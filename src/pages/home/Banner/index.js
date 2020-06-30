@@ -22,7 +22,6 @@ const Banner = () => {
                 className="button blue-button"
                 href={getLangURL(PageURL.spotFullPage)}
                 rel="noopener noreferrer"
-                target="_blank"
                 title={toLocale('home_banner_btn_trade')}
               >
                 {toLocale('home_banner_btn_trade')}
