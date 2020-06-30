@@ -1,0 +1,71 @@
+@import "../../assets/css/theme";
+
+.introduce-container {
+  position: relative;
+  padding-right: 5px;
+  > .introduce-pairTitle {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 12px;
+    line-height: 22px;
+    word-break: break-all;
+    > span {
+        color: @brand;
+        font-size: 14px;
+    }
+  }
+  > .introduce-layer {
+    display: flex;
+    flex-wrap: wrap;
+    > div {
+        min-width: 50%;
+    }
+  }
+  .introduce-label {
+    min-width: 56px;
+    height: 21px;
+    font-size: 12px;
+    display: inline-block;
+    margin-right: 8px;
+    margin-bottom: 5px;
+  }
+  .introduce-label-connent {
+    font-size: 12px;
+    font-weight: normal;
+  }
+  p {
+    line-height: 24px;
+    font-size: 14px;
+    text-align: justify;
+    text-justify: inter-ideograph;
+  }
+  a {
+    color: @brand;
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .intro-more-link {
+    margin-left: 10px;
+  }
+  .project-detail-link {
+    position: absolute;
+    right: 10px;
+    top: 0;
+  }
+}
+
+.theme-fun({
+  .introduce-container {
+    > .introduce-pairTitle, .introduce-label-connent {
+      color: @text-title;
+    }
+  }
+});
+
+.full-product-list .introduce-container {
+  padding-bottom: 0;
+}

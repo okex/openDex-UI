@@ -1,0 +1,71 @@
+@import "../../assets/css/theme";
+
+.place-order-not-login {
+  width: 280px;
+  margin-left: 40px;
+  padding-top: 20px;
+  .header {
+    height: 40px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    padding-left: 14px;
+    font-weight: 500;
+    border-bottom: 1px solid;
+  }
+  p {
+    font-size: 14px;
+    line-height: 21px;
+    text-align: center;
+    padding: 40px 0 50px;
+  }
+  .btns {
+    display: flex;
+    flex-direction: column;
+    button {
+      margin-bottom: 16px;
+    }
+  }
+  // todo fullscreen color
+  &.dark {
+    width: 100%;
+    margin-left: 4px; // 0
+    padding-top: 0; // 4px
+    .header {
+      height: 35px;
+      color: @full-white80;
+      font-size: 14px;
+      background: @full-shallow-black;
+      padding-left: 6px;
+      border-bottom: none;
+    }
+    p {
+      color: @full-white50;
+      font-size: 14px;
+      line-height: 21px;
+      padding: 36px 17px;
+    }
+    .main {
+      background: #1C283E;
+    }
+    .btns {
+      padding: 0 12px;
+      button {
+        height: 32px;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+.theme-fun({
+  .place-order-not-login {
+    .header {
+      color: @text-title;
+      border-bottom-color: @border;
+    }
+    p {
+      color: @text-primary;
+    }
+  }
+});

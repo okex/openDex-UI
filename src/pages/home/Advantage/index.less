@@ -1,0 +1,58 @@
+@import "~_component/okg/index.less";
+
+.advantage-container {
+  background: rgba(245, 246, 250, 1);
+  padding: 48px 0;
+  text-align: center;
+
+  .advantage-grid {
+    .okg();
+
+    .advantage-title {
+      .okg-col-4();
+      font-size: 24px;
+      font-weight: 500;
+      color: rgba(31, 37, 51, 1);
+      line-height: 33px;
+    }
+
+    .advantage-list {
+      .okg-col-2();
+      margin: 0 auto;
+
+      &>:first-child {
+        margin: 32px 0 36px 0;
+      }
+
+      &>:last-child {
+        margin: 36px 0 0 0;
+      }
+    }
+  }
+
+  .item-container {
+    width: 100%;
+
+    .item-img {
+      width: 36px;
+      height: 36px;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .item-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: rgba(31, 37, 51, 1);
+      line-height: 16px;
+      margin: 12px 0 8px 0;
+    }
+
+    .item-content {
+      font-size: 12px;
+      font-weight: 400;
+      color: rgba(96, 104, 123, 1);
+      line-height: 24px;
+    }
+  }
+}

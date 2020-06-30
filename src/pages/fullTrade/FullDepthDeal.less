@@ -1,0 +1,67 @@
+@import "../../assets/css/theme";
+
+.full-depth-deal {
+  height: 100%;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  background: black;
+  color: white;
+  .depth-deal-tab-heads {
+    list-style-type: none;
+    li {
+      float: left;
+      width: 50%;
+      text-align: center;
+      font-weight: 500;
+      height: 28px;
+      line-height: 28px;
+      opacity: 0.8;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 12px;
+      cursor: pointer;
+      &.active {
+        cursor: default;
+        //border-bottom: 3px solid;
+      }
+      &:nth-child(1).active {
+        color: @brand;
+      }
+      &:nth-child(2).active {
+        color: @brand;
+      }
+    }
+
+    &:after {
+      clear: both;
+      content: '';
+      height: 0;
+      display: block;
+    }
+  }
+  .depth-deal-tab-container {
+    transform: translate(0, 0); //设置transform可以让子元素(ticker-clone)相对该dom进行fixed定位
+    height: calc(~"100% - 28px"); //100% - title高度
+    display: flex;
+    flex: auto;
+    flex-direction: column;
+    background: #141d2d;
+    .depth-deal-tab-content {
+      height: 100%;
+      position: relative;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+  }
+}
+.full-wrap {
+  .full-depth-deal {
+    .depth-deal-tab-heads {
+      li {
+        &.active {
+          background: #141d2d;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,40 @@
+#
+# 请勿修改或删除
+#
+
+stages:
+  - build
+
+daily-build:
+  stage: build
+  only:
+    - /^daily\/\d+\.\d+.\d+$/
+  except:
+    - tags
+    - triggers
+  script:
+    - "sh ~/daily-build.sh"
+  tags: ['as']
+pre-build:
+  stage: build
+  only:
+    - /^prepub\/\d+\.\d+.\d+$/
+  except:
+    - tags
+    - triggers
+  script:
+    - "sh ~/pre-build.sh"
+  tags: ['as']
+publish-build:
+  stage: build
+  only:
+    - /^publish\/\d+\.\d+.\d+$/
+  except:
+    - branches
+    - triggers
+  script:
+    - "sh ~/publish-build.sh"
+  tags: ['as']
+cache:
+  paths:
+    - node_modules

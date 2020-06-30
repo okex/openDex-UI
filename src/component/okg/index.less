@@ -1,0 +1,21 @@
+/*
+ * @Descripttion: okg less mixin
+ * @LastEditors: 翟懿博
+ */
+@import url('./less/config.less');
+@import url('./less/okg-func.less');
+@import url('./less/okg-x.less');
+@import url('./less/col-func.less');
+@import url('./less/col-var.less');
+@import url('./less/okg-query-var.less');
+
+// .okg()方法 以及对应class
+#okg-func();
+// .okg-x()方法 以及对应class，动态显隐
+#okg-x();
+// .okg-col-x-y() 和 .okg-col-x-offset-y()方法，以及对应class
+#col-func();
+// .okg-col[x-y]值 width: .okg-col[sm-2]
+#col-var();
+// 4种媒体查询值 @media .okg-query[sm] 和 @midia (min-width: .okg-query[sm-width])
+#okg-query-var();

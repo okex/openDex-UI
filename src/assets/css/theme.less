@@ -1,0 +1,158 @@
+// 主视觉颜色唯一入口
+// 不需要自己再写一遍色值了
+
+
+@background-color: #041026; // 主背景色
+
+// table
+@table-head-bg: #1C283E;
+@table-line-bg-odd: #141D2D;
+@table-line-bg-even: #1C283E;
+// tab
+@tab-bg: #141D2D;
+@tab-active: #1C283E;
+
+
+
+// 品牌色功能色
+@brand: #3075EE; // 主视觉蓝色，系统主色，链接、主要可点按钮颜色、选中／悬停／当前／已完成状态（x%透明度可做底色）
+@brand-1: #4E88F0;
+@buy: #4DB872; // 买入色、完成／成功／正确状态（x%透明度可做底色）
+@sell: #EE6560; // 卖出色、错误提示、删除、失败／错误状态（x%透明度可做底色）
+@warn: #FF9B00; //提示、指示性说明（x%透明度可做底色）
+@color-black: #000;
+@color-white: #FFF;
+
+
+
+@primary-weight-black: #333333;
+@second-weight-black: #666666;
+@third-weight-black: #999999;
+@primary-black: rgba(0, 0, 0, 0.65);
+@primary-grey: rgba(0, 0, 0, 0.43);
+@primary-light-grey: rgba(0, 0, 0, 0.25);
+@primary-red: #EE6560;  // 卖出色、错误提示、删除、失败／错误状态（15%透明度可做底色）
+@primary-blue: #5795F1; // 主视觉蓝色，系统主色，链接、主要可点按钮颜色、选中／悬停／当前／已完成状态（15%透明度可做底色）
+@primary-blue-hover: #699AF2; // 主视觉蓝色，悬停
+@primary-blue-active: #4273CC; // 主视觉蓝色，active
+@primary-green: #4DB872; // 买入色、完成／成功／正确状态（15%透明度可做底色）
+@color-info: #FFBF00; //提示、指示性说明（15%透明度可做底色）
+@divider-color: #EBEDF0;
+@warning-color: #FF7E16;
+@combo-account-card-color: #7265E6;
+
+
+// 默认主题中性色
+@bg-default: #FFF;
+@text-title-default: fade(@color-black, 85%);
+@text-primary-default: fade(@color-black, 65%);
+@text-second-default: fade(@color-black, 45%);
+@text-disabled-default: fade(@color-black, 25%);
+@shadow-default: fade(@color-black, 15%);
+@border-1-default: fade(@color-black, 10%); // dash line
+@border-15-default: fade(@color-black, 15%); // dash line
+@border-default: fade(@color-black, 5%); // dash line
+@line-default: fade(@color-black, 5%);
+@input-disabled-default: fade(@color-black, 2%);
+@light-bg-default: fade(@color-black, 3%);
+@brand-tips-bg-default: fade(@color-black, 70%);
+@brand-active-bg-default: fade(@brand, 5%);
+@dialog-bg-default: #FFF;
+@scrollbar-thumb-default: fade(@color-black, 8%); // 滚动条滑块颜色
+@scrollbar-track-s-default: #F8F8F8; // 滚动条轨道颜色
+@depth-dash-default: fade(@color-black, 65%);
+// 黑夜模式中性色
+@text-title-dark: fade(@color-white, 85%);
+@text-primary-dark: fade(@color-white, 65%);
+@text-second-dark: fade(@color-white, 45%);
+@text-disabled-dark: fade(@color-white, 25%);
+@shadow-dark: fade(@color-black, 25%);
+@border-1-dark: fade(@color-white, 10%);
+@border-15-dark: fade(@color-white, 15%);
+@border-dark: fade(@color-white, 5%);
+@line-dark: fade(@color-white, 5%);
+@input-disabled-dark: fade(@color-white, 2%);
+@bg-dark: #282D3F;
+@light-bg-dark: fade(@color-white, 3%);
+@brand-tips-bg-dark: fade(#284a7c, 90%);
+@brand-active-bg-dark: fade(@brand, 10%);
+@dialog-bg-dark: #1c283e;
+@scrollbar-thumb-dark: fade(@color-white, 8%); // 滚动条滑块颜色
+@scrollbar-track-s-dark: #323750; // 滚动条轨道颜色
+@depth-dash-dark: fade(@color-white, 45%);
+
+@full-white10: rgba(255,255,255,0.1);
+@full-white20: rgba(255,255,255,0.2);
+@full-white25: rgba(255,255,255,0.25);
+@full-white30: rgba(255,255,255,0.3);
+@full-white50: rgba(255,255,255,0.5);
+@full-white60: rgba(255,255,255,0.6);
+@full-white65: rgba(255,255,255,0.65);
+@full-white80: rgba(255,255,255,0.8);
+@full-white: rgba(255,255,255,1);
+@full-deep-blue:#1c283e;
+@full-bright-blue: @brand;
+@full-shallow-black: #0C1929;
+
+
+.render-rules(@rules, @outer) when (@outer = ''){
+  @rules();
+}
+.render-rules(@rules, @outer) when (@outer = 'normal'){
+  .normal-wrap {
+    @rules();
+  }
+}
+
+.normal-colors() {
+  @text-title: @text-title-default;
+  @text-primary: @text-primary-default;
+  @text-second: @text-second-default;
+  @text-disabled: @text-disabled-default;
+  @shadow: @shadow-default;
+  @border: @border-default; // dash line
+  @border-1: @border-1-default; // dash line
+  @border-15: @border-15-default; // dash line
+  @line: @line-default;
+  @input-disabled: @input-disabled-default;
+  @bg: @bg-default;
+  @light-bg: @light-bg-default;
+  @brand-tips-bg: @brand-tips-bg-default;
+  @brand-active-bg: @brand-active-bg-default;
+  @dialog-bg: @dialog-bg-default;
+  @scrollbar-thumb: @scrollbar-thumb-default;
+  @scrollbar-track-s: @scrollbar-track-s-default;
+  @depth-dash: @depth-dash-default;
+}
+.dark-colors() {
+  @text-title: @text-title-dark;
+  @text-primary: @text-primary-dark;
+  @text-second: @text-second-dark;
+  @text-disabled: @text-disabled-dark;
+  @shadow: @shadow-dark;
+  @border: @border-dark; // dash line
+  @border-1: @border-1-dark; // dash line
+  @border-15: @border-15-dark; // dash line
+  @line: @line-dark;
+  @input-disabled: @input-disabled-dark;
+  @bg: @bg-dark;
+  @light-bg: @light-bg-dark;
+  @brand-tips-bg: @brand-tips-bg-dark;
+  @brand-active-bg: @brand-active-bg-dark;
+  @dialog-bg: @dialog-bg-dark;
+  @scrollbar-thumb: @scrollbar-thumb-dark;
+  @scrollbar-track-s: @scrollbar-track-s-dark;
+  @depth-dash: @depth-dash-dark;
+};
+
+
+.theme-fun(@rules, @outer: 'normal') {
+  // 先定义颜色，再执行规则
+  .normal-colors();
+  .render-rules(@rules, @outer);
+   body.theme-2 {
+     // 黑夜模式
+     .dark-colors();
+     .render-rules(@rules, @outer); // 黑夜模式下的规则
+   }
+}

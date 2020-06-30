@@ -1,0 +1,66 @@
+.node-local-container {
+
+  .local-set-container {
+    margin-right: -132px;
+  }
+
+  .local-set-cell {
+    margin-right: 132px;
+    display: inline-block;
+    width: 320px;
+
+    &:nth-of-type(n + 4) {
+      margin-top: 24px;
+    }
+  }
+
+  .local-set-label {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.45);
+    line-height: 22px;
+  }
+
+  .network-select {
+    margin-top: 6px;
+    height: 32px;
+    background: #1E2F4F;
+
+    &.dark {
+
+      .Select-control {
+        border: 0;
+      }
+    }
+
+    .Select-input {
+      height: 32px;
+    }
+
+    &.Select--single>.Select-control .Select-value, .Select-placeholder {
+      height: 32px;
+      line-height: 32px;
+    }
+
+    &.Select.ok-select.dark.has-value.Select--single > .Select-control .Select-value .Select-value-label, &.Select.ok-select.dark.has-value.is-pseudo-focused.Select--single > .Select-control .Select-value .Select-value-label {
+      font-size: 14px;
+      line-height: 22px;
+      color: #FFFFFF;
+    }
+  }
+
+  .local-set-terminal {
+    margin-top: 40px;
+  }
+
+  .local-terminal-title {
+    padding: 8px 12px;
+    font-size: 16px;
+    line-height: 24px;
+    background: #1B273D;
+  }
+
+  .local-terminal-content {
+    height: 360px;
+    background: #1E2F4F;
+  }
+}

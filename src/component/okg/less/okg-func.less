@@ -1,0 +1,35 @@
+// 对外暴露 .okg() 方法，设置版心
+
+@import url('./config.less');
+
+#okg-func() {
+  .okg {
+    // 默认设备
+    padding-left : @defaultMedia[@bodyPadding];
+    padding-right: @defaultMedia[@bodyPadding];
+
+    // 其他设备
+    each(#excludeDefaultSet(), .(@mediaVal, @mediaKey) {
+        @media @mediaVal[@mediaQuery] {
+          padding-left : @mediaVal[@bodyPadding];
+          padding-right: @mediaVal[@bodyPadding];
+        }
+      }
+
+    );
+
+    // PC版心定宽
+    @media #mediaQueryLG()[@mediaQuery] {
+      margin-left: auto;
+      margin-right: auto;
+      width : #mediaQueryLG()[@contentWidth]
+    }
+
+    // 超大屏版心定宽
+    @media #mediaQueryXL()[@mediaQuery] {
+      margin-left: auto;
+      margin-right: auto;
+      width : #mediaQueryXL()[@contentWidth]
+    }
+  }
+}

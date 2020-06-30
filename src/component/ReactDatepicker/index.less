@@ -1,0 +1,84 @@
+@import "~_component/uiParams/base";
+
+@import "~react-datepicker/dist/react-datepicker.min.css";
+
+@border-color: @color-line1-2;
+@border-color-dark: fade(#fff, 15%);
+@text-color: @color-text1-4;
+@text-color-dark: fade(#fff, 85%);
+@icon-color: @color-text1-1;
+@icon-color-dark: fade(#fff, 25%);
+@border-color-active: @color-brand-3;
+
+.ok-datepicker-wrapper {
+  position: relative;
+  display: inline-block;
+  > i {
+    color: @icon-color;
+    font-size: 16px;
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    margin-top: -8px;
+    cursor: pointer;
+    line-height: 1;
+  }
+  &.dark {
+    > i {
+      color: @icon-color-dark;
+    }
+  }
+  input {
+    outline: none;
+    border-radius: 4px;
+  }
+  input:focus {
+    outline: none;
+  }
+}
+
+.ok-datepicker {
+  background: transparent;
+  border: 1px solid @border-color;
+  color: @text-color;
+  transition: all .3s;
+  &:hover {
+    border-color: @color-brand-3;
+  }
+  &:focus {
+    border-color: @color-brand-3;
+    box-shadow: 0 0 0 2px fade(@border-color-active, 15%);
+  }
+  box-sizing: border-box;
+  height: 36px;
+  line-height: 36px;
+  font-size: 14px;
+  padding: 0 28px 0 8px;
+  width: 125px;
+  &::placeholder {
+    color: @icon-color;
+  }
+  &.hide-icon {
+    width: 100px;
+    padding-right: 8px;
+  }
+  &.small {
+    height: 28px;
+    line-height: 28px;
+    font-size: 12px;
+    width: 110px;
+    &.hide-icon {
+      width: 90px;
+    }
+  }
+  &.dark {
+    border-color: @border-color-dark;
+    color: @text-color-dark;
+    &:hover {
+      border-color: @color-brand-3;
+    }
+    &::placeholder {
+      color: @icon-color-dark;
+    }
+  }
+}

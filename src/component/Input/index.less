@@ -1,0 +1,138 @@
+@import "~_component/uiParams/components/Input";
+
+@inputPrefixCls: ok-ui-input;
+
+.placeholder(@color: @placeholderColor) {
+
+  // Firefox
+  &::-moz-placeholder {
+    color: @color;
+    opacity: 1; // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526
+  }
+
+  // Internet Explorer 10+
+  &:-ms-input-placeholder {
+    color: @color;
+  }
+
+  // Safari and Chrome
+  &::-webkit-input-placeholder {
+    color: @color;
+  }
+}
+
+.@{inputPrefixCls} {
+  position: relative;
+
+  input {
+    display: inline-block;
+    width: 100%;
+    height: 36px;
+    line-height: 36px;
+    padding: 4px 11px;
+    color: @textColor;
+    font-size: @fontSize;
+    // line-height: 1.5;
+    background-color: #fff;
+    // background-image: none;
+    border: 1px solid @borderColor;
+    border-radius: @borderRadius;
+    transition: all .3s;
+    .placeholder(@placeholderColor);
+
+    &:hover {
+      border-color: @hoverBorderColor;
+    }
+
+    &:focus {
+      border-color: @hoverBorderColor;
+      outline: 0;
+      -webkit-box-shadow: 0 0 0 2px fade(@hoverBorderColor, 20%);
+      box-shadow: 0 0 0 2px fade(@hoverBorderColor, 20%);
+    }
+  }
+
+  // .@{inputPrefixCls}-prefix,
+  .@{inputPrefixCls}-suffix {
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    // color: @placeholderColor;
+    line-height: 0;
+    transform: translateY(-50%);
+    line-height: 1;
+
+    .icon-close-circle {
+      font-size: 14px;
+      cursor: pointer;
+    }
+  }
+
+  // .@{inputPrefixCls}-prefix {
+  //   left: 12px;
+  // }
+  .@{inputPrefixCls}-suffix {
+    right: 12px;
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+
+    input {
+      background-color: @disabledColor;
+      cursor: not-allowed;
+      color: @placeholderColor;
+
+      &:hover {
+        border-color: @borderColor;
+      }
+    }
+  }
+
+  &.error {
+    input {
+      border-color: @errorColor  !important;
+
+      &:focus {
+        border-color: @errorColor;
+        -webkit-box-shadow: 0 0 0 2px fade(@errorColor, 20%);
+        box-shadow: 0 0 0 2px fade(@errorColor, 20%);
+      }
+    }
+
+    .@{inputPrefixCls}-error {
+      height: 18px;
+      font-size: 12px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: @errorColor;
+      line-height: 18px;
+    }
+  }
+
+  &.dark {
+    input {
+      border-radius: 0;
+      border-top-width: 0;
+      border-left-width: 0;
+      border-right-width: 0;
+      border-bottom-color: #102955;
+      background: #102955;
+      color: #fff;
+      .placeholder(rgba(255, 255, 255, 0.25));
+      &:hover {
+        border-color: #5795F1;
+      }
+      &:focus {
+        border-color: #5795F1;
+        box-shadow: none;
+      }
+    }
+
+    .@{inputPrefixCls}-suffix {
+      .icon-close-circle {
+        color: rgba(255, 255, 255, 0.65);
+      }
+    }
+  }
+}

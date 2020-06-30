@@ -1,0 +1,103 @@
+@fontSizeMini: 12px;
+@fontSizeSmall: 12px;
+@fontSizeLarge: 16px;
+@fontSizeDefault: 16px;
+
+.btn {
+
+  &.size-mini {
+    font-size: @fontSizeMini;
+    line-height: 14px;
+    font-weight: normal;
+    padding: 2px 16px;
+
+    .btn-icon {
+      font-size: @fontSizeMini;
+    }
+  }
+
+  &.size-small {
+    font-size: @fontSizeSmall;
+    line-height: 18px;
+    font-weight: normal;
+    padding: 4px 16px;
+
+    .btn-icon {
+      font-size: @fontSizeSmall;
+    }
+  }
+
+  &.size-large {
+    font-size: @fontSizeLarge;
+    line-height: 24px;
+    font-weight: 600;
+    padding: 7px 24px;
+
+    .btn-icon {
+      font-size: @fontSizeLarge;
+    }
+  }
+
+  &.size-default {
+    font-size: @fontSizeDefault;
+    line-height: 24px;
+    font-weight: normal;
+    padding: 5px 24px;
+
+    .btn-icon {
+      font-size: @fontSizeDefault;
+    }
+  }
+
+  .btn-icon {
+    font-size: @fontSizeDefault;
+    &.loading-icon:before {
+      animation: spin 800ms infinite linear;
+      -webkit-animation: spin 800ms infinite linear;
+      display: inline-block;
+    }
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  }
+  .btn-icon + .btn-content {
+    margin-left: 4px;
+  }
+
+  &.circle {
+  }
+  &.circle-icon {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  &.circle-large {
+    @size: 42px;
+    min-width: @size;
+    min-height: @size;
+    border-radius: @size / 2;
+  }
+  &.circle-default {
+    @size: 36px;
+    min-width: @size;
+    min-height: @size;
+    border-radius: @size / 2;
+  }
+  &.circle-small {
+    @size: 28px;
+    min-width: @size;
+    min-height: @size;
+    border-radius: @size / 2;
+  }
+  &.circle-mini {
+    @size: 20px;
+    min-width: @size;
+    min-height: @size;
+    border-radius: @size / 2;
+  }
+}

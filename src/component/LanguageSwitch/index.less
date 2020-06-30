@@ -1,0 +1,40 @@
+@import "~_component/uiParams/components/LanguageSwitch.less";
+
+// 开发组件时，调试使用。
+// @import "../../uiParams/src/components/LanguageSwitch.less";
+
+.ok-ui-language-switch {
+  height: auto;
+  cursor: pointer;
+  user-select: none;
+  &.title-show-icon{
+    width: auto;
+    min-width: unset;
+    .show{
+      padding: 0;
+      border: none;
+    }
+  }
+  .show{
+    width: 100%;
+    cursor: pointer;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    padding-right: 8px;
+    font-size: 12px;
+    color: @language-switch-show-color;
+    border: @language-switch-show-border;
+    background-color: @language-switch-show-bgColor;
+    >span{
+      white-space:nowrap;
+      overflow: hidden;
+      margin-left: 8px;
+      flex-grow: 2;
+      font-size: 12px;
+    }
+  }
+}

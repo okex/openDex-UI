@@ -1,0 +1,36 @@
+@import "~_component/okg/index.less";
+
+@media .okg-query[md] {
+  .advantage-container {
+    padding: 64px 0;
+
+    .advantage-grid {
+
+      .advantage-title {
+        .okg-col-md-12();
+        font-size: 28px;
+        line-height: 40px;
+      }
+
+      .advantage-list {
+        .okg-col-md-12();
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-top: 35px;
+
+        &>:first-child {
+          margin: 0 0 0 12px;
+        }
+
+        &>:last-child {
+          margin: 0 12px 0 0;
+        }
+      }
+    }
+
+    .item-container {
+      width: 27.777778%;
+    }
+  }
+}

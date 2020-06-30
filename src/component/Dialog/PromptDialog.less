@@ -1,0 +1,96 @@
+@errorBgColor: rgba(241, 64, 52, 0.15);
+@warnBgColor: rgba(255, 191, 0, 0.15);
+@promptBgColor: rgba(255, 191, 0, 0.15);
+@infoBgColor: rgba(78, 136, 240, 0.15);
+@successBgColor: rgba(98, 200, 157, 0.15);
+
+@errorIconColor: #EE6560;
+@warnIconColor: #ffbf00;
+@promptIconColor: #FFBF00;
+@infoIconColor: #5795f1;
+@successIconColor: #4DB872;
+.prompt-dialog-content {
+  width: 300px;
+  text-align: center;
+
+  .icon-bg {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto;
+    line-height: 48px;
+    text-align: center;
+    border-radius: 50%;
+    .prompt-icon {
+      font-size: 30px;
+      font-weight: bolder;
+    }
+
+    & + .prompt-text {
+      margin-top: 16px;
+    }
+    & + .prompt-title {
+      margin-top: 16px;
+    }
+  }
+  .prompt-title {
+    font-size: 16px;
+    color: rgba(51, 51, 51, 1);
+    line-height: 24px;
+    & + .prompt-text {
+      margin-top: 12px;
+    }
+  }
+  .prompt-text {
+    font-size: 14px;
+    color: rgba(153, 153, 153, 1);
+    line-height: 18px;
+  }
+
+  .error-bg {
+    background: @errorBgColor;
+
+    .prompt-icon {
+      color: @errorIconColor;
+    }
+  }
+  .warn-bg {
+    background: @warnBgColor;
+
+    .prompt-icon {
+      color: @warnIconColor;
+    }
+  }
+  .prompt-bg {
+    background: @promptBgColor;
+
+    .prompt-icon {
+      color: @promptIconColor;
+      font-weight: normal;
+    }
+  }
+  .info-bg {
+    background: @infoBgColor;
+
+    .prompt-icon {
+      color: @infoIconColor;
+    }
+  }
+  .success-bg {
+    background: @successBgColor;
+
+    .prompt-icon {
+      color: @successIconColor;
+    }
+  }
+}
+
+.dark{
+  .prompt-dialog-content {
+    .prompt-title {
+      color: rgba(255, 255, 255, 0.65);
+    }
+    .prompt-text {
+      color: rgba(255, 255, 255, 0.65);
+    }
+  }
+}

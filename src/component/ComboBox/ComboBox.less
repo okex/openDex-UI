@@ -1,0 +1,53 @@
+@import url('../../assets/css/theme');
+
+.full-wrap {
+  .ok-combo-box {
+    // width: 90px;
+    border-radius: 4px;
+    background-color: #1c283e;
+    position: relative;
+    overflow: hidden;
+    > ul {
+      width: 100%;
+      //padding: 0 8px;
+      > li {
+        cursor: pointer;
+        user-select: none;
+        height: 36px;
+        line-height: 36px;
+        box-sizing: border-box;
+        border-bottom: none; // solid 1px rgba(255, 255, 255, 0.1);
+        padding: 0 16px;
+        > a {
+          display: block;
+          color: fade(#fff, 80%);
+          font-size: 14px;
+          text-align: center;
+        }
+        &.active {
+          > a {
+            color: @brand;
+          }
+        }
+      }
+      > li:last-child {
+        border-bottom: none;
+      }
+      > li:hover {
+        background: fade(@brand, 10%);
+        //> a {
+        //  color: #4396f8;
+        //}
+      }
+    }
+    > .moveBgColor {
+      position: absolute;
+      z-index: 5;
+      width: 100%;
+      height: 43px;
+      background-color: #2e81e6;
+      transition: all 0.3s;
+      opacity: 0.2;
+    }
+  }
+}

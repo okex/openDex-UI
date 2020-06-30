@@ -1,0 +1,204 @@
+@import "~_src/assets/css/theme";
+
+.transfer-container {
+  .ok-dialog {
+    .dialog-window {
+      table {
+        font-size: 14px;
+        line-height: 36px;
+        tr {
+          td {
+            &:first-of-type {
+              vertical-align: top;
+              min-width: 128px;
+              padding-right: 8px;
+              color: @text-primary-dark;
+            }
+            &:last-of-type {
+              position: relative;
+              width: 360px;
+              padding-bottom: 16px;
+              color: @text-primary-dark;
+            }
+          }
+        }
+        &.show {
+          tr {
+            td {
+              &:last-of-type {
+                line-height: 20px;
+                vertical-align: top;
+                padding-top: 8px;
+                padding-bottom: 18px;
+              }
+            }
+          }
+        }
+      }
+      .fee {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid #294472;
+        height: 36px;
+      }
+      .Select-control {
+        height: 36px;
+        border-radius: 0;
+        border: none;
+        border-bottom: 1px solid #294472;
+        &:hover {
+          border-color: #294472 !important;
+        }
+        .Select-value {
+          line-height: 36px !important;
+          font-size: 14px;
+          padding-left: 0;
+          padding-right: 0;
+        }
+        &>:last-child {
+          padding-right: 0;
+        }
+      }
+      .Select-input {
+        padding-left: 0;
+        padding-right: 0;
+        height: 36px;
+        > input {
+          height: 36px;
+          padding: 0;
+        }
+      }
+      .Select.ok-select.is-focused.is-open > .Select-control {
+        //border-color: @border-active-color !important;
+        box-shadow: none;
+      }
+      .Select-placeholder {
+        padding-left: 0;
+      }
+      .Select-menu-outer {
+        min-height: 36 * 5px;
+        .Select-menu {
+          max-height: 36 * 5px;
+        }
+        .Select-option {
+          height: 36px;
+          font-size: 14px;
+          padding: 0 5px;
+        }
+      }
+      p.error {
+        font-size: 12px;
+        line-height: 18px;
+        color: @sell;
+        margin-top: 4px;
+      }
+      p.amount-left-info {
+        font-size: 12px;
+        line-height: 18px;
+        margin-top: 4px;
+        color: @brand;
+        span {
+          color: @text-second-dark;
+        }
+      }
+      .trans-op-right {
+        position: absolute;
+        top: 0;
+        right: 0;
+        > span {
+          color: @text-title-dark;
+          margin-right: 20px;
+        }
+      }
+      input.trans {
+        width: 100%;
+        height: 36px;
+        background: transparent;
+        border-bottom: 1px solid #294472;
+        color: @text-primary-dark;
+        &.pwd {
+          -webkit-text-security:disc;
+          text-security:disc;
+          margin-top: 56px;
+          margin-bottom: 80px;
+          padding-right: 50px;
+        }
+        &.amount {
+          padding-right: 120px;
+        }
+      }
+      .middle-step-btns {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+        button.btn {
+          width: 150px;
+        }
+      }
+      .symbol-left {
+        display: inline-block;
+        width: 65px;
+      }
+    }
+  }
+  .trans-loading {
+    z-index: 99999;
+    background: rgba(0, 0, 0, 0.45);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    div.loading-icon {
+      width: 100px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: trans-loading-spin 800ms infinite linear;
+      svg {
+        width: 60px;
+        height: 60px;
+      }
+    }
+  }
+}
+
+@keyframes trans-loading-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.ok-dialog.trans-alert {
+  .dialog-window {
+    background: #112F62;
+    color: @text-title-dark;
+    .dialog-top {
+      display: none;
+    }
+    .dialog-box {
+      min-width: auto;
+      &.no-title {
+        padding: 20px 40px;
+        font-size: 18px;
+        line-height: 25px;
+        .trans-msg {
+          display: flex;
+          align-items: center;
+          svg {
+            width: 40px;
+            height: 40px;
+            margin-right: 40px;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+/node_modules
+*.log
+.idea/
+###Mac OS###
+.DS_Store
+/buildTest
+.vscode/
+tsconfig.json
+.history/
+/dist
+/bundle
+/okline

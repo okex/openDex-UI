@@ -1,0 +1,537 @@
+@import "~_component/uiParams/base.less";
+
+@prefixClass: ok-ui-pagination;
+@pagination-item-size-sm: 24px;
+@pagination-item-fontSize-default: @size-font-7;
+.@{prefixClass} {
+  font-size: @pagination-item-fontSize-default;
+  user-select: none;
+  padding: 0;
+
+  > li {
+    list-style: none;
+    outline: none;
+  }
+
+  &-total-text {
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    list-style: none;
+    padding: 0;
+    margin: 0 8px 0 0;
+  }
+
+  &:after {
+    content: " ";
+    display: block;
+    height: 0;
+    clear: both;
+    overflow: hidden;
+    visibility: hidden;
+  }
+
+  &-item {
+    cursor: pointer;
+    border-radius: 6px;
+    min-width: 28px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    list-style: none;
+    float: left;
+    margin-right: 8px;
+    outline: none;
+
+    a {
+      text-decoration: none;
+    }
+    &-active {
+      a {
+        color: #333;
+      }
+
+      &:hover {
+        a {
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  &-jump-prev, &-jump-next {
+    outline: none;
+    &:after {
+      content: "•••";
+      display: block;
+      letter-spacing: 2px;
+      font-size: @pagination-item-fontSize-default;
+      margin-top: 1px;
+    }
+  }
+
+  &-jump-prev {
+    &:hover {
+      &:after {
+        content: "«";
+      }
+    }
+  }
+
+  &-jump-next {
+    &:hover {
+      &:after {
+        content: "»";
+      }
+    }
+  }
+
+  &-jump-prev-custom-icon,
+  &-jump-next-custom-icon {
+    outline: none;
+    position: relative;
+
+    &:after {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto;
+      transition: all .2s;
+
+      content: "•••";
+      opacity: 1;
+      display: block;
+      letter-spacing: 2px;
+      font-size: @pagination-item-fontSize-default;
+      margin-top: 1px;
+    }
+
+    .custom-icon-jump-prev,
+    .custom-icon-jump-next {
+      opacity: 0;
+      transition: all .2s;
+    }
+
+    &:hover {
+      &:after {
+        opacity: 0;
+      }
+
+      .custom-icon-jump-prev,
+      .custom-icon-jump-next {
+        opacity: 1;
+      }
+    }
+  }
+
+  &-prev, &-jump-prev, &-jump-next {
+    margin-right: 8px;
+  }
+  &-prev, &-next, &-jump-prev, &-jump-next {
+    cursor: pointer;
+    font-size: 10px;
+    border-radius: 6px;
+    list-style: none;
+    min-width: 28px;
+    height: 28px;
+    line-height: 28px;
+    float: left;
+    text-align: center;
+  }
+
+  &-prev {
+    a {
+      &:after {
+        content: "‹";
+        display: block;
+      }
+    }
+  }
+
+  &-next {
+    a {
+      &:after {
+        content: "›";
+        display: block;
+      }
+    }
+  }
+
+  &-prev, &-next {
+    font-size: 18px;
+    a {
+      &:after {
+        margin-top: -1px;
+      }
+    }
+  }
+
+  &-disabled {
+    cursor: not-allowed;
+    a {
+      color: #ccc;
+    }
+  }
+
+  &-options {
+    float: left;
+    margin-left: 15px;
+    &-size-changer {
+      float: left;
+      width: 80px;
+    }
+
+    &-quick-jumper {
+      float: left;
+      margin-left: 16px;
+      height: 28px;
+      line-height: 28px;
+
+      input {
+        margin: 0 8px;
+        box-sizing: border-box;
+        border-radius: 6px;
+        outline: none;
+        padding: 3px 12px;
+        width: 50px;
+        height: 28px;
+      }
+
+      button {
+        display: inline-block;
+        margin: 0 8px;
+        font-weight: 500;
+        text-align: center;
+        touch-action: manipulation;
+        cursor: pointer;
+        background-image: none;
+        border: 1px solid transparent;
+        white-space: nowrap;
+        padding: 0 15px;
+        font-size: @pagination-item-fontSize-default;
+        border-radius: 6px;
+        height: 28px;
+        user-select: none;
+        transition: all .3s cubic-bezier(.645, .045, .355, 1);
+        position: relative;
+        color: rgba(0, 0, 0, .65);
+      }
+    }
+  }
+
+  &-simple {
+    .@{prefixClass}-prev, .@{prefixClass}-next {
+      border: none;
+      height: 24px;
+      line-height: 24px;
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .@{prefixClass}-simple-pager {
+      float: left;
+      margin-right: 8px;
+      list-style: none;
+
+      .@{prefixClass}-slash {
+        margin: 0 10px;
+      }
+
+      input {
+        margin: 0 8px;
+        box-sizing: border-box;
+        border-radius: 6px;
+        outline: none;
+        padding: 5px 8px;
+        min-height: 20px;
+      }
+
+      button {
+        display: inline-block;
+        margin: 0 8px;
+        font-weight: 500;
+        text-align: center;
+        touch-action: manipulation;
+        cursor: pointer;
+        background-image: none;
+        border: 1px solid transparent;
+        white-space: nowrap;
+        padding: 0 8px;
+        font-size: @pagination-item-fontSize-default;
+        border-radius: 6px;
+        height: 26px;
+        user-select: none;
+        transition: all .3s cubic-bezier(.645, .045, .355, 1);
+        position: relative;
+        color: rgba(0, 0, 0, .65);
+      }
+
+    }
+  }
+}
+
+.mini(@fontColor, @mainColor) {
+  .@{prefixClass}-total-text,
+  .@{prefixClass}-simple-pager {
+    height: @pagination-item-size-sm;
+    line-height: @pagination-item-size-sm;
+  }
+
+  .@{prefixClass}-item {
+    margin: 0;
+    min-width: @pagination-item-size-sm;
+    height: @pagination-item-size-sm;
+    line-height: @pagination-item-size-sm - 2px;
+  }
+
+  .@{prefixClass}-item:not(.@{prefixClass}-item-active) {
+    background: transparent;
+    border-color: transparent;
+  }
+
+  .@{prefixClass}-prev,
+  .@{prefixClass}-next {
+    background: transparent;
+    border-color: transparent;
+    margin: 0;
+    min-width: @pagination-item-size-sm;
+    height: @pagination-item-size-sm;
+    line-height: @pagination-item-size-sm;
+  }
+
+  .@{prefixClass}-prev .@{prefixClass}-item-link,
+  .@{prefixClass}-next .@{prefixClass}-item-link {
+    border-color: transparent;
+    background: transparent;
+    &:after {
+      height: @pagination-item-size-sm;
+      line-height: @pagination-item-size-sm;
+    }
+  }
+
+  .@{prefixClass}-jump-prev,
+  .@{prefixClass}-jump-next {
+    height: @pagination-item-size-sm;
+    line-height: @pagination-item-size-sm;
+    margin-right: 0;
+    &:after {
+      font-size: @pagination-item-fontSize-default;
+      color: @fontColor;
+    }
+
+    &:hover {
+      &:after {
+        color: @mainColor;
+      }
+    }
+  }
+
+  .@{prefixClass}-options {
+    margin-left: 2px;
+    .@{prefixClass}-quick-jumper {
+      height: @pagination-item-size-sm;
+      line-height: @pagination-item-size-sm;
+
+      input {
+        padding: 1px 7px;
+        height: 24px;
+        width: 44px;
+      }
+    }
+  }
+  .@{prefixClass}-item {
+    & {
+      background: transparent;
+      border-color: transparent;
+      a {
+        color: @fontColor;
+      }
+    }
+    &:hover {
+      background: transparent;
+      border-color: @mainColor;
+      a {
+        color: @mainColor;
+      }
+    }
+    &-active {
+      background: transparent;
+      border-color: @mainColor;
+
+      a {
+        color: @mainColor;
+      }
+    }
+  }
+}
+
+.normal(@mainColor, @mainBorder, @mainBackground, @fontColor) {
+  .@{prefixClass}-item {
+    border: 1px solid @mainBorder;
+    background-color: @mainBackground;
+    a {
+      color: @fontColor;
+    }
+
+    &:hover {
+      border-color: @mainColor;
+      background-color: @mainColor;
+      a {
+        color: #fff;
+      }
+    }
+
+    &-active {
+      background-color: @mainColor;
+      border-color: @mainColor;
+
+      a {
+        color: #fff;
+      }
+
+      &:hover {
+        a {
+          color: #fff;
+        }
+      }
+    }
+  }
+  .@{prefixClass}-jump-prev, .@{prefixClass}-jump-next {
+    &:after {
+      color: @fontColor;
+    }
+
+    &:hover {
+      &:after {
+        color: @mainColor;
+      }
+    }
+
+  }
+  .@{prefixClass}-jump-prev-custom-icon,
+  .@{prefixClass}-jump-next-custom-icon {
+    &:after {
+      color: @fontColor;
+    }
+
+    &:hover {
+      &:after {
+        color: @fontColor;
+      }
+
+      .custom-icon-jump-prev,
+      .custom-icon-jump-next {
+        color: @mainColor;
+      }
+    }
+  }
+  .@{prefixClass}-prev, .@{prefixClass}-next, .@{prefixClass}-jump-prev, .@{prefixClass}-jump-next {
+    color: @fontColor;
+  }
+  .@{prefixClass}-prev, .@{prefixClass}-next {
+    border: 1px solid @mainBorder;
+    background-color: @mainBackground;
+    a {
+      color: @fontColor;
+    }
+  }
+  .@{prefixClass}-disabled {
+    cursor: not-allowed;
+    a {
+      color: #ccc;
+    }
+  }
+  .@{prefixClass}-options {
+    &-quick-jumper {
+      input {
+        background-color: @mainBackground;
+        border: 1px solid @mainBorder;
+        width: 44px;
+        &:hover {
+          border-color: @mainColor;
+        }
+      }
+
+      button {
+        color: rgba(0, 0, 0, .65);
+        background-color: @mainBackground;
+        border-color: @mainBorder;
+
+        &:hover, &:active, &:focus {
+          color: @mainColor;
+          background-color: @mainBackground;
+          border-color: @mainColor;
+        }
+      }
+    }
+  }
+  .@{prefixClass}-simple {
+    &-pager {
+      color: @fontColor;
+      input {
+        background-color: @mainBackground !important;
+        border: 1px solid @mainBorder;
+        color: @fontColor;
+        width: 44px;
+        &:hover {
+          border-color: @mainColor;
+        }
+      }
+
+      button {
+        color: rgba(0, 0, 0, .65);
+        background-color: @mainBackground;
+        border-color: @mainBorder;
+
+        &:hover, &:active, &:focus {
+          color: @mainColor;
+          background-color: @mainBackground;
+          border-color: @mainColor;
+        }
+      }
+    }
+  }
+}
+
+.@{prefixClass} {
+  @mainColor: @color-brand-3;
+  @mainBorder: #d9d9d9;
+  @mainBackground: @color-white;
+  @fontColor: @color-text1-3;
+  .normal(@mainColor, @mainBorder, @mainBackground, @fontColor);
+}
+
+.@{prefixClass}.mini {
+  @mainColor: @color-brand-3;
+  @mainBorder: #d9d9d9;
+  @mainBackground: @color-white;
+  @fontColor: @color-text1-3;
+  .mini(@fontColor, @mainColor);
+}
+
+.@{prefixClass}-dark {
+  @mainColor: @color-brand-3;
+  @mainBorder: #31374d;
+  @mainBackground: #31374d;
+  @fontColor: hsla(0, 0%, 100%, .8);
+  .normal(@mainColor, @mainBorder, @mainBackground, @fontColor);
+}
+
+.@{prefixClass}-dark.mini {
+  @mainColor: @color-brand-3;
+  @mainBorder: #31374d;
+  @mainBackground: #31374d;
+  @fontColor: hsla(0, 0%, 100%, .8);
+  .mini(@fontColor, @mainColor);
+}
+
+@media only screen and (max-width: 1024px) {
+  .@{prefixClass}-item {
+    &-after-jump-prev,
+    &-before-jump-next {
+      display: none;
+    }
+  }
+}

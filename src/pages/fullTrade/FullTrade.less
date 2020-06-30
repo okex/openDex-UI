@@ -1,0 +1,204 @@
+@import "../../assets/css/theme";
+
+// 费率标准tooltip
+.full-fee-tooltip {
+  background: rgba(40, 74, 124, 1);
+  color: white;
+  padding: 6px 9px;
+  border-radius: 4px;
+}
+
+.full-wrap {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  min-height: 600px;
+  min-width: 1280px;
+  background: black;
+  color: white;
+  div, span, ul {
+    box-sizing: border-box;
+    &::-webkit-scrollbar-thumb {
+      /*滚动条里面小方块*/
+      background: rgba(255, 255, 255, 0.2);
+    }
+    &::-webkit-scrollbar-track {
+      /*滚动条里面轨道*/
+      background: #1c283e;
+    }
+    &::-webkit-scrollbar {
+      /* 设置滚动条 - 垂直方向 y轴的宽度 */
+      width: 4px;
+    }
+  }
+
+  .trade-container {
+    display: flex;
+    flex: auto;
+    flex-direction: row;
+    min-height: 550px;
+    .full-left {
+      width: calc(100vw - 540px); // width: 63%; 83%->63%
+      padding-right: 4px;
+      display: flex;
+      flex-direction: column;
+      .full-left-top {
+        display: flex;
+        flex: 7;
+        //flex-grow: 1;
+        //position: relative;
+        //flex: 1;
+        // 币对列表
+        /*
+        .full-left-top-left {
+          overflow-x: hidden;
+          overflow-y: auto;
+          display: flex;
+          margin-top: 80px;
+          //flex: 1 1 auto;
+          //min-width: 300px;
+          //flex-basis: 300px;
+          //width: 22%;
+          width: 0;
+          flex-direction: row;
+        }*/
+
+        // ticker & k线
+        .full-left-top-right {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          //padding-left: 4px;
+
+          .full-ticker-kline {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            background-color: #141d2d;
+
+            /*
+            .full-ticker {
+              height: 0;
+              height: 50px;
+              line-height: 50px;
+            }*/
+          }
+        }
+      }
+
+      .full-left-bottom {
+        flex: 0 0 265px; // height: 265px;
+        display: flex;
+        flex-direction: column;
+        overflow-y: hidden;
+        overflow-x: auto;
+        /*
+        display: flex;
+        margin-top: 4px;
+        // 订单
+        .full-left-bottom-left {
+          width: 75%;
+          overflow-y: hidden;
+          overflow-x: auto;
+        }
+        // 下单
+        .full-left-bottom-right {
+          display: flex;
+          width: 25%;
+          min-width: 300px;
+          .spot-place-order-container {
+            margin-left: 4px;
+          }
+        }
+        */
+      }
+
+      .ok-ui-loading {
+        background: #1c283e;
+      }
+    }
+
+    .full-dark {
+      background-color: #141d2d !important;
+    }
+
+    .full-right {
+      display: flex;
+      //flex: 1;
+      .full-right-left {
+        //flex: 1;
+        //min-width: 290px;
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        padding-right: 4px; // margin-right: 4px;
+      }
+      .full-right-right {
+        width: 240px;
+        //flex: 1;
+      }
+    }
+  }
+}
+
+.full-body {
+
+  #headerContainer {
+    display: none;
+  }
+
+  #footerContainer {
+    display: none;
+  }
+}
+
+
+@media screen and (min-height: 720px) {
+  .full-wrap {
+    .trade-container {
+      .full-left {
+        .full-left-top {
+          height: 70%;
+        }
+        .full-left-bottom {
+          height: 30%;
+          flex: 3;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .full-wrap {
+    .trade-container {
+      .full-left {
+        width: 736px;
+      }
+    }
+  }
+}
+
+@media screen and (min-height: 1440px) and (max-width: 1280px) {
+  html, body {
+    min-width: unset;
+  }
+  .full-wrap {
+    min-width: unset;
+    .trade-container {
+      .full-left {
+        width: 57.81%;
+      }
+      .full-right {
+        width: 42.19%;
+        .full-right-left {
+          width: 55.55%;
+        }
+        .full-right-right {
+          width: 44.45%;
+        }
+      }
+    }
+  }
+}

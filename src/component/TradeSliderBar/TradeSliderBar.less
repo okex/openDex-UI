@@ -1,0 +1,182 @@
+@import "../../assets/css/theme";
+
+@primary-color: @buy;
+@bgline-color: #e6e6e6;
+
+.trade-slider-bar-comp {
+  // 防止拖拽时选中页面其他元素
+  a, b, body, button, dd, div, dl, dt, em, footer, h1, h2, h3, h4, header,
+  html, i, img, li, ol, p, select, span, strong, textarea, ul {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  margin: 5px;
+  position: relative;
+  z-index: 0; /*市价单时，影响上方的select*/
+  .trade-slider-bar {
+    position: relative;
+    padding-top: 2px;
+    .slider-bar-bgline {
+      width: 100%;
+      height: 2px;
+      background-color: @bgline-color;
+      position: absolute;
+      top: 6px;
+      z-index: 0;
+    }
+
+    .slider-bar-chk-line {
+      height: 2px;
+      position: absolute;
+      top: 6px;
+      z-index: 1;
+      border-radius: 2px;
+    }
+
+    .slider-bar-quarter {
+      position: absolute;
+      top: 4px;
+      width: 6px;
+      height: 6px;
+      background-color: #ffffff;
+      border: solid 2px #e6e6e6;
+      border-radius: 50%;
+      box-sizing: border-box;
+      cursor: pointer;
+      user-select: none;
+      z-index: 10;
+    }
+    a {
+      margin-left: -5px;
+    }
+    .slider-bar-drag-bar {
+      width: 10px;
+      height: 10px;
+      background-color: #ffffff;
+      box-sizing: border-box;
+      border-radius: 50%;
+      z-index: 100;
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+      margin-left: -6px;
+    }
+    &.green {
+      @primary-color: @buy;
+      .slider-bar-chk-line {
+        background-color: @primary-color;
+      }
+      .slider-bar-quarter {
+        &.checked {
+          background-color: @primary-color;
+          border-color: @primary-color;
+        }
+      }
+      .slider-bar-drag-bar {
+        background-color: @primary-color;
+        border: solid 2px @primary-color;
+      }
+    }
+    &.red {
+      @primary-color: @sell;
+      .slider-bar-chk-line {
+        background-color: @primary-color;
+      }
+      .slider-bar-quarter {
+        &.checked {
+          background-color: @primary-color;
+          border-color: @primary-color;
+        }
+      }
+      .slider-bar-drag-bar {
+        background-color: @primary-color;
+        border: solid 2px @primary-color;
+      }
+    }
+  }
+  .bars-container {
+    display: flex;
+    justify-content: space-between;
+    & > span {
+      font-size: 12px;
+    }
+  }
+}
+
+.theme-fun({
+  .trade-slider-bar-comp {
+    .trade-slider-bar {
+      .slider-bar-bgline {
+        background-color: @light-bg;
+      }
+    }
+  }
+});
+
+/*覆盖tooltip样式*/
+.trade-order-slider {
+  opacity: 1;
+  .rc-tooltip-inner {
+    max-width: 240px;
+    min-height: 0;
+    border: 0;
+    padding: 0;
+    background-color: unset;
+    div {
+      padding: 0 2px;
+      border-radius: 2px;
+    }
+  }
+  &.green {
+    .rc-tooltip-inner {
+      div {
+        background-color: #E6F2EA;
+      }
+      color: @buy;
+    }
+  }
+  &.red {
+    .rc-tooltip-inner {
+      div {
+        background-color: #FCE6E6;
+      }
+      color: @sell;
+    }
+  }
+}
+
+body.full-body, body.theme-1,
+body.full-body, body.theme-2 {
+  .trade-order-slider {
+    &.green {
+      .rc-tooltip-inner {
+        div {
+          background-color: #1A403A;
+        }
+      }
+    }
+    &.red {
+      .rc-tooltip-inner {
+        div {
+          background-color: #33242E;
+        };
+      }
+    }
+  }
+}
+
+.trade-slider-bar-comp-dark {
+  .trade-slider-bar-comp;
+  height: 30px;
+  .trade-slider-bar {
+    .slider-bar-bgline {
+      background-color: #041025; // #606878;
+    }
+  }
+  .bars-container {
+    color: white;
+  }
+}

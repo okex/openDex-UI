@@ -1,0 +1,42 @@
+@white45: rgba(255, 255, 255, 0.45);
+.okdex-footer {
+  height: 60px;
+  background: rgba(20, 29, 45, 1);
+  color: @white45;
+  position: relative;
+  .row-center, .row-right{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+  }
+  .row-center {
+    font-size: 12px;
+    font-family: ArialMT;
+    position: absolute;
+    z-index: 1;
+    justify-content: center;
+  }
+  .row-right {
+    z-index: 2;
+    justify-content: flex-end;
+    padding-right: 150px;
+    box-sizing: border-box;
+    .okex-footer-links {
+      display: flex;
+      color: @white45;
+      align-items: center;
+      a{
+        color: @white45;
+        font-size: 12px;
+      }
+      .line-divider {
+        border-right: 1px solid fade(white, 10%);
+        margin: 0 20px;
+        height: 12px;
+      }
+    }
+  }
+}

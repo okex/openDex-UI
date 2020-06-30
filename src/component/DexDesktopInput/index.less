@@ -1,0 +1,59 @@
+.dex-desktop-input-container {
+  margin-top: 24px;
+  width: 480px;
+  font-size: 14px;
+  line-height: 22px;
+
+  .desktop-input-title-row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .icon {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.45);
+      cursor: pointer;
+    }
+  }
+
+  .desktop-input-label {
+    color: rgba(255, 255, 255, 0.45);
+  }
+
+  .desktop-input-icon {
+
+    &:hover {
+
+      .desktop-input-hint {
+        display: block;
+      }
+    }
+  }
+
+  .desktop-input-hint {
+    position: absolute;
+    top: 0;
+    left: 490px;
+    display: none;
+    padding: 10px;
+    width: 420px;
+    font-size: 12px;
+    line-height: 17px;
+    background: #1B273D;
+    border-radius: 2px;
+  }
+
+  .desktop-input {
+    box-sizing: border-box;
+    display: block;
+    margin-top: 6px;
+    padding: 5px 12px;
+    width: 100%;
+    font-size: 14px;
+    line-height: 22px;
+    color: #FFFFFF;
+    background: #1E2F4F;
+    border-radius: 2px;
+  }
+}

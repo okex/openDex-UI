@@ -1,0 +1,59 @@
+@import "../../assets/css/theme";
+
+.ok-table-container {
+  background-color: transparent;
+  font-size: 12px;
+  padding: 10px 0;
+  .ok-table {
+    border-spacing: 0;
+    width: 100%;
+    > thead {
+      th {
+        text-align: left;
+        border-bottom: 1px solid;
+        font-weight: normal;
+        height: 34px;
+        box-sizing: border-box;
+        &:last-of-type {
+          text-align: right;
+        }
+      }
+    }
+    tbody {
+      font-size: 12px;
+      > tr {
+        &:hover {
+          background: fade(@brand, 10%);
+        }
+        > td {
+          border-bottom: 1px solid;
+          text-align: left;
+          height: 52px;
+          box-sizing: border-box;
+          &:last-of-type {
+            text-align: right;
+          }
+        }
+      }
+    }
+  }
+}
+.theme-fun({
+  .ok-table-container {
+    .ok-table {
+      > thead {
+        th {
+          border-bottom-color: @line;
+        }
+      }
+      tbody {
+        color: @text-title;
+        > tr {
+          > td {
+            border-bottom-color: @line;
+          }
+        }
+      }
+    }
+  }
+});

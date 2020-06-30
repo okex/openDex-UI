@@ -1,0 +1,46 @@
+@import url('../../assets/css/theme');
+
+.full-ticker {
+  //margin-left: 16px;
+  display: flex;
+  align-items: center;
+  .seg-line {
+    color: #6e7e99;
+    opacity: 0.5;
+    height: 32px;
+    border-left: 1px solid;
+    margin-right: 11px;
+    margin-left: 5px;
+  }
+  .ticker-main {
+    color: @sell;
+    min-width: 152px;
+    .price {
+      font-size: 19px;
+    }
+    .change {
+      margin-left: 8px;
+      font-size: 14px;
+    }
+  }
+  .ticker-units {
+    display: flex;
+    margin-left: 4px;
+    height: 34px;
+    > div {
+      height: 16px;
+      line-height: 16px;
+    }
+    .ticker-unit {
+      margin-left: 16px;
+      font-size: 13px;
+      .title {
+        opacity: 0.5;
+      }
+      .value {
+        margin-top: 2px;
+        opacity: 0.8;
+      }
+    }
+  }
+}

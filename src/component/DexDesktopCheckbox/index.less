@@ -1,0 +1,46 @@
+.dex-desktop-checkbox-container {
+  display: flex;
+  align-items: center;
+  margin-top: 24px;
+  width: 360px;
+  padding: 13px 0;
+
+  .desktop-checkbox-label {
+    margin-right: 12px;
+    font-size: 14px;
+    line-height: 22px;
+    color: #FFFFFF;
+  }
+
+  .rc-checkbox:hover .rc-checkbox-inner, .rc-checkbox-input:focus + .rc-checkbox-inner {
+    border-color: rgba(255, 255, 255, 0.45);
+  }
+
+  .rc-checkbox {
+    width: 14px;
+    height: 14px;
+
+    &.rc-checkbox-checked {
+
+      .rc-checkbox-inner {
+
+        &::after {
+          display: table;
+        }
+      }
+    }
+  }
+
+  .rc-checkbox-input {
+    width: 100%;
+  }
+
+  .rc-checkbox-inner {
+    border-color: rgba(255, 255, 255, 0.45);
+    background: transparent;
+
+    &::after {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,35 @@
+@import "../../assets/css/theme";
+.full-deals {
+  background: @full-shallow-black;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 0 4px;
+  min-height: 0; // 解决firefox下overflow失效问题
+  height: 100%;
+  .full-deals-title {
+    height: 28px;
+    line-height: 28px;
+    text-align: left;
+    opacity: 0.8;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 12px;
+  }
+  .deals-rec {
+    min-height: 0; // 解决firefox下overflow失效问题
+    .deals-header {
+      color: #fff;
+      opacity: 0.3;
+      border-top: 1px solid rgba(235, 237, 240, 0.08);
+      border-bottom: 1px solid rgba(235, 237, 240, 0.08);
+      height: 30px;
+    }
+    .deals-list {
+      li {
+        span {
+          color: #fff;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,248 @@
+@import "~_component/uiParams/base";
+
+@import "~react-select/dist/react-select.min.css";
+
+@border-active-color: @color-brand-3;
+@text-active-color: @color-brand-3;
+@value-color: @color-text1-4;
+@border-color: @color-line1-2;
+@bg: @color-white;
+@shadow: fade(#000, 15%);
+@option-color: @color-text1-3;
+@option-active-bg: fade(@border-active-color, 5%);
+@arrow-color: @color-text1-1;
+@scrollbar-track: #fff;
+@scrollbar-thumb: fade(#000, 5%);
+
+@value-color-dark: fade(#fff, 85%);
+@border-color-dark: fade(#fff, 15%);
+@bg-dark: #282d3f;
+@shadow-dark: fade(#000, 20%);
+@option-color-dark: fade(#fff, 65%);
+@option-active-bg-dark: fade(@border-active-color, 10%);
+@arrow-color-dark: fade(#fff, 25%);
+@scrollbar-track-dark: #09142a;
+@scrollbar-thumb-dark: fade(#fff, 5%);
+
+// 用来处理select的已选择value
+.select-theme(@rules) {
+  .Select-placeholder, .Select--single > .Select-control .Select-value {
+    @rules();
+  }
+
+  &.has-value.Select--single > .Select-control .Select-value .Select-value-label,
+  &.has-value.is-pseudo-focused.is-focused.Select--single > .Select-control .Select-value .Select-value-label {
+    @rules();
+  }
+
+  &.has-value.Select--single > .Select-control .Select-value .Select-value-label,
+  &.has-value.is-pseudo-focused.Select--single > .Select-control .Select-value .Select-value-label {
+    @rules();
+  }
+
+  .Select-control,
+  &.is-focused > .Select-control,
+  &.is-disabled > .Select-control {
+    @rules();
+  }
+
+  .has-value.is-open.Select--single > .Select-control .Select-value .Select-value-label {
+    @rules();
+  }
+
+  input {
+    @rules();
+  }
+}
+
+.Select.ok-select {
+  font-size: 14px;
+  line-height: 21px;
+  .select-theme({
+    color: @value-color;
+    font-weight: 400;
+  });
+  .Select-control,
+  &.is-focused > .Select-control,
+  &.is-disabled > .Select-control,
+  &.is-focused:not(.is-open) > .Select-control {
+    border-color: @border-color;
+  }
+  .Select-control {
+    transition: all .3s cubic-bezier(.645, .045, .355, 1);
+    &:hover {
+      box-shadow: none;
+      border-color: @border-active-color !important;
+    }
+  }
+  &.is-focused.is-open > .Select-control {
+    border-color: @border-active-color !important;
+    box-shadow: 0 0 0 2px fade(@border-active-color, 15%);
+  }
+  &.is-open > .Select-control {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+  .Select-control,
+  &.is-focused > .Select-control,
+  &.is-disabled > .Select-control {
+    background-color: transparent;
+  }
+  .Select-input, .Select-control .Select-input:focus {
+    background-color: transparent;
+  }
+  .Select-menu-outer {
+    margin-top: 4px;
+    border: none;
+    box-shadow: 0 2px 6px 0 @shadow;
+    background: @bg;
+    max-height: 180px;
+    border-radius: 4px;
+    .Select-menu {
+      max-height: 180px;
+      border-radius: 4px;
+      &::-webkit-scrollbar {
+        width: 4px; // y轴宽度
+      }
+      &::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
+        background: @scrollbar-thumb;
+        border-radius: 2px;
+      }
+      &::-webkit-scrollbar-track { /*滚动条里面轨道*/
+        width: 4px;
+        background: @scrollbar-track;
+      }
+      &::-webkit-scrollbar-corner{ /*右下角按钮样式*/
+        background: @scrollbar-track;
+      }
+    }
+    .Select-option {
+      display: flex;
+      align-items: center;
+      height: 36px;
+      background: @bg;
+      color: @option-color;
+      &.is-focused {
+        background-color: @option-active-bg;
+      }
+      &.is-selected {
+        color: @text-active-color;
+      }
+    }
+  }
+  &.is-focused:not(.is-open) > .Select-control {
+    box-shadow: 0 0 0 transparent;
+    background: transparent;
+  }
+  input {
+    background-color: transparent;
+    border-color: transparent;
+  }
+  .Select-arrow-zone {
+    color: @arrow-color;
+    i {
+      font-size: 12px;
+      display: block;
+      transition: transform .3s, -webkit-transform .3s;
+      &.arrow-open {
+          transform: rotate(180deg);
+        }
+      }
+  }
+  &.small {
+    font-size: 12px;
+    line-height: 18px;
+    .Select-control {
+      height: 28px;
+    }
+    &.Select--single>.Select-control .Select-value, .Select-placeholder {
+      line-height: 26px;
+    }
+    .Select-input {
+      height: 26px;
+      > input {
+        height: 13px;
+        padding: 6px 0 4px;
+      }
+    }
+    .Select-menu-outer {
+      max-height: 160px;
+      .Select-menu {
+        max-height: 160px;
+      }
+      .Select-option {
+        height: 32px;
+      }
+    }
+  }
+  // 黑夜模式
+  &.dark {
+    .select-theme({
+      color: @value-color-dark;
+      font-weight: 400;
+    });
+    .Select-control,
+    &.is-focused > .Select-control,
+    &.is-disabled > .Select-control,
+    &.is-focused:not(.is-open) > .Select-control {
+      border-color: @border-color-dark;
+    }
+    .Select-menu-outer {
+      box-shadow: 0 2px 6px 0 @shadow-dark;
+      background: @bg-dark;
+      .Select-menu {
+        &::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
+          background: @scrollbar-thumb-dark;
+        }
+        &::-webkit-scrollbar-track { /*滚动条里面轨道*/
+          width: 4px;
+          background: @scrollbar-track-dark;
+        }
+        &::-webkit-scrollbar-corner{ /*右下角按钮样式*/
+          background: @scrollbar-track-dark;
+        }
+      }
+      .Select-option {
+        background: @bg-dark;
+        color: @option-color-dark;
+        &.is-focused {
+          background-color: @option-active-bg-dark;
+        }
+        &.is-selected {
+          color: @text-active-color;
+        }
+      }
+    }
+    .Select-arrow-zone {
+      color: @arrow-color-dark;
+    }
+  }
+}
+
+.ok-select-wrap {
+  position: relative;
+  > i {
+    position: absolute;
+    left: 8px;
+    font-size: 14px;
+    line-height: 1;
+    top: 11px;
+    color: @arrow-color;
+  }
+  .Select--single>.Select-control .Select-value, .Select-placeholder {
+    padding-left: 26px;
+  }
+  .Select-input {
+    padding-left: 26px;
+  }
+  &.small {
+    > i {
+      top: 7px;
+    }
+  }
+  &.dark {
+    > i {
+      color: @arrow-color-dark;
+    }
+  }
+}

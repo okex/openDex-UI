@@ -1,0 +1,50 @@
+@import "~_src/assets/css/theme";
+
+.ok-dialog.pwd-dialog {
+  .dialog-window {
+    min-width: 568px;
+    .pwd-container {
+      position: relative;
+      input[value=''] {
+        & + .clear-pwd {
+          display: none;
+        }
+      }
+    }
+    input.pwd-input {
+      width: 100%;
+      height: 36px;
+      background: transparent;
+      border-bottom: 1px solid #294472;
+      color: @text-primary-dark;
+      -webkit-text-security: disc;
+      text-security: disc;
+      margin-top: 56px;
+      margin-bottom: 80px;
+      padding-right: 50px;
+      &::placeholder {
+        color: @text-second-dark;
+      }
+    }
+    .clear-pwd {
+      display: block;
+      width: 14px;
+      height: 14px;
+      position: absolute;
+      top: 66px;
+      font-size: 14px;
+      color: @text-primary-dark;
+      right: 0;
+      cursor: pointer;
+    }
+    p.pwd-error {
+      font-size: 12px;
+      line-height: 18px;
+      color: @sell;
+      position: absolute;
+      top: 96px;
+      left: 0;
+      margin-top: 0;
+    }
+  }
+}

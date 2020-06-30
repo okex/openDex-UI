@@ -1,0 +1,24 @@
+@import "../../assets/css/theme";
+
+.dex-tab {
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: 50px;
+  background: @tab-bg;
+  > .dex-tab-item {
+    min-width: 150px;
+    height: 50px;
+    padding: 0 30px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    &.current {
+      background: @tab-active;
+      color: @brand;
+      box-shadow: inset 0 2px 0 0 @brand;
+    }
+  }
+}

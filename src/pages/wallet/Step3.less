@@ -1,0 +1,64 @@
+@import url('./walletColor.less');
+
+.create-wallet-step3 {
+  .questions-container {
+    padding-top: 40px;
+
+    .question-item {
+      width: fit-content;
+      margin: 0 auto;
+
+      .question-title {
+        font-size: 14px;
+        font-weight: 400;
+        height: 18px;
+        line-height: 20px;
+      }
+
+      .options-container {
+        display: flex;
+
+        .option-item {
+          background: @blue5;
+          font-size: 12px;
+          padding: 0 6px;
+          margin: 15px 16px 20px 0;
+          width: 100px;
+          height: 26px;
+          line-height: 26px;
+          text-align: center;
+          cursor: pointer;
+          color: white;
+
+          &:nth-child(4n) {
+            margin-right: 0;
+          }
+
+          &.active {
+            background: @blue3;
+          }
+        }
+      }
+    }
+  }
+
+  .next-row {
+    margin-top: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 31px;
+
+    button {
+      width: 150px;
+    }
+
+    .prev-btn {
+      background: rgba(0, 115, 245, 0.4);
+
+      &:hover {
+        background: rgba(0, 115, 245, 0.6);
+      }
+    }
+  }
+}

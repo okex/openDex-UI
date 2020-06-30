@@ -1,0 +1,133 @@
+/**
+ * Created by wenqiang.li on 2017/11/10.
+ */
+@import "../../assets/css/theme";
+
+.spot-depth {
+  margin-left: 40px;
+  margin-top: 0;
+  height: 368px; // 否则浏览器高度小的时候会出现，比如在Mac小屏的时候
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  .spot-depth-title {
+    position: relative;
+    text-align: right;
+    padding: 11px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid;
+    .spot-depth-button {
+      cursor: pointer;
+      width: 70px;
+      height: 18px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .spot-depth-drop {
+      cursor: pointer;
+      user-select: none;
+      display: inline-block;
+      height: 26px;
+      line-height: 26px;
+      .spot-depth-desc {
+        height: 18px;
+        line-height: 18px;
+        font-size: 12px;
+        text-align: right;
+      }
+      .icon {
+        display: inline-block;
+        font-size: 12px;
+        transform: scale(0.7);
+        margin-left: 5px;
+        transition: transform .4s ease;
+        &.upside-down {
+          transform: rotate(-180deg) scale(0.7);
+        }
+      }
+    }
+
+    .spot-depth-drop-list {
+      display: none;
+      z-index: 100;
+      position: absolute;
+      right: 0;
+      border-radius: 4px;
+      border: none;
+      p {
+        box-sizing: border-box;
+        cursor: pointer;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 0 16px;
+        font-size: 12px;
+      }
+    }
+  }
+  .spot-depth-list {
+    flex: 1;
+    overflow: hidden;
+  }
+}
+
+.theme-fun({
+  .spot-depth {
+    .spot-depth-title {
+      border-bottom-color: @line;
+      .spot-depth-drop {
+        .icon {
+          color: @text-disabled;
+        }
+      }
+      .spot-depth-drop-list {
+        background: @bg;
+        box-shadow: 0 2px 4px 0 @shadow;
+        p {
+          color: @text-second;
+          &.current {
+            color: @brand;
+          }
+          &:hover {
+            background: @brand-active-bg;
+          }
+        }
+      }
+    }
+  }
+});
+
+.full-wrap {
+  .spot-depth {
+    background: #141d2d;
+    padding: 0 4px;
+    //flex-grow: 1;
+    flex: 1 1 368px;
+    margin-left: 0;
+    height: auto;
+    .spot-depth-title {
+      color: @full-white60;
+      border-bottom: 1px solid #252f41;
+      padding: 5px 0;
+      height: auto;
+      margin-bottom: 0;
+      .spot-depth-drop-list {
+        background-color: #1c283e;
+        border: none;
+        box-shadow: 0 2px 4px 0 @shadow-dark;
+        p {
+          &.current {
+            color: #4396f8;
+          }
+          &:hover {
+            color: #f4934d;
+            background-color: #1c283e;
+          }
+        }
+      }
+    }
+  }
+}

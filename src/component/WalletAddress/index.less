@@ -1,0 +1,45 @@
+@import "~_src/assets/css/theme";
+
+.my-address {
+  color: #A7ABB3;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  padding: 0 20px;
+  > span {
+    line-height:22px;
+  }
+  i {
+    color: @brand;
+  }
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+  i, svg {
+    margin-left: 30px;
+    cursor: pointer;
+  }
+  .qr-container {
+    position: relative;
+    display: inline-block;
+    i:hover {
+      &~div {
+        display: flex;
+      }
+    }
+    .qr-pic {
+      width: 81px;
+      height: 81px;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      position: absolute;
+      top: 20px;
+      z-index: 1;
+      left: 0;
+      display: none;
+    }
+  }
+}

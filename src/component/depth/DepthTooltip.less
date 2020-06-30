@@ -1,0 +1,33 @@
+@import '../../assets/css/theme';
+
+.depth-tooltip-content {
+  font-size: 12px;
+  line-height: 14px;
+  > div {
+    height: 14px;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+    label {
+      color: @text-primary-dark;
+    }
+    span {
+      margin-left: 16px;
+      color: @color-white;
+      font-weight: 500;
+    }
+  }
+}
+
+//.theme-fun({
+//  .depth-tooltip-content {
+//    > div {
+//      label {
+//        color: @text-primary;
+//      }
+//    }
+//  }
+//}, '');

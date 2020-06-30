@@ -1,0 +1,32 @@
+@leftHeight: 400px;
+@dialogTotalHeight: 356px;
+.wallet-left {
+  left: 10px;
+  text-align: center;
+  width: 260px;
+  height: 400px;
+  position: absolute;
+  top: -((@leftHeight - @dialogTotalHeight)/2);
+  background: #112F62;
+  box-shadow:0px 0px 20px 0px rgba(4,16,38,0.5);
+  .title {
+    color: rgba(255,255,255,0.85);
+    height: 172px;
+    padding-top: 20px;
+    .step-no {
+      height: 50px;
+      .current {
+        font-size: 36px;
+        font-weight: 400;
+      }
+      .total {
+        color: rgba(255,255,255,0.45);
+        font-size: 16px;
+      }
+    }
+    .step-name {
+      font-size: 24px;
+      font-weight: 300;
+    }
+  }
+}

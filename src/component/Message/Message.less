@@ -1,0 +1,126 @@
+@import "~_component/uiParams/components/Message";
+
+@errorIconColor: @color-error-2;
+@warnIconColor: @color-warning-2;
+@infoIconColor: @color-notice-2;
+@successIconColor: @color-success-2;
+
+@text-color: @color-text1-3;
+
+@message-prefix-cls: ~"@{ok-ui-prefix}-message";
+
+.@{message-prefix-cls} {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  top: 16px;
+  left: 0;
+  z-index: 99997;
+  width: 100%;
+  text-align: center;
+  pointer-events: none;
+  line-height: 1;
+  * {
+    box-sizing: border-box;
+  }
+
+  &-container {
+    &.container-remove {
+      animation-name: MessageOut;
+      animation-duration: .55s;
+    }
+  }
+
+  &-box {
+    position: relative;
+    display: inline-block;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+    max-width: 700px;
+    padding: 8px 9px;
+    min-height: 18px;
+    margin: 7px 0;
+    animation-name: MessageIn;
+    overflow: hidden;
+    animation-duration: .3s;
+    line-height: 1;
+  }
+
+  .@{message-prefix-cls} {
+    &-icon {
+      width: 14px;
+      height: 14px;
+      font-size: 14px;
+      display: inline-block;
+      vertical-align: top;
+      margin-top: 2px;
+      margin-right: 9px;
+
+      &.error {
+        color: @errorIconColor;
+      }
+      &.warn {
+        color: @warnIconColor;
+      }
+      &.info {
+        color: @infoIconColor;
+      }
+      &.success {
+        color: @successIconColor;
+      }
+      &.loading {
+        color: rgba(0, 0, 0, .25);
+
+        &:before {
+          animation: spin 800ms infinite linear;
+          -webkit-animation: spin 800ms infinite linear;
+          display: inline-block;
+          height: 14px;
+        }
+        @keyframes spin {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+      }
+    }
+    &-text {
+      width: 60px;
+      height: 18px;
+      font-size: 12px;
+      color: @text-color;
+      line-height: 18px;
+    }
+  }
+}
+
+@keyframes MessageIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -30px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes MessageOut {
+  0% {
+    opacity: 1;
+    max-height: 150px;
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    opacity: 0;
+    max-height: 0;
+    transform: translate3d(0, -30px, 0);
+
+  }
+}

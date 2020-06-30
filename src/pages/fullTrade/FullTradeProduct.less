@@ -1,0 +1,98 @@
+@import "../../assets/css/theme";
+
+.full-product-list {
+  margin-left: 20px;
+  cursor: pointer;
+  user-select: none;
+  em {
+    font-size: 18px;
+  }
+  .down-arrow {
+    border-style: solid;
+    border-width: 5px 4px 0;
+    border-color: @full-white50 transparent transparent;
+    display: inline-block;
+    margin-left: 10px;
+    margin-top: -5px;
+    vertical-align: middle;
+  }
+  .margin-x {
+    border-radius: 4px;
+    border: 1px solid #d9d9d9;
+    margin-left: 10px;
+    padding: 0 3px;
+  }
+  .product-list-container {
+    position: absolute;
+    cursor: default;
+    top: 50px;
+    background: @full-deep-blue;
+    line-height: 12px;
+    z-index: 10;
+    .search-bar {
+      input {
+        height: 36px;
+        background: #141d2d;
+        width: 100%;
+        padding-left: 34px;
+        caret-color: rgba(255, 255, 255, 0.25);
+        color: @full-white80;
+      }
+      .icon {
+        display: inline-block;
+        position: absolute;
+        left: 10px;
+        top: 11px;
+        color: @full-white25;
+        font-size: 12px;
+      }
+    }
+    .product-list {
+      display: flex;
+      .trad-area {
+        width: 114px;
+        ul {
+          li {
+            height: 36px;
+            line-height: 36px;
+            padding-left: 16px;
+            cursor: pointer;
+            user-select: none;
+            &.active {
+              border-left: 3px solid @full-bright-blue;
+              background: @full-shallow-black;
+              color: @full-bright-blue;
+            }
+          }
+        }
+      }
+    }
+  }
+  > span {
+    display: inline-block;
+    height: 100%;
+  }
+  > span:nth-of-type(2) {
+    padding: 0 20px;
+  }
+  .production-container {
+    position: absolute;
+    cursor: default;
+    background: @full-deep-blue;
+    z-index: 10;
+    width: 408px;
+    left: -20px;
+    top: 48px;
+    padding: 16px;
+    box-sizing: border-box;
+    div {
+      line-height: 1;
+    }
+    .introduce-label {
+      color: #6e7e99;
+    }
+    .introduce-label-connent {
+      color: @full-white80;
+    }
+  }
+}

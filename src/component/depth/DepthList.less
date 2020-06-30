@@ -1,0 +1,340 @@
+@import '../../assets/css/theme';
+
+.ticker() {
+  height: 28px;
+  line-height: 28px;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  font-size: 15px;
+  font-weight: bold;
+  .icon {
+    margin-left: 7px;
+    font-size: 13px;
+    transform: scale(0.8);
+    font-weight: 500;
+  }
+  &.up {
+    color: @buy;
+  }
+  &.down {
+    color: @sell;
+  }
+}
+.ticker-clone() {
+  height: 28px;
+  line-height: 28px;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  font-size: 15px;
+  .icon {
+    font-size: 13px;
+    transform: scale(0.8);
+    font-weight: 500;
+  }
+  &.up {
+    color: @buy;
+  }
+  &.down {
+    color: @sell;
+  }
+}
+
+.ok-depth-container {
+  flex: 1;
+  overflow-y: hidden;
+  .title {
+    display: flex;
+    justify-content: space-between;
+    margin: 8px 0 4px;
+    span {
+      height: 28px;
+      line-height: 28px;
+      text-align: right;
+      flex: 1;
+      &:first-child {
+        text-align: left;
+      }
+    }
+  }
+  .scroll-container {
+    transform: translate(0, 0); //设置transform可以让子元素(ticker-clone)相对该dom进行fixed定位
+    //position: relative;
+    height: calc(~"100% - 38px"); //100% - title高度 28+10
+    .scroll-box {
+      height: 100%;
+      position: relative;
+      overflow-y: auto;
+      overflow-x: hidden;
+      color: @sell;
+      ul {
+        list-style-type: none;
+        padding-right: 5px;
+        li {
+          position: relative;
+          height: 19px;
+          line-height: 19px;
+          cursor: pointer;
+          user-select: none;
+          display: flex;
+          justify-content: space-between;
+          &.sell-item {
+            &::before {
+              content: '';
+              display: none;
+              position: absolute;
+              width: 100%;
+              height: 1px;
+              border-top: 1px dashed;
+              top: 0;
+              box-sizing: border-box;
+            }
+            &:hover {
+              &::before {
+                display: block;
+              }
+            }
+          }
+          &.buy-item {
+            &::after {
+              content: '';
+              display: none;
+              position: absolute;
+              width: 100%;
+              height: 1px;
+              border-top: 1px dashed;
+              bottom: 0;
+              box-sizing: border-box;
+            }
+            &:hover {
+              &::after {
+                display: block;
+              }
+            }
+          }
+          span {
+            font-size: 12px;
+            display: inline-block;
+            max-width: 50%;
+            flex: 1;
+            text-align: right;
+            &:first-child {
+              text-align: left;
+            }
+          }
+          .process-bar {
+            position: absolute;
+            height: 100%;
+            right: 0;
+            min-width: 3px;
+            max-width: 100%;
+            background-color: fade(@sell, 10%);
+            z-index: -1;
+          }
+        }
+        &.buy-list {
+          li {
+            .process-bar {
+              background-color: fade(@buy, 10%);
+            }
+          }
+        }
+      }
+      .buy-list {
+        color: @buy;
+      }
+      .ticker {
+        .ticker();
+      }
+      //.center-bar {
+      //  position: relative;
+      //  display: flex;
+      //  justify-content: space-between;
+      //  align-items: center;
+      //  border-top: 1px solid;
+      //  border-bottom: 1px solid;
+      //  //padding: 5px 0;
+      //  margin: 0 5px 0 0;
+      //  text-align: right;
+      //  font-size: 15px;
+      //  .ticker {
+      //    .ticker();
+      //  }
+      //  .spot-depth-drop {
+      //    cursor: pointer;
+      //    user-select: none;
+      //    display: inline-block;
+      //    color: rgba(0,0,0,.43);
+      //    .spot-depth-desc {
+      //      height: 18px;
+      //      font-size: 12px;
+      //      text-align: right;
+      //    }
+      //    .icon {
+      //      display: inline-block;
+      //      font-size: 12px;
+      //      transform: scale(0.7);
+      //    }
+      //    .spot-depth-drop-list {
+      //      display: none;
+      //      z-index: 100;
+      //      position: absolute;
+      //      right: 0;
+      //      border-radius: 4px;
+      //      border: solid 1px;
+      //      box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
+      //      border: 1px solid #d8d8d8;
+      //      p {
+      //        box-sizing: border-box;
+      //        cursor: pointer;
+      //        padding: 7px 10px;
+      //        font-size: 12px;
+      //      }
+      //    }
+      //  }
+      //}
+    }
+    .ticker-clone {
+      .ticker-clone();
+      position: fixed;
+      width: 100%;
+      visibility: hidden;
+      .return-center {
+        cursor: pointer;
+        user-select: none;
+        float: right;
+        font-size: 13px;
+      }
+    }
+  }
+}
+
+.theme-fun({
+  .ok-depth-container {
+    .scroll-container {
+      .scroll-box .ticker, .ticker-clone {
+        background: @bg;
+        border-top-color: @line;
+        border-bottom-color: @line;
+        .return-center {
+          color: @text-second;
+        }
+      }
+      .scroll-box ul {
+        li {
+          span:nth-of-type(2n) {
+            color: @text-second;
+          }
+          &.has-bg {
+            background: @brand-active-bg;
+          }
+          &.sell-item::before, &.buy-item::after {
+            border-top-color: @depth-dash;
+          }
+          //&:hover {
+          //  background: @brand-active-bg;
+          //}
+        }
+      }
+      .scroll-box .center-bar {
+        border-bottom-color: @line;
+        font-size: 50px;
+        .ticker {
+          background: @bg;
+          border-top-color: @line;
+          border-bottom-color: @line;
+        }
+        .spot-depth-drop-list {
+          background: @bg;
+          box-shadow: 0 2px 4px 0 @shadow;
+          border-color: @border;
+          p {
+            color: @text-primary;
+            &:hover {
+              background: @brand-active-bg;
+            }
+          }
+        }
+      }
+    }
+  }
+});
+
+
+
+.dark-ticker() {
+  background: @full-deep-blue;
+  border-top: 0;
+  border-bottom: 1px solid #041025;
+}
+
+.ok-depth-container-dark {
+  .ok-depth-container();
+  flex: 1 1 100px;
+  //以下为样式覆盖
+  .title {
+    color: @full-white30;
+    overflow: hidden;
+    margin: 0;
+  }
+  .scroll-container {
+    height: calc(100% - 28px);
+    .scroll-box {
+      ul {
+        li {
+          border-bottom: 1px solid #041025;
+          &.has-bg {
+            background: fade(#D0E0FF, 15%);
+          }
+          &.sell-item::before, &.buy-item::after {
+            border-top-color: fade(#D0E0FF, 45%);
+          }
+          //&:hover {
+          //  background-color: @full-deep-blue;
+          //}
+          span {
+            &:last-child {
+              color: @full-white60;
+            }
+          }
+        }
+        &.buy-list {
+          li {
+            .process-bar {
+              background-color: rgba(77, 184, 114, 0.1);
+            }
+          }
+        }
+      }
+      .ticker {
+        .dark-ticker();
+      }
+      //.center-bar {
+      //  background: @full-deep-blue;
+      //  border-top: 0;
+      //  border-bottom: 1px solid #041025;
+      //  //border-bottom: 1px solid #252f41;
+      //  //border: 0;
+      //  .ticker {
+      //    //.dark-ticker();
+      //  }
+      //  .spot-depth-drop {
+      //    color: @full-white60;
+      //    .spot-depth-drop-list {
+      //      background-color: #1c283e;
+      //      border: none;
+      //      p {
+      //        color: #4396f8;
+      //        &:hover {
+      //          color: #f4934d;
+      //          background-color: #1c283e;
+      //        }
+      //      }
+      //    }
+      //  }
+      //}
+    }
+    .ticker-clone {
+      .dark-ticker();
+    }
+  }
+}

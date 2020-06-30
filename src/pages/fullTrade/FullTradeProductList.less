@@ -1,0 +1,222 @@
+@import "../../assets/css/theme";
+
+.full-product-list {
+  margin-left: 18px;
+  user-select: none;
+  em {
+    font-size: 16px;
+  }
+  .down-arrow {
+    border-style: solid;
+    border-width: 5px 4px 0;
+    border-color: @full-white50 transparent transparent;
+    display: inline-block;
+    margin-left: 8px;
+    margin-top: -5px;
+    vertical-align: middle;
+    transition: transform 0.3s, -webkit-transform 0.3s;
+  }
+  .margin-x {
+    display: inline-block;
+    text-align: center;
+    border-radius: 8px;
+    margin-left: 4px;
+    font-size: 18px;
+    width: 40px;
+    height: 30px;
+    line-height: 25px;
+    transform: scale(.5);
+    transform-origin: 0 50%;
+    font-weight: 500;
+    background: fade(@warn, 10%);
+    color: @warn;
+    border: 2px solid @warn;
+    & ~ .down-arrow {
+      margin-left: -7px;
+    }
+  }
+  .product-list-container-new {
+    position: absolute;
+    top: 45px;
+    z-index: 10;
+    width: 410px;
+    background: #1B273D;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 2px 0px 0px 2px;
+    cursor: default;
+
+    .product-list-tab {
+      overflow: hidden;
+    }
+
+    .product-list-tab-nav {
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-bottom: 1px solid rgba(233, 235, 242, 0.1);
+      }
+    }
+
+    .product-list-tab-nav-list {
+      padding: 0 20px 10px;
+    }
+
+    .product-list-tab-nav-operations-hidden {
+      position: absolute;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .product-list-tab-tab {
+      border: 0;
+      margin: 0 20px 0 0;
+      padding: 14px 0;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 20px;
+      color: rgba(255, 255, 255, 0.3);
+      outline: none;
+      cursor: pointer;
+
+      &:last-of-type {
+        margin-right: 0;
+      }
+
+      &.product-list-tab-tab-active {
+        color: #FFFFFF;
+      }
+    }
+
+    .product-list-tab-ink-bar {
+      position: absolute;
+      bottom: 0;
+      height: 2px;
+      background: #FFFFFF;
+      pointer-events: none;
+      transition: width .3s,left .3s,right .3s;
+    }
+
+    .product-list-tab-content {
+      display: flex;
+      width: 100%;
+    }
+
+    .product-list-tab-tabpane {
+      flex: none;
+      width: 100%;
+      outline: none;
+    }
+  }
+  // ZCHTODO：删掉原来的product-list-container
+  .product-list-container {
+    position: absolute;
+    cursor: default;
+    top: 45px;
+    padding-top: 5px;
+    // background: @full-deep-blue;
+    line-height: 12px;
+    z-index: 10;
+    border-radius: 4px;
+    .search-bar {
+      input {
+        height: 36px;
+        line-height: 36px;
+        background: #141d2d;
+        width: 100%;
+        padding-left: 34px;
+        font-size: 12px;
+        caret-color: fade(#fff, 25%);
+        color: @full-white80;
+        border-radius: 4px 4px 0 0;
+        &::placeholder {
+          color: fade(#fff, 25%);
+        }
+      }
+      .icon {
+        display: inline-block;
+        position: absolute;
+        left: 13px;
+        top: 18px;
+        color: @full-white25;
+        font-size: 12px;
+      }
+    }
+    .product-list {
+      display: flex;
+      background: @full-deep-blue;
+      border-radius: 0 0 4px 4px;
+      .trad-area {
+        width: 114px;
+        ul {
+          li {
+            height: 36px;
+            line-height: 36px;
+            padding-left: 16px;
+            color: fade(#FFF, 80%);
+            cursor: pointer;
+            user-select: none;
+            &.active {
+              box-shadow:inset 3px 0 0 0 @full-bright-blue;
+              background: #141D2D;
+              color: @full-bright-blue;
+            }
+            &.market-label {
+              cursor: default;
+              height: 26px;
+              line-height: 26px;
+              font-size: 12px;
+              color: fade(#FFF, 43%);
+            }
+          }
+        }
+      }
+    }
+  }
+  > span {
+    display: inline-block;
+    height: 45px;
+    cursor: pointer;
+    //display: inline-block;
+    //height: 100%;
+  }
+  > span:nth-of-type(2) {
+    padding: 0 15px;
+  }
+  > span.current-symbol {
+    &:hover {
+      .down-arrow {
+        transform: rotate(180deg);
+        transform-origin: center;
+      }
+    }
+  }
+  .production-container-outer {
+    position: absolute;
+    cursor: default;
+    z-index: 10;
+    width: 408px;
+    left: -20px;
+    top: 45px;
+    padding-top: 5px;
+    box-sizing: border-box;
+    .production-container {
+      background: @full-deep-blue;
+      padding: 16px;
+      box-sizing: border-box;
+      div {
+        line-height: 1;
+      }
+      .introduce-label {
+        color: #6e7e99;
+      }
+      .introduce-label-connent {
+        color: @full-white80;
+      }
+    }
+  }
+}

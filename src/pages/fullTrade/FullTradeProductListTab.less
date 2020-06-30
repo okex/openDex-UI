@@ -1,0 +1,135 @@
+.product-list-tab {
+  font-size: 12px;
+  line-height: 20px;
+
+  .search-bar {
+    position: relative;
+    padding: 8px 20px 7px;
+    line-height: initial;
+    border-bottom: 1px solid rgba(233, 235, 242, 0.1);
+
+    input {
+      padding-left: 20px;
+      width: 100%;
+      height: 20px;
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    .icon {
+      display: inline-block;
+      position: absolute;
+      top: 12px;
+      left: 20px;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.45);
+    }
+  }
+
+  .product-list-new {
+    padding-bottom: 10px;
+    max-height: 394px;
+    overflow-y: auto;
+  }
+
+  .product-list-title, .product-list-item-new {
+    display: flex;
+  }
+
+  .product-list-title {
+    padding: 5px 20px;
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  .product-list-item-new {
+    padding: 6px 20px;
+    color: #E9EBF2;
+    cursor: pointer;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    &.active {
+
+      .product-item-pair {
+        color: #3C6FEF;
+      }
+    }
+  }
+
+  .product-item-pair {
+    width: 111px;
+
+    .icon-Star {
+      margin-right: 4px;
+      font-size: 14px;
+      color: #545D6D;
+
+      &.favorite {
+        color: #3C6FEF;
+      }
+    }
+  }
+
+  .product-item-change {
+    width: 80px;
+
+    &.product-item-change-red {
+      color: #E35E5E;
+    }
+
+    &.product-item-change-green {
+      color: #2EAD65;
+    }
+  }
+
+  .product-item-owner {
+    width: 150px;
+  }
+
+  .product-item-deposit {
+    width: 80px;
+  }
+
+  .product-list-favorite, .product-list-item-favorite {
+
+    .product-item-pair {
+      margin-right: 18px;
+    }
+
+    .product-item-change {
+      margin-right: 11px;
+    }
+
+    .product-item-owner {
+      text-align: right;
+    }
+  }
+
+  .product-list-normal, .product-list-item-normal {
+
+    .product-item-pair {
+      margin-right: 19px;
+    }
+
+    .product-item-owner {
+      margin-right: 10px;
+    }
+
+    .product-item-deposit {
+      text-align: right;
+    }
+  }
+
+  .product-list-none {
+    padding: 95px 20px 219px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.65);
+
+    img {
+      margin-bottom: 12px;
+      width: 54px;
+      height: 48px;
+    }
+  }
+}

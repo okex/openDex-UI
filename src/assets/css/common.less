@@ -1,0 +1,333 @@
+@import url('./theme');
+/*common base css begin*/
+.spot-container, .full-wrap {
+  * {
+    box-sizing: border-box;
+    &.content-box {
+      box-sizing: content-box;
+      * {
+        box-sizing: content-box;
+      }
+    }
+  }
+}
+
+
+.normal-wrap {
+  overflow: hidden;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+  user-select: none;
+}
+
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
+.dib {
+  display: inline-block;
+}
+
+.ver-middle {
+  vertical-align: middle;
+}
+
+.clear:after {
+  clear: both;
+  content: '.';
+  display: block;
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+
+.primary-blue {
+  color: @brand;
+}
+
+.primary-green {
+  color: @buy;
+}
+
+.primary-red {
+  color: @sell;
+}
+
+.primary-yellow {
+  color: @warn;
+}
+
+.gray {
+  color: #767676;
+}
+
+.white {
+  color: white;
+}
+
+.hide {
+  display: none !important;
+}
+
+.algin-center {
+  text-align: center;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.fw500 {
+  font-weight: 500;
+}
+
+.mar_pad(@counter) when (@counter<=50) {
+  .mar-left@{counter} {
+    margin-left: @counter*1px !important;
+  }
+  .mar-rig@{counter} {
+    margin-right: @counter*1px !important;
+  }
+  .mar-top@{counter} {
+    margin-top: @counter*1px !important;
+  }
+  .mar-bot@{counter} {
+    margin-bottom: @counter*1px !important;
+  }
+  .pad-left@{counter} {
+    padding-left: @counter*1px !important;
+  }
+  .pad-rig@{counter} {
+    padding-right: @counter*1px !important;
+  }
+  .pad-top@{counter} {
+    padding-top: @counter*1px !important;
+  }
+  .pad-bot@{counter} {
+    padding-bottom: @counter*1px !important;
+  }
+  .mar_pad((@counter+1));
+}
+
+.mar_pad(0);
+
+.flex(@counter) when (@counter<=10) {
+  .flex@{counter} {
+    flex: @counter/10;
+  }
+  .flex((@counter + 1));
+}
+
+.flex(1);
+
+.fz12 {
+  font-size: 12px;
+}
+
+.fz14 {
+  font-size: 14px;
+}
+
+.fz16 {
+  font-size: 16px;
+}
+
+.w50 {
+  width: 50px;
+}
+
+.w100 {
+  width: 100px;
+}
+
+.w150 {
+  width: 150px;
+}
+
+.w175 {
+  width: 175px;
+}
+
+.w200 {
+  width: 200px;
+}
+
+.w320 {
+  width: 320px;
+}
+
+.h15 {
+  height: 15px;
+}
+
+.h20 {
+  height: 20px;
+}
+
+.h40 {
+  height: 40px;
+}
+
+.h50 {
+  height: 50px;
+}
+
+.h150 {
+  width: 150px;
+}
+
+.can-click {
+  cursor: pointer;
+  color: @brand;
+  user-select: none;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  &.center {
+    justify-content: center;
+  }
+  &.vertical-middle {
+    align-items: center;
+  }
+  &.space-between {
+    justify-content: space-between;
+  }
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.spot-dialog-content {
+  line-height: 20px;
+  font-size: 16px;
+  text-align: center;
+  width: 280px;
+  margin: 0 auto;
+}
+
+.tooltip-content {
+  padding: 12px;
+  border-radius: 4px;
+  color: #fff;
+}
+
+.one-line {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.default-fz {
+  .fz14;
+  line-height: 21px;
+}
+
+.ok-dialog.base-dialog {
+  .dialog-window {
+    background: #112F62;
+    .dialog-top {
+      border-bottom-color: #0D254E;
+      .dialog-title {
+        color: @text-title-dark;
+      }
+      .close-btn {
+        color: @text-primary-dark;
+      }
+    }
+  }
+}
+
+#okdex-confirm + .dialog-box.no-title {
+  padding: 0 40px 24px 40px;
+}
+// 下单，撤单和转账 成功或失败，结果提示
+.ok-dialog.operate-alert {
+  .dialog-window {
+    background: #112F62;
+    color: @text-title-dark;
+    .dialog-top {
+      display: none;
+    }
+    .dialog-box {
+      min-width: auto;
+      &.no-title {
+        padding: 20px 40px;
+        font-size: 18px;
+        line-height: 25px;
+        .operate-msg {
+          display: flex;
+          align-items: center;
+          svg {
+            width: 40px;
+            height: 40px;
+            margin-right: 40px;
+          }
+        }
+      }
+    }
+  }
+}
+// 撤单和转账，等待后端返回过程中的loading状态
+.wait-loading {
+  z-index: 99999;
+  background: rgba(0, 0, 0, 0.45);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  div.loading-icon {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: wait-loading-spin 800ms infinite linear;
+    svg {
+      width: 60px;
+      height: 60px;
+    }
+  }
+}
+@keyframes wait-loading-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.icon-node {
+
+  &.color-low {
+    color: #00BC6C;
+  }
+
+  &.color-high {
+    color: #E35E5E;
+  }
+
+  &.color-unreachable {
+    color: rgba(255, 255, 255, .25);
+  }
+}
+
+/*common css end*/

@@ -1,0 +1,294 @@
+@import "./theme";
+
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+input[type="password"] {
+  font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+
+/*reset css begin*/
+a, b, html, body, button, dd, div, dl, dt, th, td, em, footer, h1, h2, h3, h4, h5, h6, header,
+pre, form, fieldset, i, img, input, li, ol, p, select, span, strong, textarea, ul {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  -webkit-tap-highlight-color: transparent
+}
+
+.user-select-none {
+  a, b, body, button, dd, div, dl, dt, em, footer, h1, h2, h3, h4, header,
+  html, i, img, li, ol, p, select, span, strong, textarea, ul {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+}
+
+html {
+  -webkit-text-size-adjust: none;
+  // height: 100%;
+}
+
+body {
+  // height: 100%;
+  color: @text-title-dark;
+  background: @background-color;
+  font-size: 14px;
+  min-width: 1180px;
+  line-height: 1;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimSun, Tahoma, sans-serif;
+}
+
+input, select, textarea {
+  resize: none;
+  border: none;
+  outline: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  -webkit-border-radius: 0;
+  border-radius: 0
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 1em;
+  font-weight: normal
+}
+
+a {
+  color: @brand;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+b, em, i, strong {
+  font-style: normal;
+  font-weight: 400
+}
+
+button, textarea, input {
+  background: 0 0;
+  -webkit-appearance: none;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  outline: none;
+  resize: none;
+}
+
+ul, ol, li {
+  list-style: none;
+}
+
+input, label, select, option, textarea, button, fieldset, legend {
+  font-size: 1em;
+}
+
+em, i {
+  font-style: normal;
+}
+
+b, strong {
+  font-weight: normal;
+}
+
+// 滚动条整体部分，其中的属性有width,height,background,border（就和一个块级元素一样）等。
+::-webkit-scrollbar {
+  width: 4px;
+  height: 0;
+  background-color: #f5f5f5;
+}
+
+// 滚动条两端的按钮。可以用display:none让其不显示，也可以添加背景图片，颜色改变显示效果。
+::-webkit-scrollbar-button {}
+
+// 定义滚动条轨道 内阴影+圆角  外层轨道。可以用display:none让其不显示，也可以添加背景图片，颜色改变显示效果。
+::-webkit-scrollbar-track {
+  //-webkit-box-shadow: inset 0 0 4px #f5f5f5;
+  background-color: #f5f5f5;
+}
+
+// 定义滑块 内阴影+圆角
+::-webkit-scrollbar-thumb {
+  //-webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, .1);
+  background-color: #e0e0e0;
+}
+
+// 边角
+::-webkit-scrollbar-corner {}
+
+// 定义右下角拖动块的样式
+::-webkit-resizer {}
+
+// safari浏览器，隐藏密码框小钥匙
+input::-webkit-credentials-auto-fill-button {
+  display: none !important;
+  visibility: hidden;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+}
+
+/*reset css end*/
+//取消rc-checkbox动画
+.spot-main .rc-checkbox-inner,
+.full-wrap .rc-checkbox-inner {
+  transition: none;
+}
+
+
+
+
+// btn的动画加速
+.btn .btn-icon.loading-icon:before {
+  transform: translateZ(0) !important;
+  will-change: transform !important;
+}
+
+//覆盖tool-tip样式
+.rc-tooltip {
+  padding: 0;
+  .strategy-type-more{
+    color: @brand-1;
+  }
+}
+
+.rc-tooltip-arrow {
+  display: none;
+}
+
+
+
+// 覆盖checkbox样式
+.rc-checkbox:hover .rc-checkbox-inner,
+.rc-checkbox-input:focus+.rc-checkbox-inner {
+  border-color: @brand;
+}
+
+.rc-checkbox-checked .rc-checkbox-inner {
+  border-color: @brand;
+  background-color: @brand;
+}
+
+.rc-checkbox-checked .rc-checkbox-inner:after {
+  animation-timing-function: unset;
+  animation-duration: unset;
+  animation-name: unset;
+}
+
+.normal-wrap {
+  .icon-close {
+    color: #999;
+  }
+  .Select.ok-select {
+    &.select-theme-controls {
+      &.Select--single {
+        & > .Select-control .Select-value {
+          line-height: 38px;
+          .Select-value-label {
+            font-weight: 500;
+          }
+        }
+      }
+      .Select-option {
+        white-space: nowrap;
+        padding: 8px 0;
+      }
+    }
+    &.longer-menu {
+      .Select-menu-outer {
+        @longer-height: 32px * 10;
+        max-height: @longer-height;
+        .Select-menu {
+          max-height:@longer-height;
+        }
+      }
+    }
+
+  }
+}
+
+
+.full-wrap {
+  .Select.ok-select.select-theme-controls {
+    font-size: 12px;
+    .Select-control {
+      background-color: transparent;
+      border: 1px solid #041025;
+      .Select-input {
+        height: 30px;
+        &:focus {
+          background: transparent;
+        }
+      }
+    }
+    &.is-open > .Select-control, &.is-focused:not(.is-open) > .Select-control {
+      background: transparent;
+      box-shadow: none;
+      border-color: #007eff
+    }
+    .Select-placeholder, &.Select--single > .Select-control .Select-value {
+      color: @full-white30;
+      font-size: 13px;
+      padding-left: 5px;
+      padding-right: 20px;
+      line-height: 30px;
+    }
+    &.has-value.Select--single > .Select-control .Select-value .Select-value-label, &.has-value.is-pseudo-focused.Select--single > .Select-control .Select-value .Select-value-label {
+      color: @full-white30;
+    }
+    .Select-arrow, &.is-open > .Select-control .Select-arrow {
+      border-width: 4px 4px 3.5px;
+    }
+    &.is-open .Select-arrow, &.is-open .Select-arrow-zone:hover > .Select-arrow {
+      border-top-color: transparent;
+    }
+    .Select-menu-outer {
+      background-color: @full-deep-blue;
+      border: 1px solid @full-shallow-black;
+      /*top: 39px;*/
+      font-size: 12px;
+      box-shadow: 1px 3px 1px black;
+    }
+    .Select-option {
+      color: @full-white80;
+      background: @full-shallow-black;
+      &.is-selected, &.is-focused {
+        color: @full-white80;
+      }
+      &.is-focused {
+        background: rgba(255, 255, 255, 0.1);
+      }
+    }
+    .Select-arrow-zone {
+      color: @full-white50
+    }
+  }
+}
+
+.ok-dialog {
+
+  .btn.btn-default,
+  .btn.dark.btn-default {
+    background: #173D7E;
+    border-color: #173D7E;
+    color: #fff;
+  }
+}

@@ -1,0 +1,109 @@
+@import "~_component/uiParams//components/Alert";
+
+@errorIconColor: @color-error-2;
+@warnIconColor: @color-warning-2;
+@infoIconColor: @color-notice-2;
+@successIconColor: @color-success-2;
+
+@errorBgColor: #FEF0EF;
+@warnBgColor: #fffaeb;
+@infoBgColor: #f1f5ff;
+@successBgColor: #E1F6E6;
+
+@text-color: @color-text1-3;
+
+@alert-prefix-cls: ~"@{ok-ui-prefix}-alert";
+
+.@{alert-prefix-cls} {
+  border-radius: 4px;
+  position: relative;
+  color: @text-color;
+  display: inline-flex;
+  width: 100%;
+  padding: 8px 9px;
+  min-height: 18px;
+  line-height: 1;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  .@{alert-prefix-cls} {
+    &-icon {
+      width: 14px;
+      height: 14px;
+      font-size: 14px;
+      display: inline-block;
+      vertical-align: top;
+      margin-top: 2px;
+      margin-right: 9px;
+    }
+
+    &-msg-box {
+      display: inline-block;
+      flex-grow: 1;
+    }
+
+    &-message, &-description {
+      display: block;
+      font-size: 12px;
+      line-height: 18px;
+      text-align: left;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.65);
+    }
+
+    &-operation {
+      display: inline-block;
+      font-size: 12px;
+      line-height: 18px;
+      color: @infoIconColor;
+      cursor: pointer;
+      max-width: 160px;
+      flex-shrink: 0;
+    }
+
+    &-close-con {
+      padding-top: 2px;
+      height: 16px;
+      width: 14px;
+      display: inline-block;
+      margin-left: 8px;
+      position: relative;
+      .@{alert-prefix-cls}-close {
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.25);
+        cursor: pointer;
+        position: absolute;
+      }
+    }
+  }
+  &.error-message {
+    background: @errorBgColor;
+
+    .@{alert-prefix-cls}-icon {
+      color: @errorIconColor;
+    }
+  }
+  &.warn-message {
+    background: @warnBgColor;
+
+    .@{alert-prefix-cls}-icon {
+      color: @warnIconColor;
+    }
+  }
+  &.info-message {
+    background: @infoBgColor;
+
+    .@{alert-prefix-cls}-icon {
+      color: @infoIconColor;
+    }
+  }
+  &.success-message {
+    background: @successBgColor;
+
+    .@{alert-prefix-cls}-icon {
+      color: @successIconColor;
+    }
+  }
+}

@@ -1,0 +1,57 @@
+// 对外暴露 .okg-x 类名，用于不同设备动态显隐
+
+@import './config.less';
+
+@_smWidth   : #mediaQuerySM()[@mediaWidth];
+@_mdMinWidth: #mediaQueryMD()[@mediaWidth];
+@_mdMaxWidth: #mediaQueryLG()[@mediaWidth] - 1;
+@_lgMinWidth: #mediaQueryLG()[@mediaWidth];
+@_lgMaxWidth: #mediaQueryXL()[@mediaWidth] - 1;
+@_xlWidth   : #mediaQueryXL()[@mediaWidth];
+
+#_mediaQuerySM() {
+  @mediaQuery: (max-width:@_smWidth);
+}
+
+#_mediaQueryMD() {
+  @mediaQuery: (min-width: @_mdMinWidth) and (max-width: @_mdMaxWidth);
+}
+
+#_mediaQueryLG() {
+  @mediaQuery: (min-width: @_lgMinWidth) and (max-width: @_lgMaxWidth);
+}
+
+#_mediaQueryXL() {
+  @mediaQuery: (min-width: @_xlWidth);
+}
+
+#_mediaSet() {
+  sm: #_mediaQuerySM();
+  md: #_mediaQueryMD();
+  lg: #_mediaQueryLG();
+  xl: #_mediaQueryXL();
+}
+
+#okg-x() {
+  each(#_mediaSet(), .(@mediaVal, @mediaKey) {
+      // okg-sm,okg-md,okg-lg,okg-xl   display:none
+      .okg-@{mediaKey} {
+        display: none;
+      }
+    }
+
+  ) each(#_mediaSet(), .(@mediaVal, @mediaKey) {
+      @media @mediaVal[@mediaQuery] {
+        .okg-@{mediaKey} {
+          display: flex;
+        }
+
+        // okg-sm-hide
+        .okg-@{mediaKey}-hide {
+          display: none;
+        }
+      }
+    }
+
+  )
+}

@@ -1,0 +1,460 @@
+@import "../../assets/css/theme";
+
+@dark-deep-blue: #141d2d;
+@dark-light-blue: #1c283e;
+@dark-primary-white: rgb(255, 255, 255);
+
+.ok-left-menu {
+  width: 200px;
+  .icon {
+    font-size: 14px;
+  }
+  .list-container {
+    //border: solid 1px;
+    //border-top-width: 0;
+    border: none;
+    border-radius: 0 0 4px 4px;
+    padding-bottom: 10px;
+    padding-top: 1px;
+    &.top-border {
+      border-top-width: 1px;
+      border-radius: 4px;
+    }
+    .trade-info-title {
+      margin: 19px 8px 9px 12px;
+      font-size: 12px;
+      height: 18px;
+      display: flex;
+      align-items: center;
+      i {
+        margin-right: 6px; //4px;
+      }
+    }
+  }
+  .list-search {
+    border-top: none;
+    .search-wrap {
+      position: relative;
+      font-size: 12px;
+      //line-height: 14px;
+      height: 36px;
+      border: solid 1px;
+      border-bottom: none;
+      border-radius: 4px 4px 0 0;
+      display: flex;
+      align-items: center;
+      padding: 0 9px;
+      input {
+        width: 200px;
+        box-sizing: border-box;
+        height: 100%;
+        border: none;
+        background: transparent;
+        //height: 36px;
+        //border-radius: 4px 4px 0 0;
+        //padding: 0 8px 0 30px;
+        //border: solid 1px;
+        //&:hover, &:focus {
+        //  border-color: @brand;
+        //}
+      }
+      .icon {
+        //display: inline-block;
+        //position: absolute;
+        //left: 13px;
+        //top: 12px;
+        font-size: 12px;
+        width: 12px;
+        height: 12px;
+        margin-right: 6px;
+      }
+    }
+  }
+
+  .list-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 200px;
+    height: 26px;
+    font-size: 12px;
+    box-sizing: border-box;
+    .head-left {
+      padding-left: 28px;
+      height: 18px;
+      line-height: 18px;
+    }
+
+    .head-right {
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      padding-right: 8px;//15
+      .change-icons {
+        height: 18px;
+        margin-left: 4px;
+        .icon {
+          display: block;
+          transform: scale(0.5);
+          font-size: 10px;
+          vertical-align: text-top;
+          &.icon-spread {
+            margin-top: -6px;
+          }
+          &.active {
+            color: @brand;
+          }
+        }
+      }
+    }
+  }
+
+  .list-main {
+    overflow-x: hidden;
+    //overflow-y: auto;
+    .empty-container {
+      display: flex;
+      height: 100%;
+      justify-content: center;
+      align-items: center;
+    }
+    li {
+      height: 36px;
+      line-height: 36px;
+      font-size: 14px;
+      cursor: pointer;
+      user-select: none;
+      box-sizing: border-box;
+      list-style: none;
+      padding: 0 8px; // 11
+      display: flex;
+      align-items: center;
+      position: relative;
+      .pair {
+        line-height: 21px;
+        height: 21px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      &.active {
+        box-shadow: inset 3px 0 0 0 @brand;
+        .pair {
+          color: @brand;
+        }
+      }
+      label {
+        cursor: pointer;
+        user-select: none;
+      }
+      .icon {
+        display: inline-block;
+        font-size: 14px; // 13
+        line-height: 1;
+        width: 14px;
+        height: 14px;
+        cursor: pointer;
+        user-select: none;
+        margin-right: 6px;
+        &.icon-Star {
+          color: @brand;
+        }
+      }
+
+      .change {
+        position: absolute;
+        font-size: 12px;
+        right: 8px;
+        &.change-green {
+          color: @buy;
+        }
+        &.change-red {
+          color: @sell;
+        }
+      }
+      .lever {
+        display: inline-block;
+        text-align: center;
+        border-radius: 8px;
+        margin-left: 2px;
+        background: rgba(255, 155, 0, 0.1);
+        font-size: 18px;
+        width: 40px;
+        height: 30px;
+        line-height: 25px;
+        transform: scale(.5);
+        transform-origin: 0 50%;
+        font-weight: 500;
+        background: fade(@warn, 10%);
+        color: @warn;
+        border: 2px solid @warn;
+        //width: 22px;
+        //height: 15px;
+        //border-radius: 4px;
+        //font-size: 12px;
+        //margin-left: 3px;
+        //background: fade(@warn, 10%);
+        //color: @warn;
+        //display: flex;
+        //align-items: center;
+        //justify-content: center;
+        span {
+          font-size: 14px;
+          display: block;
+          transform: scale(0.7);
+        }
+      }
+    }
+  }
+
+  &.has-scroll {
+    .list-main {
+      width: 199px;
+      li {
+        padding-right: 3px;
+        .change {
+          right: 3px;
+        }
+      }
+    }
+  }
+
+  .scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-track-y {
+    width: 4px;
+    right: 2px;
+  }
+  .scrollbar-thumb {
+    width: 4px;
+    border-radius: 2px;
+    background: fade(#000, 8%);
+  }
+  &.no-bottom {
+    position: relative;
+    &::after {
+      content: '';
+      display: block;
+      height: 2px;
+      background: #fff;
+      position: absolute;
+      width: 100%;
+      left: 0;
+      bottom: 0;
+    }
+  }
+}
+
+// 主题色元素提取
+@ok-left-menu-rules: {
+  .ok-left-menu {
+    .list-container {
+      box-shadow: inset 0 0 0 1px @border;
+      //border-color: @border;
+      .trade-info-title {
+        i {
+          color: @text-disabled;
+        }
+      }
+    }
+    .list-search {
+      .search-wrap {
+        input {
+          color: @text-title;
+          //background-color: @bg;
+          //border-color: @border;
+          //caret-color: @text-primary;
+          &::-webkit-input-placeholder {
+            color: @text-second;
+          }
+
+          &:-moz-placeholder {
+            color: @text-second;
+          }
+
+          &::-moz-placeholder {
+            color: @text-second;
+          }
+
+          &:-ms-input-placeholder {
+            color: @text-second;
+          }
+        }
+        .icon {
+          color: @text-disabled;
+        }
+      }
+    }
+
+    .list-head {
+      .head-right {
+        .change-icons {
+          color: @text-disabled;
+        }
+      }
+    }
+
+    .list-main {
+      &::-webkit-scrollbar-track {
+        background: #323750;
+      }
+      &::-webkit-scrollbar-track {
+        //background: @input-disabled;
+      }
+      li {
+        .icon {
+          &.icon-Star-o {
+            color: @text-disabled;
+          }
+        }
+        &:hover {
+          background: @brand-active-bg;
+        }
+        &.active {
+          background: @brand-active-bg;
+        }
+      }
+      li:not(.active) {
+        .pair {
+          color: @text-title;
+        }
+      }
+    }
+    &.no-bottom {
+      &::after {
+        background: @bg;
+      }
+    }
+  }
+}
+
+// 生成主题
+.theme-fun(@ok-left-menu-rules);
+
+
+.ok-left-menu.dark {
+  width: 246px;
+  .list-container {
+    //border: 0;
+    padding-top: 0;
+    &.top-border {
+      border-top-width: 0;
+    }
+  }
+  .list-head {
+    width: 246px;
+    background: @dark-light-blue;
+    color: @dark-primary-white;
+    .head-left {
+      padding-left: 35px;
+    }
+    .head-right {
+      padding-right: 16px;
+    }
+    .head-left, .head-right {
+      opacity: 0.43;
+    }
+  }
+  .list-main {
+    background: @dark-deep-blue;
+    &::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
+      background: rgba(255, 255, 255, 0.25);
+    }
+    &::-webkit-scrollbar-track { /*滚动条里面轨道*/
+      background: #1c283e;
+    }
+    li {
+      padding: 0 12px;
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+      &.active {
+        //background: rgba(255, 255, 255, 0.1);
+        //border-left: 0;
+        //padding-left: 10px;
+        border-left: 0;
+        box-shadow: none;
+        .pair {
+          color: @brand;
+          opacity: 1;
+        }
+      }
+      .pair {
+        color: @dark-primary-white;
+        opacity: 0.8;
+      }
+      .change {
+        right: 16px;
+      }
+      .icon {
+        margin-right: 9px;
+        &.icon-Star-o {
+          color: @dark-primary-white;
+          opacity: 0.25;
+        }
+      }
+      /*.lever {
+          color: #d9d9d9;
+          border: solid 1px #d9d9d9;
+      }*/
+    }
+    .empty-container {
+      color: @dark-primary-white;
+    }
+  }
+  &.has-scroll {
+    .list-main {
+      width: 246px;
+      li {
+        .change {
+          right: 12px;
+        }
+      }
+    }
+  }
+  .list-head {
+    background: @dark-light-blue;
+    color: @dark-primary-white;
+    .head-left, .head-right {
+      opacity: 0.43;
+    }
+  }
+  .list-main {
+    background: @dark-deep-blue;
+    &::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
+      background: rgba(255, 255, 255, 0.25);
+    }
+    &::-webkit-scrollbar-track { /*滚动条里面轨道*/
+      background: #1c283e;
+    }
+    li {
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+      &.active {
+        background: rgba(255, 255, 255, 0.1);
+        border-left: 0;
+        padding-left: 10px;
+      }
+      .pair {
+        color: @dark-primary-white;
+        opacity: 0.8;
+      }
+      .icon {
+        &.icon-Star-o {
+          color: @dark-primary-white;
+          opacity: 0.25;
+        }
+      }
+      /*.lever {
+          color: #d9d9d9;
+          border: solid 1px #d9d9d9;
+      }*/
+    }
+    .empty-container {
+      color: @dark-primary-white;
+    }
+  }
+}

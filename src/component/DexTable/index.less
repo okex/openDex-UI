@@ -1,0 +1,60 @@
+@import "../../assets/css/theme";
+
+.dex-table-container {
+  background-color: transparent;
+  font-size: 14px;
+  .dex-table {
+    border-spacing: 0;
+    width: 100%;
+    tr {
+      td, th {
+        font-weight: normal;
+        text-align: left;
+        box-sizing: border-box;
+        &:first-of-type {
+          padding-left: 30px;
+        }
+        &:last-of-type {
+          text-align: right;
+          padding-right: 30px;
+        }
+      }
+    }
+    thead {
+      tr {
+        background-color: @table-head-bg;
+        th {
+          height: 40px;
+          color: @text-primary-dark;
+        }
+      }
+    }
+    tbody {
+      tr {
+        &:nth-of-type(odd) {
+          background-color: @table-line-bg-odd;
+        }
+        &:nth-of-type(even) {
+          background-color: @table-line-bg-even;
+        }
+        &:hover {
+          background: fade(@brand, 15%);
+        }
+        td {
+          height: 50px;
+        }
+      }
+    }
+  }
+  .page-container {
+    height: 60px;
+    background: @table-line-bg-even;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 20px;
+  }
+  .okex-loading-box, okcoin-loading-box {
+    background: fade(#000, 15);
+  }
+}
