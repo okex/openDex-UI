@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import Icon from '_component/IconLite';
 import DesktopNodeMenu from '_component/DesktopNodeMenu';
 import DesktopLinkMenu from '_component/DesktopLinkMenu';
+import okchainLogo from '_src/assets/images/OKChain.png';
 import * as CommonAction from '../../redux/actions/CommonAction';
 import PageURL from '../../constants/PageURL';
 import FullTradeTicker from './FullTradeTicker';
@@ -55,7 +56,7 @@ class FullTradeHead extends React.Component {
       <div className="full-top-info-box">
         <Link className="logo-wrap" to="/">
           <img
-            src="https://static.bafang.com/cdn/assets/imgs/MjAxOTQ/CD3CDB1160FD60652744BF54FD77DBF8.png"
+            src={okchainLogo}
             style={this.iconStyle}
           />
         </Link>
