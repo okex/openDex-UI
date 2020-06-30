@@ -6,6 +6,7 @@ import PasswordDialog from '_component/PasswordDialog';
 import { toLocale } from '_src/locale/react-locale';
 import RegisterInput from '_component/DexDesktopInput';
 import ClientWrapper from '_src/wrapper/ClientWrapper';
+import Config from '_constants/Config';
 import './index.less';
 
 const showError = () => {
@@ -44,6 +45,7 @@ class Register extends Component {
     okchainClient.sendRegisterDexOperatorTransaction(websiteValue, feeAddressValue).then((res) => {
       this.setState({ isActionLoading: false });
       const { result, status } = res;
+      const { txhash } = result;
       const log = JSON.parse(result.raw_log);
       if (status !== 200 || (log && log.code)) {
         showError();
@@ -57,6 +59,7 @@ class Register extends Component {
             background: '#112F62'
           },
           onConfirm: () => {
+            window.open(`${Config.okchain.browserUrl}/tx/${txhash}`);
             dialog.destroy();
           },
         });

@@ -30,7 +30,7 @@ const initialState = {
   productList: [], // 所有币对
   productObj: {}, // 所有币对的对象形式
   // 本地收藏币对列表
-  favoriteList: JSON.parse(storage.get('favoriteList') || '[]'),
+  favorites: storage.get('favorites') || ['tbtc_tusdk', 'tokb_tusdk', 'tokt_tusdk'],
 
   // 币种列表
   currencyList: [], // 所有币种
@@ -336,10 +336,10 @@ export default function reducer(state = initialState, action) {
         hourRate: action.data
       };
 
-    case ActionTypes.UPDATE_FAVORITE_LIST:
+    case ActionTypes.UPDATE_FAVORITES:
       return {
         ...state,
-        favoriteList: action.data
+        favorites: action.data
       };
     default:
       return state;

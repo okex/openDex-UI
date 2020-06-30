@@ -53,10 +53,8 @@ class DesktopLinkMenu extends Component {
                 {toLocale('linkMenu.Token')}
                 <Icon className="icon-retract" />
                 <div className="link-sub-menu">
-                  <div className="link-submenu-item" onClick={this.toRoute(PageURL.registerPage)}>{toLocale('linkMenu.register')}</div>
-                  <div className="link-submenu-item" onClick={this.toRoute(PageURL.listTokenpairPage)}>{toLocale('linkMenu.tokenPair')}</div>
-                  <a href="" className="link-submenu-item">{toLocale('linkMenu.deposits')}</a>
-                  <a href="" className="link-submenu-item">{toLocale('linkMenu.handlingFee')}</a>
+                  <div className="link-submenu-item" onClick={this.toRoute(PageURL.issueTokenPage)}>{toLocale('linkMenu.issue')}</div>
+                  <a href="" className="link-submenu-item">{toLocale('linkMenu.mintBurn')}</a>
                 </div>
               </div>
             </div>
@@ -65,8 +63,10 @@ class DesktopLinkMenu extends Component {
                 {toLocale('linkMenu.operator')}
                 <Icon className="icon-retract" />
                 <div className="link-sub-menu">
-                  <div className="link-submenu-item" onClick={this.toRoute(PageURL.issueTokenPage)}>{toLocale('linkMenu.issue')}</div>
-                  <a href="" className="link-submenu-item">{toLocale('linkMenu.mintBurn')}</a>
+                  <div className="link-submenu-item" onClick={this.toRoute(PageURL.registerPage)}>{toLocale('linkMenu.register')}</div>
+                  <div className="link-submenu-item" onClick={this.toRoute(PageURL.listTokenpairPage)}>{toLocale('linkMenu.tokenPair')}</div>
+                  <a href="" className="link-submenu-item">{toLocale('linkMenu.deposits')}</a>
+                  <a href="" className="link-submenu-item">{toLocale('linkMenu.handlingFee')}</a>
                 </div>
               </div>
             </div>

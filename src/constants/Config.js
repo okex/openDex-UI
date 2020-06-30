@@ -7,17 +7,15 @@ const host = window.location.hostname;
 
 // online
 let apiUrl = BASE_HOST;
-let exploreUrl = 'https://www.oklink.com'; // OKChain区块链浏览器基础URL - 域名
+const exploreUrl = 'https://www.oklink.com'; // OKChain区块链浏览器基础URL - 域名
 
 // test
 if (host.includes('192.168.') || host.includes('localhost') || host.includes('127.0.0.1')) { // 本地调试
   apiUrl = 'http://127.0.0.1:7777';
-  exploreUrl = 'http://kong-proxy.test-a-oklink.svc.test.local:8443';
 }
 
 if (navigator.userAgent.includes('Electron') && window.location.protocol.includes('file')) {
   apiUrl = 'http://www.okex.com';
-  exploreUrl = 'http://kong-proxy.test-a-oklink.svc.test.local:8443';
 }
 
 // 浏览器URL修改 /explorer
