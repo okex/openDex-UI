@@ -8,6 +8,7 @@ import { Dialog } from '_component/Dialog';
 import Message from '_src/component/Message';
 import ClientWrapper from '_src/wrapper/ClientWrapper';
 import util from '_src/utils/util';
+import Config from '_constants/Config';
 import './index.less';
 
 const showError = () => {
@@ -72,19 +73,21 @@ class IssueToken extends Component {
     okchainClient.sendTokenIssueTransaction(fSymbol, wholename, fTotal, fMintable, desc).then((res) => {
       this.setState({ isActionLoading: false });
       const { result, status } = res;
+      const { txhash } = result;
       const log = JSON.parse(result.raw_log);
       if (status !== 200 || (log && log.code)) {
         showError();
       } else {
         const dialog = Dialog.success({
           className: 'desktop-success-dialog',
-          confirmText: 'Get detail',
+          confirmText: 'Get Detail',
           theme: 'dark',
           title: 'Issue success！',
           windowStyle: {
             background: '#112F62'
           },
           onConfirm: () => {
+            window.open(`${Config.okchain.browserUrl}/tx/${txhash}`);
             dialog.destroy();
           },
         });

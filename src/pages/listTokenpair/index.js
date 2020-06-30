@@ -9,6 +9,7 @@ import Message from '_src/component/Message';
 import DexDesktopInput from '_component/DexDesktopInput';
 import PageURL from '_constants/PageURL';
 import util from '_src/utils/util';
+import Config from '_constants/Config';
 import './index.less';
 
 const showError = () => {
@@ -52,6 +53,7 @@ class ListTokenpair extends Component {
     okchainClient.sendListTokenPairTransaction(fBase, fQuote, fInitPrice).then((res) => {
       this.setState({ isActionLoading: false });
       const { result, status } = res;
+      const { txhash } = result;
       const log = JSON.parse(result.raw_log);
       if (status !== 200 || (log && !log[0].success)) {
         showError();
@@ -65,6 +67,7 @@ class ListTokenpair extends Component {
             background: '#112F62'
           },
           onConfirm: () => {
+            window.open(`${Config.okchain.browserUrl}/tx/${txhash}`);
             dialog.destroy();
           },
         });

@@ -5,6 +5,7 @@ import { toLocale } from '_src/locale/react-locale';
 import URL from '_constants/URL';
 import history from '_src/utils/history';
 import PageURL from '_constants/PageURL';
+import Config from '_constants/Config';
 import DashboardSection from './DashboardSection';
 
 const util = {};
@@ -21,8 +22,8 @@ const transactionsCols = [
   {
     title: toLocale('trade_column_hash'),
     key: 'txhash',
-    render: (text) => { // trade-info/
-      return <span className="one-line">{text}</span>;
+    render: (text) => {
+      return <a className="one-line" href={`${Config.okchain.browserUrl}/tx/${text}`} target="_blank" rel="noopener noreferrer">{text}</a>;
     }
   },
   {
