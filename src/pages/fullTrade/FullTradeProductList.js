@@ -23,7 +23,7 @@ function mapStateToProps(state) { // 绑定redux中相关state
     wsIsOnlineV3, wsErrCounterV3, tickers, activeMarket // , searchText
   } = state.Spot;
   const {
-    groupList, productList, product, productObj, isMarginOpen, spotOrMargin, favoriteList
+    groupList, productList, product, productObj, isMarginOpen, spotOrMargin, favorites
   } = state.SpotTrade;
   // let myProductList = productList;
   // yao 未登录时使用本地数据
@@ -48,7 +48,7 @@ function mapStateToProps(state) { // 绑定redux中相关state
     productObj,
     isMarginOpen,
     spotOrMargin,
-    favoriteList,
+    favorites,
   };
 }
 
@@ -200,14 +200,14 @@ class FullTradeProductList extends React.Component {
 
   // 本地收藏
   handleClickFavorite = (item) => {
-    const { isFavorite } = item;
-    const { spotActions, favoriteList } = this.props;
+    const { isFavorite, product } = item;
+    const { spotActions, favorites } = this.props;
     if (!isFavorite) {
-      spotActions.updateFavoriteList([...favoriteList, { ...item, isFavorite: true }]);
+      spotActions.updateFavoriteList([...favorites, product]);
     } else {
-      const dList = util.cloneDeep(favoriteList);
+      const dList = util.cloneDeep(favorites);
       const list = dList.filter((l) => {
-        return l.product !== item.product;
+        return l !== product;
       });
       spotActions.updateFavoriteList(list);
     }
@@ -244,7 +244,7 @@ class FullTradeProductList extends React.Component {
 
   render() {
     const {
-      tickers, productList, product, favoriteList, // productObj,
+      tickers, productList, product, favorites, // productObj,
     } = this.props;
     const {
       isShowList, isShowProduction, // searchText, activeMarket
@@ -305,11 +305,12 @@ class FullTradeProductList extends React.Component {
     //   const sortKey = `productSort${activeMarket.groupId}`;
     //   return itemA[sortKey] - itemB[sortKey];
     // });
+    const favoriteList = [];
     const tabList = productList.map((item) => {
       const productIterative = item.product; // item.symbol;
       const pair = productIterative.toUpperCase().replace('_', '/');
-      const isFavorite = favoriteList.some((fav) => {
-        return fav.product === item.product;
+      const isFavorite = favorites.some((fav) => {
+        return fav === item.product;
       });
       if (!activeId) {
         activeId = pair;
@@ -323,7 +324,7 @@ class FullTradeProductList extends React.Component {
       }
       const [symbol] = productIterative.split('_');
       const [shortToken] = symbol.split('-');
-      return {
+      const exItem = {
         ...item,
         changePercentage,
         text: pair,
@@ -332,6 +333,10 @@ class FullTradeProductList extends React.Component {
         shortToken,
         isFavorite,
       };
+      if (isFavorite) {
+        favoriteList.push(exItem);
+      }
+      return exItem;
     });
     const listEmpty = toLocale('spot.noData');
     // langForRaw

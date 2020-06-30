@@ -171,9 +171,9 @@ export function updateActiveMarket(market) {
  */
 export function updateFavoriteList(list) {
   return (dispatch) => {
-    storage.set('favoriteList', JSON.stringify(list || []));
+    storage.set('favorites', list || []);
     dispatch({
-      type: SpotTradeActionType.UPDATE_FAVORITE_LIST,
+      type: SpotTradeActionType.UPDATE_FAVORITES,
       data: list,
     });
   };
