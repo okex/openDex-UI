@@ -91,7 +91,7 @@ export default class FullTradeKLine extends React.Component {
     // let wsUrl = 'wss://okexcomreal.bafang.com:10442/ws/v3';
     let wsUrl = getWsUrl();
     let logo;
-    let screenshotIcon = 'https://static.bafang.com/cdn/assets/imgs/MjAxOTM/05D71CB3408AD30681388F4D774BABBA.png';
+    let screenshotIcon = 'https://img.bafang.com/cdn/assets/imgs/MjAxOTM/05D71CB3408AD30681388F4D774BABBA.png';
     // okex使用CombKline（双K线)，开发交易所和国际站使用Kline（单K线），java工程中有对应引用
     const Kline = window.okui.CombKline || window.okui.Kline;
     this.kline = new Kline({

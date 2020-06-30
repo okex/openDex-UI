@@ -8,7 +8,6 @@ import PageURL from '_constants/PageURL';
 import { toLocale } from '_src/locale/react-locale';
 import util from '../utils/util';
 import history from '../utils/history';
-import FullTradeHead from '../pages/fullTrade/FullTradeHead';
 
 class App extends React.Component {
   constructor(props) {
@@ -33,10 +32,6 @@ class App extends React.Component {
     return (
       <Router basename={window.okGlobal.langPath} history={history}>
         <React.Fragment>
-          {/* <DexHeader /> */}
-          <div className="full-head">
-            <FullTradeHead />
-          </div>
           <div className="main-container">
             <Switch>
               <Route
