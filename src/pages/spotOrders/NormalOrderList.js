@@ -294,7 +294,7 @@ export default class NormalOrderList extends React.Component {
           theme={tableTheme}
         >
           {dataSource.length >= 20 ? <div style={{textAlign: 'center', 'lineHeight': '22px'}}>
-            <Link to={`${PageURL.homePage}/spot/${path}`} target="_blank">
+            <Link to={`${PageURL.homePage}/spot/${path}`}>
               {toLocale('link_to_all')}
             </Link>
           </div> : null}
