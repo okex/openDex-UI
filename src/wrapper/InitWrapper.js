@@ -140,7 +140,7 @@ const InitWrapper = (Component) => {
           // 如果token过期，相当于退出，强制用户重新登录
           if (event === 'error' && (Number(errorCode) === 30043 || Number(errorCode) === 30008 || Number(errorCode) === 30006)) {
             util.doLogout();
-            history.push(PageURL.homePage);
+            // history.push(PageURL.homePage);
           }
         });
         v3.connect();

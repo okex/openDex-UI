@@ -305,9 +305,14 @@ class FullTradeProductList extends React.Component {
     //   const sortKey = `productSort${activeMarket.groupId}`;
     //   return itemA[sortKey] - itemB[sortKey];
     // });
+<<<<<<< HEAD
     let favoriteList = [];
     const notFavoriteList = [];
     productList.forEach((item) => {
+=======
+    const favoriteList = [];
+    const tabList = productList.map((item) => {
+>>>>>>> b5ee7e5c8f7840ba9a47db0d647b8e1e2d48c764
       const productIterative = item.product; // item.symbol;
       const pair = productIterative.toUpperCase().replace('_', '/');
       const isFavorite = favorites.some((fav) => {
