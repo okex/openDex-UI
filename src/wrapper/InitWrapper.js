@@ -2,6 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import * as NodeActions from '_src/redux/actions/NodeAction';
 import FormatWS from '../utils/FormatWS';
 import { getConnectCfg, wsV3 } from '../utils/websocket';
 import * as SpotActions from '../redux/actions/SpotAction';
@@ -15,8 +16,9 @@ import PageURL from '../constants/PageURL';
 function mapStateToProps(state) {
   const { tickers } = state.Spot;
   const { currencyList, productList } = state.SpotTrade;
+  const { currentNode } = state.NodeStore;
   return {
-    currencyList, productList, tickers
+    currencyList, productList, tickers, currentNode
   };
 }
 
@@ -25,6 +27,7 @@ function mapDispatchToProps(dispatch) { // 绑定action，以便向redux发送ac
     spotActions: bindActionCreators(SpotActions, dispatch),
     spotTradeActions: bindActionCreators(SpotTradeActions, dispatch),
     orderAction: bindActionCreators(OrderAction, dispatch),
+    nodeActions: bindActionCreators(NodeActions, dispatch),
   };
 }
 
@@ -58,6 +61,13 @@ const InitWrapper = (Component) => {
       // }
     }
     componentWillUnmount() {
+    }
+
+    componentDidUpdate(prevProps) {
+      if (prevProps.currentNode !== this.props.currentNode) {
+        console.log(prevProps.currentNode);
+        console.log(this.props.currentNode);
+      }
     }
 
     // 基础ajax，其他业务数据对此有依赖
