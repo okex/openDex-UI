@@ -305,7 +305,8 @@ class FullTradeProductList extends React.Component {
     //   const sortKey = `productSort${activeMarket.groupId}`;
     //   return itemA[sortKey] - itemB[sortKey];
     // });
-    const favoriteList = [];
+    let favoriteList = [];
+    // const notFavoriteList = [];
     const tabList = productList.map((item) => {
       const productIterative = item.product; // item.symbol;
       const pair = productIterative.toUpperCase().replace('_', '/');
@@ -337,6 +338,13 @@ class FullTradeProductList extends React.Component {
         favoriteList.push(exItem);
       }
       return exItem;
+    });
+    favoriteList = favorites.map((fav) => {
+      return favoriteList.find((item) => {
+        return fav === item.product;
+      });
+    }).filter((item) => {
+      return !!item;
     });
     const listEmpty = toLocale('spot.noData');
     // langForRaw
