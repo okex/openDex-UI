@@ -305,8 +305,9 @@ class FullTradeProductList extends React.Component {
     //   const sortKey = `productSort${activeMarket.groupId}`;
     //   return itemA[sortKey] - itemB[sortKey];
     // });
-    const favoriteList = [];
-    const tabList = productList.map((item) => {
+    let favoriteList = [];
+    const notFavoriteList = [];
+    productList.forEach((item) => {
       const productIterative = item.product; // item.symbol;
       const pair = productIterative.toUpperCase().replace('_', '/');
       const isFavorite = favorites.some((fav) => {
@@ -335,9 +336,21 @@ class FullTradeProductList extends React.Component {
       };
       if (isFavorite) {
         favoriteList.push(exItem);
+      } else {
+        notFavoriteList.push(exItem);
       }
       return exItem;
     });
+    favoriteList = favorites.map((fav) => {
+      return favoriteList.find((item) => {
+        return fav === item.product;
+      });
+    }).filter((item) => {
+      return !!item;
+    });
+    const tabList = [...favoriteList, ...notFavoriteList.sort((a, b) => {
+      return a.base_asset_symbol.localeCompare(b.base_asset_symbol);
+    })];
     const listEmpty = toLocale('spot.noData');
     // langForRaw
     return (

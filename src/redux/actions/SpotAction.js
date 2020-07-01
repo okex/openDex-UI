@@ -184,7 +184,6 @@ export function updateFavoriteList(list) {
  * */
 export function initProduct(productObj, productList, callback) {
   let product = '';
-  let haveCollect = false; // 是否有自选的币
 
   const symbolInHash = util.getQueryHashString('product');
   if (symbolInHash) {
@@ -197,24 +196,11 @@ export function initProduct(productObj, productList, callback) {
     }
   }
   if (!product) {
-    if (storage.get('product') && productObj[storage.get('product')]) {
-      //  2、尝试从cookie中取当前币对
-      product = storage.get('product');
-    } else { //  3、默认进入自选区
-      //  3.1、以自选中的第一个作为当前币对
-      Object.keys(productObj).some((key) => {
-        if (productObj[key]) {
-          product = key;
-          haveCollect = false; // TODO 应该是true
-          return true;
-        }
-        return false;
-      });
-      // 3.2、没有自选的币，取列表中的第一个币对
-      if (!haveCollect && productList.length && productList[0].product) {
-        productList.sort((a, b) => { return (a.base_asset_symbol).localeCompare(b.base_asset_symbol); });
-        product = productList[0].product;
-      }
+    const favorites = storage.get('favorites');
+    if (favorites) {
+      product = favorites[0] || '';
+    } else {
+      product = 'tbtc_tusdk';
     }
   }
   // 重置当前币对配置信息
