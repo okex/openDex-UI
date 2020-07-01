@@ -83,9 +83,9 @@ export default class FullTradeFrame extends React.Component {
     const isLogin = util.isLogined();
     return (
       <div className="full-wrap">
-        <div className="full-head">
+        {/*<div className="full-head">
           <FullTradeHead />
-        </div>
+        </div>*/}
         <div className="trade-container">
           <div className="full-left">
             <div className="full-left-top">
