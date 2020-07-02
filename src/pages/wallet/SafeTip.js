@@ -49,7 +49,7 @@ class SafeTip extends Component {
   downloadKeyStore = () => {
     const { keyStore } = this.props;
     const keyStoreName = `keystore_${moment().format('YYYY-MM-DD HH:mm:ss')}`;
-    util.downloadObjectAsJson(keyStore, keyStoreName);
+    util.downloadObjectAsJson(keyStore, `${keyStoreName}.txt`);
     this.setState({
       hasDownload: true
     });

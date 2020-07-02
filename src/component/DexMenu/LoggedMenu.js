@@ -64,7 +64,7 @@ class DexLoggedMenu extends React.Component {
         const { info: keyStore } = UserObj;
         const privateKey = crypto.getPrivateKeyFromKeyStore(keyStore, passValue);
         if (privateKey) {
-          util.downloadObjectAsJson(keyStore || '', keyStoreName);
+          util.downloadObjectAsJson(keyStore || '', `${keyStoreName}.txt`);
           this.setState({ isShowPassword: false, passwordError: '' });
         }
       } catch (e) {

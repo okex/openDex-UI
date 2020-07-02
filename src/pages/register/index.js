@@ -7,7 +7,61 @@ import { toLocale } from '_src/locale/react-locale';
 import RegisterInput from '_component/DexDesktopInput';
 import ClientWrapper from '_src/wrapper/ClientWrapper';
 import Config from '_constants/Config';
+import util from '_src/utils/util';
 import './index.less';
+
+const opJson = {
+  dex_name: '',
+  dex_owner_key: '',
+  org: {
+    website: '',
+    code_of_conduct: '',
+    email: '',
+    branding: {
+      logo_256: '',
+      logo_1024: '',
+      logo_svg: ''
+    },
+    location: {
+      name: '',
+      country: '',
+      latitude: 0,
+      longitude: 0
+    },
+    social: {
+      steemit: '',
+      twitter: '',
+      youtube: '',
+      facebook: '',
+      github: '',
+      reddit: '',
+      keybase: '',
+      telegram: ''
+    }
+  },
+  nodes: [
+    {
+      location: {
+        name: '',
+        country: '',
+        latitude: 0,
+        longitude: 0,
+      },
+      node_type: '',
+      api_endpoint: ''
+    },
+    {
+      location: {
+        name: '',
+        country: '',
+        latitude: 0,
+        longitude: 0
+      },
+      node_type: '',
+      ws_endpoint: ''
+    }
+  ]
+};
 
 const showError = () => {
   Message.error({
@@ -79,6 +133,10 @@ class Register extends Component {
     this.props.checkPK(this.onRegister);
   }
 
+  handleDownloadOperator = () => {
+    util.downloadObjectAsJson(opJson, 'operator.json');
+  }
+
   render() {
     const {
       websiteValue, feeAddressValue, isActionLoading
@@ -104,7 +162,9 @@ class Register extends Component {
             onChange={this.onFeeAddressChange}
             hint={toLocale('register.feeAddress.hint')}
           />
-          <div className="register-get-operato">Get operato</div>
+          <div className="register-get-operato">
+            <span className="operato-dl-btn" onClick={this.handleDownloadOperator}>Get operato</span>
+          </div>
           <button
             className="dex-desktop-btn register-btn"
             onClick={this.handleRegister}
