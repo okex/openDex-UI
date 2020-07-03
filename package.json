@@ -85,6 +85,7 @@
     "rc-checkbox": "^2.1.5",
     "rc-dropdown": "^3.1.2",
     "rc-menu": "^7.4.19",
+    "rc-switch": "^3.2.0",
     "rc-tabs": "^11.4.1",
     "rc-tooltip": "^3.7.2",
     "react": "^16.8.6",

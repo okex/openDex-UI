@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import DexSwitch from '_component/DexSwitch';
 import Select from '_component/ReactSelect';
 import DexDesktopInput from '_component/DexDesktopInput';
 import './TabLocal.less';
@@ -44,6 +45,14 @@ class TabLocal extends Component {
     } = this.state;
     return (
       <div className="node-local-container">
+        <div className="node-local-switch">
+          <div className="local-switch-title">Locally hosted</div>
+          <div className="local-switch-desc">（Estimated time 1D）</div>
+          <DexSwitch
+            checkedChildren="开"
+            unCheckedChildren="关"
+          />
+        </div>
         <div className="local-set-container">
           <div className="local-set-cell">
             <label htmlFor="" className="local-set-label">Network</label>
