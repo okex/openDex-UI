@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Select from '_component/ReactSelect';
+import DexDesktopInput from '_component/DexDesktopInput';
 import './TabLocal.less';
 
 const defaultOptions = [
@@ -14,6 +15,8 @@ class TabLocal extends Component {
     this.state = {
       options: defaultOptions,
       selected: defaultOptions[0],
+      p2p: '',
+      rpc: '',
     };
   }
 
@@ -23,8 +26,22 @@ class TabLocal extends Component {
     };
   }
 
+  onP2pChange = (e) => {
+    this.setState({
+      p2p: e.target.value
+    });
+  }
+
+  onRpcChange = (e) => {
+    this.setState({
+      rpc: e.target.value
+    });
+  }
+
   render() {
-    const { options, selected } = this.state;
+    const {
+      options, selected, p2p, rpc
+    } = this.state;
     return (
       <div className="node-local-container">
         <div className="local-set-container">
@@ -55,29 +72,17 @@ class TabLocal extends Component {
             />
           </div>
           <div className="local-set-cell">
-            <label htmlFor="" className="local-set-label">Network</label>
-            <Select
-              className="network-select"
-              clearable={false}
-              searchable={false}
-              theme="dark"
-              name="form-field-name"
-              value={selected}
-              onChange={this.onChange()}
-              options={options}
+            <DexDesktopInput
+              label="P2P Port"
+              value={p2p}
+              onChange={this.onP2pChange}
             />
           </div>
           <div className="local-set-cell">
-            <label htmlFor="" className="local-set-label">Network</label>
-            <Select
-              className="network-select"
-              clearable={false}
-              searchable={false}
-              theme="dark"
-              name="form-field-name"
-              value={selected}
-              onChange={this.onChange()}
-              options={options}
+            <DexDesktopInput
+              label="RPC Port"
+              value={rpc}
+              onChange={this.onRpcChange}
             />
           </div>
           <div className="local-set-cell">
