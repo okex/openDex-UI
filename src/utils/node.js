@@ -1,5 +1,5 @@
 import hirestime from 'hirestime';
-import { storage } from '_src/component/okit';
+import { storage, calc } from '_component/okit';
 import { MAX_LATENCY, NODE_TYPE } from '_constants/Node';
 
 const TIMEOUT = 2000;
@@ -43,4 +43,19 @@ export const getNodeLatency = (node) => {
     });
     connection.connect();
   });
+};
+
+export const timeUnit = (t) => {
+  let time = t;
+  if (!time || time === MAX_LATENCY) {
+    return '- -';
+  }
+  const suffix = ['ms', 's'];
+  const carry = 1000;
+  let index = 0;
+  while (time >= carry && index < suffix.length - 1) {
+    time = calc.div(time, carry);
+    index++;
+  }
+  return `${time}${suffix[index]}`;
 };

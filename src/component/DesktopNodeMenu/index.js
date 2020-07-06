@@ -9,7 +9,7 @@ import PageURL from '_constants/PageURL';
 import { toLocale } from '_src/locale/react-locale';
 // import ont from '_src/utils/dataProxy';
 // import URL from '_constants/URL';
-import { setcurrentNode, getDelayType } from '_src/utils/node';
+import { setcurrentNode, getDelayType, timeUnit } from '_src/utils/node';
 import './index.less';
 
 function mapStateToProps(state) {
@@ -65,8 +65,8 @@ class DesktopNodeMenu extends Component {
 
   render() {
     const { latestHeight, currentNode, remoteList } = this.props;
-    const delayTime = 55; // 先写死
-    const delayType = getDelayType(delayTime);
+    const { latency } = currentNode;
+    const delayType = getDelayType(latency);
     const settingsNodeList = remoteList.filter((node) => {
       return node.wsUrl !== currentNode.wsUrl;
     }).slice(0, 3);
@@ -81,7 +81,7 @@ class DesktopNodeMenu extends Component {
               <Icon className="icon-retract" />
             </div>
             <div className="node-assist">{toLocale('nodeMenu.block')} #{latestHeight}</div>
-            <div className={`node-assist color-${delayType}`}>{toLocale('nodeMenu.latency')} 55MS</div>
+            <div className={`node-assist color-${delayType}`}>{toLocale('nodeMenu.latency')} {timeUnit(latency)}</div>
             <div className="node-sub-menu remote-node-submenu">
               {
                 settingsNodeList.map((node, index) => {

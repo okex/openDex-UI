@@ -1,27 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { calc } from '_component/okit';
 import { toLocale } from '_src/locale/react-locale';
 import Icon from '_src/component/IconLite';
 import iconNodeDelete from '_src/assets/images/icon_node_delete.png';
 import { NODE_TYPE, MAX_LATENCY } from '_constants/Node';
-import { getDelayType } from '_src/utils/node';
+import { getDelayType, timeUnit } from '_src/utils/node';
 import './NodeItem.less';
-
-const timeUnit = (t) => {
-  let time = t;
-  if (!time || time === MAX_LATENCY) {
-    return '- -';
-  }
-  const suffix = ['ms', 's'];
-  const carry = 1000;
-  let index = 0;
-  while (time >= carry && index < suffix.length - 1) {
-    time = calc.div(time, carry);
-    index++;
-  }
-  return `${time}${suffix[index]}`;
-};
 
 class NodeItem extends Component {
   static propTypes = {
