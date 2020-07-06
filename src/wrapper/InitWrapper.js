@@ -2,6 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import * as NodeActions from '_src/redux/actions/NodeAction';
 import FormatWS from '../utils/FormatWS';
 import { getConnectCfg, wsV3 } from '../utils/websocket';
 import * as SpotActions from '../redux/actions/SpotAction';
@@ -15,8 +16,9 @@ import PageURL from '../constants/PageURL';
 function mapStateToProps(state) {
   const { tickers } = state.Spot;
   const { currencyList, productList } = state.SpotTrade;
+  const { currentNode } = state.NodeStore;
   return {
-    currencyList, productList, tickers
+    currencyList, productList, tickers, currentNode
   };
 }
 
@@ -25,6 +27,7 @@ function mapDispatchToProps(dispatch) { // 绑定action，以便向redux发送ac
     spotActions: bindActionCreators(SpotActions, dispatch),
     spotTradeActions: bindActionCreators(SpotTradeActions, dispatch),
     orderAction: bindActionCreators(OrderAction, dispatch),
+    nodeActions: bindActionCreators(NodeActions, dispatch),
   };
 }
 
@@ -34,12 +37,13 @@ const InitWrapper = (Component) => {
   @connect(mapStateToProps, mapDispatchToProps)
   class SpotInit extends React.Component {
     componentDidMount() {
-      const { match } = this.props;
+      const { match, currentNode } = this.props;
+      const { wsUrl } = currentNode;
       if (match.path.includes('/spot/fullMargin') || match.path.includes('/spot/marginTrade')) {
         window.OK_GLOBAL.isMarginType = true;
       }
       this.sendBasicAjax();
-      this.startInitWebSocket();
+      this.startInitWebSocket(wsUrl);
       const header = document.querySelector('.spot-head-box');
       const left = document.querySelector('.left-menu-container');
       if (header) {
@@ -58,6 +62,18 @@ const InitWrapper = (Component) => {
       // }
     }
     componentWillUnmount() {
+    }
+
+    componentDidUpdate(prevProps) {
+      if (prevProps.currentNode !== this.props.currentNode) {
+        window.OK_GLOBAL.ws_v3.disconnect();
+        window.OK_GLOBAL.ws_v3 = null;
+        const { spotActions } = this.props;
+        spotActions.updateWsStatus(false);
+        const { currentNode } = this.props;
+        const { wsUrl } = currentNode;
+        this.startInitWebSocket(wsUrl);
+      }
     }
 
     // 基础ajax，其他业务数据对此有依赖
@@ -96,11 +112,11 @@ const InitWrapper = (Component) => {
       return fns[table.split(':')[0]];
     };
     // 建立ws连接
-    startInitWebSocket = () => {
+    startInitWebSocket = (wsUrl) => {
       const OK_GLOBAL = window.OK_GLOBAL;
       if (!OK_GLOBAL.ws_v3) {
         const { spotActions } = this.props;
-        OK_GLOBAL.ws_v3 = new window.WebSocketCore(getConnectCfg());
+        OK_GLOBAL.ws_v3 = new window.WebSocketCore({ connectUrl: wsUrl });
         const v3 = OK_GLOBAL.ws_v3;
         v3.onSocketConnected(() => {
           function getJwtToken() {

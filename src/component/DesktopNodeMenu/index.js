@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as CommonAction from '_src/redux/actions/CommonAction';
+import * as NodeActions from '_src/redux/actions/NodeAction';
 import { withRouter } from 'react-router-dom';
 import Icon from '_component/IconLite';
 import navBack from '_src/assets/images/nav_back@2x.png';
@@ -9,7 +10,7 @@ import PageURL from '_constants/PageURL';
 import { toLocale } from '_src/locale/react-locale';
 // import ont from '_src/utils/dataProxy';
 // import URL from '_constants/URL';
-import { setcurrentNode, getDelayType, timeUnit } from '_src/utils/node';
+import { getDelayType, timeUnit } from '_src/utils/node';
 import './index.less';
 
 function mapStateToProps(state) {
@@ -25,6 +26,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     commonAction: bindActionCreators(CommonAction, dispatch),
+    nodeActions: bindActionCreators(NodeActions, dispatch),
   };
 }
 
@@ -55,7 +57,8 @@ class DesktopNodeMenu extends Component {
 
   onNodeClick = (node) => {
     return () => {
-      setcurrentNode(node);
+      const { nodeActions } = this.props;
+      nodeActions.updateCurrenntNode(node);
     };
   }
 
