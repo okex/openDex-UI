@@ -68,7 +68,7 @@ class NodeSetting extends Component {
   render() {
     const { currentNode } = this.props;
     const {
-      region, country, location, wsUrl, latency
+      region, country, location, wsUrl, latency, httpUrl
     } = currentNode;
     return (
       <div className="node-container">
@@ -78,13 +78,13 @@ class NodeSetting extends Component {
           <NodeItem
             name={`${region} - ${country} - ${location}`}
             ws={wsUrl}
-            http="https://www.oklink.com/okchain/v1"
+            http={httpUrl}
             delayTime={latency}
             disabled
           />
         </div>
         <div className="node-select-container">
-          <Tabs defaultActiveKey="2" prefixCls="node-select">
+          <Tabs defaultActiveKey="3" prefixCls="node-select">
             <TabPane tab={toLocale('node.tab.wellenow')} key="1">
               <NodeList />
             </TabPane>

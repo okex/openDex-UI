@@ -1,4 +1,5 @@
 .node-set-item {
+  position: relative;
   display: flex;
   align-items: center;
   padding: 10px 56px 10px 12px;
@@ -67,5 +68,14 @@
     &.color-unreachable {
       color: #838C9E;
     }
+  }
+
+  .node-delete {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
   }
 }

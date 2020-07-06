@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import { calc } from '_component/okit';
 import { toLocale } from '_src/locale/react-locale';
 import Icon from '_src/component/IconLite';
+import iconNodeDelete from '_src/assets/images/icon_node_delete.png';
 import { NODE_TYPE, MAX_LATENCY } from '_constants/Node';
 import { getDelayType } from '_src/utils/node';
 import './NodeItem.less';
 
-const timeUnit = (time) => {
+const timeUnit = (t) => {
+  let time = t;
   if (!time || time === MAX_LATENCY) {
     return '- -';
   }
@@ -29,6 +31,8 @@ class NodeItem extends Component {
     delayTime: PropTypes.number,
     onClick: PropTypes.func,
     disabled: PropTypes.bool,
+    isRenderDelete: PropTypes.bool,
+    onDelete: PropTypes.func,
   };
 
   static defaultProps = {
@@ -38,6 +42,8 @@ class NodeItem extends Component {
     delayTime: MAX_LATENCY,
     onClick: () => {},
     disabled: false,
+    isRenderDelete: false,
+    onDelete: () => {},
   };
 
   constructor() {
@@ -54,7 +60,8 @@ class NodeItem extends Component {
 
   render() {
     const {
-      name, ws, http, delayTime, disabled
+      name, ws, http, delayTime, disabled,
+      isRenderDelete, onDelete
     } = this.props;
     const delayType = getDelayType(delayTime);
     const delayCls = `node-delay node-delay-${delayType}`;
@@ -74,6 +81,13 @@ class NodeItem extends Component {
         <div className="node-icon" onClick={this.handleClick} style={{ cursor: disabled ? 'normal' : 'pointer' }}>
           <Icon className={`icon-node color-${delayType}`} />
         </div>
+        {
+          isRenderDelete && (
+            <div className="node-delete extend-click" onClick={onDelete}>
+              <img width="100%" src={iconNodeDelete} alt="delete" />
+            </div>
+          )
+        }
       </div>
     );
   }

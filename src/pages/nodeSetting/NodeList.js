@@ -46,7 +46,7 @@ class NodeList extends Component {
         {
           showList.map((node, index) => {
             const {
-              region, country, location, wsUrl, latency
+              region, country, location, wsUrl, latency, httpUrl
             } = node;
             const name = `${region} - ${country} - ${location}`;
             return (
@@ -54,7 +54,7 @@ class NodeList extends Component {
                 <NodeItem
                   name={name}
                   ws={wsUrl}
-                  http="https://www.oklink.com/okchain/v1"
+                  http={httpUrl}
                   delayTime={latency}
                   disabled={false}
                   onClick={this.handleChange(node)}
