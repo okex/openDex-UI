@@ -66,13 +66,7 @@ const InitWrapper = (Component) => {
 
     componentDidUpdate(prevProps) {
       if (prevProps.currentNode !== this.props.currentNode) {
-        window.OK_GLOBAL.ws_v3.disconnect();
-        window.OK_GLOBAL.ws_v3 = null;
-        const { spotActions } = this.props;
-        spotActions.updateWsStatus(false);
-        const { currentNode } = this.props;
-        const { wsUrl } = currentNode;
-        this.startInitWebSocket(wsUrl);
+        window.location.reload();
       }
     }
 
