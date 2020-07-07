@@ -72,16 +72,16 @@ class DashboardTransaction extends Component {
     };
     this.setState({ loading: true });
     ont.get(URL.GET_TRANSACTIONS, { params }).then(({ data }) => {
-      this.setState({ loading: false });
       const list = data.data.map((item) => {
         const newItem = { ...item };
         newItem.uniqueKey = newItem.txhash + newItem.type + newItem.side + newItem.symbol + newItem.timestamp;
         return newItem;
       });
       this.setState({
+        loading: false,
         transactions: list || [],
       });
-    }).catch().then(() => {
+    }).catch(() => {
       this.setState({ loading: false });
     });
   };
