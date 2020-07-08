@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as CommonAction from '_src/redux/actions/CommonAction';
 import Config from '_constants/Config';
+import PasswordDialog from '_component/PasswordDialog';
 import { toLocale } from '_src/locale/react-locale';
 
 function mapStateToProps(state) {
@@ -50,7 +51,7 @@ const ClientWrapper = (Com) => {
       });
     }
 
-    onPwdEnter = (password, success) => {
+    onPwdEnter = (password) => {
       const { commonAction } = this.props;
       if (password.trim() === '') {
         return this.updateWarning(toLocale('spot.place.tips.pwd'));
@@ -64,7 +65,7 @@ const ClientWrapper = (Com) => {
             this.setState({
               isShowPwdDialog: false,
             }, () => {
-              this.setAccountInfo(success);
+              this.setAccountInfo(this.wrappedInstance.onPwdSuccess);
             });
           }, () => {
             this.setState({
@@ -104,16 +105,23 @@ const ClientWrapper = (Com) => {
 
     render() {
       const { isShowPwdDialog, isLoading, warning } = this.state;
-      const p = { isShowPwdDialog, isLoading, warning };
-      return (<Com
-        {...p}
-        {...this.props}
-        onPwdOpen={this.onPwdOpen}
-        onPwdClose={this.onPwdClose}
-        checkPK={this.checkPK}
-        onPwdEnter={this.onPwdEnter}
-        updateWarning={this.updateWarning}
-      />);
+      return (
+        <Fragment>
+          <Com
+            {...this.props}
+            checkPK={this.checkPK}
+            ref={(instance) => { this.wrappedInstance = instance; }}
+          />
+          <PasswordDialog
+            btnLoading={isLoading}
+            warning={warning}
+            isShow={isShowPwdDialog}
+            updateWarning={this.updateWarning}
+            onEnter={this.onPwdEnter}
+            onClose={this.onPwdClose}
+          />
+        </Fragment>
+      );
     }
   }
 

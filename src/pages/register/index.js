@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import DexDesktopContainer from '_component/DexDesktopContainer';
 import { Dialog } from '_component/Dialog';
 import Message from '_src/component/Message';
-import PasswordDialog from '_component/PasswordDialog';
 import { toLocale } from '_src/locale/react-locale';
 import RegisterInput from '_component/DexDesktopInput';
 import ClientWrapper from '_src/wrapper/ClientWrapper';
@@ -125,8 +124,8 @@ class Register extends Component {
     });
   }
 
-  onPwdEnter = (password) => {
-    this.props.onPwdEnter(password, this.onRegister);
+  onPwdSuccess = () => {
+    this.onRegister();
   }
 
   handleRegister = () => {
@@ -141,7 +140,6 @@ class Register extends Component {
     const {
       websiteValue, feeAddressValue, isActionLoading
     } = this.state;
-    const { isShowPwdDialog, isLoading, warning } = this.props;
     return (
       <DexDesktopContainer
         isShowHelp
@@ -171,14 +169,6 @@ class Register extends Component {
           >
             Register
           </button>
-          <PasswordDialog
-            btnLoading={isLoading}
-            warning={warning}
-            isShow={isShowPwdDialog}
-            updateWarning={this.props.updateWarning}
-            onEnter={this.onPwdEnter}
-            onClose={this.props.onPwdClose}
-          />
         </div>
       </DexDesktopContainer>
     );

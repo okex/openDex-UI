@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom';
 import DexDesktopContainer from '_component/DexDesktopContainer';
 import { toLocale } from '_src/locale/react-locale';
 import ClientWrapper from '_src/wrapper/ClientWrapper';
-import PasswordDialog from '_component/PasswordDialog';
 import { Dialog } from '_component/Dialog';
 import Message from '_src/component/Message';
 import DexDesktopInput from '_component/DexDesktopInput';
@@ -79,8 +78,8 @@ class ListTokenpair extends Component {
     });
   }
 
-  onPwdEnter = (password) => {
-    this.props.onPwdEnter(password, this.onList);
+  onPwdSuccess = () => {
+    this.onList();
   }
 
   handleList = () => {
@@ -95,7 +94,6 @@ class ListTokenpair extends Component {
     const {
       baseAsset, quoteAsset, initPrice, isActionLoading
     } = this.state;
-    const { isShowPwdDialog, isLoading, warning } = this.props;
     return (
       <DexDesktopContainer
         isShowHelp
@@ -133,14 +131,6 @@ class ListTokenpair extends Component {
             <span onClick={this.toRegister}>{toLocale('listToken.hint.register')}</span>
           </div>
         </div>
-        <PasswordDialog
-          btnLoading={isLoading}
-          warning={warning}
-          isShow={isShowPwdDialog}
-          updateWarning={this.props.updateWarning}
-          onEnter={this.onPwdEnter}
-          onClose={this.props.onPwdClose}
-        />
       </DexDesktopContainer>
     );
   }

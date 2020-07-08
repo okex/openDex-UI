@@ -3,7 +3,6 @@ import DexDesktopContainer from '_component/DexDesktopContainer';
 import DexDesktopInput from '_component/DexDesktopInput';
 import DexDesktopCheckbox from '_component/DexDesktopCheckbox';
 import { toLocale } from '_src/locale/react-locale';
-import PasswordDialog from '_component/PasswordDialog';
 import { Dialog } from '_component/Dialog';
 import Message from '_src/component/Message';
 import ClientWrapper from '_src/wrapper/ClientWrapper';
@@ -99,8 +98,8 @@ class IssueToken extends Component {
     });
   }
 
-  onPwdEnter = (password) => {
-    this.props.onPwdEnter(password, this.onIssue);
+  onPwdSuccess = () => {
+    this.onIssue();
   }
 
   handleIssue = () => {
@@ -111,7 +110,6 @@ class IssueToken extends Component {
     const {
       symbol, wholename, totalSupply, desc, mintable, isActionLoading
     } = this.state;
-    const { isShowPwdDialog, isLoading, warning } = this.props;
     return (
       <DexDesktopContainer
         isShowHelp
@@ -154,14 +152,6 @@ class IssueToken extends Component {
             {toLocale('issueToken.issue.btn')}
           </button>
         </div>
-        <PasswordDialog
-          btnLoading={isLoading}
-          warning={warning}
-          isShow={isShowPwdDialog}
-          updateWarning={this.props.updateWarning}
-          onEnter={this.onPwdEnter}
-          onClose={this.props.onPwdClose}
-        />
       </DexDesktopContainer>
     );
   }
