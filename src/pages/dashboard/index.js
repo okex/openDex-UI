@@ -16,6 +16,7 @@ class Dashboard extends Component {
       tokens: [],
       isTokensLoading: false,
       isAccountsLoading: false,
+      isActionLoading: false,
     };
     this.addr = window.OK_GLOBAL.senderAddr;
   }
@@ -25,6 +26,16 @@ class Dashboard extends Component {
       this.fetchAccounts();
       this.fetchTokens();
     }
+  }
+
+  beforeMintOrBurn = () => {
+    this.setState({ isActionLoading: true });
+  }
+
+  afterMintOrBurn = () => {
+    this.setState({ isActionLoading: false });
+    this.fetchAccounts();
+    this.fetchTokens();
   }
 
   fetchAccounts = () => {
@@ -54,11 +65,15 @@ class Dashboard extends Component {
 
   render() {
     const {
-      currencies, tokens, isTokensLoading, isAccountsLoading
+      currencies, tokens, isTokensLoading, isAccountsLoading, isActionLoading
     } = this.state;
 
     return (
-      <DexDesktopContainer isShowAddress needLogin>
+      <DexDesktopContainer
+        isShowAddress
+        needLogin
+        loading={isActionLoading}
+      >
         <div className="dashboard-page-container" >
           <DashboardAsset
             tokens={tokens}
@@ -71,6 +86,8 @@ class Dashboard extends Component {
           <DashboardIssue
             tokens={tokens}
             loading={isTokensLoading}
+            beforeMintOrBurn={this.beforeMintOrBurn}
+            afterMintOrBurn={this.afterMintOrBurn}
           />
         </div>
       </DexDesktopContainer>
