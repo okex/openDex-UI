@@ -41,6 +41,7 @@ class BurnDialog extends Component {
     const { value } = this.state;
     const amount = util.precisionInput(value);
     okchainClient.sendTokenBurnTransaction(token, amount).then((res) => {
+      this.setState({ value: '' });
       isFunction(afterBurn) && afterBurn();
       const { result, status } = res;
       const { txhash } = result;
@@ -67,6 +68,7 @@ class BurnDialog extends Component {
       console.log(err);
       isFunction(afterBurn) && afterBurn();
       showError();
+      this.setState({ value: '' });
     });
   }
 

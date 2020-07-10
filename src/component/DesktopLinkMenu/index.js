@@ -54,7 +54,7 @@ class DesktopLinkMenu extends Component {
                 <Icon className="icon-retract" />
                 <div className="link-sub-menu">
                   <div className="link-submenu-item" onClick={this.toRoute(PageURL.issueTokenPage)}>{toLocale('linkMenu.issue')}</div>
-                  <a href="" className="link-submenu-item">{toLocale('linkMenu.mintBurn')}</a>
+                  <div className="link-submenu-item" onClick={this.toRoute(PageURL.issueDetailPage)}>{toLocale('linkMenu.mintBurn')}</div>
                 </div>
               </div>
             </div>

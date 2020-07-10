@@ -26,4 +26,5 @@ export default {
   issueTokenPage: `${contentPath}/issue-token`, // 发行币种
   listTokenpairPage: `${contentPath}/list-tokenpair`, // 发行币对
   dashboardPage: `${contentPath}/dashboard`, // 总览
+  issueDetailPage: `${contentPath}/issue`, // 我的币种详情
 };

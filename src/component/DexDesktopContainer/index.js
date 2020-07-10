@@ -22,11 +22,14 @@ class DexDesktopContainer extends Component {
   }
 
   render() {
-    const { isShowHelp, isShowAddress, loading = false } = this.props;
+    const {
+      isShowHelp, isShowAddress, loading = false, className
+    } = this.props;
     const { senderAddr } = window.OK_GLOBAL || {};
+    const cls = className ? `dex-desktop-container ${className}` : 'dex-desktop-container';
 
     return (
-      <div className="dex-desktop-container">
+      <div className={cls}>
         <Loading when={loading} />
         {
           (isShowAddress && senderAddr) && (

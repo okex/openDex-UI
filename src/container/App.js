@@ -132,6 +132,12 @@ class App extends React.Component {
                   return import('../pages/dashboard');
                 })}
               />
+              <Route
+                path={PageURL.issueDetailPage}
+                component={Load(() => {
+                  return import('../pages/issueDetail');
+                })}
+              />
               <Redirect
                 from={PageURL.wallet}
                 to={PageURL.walletAssets}

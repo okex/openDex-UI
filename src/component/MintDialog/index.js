@@ -41,6 +41,7 @@ class MintDialog extends Component {
     const { value } = this.state;
     const amount = util.precisionInput(value);
     okchainClient.sendTokenMintTransaction(token, amount).then((res) => {
+      this.setState({ value: '' });
       this.props.afterMint();
       const { result, status } = res;
       const { txhash } = result;
@@ -67,6 +68,7 @@ class MintDialog extends Component {
       console.log(err);
       isFunction(afterMint) && afterMint();
       showError();
+      this.setState({ value: '' });
     });
   }
 

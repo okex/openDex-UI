@@ -9,3 +9,7 @@ export const isNumberString = (num) => {
 export const isFunction = (val) => {
   return getType(val) === 'Function';
 };
+
+export const isString = (val) => {
+  return getType(val) === 'String';
+};

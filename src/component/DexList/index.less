@@ -1,0 +1,103 @@
+.dex-list-container {
+
+  .dex-list-top {
+    display: flex;
+    height: 48px;
+    box-shadow: 0px 1px 0px 0px rgba(39, 52, 73, 1);
+
+    .dex-list-pagination-container {
+      flex: 1;
+
+      .dex-list-pagination {
+        margin-top: 0;
+        padding-top: 8px;
+      }
+    }
+  }
+
+  .dex-list-title {
+    padding-top: 13px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #FFFFFF;
+    line-height: 22px;
+  }
+
+  .dex-list-pagination-container {
+    text-align: right;
+  }
+
+  .dex-list-pagination {
+    margin-top: 16px;
+    display: inline-block;
+  }
+}
+
+.dex-desktop-container {
+
+  .dex-list-container {
+
+    .dex-table-container {
+
+      .dex-table {
+
+        tr {
+          background: transparent;
+          box-shadow: 0px 1px 0px 0px rgba(39, 52, 73, 1);
+
+          td, th {
+
+            &:first-of-type {
+              padding-left: 0;
+            }
+
+            &:last-of-type {
+              padding-right: 0;
+            }
+          }
+        }
+
+        thead {
+
+          tr {
+            box-shadow: 0px 1px 0px 0px rgba(39, 52, 73, 1);
+          }
+        }
+
+        tbody {
+
+          tr {
+            background: transparent;
+
+            &:nth-of-type(odd) {
+              background-color: transparent;
+            }
+            &:nth-of-type(even) {
+              background-color: transparent;
+            }
+            &:hover {
+              background: transparent;
+            }
+            td {
+              height: 48px;
+              color: #FFFFFF;
+            }
+          }
+        }
+      }
+    }
+
+    .issue-action-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .action-boundary {
+      margin: 0 20px;
+      width: 1px;
+      height: 10px;
+      background: rgba(255, 255, 255, .15);
+    }
+  }
+}
