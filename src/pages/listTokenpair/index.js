@@ -6,6 +6,7 @@ import ClientWrapper from '_src/wrapper/ClientWrapper';
 import { Dialog } from '_component/Dialog';
 import Message from '_src/component/Message';
 import DexDesktopInput from '_component/DexDesktopInput';
+import DexDesktopInputPair from '_component/DexDesktopInputPair';
 import PageURL from '_constants/PageURL';
 import util from '_src/utils/util';
 import Config from '_constants/Config';
@@ -102,22 +103,13 @@ class ListTokenpair extends Component {
         loading={isActionLoading}
       >
         <div className="list-tokenpair-container">
-          <label className="tokenpair-label" htmlFor="">{toLocale('listToken.label')}</label>
-          <div className="tokenpair-input-container">
-            <input
-              type="text"
-              className="tokenpair-input"
-              value={baseAsset}
-              onChange={this.onBaseAssetChange}
-            />
-            <div className="tokenpair-input-separator">/</div>
-            <input
-              type="text"
-              className="tokenpair-input"
-              value={quoteAsset}
-              onChange={this.onQuoteAssetChange}
-            />
-          </div>
+          <DexDesktopInputPair
+            label={toLocale('listToken.label')}
+            firstValue={baseAsset}
+            onFirstChange={this.onBaseAssetChange}
+            secondValue={quoteAsset}
+            onSecondChange={this.onQuoteAssetChange}
+          />
           <DexDesktopInput
             label={toLocale('listToken.initPrice.label')}
             value={initPrice}
