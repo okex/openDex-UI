@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import Message from '_src/component/Message';
-import SingleInputDialog from '_component/SingleInputDialog';
+import SingleInputDialog from '_component/ActionDialog/SingleInputDialog';
 import ClientWrapper from '_src/wrapper/ClientWrapper';
 import util from '_src/utils/util';
 import { isNumberString, isFunction } from '_src/utils/type';
@@ -14,7 +14,7 @@ const showError = () => {
 };
 
 @ClientWrapper
-class MintDialog extends Component {
+class BurnDialog extends Component {
   constructor() {
     super();
     this.state = {
@@ -33,16 +33,16 @@ class MintDialog extends Component {
     });
   }
 
-  onMint = () => {
+  onBurn = () => {
     const {
-      okchainClient, token, beforeMint, afterMint
+      okchainClient, token, beforeBurn, afterBurn
     } = this.props;
-    isFunction(beforeMint) && beforeMint();
+    isFunction(beforeBurn) && beforeBurn();
     const { value } = this.state;
     const amount = util.precisionInput(value);
-    okchainClient.sendTokenMintTransaction(token, amount).then((res) => {
+    okchainClient.sendTokenBurnTransaction(token, amount).then((res) => {
       this.setState({ value: '' });
-      this.props.afterMint();
+      isFunction(afterBurn) && afterBurn();
       const { result, status } = res;
       const { txhash } = result;
       console.log(res);
@@ -54,7 +54,7 @@ class MintDialog extends Component {
           className: 'desktop-success-dialog',
           confirmText: 'Get Detail',
           theme: 'dark',
-          title: 'Mint success！',
+          title: 'Burn success！',
           windowStyle: {
             background: '#112F62'
           },
@@ -66,21 +66,21 @@ class MintDialog extends Component {
       }
     }).catch((err) => {
       console.log(err);
-      isFunction(afterMint) && afterMint();
+      isFunction(afterBurn) && afterBurn();
       showError();
       this.setState({ value: '' });
     });
   }
 
   onPwdSuccess = () => {
-    this.onMint();
+    this.onBurn();
   }
 
-  handleMint = () => {
+  handleBurn = () => {
     const { value } = this.state;
     if (isNumberString(value)) {
       this.props.onClose();
-      this.props.checkPK(this.onMint);
+      this.props.checkPK(this.onBurn);
     } else {
       Message.error({
         content: '输入类型错误，请重新输入'
@@ -97,14 +97,14 @@ class MintDialog extends Component {
         <SingleInputDialog
           value={value}
           onChange={this.onChange}
-          title="Mint"
+          title="Burn"
           visible={visible}
           onClose={this.onClose}
-          onConfirm={this.handleMint}
+          onConfirm={this.handleBurn}
         />
       </Fragment>
     );
   }
 }
 
-export default MintDialog;
+export default BurnDialog;

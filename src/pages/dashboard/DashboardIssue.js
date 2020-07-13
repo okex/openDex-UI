@@ -1,8 +1,7 @@
 /* eslint-disable camelcase */
 import React, { Component, Fragment } from 'react';
 import { toLocale } from '_src/locale/react-locale';
-import MintDialog from '_component/MintDialog';
-import BurnDialog from '_component/BurnDialog';
+import { MintDialog, BurnDialog } from '_component/ActionDialog';
 import history from '_src/utils/history';
 import PageURL from '_constants/PageURL';
 import { getIssueCols } from '_src/utils/table';

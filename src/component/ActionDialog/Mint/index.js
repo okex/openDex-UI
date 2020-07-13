@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import Message from '_src/component/Message';
-import SingleInputDialog from '_component/SingleInputDialog';
+import SingleInputDialog from '_component/ActionDialog/SingleInputDialog';
 import ClientWrapper from '_src/wrapper/ClientWrapper';
 import util from '_src/utils/util';
 import { isNumberString, isFunction } from '_src/utils/type';
@@ -14,7 +14,7 @@ const showError = () => {
 };
 
 @ClientWrapper
-class BurnDialog extends Component {
+class MintDialog extends Component {
   constructor() {
     super();
     this.state = {
@@ -33,19 +33,18 @@ class BurnDialog extends Component {
     });
   }
 
-  onBurn = () => {
+  onMint = () => {
     const {
-      okchainClient, token, beforeBurn, afterBurn
+      okchainClient, token, beforeMint, afterMint
     } = this.props;
-    isFunction(beforeBurn) && beforeBurn();
+    isFunction(beforeMint) && beforeMint();
     const { value } = this.state;
     const amount = util.precisionInput(value);
-    okchainClient.sendTokenBurnTransaction(token, amount).then((res) => {
+    okchainClient.sendTokenMintTransaction(token, amount).then((res) => {
       this.setState({ value: '' });
-      isFunction(afterBurn) && afterBurn();
+      this.props.afterMint();
       const { result, status } = res;
       const { txhash } = result;
-      console.log(res);
       const log = JSON.parse(result.raw_log);
       if (status !== 200 || (log && log.code)) {
         showError();
@@ -54,7 +53,7 @@ class BurnDialog extends Component {
           className: 'desktop-success-dialog',
           confirmText: 'Get Detail',
           theme: 'dark',
-          title: 'Burn success！',
+          title: 'Mint success！',
           windowStyle: {
             background: '#112F62'
           },
@@ -66,21 +65,21 @@ class BurnDialog extends Component {
       }
     }).catch((err) => {
       console.log(err);
-      isFunction(afterBurn) && afterBurn();
+      isFunction(afterMint) && afterMint();
       showError();
       this.setState({ value: '' });
     });
   }
 
   onPwdSuccess = () => {
-    this.onBurn();
+    this.onMint();
   }
 
-  handleBurn = () => {
+  handleMint = () => {
     const { value } = this.state;
     if (isNumberString(value)) {
       this.props.onClose();
-      this.props.checkPK(this.onBurn);
+      this.props.checkPK(this.onMint);
     } else {
       Message.error({
         content: '输入类型错误，请重新输入'
@@ -97,14 +96,14 @@ class BurnDialog extends Component {
         <SingleInputDialog
           value={value}
           onChange={this.onChange}
-          title="Burn"
+          title="Mint"
           visible={visible}
           onClose={this.onClose}
-          onConfirm={this.handleBurn}
+          onConfirm={this.handleMint}
         />
       </Fragment>
     );
   }
 }
 
-export default BurnDialog;
+export default MintDialog;
