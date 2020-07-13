@@ -17,8 +17,8 @@ const showError = () => {
   });
 };
 
-@ClientWrapper
 @withRouter
+@ClientWrapper
 class ListTokenpair extends Component {
   constructor() {
     super();
