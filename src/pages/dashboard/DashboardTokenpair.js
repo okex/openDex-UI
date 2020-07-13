@@ -1,48 +1,10 @@
-import React, { Component } from 'react';
-import { calc } from '_component/okit';
+import React, { Component, Fragment } from 'react';
+import { AddDepositsDialog, WithdrawDepositsDialog } from '_component/ActionDialog';
 import ont from '_src/utils/dataProxy';
 import URL from '_constants/URL';
 import { toLocale } from '_src/locale/react-locale';
-import util from '_src/utils/util';
+import { getDashboardTokenPairCols } from '_src/utils/table';
 import DashboardSection from './DashboardSection';
-
-const depositCols = [
-  {
-    title: toLocale('tokenPair_column_tokenPair'),
-    key: 'product',
-    render: (text) => {
-      return util.getShortName(text);
-    }
-  },
-  {
-    title: toLocale('tokenPair_column_birth'),
-    key: 'block_height',
-  },
-  {
-    title: toLocale('tokenPair_column_deposit'),
-    key: 'deposits',
-    render: (text) => {
-      return calc.showFloorTruncation(text.amount, 8, false);
-    }
-  },
-  {
-    title: toLocale('tokenPair_column_rank'),
-    key: 'rank',
-  },
-  {
-    title: '',
-    key: 'add',
-    render: (text, data) => {
-      return (
-        <span
-          className="td-action"
-        >
-          {toLocale('tokenPair_cell_add')}
-        </span>
-      );
-    }
-  }
-];
 
 class DashboardTokenpair extends Component {
   constructor() {
@@ -50,6 +12,9 @@ class DashboardTokenpair extends Component {
     this.state = {
       loading: false,
       deposits: [],
+      isShowAddDialog: false,
+      isShowWithdrawDialog: false,
+      project: '',
     };
     this.addr = window.OK_GLOBAL.senderAddr;
   }
@@ -58,6 +23,44 @@ class DashboardTokenpair extends Component {
     if (this.addr) {
       this.fetchAccountDeposit();
     }
+  }
+
+  onAddOpen = (project) => {
+    return () => {
+      this.setState({
+        isShowAddDialog: true,
+        project,
+      });
+    };
+  }
+
+  onAddClose = () => {
+    this.setState({
+      isShowAddDialog: false,
+    });
+  }
+
+  onWithdrawOpen = (project) => {
+    return () => {
+      this.setState({
+        isShowWithdrawDialog: true,
+        project,
+      });
+    };
+  }
+
+  onWithdrawClose = () => {
+    this.setState({
+      isShowWithdrawDialog: false
+    });
+  }
+
+  afterAddOrWithdraw = () => {
+    this.props.afterAddOrWithdraw();
+    this.setState({
+      project: ''
+    });
+    this.fetchAccountDeposit();
   }
 
   fetchAccountDeposit = () => {
@@ -76,16 +79,35 @@ class DashboardTokenpair extends Component {
   }
 
   render() {
-    const { loading, deposits } = this.state;
+    const { beforeAddOrWithdraw } = this.props;
+    const {
+      loading, deposits, isShowAddDialog, isShowWithdrawDialog, project
+    } = this.state;
     return (
-      <DashboardSection
-        title={toLocale('dashboard_tokenPair_title')}
-        columns={depositCols}
-        dataSource={deposits}
-        rowKey="product"
-        isLoading={loading}
-        empty={toLocale('tokenPair_emtpy')}
-      />
+      <Fragment>
+        <DashboardSection
+          title={toLocale('dashboard_tokenPair_title')}
+          columns={getDashboardTokenPairCols({ add: this.onAddOpen, withdraw: this.onWithdrawOpen })}
+          dataSource={deposits}
+          rowKey="product"
+          isLoading={loading}
+          empty={toLocale('tokenPair_emtpy')}
+        />
+        <AddDepositsDialog
+          visible={isShowAddDialog}
+          onClose={this.onAddClose}
+          project={project}
+          beforeAdd={beforeAddOrWithdraw}
+          afterAdd={this.afterAddOrWithdraw}
+        />
+        <WithdrawDepositsDialog
+          visible={isShowWithdrawDialog}
+          onClose={this.onWithdrawClose}
+          project={project}
+          beforeWithdraw={beforeAddOrWithdraw}
+          afterWithdraw={this.afterAddOrWithdraw}
+        />
+      </Fragment>
     );
   }
 }

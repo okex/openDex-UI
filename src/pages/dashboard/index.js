@@ -28,8 +28,12 @@ class Dashboard extends Component {
     }
   }
 
-  beforeMintOrBurn = () => {
+  showActionLoading = () => {
     this.setState({ isActionLoading: true });
+  }
+
+  hideActionLoading = () => {
+    this.setState({ isActionLoading: false });
   }
 
   afterMintOrBurn = () => {
@@ -82,11 +86,14 @@ class Dashboard extends Component {
             onTransferSuccess={this.fetchAccounts}
           />
           <DashboardTransaction />
-          <DashboardTokenpair />
+          <DashboardTokenpair
+            beforeAddOrWithdraw={this.showActionLoading}
+            afterAddOrWithdraw={this.hideActionLoading}
+          />
           <DashboardIssue
             tokens={tokens}
             loading={isTokensLoading}
-            beforeMintOrBurn={this.beforeMintOrBurn}
+            beforeMintOrBurn={this.showActionLoading}
             afterMintOrBurn={this.afterMintOrBurn}
           />
         </div>

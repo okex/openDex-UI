@@ -13,7 +13,7 @@ const showError = () => {
 };
 
 @ClientWrapper
-class BurnDialog extends Component {
+class WithdrawDepositsDialog extends Component {
   constructor() {
     super();
     this.state = {
@@ -32,41 +32,41 @@ class BurnDialog extends Component {
     });
   }
 
-  onBurn = () => {
+  onWithdraw = () => {
     const {
-      okchainClient, token, beforeBurn, afterBurn
+      okchainClient, project, beforeWithdraw, afterWithdraw
     } = this.props;
-    isFunction(beforeBurn) && beforeBurn();
+    isFunction(beforeWithdraw) && beforeWithdraw();
     const { value } = this.state;
     const amount = util.precisionInput(value);
-    okchainClient.sendTokenBurnTransaction(token, amount).then((res) => {
+    okchainClient.sendWithdrawProductDepositTransaction(amount, project).then((res) => {
       this.setState({ value: '' });
-      isFunction(afterBurn) && afterBurn();
+      isFunction(afterWithdraw) && afterWithdraw();
       const { result, status } = res;
       const { txhash } = result;
       const log = JSON.parse(result.raw_log);
       if (status !== 200 || (log && log.code)) {
         showError();
       } else {
-        showSuccessDialog('Burn success！', txhash);
+        showSuccessDialog('Withdraw deposits success！', txhash);
       }
     }).catch((err) => {
       console.log(err);
-      isFunction(afterBurn) && afterBurn();
+      isFunction(afterWithdraw) && afterWithdraw();
       showError();
       this.setState({ value: '' });
     });
   }
 
   onPwdSuccess = () => {
-    this.onBurn();
+    this.onWithdraw();
   }
 
-  handleBurn = () => {
+  handleWithdraw = () => {
     const { value } = this.state;
     if (isNumberString(value)) {
       this.props.onClose();
-      this.props.checkPK(this.onBurn);
+      this.props.checkPK(this.onWithdraw);
     } else {
       Message.error({
         content: '输入类型错误，请重新输入'
@@ -83,14 +83,14 @@ class BurnDialog extends Component {
         <SingleInputDialog
           value={value}
           onChange={this.onChange}
-          title="Burn"
+          title="Withdraw deposits"
           visible={visible}
           onClose={this.onClose}
-          onConfirm={this.handleBurn}
+          onConfirm={this.handleWithdraw}
         />
       </Fragment>
     );
   }
 }
 
-export default BurnDialog;
+export default WithdrawDepositsDialog;

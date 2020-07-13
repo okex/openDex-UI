@@ -1,11 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import Message from '_src/component/Message';
 import SingleInputDialog from '_component/ActionDialog/SingleInputDialog';
+import showSuccessDialog from '_component/ActionDialog/successDialog';
 import ClientWrapper from '_src/wrapper/ClientWrapper';
 import util from '_src/utils/util';
 import { isNumberString, isFunction } from '_src/utils/type';
-import Config from '_constants/Config';
-import { Dialog } from '_component/Dialog';
 
 const showError = () => {
   Message.error({
@@ -42,26 +41,14 @@ class MintDialog extends Component {
     const amount = util.precisionInput(value);
     okchainClient.sendTokenMintTransaction(token, amount).then((res) => {
       this.setState({ value: '' });
-      this.props.afterMint();
+      isFunction(afterMint) && afterMint();
       const { result, status } = res;
       const { txhash } = result;
       const log = JSON.parse(result.raw_log);
       if (status !== 200 || (log && log.code)) {
         showError();
       } else {
-        const dialog = Dialog.success({
-          className: 'desktop-success-dialog',
-          confirmText: 'Get Detail',
-          theme: 'dark',
-          title: 'Mint success！',
-          windowStyle: {
-            background: '#112F62'
-          },
-          onConfirm: () => {
-            window.open(`${Config.okchain.browserUrl}/tx/${txhash}`);
-            dialog.destroy();
-          },
-        });
+        showSuccessDialog('Mint success！', txhash);
       }
     }).catch((err) => {
       console.log(err);
