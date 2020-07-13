@@ -16,7 +16,6 @@ class DexList extends Component {
       columns, dataSource, rowKey, isLoading, empty,
       total, page, pageSize, onChange,
     } = this.props;
-    console.log(total);
 
     return (
       <div className="dex-list-container">
@@ -41,17 +40,21 @@ class DexList extends Component {
           isLoading={isLoading}
           empty={<div>{empty}</div>}
         />
-        <div className="dex-list-pagination-container">
-          <Pagination
-            className="dex-list-pagination"
-            total={total}
-            pageSize={pageSize}
-            onChange={onChange}
-            current={page}
-            hideOnSinglePage={false}
-            dark
-          />
-        </div>
+        {
+          total > 0 && (
+            <div className="dex-list-pagination-container">
+              <Pagination
+                className="dex-list-pagination"
+                total={total}
+                pageSize={pageSize}
+                onChange={onChange}
+                current={page}
+                hideOnSinglePage={false}
+                dark
+              />
+            </div>
+          )
+        }
       </div>
     );
   }

@@ -10,7 +10,7 @@ import URL from '_constants/URL';
 import ont from '_src/utils/dataProxy';
 import './index.less';
 
-const defaultPageSize = 20;
+const defaultPageSize = 10;
 
 class IssueDetail extends Component {
   constructor() {
@@ -69,7 +69,10 @@ class IssueDetail extends Component {
   }
 
   onSearchChange = (e) => {
-    this.setState({ searchText: e.target.value });
+    this.setState({
+      searchText: e.target.value,
+      page: 1,
+    });
   }
 
   beforeMintOrBurn = () => {
@@ -105,10 +108,11 @@ class IssueDetail extends Component {
       searchText,
     } = this.state;
     const pageSize = defaultPageSize;
-    const tokens = issueTokens.filter((token) => {
+    const filterTokens = issueTokens.filter((token) => {
       return token.symbol.indexOf(searchText.trim().toLowerCase().toString()) > -1;
     });
-    const total = tokens.length;
+    const total = filterTokens.length;
+    const renderTokens = filterTokens.slice((page - 1) * pageSize, page * pageSize);
 
     return (
       <DexDesktopContainer
@@ -133,7 +137,7 @@ class IssueDetail extends Component {
             );
           }}
           columns={getIssueCols({ mint: this.onMintOpen, burn: this.onBurnOpen })}
-          dataSource={tokens}
+          dataSource={renderTokens}
           rowKey="symbol"
           isLoading={loading}
           empty={toLocale('issue_empty')}
