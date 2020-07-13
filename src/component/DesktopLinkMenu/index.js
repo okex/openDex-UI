@@ -65,7 +65,7 @@ class DesktopLinkMenu extends Component {
                 <div className="link-sub-menu">
                   <div className="link-submenu-item" onClick={this.toRoute(PageURL.registerPage)}>{toLocale('linkMenu.register')}</div>
                   <div className="link-submenu-item" onClick={this.toRoute(PageURL.listTokenpairPage)}>{toLocale('linkMenu.tokenPair')}</div>
-                  <a href="" className="link-submenu-item">{toLocale('linkMenu.deposits')}</a>
+                  <div className="link-submenu-item" onClick={this.toRoute(PageURL.tokenpairDetailPage)}>{toLocale('linkMenu.deposits')}</div>
                   <a href="" className="link-submenu-item">{toLocale('linkMenu.handlingFee')}</a>
                 </div>
               </div>

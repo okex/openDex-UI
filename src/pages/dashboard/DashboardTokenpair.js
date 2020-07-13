@@ -4,6 +4,8 @@ import ont from '_src/utils/dataProxy';
 import URL from '_constants/URL';
 import { toLocale } from '_src/locale/react-locale';
 import { getDashboardTokenPairCols } from '_src/utils/table';
+import history from '_src/utils/history';
+import PageURL from '_constants/PageURL';
 import DashboardSection from './DashboardSection';
 
 class DashboardTokenpair extends Component {
@@ -78,6 +80,10 @@ class DashboardTokenpair extends Component {
     });
   }
 
+  toTokenpairDetail = () => {
+    history.push(PageURL.tokenpairDetailPage);
+  }
+
   render() {
     const { beforeAddOrWithdraw } = this.props;
     const {
@@ -92,6 +98,7 @@ class DashboardTokenpair extends Component {
           rowKey="product"
           isLoading={loading}
           empty={toLocale('tokenPair_emtpy')}
+          onClickMore={this.toTokenpairDetail}
         />
         <AddDepositsDialog
           visible={isShowAddDialog}
