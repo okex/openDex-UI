@@ -1,9 +1,31 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as NodeActions from '_src/redux/actions/NodeAction';
 import { Dialog } from '_component/Dialog';
 import iconNodeAdd from '_src/assets/images/icon_node_add.png';
+import { MAX_LATENCY } from '_constants/Node';
+import { randomStrNumber } from '_src/utils/random';
 import NodeItem from './NodeItem';
 import './TabCustomerlize.less';
 
+function mapStateToProps(state) { // 绑定redux中相关state
+  const {
+    currentNode, customList
+  } = state.NodeStore;
+  return {
+    currentNode,
+    customList,
+  };
+}
+
+function mapDispatchToProps(dispatch) { // 绑定action，以便向redux发送action
+  return {
+    nodeActions: bindActionCreators(NodeActions, dispatch)
+  };
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
 class TabCustomerlize extends Component {
   constructor() {
     super();
@@ -13,10 +35,6 @@ class TabCustomerlize extends Component {
       valueWs: '',
       valueHttp: '',
     };
-  }
-
-  onDelete = () => {
-    console.log('delete customerlize node');
   }
 
   onValueNameChange = (e) => {
@@ -38,9 +56,27 @@ class TabCustomerlize extends Component {
 
   onConfirm = () => {
     const { valueName, valueWs, valueHttp } = this.state;
-    console.log(valueName);
-    console.log(valueWs);
-    console.log(valueHttp);
+    let id = '';
+    const { customList } = this.props;
+    let isExist = true;
+    const checkExist = (node) => {
+      return node.id === id;
+    };
+    while (isExist) {
+      id = randomStrNumber(8);
+      isExist = customList.some(checkExist);
+    }
+    const node = {
+      id,
+      name: valueName,
+      wsUrl: valueWs,
+      httpUrl: valueHttp,
+      latency: MAX_LATENCY,
+    };
+    const newList = customList.slice();
+    newList.push(node);
+    const { nodeActions } = this.props;
+    nodeActions.updateCustomList(newList);
     this.closeDialog();
     this.clearInputValues();
   }
@@ -61,10 +97,38 @@ class TabCustomerlize extends Component {
     });
   }
 
+  handleChange = (node) => {
+    return () => {
+      const { nodeActions } = this.props;
+      nodeActions.updateCurrentNode(node);
+    };
+  }
+
+  handleDelete = (node) => {
+    return (e) => {
+      e.stopPropagation();
+      const { customList } = this.props;
+      const newList = customList.slice();
+      const idx = newList.findIndex((n) => {
+        return n.id === node.id;
+      });
+      if (idx > -1) {
+        newList.splice(idx, 1);
+        const { nodeActions } = this.props;
+        nodeActions.updateCustomList(newList);
+      }
+    };
+  }
+
   render() {
     const {
       isDialogShow, valueName, valueWs, valueHttp
     } = this.state;
+    const { customList, currentNode } = this.props;
+    const showList = customList.filter((node) => {
+      return currentNode.id !== node.id;
+    });
+
     return (
       <div className="node-customerlize-container">
         <div className="customerlize-add" onClick={this.showDialog}>
@@ -98,15 +162,33 @@ class TabCustomerlize extends Component {
             <div className="cd-btn cd-btn-confirm" onClick={this.onConfirm}>Confirm</div>
           </div>
         </Dialog>
-        <NodeItem
-          name="Eastern Asia - China - Hangzhou"
-          ws="wss://ws.gdex.top"
-          http="https://www.oklink.com/okchain/v1"
-          delayType={NodeItem.NODE_TYPE.LOW}
-          delayTime={119.84}
-          isRenderDelete
-          onDelete={this.onDelete}
-        />
+        {
+          showList.length > 0 && (
+            <ul className="custom-node-list">
+              {
+                showList.map((node) => {
+                  const {
+                    id, name, wsUrl, httpUrl, latency
+                  } = node;
+                  return (
+                    <li className="node-set-list-item" key={id}>
+                      <NodeItem
+                        name={name}
+                        ws={wsUrl}
+                        http={httpUrl}
+                        delayTime={latency}
+                        disabled={false}
+                        onClick={this.handleChange(node)}
+                        isRenderDelete
+                        onDelete={this.handleDelete(node)}
+                      />
+                    </li>
+                  );
+                })
+              }
+            </ul>
+          )
+        }
       </div>
     );
   }

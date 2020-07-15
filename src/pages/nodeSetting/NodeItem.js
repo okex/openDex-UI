@@ -52,7 +52,7 @@ class NodeItem extends Component {
     const delayTypeTxt = toLocale(`node.delay.type.${delayType}`);
 
     return (
-      <div className="node-set-item">
+      <div className="node-set-item" onClick={this.handleClick} style={{ cursor: disabled ? 'normal' : 'pointer' }}>
         <div className="node-name">{name}</div>
         <div className="node-link">
           <div className="node-link-item one-line">{ws}</div>
@@ -62,7 +62,7 @@ class NodeItem extends Component {
           <div className="node-delay-type">{delayTypeTxt}</div>
           <div className="node-delay-time">{timeUnit(delayTime)}</div>
         </div>
-        <div className="node-icon" onClick={this.handleClick} style={{ cursor: disabled ? 'normal' : 'pointer' }}>
+        <div className="node-icon">
           <Icon className={`icon-node color-${delayType}`} />
         </div>
         {

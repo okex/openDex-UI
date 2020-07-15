@@ -22,3 +22,13 @@ export function updateRemoteList(list) {
     })
   }
 }
+
+export function updateCustomList(list) {
+  return (dispatch) => {
+    storage.set('customList', list);
+    dispatch({
+      type: NodeActionType.UPDATE_CUSTOM_LIST,
+      data: list,
+    })
+  }
+}

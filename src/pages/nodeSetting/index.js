@@ -15,11 +15,12 @@ const loopTime = 10000;
 
 function mapStateToProps(state) { // 绑定redux中相关state
   const {
-    currentNode, remoteList,
+    currentNode, remoteList, customList
   } = state.NodeStore;
   return {
     currentNode,
     remoteList,
+    customList,
   };
 }
 
@@ -39,27 +40,49 @@ class NodeSetting extends Component {
 
   componentDidMount() {
     const fetchNodesLatency = () => {
-      const { remoteList } = this.props;
+      const { remoteList, customList } = this.props;
       const hasVisited = {};
-      remoteList.forEach((node) => {
-        if (!hasVisited[node.wsUrl]) {
-          hasVisited[node.wsUrl] = true;
-          getNodeLatency(node).then((latency) => {
-            const newList = this.props.remoteList.slice();
-            for (let i = 0; i < newList.length; i++) {
-              if (newList[i].wsUrl === node.wsUrl) {
-                newList[i].latency = latency;
-              }
-            }
-            this.props.nodeActions.updateRemoteList(newList);
-            const { currentNode } = this.props;
-            if (currentNode.id === node.id) {
-              this.props.nodeActions.updateCurrentNode({ ...currentNode, latency });
-            }
-          });
+
+      const updateLatency = (list, updateList, updateNode, currentNode, node, latency) => {
+        let hasNode = false;
+        const newList = list.slice();
+        for (let i = 0; i < newList.length; i++) {
+          if (newList[i].wsUrl === node.wsUrl) {
+            newList[i].latency = latency;
+            hasNode = true;
+          }
         }
-      });
+        hasNode && updateList(newList);
+        if (currentNode.wsUrl === node.wsUrl) {
+          updateNode({ ...currentNode, latency });
+        }
+      };
+
+      const updateRemote = (node, latency) => {
+        const { nodeActions, currentNode } = this.props;
+        updateLatency(this.props.remoteList, nodeActions.updateRemoteList, nodeActions.updateCurrentNode, currentNode, node, latency);
+      };
+
+      const updateCustom = (node, latency) => {
+        const { nodeActions, currentNode } = this.props;
+        updateLatency(this.props.customList, nodeActions.updateCustomList, nodeActions.updateCurrentNode, currentNode, node, latency);
+      };
+
+      const fetchListLatency = (list) => {
+        list.forEach((node) => {
+          if (!hasVisited[node.wsUrl]) {
+            hasVisited[node.wsUrl] = true;
+            getNodeLatency(node).then((latency) => {
+              updateRemote(node, latency);
+              updateCustom(node, latency);
+            });
+          }
+        });
+      };
+      fetchListLatency(remoteList);
+      fetchListLatency(customList);
     };
+
     fetchNodesLatency();
     this.timer = setInterval(fetchNodesLatency, loopTime);
   }
@@ -73,13 +96,14 @@ class NodeSetting extends Component {
     const {
       region, country, location, wsUrl, latency, httpUrl
     } = currentNode;
+    const name = currentNode.name || `${region} - ${country} - ${location}`; // custom node or remote node
     return (
       <div className="node-container">
         <h1 className="node-title">{toLocale('node.main.title')}</h1>
         <div className="node-active-container">
           <h2 className="node-active-title">{toLocale('node.active.title')}</h2>
           <NodeItem
-            name={`${region} - ${country} - ${location}`}
+            name={name}
             ws={wsUrl}
             http={httpUrl}
             delayTime={latency}

@@ -15,6 +15,7 @@ const getRenderRemoteList = () => {
 
 const initialState = {
   remoteList: getRenderRemoteList(),
+  customList: storage.get('customList') || [],
   currentNode: storage.get('currentNode') || {
     ...settingsAPIs.DEFAULT_NODE,
     latency: MAX_LATENCY,
@@ -32,6 +33,11 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         remoteList: action.data,
+      };
+    case ActionTypes.UPDATE_CUSTOM_LIST:
+      return {
+        ...state,
+        customList: action.data,
       };
     default:
       return state;

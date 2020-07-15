@@ -44,13 +44,13 @@ class NodeList extends Component {
     return (
       <ul className="node-set-list">
         {
-          showList.map((node, index) => {
+          showList.map((node) => {
             const {
-              region, country, location, wsUrl, latency, httpUrl
+              id, region, country, location, wsUrl, latency, httpUrl
             } = node;
             const name = `${region} - ${country} - ${location}`;
             return (
-              <li className="node-set-list-item" key={index}>
+              <li className="node-set-list-item" key={id}>
                 <NodeItem
                   name={name}
                   ws={wsUrl}
