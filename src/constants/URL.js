@@ -27,5 +27,6 @@ const URL = {
   GET_TRANSACTIONS: `${OKDEX_BASE_URL}/transactions`, // 交易记录
   GET_LATEST_HEIGHT: `${OKDEX_BASE_URL}/latestheight`, // 查询最新高度
   GET_ACCOUNT_DEPOSIT: `${OKDEX_BASE_URL}/dex/deposits`, // 查询对应地址的币对
+  GET_FEES: `${OKDEX_BASE_URL}/dex/fees`, // 查询运营方币对手续费
 };
 export default URL;

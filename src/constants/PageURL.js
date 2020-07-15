@@ -28,4 +28,5 @@ export default {
   dashboardPage: `${contentPath}/dashboard`, // 总览
   issueDetailPage: `${contentPath}/issue`, // 我的币种详情
   tokenpairDetailPage: `${contentPath}/tokenpair`, // tokenpair detail
+  feesPage: `${contentPath}/fees`, // handling fee address
 };

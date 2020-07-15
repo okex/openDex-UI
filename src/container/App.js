@@ -144,6 +144,12 @@ class App extends React.Component {
                   return import('../pages/tokenpairDetail');
                 })}
               />
+              <Route
+                path={PageURL.feesPage}
+                component={Load(() => {
+                  return import('../pages/fees');
+                })}
+              />
               <Redirect
                 from={PageURL.wallet}
                 to={PageURL.walletAssets}
