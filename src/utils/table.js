@@ -4,6 +4,7 @@ import Tooltip from '_component/Tooltip';
 import Icon from '_component/IconLite';
 import { calc } from '_component/okit';
 import { toLocale } from '_src/locale/react-locale';
+import Config from '_constants/Config';
 import util from './util';
 
 export const getIssueCols = ({ mint, burn }) => {
@@ -94,6 +95,9 @@ export const getDashboardTokenPairCols = ({ add, withdraw }) => {
     {
       title: toLocale('tokenPair_column_birth'),
       key: 'block_height',
+      render: (text) => {
+        return <a className="one-line" href={`${Config.okchain.browserUrl}/block/${text}`} target="_blank" rel="noopener noreferrer">{text}</a>;
+      }
     },
     {
       title: toLocale('tokenPair_column_deposit'),
@@ -152,6 +156,9 @@ export const getDetailTokenPairCols = ({ add, withdraw }) => {
     {
       title: toLocale('tokenPair_column_birth'),
       key: 'block_height',
+      render: (text) => {
+        return <a className="one-line" href={`${Config.okchain.browserUrl}/block/${text}`} target="_blank" rel="noopener noreferrer">{text}</a>;
+      }
     },
     {
       title: toLocale('tokenPair_column_deposit'),
