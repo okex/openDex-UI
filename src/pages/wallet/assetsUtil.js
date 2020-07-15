@@ -20,8 +20,6 @@ util.accountsCols = ({ transfer }, { valuationUnit }) => {
       key: 'assetToken',
       render: (text, data) => {
         const { whole_name, symbol } = data;
-        console.log(data);
-        console.log(symbol);
         const whole_nameString = whole_name ? ` (${whole_name})` : '';
         return (
           <div className="symbol-line">

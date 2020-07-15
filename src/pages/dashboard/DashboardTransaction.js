@@ -1,51 +1,11 @@
 import React, { Component } from 'react';
-import moment from 'moment';
 import ont from '_src/utils/dataProxy';
 import { toLocale } from '_src/locale/react-locale';
 import URL from '_constants/URL';
 import history from '_src/utils/history';
 import PageURL from '_constants/PageURL';
-import Config from '_constants/Config';
+import { getTransactionsCols } from '_src/utils/table';
 import DashboardSection from './DashboardSection';
-
-const util = {};
-util.transactionsTypes = [
-  { value: 1, label: toLocale('trade_type_trans') },
-  { value: 2, label: toLocale('trade_type_order') },
-  { value: 3, label: toLocale('trade_type_cancle') },
-];
-const transactionsTypesMap = {};
-util.transactionsTypes.forEach(({ value, label }) => {
-  transactionsTypesMap[value] = label;
-});
-const transactionsCols = [
-  {
-    title: toLocale('trade_column_hash'),
-    key: 'txhash',
-    render: (text) => {
-      return <a className="one-line" href={`${Config.okchain.browserUrl}/tx/${text}`} target="_blank" rel="noopener noreferrer">{text}</a>;
-    }
-  },
-  {
-    title: toLocale('trade_column_time'),
-    key: 'timestamp',
-    render: (text) => {
-      return moment(Number(`${text}000`)).format('MM-DD HH:mm:ss');
-    }
-  },
-  {
-    title: toLocale('trade_column_type'),
-    key: 'type',
-    render: (text) => {
-      return transactionsTypesMap[text] || '';
-    }
-  },
-  {
-    title: toLocale('trade_column_amount'),
-    alignRight: true,
-    key: 'quantity',
-  },
-];
 
 class DashboardTransaction extends Component {
   constructor() {
@@ -95,7 +55,7 @@ class DashboardTransaction extends Component {
     return (
       <DashboardSection
         title={toLocale('dashboard_transaction_title')}
-        columns={transactionsCols}
+        columns={getTransactionsCols()}
         dataSource={transactions.slice(0, 3)}
         rowKey="uniqueKey"
         isLoading={loading}

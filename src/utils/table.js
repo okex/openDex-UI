@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import React, { Fragment } from 'react';
+import moment from 'moment';
 import Tooltip from '_component/Tooltip';
 import Icon from '_component/IconLite';
 import { calc } from '_component/okit';
@@ -190,5 +191,108 @@ export const getDetailTokenPairCols = ({ add, withdraw }) => {
         );
       }
     }
+  ];
+};
+
+export const getAccountsCols = ({ transfer }) => {
+  return [
+    {
+      title: toLocale('assets_column_assets'),
+      key: 'assetToken',
+      render: (text, data) => {
+        const { whole_name, symbol } = data;
+        const whole_nameString = whole_name ? ` (${whole_name})` : '';
+        return (
+          <div className="symbol-line">
+            <Tooltip
+              placement="bottomLeft"
+              overlayClassName="symbol-tooltip"
+              overlay={symbol}
+              maxWidth={400}
+              noUnderline
+            >
+              {text + whole_nameString}
+            </Tooltip>
+          </div>
+        );
+      }
+    },
+    {
+      title: toLocale('assets_column_total'),
+      key: 'total',
+      render: (text) => {
+        return text;
+      }
+    },
+    {
+      title: toLocale('assets_column_balance'),
+      key: 'available',
+      render: (text) => {
+        return calc.showFloorTruncation(text, 8, false);
+      }
+    },
+    {
+      title: toLocale('assets_column_list'),
+      key: 'locked',
+      render: (text) => {
+        return calc.showFloorTruncation(text, 8, false);
+      }
+    },
+    {
+      title: '',
+      key: 'transfer',
+      render: (text, { symbol }) => {
+        return (
+          <span
+            className="td-action"
+            onClick={transfer(symbol)}
+          >
+            {toLocale('assets_trans_btn')}
+          </span>
+        );
+      }
+    },
+  ];
+};
+
+const tempUtil = {};
+tempUtil.transactionsTypes = [
+  { value: 1, label: toLocale('trade_type_trans') },
+  { value: 2, label: toLocale('trade_type_order') },
+  { value: 3, label: toLocale('trade_type_cancle') },
+];
+const transactionsTypesMap = {};
+tempUtil.transactionsTypes.forEach(({ value, label }) => {
+  transactionsTypesMap[value] = label;
+});
+
+export const getTransactionsCols = () => {
+  return [
+    {
+      title: toLocale('trade_column_hash'),
+      key: 'txhash',
+      render: (text) => {
+        return <a className="one-line" href={`${Config.okchain.browserUrl}/tx/${text}`} target="_blank" rel="noopener noreferrer">{text}</a>;
+      }
+    },
+    {
+      title: toLocale('trade_column_time'),
+      key: 'timestamp',
+      render: (text) => {
+        return moment(Number(`${text}000`)).format('MM-DD HH:mm:ss');
+      }
+    },
+    {
+      title: toLocale('trade_column_type'),
+      key: 'type',
+      render: (text) => {
+        return transactionsTypesMap[text] || '';
+      }
+    },
+    {
+      title: toLocale('trade_column_amount'),
+      alignRight: true,
+      key: 'quantity',
+    },
   ];
 };

@@ -1,73 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import { calc } from '_component/okit';
-import Tooltip from '_src/component/Tooltip';
 import { toLocale } from '_src/locale/react-locale';
 import history from '_src/utils/history';
 import PageURL from '_constants/PageURL';
+import { getAccountsCols } from '_src/utils/table';
 import DashboardSection from './DashboardSection';
 import TransferDialog from '../wallet/TransferDialog';
-
-const accountsCols = ({ transfer }) => {
-  // const valuationName = valuationUnit || '--';
-  return [
-    {
-      title: toLocale('assets_column_assets'),
-      key: 'assetToken',
-      render: (text, data) => {
-        const { whole_name, symbol } = data;
-        const whole_nameString = whole_name ? ` (${whole_name})` : '';
-        return (
-          <div className="symbol-line">
-            <Tooltip
-              placement="bottomLeft"
-              overlayClassName="symbol-tooltip"
-              overlay={symbol}
-              maxWidth={400}
-              noUnderline
-            >
-              {text + whole_nameString}
-            </Tooltip>
-          </div>
-        );
-      }
-    },
-    {
-      title: toLocale('assets_column_total'),
-      key: 'total',
-      render: (text) => {
-        return text;
-      }
-    },
-    {
-      title: toLocale('assets_column_balance'),
-      key: 'available',
-      render: (text) => {
-        return calc.showFloorTruncation(text, 8, false);
-      }
-    },
-    {
-      title: toLocale('assets_column_list'),
-      key: 'locked',
-      render: (text) => {
-        return calc.showFloorTruncation(text, 8, false);
-      }
-    },
-    {
-      title: '',
-      key: 'transfer',
-      render: (text, { symbol }) => {
-        return (
-          <span
-            className="td-action"
-            onClick={transfer(symbol)}
-          >
-            {toLocale('assets_trans_btn')}
-          </span>
-        );
-      }
-    },
-  ];
-};
 
 class DashboardAsset extends Component {
   constructor() {
@@ -154,7 +92,7 @@ class DashboardAsset extends Component {
       <Fragment>
         <DashboardSection
           title={toLocale('dashboard_asset_title')}
-          columns={accountsCols({ transfer: this.openTransfer }, { valuationUnit })}
+          columns={getAccountsCols({ transfer: this.openTransfer }, { valuationUnit })}
           dataSource={fCurrencies}
           rowKey="symbol"
           isLoading={loading}
