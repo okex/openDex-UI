@@ -4,7 +4,7 @@ import NodeActionType from '../actionTypes/NodeActionType';
 /**
  * 更新当前节点
  */
-export function updateCurrenntNode(node) {
+export function updateCurrentNode(node) {
   return (dispatch) => {
     storage.set('currentNode', node);
     dispatch({

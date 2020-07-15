@@ -58,7 +58,7 @@ class DesktopNodeMenu extends Component {
   onNodeClick = (node) => {
     return () => {
       const { nodeActions } = this.props;
-      nodeActions.updateCurrenntNode(node);
+      nodeActions.updateCurrentNode(node);
     };
   }
 
@@ -71,7 +71,7 @@ class DesktopNodeMenu extends Component {
     const { latency } = currentNode;
     const delayType = getDelayType(latency);
     const settingsNodeList = remoteList.filter((node) => {
-      return node.wsUrl !== currentNode.wsUrl;
+      return node.id !== currentNode.id;
     }).slice(0, 3);
     return (
       <div className="desktop-node-menu-wrapper">

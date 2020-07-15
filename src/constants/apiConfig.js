@@ -2,23 +2,21 @@
 const httpUrl = navigator.userAgent.includes('Electron') && window.location.protocol.includes('file') ? 'https://www.okex.com' : 'http://127.0.0.1:7777';
 const wsUrl = 'wss://dexcomreal.bafang.com:8443/ws/v3';
 
+const DEFAULT_NODE = {
+  id: '001',
+  wsUrl,
+  region: 'Asia',
+  httpUrl,
+  country: 'China',
+  location: "Hong Kong",
+};
+
 export const settingsAPIs = {
-  DEFAULT_NODE: {
-    wsUrl,
-    region: 'Asia',
-    httpUrl,
-    country: 'China',
-    location: "Hong Kong",
-  },
+  DEFAULT_NODE,
   NODE_LIST: [
+    DEFAULT_NODE,
     {
-      wsUrl,
-      httpUrl,
-      region: 'Asia',
-      country: 'China',
-      location: "Hong Kong",
-    },
-    {
+      id: '002',
       wsUrl,
       httpUrl,
       region: 'Asia',
@@ -26,6 +24,7 @@ export const settingsAPIs = {
       location: "Shanghai",
     },
     {
+      id: '003',
       wsUrl,
       httpUrl,
       region: 'Asia',

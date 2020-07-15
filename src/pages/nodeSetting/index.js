@@ -40,21 +40,24 @@ class NodeSetting extends Component {
   componentDidMount() {
     const fetchNodesLatency = () => {
       const { remoteList } = this.props;
+      const hasVisited = {};
       remoteList.forEach((node) => {
-        getNodeLatency(node).then((latency) => {
-          const newList = this.props.remoteList.slice();
-          for (let i = 0; i < newList.length; i++) {
-            if (newList[i].wsUrl === node.wsUrl) {
-              newList[i].latency = latency;
-              break;
+        if (!hasVisited[node.wsUrl]) {
+          hasVisited[node.wsUrl] = true;
+          getNodeLatency(node).then((latency) => {
+            const newList = this.props.remoteList.slice();
+            for (let i = 0; i < newList.length; i++) {
+              if (newList[i].wsUrl === node.wsUrl) {
+                newList[i].latency = latency;
+              }
             }
-          }
-          this.props.nodeActions.updateRemoteList(newList);
-          const { currentNode } = this.props;
-          if (currentNode.wsUrl === node.wsUrl) {
-            this.props.nodeActions.updateCurrenntNode({ ...currentNode, latency });
-          }
-        });
+            this.props.nodeActions.updateRemoteList(newList);
+            const { currentNode } = this.props;
+            if (currentNode.id === node.id) {
+              this.props.nodeActions.updateCurrentNode({ ...currentNode, latency });
+            }
+          });
+        }
       });
     };
     fetchNodesLatency();
@@ -84,7 +87,7 @@ class NodeSetting extends Component {
           />
         </div>
         <div className="node-select-container">
-          <Tabs defaultActiveKey="3" prefixCls="node-select">
+          <Tabs defaultActiveKey="1" prefixCls="node-select">
             <TabPane tab={toLocale('node.tab.wellenow')} key="1">
               <NodeList />
             </TabPane>

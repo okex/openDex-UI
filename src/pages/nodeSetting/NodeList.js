@@ -31,14 +31,14 @@ class NodeList extends Component {
   handleChange = (node) => {
     return () => {
       const { nodeActions } = this.props;
-      nodeActions.updateCurrenntNode(node);
+      nodeActions.updateCurrentNode(node);
     };
   }
 
   render() {
     const { remoteList, currentNode } = this.props;
     const showList = remoteList.filter((node) => {
-      return currentNode.wsUrl !== node.wsUrl;
+      return currentNode.id !== node.id;
     });
 
     return (
