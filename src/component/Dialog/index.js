@@ -1,8 +1,3 @@
-/**
- * 弹框
- * Created by yuxin.zhang on 2018/1/1.
- */
-
 import Dialog from './Dialog';
 import DialogOneBtn from './DialogOneBtn';
 import DialogTwoBtn from './DialogTwoBtn';

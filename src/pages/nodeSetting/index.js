@@ -84,7 +84,7 @@ class NodeSetting extends Component {
           />
         </div>
         <div className="node-select-container">
-          <Tabs defaultActiveKey="1" prefixCls="node-select">
+          <Tabs defaultActiveKey="3" prefixCls="node-select">
             <TabPane tab={toLocale('node.tab.wellenow')} key="1">
               <NodeList />
             </TabPane>

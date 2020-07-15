@@ -9,11 +9,40 @@ class TabCustomerlize extends Component {
     super();
     this.state = {
       isDialogShow: false,
+      valueName: '',
+      valueWs: '',
+      valueHttp: '',
     };
   }
 
   onDelete = () => {
     console.log('delete customerlize node');
+  }
+
+  onValueNameChange = (e) => {
+    this.setState({ valueName: e.target.value });
+  }
+
+  onValueWsChange = (e) => {
+    this.setState({ valueWs: e.target.value });
+  }
+
+  onValueHttpChange = (e) => {
+    this.setState({ valueHttp: e.target.value });
+  }
+
+  onCancel = () => {
+    this.closeDialog();
+    this.clearInputValues();
+  }
+
+  onConfirm = () => {
+    const { valueName, valueWs, valueHttp } = this.state;
+    console.log(valueName);
+    console.log(valueWs);
+    console.log(valueHttp);
+    this.closeDialog();
+    this.clearInputValues();
   }
 
   showDialog = () => {
@@ -24,8 +53,18 @@ class TabCustomerlize extends Component {
     this.setState({ isDialogShow: false });
   }
 
+  clearInputValues = () => {
+    this.setState({
+      valueName: '',
+      valueWs: '',
+      valueHttp: '',
+    });
+  }
+
   render() {
-    const { isDialogShow } = this.state;
+    const {
+      isDialogShow, valueName, valueWs, valueHttp
+    } = this.state;
     return (
       <div className="node-customerlize-container">
         <div className="customerlize-add" onClick={this.showDialog}>
@@ -35,10 +74,30 @@ class TabCustomerlize extends Component {
           </div>
         </div>
         <Dialog
-          theme="base-dialog pwd-dialog"
+          theme="base-dialog customerlize-dialog"
           visible={isDialogShow}
           onClose={this.closeDialog}
-        />
+          title="Add Node"
+        >
+          <div className="cd-main">
+            <div className="cd-input-container">
+              <label className="cd-label">Name</label>
+              <input className="cd-input" type="text" value={valueName} onChange={this.onValueNameChange} />
+            </div>
+            <div className="cd-input-container">
+              <label className="cd-label">WS</label>
+              <input className="cd-input" type="text" value={valueWs} onChange={this.onValueWsChange} />
+            </div>
+            <div className="cd-input-container">
+              <label className="cd-label">RPC</label>
+              <input className="cd-input" type="text" value={valueHttp} onChange={this.onValueHttpChange} />
+            </div>
+          </div>
+          <div className="cd-btn-container">
+            <div className="cd-btn cd-btn-cancel">Cancel</div>
+            <div className="cd-btn cd-btn-confirm" onClick={this.onConfirm}>Confirm</div>
+          </div>
+        </Dialog>
         <NodeItem
           name="Eastern Asia - China - Hangzhou"
           ws="wss://ws.gdex.top"
