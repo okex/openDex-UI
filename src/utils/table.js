@@ -296,3 +296,31 @@ export const getTransactionsCols = () => {
     },
   ];
 };
+
+export const getFeesCols = () => {
+  return [
+    {
+      title: 'HandlingFeeAddress',
+      key: 'handling_fee_addr',
+    },
+    {
+      title: 'Tokenpair',
+      key: 'product',
+    },
+    {
+      title: 'OrderID',
+      key: 'order_id',
+    },
+    {
+      title: 'Date',
+      key: 'timestamp',
+    },
+    {
+      title: 'HandlingFee',
+      key: 'fee',
+      render: (text) => {
+        return moment(Number(`${text}000`)).format('MM-DD HH:mm:ss');
+      }
+    }
+  ];
+};

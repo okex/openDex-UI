@@ -1,4 +1,6 @@
+/* eslint-disable camelcase */
 import React, { Component } from 'react';
+import Message from '_src/component/Message';
 import DexDesktopContainer from '_component/DexDesktopContainer';
 import DexDesktopInput from '_component/DexDesktopInput';
 import DexDesktopInputPair from '_component/DexDesktopInputPair';
@@ -10,21 +12,23 @@ import URL from '_constants/URL';
 import { getDetailTokenPairCols } from '_src/utils/table';
 import './index.less';
 
+const DEFAULT_PAGINATION = {
+  page: 1,
+  total: 0,
+  per_page: 10,
+};
+
 class TokenpairDetail extends Component {
   constructor() {
     super();
     this.state = {
       isActionLoading: false,
       loading: false,
+      address: window.OK_GLOBAL.senderAddr,
       baseAsset: '',
       quoteAsset: '',
-      operator: '',
       tokenpairs: [],
-      pagination: {
-        page: 1,
-        total: 10,
-        per_page: 10,
-      },
+      pagination: DEFAULT_PAGINATION,
       isShowAddDialog: false,
       isShowWithdrawDialog: false,
       project: '',
@@ -32,7 +36,7 @@ class TokenpairDetail extends Component {
   }
 
   componentDidMount() {
-    this.fetchTokenpairs();
+    this.fetchTokenpairsByState();
   }
 
   onBaseAssetChange = (e) => {
@@ -43,17 +47,16 @@ class TokenpairDetail extends Component {
     this.setState({ quoteAsset: e.target.value });
   }
 
-  onOperatorChange = (e) => {
-    this.setState({ operator: e.target.value });
+  onAddressChange = (e) => {
+    this.setState({ address: e.target.value });
   }
 
   onPageChange = (pageSize) => {
-    this.setState({
-      pagination: {
-        ...this.state.pagination,
-        page: pageSize
-      }
-    });
+    const pagination = {
+      ...this.state.pagination,
+      page: pageSize,
+    };
+    this.fetchTokenpairs(pagination);
   }
 
   onAddOpen = (project) => {
@@ -95,27 +98,44 @@ class TokenpairDetail extends Component {
       isActionLoading: false,
       project: ''
     });
-    this.fetchTokenpairs();
+    this.fetchTokenpairsByState();
   }
 
-  fetchTokenpairs = () => {
+  fetchTokenpairsByState = () => {
     const { pagination } = this.state;
-    const params = {
-      page: pagination.page,
-      per_page: pagination.per_page,
-    };
-    this.setState({ loading: true });
-    ont.get(`${URL.GET_ACCOUNT_DEPOSIT}/${window.OK_GLOBAL.senderAddr}`, { params }).then(({ data }) => {
-      this.setState({ loading: false, tokenpairs: data });
-    }).catch(() => {
-      this.setState({ loading: false });
-    });
+    this.fetchTokenpairs(pagination);
+  }
+
+  fetchTokenpairs = (pagination) => {
+    const { page, per_page } = pagination;
+    const { address, baseAsset, quoteAsset } = this.state;
+    if (address === '' && baseAsset === '' && quoteAsset === '') {
+      Message.error({ content: '请至少输入一个检索条件' });
+    } else {
+      this.setState({ loading: true });
+      const params = {
+        page,
+        per_page,
+        address,
+        base_asset: baseAsset,
+        quote_asset: quoteAsset,
+      };
+      ont.get(`${URL.GET_ACCOUNT_DEPOSIT}`, { params }).then(({ data }) => {
+        this.setState({
+          loading: false,
+          tokenpairs: data.data || [],
+          pagination: data.param_page || DEFAULT_PAGINATION,
+        });
+      }).catch(() => {
+        this.setState({ loading: false });
+      });
+    }
   }
 
   render() {
     const {
       isActionLoading, loading,
-      baseAsset, quoteAsset, operator,
+      baseAsset, quoteAsset, address,
       tokenpairs, pagination,
       isShowAddDialog, isShowWithdrawDialog, project
     } = this.state;
@@ -131,8 +151,8 @@ class TokenpairDetail extends Component {
         <div className="tokenpair-detail-container">
           <DexDesktopInput
             label="DEX operator"
-            value={operator}
-            onChange={this.onOperatorChange}
+            value={address}
+            onChange={this.onAddressChange}
           />
           <DexDesktopInputPair
             label={toLocale('listToken.label')}
@@ -141,7 +161,7 @@ class TokenpairDetail extends Component {
             secondValue={quoteAsset}
             onSecondChange={this.onQuoteAssetChange}
           />
-          <button className="dex-desktop-btn" onClick={() => {}}>
+          <button className="dex-desktop-btn" onClick={this.fetchTokenpairsByState}>
             Query
           </button>
           <DexTable
