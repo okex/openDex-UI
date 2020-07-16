@@ -19,6 +19,7 @@ export default class Table extends React.Component {
     hidePage: PropTypes.bool, // 是否隐藏分页组件
     pagination: PropTypes.object, // 分页组件数据object
     onPageChange: PropTypes.func, // 分页变化函数
+    hideOnSinglePage: PropTypes.bool,
   };
   static defaultProps = {
     style: {},
@@ -34,6 +35,7 @@ export default class Table extends React.Component {
       per_page: 20, // 每页条数
     },
     onPageChange: () => {}, // 页码变化回调
+    hideOnSinglePage: true,
   };
 
   renderTbody = () => {
@@ -84,7 +86,7 @@ export default class Table extends React.Component {
 
   render() {
     const {
-      columns, dataSource, style, isLoading, hidePage, pagination, onPageChange
+      columns, dataSource, style, isLoading, hidePage, pagination, onPageChange, hideOnSinglePage
     } = this.props;
     const {
       page, per_page, total, totalSize
@@ -119,6 +121,7 @@ export default class Table extends React.Component {
               pageSize={per_page}
               total={total || totalSize}
               onChange={onPageChange}
+              hideOnSinglePage={hideOnSinglePage}
               dark
             />
           </div>

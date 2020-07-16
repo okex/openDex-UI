@@ -3,6 +3,7 @@ import DexDesktopContainer from '_component/DexDesktopContainer';
 import DexDesktopInput from '_component/DexDesktopInput';
 import DexDesktopInputPair from '_component/DexDesktopInputPair';
 import DexTable from '_component/DexTable';
+import { AddDepositsDialog, WithdrawDepositsDialog } from '_component/ActionDialog';
 import { toLocale } from '_src/locale/react-locale';
 import ont from '_src/utils/dataProxy';
 import URL from '_constants/URL';
@@ -21,9 +22,12 @@ class TokenpairDetail extends Component {
       tokenpairs: [],
       pagination: {
         page: 1,
-        total: 5,
-        per_page: 3,
-      }
+        total: 10,
+        per_page: 10,
+      },
+      isShowAddDialog: false,
+      isShowWithdrawDialog: false,
+      project: '',
     };
   }
 
@@ -52,6 +56,48 @@ class TokenpairDetail extends Component {
     });
   }
 
+  onAddOpen = (project) => {
+    return () => {
+      this.setState({
+        isShowAddDialog: true,
+        project,
+      });
+    };
+  }
+
+  onAddClose = () => {
+    this.setState({
+      isShowAddDialog: false,
+    });
+  }
+
+  onWithdrawOpen = (project) => {
+    return () => {
+      this.setState({
+        isShowWithdrawDialog: true,
+        project,
+      });
+    };
+  }
+
+  onWithdrawClose = () => {
+    this.setState({
+      isShowWithdrawDialog: false
+    });
+  }
+
+  beforeAddOrWithdraw = () => {
+    this.setState({ isActionLoading: true });
+  }
+
+  afterAddOrWithdraw = () => {
+    this.setState({
+      isActionLoading: false,
+      project: ''
+    });
+    this.fetchTokenpairs();
+  }
+
   fetchTokenpairs = () => {
     const { pagination } = this.state;
     const params = {
@@ -70,7 +116,8 @@ class TokenpairDetail extends Component {
     const {
       isActionLoading, loading,
       baseAsset, quoteAsset, operator,
-      tokenpairs, pagination
+      tokenpairs, pagination,
+      isShowAddDialog, isShowWithdrawDialog, project
     } = this.state;
 
     return (
@@ -98,13 +145,28 @@ class TokenpairDetail extends Component {
             Query
           </button>
           <DexTable
-            columns={getDetailTokenPairCols({ add: () => {}, withdraw: () => {} })}
+            columns={getDetailTokenPairCols({ add: this.onAddOpen, withdraw: this.onWithdrawOpen })}
             dataSource={tokenpairs}
             rowKey="product"
             isLoading={loading}
             empty={<div>{toLocale('tokenPair_emtpy')}</div>}
             pagination={pagination}
             onPageChange={this.onPageChange}
+            hideOnSinglePage={false}
+          />
+          <AddDepositsDialog
+            visible={isShowAddDialog}
+            onClose={this.onAddClose}
+            project={project}
+            beforeAdd={this.beforeAddOrWithdraw}
+            afterAdd={this.afterAddOrWithdraw}
+          />
+          <WithdrawDepositsDialog
+            visible={isShowWithdrawDialog}
+            onClose={this.onWithdrawClose}
+            project={project}
+            beforeWithdraw={this.beforeAddOrWithdraw}
+            afterWithdraw={this.afterAddOrWithdraw}
           />
         </div>
       </DexDesktopContainer>
