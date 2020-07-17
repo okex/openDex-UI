@@ -246,6 +246,7 @@ class FullTradeProductList extends React.Component {
     const {
       tickers, productList, product, favorites, // productObj,
     } = this.props;
+
     const {
       isShowList, isShowProduction, // searchText, activeMarket
     } = this.state;

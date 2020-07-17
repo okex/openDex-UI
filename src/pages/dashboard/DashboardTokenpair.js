@@ -67,14 +67,14 @@ class DashboardTokenpair extends Component {
 
   fetchAccountDeposit = () => {
     const page = 1;
-    const address = this.addr;
     const params = {
+      address: this.addr,
       page,
       per_page: 3,
     };
     this.setState({ loading: true });
-    ont.get(`${URL.GET_ACCOUNT_DEPOSIT}/${address}`, { params }).then(({ data }) => {
-      this.setState({ loading: false, deposits: data });
+    ont.get(`${URL.GET_ACCOUNT_DEPOSIT}`, { params }).then(({ data }) => {
+      this.setState({ loading: false, deposits: data.data });
     }).catch(() => {
       this.setState({ loading: false });
     });

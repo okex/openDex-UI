@@ -90,7 +90,7 @@ class IssueDetail extends Component {
     };
     ont.get(URL.GET_TOKENS, { params }).then(({ data }) => {
       this.setState({
-        issueTokens: data,
+        issueTokens: data || [],
         loading: false,
       });
     }).catch(() => {

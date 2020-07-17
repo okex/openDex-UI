@@ -314,13 +314,13 @@ export const getFeesCols = () => {
     {
       title: 'Date',
       key: 'timestamp',
+      render: (text) => {
+        return moment(Number(`${text}000`)).format('MM-DD HH:mm:ss');
+      },
     },
     {
       title: 'HandlingFee',
       key: 'fee',
-      render: (text) => {
-        return moment(Number(`${text}000`)).format('MM-DD HH:mm:ss');
-      }
     }
   ];
 };

@@ -88,6 +88,11 @@ class FeesPage extends Component {
     }
   }
 
+  handleQuery = () => {
+    const pagination = DEFAULT_PAGINATION;
+    this.fetchFees(pagination);
+  }
+
   render() {
     const {
       loading, address, baseAsset, quoteAsset,
@@ -114,7 +119,7 @@ class FeesPage extends Component {
             secondValue={quoteAsset}
             onSecondChange={this.onQuoteAssetChange}
           />
-          <button className="dex-desktop-btn" onClick={this.fetchFeesByState}>
+          <button className="dex-desktop-btn" onClick={this.handleQuery}>
             Query
           </button>
           <DexTable

@@ -132,6 +132,11 @@ class TokenpairDetail extends Component {
     }
   }
 
+  handleQuery = () => {
+    const pagination = DEFAULT_PAGINATION;
+    this.fetchTokenpairs(pagination);
+  }
+
   render() {
     const {
       isActionLoading, loading,
@@ -161,7 +166,7 @@ class TokenpairDetail extends Component {
             secondValue={quoteAsset}
             onSecondChange={this.onQuoteAssetChange}
           />
-          <button className="dex-desktop-btn" onClick={this.fetchTokenpairsByState}>
+          <button className="dex-desktop-btn" onClick={this.handleQuery}>
             Query
           </button>
           <DexTable

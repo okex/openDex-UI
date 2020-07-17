@@ -47,7 +47,7 @@ class Dashboard extends Component {
     ont.get(`${URL.GET_ACCOUNTS}/${this.addr}`).then(({ data }) => {
       const { currencies } = data;
       this.setState({
-        currencies,
+        currencies: currencies || [],
         isAccountsLoading: false,
       });
     }).catch(() => {
