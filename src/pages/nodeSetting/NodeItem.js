@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { toLocale } from '_src/locale/react-locale';
 import Icon from '_src/component/IconLite';
 import iconNodeDelete from '_src/assets/images/icon_node_delete.png';
-import { NODE_TYPE, MAX_LATENCY } from '_constants/Node';
+import { NODE_LATENCY_TYPE, MAX_LATENCY } from '_constants/Node';
 import { getDelayType, timeUnit } from '_src/utils/node';
 import './NodeItem.less';
 
@@ -77,6 +77,6 @@ class NodeItem extends Component {
   }
 }
 
-NodeItem.NODE_TYPE = NODE_TYPE;
+NodeItem.NODE_LATENCY_TYPE = NODE_LATENCY_TYPE;
 
 export default NodeItem;

@@ -1,17 +1,17 @@
 import hirestime from 'hirestime';
 import { calc } from '_component/okit';
-import { MAX_LATENCY, NODE_TYPE } from '_constants/Node';
+import { MAX_LATENCY, NODE_LATENCY_TYPE } from '_constants/Node';
 
 const TIMEOUT = 2000;
 
 export const getDelayType = (delayTime) => {
   let delayType;
   if (delayTime === MAX_LATENCY) {
-    delayType = NODE_TYPE.UNREACHABLE;
+    delayType = NODE_LATENCY_TYPE.UNREACHABLE;
   } else if (delayTime > 150) {
-    delayType = NODE_TYPE.HIGH;
+    delayType = NODE_LATENCY_TYPE.HIGH;
   } else {
-    delayType = NODE_TYPE.LOW;
+    delayType = NODE_LATENCY_TYPE.LOW;
   }
   return delayType;
 };

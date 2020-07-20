@@ -1,4 +1,4 @@
-export const NODE_TYPE = {
+export const NODE_LATENCY_TYPE = {
   LOW: 'low',
   HIGH: 'high',
   UNREACHABLE: 'unreachable',
