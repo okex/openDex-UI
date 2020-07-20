@@ -1,10 +1,10 @@
 import { storage } from '_component/okit';
-import { settingsAPIs } from '_constants/apiConfig';
+import { NODE_LIST, DEFAULT_NODE } from '_constants/apiConfig';
 import { MAX_LATENCY } from '_constants/Node';
 import ActionTypes from '../actionTypes/NodeActionType';
 
 const getRenderRemoteList = () => {
-  const nodeList = settingsAPIs.NODE_LIST;
+  const nodeList = NODE_LIST;
   return nodeList.map((node) => {
     return {
       ...node,
@@ -17,7 +17,7 @@ const initialState = {
   remoteList: getRenderRemoteList(),
   customList: storage.get('customList') || [],
   currentNode: storage.get('currentNode') || {
-    ...settingsAPIs.DEFAULT_NODE,
+    ...DEFAULT_NODE,
     latency: MAX_LATENCY,
   },
 };

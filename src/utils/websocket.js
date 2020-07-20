@@ -1,5 +1,5 @@
 import { storage } from '_src/component/okit';
-import { settingsAPIs } from '_constants/apiConfig';
+import { DEFAULT_NODE } from '_constants/apiConfig';
 import websocketURL from '../constants/websocketURL';
 import util from './util';
 
@@ -103,7 +103,7 @@ export const getWsUrl = () => {
   }
   // return url;
   // new
-  const currentNode = storage.get('currentNode') || settingsAPIs.DEFAULT_NODE;
+  const currentNode = storage.get('currentNode') || DEFAULT_NODE;
   return currentNode.wsUrl;
 };
 

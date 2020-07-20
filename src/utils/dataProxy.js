@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { settingsAPIs } from '_constants/apiConfig';
+import { DEFAULT_NODE } from '_constants/apiConfig';
 import { storage } from '_component/okit';
 import PageURL from '../constants/PageURL';
 import history from './history';
@@ -21,7 +21,7 @@ axios.interceptors.request.use((request) => {
   // 添加时间戳 防止缓存
   request.url += `${queryMark}t=${time}`;
 
-  const currentNode = storage.get('currentNode') || settingsAPIs.DEFAULT_NODE;
+  const currentNode = storage.get('currentNode') || DEFAULT_NODE;
   const { httpUrl = '' } = currentNode;
   request.url = request.url.replace('{domain}', httpUrl);
 
