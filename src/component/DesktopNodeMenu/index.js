@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as CommonAction from '_src/redux/actions/CommonAction';
@@ -74,10 +74,11 @@ class DesktopNodeMenu extends Component {
       latestHeight, currentNode, customList
     } = this.props;
     const { latency, type } = currentNode;
-    const delayType = getDelayType(latency);
+    const currentDelayType = getDelayType(latency);
     const remoteNode = type === NODE_TYPE.REMOTE ? currentNode : DEFAULT_NODE;
     const customNode = type === NODE_TYPE.CUSTOM ? currentNode : (customList[0] || {});
     const settingsNodeList = [remoteNode, customNode, NONE_NODE];
+
     return (
       <div className="desktop-node-menu-wrapper">
         <img className="node-menu-back" src={navBack} alt="node-set-img" />
@@ -85,23 +86,35 @@ class DesktopNodeMenu extends Component {
           <div className="node-menu-item remote-node-item">
             <div className="node-menu-type">
               <div className="node-type">{toLocale('nodeMenu.remote')}</div>
-              <Icon className={`icon-node color-${delayType}`} />
+              <Icon className={`icon-node color-${currentDelayType}`} />
               <Icon className="icon-retract" />
             </div>
-            <div className="node-assist">{toLocale('nodeMenu.block')} #{latestHeight}</div>
-            <div className={`node-assist color-${delayType}`}>{toLocale('nodeMenu.latency')} {timeUnit(latency)}</div>
+            {
+              type === NODE_TYPE.NONE ? (
+                <div className="node-assist">None</div>
+              ) : (
+                <Fragment>
+                  <div className="node-assist">{toLocale('nodeMenu.block')} #{latestHeight}</div>
+                  <div className={`node-assist color-${currentDelayType}`}>{toLocale('nodeMenu.latency')} {timeUnit(latency)}</div>
+                </Fragment>
+              )
+            }
             <div className="node-sub-menu remote-node-submenu">
               {
                 settingsNodeList.map((node, index) => {
                   const { id } = node;
                   const renderName = getNodeRenderName(node);
+                  const delayType = getDelayType(node.latency);
+                  const extraStyle = id === currentNode.id ? {
+                    color: '#2D60E0',
+                  } : {};
                   return id && (
                     <div
                       className="node-detail-container"
                       key={index}
                       onClick={this.onNodeClick(node)}
                     >
-                      <div className="node-name">{renderName}</div>
+                      <div className="node-name" style={extraStyle}>{renderName}</div>
                       <Icon className={`icon-node color-${delayType}`} />
                     </div>
                   );
