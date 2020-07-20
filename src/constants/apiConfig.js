@@ -11,6 +11,15 @@ export const DEFAULT_NODE = {
   location: "Hong Kong",
 };
 
+export const NONE_NODE = {
+  id: '100',
+  wsUrl: '',
+  region: '',
+  httpUrl: '',
+  country: '',
+  location: '',
+}
+
 export const NODE_LIST = [
   DEFAULT_NODE,
   {
@@ -28,5 +37,6 @@ export const NODE_LIST = [
     region: 'Asia',
     country: 'China',
     location: "Hangzhou",
-  }
+  },
+  NONE_NODE,
 ];

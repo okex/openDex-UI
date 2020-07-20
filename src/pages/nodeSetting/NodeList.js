@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as NodeActions from '_src/redux/actions/NodeAction';
+import { NONE_NODE } from '_constants/apiConfig';
 import NodeItem from './NodeItem';
 import './NodeList.less';
 
@@ -48,13 +49,13 @@ class NodeList extends Component {
             const {
               id, region, country, location, wsUrl, latency, httpUrl
             } = node;
-            const name = `${region} - ${country} - ${location}`;
+            const name = node.id === NONE_NODE.id ? 'None' : `${region} - ${country} - ${location}`;
             return (
               <li className="node-set-list-item" key={id}>
                 <NodeItem
                   name={name}
-                  ws={wsUrl}
-                  http={httpUrl}
+                  ws={wsUrl || '- -'}
+                  http={httpUrl || '- -'}
                   delayTime={latency}
                   disabled={false}
                   onClick={this.handleChange(node)}

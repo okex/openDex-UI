@@ -1,5 +1,5 @@
 import hirestime from 'hirestime';
-import { storage, calc } from '_component/okit';
+import { calc } from '_component/okit';
 import { MAX_LATENCY, NODE_TYPE } from '_constants/Node';
 
 const TIMEOUT = 2000;
@@ -16,32 +16,31 @@ export const getDelayType = (delayTime) => {
   return delayType;
 };
 
-export const setcurrentNode = (node) => {
-  storage.set('currentNode', node);
-  window.location.reload();
-};
-
 export const getNodeLatency = (node) => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(MAX_LATENCY);
     }, TIMEOUT);
     const { wsUrl } = node;
-    const connection = new window.WebSocketCore({ connectUrl: wsUrl });
-    let getElapsed;
-    connection.onSocketError(() => {
+    if (wsUrl) {
+      const connection = new window.WebSocketCore({ connectUrl: wsUrl });
+      let getElapsed;
+      connection.onSocketError(() => {
+        resolve(MAX_LATENCY);
+      });
+      connection.onSocketConnected(() => {
+        connection.sendChannel('ping');
+        getElapsed = hirestime();
+      });
+      connection.setPushDataResolver(() => {
+        const pingTime = getElapsed && getElapsed();
+        connection.disconnect();
+        resolve(pingTime);
+      });
+      connection.connect();
+    } else {
       resolve(MAX_LATENCY);
-    });
-    connection.onSocketConnected(() => {
-      connection.sendChannel('ping');
-      getElapsed = hirestime();
-    });
-    connection.setPushDataResolver(() => {
-      const pingTime = getElapsed && getElapsed();
-      connection.disconnect();
-      resolve(pingTime);
-    });
-    connection.connect();
+    }
   });
 };
 
