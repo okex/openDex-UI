@@ -38,7 +38,9 @@ function mapDispatchToProps(dispatch) {
 class DesktopNodeMenu extends Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      isMenuShow: false
+    };
   }
 
   componentDidMount() {
@@ -69,10 +71,19 @@ class DesktopNodeMenu extends Component {
     this.props.history.push(PageURL.nodeSettingPage);
   }
 
+  showMenu = () => {
+    this.setState({ isMenuShow: true });
+  }
+
+  hideMenu = () => {
+    this.setState({ isMenuShow: false });
+  }
+
   render() {
     const {
       latestHeight, currentNode, customList
     } = this.props;
+    const { isMenuShow } = this.state;
     const { latency, type } = currentNode;
     const currentDelayType = getDelayType(latency);
     const remoteNode = type === NODE_TYPE.REMOTE ? currentNode : DEFAULT_NODE;
@@ -80,9 +91,13 @@ class DesktopNodeMenu extends Component {
     const settingsNodeList = [remoteNode, customNode, NONE_NODE];
 
     return (
-      <div className="desktop-node-menu-wrapper">
+      <div
+        className="desktop-node-menu-wrapper"
+        onMouseEnter={this.showMenu}
+        onMouseLeave={this.hideMenu}
+      >
         <img className="node-menu-back" src={navBack} alt="node-set-img" />
-        <div className="desktop-node-menu-container">
+        <div className="desktop-node-menu-container" style={{ display: isMenuShow ? 'block' : 'none' }}>
           <div className="node-menu-item remote-node-item">
             <div className="node-menu-type">
               <div className="node-type">{toLocale('nodeMenu.remote')}</div>
