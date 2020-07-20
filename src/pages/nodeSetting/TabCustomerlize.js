@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import * as NodeActions from '_src/redux/actions/NodeAction';
 import { Dialog } from '_component/Dialog';
 import iconNodeAdd from '_src/assets/images/icon_node_add.png';
-import { MAX_LATENCY } from '_constants/Node';
+import { MAX_LATENCY, NODE_TYPE } from '_constants/Node';
 import { randomStrNumber } from '_src/utils/random';
 import NodeItem from './NodeItem';
 import './TabCustomerlize.less';
@@ -72,6 +72,7 @@ class TabCustomerlize extends Component {
       wsUrl: valueWs,
       httpUrl: valueHttp,
       latency: MAX_LATENCY,
+      type: NODE_TYPE.CUSTOM,
     };
     const newList = customList.slice();
     newList.push(node);

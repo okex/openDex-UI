@@ -1,4 +1,6 @@
 /* eslint-disable */
+import { NODE_TYPE } from './Node';
+
 const httpUrl = navigator.userAgent.includes('Electron') && window.location.protocol.includes('file') ? 'https://www.okex.com' : 'http://127.0.0.1:7777';
 const wsUrl = 'wss://dexcomreal.bafang.com:8443/ws/v3';
 
@@ -9,6 +11,7 @@ export const DEFAULT_NODE = {
   httpUrl,
   country: 'China',
   location: "Hong Kong",
+  type: NODE_TYPE.REMOTE,
 };
 
 export const NONE_NODE = {
@@ -18,6 +21,7 @@ export const NONE_NODE = {
   httpUrl: '',
   country: '',
   location: '',
+  type: NODE_TYPE.NONE,
 }
 
 export const NODE_LIST = [
@@ -29,6 +33,7 @@ export const NODE_LIST = [
     region: 'Asia',
     country: 'China',
     location: "Shanghai",
+    type: NODE_TYPE.REMOTE,
   },
   {
     id: '003',
@@ -37,6 +42,7 @@ export const NODE_LIST = [
     region: 'Asia',
     country: 'China',
     location: "Hangzhou",
+    type: NODE_TYPE.REMOTE,
   },
   NONE_NODE,
 ];
