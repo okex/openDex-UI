@@ -1,6 +1,6 @@
 import hirestime from 'hirestime';
 import { calc } from '_component/okit';
-import { MAX_LATENCY, NODE_LATENCY_TYPE } from '_constants/Node';
+import { MAX_LATENCY, NODE_LATENCY_TYPE, NODE_TYPE } from '_constants/Node';
 
 const TIMEOUT = 2000;
 
@@ -42,6 +42,21 @@ export const getNodeLatency = (node) => {
       resolve(MAX_LATENCY);
     }
   });
+};
+
+export const getNodeRenderName = (node) => {
+  let renderName = '';
+  const {
+    type, region, country, location, name
+  } = node;
+  if (type === NODE_TYPE.REMOTE) {
+    renderName = `${region} - ${country} - ${location}`;
+  } else if (type === NODE_TYPE.CUSTOM) {
+    renderName = name;
+  } else {
+    renderName = 'None';
+  }
+  return renderName;
 };
 
 export const timeUnit = (t) => {

@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import Tabs, { TabPane } from 'rc-tabs';
 import { toLocale } from '_src/locale/react-locale';
 import * as NodeActions from '_src/redux/actions/NodeAction';
-import { getNodeLatency } from '_src/utils/node';
+import { getNodeLatency, getNodeRenderName } from '_src/utils/node';
 import NodeItem from './NodeItem';
 import NodeList from './NodeList';
 import TabLocal from './TabLocal';
@@ -93,10 +93,8 @@ class NodeSetting extends Component {
 
   render() {
     const { currentNode } = this.props;
-    const {
-      region, country, location, wsUrl, latency, httpUrl
-    } = currentNode;
-    const name = currentNode.name || `${region} - ${country} - ${location}`; // custom node or remote node
+    const { wsUrl, latency, httpUrl } = currentNode;
+    const name = getNodeRenderName(currentNode);
     return (
       <div className="node-container">
         <h1 className="node-title">{toLocale('node.main.title')}</h1>
@@ -104,8 +102,8 @@ class NodeSetting extends Component {
           <h2 className="node-active-title">{toLocale('node.active.title')}</h2>
           <NodeItem
             name={name}
-            ws={wsUrl}
-            http={httpUrl}
+            ws={wsUrl || '- -'}
+            http={httpUrl || '- -'}
             delayTime={latency}
             disabled
           />

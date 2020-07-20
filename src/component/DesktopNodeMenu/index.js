@@ -10,16 +10,19 @@ import PageURL from '_constants/PageURL';
 import { toLocale } from '_src/locale/react-locale';
 // import ont from '_src/utils/dataProxy';
 // import URL from '_constants/URL';
-import { getDelayType, timeUnit } from '_src/utils/node';
+import { getDelayType, timeUnit, getNodeRenderName } from '_src/utils/node';
+import { NODE_TYPE } from '_constants/Node';
+import { DEFAULT_NODE, NONE_NODE } from '_constants/apiConfig';
 import './index.less';
 
 function mapStateToProps(state) {
   const { latestHeight } = state.Common;
-  const { currentNode, remoteList } = state.NodeStore;
+  const { currentNode, remoteList, customList } = state.NodeStore;
   return {
     latestHeight,
     currentNode,
     remoteList,
+    customList,
   };
 }
 
@@ -67,12 +70,14 @@ class DesktopNodeMenu extends Component {
   }
 
   render() {
-    const { latestHeight, currentNode, remoteList } = this.props;
-    const { latency } = currentNode;
+    const {
+      latestHeight, currentNode, customList
+    } = this.props;
+    const { latency, type } = currentNode;
     const delayType = getDelayType(latency);
-    const settingsNodeList = remoteList.filter((node) => {
-      return node.id !== currentNode.id;
-    }).slice(0, 3);
+    const remoteNode = type === NODE_TYPE.REMOTE ? currentNode : DEFAULT_NODE;
+    const customNode = type === NODE_TYPE.CUSTOM ? currentNode : (customList[0] || {});
+    const settingsNodeList = [remoteNode, customNode, NONE_NODE];
     return (
       <div className="desktop-node-menu-wrapper">
         <img className="node-menu-back" src={navBack} alt="node-set-img" />
@@ -88,14 +93,15 @@ class DesktopNodeMenu extends Component {
             <div className="node-sub-menu remote-node-submenu">
               {
                 settingsNodeList.map((node, index) => {
-                  const { region, country, location } = node;
-                  return (
+                  const { id } = node;
+                  const renderName = getNodeRenderName(node);
+                  return id && (
                     <div
                       className="node-detail-container"
                       key={index}
                       onClick={this.onNodeClick(node)}
                     >
-                      <div className="node-name">{`${region} - ${country} - ${location}`}</div>
+                      <div className="node-name">{renderName}</div>
                       <Icon className={`icon-node color-${delayType}`} />
                     </div>
                   );
