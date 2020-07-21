@@ -7,6 +7,7 @@ import RegisterInput from '_component/DexDesktopInput';
 import ClientWrapper from '_src/wrapper/ClientWrapper';
 import Config from '_constants/Config';
 import util from '_src/utils/util';
+import { validateTxs } from '_src/utils/client';
 import './index.less';
 
 const opJson = {
@@ -97,10 +98,9 @@ class Register extends Component {
     const { okchainClient } = this.props;
     okchainClient.sendRegisterDexOperatorTransaction(websiteValue, feeAddressValue).then((res) => {
       this.setState({ isActionLoading: false });
-      const { result, status } = res;
+      const { result } = res;
       const { txhash } = result;
-      const log = JSON.parse(result.raw_log);
-      if (status !== 200 || (log && log.code)) {
+      if (!validateTxs(res)) {
         showError();
       } else {
         const dialog = Dialog.success({

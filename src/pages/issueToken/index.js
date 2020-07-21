@@ -7,6 +7,7 @@ import { Dialog } from '_component/Dialog';
 import Message from '_src/component/Message';
 import ClientWrapper from '_src/wrapper/ClientWrapper';
 import util from '_src/utils/util';
+import { validateTxs } from '_src/utils/client';
 import Config from '_constants/Config';
 import './index.less';
 
@@ -71,10 +72,9 @@ class IssueToken extends Component {
     const fMintable = mintable === 1;
     okchainClient.sendTokenIssueTransaction(fSymbol, wholename, fTotal, fMintable, desc).then((res) => {
       this.setState({ isActionLoading: false });
-      const { result, status } = res;
+      const { result } = res;
       const { txhash } = result;
-      const log = JSON.parse(result.raw_log);
-      if (status !== 200 || (log && log.code)) {
+      if (!validateTxs(res)) {
         showError();
       } else {
         const dialog = Dialog.success({

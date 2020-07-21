@@ -13,3 +13,7 @@ export const isFunction = (val) => {
 export const isString = (val) => {
   return getType(val) === 'String';
 };
+
+export const isArray = (val) => {
+  return getType(val) === 'Array';
+};

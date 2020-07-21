@@ -5,6 +5,7 @@ import showSuccessDialog from '_component/ActionDialog/successDialog';
 import ClientWrapper from '_src/wrapper/ClientWrapper';
 import util from '_src/utils/util';
 import { isNumberString, isFunction } from '_src/utils/type';
+import { validateTxs } from '_src/utils/client';
 
 const showError = () => {
   Message.error({
@@ -42,10 +43,9 @@ class BurnDialog extends Component {
     okchainClient.sendTokenBurnTransaction(token, amount).then((res) => {
       this.setState({ value: '' });
       isFunction(afterBurn) && afterBurn();
-      const { result, status } = res;
+      const { result } = res;
       const { txhash } = result;
-      const log = JSON.parse(result.raw_log);
-      if (status !== 200 || (log && log.code)) {
+      if (!validateTxs(res)) {
         showError();
       } else {
         showSuccessDialog('Burn success！', txhash);

@@ -10,6 +10,7 @@ import DexDesktopInputPair from '_component/DexDesktopInputPair';
 import PageURL from '_constants/PageURL';
 import util from '_src/utils/util';
 import Config from '_constants/Config';
+import { validateTxs } from '_src/utils/client';
 import './index.less';
 
 const showError = () => {
@@ -52,10 +53,9 @@ class ListTokenpair extends Component {
     const fInitPrice = util.precisionInput(initPrice);
     okchainClient.sendListTokenPairTransaction(fBase, fQuote, fInitPrice).then((res) => {
       this.setState({ isActionLoading: false });
-      const { result, status } = res;
+      const { result } = res;
       const { txhash } = result;
-      const log = JSON.parse(result.raw_log);
-      if (status !== 200 || (log && !log[0].success)) {
+      if (!validateTxs(res)) {
         showError();
       } else {
         const dialog = Dialog.success({
