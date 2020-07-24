@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import DexSwitch from '_component/DexSwitch';
 import Select from '_component/ReactSelect';
 import DexDesktopInput from '_component/DexDesktopInput';
+import DexUpload from '_component/DexUpload';
 import './TabLocal.less';
 
 const defaultOptions = [
-  { value: 0, label: '币币' },
-  { value: 1, label: '杠杆' },
-  { value: 2, label: '其他' },
+  { value: 0, label: 'TestNet' },
 ];
 
 class TabLocal extends Component {
@@ -18,6 +17,9 @@ class TabLocal extends Component {
       selected: defaultOptions[0],
       p2p: '',
       rpc: '',
+      datadir: '',
+      db: '',
+      ws: '',
     };
   }
 
@@ -39,9 +41,39 @@ class TabLocal extends Component {
     });
   }
 
+  onDatadirChange = (e) => {
+    this.setState({
+      datadir: e.target.value
+    });
+  }
+
+  onDatadirUpdate = (path) => {
+    this.setState({
+      datadir: path
+    });
+  }
+
+  onDbChange = (e) => {
+    this.setState({
+      db: e.target.value
+    });
+  }
+
+  onDbUpdate = (path) => {
+    this.setState({
+      db: path
+    });
+  }
+
+  onWsChange = (e) => {
+    this.setState({
+      ws: e.target.value
+    });
+  }
+
   render() {
     const {
-      options, selected, p2p, rpc
+      options, selected, p2p, rpc, datadir, db, ws
     } = this.state;
     return (
       <div className="node-local-container">
@@ -68,16 +100,11 @@ class TabLocal extends Component {
             />
           </div>
           <div className="local-set-cell">
-            <label htmlFor="" className="local-set-label">Network</label>
-            <Select
-              className="network-select"
-              clearable={false}
-              searchable={false}
-              theme="dark"
-              name="form-field-name"
-              value={selected}
-              onChange={this.onChange()}
-              options={options}
+            <DexUpload
+              label="Datadir"
+              value={datadir}
+              onChange={this.onDatadirChange}
+              onUpload={this.onDatadirUpdate}
             />
           </div>
           <div className="local-set-cell">
@@ -95,16 +122,18 @@ class TabLocal extends Component {
             />
           </div>
           <div className="local-set-cell">
-            <label htmlFor="" className="local-set-label">Network</label>
-            <Select
-              className="network-select"
-              clearable={false}
-              searchable={false}
-              theme="dark"
-              name="form-field-name"
-              value={selected}
-              onChange={this.onChange()}
-              options={options}
+            <DexUpload
+              label="DB"
+              value={db}
+              onChange={this.onDbChange}
+              onUpload={this.onDbUpdate}
+            />
+          </div>
+          <div className="local-set-cell">
+            <DexDesktopInput
+              label="WS Port"
+              value={ws}
+              onChange={this.onWsChange}
             />
           </div>
         </div>
