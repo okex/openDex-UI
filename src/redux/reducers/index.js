@@ -6,6 +6,7 @@ import FormStore from './FormReducer';
 import OrderStore from './OrderReducer';
 import WalletStore from './WalletReducer';
 import NodeStore from './NodeReducer';
+import LocalNodeStore from './LocalNodeReducer';
 
 const rootReducer = combineReducers({
   Common,
@@ -15,5 +16,6 @@ const rootReducer = combineReducers({
   OrderStore,
   WalletStore,
   NodeStore,
+  LocalNodeStore,
 });
 export default rootReducer;

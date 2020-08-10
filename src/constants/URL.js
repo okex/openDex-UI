@@ -9,6 +9,7 @@ import Config from './Config';
 
 // var OKEX_BASE_URL = location.protocol + '//' + location.host + getContextPath() + PROJECT_PRXFIX_URL;
 const OKDEX_BASE_URL = '{domain}/okchain/v1';
+const MASTER_BASE_URL = 'https://www.okex.com/okchain/v1';
 
 /*
  * URL统一管理
@@ -28,5 +29,6 @@ const URL = {
   GET_LATEST_HEIGHT: `${OKDEX_BASE_URL}/latestheight`, // 查询最新高度
   GET_ACCOUNT_DEPOSIT: `${OKDEX_BASE_URL}/dex/deposits`, // 查询对应地址的币对
   GET_FEES: `${OKDEX_BASE_URL}/dex/fees`, // 查询运营方币对手续费
+  GET_LATEST_HEIGHT_MASTER: `${MASTER_BASE_URL}/latestheight`,
 };
 export default URL;

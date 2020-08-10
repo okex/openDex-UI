@@ -78,8 +78,10 @@ export function fetchProducts() {
       //     }
       //   });
       // }
-      if (res.data.data) {
-        res.data.data.forEach((item, index) => {
+      console.log(productList);
+      console.log(res);
+      if (res.data) {
+        res.data.forEach((item, index) => {
           // TODO
           // if (item.quote_asset_symbol === 'tokt') {
           //   item.quote_asset_symbol = 'tusdk';

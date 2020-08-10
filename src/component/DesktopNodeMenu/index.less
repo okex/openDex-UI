@@ -23,6 +23,7 @@
   }
 
   .node-menu-item {
+    position: relative;
     padding: 7px 10px 5px 12px;
     background: #1E2F4F;
     cursor: pointer;
@@ -123,7 +124,27 @@
     }
   }
 
-  .remote-node-item:hover {
+  .local-node-submenu {
+    width: initial;
+  }
+
+  .local-node-container {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 13px 12px 13px 20px;
+    width: 200px;
+    background: #1B273D;
+  }
+
+  .local-node-text {
+    font-size: 12px;
+    line-height: 14px;
+    color: #FFFFFF;
+  }
+
+  .node-menu-item:hover {
 
     .node-sub-menu {
       display: block;

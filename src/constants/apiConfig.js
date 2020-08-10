@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { NODE_TYPE, MAX_LATENCY } from './Node';
 
-const httpUrl = navigator.userAgent.includes('Electron') && window.location.protocol.includes('file') ? 'https://www.okex.com' : 'http://127.0.0.1:7777';
+const httpUrl = navigator.userAgent.includes('Electron') && window.location.protocol.includes('file') ? 'https://www.okex.com' : 'https://www.okex.com';
 const wsUrl = 'wss://dexcomreal.bafang.com:8443/ws/v3';
 
 const commonNodeItems = {

@@ -23,7 +23,7 @@ class DexUpload extends Component {
 
   render() {
     const {
-      label, value, onChange,
+      label, value, onChange, directory
     } = this.props;
 
     return (
@@ -40,9 +40,11 @@ class DexUpload extends Component {
           type="file"
           onChange={this.onFileChange}
           ref={(self) => {
-            this.inputFile = self;
-          }}
+                this.inputFile = self;
+              }}
           style={{ display: 'none' }}
+          webkitdirectory={directory ? 'true' : null}
+          directory={directory ? 'true' : null}
         />
       </div>
     );

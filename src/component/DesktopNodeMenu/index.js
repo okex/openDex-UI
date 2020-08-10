@@ -3,8 +3,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as CommonAction from '_src/redux/actions/CommonAction';
 import * as NodeActions from '_src/redux/actions/NodeAction';
+import * as LocalNodeAction from '_src/redux/actions/LocalNodeAction';
 import { withRouter } from 'react-router-dom';
 import Icon from '_component/IconLite';
+import DexSwitch from '_component/DexSwitch';
 import navBack from '_src/assets/images/nav_back@2x.png';
 import PageURL from '_constants/PageURL';
 import { toLocale } from '_src/locale/react-locale';
@@ -18,11 +20,14 @@ import './index.less';
 function mapStateToProps(state) {
   const { latestHeight } = state.Common;
   const { currentNode, remoteList, customList } = state.NodeStore;
+  const { logs, isStarted } = state.LocalNodeStore;
   return {
     latestHeight,
     currentNode,
     remoteList,
     customList,
+    logs,
+    isStarted,
   };
 }
 
@@ -30,6 +35,7 @@ function mapDispatchToProps(dispatch) {
   return {
     commonAction: bindActionCreators(CommonAction, dispatch),
     nodeActions: bindActionCreators(NodeActions, dispatch),
+    localNodeAction: bindActionCreators(LocalNodeAction, dispatch),
   };
 }
 
@@ -67,6 +73,13 @@ class DesktopNodeMenu extends Component {
     };
   }
 
+  onSwitchChange = async (checked) => {
+    const { localNodeAction } = this.props;
+    if (checked) {
+      localNodeAction.initOkchaind();
+    }
+  }
+
   handleToMore = () => {
     this.props.history.push(PageURL.nodeSettingPage);
   }
@@ -79,9 +92,21 @@ class DesktopNodeMenu extends Component {
     this.setState({ isMenuShow: false });
   }
 
+  onSwitchChange = (checked) => {
+    const { datadir } = this.state;
+    const { localNodeAction } = this.props;
+    if (checked) {
+      localNodeAction.switchIsStarted(true);
+      localNodeAction.initOkchaind(datadir);
+    } else {
+      localNodeAction.switchIsStarted(false);
+      localNodeAction.stopOkchaind();
+    }
+  }
+
   render() {
     const {
-      latestHeight, currentNode, customList
+      latestHeight, currentNode, customList, isStarted
     } = this.props;
     const { isMenuShow } = this.state;
     const { latency, type } = currentNode;
@@ -145,6 +170,18 @@ class DesktopNodeMenu extends Component {
               <Icon className="icon-retract" />
             </div>
             <div className="node-assist">{toLocale('node.stopped')}</div>
+            <div className="node-sub-menu local-node-submenu">
+              <div className="local-node-container">
+                <div className="local-node-text">go-okchain</div>
+                <DexSwitch
+                  checked={isStarted}
+                  checkedChildren="开"
+                  unCheckedChildren="关"
+                  onChange={this.onSwitchChange}
+                />
+              </div>
+              <div className="node-more" onClick={this.handleToMore}>{toLocale('nodeMenu.more')}</div>
+            </div>
           </div>
         </div>
       </div>
