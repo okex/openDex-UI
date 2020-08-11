@@ -5,6 +5,7 @@ import Tabs, { TabPane } from 'rc-tabs';
 import { toLocale } from '_src/locale/react-locale';
 import * as NodeActions from '_src/redux/actions/NodeAction';
 import { getNodeLatency, getNodeRenderName } from '_src/utils/node';
+import { NODE_TYPE } from '_constants/Node';
 import NodeItem from './NodeItem';
 import NodeList from './NodeList';
 import TabLocal from './TabLocal';
@@ -40,8 +41,17 @@ class NodeSetting extends Component {
 
   componentDidMount() {
     const fetchNodesLatency = () => {
-      const { remoteList, customList } = this.props;
+      const { remoteList, customList, currentNode } = this.props;
       const hasVisited = {};
+      if (currentNode.type === NODE_TYPE.LOCAL) {
+        getNodeLatency(currentNode).then((latency) => {
+          const { nodeActions } = this.props;
+          nodeActions.updateCurrentNode({
+            ...currentNode,
+            latency
+          });
+        });
+      }
 
       const updateLatency = (list, updateList, updateNode, currentNode, node, latency) => {
         let hasNode = false;
