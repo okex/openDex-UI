@@ -8,7 +8,7 @@ import { getStartCommand } from '_src/utils/command';
 import LocalNodeActionType from '../actionTypes/LocalNodeActionType';
 import NodeActionType from '../actionTypes/NodeActionType';
 
-const electronUtils = window.require('electron').remote.require('./src/utils');
+const electronUtils = window.require('electron').remote.require('./utils');
 
 function getOkchaindDir() {
   const { store } = electronUtils;

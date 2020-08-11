@@ -9,7 +9,7 @@ import DexUpload from '_component/DexUpload';
 import { htmlLineBreak } from '_src/utils/ramda';
 import './TabLocal.less';
 
-const electronUtils = window.require('electron').remote.require('./src/utils');
+const electronUtils = window.require('electron').remote.require('./utils');
 
 const defaultOptions = [
   { value: 0, label: 'TestNet' },

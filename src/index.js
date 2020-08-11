@@ -41,7 +41,7 @@ const languageType = 2; // 1远程，2本地
 let localProviderProps = {};
 const store = configureStore();
 
-const electronUtils = window.require('electron').remote.require('./src/utils');
+const electronUtils = window.require('electron').remote.require('./utils');
 const { emitter } = electronUtils;
 
 emitter.on('downloadOkchainStart', () => {
