@@ -1,7 +1,7 @@
 import { emptyLineBreak } from '_src/utils/ramda';
 import LocalNodeActionType from '../actionTypes/LocalNodeActionType';
 
-const electronUtils = window.require('electron').remote.require('./utils');
+const electronUtils = window.require('electron').remote.require('./src/utils');
 
 const getHomePath = () => {
   const { shell } = electronUtils;
