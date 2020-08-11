@@ -1,9 +1,37 @@
+import { emptyLineBreak } from '_src/utils/ramda';
 import LocalNodeActionType from '../actionTypes/LocalNodeActionType';
+
+const electronUtils = window.require('electron').remote.require('./src/utils');
+
+const getHomePath = () => {
+  const { shell } = electronUtils;
+  const p = shell.exec('cd $HOME && pwd');
+  const path = emptyLineBreak(p.toString());
+  return path;
+};
+
+const getInitDataDir = () => {
+  const path = getHomePath();
+  const datadir = `${emptyLineBreak(path)}/.okchaind`;
+  return datadir;
+};
+
+const getInitDb = () => {
+  const path = getHomePath();
+  const db = `${emptyLineBreak(path)}/.okchaind/data/backend.sqlite3`;
+  return db;
+};
 
 const initialState = {
   logs: '',
   okchaind: null,
   isStarted: false,
+  p2p: '26656',
+  rest: '26659',
+  ws: '26661',
+  datadir: getInitDataDir(),
+  db: getInitDb(),
+  isSync: false,
 };
 
 export default function reducer(state = initialState, action) {
@@ -27,6 +55,36 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         localNodeSetting: action.data,
+      };
+    case LocalNodeActionType.UPDATE_P2P:
+      return {
+        ...state,
+        p2p: action.data,
+      };
+    case LocalNodeActionType.UPDATE_REST:
+      return {
+        ...state,
+        rest: action.data,
+      };
+    case LocalNodeActionType.UPDATE_WS:
+      return {
+        ...state,
+        ws: action.data,
+      };
+    case LocalNodeActionType.UPDATE_DATADIR:
+      return {
+        ...state,
+        datadir: action.data,
+      };
+    case LocalNodeActionType.UPDATE_DB:
+      return {
+        ...state,
+        db: action.data,
+      };
+    case LocalNodeActionType.UPDATE_IS_SYNC:
+      return {
+        ...state,
+        isSync: action.data,
       };
     default:
       return state;

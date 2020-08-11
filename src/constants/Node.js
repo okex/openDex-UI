@@ -2,6 +2,7 @@ export const NODE_TYPE = {
   REMOTE: 'remote',
   CUSTOM: 'custom',
   NONE: 'none',
+  LOCAL: 'local',
 };
 
 export const NODE_LATENCY_TYPE = {

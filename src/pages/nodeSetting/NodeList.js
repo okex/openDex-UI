@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as NodeActions from '_src/redux/actions/NodeAction';
 import { NONE_NODE } from '_constants/apiConfig';
+import { NODE_TYPE } from '_constants/Node';
 import NodeItem from './NodeItem';
 import './NodeList.less';
 
@@ -10,9 +11,13 @@ function mapStateToProps(state) { // 绑定redux中相关state
   const {
     currentNode, remoteList
   } = state.NodeStore;
+  const {
+    isSync,
+  } = state.LocalNodeStore;
   return {
     currentNode,
     remoteList,
+    isSync,
   };
 }
 
@@ -37,9 +42,12 @@ class NodeList extends Component {
   }
 
   render() {
-    const { remoteList, currentNode } = this.props;
-    const showList = remoteList.filter((node) => {
+    const { remoteList, currentNode, isSync } = this.props;
+    const notCurrentList = remoteList.filter((node) => {
       return currentNode.id !== node.id;
+    });
+    const showList = isSync ? notCurrentList : notCurrentList.filter((node) => {
+      return node.type !== NODE_TYPE.NONE;
     });
 
     return (

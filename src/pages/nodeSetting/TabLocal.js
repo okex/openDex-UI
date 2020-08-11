@@ -6,7 +6,7 @@ import DexSwitch from '_component/DexSwitch';
 import Select from '_component/ReactSelect';
 import DexDesktopInput from '_component/DexDesktopInput';
 import DexUpload from '_component/DexUpload';
-import { htmlLineBreak, emptyLineBreak } from '_src/utils/ramda';
+import { htmlLineBreak } from '_src/utils/ramda';
 import './TabLocal.less';
 
 const electronUtils = window.require('electron').remote.require('./src/utils');
@@ -18,10 +18,16 @@ const defaultOptions = [
 function mapStateToProps(state) { // 绑定redux中相关state
   const {
     logs, isStarted,
+    p2p, rest, ws, datadir, db,
   } = state.LocalNodeStore;
   return {
     logs,
     isStarted,
+    p2p,
+    rest,
+    ws,
+    datadir,
+    db,
   };
 }
 
@@ -38,16 +44,7 @@ class TabLocal extends Component {
     this.state = {
       options: defaultOptions,
       selected: defaultOptions[0],
-      p2p: '',
-      rest: '',
-      datadir: '',
-      db: '',
-      ws: '',
     };
-  }
-
-  componentDidMount() {
-    this.initData();
   }
 
   onChange = () => {
@@ -57,80 +54,65 @@ class TabLocal extends Component {
   }
 
   onP2pChange = (e) => {
-    this.setState({
-      p2p: e.target.value
-    });
+    const { localNodeAction } = this.props;
+    localNodeAction.updateP2p(e.target.value);
   }
 
   onRestChange = (e) => {
-    this.setState({
-      rest: e.target.value
-    });
+    const { localNodeAction } = this.props;
+    localNodeAction.updateRest(e.target.value);
   }
 
   onDatadirChange = (e) => {
-    this.setState({
-      datadir: e.target.value
-    });
+    this.updateDatadir(e.target.value);
   }
 
   onDatadirUpdate = (path) => {
-    this.setState({
-      datadir: path
-    });
+    this.updateDatadir(path);
   }
 
   onDbChange = (e) => {
-    this.setState({
-      db: e.target.value
-    });
+    this.updateDb(e.target.value);
   }
 
   onDbUpdate = (path) => {
-    this.setState({
-      db: path
-    });
+    this.updateDb(path);
   }
 
   onWsChange = (e) => {
-    this.setState({
-      ws: e.target.value
-    });
+    const { localNodeAction } = this.props;
+    localNodeAction.updateWs(e.target.value);
   }
 
   onSwitchChange = (checked) => {
-    const { datadir } = this.state;
-    const { localNodeAction } = this.props;
+    const { localNodeAction, datadir } = this.props;
     if (checked) {
       localNodeAction.switchIsStarted(true);
-      localNodeAction.initOkchaind(datadir);
+      localNodeAction.startOkchaind(datadir);
     } else {
       localNodeAction.switchIsStarted(false);
       localNodeAction.stopOkchaind();
     }
   }
 
-  initData = () => {
-    const { shell } = electronUtils;
-    shell.exec('cd $HOME && pwd', (code, stdout, stderr) => {
-      const dir = stdout;
-      const iDatadir = `${emptyLineBreak(dir)}/.okchaind`;
-      const iDb = `${dir}/.okchaind/data/backend.sqlite3`;
-      this.setState({
-        datadir: iDatadir,
-        db: iDb,
-        p2p: '26656',
-        rest: '26659',
-        ws: '26661',
-      });
-    });
+  updateDatadir = (datadir) => {
+    const { localNodeAction } = this.props;
+    localNodeAction.updateDatadir(datadir);
+  }
+
+  updateDb = (db) => {
+    const { localNodeAction } = this.props;
+    localNodeAction.updateDb(db);
   }
 
   render() {
     const {
-      options, selected, p2p, rest, datadir, db, ws,
+      logs, isStarted,
+      p2p, rest, ws, datadir, db,
+    } = this.props;
+    const {
+      options, selected,
     } = this.state;
-    const { logs, isStarted } = this.props;
     const htmlLogs = htmlLineBreak(logs);
 
     return (

@@ -73,10 +73,15 @@ class DesktopNodeMenu extends Component {
     };
   }
 
-  onSwitchChange = async (checked) => {
+  onSwitchChange = (checked) => {
+    const { datadir } = this.state;
     const { localNodeAction } = this.props;
     if (checked) {
-      localNodeAction.initOkchaind();
+      localNodeAction.switchIsStarted(true);
+      localNodeAction.startOkchaind(datadir);
+    } else {
+      localNodeAction.switchIsStarted(false);
+      localNodeAction.stopOkchaind();
     }
   }
 
@@ -90,18 +95,6 @@ class DesktopNodeMenu extends Component {
 
   hideMenu = () => {
     this.setState({ isMenuShow: false });
-  }
-
-  onSwitchChange = (checked) => {
-    const { datadir } = this.state;
-    const { localNodeAction } = this.props;
-    if (checked) {
-      localNodeAction.switchIsStarted(true);
-      localNodeAction.initOkchaind(datadir);
-    } else {
-      localNodeAction.switchIsStarted(false);
-      localNodeAction.stopOkchaind();
-    }
   }
 
   render() {

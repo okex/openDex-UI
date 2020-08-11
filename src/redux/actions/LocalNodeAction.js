@@ -1,5 +1,9 @@
+import ont from '_src/utils/dataProxy';
 import { commaLineBreak } from '_src/utils/ramda';
+import URL from '_constants/URL';
+import { NODE_TYPE, MAX_LATENCY } from '_constants/Node';
 import LocalNodeActionType from '../actionTypes/LocalNodeActionType';
+import NodeActionType from '../actionTypes/NodeActionType';
 
 const electronUtils = window.require('electron').remote.require('./src/utils');
 
@@ -11,19 +15,26 @@ function getOkchaindDir() {
 function start(datadir, dispatch, getState) {
   const { shell } = electronUtils;
   const directory = getOkchaindDir();
-  shell.cd(directory);
-  const child = shell.exec(`./okchaind start --home ${datadir}`, { async: true });
-  child.stdout.on('data', (data) => {
-    const { logs } = getState().LocalNodeStore;
-    const newLog = logs + data;
-    dispatch({
-      type: LocalNodeActionType.UPDATE_LOGS,
-      data: newLog,
-    });
-    dispatch({
-      type: LocalNodeActionType.UPDATE_OKCHAIND,
-      data: child,
-    });
+  return new Promise((reslove, reject) => {
+    try {
+      shell.cd(directory);
+      const child = shell.exec(`./okchaind start --home ${datadir}`, { async: true });
+      child.stdout.on('data', (data) => {
+        const { logs } = getState().LocalNodeStore;
+        const newLog = logs + data;
+        dispatch({
+          type: LocalNodeActionType.UPDATE_LOGS,
+          data: newLog,
+        });
+        dispatch({
+          type: LocalNodeActionType.UPDATE_OKCHAIND,
+          data: child,
+        });
+      });
+      reslove(true);
+    } catch (err) {
+      reject(err);
+    }
   });
 }
 
@@ -106,6 +117,42 @@ function initData(datadir) {
   });
 }
 
+function checkIsSync(dispatch, getState) {
+  const getHeightMaster = ont.get(URL.GET_LATEST_HEIGHT_MASTER);
+  const getHeight = ont.get(URL.GET_LATEST_HEIGHT);
+  const timer = setInterval(() => {
+    Promise.all([getHeightMaster, getHeight]).then((res) => {
+      const masterHeight = res[0].data;
+      const localHeight = res[1].data;
+      if (masterHeight - localHeight < 6) {
+        dispatch({
+          type: LocalNodeActionType.UPDATE_IS_SYNC,
+          data: true
+        });
+        const { currentNode } = getState().NodeStore;
+        if (currentNode.type === NODE_TYPE.NONE) {
+          const {
+            rest, ws,
+          } = getState().LocalNodeStore;
+          const localNode = {
+            name: 'Local',
+            httpUrl: `http://127.0.0.1:${rest}`,
+            wsUrl: `http://127.0.0.1:${ws}`,
+            latency: MAX_LATENCY,
+            id: '00000000',
+          };
+          dispatch({
+            type: NodeActionType.UPDATE_CURRENT_NODE,
+            data: localNode,
+          });
+        }
+      }
+    }).catch((err) => {
+      console.log(err);
+    });
+  }, 3000);
+}
+
 export function updateLogs(logs) {
   return (dispatch) => {
     dispatch({
@@ -115,18 +162,20 @@ export function updateLogs(logs) {
   };
 }
 
-export function initOkchaind(datadir) {
+export function startOkchaind(datadir) {
   return async (dispatch, getState) => {
     const isExist = await isDirExist(datadir);
     const configDir = `${datadir}/config`;
     if (isExist) {
-      start(datadir, dispatch, getState);
+      await start(datadir, dispatch, getState);
+      checkIsSync(dispatch, getState);
     } else {
       await initData(datadir);
       await downloadGenesis(configDir);
       await downloadSeeds(configDir);
       await setSeeds(configDir);
-      start(datadir, dispatch, getState);
+      await start(datadir, dispatch, getState);
+      checkIsSync(dispatch, getState);
     }
   };
 }
@@ -156,3 +205,56 @@ export function switchIsStarted(status) {
   };
 }
 
+export function updateP2p(p2p) {
+  return (dispatch) => {
+    dispatch({
+      type: LocalNodeActionType.UPDATE_P2P,
+      data: p2p,
+    });
+  };
+}
+
+export function updateRest(rest) {
+  return (dispatch) => {
+    dispatch({
+      type: LocalNodeActionType.UPDATE_REST,
+      data: rest,
+    });
+  };
+}
+
+export function updateWs(ws) {
+  return (dispatch) => {
+    dispatch({
+      type: LocalNodeActionType.UPDATE_WS,
+      data: ws,
+    });
+  };
+}
+
+export function updateDatadir(datadir) {
+  return (dispatch) => {
+    dispatch({
+      type: LocalNodeActionType.UPDATE_DATADIR,
+      data: datadir,
+    });
+  };
+}
+
+export function updateDb(db) {
+  return (dispatch) => {
+    dispatch({
+      type: LocalNodeActionType.UPDATE_DB,
+      data: db,
+    });
+  };
+}
+
+export function updateIsSync(isSync) {
+  return (dispatch) => {
+    dispatch({
+      type: LocalNodeActionType.UPDATE_IS_SYNC,
+      data: isSync,
+    });
+  };
+}

@@ -9,7 +9,7 @@ import Config from './Config';
 
 // var OKEX_BASE_URL = location.protocol + '//' + location.host + getContextPath() + PROJECT_PRXFIX_URL;
 const OKDEX_BASE_URL = '{domain}/okchain/v1';
-const MASTER_BASE_URL = 'https://www.okex.com/okchain/v1';
+const MASTER_BASE_URL = '';
 
 /*
  * URL统一管理
