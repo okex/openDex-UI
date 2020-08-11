@@ -31,7 +31,6 @@ axios.interceptors.request.use((request) => {
   if (!headers.Authorization && token) {
     headers.Authorization = token;
   }
-
   return request;
 }, (error) => {
   return Promise.reject(error);

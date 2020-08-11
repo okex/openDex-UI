@@ -46,7 +46,7 @@ class NodeList extends Component {
     const notCurrentList = remoteList.filter((node) => {
       return currentNode.id !== node.id;
     });
-    const showList = isSync ? notCurrentList : notCurrentList.filter((node) => {
+    const showList = !(isSync && currentNode.type === NODE_TYPE.LOCAL) ? notCurrentList : notCurrentList.filter((node) => {
       return node.type !== NODE_TYPE.NONE;
     });
 

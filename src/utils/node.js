@@ -51,7 +51,7 @@ export const getNodeRenderName = (node) => {
   } = node;
   if (type === NODE_TYPE.REMOTE) {
     renderName = `${region} - ${country} - ${location}`;
-  } else if (type === NODE_TYPE.CUSTOM) {
+  } else if (type === NODE_TYPE.CUSTOM || type === NODE_TYPE.LOCAL) {
     renderName = name;
   } else {
     renderName = 'None';

@@ -1,7 +1,10 @@
 import ont from '_src/utils/dataProxy';
 import { commaLineBreak } from '_src/utils/ramda';
+import { storage } from '_component/okit';
 import URL from '_constants/URL';
 import { NODE_TYPE, MAX_LATENCY } from '_constants/Node';
+import { NONE_NODE } from '_constants/apiConfig';
+import { getStartCommand } from '_src/utils/command';
 import LocalNodeActionType from '../actionTypes/LocalNodeActionType';
 import NodeActionType from '../actionTypes/NodeActionType';
 
@@ -18,7 +21,17 @@ function start(datadir, dispatch, getState) {
   return new Promise((reslove, reject) => {
     try {
       shell.cd(directory);
-      const child = shell.exec(`./okchaind start --home ${datadir}`, { async: true });
+      const {
+        p2p, ws, rest, db,
+      } = getState().LocalNodeStore;
+      const startCommand = getStartCommand({
+        p2p,
+        ws,
+        rest,
+        datadir,
+        db,
+      });
+      const child = shell.exec(`${startCommand}`, { async: true });
       child.stdout.on('data', (data) => {
         const { logs } = getState().LocalNodeStore;
         const newLog = logs + data;
@@ -118,39 +131,63 @@ function initData(datadir) {
 }
 
 function checkIsSync(dispatch, getState) {
-  const getHeightMaster = ont.get(URL.GET_LATEST_HEIGHT_MASTER);
-  const getHeight = ont.get(URL.GET_LATEST_HEIGHT);
-  const timer = setInterval(() => {
-    Promise.all([getHeightMaster, getHeight]).then((res) => {
-      const masterHeight = res[0].data;
-      const localHeight = res[1].data;
-      if (masterHeight - localHeight < 6) {
-        dispatch({
-          type: LocalNodeActionType.UPDATE_IS_SYNC,
-          data: true
-        });
-        const { currentNode } = getState().NodeStore;
-        if (currentNode.type === NODE_TYPE.NONE) {
-          const {
-            rest, ws,
-          } = getState().LocalNodeStore;
-          const localNode = {
-            name: 'Local',
-            httpUrl: `http://127.0.0.1:${rest}`,
-            wsUrl: `http://127.0.0.1:${ws}`,
-            latency: MAX_LATENCY,
-            id: '00000000',
-          };
-          dispatch({
-            type: NodeActionType.UPDATE_CURRENT_NODE,
-            data: localNode,
-          });
-        }
-      }
-    }).catch((err) => {
-      console.log(err);
+  // const timer = setInterval(() => {
+  // ont.get('http://127.0.0.1:26657/status?').then((res) => {
+  //   console.log(res);
+  // });
+  // Promise.all([getHeightMaster, getHeight]).then((res) => {
+  //   const masterHeight = res[0].data;
+  //   const localHeight = res[1].data;
+  //   if (masterHeight - localHeight < 6) {
+  //     dispatch({
+  //       type: LocalNodeActionType.UPDATE_IS_SYNC,
+  //       data: true
+  //     });
+  //     const { currentNode } = getState().NodeStore;
+  //     if (currentNode.type === NODE_TYPE.NONE) {
+  //       const {
+  //         rest, ws,
+  //       } = getState().LocalNodeStore;
+  //       const localNode = {
+  //         name: 'Local',
+  //         httpUrl: `http://127.0.0.1:${rest}`,
+  //         wsUrl: `http://127.0.0.1:${ws}`,
+  //         latency: MAX_LATENCY,
+  //         id: '00000000',
+  //       };
+  //       dispatch({
+  //         type: NodeActionType.UPDATE_CURRENT_NODE,
+  //         data: localNode,
+  //       });
+  //     }
+  //   }
+  // }).catch((err) => {
+  //   console.log(err);
+  // });
+  // }, 3000);
+  dispatch({
+    type: LocalNodeActionType.UPDATE_IS_SYNC,
+    data: true
+  });
+  const { currentNode } = getState().NodeStore;
+  if (currentNode.type === NODE_TYPE.NONE) {
+    const {
+      rest, ws,
+    } = getState().LocalNodeStore;
+    const localNode = {
+      name: 'Local',
+      httpUrl: `http://127.0.0.1:${rest}`,
+      wsUrl: `ws://127.0.0.1:${ws}/ws/v3?compress=true`,
+      latency: MAX_LATENCY,
+      id: '00000000',
+      type: NODE_TYPE.LOCAL,
+    };
+    storage.set('currentNode', localNode);
+    dispatch({
+      type: NodeActionType.UPDATE_CURRENT_NODE,
+      data: localNode,
     });
-  }, 3000);
+  }
 }
 
 export function updateLogs(logs) {
@@ -181,7 +218,7 @@ export function startOkchaind(datadir) {
 }
 
 export function stopOkchaind() {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     const okchaindDir = getOkchaindDir();
     const { shell } = electronUtils;
     shell.cd(okchaindDir);
@@ -193,6 +230,17 @@ export function stopOkchaind() {
         });
       }
     });
+    dispatch({
+      type: LocalNodeActionType.UPDATE_IS_SYNC,
+      data: false
+    });
+    const { currentNode } = getState().NodeStore;
+    if (currentNode.type === NODE_TYPE.LOCAL) {
+      dispatch({
+        type: NodeActionType.UPDATE_CURRENT_NODE,
+        data: NONE_NODE
+      });
+    }
   };
 }
 
