@@ -5,7 +5,7 @@ const electronUtils = window.require('electron').remote.require('./src/utils');
 
 const getHomePath = () => {
   const { shell } = electronUtils;
-  shell.cd('$HOME');
+  shell.cd('~');
   const p = shell.pwd();
   const path = emptyLineBreak(p.toString());
   return path;

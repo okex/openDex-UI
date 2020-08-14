@@ -26,6 +26,7 @@ export const getNodeLatency = (node) => {
       const connection = new window.WebSocketCore({ connectUrl: wsUrl });
       let getElapsed;
       connection.onSocketError(() => {
+        connection.disconnect();
         resolve(MAX_LATENCY);
       });
       connection.onSocketConnected(() => {

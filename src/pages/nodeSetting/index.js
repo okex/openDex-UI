@@ -41,17 +41,21 @@ class NodeSetting extends Component {
 
   componentDidMount() {
     const fetchNodesLatency = () => {
-      const { remoteList, customList, currentNode } = this.props;
+      const { remoteList, customList } = this.props;
       const hasVisited = {};
-      if (currentNode.type === NODE_TYPE.LOCAL) {
-        getNodeLatency(currentNode).then((latency) => {
-          const { nodeActions } = this.props;
-          nodeActions.updateCurrentNode({
-            ...currentNode,
-            latency
+
+      const fetchLocalNode = () => {
+        const { currentNode } = this.props;
+        if (currentNode.type === NODE_TYPE.LOCAL) {
+          getNodeLatency(currentNode).then((latency) => {
+            const { nodeActions } = this.props;
+            nodeActions.updateCurrentNode({
+              ...currentNode,
+              latency
+            });
           });
-        });
-      }
+        }
+      };
 
       const updateLatency = (list, updateList, updateNode, currentNode, node, latency) => {
         let hasNode = false;
@@ -89,6 +93,8 @@ class NodeSetting extends Component {
           }
         });
       };
+
+      fetchLocalNode();
       fetchListLatency(remoteList);
       fetchListLatency(customList);
     };

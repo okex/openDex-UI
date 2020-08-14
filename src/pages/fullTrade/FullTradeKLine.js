@@ -27,6 +27,7 @@ export default class FullTradeKLine extends React.Component {
     super(props);
     this.kline = null;
     window.addEventListener('resize', this.onResize);
+    this.date = new Date().getTime();
   }
   componentDidMount() { }
   componentWillReceiveProps(nextProps) {
@@ -37,12 +38,17 @@ export default class FullTradeKLine extends React.Component {
     const newTicker = nextProps.currencyTicker;
     if (newProduct !== oldProduct && newProduct !== '') {
       // symbol发生改变
-      if (oldProduct === '' || !this.kline) {
-        this.initKline(newProduct);
-      } else {
-        // this.kline.setSymbol(util.getShortName(newProduct).replace('/', '-'));
-        this.kline.setSymbol(newProduct.toLowerCase());
-      }
+      // if (oldProduct === '' || !this.kline) {
+      //   this.initKline(newProduct);
+      // } else {
+      //   // this.kline.setSymbol(util.getShortName(newProduct).replace('/', '-'));
+      //   if (new Date().getTime() - this.date < 1000) {
+      //     return;
+      //   }
+      //   this.date = new Date().getTime();
+      //   this.kline.setSymbol(newProduct.toLowerCase());
+      // }
+      this.initKline(newProduct);
     }
     if (newTicker && (oldTicker !== newTicker)) {
       const { price } = newTicker;
@@ -110,7 +116,10 @@ export default class FullTradeKLine extends React.Component {
       language: util.getSupportLocale(Cookies.get('locale') || 'en_US'),
       showIndics: false,
       logo,
-      screenshotIcon
+      screenshotIcon,
+      onReady: () => {
+        console.log('ready');
+      },
     });
   };
   // 对K线深度数据进行转换,string => number

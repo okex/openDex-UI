@@ -10,6 +10,8 @@ import NodeActionType from '../actionTypes/NodeActionType';
 
 const electronUtils = window.require('electron').remote.require('./src/utils');
 
+let timer = null;
+
 function getOkchaindDir() {
   const { store } = electronUtils;
   return store.get('okchaindDirectory');
@@ -34,7 +36,7 @@ function start(datadir, dispatch, getState) {
       const child = shell.exec(`${startCommand}`, { async: true });
       child.stdout.on('data', (data) => {
         const { logs } = getState().LocalNodeStore;
-        const newLog = logs + data;
+        const newLog = data + logs;
         dispatch({
           type: LocalNodeActionType.UPDATE_LOGS,
           data: newLog,
@@ -131,63 +133,56 @@ function initData(datadir) {
 }
 
 function checkIsSync(dispatch, getState) {
-  // const timer = setInterval(() => {
-  // ont.get('http://127.0.0.1:26657/status?').then((res) => {
-  //   console.log(res);
-  // });
-  // Promise.all([getHeightMaster, getHeight]).then((res) => {
-  //   const masterHeight = res[0].data;
-  //   const localHeight = res[1].data;
-  //   if (masterHeight - localHeight < 6) {
-  //     dispatch({
-  //       type: LocalNodeActionType.UPDATE_IS_SYNC,
-  //       data: true
-  //     });
-  //     const { currentNode } = getState().NodeStore;
-  //     if (currentNode.type === NODE_TYPE.NONE) {
-  //       const {
-  //         rest, ws,
-  //       } = getState().LocalNodeStore;
-  //       const localNode = {
-  //         name: 'Local',
-  //         httpUrl: `http://127.0.0.1:${rest}`,
-  //         wsUrl: `http://127.0.0.1:${ws}`,
-  //         latency: MAX_LATENCY,
-  //         id: '00000000',
-  //       };
-  //       dispatch({
-  //         type: NodeActionType.UPDATE_CURRENT_NODE,
-  //         data: localNode,
-  //       });
-  //     }
-  //   }
-  // }).catch((err) => {
-  //   console.log(err);
-  // });
-  // }, 3000);
-  dispatch({
-    type: LocalNodeActionType.UPDATE_IS_SYNC,
-    data: true
-  });
-  const { currentNode } = getState().NodeStore;
-  if (currentNode.type === NODE_TYPE.NONE) {
-    const {
-      rest, ws,
-    } = getState().LocalNodeStore;
-    const localNode = {
-      name: 'Local',
-      httpUrl: `http://127.0.0.1:${rest}`,
-      wsUrl: `ws://127.0.0.1:${ws}/ws/v3?compress=true`,
-      latency: MAX_LATENCY,
-      id: '00000000',
-      type: NODE_TYPE.LOCAL,
-    };
-    storage.set('currentNode', localNode);
-    dispatch({
-      type: NodeActionType.UPDATE_CURRENT_NODE,
-      data: localNode,
+  timer && clearInterval(timer);
+  timer = setInterval(() => {
+    ont.get('http://127.0.0.1:26657/status?').then((res) => {
+      console.log(res);
+    }).catch((rpcRes) => {
+      const { result = {} } = rpcRes;
+      const info = result.sync_info || {};
+      const nowSync = !info.catching_up;
+      const oldSync = getState().LocalNodeStore.isSync;
+      if (oldSync !== nowSync) {
+        if (nowSync) {
+          dispatch({
+            type: LocalNodeActionType.UPDATE_IS_SYNC,
+            data: true
+          });
+          const { currentNode } = getState().NodeStore;
+          if (currentNode.type === NODE_TYPE.NONE) {
+            const {
+              rest, ws,
+            } = getState().LocalNodeStore;
+            const localNode = {
+              name: 'Local',
+              httpUrl: `http://127.0.0.1:${rest}`,
+              wsUrl: `ws://127.0.0.1:${ws}/ws/v3?compress=true`,
+              latency: MAX_LATENCY,
+              id: '00000000',
+              type: NODE_TYPE.LOCAL,
+            };
+            storage.set('currentNode', localNode);
+            dispatch({
+              type: NodeActionType.UPDATE_CURRENT_NODE,
+              data: localNode,
+            });
+          }
+        } else {
+          dispatch({
+            type: LocalNodeActionType.UPDATE_IS_SYNC,
+            data: false
+          });
+          const { currentNode } = getState().NodeStore;
+          if (currentNode.type === NODE_TYPE.LOCAL) {
+            dispatch({
+              type: NodeActionType.UPDATE_CURRENT_NODE,
+              data: NONE_NODE
+            });
+          }
+        }
+      }
     });
-  }
+  }, 3000);
 }
 
 export function updateLogs(logs) {
@@ -219,6 +214,7 @@ export function startOkchaind(datadir) {
 
 export function stopOkchaind() {
   return (dispatch, getState) => {
+    timer && clearInterval(timer);
     const okchaindDir = getOkchaindDir();
     const { shell } = electronUtils;
     shell.cd(okchaindDir);
