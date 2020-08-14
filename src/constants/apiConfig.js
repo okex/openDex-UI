@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { NODE_TYPE, MAX_LATENCY } from './Node';
 
 const httpUrl = navigator.userAgent.includes('Electron') && window.location.protocol.includes('file') ? 'https://www.okex.com' : 'https://www.okex.com';
@@ -6,12 +5,15 @@ const wsUrl = 'wss://dexcomreal.bafang.com:8443/ws/v3';
 
 const commonNodeItems = {
   latency: MAX_LATENCY,
-}
+};
 
 const remoteNodeItems = {
   ...commonNodeItems,
   type: NODE_TYPE.REMOTE,
-}
+};
+
+export const LOCAL_PREFIX = 'http://127.0.0.1:';
+export const LOCAL_PREFIX_WS = 'ws://127.0.0.1:';
 
 export const DEFAULT_NODE = {
   ...remoteNodeItems,
@@ -20,7 +22,7 @@ export const DEFAULT_NODE = {
   region: 'Asia',
   httpUrl,
   country: 'China',
-  location: "Hong Kong",
+  location: 'Hong Kong',
 };
 
 export const NONE_NODE = {
@@ -32,7 +34,7 @@ export const NONE_NODE = {
   country: '',
   location: '',
   type: NODE_TYPE.NONE,
-}
+};
 
 export const NODE_LIST = [
   DEFAULT_NODE,
@@ -43,7 +45,7 @@ export const NODE_LIST = [
     httpUrl,
     region: 'Asia',
     country: 'China',
-    location: "Shanghai",
+    location: 'Shanghai',
   },
   {
     ...remoteNodeItems,
@@ -52,7 +54,7 @@ export const NODE_LIST = [
     httpUrl,
     region: 'Asia',
     country: 'China',
-    location: "Hangzhou",
+    location: 'Hangzhou',
   },
   NONE_NODE,
 ];

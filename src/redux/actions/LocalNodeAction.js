@@ -3,7 +3,7 @@ import { commaLineBreak } from '_src/utils/ramda';
 import { storage } from '_component/okit';
 import URL from '_constants/URL';
 import { NODE_TYPE, MAX_LATENCY } from '_constants/Node';
-import { NONE_NODE } from '_constants/apiConfig';
+import { NONE_NODE, LOCAL_PREFIX, LOCAL_PREFIX_WS } from '_constants/apiConfig';
 import { getStartCommand } from '_src/utils/command';
 import LocalNodeActionType from '../actionTypes/LocalNodeActionType';
 import NodeActionType from '../actionTypes/NodeActionType';
@@ -135,7 +135,7 @@ function initData(datadir) {
 function checkIsSync(dispatch, getState) {
   timer && clearInterval(timer);
   timer = setInterval(() => {
-    ont.get('http://127.0.0.1:26657/status?').then((res) => {
+    ont.get(`${LOCAL_PREFIX}26657/status?`).then((res) => {
       console.log(res);
     }).catch((rpcRes) => {
       const { result = {} } = rpcRes;
@@ -155,8 +155,8 @@ function checkIsSync(dispatch, getState) {
             } = getState().LocalNodeStore;
             const localNode = {
               name: 'Local',
-              httpUrl: `http://127.0.0.1:${rest}`,
-              wsUrl: `ws://127.0.0.1:${ws}/ws/v3?compress=true`,
+              httpUrl: `${LOCAL_PREFIX}${rest}`,
+              wsUrl: `${LOCAL_PREFIX_WS}${ws}/ws/v3?compress=true`,
               latency: MAX_LATENCY,
               id: '00000000',
               type: NODE_TYPE.LOCAL,

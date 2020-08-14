@@ -1,5 +1,6 @@
 import { storage } from '_component/okit';
 import { NODE_TYPE, MAX_LATENCY } from '_constants/Node';
+import { LOCAL_PREFIX, LOCAL_PREFIX_WS } from '_constants/apiConfig';
 import NodeActionType from '../actionTypes/NodeActionType';
 /* eslint-disable */
 /**
@@ -15,8 +16,8 @@ export function updateCurrentNode(node) {
       } = getState().LocalNodeStore;
       const localNode = {
         name: 'Local',
-        httpUrl: `http://127.0.0.1:${rest}`,
-        wsUrl: `ws://127.0.0.1:${ws}/ws/v3?compress=true`,
+        httpUrl: `${LOCAL_PREFIX}${rest}`,
+        wsUrl: `${LOCAL_PREFIX_WS}${ws}/ws/v3?compress=true`,
         latency: MAX_LATENCY,
         id: '00000000',
         type: NODE_TYPE.LOCAL,
