@@ -8,6 +8,7 @@ const LocalNodeActionType = {
   UPDATE_DATADIR: 'UPDATE_DATADIR',
   UPDATE_DB: 'UPDATE_DB',
   UPDATE_IS_SYNC: 'UPDATE_IS_SYNC',
+  UPDATE_LOCAL_HEIGHT: 'UPDATE_LOCAL_HEIGHT',
 };
 
 export default LocalNodeActionType;

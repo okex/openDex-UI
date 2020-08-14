@@ -20,7 +20,9 @@ import './index.less';
 function mapStateToProps(state) {
   const { latestHeight } = state.Common;
   const { currentNode, remoteList, customList } = state.NodeStore;
-  const { logs, isStarted } = state.LocalNodeStore;
+  const {
+    logs, isStarted, datadir, localHeight
+  } = state.LocalNodeStore;
   return {
     latestHeight,
     currentNode,
@@ -28,6 +30,8 @@ function mapStateToProps(state) {
     customList,
     logs,
     isStarted,
+    datadir,
+    localHeight,
   };
 }
 
@@ -74,8 +78,7 @@ class DesktopNodeMenu extends Component {
   }
 
   onSwitchChange = (checked) => {
-    const { datadir } = this.state;
-    const { localNodeAction } = this.props;
+    const { localNodeAction, datadir } = this.props;
     if (checked) {
       localNodeAction.switchIsStarted(true);
       localNodeAction.startOkchaind(datadir);
@@ -99,7 +102,8 @@ class DesktopNodeMenu extends Component {
 
   render() {
     const {
-      latestHeight, currentNode, customList, isStarted
+      latestHeight, currentNode, customList,
+      isStarted, localHeight,
     } = this.props;
     const { isMenuShow } = this.state;
     const { latency, type } = currentNode;
@@ -115,7 +119,8 @@ class DesktopNodeMenu extends Component {
         onMouseLeave={this.hideMenu}
       >
         <img className="node-menu-back" src={navBack} alt="node-set-img" />
-        <div className="desktop-node-menu-container" style={{ display: isMenuShow ? 'block' : 'none' }}>
+        {/* style={{ display: isMenuShow ? 'block' : 'none' }} */}
+        <div className="desktop-node-menu-container">
           <div className="node-menu-item remote-node-item">
             <div className="node-menu-type">
               <div className="node-type">{toLocale('nodeMenu.remote')}</div>
@@ -162,7 +167,13 @@ class DesktopNodeMenu extends Component {
               <Icon className="icon-node" />
               <Icon className="icon-retract" />
             </div>
-            <div className="node-assist">{toLocale('node.stopped')}</div>
+            {
+              isStarted ? (
+                <div className="node-assist">{toLocale('nodeMenu.block')} #{localHeight}</div>
+              ) : (
+                <div className="node-assist">{toLocale('node.stopped')}</div>
+              )
+            }
             <div className="node-sub-menu local-node-submenu">
               <div className="local-node-container">
                 <div className="local-node-text">go-okchain</div>

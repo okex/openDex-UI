@@ -33,6 +33,7 @@ const initialState = {
   datadir: getInitDataDir(),
   db: getInitDb(),
   isSync: false,
+  localHeight: 0,
 };
 
 export default function reducer(state = initialState, action) {
@@ -86,6 +87,11 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         isSync: action.data,
+      };
+    case LocalNodeActionType.UPDATE_LOCAL_HEIGHT:
+      return {
+        ...state,
+        localHeight: action.data,
       };
     default:
       return state;

@@ -1,7 +1,6 @@
 import ont from '_src/utils/dataProxy';
 import { commaLineBreak } from '_src/utils/ramda';
 import { storage } from '_component/okit';
-import URL from '_constants/URL';
 import { NODE_TYPE, MAX_LATENCY } from '_constants/Node';
 import { NONE_NODE, LOCAL_PREFIX, LOCAL_PREFIX_WS } from '_constants/apiConfig';
 import { getStartCommand } from '_src/utils/command';
@@ -132,7 +131,17 @@ function initData(datadir) {
   });
 }
 
-function checkIsSync(dispatch, getState) {
+function updateLocalHeight(dispatch, info) {
+  const localHeight = info.latest_block_height;
+  if (localHeight) {
+    dispatch({
+      type: LocalNodeActionType.UPDATE_LOCAL_HEIGHT,
+      data: localHeight,
+    });
+  }
+}
+
+function startPoll(dispatch, getState) {
   timer && clearInterval(timer);
   timer = setInterval(() => {
     ont.get(`${LOCAL_PREFIX}26657/status?`).then((res) => {
@@ -140,6 +149,7 @@ function checkIsSync(dispatch, getState) {
     }).catch((rpcRes) => {
       const { result = {} } = rpcRes;
       const info = result.sync_info || {};
+      updateLocalHeight(dispatch, info);
       const nowSync = !info.catching_up;
       const oldSync = getState().LocalNodeStore.isSync;
       if (oldSync !== nowSync) {
@@ -200,14 +210,14 @@ export function startOkchaind(datadir) {
     const configDir = `${datadir}/config`;
     if (isExist) {
       await start(datadir, dispatch, getState);
-      checkIsSync(dispatch, getState);
+      startPoll(dispatch, getState);
     } else {
       await initData(datadir);
       await downloadGenesis(configDir);
       await downloadSeeds(configDir);
       await setSeeds(configDir);
       await start(datadir, dispatch, getState);
-      checkIsSync(dispatch, getState);
+      startPoll(dispatch, getState);
     }
   };
 }
