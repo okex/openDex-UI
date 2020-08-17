@@ -10,9 +10,9 @@ import DexSwitch from '_component/DexSwitch';
 import navBack from '_src/assets/images/nav_back@2x.png';
 import PageURL from '_constants/PageURL';
 import { toLocale } from '_src/locale/react-locale';
-// import ont from '_src/utils/dataProxy';
-// import URL from '_constants/URL';
-import { getDelayType, timeUnit, getNodeRenderName } from '_src/utils/node';
+import ont from '_src/utils/dataProxy';
+import URL from '_constants/URL';
+import { getDelayType, timeUnit, getNodeRenderName, formatEstimatedTime } from '_src/utils/node';
 import { NODE_TYPE } from '_constants/Node';
 import { DEFAULT_NODE, NONE_NODE } from '_constants/apiConfig';
 import './index.less';
@@ -21,7 +21,7 @@ function mapStateToProps(state) {
   const { latestHeight } = state.Common;
   const { currentNode, remoteList, customList } = state.NodeStore;
   const {
-    logs, isStarted, datadir, localHeight
+    logs, isStarted, datadir, localHeight, estimatedTime
   } = state.LocalNodeStore;
   return {
     latestHeight,
@@ -32,6 +32,7 @@ function mapStateToProps(state) {
     isStarted,
     datadir,
     localHeight,
+    estimatedTime,
   };
 }
 
@@ -54,16 +55,16 @@ class DesktopNodeMenu extends Component {
   }
 
   componentDidMount() {
-    // this.heightTimer = setInterval(() => {
-    //   ont.get(URL.GET_LATEST_HEIGHT).then((res) => {
-    //     if (res.data) {
-    //       const { commonAction } = this.props;
-    //       commonAction.updateLatestHeight(res.data);
-    //     }
-    //   }).catch((err) => {
-    //     console.log(err);
-    //   });
-    // }, 3000);
+    this.heightTimer = setInterval(() => {
+      ont.get(URL.GET_LATEST_HEIGHT_MASTER).then((res) => {
+        if (res.data) {
+          const { commonAction } = this.props;
+          commonAction.updateLatestHeight(res.data);
+        }
+      }).catch((err) => {
+        console.log(err);
+      });
+    }, 3000);
   }
 
   componentWillUnmount() {
@@ -103,7 +104,7 @@ class DesktopNodeMenu extends Component {
   render() {
     const {
       latestHeight, currentNode, customList,
-      isStarted, localHeight,
+      isStarted, localHeight, estimatedTime,
     } = this.props;
     const { isMenuShow } = this.state;
     const { latency, type } = currentNode;
@@ -111,6 +112,7 @@ class DesktopNodeMenu extends Component {
     const remoteNode = type === NODE_TYPE.REMOTE ? currentNode : DEFAULT_NODE;
     const customNode = type === NODE_TYPE.CUSTOM ? currentNode : (customList[0] || {});
     const settingsNodeList = [remoteNode, customNode, NONE_NODE];
+    const fEstimatedTime = formatEstimatedTime(estimatedTime);
 
     return (
       <div
@@ -169,7 +171,12 @@ class DesktopNodeMenu extends Component {
             </div>
             {
               isStarted ? (
-                <div className="node-assist">{toLocale('nodeMenu.block')} #{localHeight}</div>
+                <Fragment>
+                  <div className="node-assist">{toLocale('nodeMenu.block')} #{localHeight}</div>
+                  {
+                    estimatedTime !== 0 && <div className="node-estimated">Estimated time {fEstimatedTime}</div>
+                  }
+                </Fragment>
               ) : (
                 <div className="node-assist">{toLocale('node.stopped')}</div>
               )

@@ -7,9 +7,8 @@ import Select from '_component/ReactSelect';
 import DexDesktopInput from '_component/DexDesktopInput';
 import DexUpload from '_component/DexUpload';
 import { htmlLineBreak } from '_src/utils/ramda';
+import { formatEstimatedTime } from '_src/utils/node';
 import './TabLocal.less';
-
-const electronUtils = window.require('electron').remote.require('./src/utils');
 
 const defaultOptions = [
   { value: 0, label: 'TestNet' },
@@ -19,6 +18,7 @@ function mapStateToProps(state) { // 绑定redux中相关state
   const {
     logs, isStarted,
     p2p, rest, ws, datadir, db,
+    estimatedTime,
   } = state.LocalNodeStore;
   return {
     logs,
@@ -28,6 +28,7 @@ function mapStateToProps(state) { // 绑定redux中相关state
     ws,
     datadir,
     db,
+    estimatedTime,
   };
 }
 
@@ -109,17 +110,21 @@ class TabLocal extends Component {
     const {
       logs, isStarted,
       p2p, rest, ws, datadir, db,
+      estimatedTime,
     } = this.props;
     const {
       options, selected,
     } = this.state;
     const htmlLogs = htmlLineBreak(logs);
+    const fEstimatedTime = formatEstimatedTime(estimatedTime);
 
     return (
       <div className="node-local-container">
         <div className="node-local-switch">
           <div className="local-switch-title">Locally hosted</div>
-          <div className="local-switch-desc">（Estimated time 1D）</div>
+          {
+            estimatedTime !== 0 && <div className="local-switch-desc">（Estimated time {fEstimatedTime}）</div>
+          }
           <DexSwitch
             checked={isStarted}
             checkedChildren="开"

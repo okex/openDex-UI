@@ -34,6 +34,7 @@ const initialState = {
   db: getInitDb(),
   isSync: false,
   localHeight: 0,
+  estimatedTime: 0, // unit:ms
 };
 
 export default function reducer(state = initialState, action) {
@@ -92,6 +93,11 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         localHeight: action.data,
+      };
+    case LocalNodeActionType.UPDATE_ESTIMATED_TIME:
+      return {
+        ...state,
+        estimatedTime: action.data,
       };
     default:
       return state;

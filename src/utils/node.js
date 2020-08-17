@@ -1,8 +1,33 @@
 import hirestime from 'hirestime';
 import { calc } from '_component/okit';
 import { MAX_LATENCY, NODE_LATENCY_TYPE, NODE_TYPE } from '_constants/Node';
+import { carry, fixed } from '_src/utils/ramda';
 
 const TIMEOUT = 2000;
+
+const timeData = [
+  {
+    suffix: 'MS',
+    scale: 1000,
+  },
+  {
+    suffix: 'S',
+    scale: 60,
+  },
+  {
+    suffix: 'MIN',
+    scale: 60,
+  },
+  {
+    suffix: 'H',
+    scale: 24,
+  },
+  {
+    suffix: 'D',
+  },
+];
+
+const fixed0 = fixed(0);
 
 export const getDelayType = (delayTime) => {
   let delayType;
@@ -61,16 +86,17 @@ export const getNodeRenderName = (node) => {
 };
 
 export const timeUnit = (t) => {
-  let time = t;
-  if (!time || time === MAX_LATENCY) {
+  if (!t || t === MAX_LATENCY) {
     return '- -';
   }
-  const suffix = ['ms', 's'];
-  const carry = 1000;
-  let index = 0;
-  while (time >= carry && index < suffix.length - 1) {
-    time = calc.div(time, carry);
-    index++;
-  }
-  return `${time}${suffix[index]}`;
+  const [time, suffix] = carry(timeData.slice(0, 2), t);
+  return `${parseFloat(fixed(2, time))}${suffix}`;
+};
+
+/**
+ * @param {string} timestamp
+ */
+export const formatEstimatedTime = (t) => {
+  const [time, suffix] = carry(timeData, fixed0(t));
+  return `${fixed0(time)}${suffix}`;
 };

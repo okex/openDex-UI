@@ -1,5 +1,5 @@
 import ont from '_src/utils/dataProxy';
-import { commaLineBreak } from '_src/utils/ramda';
+import { commaLineBreak, divide, multiply } from '_src/utils/ramda';
 import { storage } from '_component/okit';
 import { NODE_TYPE, MAX_LATENCY } from '_constants/Node';
 import { NONE_NODE, LOCAL_PREFIX, LOCAL_PREFIX_WS } from '_constants/apiConfig';
@@ -10,6 +10,7 @@ import NodeActionType from '../actionTypes/NodeActionType';
 const electronUtils = window.require('electron').remote.require('./src/utils');
 
 let timer = null;
+const pollInterval = 3000;
 
 function getOkchaindDir() {
   const { store } = electronUtils;
@@ -131,14 +132,21 @@ function initData(datadir) {
   });
 }
 
-function updateLocalHeight(dispatch, info) {
+function updateEstimatedTime(dispatch, getState, info, diffLocalHeight) {
+  const masterHeight = getState().Common.latestHeight;
   const localHeight = info.latest_block_height;
-  if (localHeight) {
-    dispatch({
-      type: LocalNodeActionType.UPDATE_LOCAL_HEIGHT,
-      data: localHeight,
-    });
+  const diffHeight = masterHeight - localHeight;
+  let time;
+  if (diffHeight === 0 || diffLocalHeight === 0) {
+    time = 0;
+  } else {
+    const t = divide(pollInterval, diffLocalHeight);
+    time = multiply(t, diffHeight);
   }
+  dispatch({
+    type: LocalNodeActionType.UPDATE_ESTIMATED_TIME,
+    data: time,
+  });
 }
 
 function startPoll(dispatch, getState) {
@@ -149,7 +157,16 @@ function startPoll(dispatch, getState) {
     }).catch((rpcRes) => {
       const { result = {} } = rpcRes;
       const info = result.sync_info || {};
-      updateLocalHeight(dispatch, info);
+      const oldLocalHeight = getState().LocalNodeStore.localHeight;
+      const localHeight = info.latest_block_height - 0;
+      const diffLocalHeight = localHeight - oldLocalHeight;
+      if (localHeight) {
+        dispatch({
+          type: LocalNodeActionType.UPDATE_LOCAL_HEIGHT,
+          data: localHeight,
+        });
+      }
+      oldLocalHeight > 0 && updateEstimatedTime(dispatch, getState, info, diffLocalHeight);
       const nowSync = !info.catching_up;
       const oldSync = getState().LocalNodeStore.isSync;
       if (oldSync !== nowSync) {
@@ -192,7 +209,7 @@ function startPoll(dispatch, getState) {
         }
       }
     });
-  }, 3000);
+  }, pollInterval);
 }
 
 export function updateLogs(logs) {
