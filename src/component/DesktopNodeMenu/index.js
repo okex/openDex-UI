@@ -121,8 +121,7 @@ class DesktopNodeMenu extends Component {
         onMouseLeave={this.hideMenu}
       >
         <img className="node-menu-back" src={navBack} alt="node-set-img" />
-        {/* style={{ display: isMenuShow ? 'block' : 'none' }} */}
-        <div className="desktop-node-menu-container">
+        <div className="desktop-node-menu-container" style={{ display: isMenuShow ? 'block' : 'none' }}>
           <div className="node-menu-item remote-node-item">
             <div className="node-menu-type">
               <div className="node-type">{toLocale('nodeMenu.remote')}</div>
