@@ -10,10 +10,14 @@ import util from '../../utils/util';
 
 function mapStateToProps(state) {
   const { product, depth200, currencyTicker } = state.SpotTrade;
+  const {
+    currentNode,
+  } = state.NodeStore;
   return {
     product,
     depth200,
-    currencyTicker
+    currencyTicker,
+    currentNode,
   };
 }
 
@@ -93,6 +97,7 @@ export default class FullTradeKLine extends React.Component {
     this.kline.resize(offsetWidth, height);
   };
   initKline = (product) => {
+    const { httpUrl } = this.props.currentNode;
     // okex线上
     // let wsUrl = 'wss://okexcomreal.bafang.com:10442/ws/v3';
     let wsUrl = getWsUrl();
@@ -102,7 +107,7 @@ export default class FullTradeKLine extends React.Component {
     const Kline = window.okui.CombKline || window.okui.Kline;
     this.kline = new Kline({
       element: '#dex-full-kline-container',
-      klineUrl: Config.okchain.clientUrl + '/okchain/v1/candles/<symbol>', //  + product
+      klineUrl: httpUrl + '/okchain/v1/candles/<symbol>', //  + product
       klineType: 'TradingView',
       showToggle: false,
       wsUrl,
