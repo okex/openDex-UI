@@ -65,13 +65,17 @@ const InitWrapper = (Component) => {
       //   window.location.reload();
       // }
     }
-    componentWillUnmount() {
-    }
 
     componentDidUpdate(prevProps) {
       if (prevProps.currentNode !== this.props.currentNode) {
         window.location.reload();
       }
+    }
+
+    componentWillUnmount() {
+      const { spotActions } = this.props;
+      spotActions.updateWsStatus(false);
+      window.OK_GLOBAL.ws_v3 = undefined;
     }
 
     // 基础ajax，其他业务数据对此有依赖

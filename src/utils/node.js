@@ -1,5 +1,4 @@
 import hirestime from 'hirestime';
-import { calc } from '_component/okit';
 import { MAX_LATENCY, NODE_LATENCY_TYPE, NODE_TYPE } from '_constants/Node';
 import { carry, fixed } from '_src/utils/ramda';
 
