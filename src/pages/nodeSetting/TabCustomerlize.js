@@ -159,7 +159,7 @@ class TabCustomerlize extends Component {
             </div>
           </div>
           <div className="cd-btn-container">
-            <div className="cd-btn cd-btn-cancel">Cancel</div>
+            <div className="cd-btn cd-btn-cancel" onClick={this.closeDialog}>Cancel</div>
             <div className="cd-btn cd-btn-confirm" onClick={this.onConfirm}>Confirm</div>
           </div>
         </Dialog>
