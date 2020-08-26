@@ -13,17 +13,43 @@ class DexUpload extends Component {
     const {
       onUpload
     } = this.props;
+    console.log(e.target);
+    console.log(e.target.value);
+    console.log(e.target.files[0]);
+    console.log(e.target.files[0].path);
     const filePath = e.target.files[0].path;
     onUpload && onUpload(filePath);
   }
 
+  showOpenDialog = async (e) => {
+    const {
+      onUpload, directory
+    } = this.props;
+    const dialog = window.require('electron').remote.dialog;
+    e.preventDefault();
+    const pathType = directory ? 'directory' : 'file';
+    const options = {
+      properties: ['showHiddenFiles']
+    };
+    if (pathType === 'directory') {
+      options.properties.push('openDirectory');
+    } else {
+      options.properties.push('openFile');
+    }
+    dialog.showOpenDialog(options).then((result) => {
+      const filePath = result.filePaths[0];
+      onUpload && onUpload(filePath);
+    });
+    return null;
+  }
+
   handleUpload = () => {
-    this.inputFile && this.inputFile.click();
+    this.inputDir && this.inputDir.click();
   }
 
   render() {
     const {
-      label, value, onChange, directory
+      label, value, onChange, directory,
     } = this.props;
 
     return (
@@ -38,13 +64,13 @@ class DexUpload extends Component {
         </div>
         <input
           type="file"
-          onChange={this.onFileChange}
+          onClick={this.showOpenDialog}
           ref={(self) => {
-                this.inputFile = self;
-              }}
+            this.inputDir = self;
+          }}
           style={{ display: 'none' }}
-          webkitdirectory={directory ? 'true' : null}
-          directory={directory ? 'true' : null}
+          webkitdirectory={directory ? 1 : 0}
+          directory={directory ? 1 : 0}
         />
       </div>
     );

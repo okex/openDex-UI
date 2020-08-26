@@ -149,6 +149,8 @@ const SpotTradeWrapper = (Component) => {
         this.stopWs();
       }
       spotActions.updateProduct('');
+      spotActions.updateWsStatus(false);
+      window.OK_GLOBAL.ws_v3 = undefined;
     }
 
     // 获取初始全量数据（api方式）
