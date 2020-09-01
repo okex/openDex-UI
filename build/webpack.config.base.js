@@ -10,7 +10,7 @@ const base = {
   output: {
     filename: '[name]/index.js',
     chunkFilename: 'common/[name]/[name].js',
-    path: path.resolve(__dirname, '../dist')
+    path: path.resolve(__dirname, '../bundle')
   },
   module: {
     rules: [

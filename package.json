@@ -42,7 +42,6 @@
     "clean-webpack-plugin": "^0.1.19",
     "copy-webpack-plugin": "^4.5.2",
     "css-loader": "^0.28.11",
-    "electron": "^9.1.2",
     "eslint": "^4.19.1",
     "eslint-import-resolver-alias": "^1.1.0",
     "eslint-loader": "^2.0.0",
