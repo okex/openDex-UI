@@ -1,6 +1,7 @@
 import ont from '_src/utils/dataProxy';
 import { commaLineBreak, divide, multiply } from '_src/utils/ramda';
 import { storage } from '_component/okit';
+import Message from '_src/component/Message';
 import { NODE_TYPE, MAX_LATENCY } from '_constants/Node';
 import { NONE_NODE, LOCAL_PREFIX, LOCAL_PREFIX_WS } from '_constants/apiConfig';
 import { getStartCommand } from '_src/utils/command';
@@ -15,6 +16,10 @@ const pollInterval = 3000;
 function getOkchaindDir() {
   const { store } = electronUtils;
   return store.get('okchaindDirectory');
+}
+
+function stopPoll() {
+  timer && clearInterval(timer);
 }
 
 function start(datadir, dispatch, getState) {
@@ -33,7 +38,18 @@ function start(datadir, dispatch, getState) {
         datadir,
         db,
       });
-      const child = shell.exec(`${startCommand}`, { async: true });
+      const child = shell.exec(`${startCommand}`, { async: true }, (code) => {
+        if (code !== 130 && code !== 0) {
+          Message.error({
+            content: 'okchaind start error',
+          });
+          stopPoll();
+          dispatch({
+            type: LocalNodeActionType.UPDATE_IS_STARTED,
+            data: false,
+          });
+        }
+      });
       child.stdout.on('data', (data) => {
         const { logs } = getState().LocalNodeStore;
         const newLog = data + logs;
@@ -147,10 +163,6 @@ function updateEstimatedTime(dispatch, getState, info, diffLocalHeight) {
     type: LocalNodeActionType.UPDATE_ESTIMATED_TIME,
     data: time,
   });
-}
-
-function stopPoll() {
-  timer && clearInterval(timer);
 }
 
 function startPoll(dispatch, getState) {
