@@ -129,7 +129,7 @@ class DesktopNodeMenu extends Component {
               <Icon className="icon-retract" />
             </div>
             {
-              type === NODE_TYPE.NONE ? (
+              (type === NODE_TYPE.NONE || type === NODE_TYPE.LOCAL) ? (
                 <div className="node-assist">None</div>
               ) : (
                 <Fragment>
