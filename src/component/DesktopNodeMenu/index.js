@@ -14,7 +14,7 @@ import { toLocale } from '_src/locale/react-locale';
 import ont from '_src/utils/dataProxy';
 import URL from '_constants/URL';
 import { getDelayType, timeUnit, getNodeRenderName, formatEstimatedTime } from '_src/utils/node';
-import { NODE_TYPE } from '_constants/Node';
+import { NODE_TYPE, NODE_LATENCY_TYPE } from '_constants/Node';
 import { DEFAULT_NODE, NONE_NODE } from '_constants/apiConfig';
 import './index.less';
 
@@ -160,6 +160,7 @@ class DesktopNodeMenu extends Component {
     const customNode = type === NODE_TYPE.CUSTOM ? currentNode : (customList[0] || {});
     const settingsNodeList = [remoteNode, customNode, NONE_NODE];
     const fEstimatedTime = formatEstimatedTime(estimatedTime);
+    const isNoneOrLocalNode = type === NODE_TYPE.NONE || type === NODE_TYPE.LOCAL;
 
     return (
       <div
@@ -176,7 +177,7 @@ class DesktopNodeMenu extends Component {
               <Icon className="icon-retract" />
             </div>
             {
-              (type === NODE_TYPE.NONE || type === NODE_TYPE.LOCAL) ? (
+              isNoneOrLocalNode ? (
                 <div className="node-assist">None</div>
               ) : (
                 <Fragment>
@@ -190,7 +191,7 @@ class DesktopNodeMenu extends Component {
                 settingsNodeList.map((node, index) => {
                   const { id } = node;
                   const renderName = getNodeRenderName(node);
-                  const delayType = getDelayType(node.latency);
+                  const delayType = isNoneOrLocalNode ? NODE_LATENCY_TYPE.UNREACHABLE : getDelayType(node.latency);
                   const extraStyle = id === currentNode.id ? {
                     color: '#2D60E0',
                   } : {};
