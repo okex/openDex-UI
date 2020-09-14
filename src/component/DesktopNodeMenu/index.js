@@ -7,6 +7,7 @@ import * as LocalNodeAction from '_src/redux/actions/LocalNodeAction';
 import { withRouter } from 'react-router-dom';
 import Icon from '_component/IconLite';
 import DexSwitch from '_component/DexSwitch';
+import { Dialog } from '_component/Dialog';
 import navBack from '_src/assets/images/nav_back@2x.png';
 import PageURL from '_constants/PageURL';
 import { toLocale } from '_src/locale/react-locale';
@@ -21,7 +22,7 @@ function mapStateToProps(state) {
   const { latestHeight } = state.Common;
   const { currentNode, remoteList, customList } = state.NodeStore;
   const {
-    logs, isStarted, datadir, localHeight, estimatedTime
+    logs, isStarted, datadir, localHeight, estimatedTime, isSync,
   } = state.LocalNodeStore;
   return {
     latestHeight,
@@ -33,6 +34,7 @@ function mapStateToProps(state) {
     datadir,
     localHeight,
     estimatedTime,
+    isSync,
   };
 }
 
@@ -52,6 +54,7 @@ class DesktopNodeMenu extends Component {
     this.state = {
       isMenuShow: false
     };
+    this.outOfSyncDialog = null;
   }
 
   componentDidMount() {
@@ -65,6 +68,50 @@ class DesktopNodeMenu extends Component {
         console.log(err);
       });
     }, 3000);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { isSync: oldIsSync } = prevProps;
+    const { isSync: nowIsSync, location = {} } = this.props;
+    const isShowDialog = oldIsSync && !nowIsSync && location.pathname === PageURL.spotFullPage && !this.outOfSyncDialog;
+    if (isShowDialog) {
+      this.outOfSyncDialog = Dialog.show({
+        onClose: () => {
+          this.outOfSyncDialog.destroy();
+          this.outOfSyncDialog = null;
+        },
+        className: 'out-of-dialog',
+        title: 'Connection out of sync',
+        children: (
+          <div className="out-of-dialog-main">
+            <div className="out-of-dialog-text">Your connection has been out of sync for 18 seconds.
+          If the connection can be recovered this message will disappear automatically.
+            </div>
+            <div className="out-of-dialog-btn-content">
+              <div
+                className="ouf-of-dialog-solid-btn ouf-of-dialog-btn ouf-of-dialog-setting-btn"
+                onClick={() => {
+                  this.outOfSyncDialog.destroy();
+                  this.outOfSyncDialog = null;
+                  this.props.history.push(PageURL.nodeSettingPage);
+                }}
+              >
+                NODES SETTINGS
+              </div>
+              <div
+                className="ouf-of-dialog-hollow-btn ouf-of-dialog-btn ouf-of-dialog-cancel-btn"
+                onClick={() => {
+                  this.outOfSyncDialog.destroy();
+                  this.outOfSyncDialog = null;
+                }}
+              >
+                Cancel
+              </div>
+            </div>
+          </div>
+        )
+      });
+    }
   }
 
   componentWillUnmount() {

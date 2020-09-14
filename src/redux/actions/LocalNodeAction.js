@@ -149,8 +149,12 @@ function updateEstimatedTime(dispatch, getState, info, diffLocalHeight) {
   });
 }
 
-function startPoll(dispatch, getState) {
+function stopPoll() {
   timer && clearInterval(timer);
+}
+
+function startPoll(dispatch, getState) {
+  stopPoll();
   timer = setInterval(() => {
     ont.get(`${LOCAL_PREFIX}26657/status?`).then((res) => {
       console.log(res);
@@ -241,7 +245,7 @@ export function startOkchaind(datadir) {
 
 export function stopOkchaind() {
   return (dispatch, getState) => {
-    timer && clearInterval(timer);
+    stopPoll();
     const okchaindDir = getOkchaindDir();
     const { shell } = electronUtils;
     shell.cd(okchaindDir);
