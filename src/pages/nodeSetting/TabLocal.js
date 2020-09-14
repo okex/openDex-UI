@@ -123,7 +123,7 @@ class TabLocal extends Component {
         <div className="node-local-switch">
           <div className="local-switch-title">Locally hosted</div>
           {
-            estimatedTime !== 0 && <div className="local-switch-desc">（Estimated time {fEstimatedTime}）</div>
+            estimatedTime > 0 && <div className="local-switch-desc">（Estimated time {fEstimatedTime}）</div>
           }
           <DexSwitch
             checked={isStarted}
