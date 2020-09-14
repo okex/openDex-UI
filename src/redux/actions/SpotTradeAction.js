@@ -353,7 +353,7 @@ export function addColorToDeals(arr) {
  * */
 export function getDeals(product, callback) {
   return (dispatch) => {
-    ont.get(URL.GET_LATEST_MATCHES, { params: { product, page: 0, per_page: 60 } }).then((res) => {
+    ont.get(URL.GET_LATEST_MATCHES, { params: { product, page: 1, per_page: 60 } }).then((res) => {
       const data = res.data.data || [];
       data.sort((d1, d2) => {
         return d2.timestamp - d1.timestamp;
