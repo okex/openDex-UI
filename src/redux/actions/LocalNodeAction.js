@@ -39,6 +39,7 @@ function start(datadir, dispatch, getState) {
         db,
       });
       const child = shell.exec(`${startCommand}`, { async: true }, (code) => {
+        console.log(code);
         if (code !== 130 && code !== 0) {
           Message.error({
             content: 'okchaind start error',
