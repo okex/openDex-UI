@@ -2,7 +2,7 @@ var path = require('path');
 
 module.exports = {
   "parser": "babel-eslint",
-  "extends": "@ok/eslint-config-ok",
+  "extends": "airbnb",
   "rules": {
     "class-methods-use-this": 0
   },

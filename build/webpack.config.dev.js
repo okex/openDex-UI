@@ -3,19 +3,13 @@ const webpack = require('webpack');
 const env = require('./dev.env');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const base = require('./webpack.config.base');
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const config = require('./config');
-// const ip = require('ip');
 
-// const address = ip.address();
-// const address = 'local.okex.com';
-// const address = 'localhost';
 const address = '127.0.0.1';
 const mockUrl = 'http://mock.okcoin-inc.com';
 base.output.publicPath = `http://${address}:${config.dev.port}/`;
 
 base.plugins.unshift(
-  // new BundleAnalyzerPlugin(),
   new webpack.DefinePlugin(env),
   new webpack.HotModuleReplacementPlugin({}),
   new HtmlWebpackPlugin({
