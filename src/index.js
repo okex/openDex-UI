@@ -53,9 +53,9 @@ emitter.on('downloadOkchainProgress', (res) => {
 });
 
 function checkLocalNode() {
-  new Promise(resolve => {
+  return new Promise(resolve => {
     electronUtils.shell.exec('ps aux | grep -v grep | grep okchaind',function(err, stdout, sdterr){
-      if(err || !stdout) resolve(false);
+      if(err) resolve(false);
       else resolve(true);
     });
   });
