@@ -113,8 +113,8 @@ function baseDownload(dir, name, url) {
 function downloadGenesis(datadir) {
   const { shell } = electronUtils;
   shell.cd(datadir);
-  // shell.exec('rm -rf genesis.json');
-  // return baseDownload(datadir, 'genesis', 'https://raw.githubusercontent.com/okex/testnets/master/latest/genesis.json');
+  shell.exec('rm -rf genesis.json');
+  return baseDownload(datadir, 'genesis', 'https://raw.githubusercontent.com/okex/testnets/master/latest/genesis.json');
 }
 
 function downloadSeeds(datadir) {
@@ -128,7 +128,7 @@ function setSeeds(configDir) {
       shell.cd(configDir);
       shell.exec('cat seeds.txt', (code, stdout, stderr) => {
         const seeds = commaLineBreak(stdout).replace(/,$/, '');
-        // shell.exec(`sed -i.bak 's/seeds = ""/seeds = "${seeds}"/g' config.toml`);
+        shell.exec(`sed -i.bak 's/seeds = ""/seeds = "${seeds}"/g' config.toml`);
         resolve(true);
       });
     } catch (err) {
