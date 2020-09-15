@@ -20,9 +20,13 @@ import './index.less';
 
 function mapStateToProps(state) {
   const { latestHeight } = state.Common;
-  const { currentNode, remoteList, customList } = state.NodeStore;
   const {
-    logs, isStarted, datadir, localHeight, estimatedTime, isSync, breakTime: localNodeBreakTime,
+    currentNode, remoteList, customList,
+    breakTime: remoteNodeBreakTime, tempBreakTime: remoteNodeTempBreakTime,
+  } = state.NodeStore;
+  const {
+    logs, isStarted, datadir, localHeight, estimatedTime, isSync,
+    breakTime: localNodeBreakTime,
   } = state.LocalNodeStore;
   return {
     latestHeight,
@@ -36,6 +40,8 @@ function mapStateToProps(state) {
     estimatedTime,
     isSync,
     localNodeBreakTime,
+    remoteNodeBreakTime,
+    remoteNodeTempBreakTime,
   };
 }
 
@@ -53,9 +59,8 @@ class DesktopNodeMenu extends Component {
   constructor() {
     super();
     this.state = {
-      isMenuShow: false
+      isMenuShow: false,
     };
-    this.outOfSyncDialog = null;
   }
 
   componentDidMount() {
@@ -67,55 +72,10 @@ class DesktopNodeMenu extends Component {
         }
       }).catch((err) => {
         console.log(err);
+        // const { nodeActions } = this.props;
+        // nodeActions.startCheckBreakTime();
       });
     }, 3000);
-  }
-
-  componentDidUpdate(prevProps) {
-    const { localNodeBreakTime, currentNode = {}, location = {} } = this.props;
-    const { type } = currentNode;
-    let nodeBreakTime = 0;
-    if (type === NODE_TYPE.LOCAL) {
-      nodeBreakTime = localNodeBreakTime;
-    }
-    if (nodeBreakTime > 15) {
-      this.outOfSyncDialog = Dialog.show({
-        onClose: () => {
-          this.outOfSyncDialog.destroy();
-          this.outOfSyncDialog = null;
-        },
-        className: 'out-of-dialog',
-        title: 'Connection out of sync',
-        children: (
-          <div className="out-of-dialog-main">
-            <div className="out-of-dialog-text">Your connection has been out of sync for {nodeBreakTime} seconds.
-          If the connection can be recovered this message will disappear automatically.
-            </div>
-            <div className="out-of-dialog-btn-content">
-              <div
-                className="ouf-of-dialog-solid-btn ouf-of-dialog-btn ouf-of-dialog-setting-btn"
-                onClick={() => {
-                  this.outOfSyncDialog.destroy();
-                  this.outOfSyncDialog = null;
-                  this.props.history.push(PageURL.nodeSettingPage);
-                }}
-              >
-                NODES SETTINGS
-              </div>
-              <div
-                className="ouf-of-dialog-hollow-btn ouf-of-dialog-btn ouf-of-dialog-cancel-btn"
-                onClick={() => {
-                  this.outOfSyncDialog.destroy();
-                  this.outOfSyncDialog = null;
-                }}
-              >
-                Cancel
-              </div>
-            </div>
-          </div>
-        )
-      });
-    }
   }
 
   componentWillUnmount() {
@@ -152,10 +112,20 @@ class DesktopNodeMenu extends Component {
     this.setState({ isMenuShow: false });
   }
 
+  handleDialogClose = () => {
+    const { currentNode = {}  } = this.props;
+    const { type } = currentNode;
+    if (type === NODE_TYPE.REMOTE || type === NODE_TYPE.CUSTOM ) {
+      this.props.nodeActions.restartTempBreakTimer();
+    }
+  }
+
   render() {
     const {
       latestHeight, currentNode, customList,
       isStarted, localHeight, estimatedTime,
+      localNodeBreakTime, remoteNodeBreakTime,
+      remoteNodeTempBreakTime,
     } = this.props;
     const { isMenuShow } = this.state;
     const { latency, type } = currentNode;
@@ -165,7 +135,16 @@ class DesktopNodeMenu extends Component {
     const settingsNodeList = [remoteNode, customNode, NONE_NODE];
     const fEstimatedTime = formatEstimatedTime(estimatedTime);
     const isNoneOrLocalNode = type === NODE_TYPE.NONE || type === NODE_TYPE.LOCAL;
-
+    const isRemoteOrCustom = type === NODE_TYPE.REMOTE || type === NODE_TYPE.CUSTOM;
+    let nodeBreakTime = 0;
+    let tempNodeBreakTime = 0;
+    if (type === NODE_TYPE.LOCAL) {
+      nodeBreakTime = localNodeBreakTime;
+    } else if (isRemoteOrCustom) {
+      nodeBreakTime = remoteNodeBreakTime;
+      tempNodeBreakTime = remoteNodeTempBreakTime;
+    }
+    console.log(nodeBreakTime, tempNodeBreakTime);
     return (
       <div
         className="desktop-node-menu-wrapper"
@@ -246,6 +225,46 @@ class DesktopNodeMenu extends Component {
             </div>
           </div>
         </div>
+        <Dialog
+          className='out-of-dialog'
+          title='Connection out of sync'
+          onClose={this.handleDialogClose}
+          visible={tempNodeBreakTime > 15}
+        >
+          <div className="out-of-dialog-main">
+            <div className="out-of-dialog-text">Your connection has been out of sync for {nodeBreakTime} seconds.
+          If the connection can be recovered this message will disappear automatically.
+            </div>
+            <div className="out-of-dialog-btn-content">
+              {
+                isRemoteOrCustom && (
+                  <div
+                    className="ouf-of-dialog-solid-btn ouf-of-dialog-btn ouf-of-dialog-reload-btn"
+                    onClick={() => {
+                      window.location.reload();
+                    }}
+                  >
+                    TRY RECONNECTING NOW
+                  </div>
+                )
+              }
+              <div
+                className="ouf-of-dialog-solid-btn ouf-of-dialog-btn ouf-of-dialog-setting-btn"
+                onClick={() => {
+                  this.props.history.push(PageURL.nodeSettingPage);
+                }}
+              >
+                NODES SETTINGS
+              </div>
+              <div
+                className="ouf-of-dialog-hollow-btn ouf-of-dialog-btn ouf-of-dialog-cancel-btn"
+                onClick={this.handleDialogClose}
+              >
+                Cancel
+              </div>
+            </div>
+          </div>
+        </Dialog>
       </div>
     );
   }

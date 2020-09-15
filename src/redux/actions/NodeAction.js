@@ -3,6 +3,10 @@ import { NODE_TYPE, MAX_LATENCY } from '_constants/Node';
 import { LOCAL_PREFIX, LOCAL_PREFIX_WS } from '_constants/apiConfig';
 import NodeActionType from '../actionTypes/NodeActionType';
 /* eslint-disable */
+
+let breakTimer = null;
+let tempBreakTimer = null;
+
 /**
  * 更新当前节点
  */
@@ -50,5 +54,64 @@ export function updateCustomList(list) {
       type: NodeActionType.UPDATE_CUSTOM_LIST,
       data: list,
     })
+  }
+}
+
+function updateTempBreakTime (dispatch, getState) {
+  const oldTempBreakTime = getState().NodeStore.tempBreakTime;
+  dispatch({
+    type: NodeActionType.UPDATE_TEMP_BREAK_TIME,
+    data: oldTempBreakTime + 1,
+  });
+}
+
+function updateBreakTime (dispatch, getState) {
+  const oldBreakTime = getState().NodeStore.breakTime;
+  dispatch({
+    type: NodeActionType.UPDATE_BREAK_TIME,
+    data: oldBreakTime + 1,
+  });
+}
+
+export function restartTempBreakTimer() {
+  return (dispatch, getState) => {
+    tempBreakTimer && clearInterval(tempBreakTimer);
+    dispatch({
+      type: NodeActionType.UPDATE_TEMP_BREAK_TIME,
+      data: 0,
+    });
+    tempBreakTimer = setInterval(() => {
+      updateTempBreakTime(dispatch, getState);
+    }, 1000);
+  }
+}
+
+export function startCheckBreakTime() {
+  return (dispatch, getState) => {
+    if (!breakTimer) {
+      breakTimer = setInterval(() => {
+        updateBreakTime(dispatch, getState);
+      }, 1000);
+    }
+    if (!tempBreakTimer) {
+      tempBreakTimer = setInterval(() => {
+        updateTempBreakTime(dispatch, getState);
+      }, 1000);
+    }
+  }
+}
+
+export function stopCheckBreakTime() {
+  return (dispatch) => {
+    breakTimer && clearInterval(breakTimer);
+    tempBreakTimer && clearInterval(tempBreakTimer);
+    dispatch({
+      type: NodeActionType.UPDATE_BREAK_TIME,
+      data: 0,
+    });
+    dispatch({
+      type: NodeActionType.UPDATE_TEMP_BREAK_TIME,
+      data: 0,
+    });
   }
 }

@@ -115,7 +115,7 @@ const InitWrapper = (Component) => {
     startInitWebSocket = (wsUrl) => {
       const OK_GLOBAL = window.OK_GLOBAL;
       if (!OK_GLOBAL.ws_v3) {
-        const { spotActions } = this.props;
+        const { spotActions, nodeActions } = this.props;
         OK_GLOBAL.ws_v3 = new window.WebSocketCore({ connectUrl: wsUrl });
         const v3 = OK_GLOBAL.ws_v3;
         v3.onSocketConnected(() => {
@@ -135,6 +135,7 @@ const InitWrapper = (Component) => {
           spotActions.updateWsStatus(true);
         });
         v3.onSocketError(() => {
+          nodeActions.startCheckBreakTime();
           spotActions.addWsErrCounter(); // 累计加1
           spotActions.updateWsStatus(false);
           spotActions.updateWsIsDelay(false);

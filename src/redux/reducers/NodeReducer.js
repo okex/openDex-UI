@@ -16,6 +16,8 @@ const initialState = {
   remoteList: NODE_LIST,
   customList: storage.get('customList') || [],
   currentNode: getInitCurrentNode(),
+  breakTime: 0, // unit:s
+  tempBreakTime: 0, // unit:s
 };
 
 export default function reducer(state = initialState, action) {
@@ -34,6 +36,16 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         customList: action.data,
+      };
+    case ActionTypes.UPDATE_BREAK_TIME:
+      return {
+        ...state,
+        breakTime: action.data,
+      };
+    case ActionTypes.UPDATE_TEMP_BREAK_TIME:
+      return {
+        ...state,
+        tempBreakTime: action.data,
       };
     default:
       return state;
