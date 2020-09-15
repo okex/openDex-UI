@@ -3,7 +3,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { render } from 'react-dom';
 import { LocaleProvider } from '_src/locale/react-locale';
-import { storage } from '_component/okit';
+// import { storage } from '_component/okit';
 import Cookies from 'js-cookie';
 
 import configureStore from './redux/store';
@@ -39,7 +39,7 @@ window.OK_GLOBAL = {
 const language = util.getSupportLocale(Cookies.get('locale') || 'en_US');
 const languageType = 2; // 1远程，2本地
 let localProviderProps = {};
-const store = configureStore();
+
 
 const electronUtils = window.require('electron').remote.require('./src/utils');
 const { emitter } = electronUtils;
@@ -52,7 +52,20 @@ emitter.on('downloadOkchainProgress', (res) => {
   console.log('downloadOkchainProgress', res);
 });
 
-const renderDom = () => {
+function checkLocalNode() {
+  new Promise(resolve => {
+    electronUtils.shell.exec('ps aux | grep -v grep | grep okchaind',function(err, stdout, sdterr){
+      if(err || !stdout) resolve(false);
+      else resolve(true);
+    });
+  });
+}
+
+
+const renderDom = async () => {
+  const result = await checkLocalNode();
+  window.localStorage.setItem('isStarted',!!result);
+  const store = configureStore();
   render(
     <LocaleProvider {...localProviderProps} >
       <Provider store={store}>

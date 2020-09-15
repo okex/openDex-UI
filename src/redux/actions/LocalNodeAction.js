@@ -40,6 +40,7 @@ function start(datadir, dispatch, getState) {
         datadir,
         db,
       });
+      window.localStorage.setItem('isStarted',true);
       const child = shell.exec(`${startCommand}`, { async: true }, (code) => {
         console.log(code);
         if (code !== 130 && code !== 0) {
@@ -112,8 +113,8 @@ function baseDownload(dir, name, url) {
 function downloadGenesis(datadir) {
   const { shell } = electronUtils;
   shell.cd(datadir);
-  shell.exec('rm -rf genesis.json');
-  return baseDownload(datadir, 'genesis', 'https://raw.githubusercontent.com/okex/testnets/master/latest/genesis.json');
+  // shell.exec('rm -rf genesis.json');
+  // return baseDownload(datadir, 'genesis', 'https://raw.githubusercontent.com/okex/testnets/master/latest/genesis.json');
 }
 
 function downloadSeeds(datadir) {
@@ -127,7 +128,7 @@ function setSeeds(configDir) {
       shell.cd(configDir);
       shell.exec('cat seeds.txt', (code, stdout, stderr) => {
         const seeds = commaLineBreak(stdout).replace(/,$/, '');
-        shell.exec(`sed -i.bak 's/seeds = ""/seeds = "${seeds}"/g' config.toml`);
+        // shell.exec(`sed -i.bak 's/seeds = ""/seeds = "${seeds}"/g' config.toml`);
         resolve(true);
       });
     } catch (err) {
@@ -321,6 +322,7 @@ export function stopOkchaind() {
         });
       }
     });
+    window.localStorage.setItem('isStarted',false);
     dispatch({
       type: LocalNodeActionType.UPDATE_IS_SYNC,
       data: false
