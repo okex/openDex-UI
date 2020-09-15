@@ -25,7 +25,7 @@ function stopPoll() {
 }
 
 function start(datadir, dispatch, getState) {
-  const { shell } = electronUtils;
+  const { shell, localNodeServerClient } = electronUtils;
   const directory = getOkchaindDir();
   return new Promise((reslove, reject) => {
     try {
@@ -41,7 +41,7 @@ function start(datadir, dispatch, getState) {
         db,
       });
       window.localStorage.setItem('isStarted',true);
-      const child = shell.exec(`${startCommand}`, { async: true }, (code) => {
+      const child = localNodeServerClient.get() || shell.exec(`${startCommand}`, { async: true }, (code) => {
         console.log(code);
         if (code !== 130 && code !== 0) {
           Message.error({
@@ -54,23 +54,32 @@ function start(datadir, dispatch, getState) {
           });
         }
       });
-      child.stdout.on('data', (data) => {
-        const { logs } = getState().LocalNodeStore;
-        const newLog = data + logs;
-        dispatch({
-          type: LocalNodeActionType.UPDATE_LOGS,
-          data: newLog,
-        });
-        dispatch({
-          type: LocalNodeActionType.UPDATE_OKCHAIND,
-          data: child,
-        });
-      });
+      localNodeServerClient.set(child);
+      listenClient(dispatch, getState);
       reslove(true);
     } catch (err) {
       reject(err);
     }
   });
+}
+
+function listenClient(dispatch, getState) {
+  const { localNodeServerClient } = electronUtils;
+  const child = localNodeServerClient.get();
+  if(!child) return;
+  child.stdout.on('data', (data) => {
+    const { logs } = getState().LocalNodeStore;
+    const newLog = data + logs;
+    dispatch({
+      type: LocalNodeActionType.UPDATE_LOGS,
+      data: newLog,
+    });
+    dispatch({
+      type: LocalNodeActionType.UPDATE_OKCHAIND,
+      data: child,
+    });
+  });
+  return;
 }
 
 function isDirExist(dir) {
@@ -306,6 +315,12 @@ export function startOkchaind(datadir) {
       startPoll(dispatch, getState);
     }
   };
+}
+
+export function startListen() {
+  return async (dispatch, getState) => {
+    listenClient(dispatch, getState);
+  }
 }
 
 export function stopOkchaind() {
