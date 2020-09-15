@@ -35,6 +35,7 @@ const initialState = {
   isSync: false,
   localHeight: 0,
   estimatedTime: 0, // unit:ms
+  breakTime: 0, // unit:s
 };
 
 export default function reducer(state = initialState, action) {
@@ -98,6 +99,11 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         estimatedTime: action.data,
+      };
+    case LocalNodeActionType.UPDATE_BREAK_TIME:
+      return {
+        ...state,
+        breakTime: action.data,
       };
     default:
       return state;

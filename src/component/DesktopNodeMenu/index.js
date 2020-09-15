@@ -22,7 +22,7 @@ function mapStateToProps(state) {
   const { latestHeight } = state.Common;
   const { currentNode, remoteList, customList } = state.NodeStore;
   const {
-    logs, isStarted, datadir, localHeight, estimatedTime, isSync,
+    logs, isStarted, datadir, localHeight, estimatedTime, isSync, breakTime: localNodeBreakTime,
   } = state.LocalNodeStore;
   return {
     latestHeight,
@@ -35,6 +35,7 @@ function mapStateToProps(state) {
     localHeight,
     estimatedTime,
     isSync,
+    localNodeBreakTime,
   };
 }
 
@@ -71,10 +72,13 @@ class DesktopNodeMenu extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { isSync: oldIsSync } = prevProps;
-    const { isSync: nowIsSync, location = {} } = this.props;
-    const isShowDialog = oldIsSync && !nowIsSync && location.pathname === PageURL.spotFullPage && !this.outOfSyncDialog;
-    if (isShowDialog) {
+    const { localNodeBreakTime, currentNode = {}, location = {} } = this.props;
+    const { type } = currentNode;
+    let nodeBreakTime = 0;
+    if (type === NODE_TYPE.LOCAL) {
+      nodeBreakTime = localNodeBreakTime;
+    }
+    if (nodeBreakTime > 15) {
       this.outOfSyncDialog = Dialog.show({
         onClose: () => {
           this.outOfSyncDialog.destroy();
@@ -84,7 +88,7 @@ class DesktopNodeMenu extends Component {
         title: 'Connection out of sync',
         children: (
           <div className="out-of-dialog-main">
-            <div className="out-of-dialog-text">Your connection has been out of sync for 18 seconds.
+            <div className="out-of-dialog-text">Your connection has been out of sync for {nodeBreakTime} seconds.
           If the connection can be recovered this message will disappear automatically.
             </div>
             <div className="out-of-dialog-btn-content">

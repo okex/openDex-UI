@@ -12,6 +12,7 @@ const electronUtils = window.require('electron').remote.require('./src/utils');
 
 let timer = null;
 const pollInterval = 3000;
+let breakTimer = null;
 
 function getOkchaindDir() {
   const { store } = electronUtils;
@@ -188,9 +189,14 @@ function startPoll(dispatch, getState) {
       const oldSync = getState().LocalNodeStore.isSync;
       if (oldSync !== nowSync) {
         if (nowSync) {
+          breakTimer && clearInterval(breakTimer);
           dispatch({
             type: LocalNodeActionType.UPDATE_IS_SYNC,
             data: true
+          });
+          dispatch({
+            type: LocalNodeActionType.UPDATE_BREAK_TIME,
+            data: 0,
           });
           const { currentNode } = getState().NodeStore;
           if (currentNode.type === NODE_TYPE.NONE) {
@@ -216,6 +222,13 @@ function startPoll(dispatch, getState) {
             type: LocalNodeActionType.UPDATE_IS_SYNC,
             data: false
           });
+          breakTimer = setInterval(() => {
+            const oldBreakTime = getState().LocalNodeStore.breakTime;
+            dispatch({
+              type: LocalNodeActionType.UPDATE_BREAK_TIME,
+              data: oldBreakTime + 1,
+            });
+          }, 1000);
           const { currentNode } = getState().NodeStore;
           if (currentNode.type === NODE_TYPE.LOCAL) {
             dispatch({
