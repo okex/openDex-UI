@@ -26,7 +26,7 @@ function mapStateToProps(state) {
   } = state.NodeStore;
   const {
     logs, isStarted, datadir, localHeight, estimatedTime, isSync,
-    breakTime: localNodeBreakTime,
+    breakTime: localNodeBreakTime, tempBreakTime: localNodeTempBreakTime,
   } = state.LocalNodeStore;
   return {
     latestHeight,
@@ -40,6 +40,7 @@ function mapStateToProps(state) {
     estimatedTime,
     isSync,
     localNodeBreakTime,
+    localNodeTempBreakTime,
     remoteNodeBreakTime,
     remoteNodeTempBreakTime,
   };
@@ -125,7 +126,7 @@ class DesktopNodeMenu extends Component {
       latestHeight, currentNode, customList,
       isStarted, localHeight, estimatedTime,
       localNodeBreakTime, remoteNodeBreakTime,
-      remoteNodeTempBreakTime,
+      localNodeTempBreakTime, remoteNodeTempBreakTime,
     } = this.props;
     const { isMenuShow } = this.state;
     const { latency, type } = currentNode;
@@ -140,11 +141,12 @@ class DesktopNodeMenu extends Component {
     let tempNodeBreakTime = 0;
     if (type === NODE_TYPE.LOCAL) {
       nodeBreakTime = localNodeBreakTime;
+      tempNodeBreakTime = localNodeTempBreakTime;
     } else if (isRemoteOrCustom) {
       nodeBreakTime = remoteNodeBreakTime;
       tempNodeBreakTime = remoteNodeTempBreakTime;
     }
-    console.log(nodeBreakTime, tempNodeBreakTime);
+
     return (
       <div
         className="desktop-node-menu-wrapper"

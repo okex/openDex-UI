@@ -13,6 +13,7 @@ const electronUtils = window.require('electron').remote.require('./src/utils');
 let timer = null;
 const pollInterval = 3000;
 let breakTimer = null;
+let tempBreakTimer = null;
 
 function getOkchaindDir() {
   const { store } = electronUtils;
@@ -167,6 +168,35 @@ function updateEstimatedTime(dispatch, getState, info, diffLocalHeight) {
   });
 }
 
+function updateTempBreakTime (dispatch, getState) {
+  const oldTempBreakTime = getState().LocalNodeStore.tempBreakTime;
+  dispatch({
+    type: LocalNodeActionType.UPDATE_TEMP_BREAK_TIME,
+    data: oldTempBreakTime + 1,
+  });
+}
+
+function updateBreakTime (dispatch, getState) {
+  const oldBreakTime = getState().LocalNodeStore.breakTime;
+  dispatch({
+    type: LocalNodeActionType.UPDATE_BREAK_TIME,
+    data: oldBreakTime + 1,
+  });
+}
+
+export function restartTempBreakTimer() {
+  return (dispatch, getState) => {
+    tempBreakTimer && clearInterval(tempBreakTimer);
+    dispatch({
+      type: NodeActionType.UPDATE_TEMP_BREAK_TIME,
+      data: 0,
+    });
+    tempBreakTimer = setInterval(() => {
+      updateTempBreakTime(dispatch, getState);
+    }, 1000);
+  }
+}
+
 function startPoll(dispatch, getState) {
   stopPoll();
   timer = setInterval(() => {
@@ -190,13 +220,18 @@ function startPoll(dispatch, getState) {
       if (oldSync !== nowSync) {
         if (nowSync) {
           breakTimer && clearInterval(breakTimer);
-          dispatch({
-            type: LocalNodeActionType.UPDATE_IS_SYNC,
-            data: true
-          });
+          tempBreakTimer && clearInterval(tempBreakTimer);
           dispatch({
             type: LocalNodeActionType.UPDATE_BREAK_TIME,
             data: 0,
+          });
+          dispatch({
+            type: LocalNodeActionType.UPDATE_TEMP_BREAK_TIME,
+            data: 0,
+          });
+          dispatch({
+            type: LocalNodeActionType.UPDATE_IS_SYNC,
+            data: true,
           });
           const { currentNode } = getState().NodeStore;
           if (currentNode.type === NODE_TYPE.NONE) {
@@ -222,13 +257,16 @@ function startPoll(dispatch, getState) {
             type: LocalNodeActionType.UPDATE_IS_SYNC,
             data: false
           });
-          breakTimer = setInterval(() => {
-            const oldBreakTime = getState().LocalNodeStore.breakTime;
-            dispatch({
-              type: LocalNodeActionType.UPDATE_BREAK_TIME,
-              data: oldBreakTime + 1,
-            });
-          }, 1000);
+          if (!breakTimer) {
+            breakTimer = setInterval(() => {
+              updateBreakTime(dispatch, getState);
+            }, 1000);
+          }
+          if (!tempBreakTimer) {
+            tempBreakTimer = setInterval(() => {
+              updateTempBreakTime(dispatch, getState);
+            }, 1000);
+          }
           const { currentNode } = getState().NodeStore;
           if (currentNode.type === NODE_TYPE.LOCAL) {
             dispatch({

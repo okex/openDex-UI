@@ -36,6 +36,7 @@ const initialState = {
   localHeight: 0,
   estimatedTime: 0, // unit:ms
   breakTime: 0, // unit:s
+  tempBreakTime: 0, // unit:s
 };
 
 export default function reducer(state = initialState, action) {
@@ -104,6 +105,11 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         breakTime: action.data,
+      };
+    case LocalNodeActionType.UPDATE_TEMP_BREAK_TIME:
+      return {
+        ...state,
+        tempBreakTime: action.data,
       };
     default:
       return state;
