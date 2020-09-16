@@ -38,6 +38,7 @@ export default function() {
     estimatedTime: 0, // unit:ms
     breakTime: 0, // unit:s
     tempBreakTime: 0, // unit:s
+    datadirAtStart: '',
   };
 
   return function(state = initialState, action) {
@@ -111,6 +112,11 @@ export default function() {
         return {
           ...state,
           tempBreakTime: action.data,
+        };
+      case LocalNodeActionType.UPDATE_DATADIR_AT_START:
+        return {
+          ...state,
+          datadirAtStart: action.data,
         };
       default:
         return state;

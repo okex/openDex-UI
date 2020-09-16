@@ -52,7 +52,15 @@ function start(datadir, dispatch, getState) {
             type: LocalNodeActionType.UPDATE_IS_STARTED,
             data: false,
           });
+          dispatch({
+            type: LocalNodeActionType.UPDATE_DATADIR_AT_START,
+            data: '',
+          });
         }
+      });
+      dispatch({
+        type: LocalNodeActionType.UPDATE_DATADIR_AT_START,
+        data: datadir,
       });
       localNodeServerClient.set(child);
       listenClient(dispatch, getState);
