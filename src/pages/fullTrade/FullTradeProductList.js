@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { calc } from '_component/okit';
+import * as NodeActions from '_src/redux/actions/NodeAction';
 import { wsV3, channelsV3 } from '../../utils/websocket';
 import Enum from '../../utils/Enum';
 import util from '../../utils/util';
@@ -54,7 +55,8 @@ function mapStateToProps(state) { // 绑定redux中相关state
 
 function mapDispatchToProps(dispatch) { // 绑定action，以便向redux发送action
   return {
-    spotActions: bindActionCreators(SpotActions, dispatch)
+    spotActions: bindActionCreators(SpotActions, dispatch),
+    nodeActions: bindActionCreators(NodeActions, dispatch),
   };
 }
 
@@ -80,12 +82,13 @@ class FullTradeProductList extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { spotActions } = this.props;
+    const { spotActions, nodeActions } = this.props;
     /* ws状态变化相关 */
     const newWsIsOnline = nextProps.wsIsOnlineV3;
     const oldWsIsOnline = this.props.wsIsOnlineV3;
     // ws首次连接或者重连成功
     if (!oldWsIsOnline && newWsIsOnline) {
+      nodeActions.stopCheckBreakTime();
       this.startWs();
     }
     const oldWsErrCounter = this.props.wsErrCounterV3;

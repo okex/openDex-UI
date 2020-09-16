@@ -40,71 +40,82 @@ class NodeSetting extends Component {
   }
 
   componentDidMount() {
-    const fetchNodesLatency = () => {
-      const { remoteList, customList } = this.props;
-      const hasVisited = {};
+    this.fetchNodesLatency();
+    this.timer = setInterval(this.fetchNodesLatency, loopTime);
+  }
 
-      const fetchLocalNode = () => {
-        const { currentNode } = this.props;
-        if (currentNode.type === NODE_TYPE.LOCAL) {
-          getNodeLatency(currentNode).then((latency) => {
-            const { nodeActions } = this.props;
-            nodeActions.updateCurrentNode({
-              ...currentNode,
-              latency
-            });
-          });
-        }
-      };
-
-      const updateLatency = (list, updateList, updateNode, currentNode, node, latency) => {
-        let hasNode = false;
-        const newList = list.slice();
-        for (let i = 0; i < newList.length; i++) {
-          if (newList[i].wsUrl === node.wsUrl) {
-            newList[i].latency = latency;
-            hasNode = true;
-          }
-        }
-        hasNode && updateList(newList);
-        if (currentNode.wsUrl === node.wsUrl) {
-          updateNode({ ...currentNode, latency });
-        }
-      };
-
-      const updateRemote = (node, latency) => {
-        const { nodeActions, currentNode } = this.props;
-        updateLatency(this.props.remoteList, nodeActions.updateRemoteList, nodeActions.updateCurrentNode, currentNode, node, latency);
-      };
-
-      const updateCustom = (node, latency) => {
-        const { nodeActions, currentNode } = this.props;
-        updateLatency(this.props.customList, nodeActions.updateCustomList, nodeActions.updateCurrentNode, currentNode, node, latency);
-      };
-
-      const fetchListLatency = (list) => {
-        list.forEach((node) => {
-          if (!hasVisited[node.wsUrl]) {
-            hasVisited[node.wsUrl] = true;
-            getNodeLatency(node).then((latency) => {
-              updateRemote(node, latency);
-              updateCustom(node, latency);
-            });
-          }
-        });
-      };
-
-      fetchLocalNode();
-      fetchListLatency(remoteList);
-      fetchListLatency(customList);
-    };
-
-    fetchNodesLatency();
-    this.timer = setInterval(fetchNodesLatency, loopTime);
+  componentDidUpdate(prevProps) {
+    const { remoteList: oldRemoteList, customList: oldCustomList } = prevProps;
+    const { remoteList, customList } = this.props;
+    const isRemoteListEqual = oldRemoteList.length === remoteList.length;
+    const isCustomListEqual = customList.length === oldCustomList.length;
+    if (!isRemoteListEqual || !isCustomListEqual) {
+      this.timer && clearInterval(this.timer);
+      this.timer = setInterval(this.fetchNodesLatency, loopTime);
+    }
   }
 
   componentWillUnmount() {
     this.timer && clearInterval(this.timer);
+  }
+
+  fetchNodesLatency  = () => {
+    const { remoteList, customList } = this.props;
+    const hasVisited = {};
+
+    const fetchLocalNode = () => {
+      const { currentNode } = this.props;
+      if (currentNode.type === NODE_TYPE.LOCAL) {
+        getNodeLatency(currentNode).then((latency) => {
+          const { nodeActions } = this.props;
+          nodeActions.updateCurrentNode({
+            ...currentNode,
+            latency
+          });
+        });
+      }
+    };
+
+    const updateLatency = (list, updateList, updateNode, currentNode, node, latency) => {
+      let hasNode = false;
+      const newList = list.slice();
+      for (let i = 0; i < newList.length; i++) {
+        if (newList[i].wsUrl === node.wsUrl) {
+          newList[i].latency = latency;
+          hasNode = true;
+        }
+      }
+      hasNode && updateList(newList);
+      if (currentNode.wsUrl === node.wsUrl) {
+        updateNode({ ...currentNode, latency });
+      }
+    };
+
+    const updateRemote = (node, latency) => {
+      const { nodeActions, currentNode } = this.props;
+      updateLatency(this.props.remoteList, nodeActions.updateRemoteList, nodeActions.updateCurrentNode, currentNode, node, latency);
+    };
+
+    const updateCustom = (node, latency) => {
+      const { nodeActions, currentNode } = this.props;
+      updateLatency(this.props.customList, nodeActions.updateCustomList, nodeActions.updateCurrentNode, currentNode, node, latency);
+    };
+
+    const fetchListLatency = (list) => {
+      list.forEach((node) => {
+        if (!hasVisited[node.wsUrl]) {
+          hasVisited[node.wsUrl] = true;
+          getNodeLatency(node).then((latency) => {
+            updateRemote(node, latency);
+            updateCustom(node, latency);
+          });
+        }
+      });
+    };
+
+    fetchLocalNode();
+    fetchListLatency(remoteList);
+    fetchListLatency(customList);
   }
 
   render() {

@@ -8,14 +8,15 @@ import WalletStore from './WalletReducer';
 import NodeStore from './NodeReducer';
 import LocalNodeStore from './LocalNodeReducer';
 
-const rootReducer = combineReducers({
-  Common,
-  Spot,
-  SpotTrade,
-  FormStore,
-  OrderStore,
-  WalletStore,
-  NodeStore,
-  LocalNodeStore,
-});
-export default rootReducer;
+export default function() {
+  return combineReducers({
+    Common,
+    Spot,
+    SpotTrade,
+    FormStore,
+    OrderStore,
+    WalletStore,
+    NodeStore,
+    LocalNodeStore:LocalNodeStore(),
+  })
+};

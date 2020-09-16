@@ -46,10 +46,6 @@ export default class FullTradeKLine extends React.Component {
         this.initKline(newProduct);
       } else {
         // this.kline.setSymbol(util.getShortName(newProduct).replace('/', '-'));
-        if (new Date().getTime() - this.date < 1000) {
-          return;
-        }
-        this.date = new Date().getTime();
         this.kline.setSymbol(newProduct.toLowerCase());
       }
       // this.initKline(newProduct);

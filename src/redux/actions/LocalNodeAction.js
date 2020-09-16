@@ -1,6 +1,7 @@
 import ont from '_src/utils/dataProxy';
 import { commaLineBreak, divide, multiply } from '_src/utils/ramda';
 import { storage } from '_component/okit';
+import Message from '_src/component/Message';
 import { NODE_TYPE, MAX_LATENCY } from '_constants/Node';
 import { NONE_NODE, LOCAL_PREFIX, LOCAL_PREFIX_WS } from '_constants/apiConfig';
 import { getStartCommand } from '_src/utils/command';
@@ -11,14 +12,21 @@ const electronUtils = window.require('electron').remote.require('./src/utils');
 
 let timer = null;
 const pollInterval = 3000;
+let breakTimer = null;
+let tempBreakTimer = null;
 
 function getOkchaindDir() {
   const { store } = electronUtils;
   return store.get('okchaindDirectory');
 }
 
-function start(datadir, dispatch, getState) {
-  const { shell } = electronUtils;
+function stopPoll() {
+  timer && clearInterval(timer);
+  tempBreakTimer && clearInterval(tempBreakTimer);
+}
+
+function start(datadir, dispatch, getState,func) {
+  const { shell, localNodeServerClient } = electronUtils;
   const directory = getOkchaindDir();
   return new Promise((reslove, reject) => {
     try {
@@ -33,24 +41,53 @@ function start(datadir, dispatch, getState) {
         datadir,
         db,
       });
-      const child = shell.exec(`${startCommand}`, { async: true });
-      child.stdout.on('data', (data) => {
-        const { logs } = getState().LocalNodeStore;
-        const newLog = data + logs;
-        dispatch({
-          type: LocalNodeActionType.UPDATE_LOGS,
-          data: newLog,
-        });
-        dispatch({
-          type: LocalNodeActionType.UPDATE_OKCHAIND,
-          data: child,
-        });
+      const child = localNodeServerClient.get() || shell.exec(`${startCommand}`, { async: true }, (code) => {
+        console.log(code);
+        if (code !== 130 && code !== 0) {
+          Message.error({
+            content: 'okchaind start error',
+          });
+          stopPoll();
+          dispatch({
+            type: LocalNodeActionType.UPDATE_IS_STARTED,
+            data: false,
+          });
+          dispatch({
+            type: LocalNodeActionType.UPDATE_DATADIR_AT_START,
+            data: '',
+          });
+        }
       });
+      dispatch({
+        type: LocalNodeActionType.UPDATE_DATADIR_AT_START,
+        data: datadir,
+      });
+      localNodeServerClient.set(child);
+      listenClient(dispatch, getState);
       reslove(true);
     } catch (err) {
       reject(err);
     }
   });
+}
+
+function listenClient(dispatch, getState) {
+  const { localNodeServerClient } = electronUtils;
+  const child = localNodeServerClient.get();
+  if(!child) return;
+  child.stdout.on('data', (data) => {
+    const { logs } = getState().LocalNodeStore;
+    const newLog = data + logs;
+    dispatch({
+      type: LocalNodeActionType.UPDATE_LOGS,
+      data: newLog,
+    });
+    dispatch({
+      type: LocalNodeActionType.UPDATE_OKCHAIND,
+      data: child,
+    });
+  });
+  return;
 }
 
 function isDirExist(dir) {
@@ -149,8 +186,37 @@ function updateEstimatedTime(dispatch, getState, info, diffLocalHeight) {
   });
 }
 
+function updateTempBreakTime (dispatch, getState) {
+  const oldTempBreakTime = getState().LocalNodeStore.tempBreakTime;
+  dispatch({
+    type: LocalNodeActionType.UPDATE_TEMP_BREAK_TIME,
+    data: oldTempBreakTime + 1,
+  });
+}
+
+function updateBreakTime (dispatch, getState) {
+  const oldBreakTime = getState().LocalNodeStore.breakTime;
+  dispatch({
+    type: LocalNodeActionType.UPDATE_BREAK_TIME,
+    data: oldBreakTime + 1,
+  });
+}
+
+export function restartTempBreakTimer() {
+  return (dispatch, getState) => {
+    tempBreakTimer && clearInterval(tempBreakTimer);
+    dispatch({
+      type: NodeActionType.UPDATE_TEMP_BREAK_TIME,
+      data: 0,
+    });
+    tempBreakTimer = setInterval(() => {
+      updateTempBreakTime(dispatch, getState);
+    }, 1000);
+  }
+}
+
 function startPoll(dispatch, getState) {
-  timer && clearInterval(timer);
+  stopPoll();
   timer = setInterval(() => {
     ont.get(`${LOCAL_PREFIX}26657/status?`).then((res) => {
       console.log(res);
@@ -171,9 +237,19 @@ function startPoll(dispatch, getState) {
       const oldSync = getState().LocalNodeStore.isSync;
       if (oldSync !== nowSync) {
         if (nowSync) {
+          breakTimer && clearInterval(breakTimer);
+          tempBreakTimer && clearInterval(tempBreakTimer);
+          dispatch({
+            type: LocalNodeActionType.UPDATE_BREAK_TIME,
+            data: 0,
+          });
+          dispatch({
+            type: LocalNodeActionType.UPDATE_TEMP_BREAK_TIME,
+            data: 0,
+          });
           dispatch({
             type: LocalNodeActionType.UPDATE_IS_SYNC,
-            data: true
+            data: true,
           });
           const { currentNode } = getState().NodeStore;
           if (currentNode.type === NODE_TYPE.NONE) {
@@ -199,6 +275,16 @@ function startPoll(dispatch, getState) {
             type: LocalNodeActionType.UPDATE_IS_SYNC,
             data: false
           });
+          if (!breakTimer) {
+            breakTimer = setInterval(() => {
+              updateBreakTime(dispatch, getState);
+            }, 1000);
+          }
+          if (!tempBreakTimer) {
+            tempBreakTimer = setInterval(() => {
+              updateTempBreakTime(dispatch, getState);
+            }, 1000);
+          }
           const { currentNode } = getState().NodeStore;
           if (currentNode.type === NODE_TYPE.LOCAL) {
             dispatch({
@@ -223,30 +309,64 @@ export function updateLogs(logs) {
 
 export function startOkchaind(datadir) {
   return async (dispatch, getState) => {
-    const isExist = await isDirExist(datadir);
+    const { localNodeDataStatus } = electronUtils;
+    const statusInstance = localNodeDataStatus.getInstance(datadir);
+    const dataStatus = statusInstance.get();
     const configDir = `${datadir}/config`;
-    if (isExist) {
-      await start(datadir, dispatch, getState);
-      startPoll(dispatch, getState);
-    } else {
+    console.log(dataStatus);
+    if(!dataStatus.hasInitData) {
       await initData(datadir);
+      statusInstance.set({hasInitData:true});
+    }
+    if(!dataStatus.hasDownloadGenesis) {
       await downloadGenesis(configDir);
+      statusInstance.set({hasDownloadGenesis:true});
+    }
+    if(!dataStatus.hasDownloadSeeds) {
       await downloadSeeds(configDir);
+      statusInstance.set({hasDownloadSeeds:true});
+    }
+    if(!dataStatus.hasSetSeeds) {
       await setSeeds(configDir);
+      statusInstance.set({hasSetSeeds:true});
+    }
+    if(dataStatus.success) {
       await start(datadir, dispatch, getState);
       startPoll(dispatch, getState);
     }
+
+    // const isExist = await isDirExist(datadir);
+    // const configDir = `${datadir}/config`;
+    // if (isExist) {
+    //   await start(datadir, dispatch, getState);
+    //   startPoll(dispatch, getState);
+    // } else {
+    //   await initData(datadir);
+    //   await downloadGenesis(configDir);
+    //   await downloadSeeds(configDir);
+    //   await setSeeds(configDir);
+    //   await start(datadir, dispatch, getState);
+    //   startPoll(dispatch, getState);
+    // }
   };
+}
+
+export function startListen() {
+  return async (dispatch, getState) => {
+    listenClient(dispatch, getState);
+    startPoll(dispatch, getState);
+  }
 }
 
 export function stopOkchaind() {
   return (dispatch, getState) => {
-    timer && clearInterval(timer);
+    stopPoll();
     const okchaindDir = getOkchaindDir();
-    const { shell } = electronUtils;
+    const { shell,localNodeServerClient } = electronUtils;
     shell.cd(okchaindDir);
     shell.exec('./okchaind stop', (code, stdout, stderr) => {
       if (code === 0) {
+        localNodeServerClient.set(null);
         dispatch({
           type: LocalNodeActionType.UPDATE_OKCHAIND,
           data: null,

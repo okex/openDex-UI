@@ -7,21 +7,26 @@ import * as LocalNodeAction from '_src/redux/actions/LocalNodeAction';
 import { withRouter } from 'react-router-dom';
 import Icon from '_component/IconLite';
 import DexSwitch from '_component/DexSwitch';
+import { Dialog } from '_component/Dialog';
 import navBack from '_src/assets/images/nav_back@2x.png';
 import PageURL from '_constants/PageURL';
 import { toLocale } from '_src/locale/react-locale';
 import ont from '_src/utils/dataProxy';
 import URL from '_constants/URL';
 import { getDelayType, timeUnit, getNodeRenderName, formatEstimatedTime } from '_src/utils/node';
-import { NODE_TYPE } from '_constants/Node';
+import { NODE_TYPE, NODE_LATENCY_TYPE } from '_constants/Node';
 import { DEFAULT_NODE, NONE_NODE } from '_constants/apiConfig';
 import './index.less';
 
 function mapStateToProps(state) {
   const { latestHeight } = state.Common;
-  const { currentNode, remoteList, customList } = state.NodeStore;
   const {
-    logs, isStarted, datadir, localHeight, estimatedTime
+    currentNode, remoteList, customList,
+    breakTime: remoteNodeBreakTime, tempBreakTime: remoteNodeTempBreakTime,
+  } = state.NodeStore;
+  const {
+    logs, isStarted, datadir, localHeight, estimatedTime, isSync,
+    breakTime: localNodeBreakTime, tempBreakTime: localNodeTempBreakTime,
   } = state.LocalNodeStore;
   return {
     latestHeight,
@@ -33,6 +38,11 @@ function mapStateToProps(state) {
     datadir,
     localHeight,
     estimatedTime,
+    isSync,
+    localNodeBreakTime,
+    localNodeTempBreakTime,
+    remoteNodeBreakTime,
+    remoteNodeTempBreakTime,
   };
 }
 
@@ -50,11 +60,13 @@ class DesktopNodeMenu extends Component {
   constructor() {
     super();
     this.state = {
-      isMenuShow: false
+      isMenuShow: false,
     };
   }
 
   componentDidMount() {
+    const { isStarted,localNodeAction } = this.props;
+    if(isStarted) localNodeAction.startListen();
     this.heightTimer = setInterval(() => {
       ont.get(URL.GET_LATEST_HEIGHT_MASTER).then((res) => {
         if (res.data) {
@@ -63,6 +75,8 @@ class DesktopNodeMenu extends Component {
         }
       }).catch((err) => {
         console.log(err);
+        // const { nodeActions } = this.props;
+        // nodeActions.startCheckBreakTime();
       });
     }, 3000);
   }
@@ -101,10 +115,20 @@ class DesktopNodeMenu extends Component {
     this.setState({ isMenuShow: false });
   }
 
+  handleDialogClose = () => {
+    const { currentNode = {}  } = this.props;
+    const { type } = currentNode;
+    if (type === NODE_TYPE.REMOTE || type === NODE_TYPE.CUSTOM ) {
+      this.props.nodeActions.restartTempBreakTimer();
+    }
+  }
+
   render() {
     const {
       latestHeight, currentNode, customList,
       isStarted, localHeight, estimatedTime,
+      localNodeBreakTime, remoteNodeBreakTime,
+      localNodeTempBreakTime, remoteNodeTempBreakTime,
     } = this.props;
     const { isMenuShow } = this.state;
     const { latency, type } = currentNode;
@@ -113,6 +137,17 @@ class DesktopNodeMenu extends Component {
     const customNode = type === NODE_TYPE.CUSTOM ? currentNode : (customList[0] || {});
     const settingsNodeList = [remoteNode, customNode, NONE_NODE];
     const fEstimatedTime = formatEstimatedTime(estimatedTime);
+    const isNoneOrLocalNode = type === NODE_TYPE.NONE || type === NODE_TYPE.LOCAL;
+    const isRemoteOrCustom = type === NODE_TYPE.REMOTE || type === NODE_TYPE.CUSTOM;
+    let nodeBreakTime = 0;
+    let tempNodeBreakTime = 0;
+    if (type === NODE_TYPE.LOCAL) {
+      nodeBreakTime = localNodeBreakTime;
+      tempNodeBreakTime = localNodeTempBreakTime;
+    } else if (isRemoteOrCustom) {
+      nodeBreakTime = remoteNodeBreakTime;
+      tempNodeBreakTime = remoteNodeTempBreakTime;
+    }
 
     return (
       <div
@@ -129,7 +164,7 @@ class DesktopNodeMenu extends Component {
               <Icon className="icon-retract" />
             </div>
             {
-              type === NODE_TYPE.NONE ? (
+              isNoneOrLocalNode ? (
                 <div className="node-assist">None</div>
               ) : (
                 <Fragment>
@@ -143,7 +178,7 @@ class DesktopNodeMenu extends Component {
                 settingsNodeList.map((node, index) => {
                   const { id } = node;
                   const renderName = getNodeRenderName(node);
-                  const delayType = getDelayType(node.latency);
+                  const delayType = isNoneOrLocalNode ? NODE_LATENCY_TYPE.UNREACHABLE : getDelayType(node.latency);
                   const extraStyle = id === currentNode.id ? {
                     color: '#2D60E0',
                   } : {};
@@ -194,6 +229,46 @@ class DesktopNodeMenu extends Component {
             </div>
           </div>
         </div>
+        <Dialog
+          className='out-of-dialog'
+          title='Connection out of sync'
+          onClose={this.handleDialogClose}
+          visible={tempNodeBreakTime > 15}
+        >
+          <div className="out-of-dialog-main">
+            <div className="out-of-dialog-text">Your connection has been out of sync for {nodeBreakTime} seconds.
+          If the connection can be recovered this message will disappear automatically.
+            </div>
+            <div className="out-of-dialog-btn-content">
+              {
+                isRemoteOrCustom && (
+                  <div
+                    className="ouf-of-dialog-solid-btn ouf-of-dialog-btn ouf-of-dialog-reload-btn"
+                    onClick={() => {
+                      window.location.reload();
+                    }}
+                  >
+                    TRY RECONNECTING NOW
+                  </div>
+                )
+              }
+              <div
+                className="ouf-of-dialog-solid-btn ouf-of-dialog-btn ouf-of-dialog-setting-btn"
+                onClick={() => {
+                  this.props.history.push(PageURL.nodeSettingPage);
+                }}
+              >
+                NODES SETTINGS
+              </div>
+              <div
+                className="ouf-of-dialog-hollow-btn ouf-of-dialog-btn ouf-of-dialog-cancel-btn"
+                onClick={this.handleDialogClose}
+              >
+                Cancel
+              </div>
+            </div>
+          </div>
+        </Dialog>
       </div>
     );
   }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as NodeActions from '_src/redux/actions/NodeAction';
+import Message from '_src/component/Message';
 import { NONE_NODE } from '_constants/apiConfig';
 import { NODE_TYPE } from '_constants/Node';
 import NodeItem from './NodeItem';
@@ -12,18 +13,19 @@ function mapStateToProps(state) { // 绑定redux中相关state
     currentNode, remoteList
   } = state.NodeStore;
   const {
-    isSync,
+    isSync, isStarted: isLocalNodeStarted,
   } = state.LocalNodeStore;
   return {
     currentNode,
     remoteList,
     isSync,
+    isLocalNodeStarted,
   };
 }
 
 function mapDispatchToProps(dispatch) { // 绑定action，以便向redux发送action
   return {
-    nodeActions: bindActionCreators(NodeActions, dispatch)
+    nodeActions: bindActionCreators(NodeActions, dispatch),
   };
 }
 
@@ -36,8 +38,13 @@ class NodeList extends Component {
 
   handleChange = (node) => {
     return () => {
-      const { nodeActions } = this.props;
+      const { nodeActions, isLocalNodeStarted } = this.props;
       nodeActions.updateCurrentNode(node);
+      if (node.type === NODE_TYPE.NONE && !isLocalNodeStarted) {
+        Message.error({
+          content: 'Local node not started',
+        });
+      }
     };
   }
 
