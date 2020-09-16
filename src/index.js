@@ -41,17 +41,6 @@ const languageType = 2; // 1远程，2本地
 let localProviderProps = {};
 const store = configureStore();
 
-const electronUtils = window.require('electron').remote.require('./src/utils');
-const { emitter } = electronUtils;
-
-emitter.on('downloadOkchainStart', () => {
-  console.log('downloadOkchainStart');
-});
-
-emitter.on('downloadOkchainProgress', (res) => {
-  console.log('downloadOkchainProgress', res);
-});
-
 const renderDom = () => {
   render(
     <LocaleProvider {...localProviderProps} >

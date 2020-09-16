@@ -6,7 +6,7 @@ import util from '../../utils/util';
 // 全屏交易独立组件
 import FullTradeHead from './FullTradeHead';
 import FullTradeData from './FullTradeData';
-
+import downloadDialog from './DownloadDialog';
 import SpotAsset from '../trade/SpotAsset';
 import SpotPlaceOrderNotLogin from '../placeOrders/NotLogin';
 import SpotOrder from '../trade/SpotOrder';
@@ -53,6 +53,7 @@ export default class FullTradeFrame extends React.Component {
     if (document.querySelector("#footerContainer")) {
       document.querySelector("#footerContainer").style.display = 'none';
     }
+    downloadDialog();
   }
 
   componentWillUnmount() {
@@ -89,15 +90,8 @@ export default class FullTradeFrame extends React.Component {
         <div className="trade-container">
           <div className="full-left">
             <div className="full-left-top">
-              {/*<div className="full-left-top-left">
-                <FullLeftMenu />
-              </div>*/}
               <div className="full-left-top-right">
                 <div className="full-ticker-kline">
-                  {/*<div className="full-ticker">
-                    <FullTradeProduct />
-                    <FullTradeTicker />
-                  </div>*/}
                   <FullTradeKLine />
                 </div>
               </div>
@@ -105,10 +99,6 @@ export default class FullTradeFrame extends React.Component {
             <div className="full-left-bottom">
               <SpotAsset />
               <SpotOrder />
-              {/*<div className="full-left-bottom-left"></div>
-              <div className="full-left-bottom-right">
-                <SpotPlaceOrder /> isLogin ? <SpotPlaceOrder /> : <SpotPlaceOrderNotLogin />
-              </div>*/}
             </div>
           </div>
           <div className="full-right">
