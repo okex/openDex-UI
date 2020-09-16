@@ -12,7 +12,10 @@ import './Assets.less';
 
 
 function mapStateToProps() {
-  return {};
+  return {
+    history: window.history,
+    location: window.location,
+  };
 }
 
 function mapDispatchToProps(dispatch) {
