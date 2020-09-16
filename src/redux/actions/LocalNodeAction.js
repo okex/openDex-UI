@@ -327,7 +327,7 @@ export function stopOkchaind() {
   return (dispatch, getState) => {
     stopPoll();
     const okchaindDir = getOkchaindDir();
-    const { shell } = electronUtils;
+    const { shell, localNodeServerClient } = electronUtils;
     shell.cd(okchaindDir);
     shell.exec('./okchaind stop', (code, stdout, stderr) => {
       if (code === 0) {
@@ -338,6 +338,7 @@ export function stopOkchaind() {
       }
     });
     window.localStorage.setItem('isStarted',false);
+    localNodeServerClient.set(null);
     dispatch({
       type: LocalNodeActionType.UPDATE_IS_SYNC,
       data: false
