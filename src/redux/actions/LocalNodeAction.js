@@ -25,7 +25,7 @@ function stopPoll() {
   tempBreakTimer && clearInterval(tempBreakTimer);
 }
 
-function start(datadir, dispatch, getState) {
+function start(datadir, dispatch, getState,func) {
   const { shell, localNodeServerClient } = electronUtils;
   const directory = getOkchaindDir();
   return new Promise((reslove, reject) => {
@@ -301,19 +301,45 @@ export function updateLogs(logs) {
 
 export function startOkchaind(datadir) {
   return async (dispatch, getState) => {
-    const isExist = await isDirExist(datadir);
+    const { localNodeDataStatus } = electronUtils;
+    const statusInstance = localNodeDataStatus.getInstance(datadir);
+    const dataStatus = statusInstance.get();
     const configDir = `${datadir}/config`;
-    if (isExist) {
-      await start(datadir, dispatch, getState);
-      startPoll(dispatch, getState);
-    } else {
+    console.log(dataStatus);
+    if(!dataStatus.hasInitData) {
       await initData(datadir);
+      statusInstance.set({hasInitData:true});
+    }
+    if(!dataStatus.hasDownloadGenesis) {
       await downloadGenesis(configDir);
+      statusInstance.set({hasDownloadGenesis:true});
+    }
+    if(!dataStatus.hasDownloadSeeds) {
       await downloadSeeds(configDir);
+      statusInstance.set({hasDownloadSeeds:true});
+    }
+    if(!dataStatus.hasSetSeeds) {
       await setSeeds(configDir);
+      statusInstance.set({hasSetSeeds:true});
+    }
+    if(dataStatus.success) {
       await start(datadir, dispatch, getState);
       startPoll(dispatch, getState);
     }
+
+    // const isExist = await isDirExist(datadir);
+    // const configDir = `${datadir}/config`;
+    // if (isExist) {
+    //   await start(datadir, dispatch, getState);
+    //   startPoll(dispatch, getState);
+    // } else {
+    //   await initData(datadir);
+    //   await downloadGenesis(configDir);
+    //   await downloadSeeds(configDir);
+    //   await setSeeds(configDir);
+    //   await start(datadir, dispatch, getState);
+    //   startPoll(dispatch, getState);
+    // }
   };
 }
 
@@ -332,13 +358,13 @@ export function stopOkchaind() {
     shell.cd(okchaindDir);
     shell.exec('./okchaind stop', (code, stdout, stderr) => {
       if (code === 0) {
+        localNodeServerClient.set(null);
         dispatch({
           type: LocalNodeActionType.UPDATE_OKCHAIND,
           data: null,
         });
       }
     });
-    localNodeServerClient.set(null);
     dispatch({
       type: LocalNodeActionType.UPDATE_IS_SYNC,
       data: false
