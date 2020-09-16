@@ -22,6 +22,7 @@ function getOkchaindDir() {
 
 function stopPoll() {
   timer && clearInterval(timer);
+  tempBreakTimer && clearInterval(tempBreakTimer);
 }
 
 function start(datadir, dispatch, getState) {
