@@ -52,19 +52,7 @@ emitter.on('downloadOkchainProgress', (res) => {
   console.log('downloadOkchainProgress', res);
 });
 
-function checkLocalNode() {
-  return new Promise(resolve => {
-    electronUtils.shell.exec('ps aux | grep -v grep | grep okchaind',function(err, stdout, sdterr){
-      if(err) resolve(false);
-      else resolve(true);
-    });
-  });
-}
-
-
 const renderDom = async () => {
-  const result = await checkLocalNode();
-  window.localStorage.setItem('isStarted',!!result);
   const store = configureStore();
   render(
     <LocaleProvider {...localProviderProps} >

@@ -40,7 +40,6 @@ function start(datadir, dispatch, getState) {
         datadir,
         db,
       });
-      window.localStorage.setItem('isStarted',true);
       const child = localNodeServerClient.get() || shell.exec(`${startCommand}`, { async: true }, (code) => {
         console.log(code);
         if (code !== 130 && code !== 0) {
@@ -320,6 +319,7 @@ export function startOkchaind(datadir) {
 export function startListen() {
   return async (dispatch, getState) => {
     listenClient(dispatch, getState);
+    startPoll(dispatch, getState);
   }
 }
 
@@ -327,7 +327,7 @@ export function stopOkchaind() {
   return (dispatch, getState) => {
     stopPoll();
     const okchaindDir = getOkchaindDir();
-    const { shell, localNodeServerClient } = electronUtils;
+    const { shell,localNodeServerClient } = electronUtils;
     shell.cd(okchaindDir);
     shell.exec('./okchaind stop', (code, stdout, stderr) => {
       if (code === 0) {
@@ -337,7 +337,6 @@ export function stopOkchaind() {
         });
       }
     });
-    window.localStorage.setItem('isStarted',false);
     localNodeServerClient.set(null);
     dispatch({
       type: LocalNodeActionType.UPDATE_IS_SYNC,
