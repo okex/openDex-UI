@@ -114,12 +114,20 @@ const onDownloadAndUpdate = () => {
   let isFinish = false;
   let config = {};
   let isInstall = true;
-  const okchaindObj = store.get('okchaindObj');
-  const cliObj = store.get('cliObj');
-  const processTotal = okchaindObj.size + cliObj.size; // 2 assets will be download
+
+
+  let okchaindObj = {};
+  let cliObj = {};
+  let processTotal = 0;
   const transferredBytesMap = {
     okchaind: 0,
     okchaincli: 0
+  };
+
+  const initTransferredBytes = () => {
+    okchaindObj = store.get('okchaindObj');
+    cliObj = store.get('cliObj');
+    processTotal = okchaindObj.size + cliObj.size; // 2 assets will be download
   };
 
   const updateDialog = (option) => {
@@ -131,6 +139,7 @@ const onDownloadAndUpdate = () => {
   };
 
   const setInstallDialog = (type, version) => {
+    initTransferredBytes();
     option = config.install;
     option.onConfirm = () => {
       setDownloadingDialog('okchaind');
