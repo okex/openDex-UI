@@ -65,6 +65,8 @@ class DesktopNodeMenu extends Component {
   }
 
   componentDidMount() {
+    const { isStarted,localNodeAction } = this.props;
+    if(isStarted) localNodeAction.startListen();
     this.heightTimer = setInterval(() => {
       ont.get(URL.GET_LATEST_HEIGHT_MASTER).then((res) => {
         if (res.data) {

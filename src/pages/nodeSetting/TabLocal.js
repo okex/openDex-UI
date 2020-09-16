@@ -192,11 +192,6 @@ class TabLocal extends Component {
       </div>
     );
   }
-
-  componentDidMount() {
-    const { isStarted,localNodeAction } = this.props;
-    if(isStarted) localNodeAction.startListen();
-  }
 }
 
 export default TabLocal;
