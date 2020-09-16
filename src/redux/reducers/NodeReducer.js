@@ -3,9 +3,12 @@ import { NODE_LIST, DEFAULT_NODE } from '_constants/apiConfig';
 import { NODE_TYPE } from '_constants/Node';
 import ActionTypes from '../actionTypes/NodeActionType';
 
-function getInitCurrentNode() {
+const electronUtils = window.require('electron').remote.require('./src/utils');
+
+function getInitCurrentNode(isStarted) {
   const n = storage.get('currentNode');
-  if (!n || n.type === NODE_TYPE.LOCAL) {
+  if (!n || !isStarted) {
+    // !isStarted 过滤存储为 LocalNode 情况
     storage.set('currentNode', DEFAULT_NODE);
     return DEFAULT_NODE;
   }
@@ -15,7 +18,7 @@ function getInitCurrentNode() {
 const initialState = {
   remoteList: NODE_LIST,
   customList: storage.get('customList') || [],
-  currentNode: getInitCurrentNode(),
+  currentNode: getInitCurrentNode(!!electronUtils.localNodeServerClient.get()),
   breakTime: 0, // unit:s
   tempBreakTime: 0, // unit:s
 };
