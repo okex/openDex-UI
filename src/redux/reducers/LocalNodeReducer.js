@@ -1,6 +1,5 @@
 import { emptyLineBreak } from '_src/utils/ramda';
 import LocalNodeActionType from '../actionTypes/LocalNodeActionType';
-import { storage } from '_component/okit'; 
 
 const electronUtils = window.require('electron').remote.require('./src/utils');
 
@@ -24,13 +23,11 @@ const getInitDb = () => {
   return db;
 };
 
-
-
 export default function() {
   const initialState = {
     logs: '',
     okchaind: null,
-    isStarted: window.localStorage.getItem('isStarted') === 'true',
+    isStarted: !!electronUtils.localNodeServerClient.get(),
     p2p: '26656',
     rest: '26659',
     ws: '26661',
