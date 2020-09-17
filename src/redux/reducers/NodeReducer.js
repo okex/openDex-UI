@@ -7,7 +7,7 @@ const electronUtils = window.require('electron').remote.require('./src/utils');
 
 function getInitCurrentNode(isStarted) {
   const n = storage.get('currentNode');
-  if (!n || !isStarted) {
+  if (!n || (n.type === NODE_TYPE.LOCAL && !isStarted)) {
     // !isStarted 过滤存储为 LocalNode 情况
     storage.set('currentNode', DEFAULT_NODE);
     return DEFAULT_NODE;
