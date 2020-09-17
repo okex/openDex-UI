@@ -26,8 +26,8 @@ const OKExHeaderWrapper = (Component) => {
     }
     componentDidMount() {
       console.log('OKExHeaderWrapper 1');
-      // 初始化okchain客户端
-      this.props.commonAction.initOKChainClient();
+      // 初始化okexchain客户端
+      this.props.commonAction.initOKExChainClient();
     }
 
     //

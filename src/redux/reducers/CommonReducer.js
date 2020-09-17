@@ -1,19 +1,19 @@
 import CommonActionType from '../actionTypes/CommonActionType';
 
 const initialState = {
-  okchainClient: {}, // OKChain客户端对象
+  okexchainClient: {}, // OKExChain客户端对象
   privateKey: '', // 私钥
   legalList: [], // 法币货币列表
   legalId: -1, // 法币货币当前id
   legalObj: {}, // 法币货币当前obj
-  latestHeight: 0, // OKChain区块最新高度
+  latestHeight: 0, // OKExChain区块最新高度
 };
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case CommonActionType.SET_OKCHAIN_CLIENT:
+    case CommonActionType.SET_OKEXCHAIN_CLIENT:
       return {
         ...state,
-        okchainClient: action.data
+        okexchainClient: action.data
       };
     case CommonActionType.UPDATE_CURRENCY_LIST:
       return {

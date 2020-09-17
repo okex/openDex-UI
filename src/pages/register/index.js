@@ -95,8 +95,8 @@ class Register extends Component {
   onRegister = () => {
     this.setState({ isActionLoading: true });
     const { websiteValue, feeAddressValue } = this.state;
-    const { okchainClient } = this.props;
-    okchainClient.sendRegisterDexOperatorTransaction(websiteValue, feeAddressValue).then((res) => {
+    const { okexchainClient } = this.props;
+    okexchainClient.sendRegisterDexOperatorTransaction(websiteValue, feeAddressValue).then((res) => {
       this.setState({ isActionLoading: false });
       const { result } = res;
       const { txhash } = result;
@@ -112,7 +112,7 @@ class Register extends Component {
             background: '#112F62'
           },
           onConfirm: () => {
-            window.open(`${Config.okchain.browserUrl}/tx/${txhash}`);
+            window.open(`${Config.okexchain.browserUrl}/tx/${txhash}`);
             dialog.destroy();
           },
         });

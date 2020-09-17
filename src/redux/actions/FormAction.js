@@ -143,14 +143,14 @@ export function submitOrder(params, callback, errCallback) {
     if (isLoading) {
       return false;
     }
-    const { okchainClient } = getState().Common;
+    const { okexchainClient } = getState().Common;
     dispatch({
       type: FormActionType.SUBMIT_ORDER,
       data: {}
     });
-    // placeOrder To OKChain
-    return okchainClient.setAccountInfo(params.pk).then(() => {
-      okchainClient.sendPlaceOrderTransaction(
+    // placeOrder To OKExChain
+    return okexchainClient.setAccountInfo(params.pk).then(() => {
+      okexchainClient.sendPlaceOrderTransaction(
         params.product,
         (params.side === Enum.placeOrder.type.buy) ? 'BUY' : 'SELL',
         FormatNum.formatNumber2String(params.price),

@@ -3,7 +3,7 @@ import moment from 'moment';
 import { toLocale } from '_src/locale/react-locale';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { crypto } from '@okchain/javascript-sdk';
+import { crypto } from '@okexchain/javascript-sdk';
 import { Dialog } from '_component/Dialog';
 import Menu from '_src/component/Menu';
 import util from '_src/utils/util';
@@ -159,8 +159,8 @@ class DexLoggedMenu extends React.Component {
             </Menu.Item>
           </SubMenu>
           {/*
-          <Menu.Item key="okChain" >
-            <a target="_blank" rel="noopener noreferrer" href={Config.okchain.browserUrl}>{toLocale('header_menu_explorer_okchain')}</a>
+          <Menu.Item key="okexChain" >
+            <a target="_blank" rel="noopener noreferrer" href={Config.okexchain.browserUrl}>{toLocale('header_menu_explorer_okexchain')}</a>
           </Menu.Item>
           */}
         </Menu>

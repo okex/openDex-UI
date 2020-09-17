@@ -38,7 +38,7 @@ http://127.0.0.1:5200/dex-test
 
 ### nginx.conf配置
 涉及跨域，需要通过Nginx代理解决。
-`vi /usr/local/etc/nginx/servers/okchain.conf`
+`vi /usr/local/etc/nginx/servers/okexchain.conf`
 
 ```shell
 upstream getsvr {
@@ -66,12 +66,12 @@ server {
 在src/constants/config.js中配置api地址
 
 ```shell
-okchain: {
-    browserUrl: `${okchainExplorerBaseUrl}/explorer/okchain`, // 浏览器地址
-    searchrUrL: `${okchainExplorerBaseUrl}/explorer/okchain/search`, // 搜索地址
+okexchain: {
+    browserUrl: `${okexchainExplorerBaseUrl}/explorer/okexchain`, // 浏览器地址
+    searchrUrL: `${okexchainExplorerBaseUrl}/explorer/okexchain/search`, // 搜索地址
     clientUrl: 'http://127.0.0.1:7777', // nginx地址
   },
 ```
 其中，
-okchainExplorerBaseUrl是浏览器地址。由于该工程暂不开源，暂时无法访问区块浏览器。
+okexchainExplorerBaseUrl是浏览器地址。由于该工程暂不开源，暂时无法访问区块浏览器。
 clientUrl是后端接口地址

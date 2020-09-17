@@ -19,7 +19,7 @@ const initialState = {
   wsIsOnlineV3: false, // ws连接状态v3
   wsErrCounterV3: 0, // ws断线重连计数器v3
   wsIsDelayLogin: false, // 获取token时间是否晚于页面执行推送连接
-  valuationToken: 'tokt', // OKChain计价通证 tokt
+  valuationToken: 'tokt', // OKExChain计价通证 tokt
   activeMarket, // 当前交易区 原来是1
   searchText: '', // 币对搜索input
   billMenuActive: '', // 左侧菜单激活Id

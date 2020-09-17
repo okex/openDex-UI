@@ -2,12 +2,12 @@
  * 统一配置管理
  */
 const BASE_HOST = `${window.location.protocol}//${window.location.host}`;
-const okbExplorePrefix = 'okchain-test';
+const okbExplorePrefix = 'okexchain-test';
 const host = window.location.hostname;
 
 // online
 let apiUrl = BASE_HOST;
-const exploreUrl = 'https://www.oklink.com'; // OKChain区块链浏览器基础URL - 域名
+const exploreUrl = 'https://www.oklink.com'; // OKExChain区块链浏览器基础URL - 域名
 
 // test
 if (host.includes('192.168.') || host.includes('localhost') || host.includes('127.0.0.1')) { // 本地调试
@@ -20,7 +20,7 @@ if (navigator.userAgent.includes('Electron') && window.location.protocol.include
 
 // 浏览器URL修改 /explorer
 const Config = {
-  okchain: {
+  okexchain: {
     browserUrl: `${exploreUrl}/${okbExplorePrefix}`, // 浏览器地址
     browserAddressUrl: `${exploreUrl}/${okbExplorePrefix}/address`, // 我的地址
     clientUrl: apiUrl,

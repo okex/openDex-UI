@@ -8,8 +8,8 @@ import Config from './Config';
 // }
 
 // var OKEX_BASE_URL = location.protocol + '//' + location.host + getContextPath() + PROJECT_PRXFIX_URL;
-const OKDEX_BASE_URL = '{domain}/okchain/v1';
-const MASTER_BASE_URL = 'https://www.okex.com/okchain/v1';
+const OKDEX_BASE_URL = '{domain}/okexchain/v1';
+const MASTER_BASE_URL = 'https://www.okex.com/okexchain/v1';
 
 /*
  * URL统一管理
@@ -20,7 +20,7 @@ const URL = {
   GET_PRODUCT_DEALS: `${OKDEX_BASE_URL}/deals`,
   GET_LATEST_MATCHES: `${OKDEX_BASE_URL}/matches`,
   GET_PRODUCT_TICKERS: `${OKDEX_BASE_URL}/tickers`,
-  GET_PRODUCTS: `${OKDEX_BASE_URL}/products`, // `${OKDEX_BASE_URL}/products` 原:`${OKDEX_SUPPORT_ROOT}/okchain/product/list`
+  GET_PRODUCTS: `${OKDEX_BASE_URL}/products`, // `${OKDEX_BASE_URL}/products` 原:`${OKDEX_SUPPORT_ROOT}/okexchain/product/list`
   GET_TOKENS: `${OKDEX_BASE_URL}/tokens`,
   GET_DEPTH_BOOK: `${OKDEX_BASE_URL}/order/depthbook`,
   GET_CANDLES: `${OKDEX_BASE_URL}/candles`,

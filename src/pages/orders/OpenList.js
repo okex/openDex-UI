@@ -98,8 +98,8 @@ class OpenList extends RouterCredential {
     }
   }
   componentDidMount() {
-    // 初始化okchain客户端。原因是交易页、未成交委托页撤单和资产页转账都需要
-    this.props.commonAction.initOKChainClient();
+    // 初始化okexchain客户端。原因是交易页、未成交委托页撤单和资产页转账都需要
+    this.props.commonAction.initOKExChainClient();
 
     const { spotActions, orderActions } = this.props;
     spotActions.fetchProducts();

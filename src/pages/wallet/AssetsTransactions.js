@@ -129,7 +129,7 @@ class AssetsTransactions extends Component {
             <Button size={Button.size.small} type={Button.btnType.primary} onClick={() => { this.fetchTransactions(); }}>{toLocale('trade_query_search')}</Button>
           </div>
           <a
-            href={Config.okchain.browserUrl}
+            href={Config.okexchain.browserUrl}
             target="_blank"
             rel="noopener noreferrer"
           >{toLocale('trade_query_more')} &gt;&gt;

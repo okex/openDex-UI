@@ -35,12 +35,12 @@ class MintDialog extends Component {
 
   onMint = () => {
     const {
-      okchainClient, token, beforeMint, afterMint
+      okexchainClient, token, beforeMint, afterMint
     } = this.props;
     isFunction(beforeMint) && beforeMint();
     const { value } = this.state;
     const amount = util.precisionInput(value);
-    okchainClient.sendTokenMintTransaction(token, amount).then((res) => {
+    okexchainClient.sendTokenMintTransaction(token, amount).then((res) => {
       this.setState({ value: '' });
       isFunction(afterMint) && afterMint();
       const { result } = res;

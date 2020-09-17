@@ -89,8 +89,8 @@ const SpotTradeWrapper = (Component) => {
       }
       document.body.classList.remove('full-body');
 
-      // 初始化okchain客户端 TODO已经加载过了还要加载？？？
-      // commonActions.initOKChainClient();
+      // 初始化okexchain客户端 TODO已经加载过了还要加载？？？
+      // commonActions.initOKExChainClient();
     }
 
     componentWillReceiveProps(nextProps) {

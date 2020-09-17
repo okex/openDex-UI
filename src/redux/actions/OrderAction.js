@@ -278,10 +278,10 @@ export function updateEntrustType(entrustType) {
  */
 export function cancelOrder(params, successCallback, errCallback) {
   return (dispatch, getState) => {
-    const { okchainClient } = getState().Common;
+    const { okexchainClient } = getState().Common;
     // const { senderAddr } = window.OK_GLOBAL; // senderAddr,
-    okchainClient.setAccountInfo(params.pk).then(() => {
-      okchainClient.sendCancelOrderTransaction(params.order_id).then((r) => {
+    okexchainClient.setAccountInfo(params.pk).then(() => {
+      okexchainClient.sendCancelOrderTransaction(params.order_id).then((r) => {
         if (r.result.code) {
           errCallback && errCallback({ msg: r.result.error });
         } else {

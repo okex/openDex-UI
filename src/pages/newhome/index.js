@@ -47,17 +47,17 @@ const index = () => {
             </span>
             <Icon className="icon-go" />
           </a>
-          <a className="div2" href={Config.okchain.browserUrl} target="_blank" rel="noopener noreferrer">
+          <a className="div2" href={Config.okexchain.browserUrl} target="_blank" rel="noopener noreferrer">
             <span>
               <Icon className="icon-Browser" />
               <span>{toLocale('home_browser')}</span>
             </span>
             <Icon className="icon-go" />
           </a>
-          <a className="div3" href={Config.okchain.docUrl} target="_blank" rel="noopener noreferrer">
+          <a className="div3" href={Config.okexchain.docUrl} target="_blank" rel="noopener noreferrer">
             <span>
               <Icon className="icon-help" />
-              <span href={Config.okchain.docUrl}>{toLocale('home_instructions')}</span>
+              <span href={Config.okexchain.docUrl}>{toLocale('home_instructions')}</span>
             </span>
             <Icon className="icon-go" />
           </a>
@@ -102,7 +102,7 @@ const index = () => {
               <li>{toLocale('home_step2_li2')}</li>
               <li>{toLocale('home_step2_li3')}</li>
             </ul>
-            <a href={Config.okchain.receiveCoinUrl} target="_blank" rel="noopener noreferrer">{toLocale('home_step2_btn')}
+            <a href={Config.okexchain.receiveCoinUrl} target="_blank" rel="noopener noreferrer">{toLocale('home_step2_btn')}
               <img src="https://img.bafang.com/cdn/assets/imgs/MjAxOTEx/130407AC319D1D7DB4B7EAD09D83016C.png" />
             </a>
           </div>
@@ -141,7 +141,7 @@ const index = () => {
             <ul>
               <li>{toLocale('home_step4_li1')}</li>
             </ul>
-            <a href={Config.okchain.browserUrl} target="_blank" rel="noopener noreferrer">{toLocale('home_step4_btn')}
+            <a href={Config.okexchain.browserUrl} target="_blank" rel="noopener noreferrer">{toLocale('home_step4_btn')}
               <img src="https://img.bafang.com/cdn/assets/imgs/MjAxOTEx/130407AC319D1D7DB4B7EAD09D83016C.png" />
             </a>
           </div>
@@ -160,7 +160,7 @@ const index = () => {
             <ul>
               <li>{toLocale('home_step5_li1')}</li>
             </ul>
-            <a href={Config.okchain.docUrl} target="_blank" rel="noopener noreferrer">{toLocale('home_step5_btn')}
+            <a href={Config.okexchain.docUrl} target="_blank" rel="noopener noreferrer">{toLocale('home_step5_btn')}
               <img src="https://img.bafang.com/cdn/assets/imgs/MjAxOTEx/130407AC319D1D7DB4B7EAD09D83016C.png" />
             </a>
           </div>
@@ -168,7 +168,7 @@ const index = () => {
       </div>
       <div className="okex-logo">
         <Icon className="icon-testcoin" isColor />
-        <a target="_blank" rel="noopener noreferrer" href={Config.okchain.receiveCoinUrl}>{toLocale('home_receive_coin')} &gt;&gt;</a>
+        <a target="_blank" rel="noopener noreferrer" href={Config.okexchain.receiveCoinUrl}>{toLocale('home_receive_coin')} &gt;&gt;</a>
       </div>
     </div>
   );

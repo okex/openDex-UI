@@ -97,7 +97,7 @@ export const getDashboardTokenPairCols = ({ add, withdraw }) => {
       title: toLocale('tokenPair_column_birth'),
       key: 'block_height',
       render: (text) => {
-        return <a className="one-line" href={`${Config.okchain.browserUrl}/block/${text}`} target="_blank" rel="noopener noreferrer">{text}</a>;
+        return <a className="one-line" href={`${Config.okexchain.browserUrl}/block/${text}`} target="_blank" rel="noopener noreferrer">{text}</a>;
       }
     },
     {
@@ -158,7 +158,7 @@ export const getDetailTokenPairCols = ({ add, withdraw }) => {
       title: toLocale('tokenPair_column_birth'),
       key: 'block_height',
       render: (text) => {
-        return <a className="one-line" href={`${Config.okchain.browserUrl}/block/${text}`} target="_blank" rel="noopener noreferrer">{text}</a>;
+        return <a className="one-line" href={`${Config.okexchain.browserUrl}/block/${text}`} target="_blank" rel="noopener noreferrer">{text}</a>;
       }
     },
     {
@@ -272,7 +272,7 @@ export const getTransactionsCols = () => {
       title: toLocale('trade_column_hash'),
       key: 'txhash',
       render: (text) => {
-        return <a className="one-line" href={`${Config.okchain.browserUrl}/tx/${text}`} target="_blank" rel="noopener noreferrer">{text}</a>;
+        return <a className="one-line" href={`${Config.okexchain.browserUrl}/tx/${text}`} target="_blank" rel="noopener noreferrer">{text}</a>;
       }
     },
     {

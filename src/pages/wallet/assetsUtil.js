@@ -114,7 +114,7 @@ util.transactionsCols = [
     title: toLocale('trade_column_hash'),
     key: 'txhash',
     render: (text) => { // trade-info/
-      return <a href={`${Config.okchain.browserUrl}/tx/${text}`} target="_blank" rel="noopener noreferrer">{FormatNum.hashShort(text)}</a>;
+      return <a href={`${Config.okexchain.browserUrl}/tx/${text}`} target="_blank" rel="noopener noreferrer">{FormatNum.hashShort(text)}</a>;
     }
   },
   {

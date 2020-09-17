@@ -1,4 +1,4 @@
-import { crypto } from '@okchain/javascript-sdk';
+import { crypto } from '@okexchain/javascript-sdk';
 
 const walletUtil = {
   // sessionStroage中存入user信息

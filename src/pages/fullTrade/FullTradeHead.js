@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import Icon from '_component/IconLite';
 import DesktopNodeMenu from '_component/DesktopNodeMenu';
 import DesktopLinkMenu from '_component/DesktopLinkMenu';
-import okchainLogo from '_src/assets/images/OKChain.png';
+import okexchainLogo from '_src/assets/images/OKExChain.png';
 import * as CommonAction from '../../redux/actions/CommonAction';
 import PageURL from '../../constants/PageURL';
 import FullTradeTicker from './FullTradeTicker';
@@ -43,8 +43,8 @@ class FullTradeHead extends React.Component {
   }
   // 获取法币计价货币列表及配置
   componentDidMount() {
-    // 初始化okchain客户端。原因是交易页、未成交委托页撤单和资产页转账都需要
-    this.props.commonAction.initOKChainClient();
+    // 初始化okexchain客户端。原因是交易页、未成交委托页撤单和资产页转账都需要
+    this.props.commonAction.initOKExChainClient();
   }
   componentWillReceiveProps(nextProps) {
   }
@@ -60,7 +60,7 @@ class FullTradeHead extends React.Component {
       <div className="full-top-info-box">
         <a className="logo-wrap" onClick={this.goHome}>
           <img
-            src={okchainLogo}
+            src={okexchainLogo}
             style={this.iconStyle}
           />
         </a>

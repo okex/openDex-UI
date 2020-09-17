@@ -96,10 +96,10 @@ class DesktopNodeMenu extends Component {
     const { localNodeAction, datadir } = this.props;
     if (checked) {
       localNodeAction.switchIsStarted(true);
-      localNodeAction.startOkchaind(datadir);
+      localNodeAction.startOkexchaind(datadir);
     } else {
       localNodeAction.switchIsStarted(false);
-      localNodeAction.stopOkchaind();
+      localNodeAction.stopOkexchaind();
     }
   }
 
@@ -217,7 +217,7 @@ class DesktopNodeMenu extends Component {
             }
             <div className="node-sub-menu local-node-submenu">
               <div className="local-node-container">
-                <div className="local-node-text">go-okchain</div>
+                <div className="local-node-text">go-okexchain</div>
                 <DexSwitch
                   checked={isStarted}
                   checkedChildren="开"

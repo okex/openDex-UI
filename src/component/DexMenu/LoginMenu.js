@@ -69,8 +69,8 @@ class DexLoginMenu extends React.Component {
           </NavLink> */}
         </Menu.Item>
         {/*
-        <Menu.Item key="okChain" >
-          <a target="_blank" rel="noopener noreferrer" href={Config.okchain.browserUrl}>{toLocale('header_menu_explorer_okchain')}</a>
+        <Menu.Item key="okexChain" >
+          <a target="_blank" rel="noopener noreferrer" href={Config.okexchain.browserUrl}>{toLocale('header_menu_explorer_okexchain')}</a>
         </Menu.Item>
         */}
       </Menu>

@@ -1,18 +1,18 @@
-import OKChainClient, { crypto } from '@okchain/javascript-sdk';
+import OKExChainClient, { crypto } from '@okexchain/javascript-sdk';
 import { toLocale } from '_src/locale/react-locale';
 import CommonActionType from '../actionTypes/CommonActionType';
 import Config from '../../constants/Config';
 import FormActionType from '../actionTypes/FormActionType';
 
 /*
- * 初始化okchain客户端
+ * 初始化okexchain客户端
  * */
-export function initOKChainClient() {
+export function initOKExChainClient() {
   return (dispatch) => {
-    const client = new OKChainClient(Config.okchain.clientUrl);
+    const client = new OKExChainClient(Config.okexchain.clientUrl);
     // client.initChain();
     dispatch({
-      type: CommonActionType.SET_OKCHAIN_CLIENT,
+      type: CommonActionType.SET_OKEXCHAIN_CLIENT,
       data: client
     });
   };
@@ -72,7 +72,7 @@ export function hidePwdDialog() {
   };
 }
 
-// 更新OKChain区块最新高度
+// 更新OKExChain区块最新高度
 export function updateLatestHeight(height) {
   return (dispatch) => {
     dispatch({

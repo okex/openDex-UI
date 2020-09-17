@@ -7,10 +7,10 @@ import PasswordDialog from '_component/PasswordDialog';
 import { toLocale } from '_src/locale/react-locale';
 
 function mapStateToProps(state) {
-  const { okchainClient, privateKey } = state.Common;
+  const { okexchainClient, privateKey } = state.Common;
   return {
     privateKey,
-    okchainClient,
+    okexchainClient,
   };
 }
 
@@ -79,8 +79,8 @@ const ClientWrapper = (Com) => {
     }
 
     setAccountInfo = (success) => {
-      const { okchainClient, privateKey } = this.props;
-      okchainClient.setAccountInfo(privateKey).then(() => {
+      const { okexchainClient, privateKey } = this.props;
+      okexchainClient.setAccountInfo(privateKey).then(() => {
         success && success();
       });
     }

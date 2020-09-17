@@ -18,9 +18,9 @@ import './TransferDialog.less';
 
 
 function mapStateToProps(state) {
-  const { okchainClient } = state.Common;
+  const { okexchainClient } = state.Common;
   const { valuationToken } = state.Spot;
-  return { okchainClient, valuationToken };
+  return { okexchainClient, valuationToken };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -34,7 +34,7 @@ class TransferDialog extends Component {
   constructor(props) {
     super(props);
     this.feeToken = this.props.valuationToken;
-    this.addrReg = /^okchain/i;
+    this.addrReg = /^okexchain/i;
     this.loadingDur = 500; // 转账loading至少展示时间
     this.transDur = 2500; // 转账结果提示显示时间
     this.initState = {
@@ -208,7 +208,7 @@ class TransferDialog extends Component {
     }, () => {
       setTimeout(() => {
         this.props.commonAction.validatePassword(pwd, (privateKey) => {
-          const { onClose, onSuccess, okchainClient } = this.props;
+          const { onClose, onSuccess, okexchainClient } = this.props;
           const {
             symbol, address, amount, note
           } = this.state;
@@ -216,8 +216,8 @@ class TransferDialog extends Component {
           this.setState({ transferring: true });
           // const myAddr = this.addr; // myAddr,
           const amountStr = Number(amount).toFixed(8);
-          okchainClient.setAccountInfo(privateKey).then(() => {
-            okchainClient.sendSendTransaction(
+          okexchainClient.setAccountInfo(privateKey).then(() => {
+            okexchainClient.sendSendTransaction(
               address,
               amountStr,
               symbol,

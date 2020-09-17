@@ -35,12 +35,12 @@ class BurnDialog extends Component {
 
   onBurn = () => {
     const {
-      okchainClient, token, beforeBurn, afterBurn
+      okexchainClient, token, beforeBurn, afterBurn
     } = this.props;
     isFunction(beforeBurn) && beforeBurn();
     const { value } = this.state;
     const amount = util.precisionInput(value);
-    okchainClient.sendTokenBurnTransaction(token, amount).then((res) => {
+    okexchainClient.sendTokenBurnTransaction(token, amount).then((res) => {
       this.setState({ value: '' });
       isFunction(afterBurn) && afterBurn();
       const { result } = res;

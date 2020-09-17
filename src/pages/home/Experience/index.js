@@ -19,7 +19,7 @@ const Experience = () => {
           <p className="experience-content">{toLocale('home_exp_content')}</p>
           <a
             className="button blue-button"
-            href={getLangURL(Config.okchain.receiveCoinUrl)}
+            href={getLangURL(Config.okexchain.receiveCoinUrl)}
             target="_blank"
             rel="friend"
             title={toLocale('home_receive_coin')}
@@ -38,7 +38,7 @@ const Experience = () => {
           <h3 className="more-title">{toLocale('home_exp_more')}</h3>
           <a
             className="more-button"
-            href={Config.okchain.docUrl}
+            href={Config.okexchain.docUrl}
             target="_blank"
             rel="friend"
             title={toLocale('home_exp_more')}
