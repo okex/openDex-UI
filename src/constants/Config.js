@@ -1,22 +1,9 @@
 /*
  * 统一配置管理
  */
-const BASE_HOST = `${window.location.protocol}//${window.location.host}`;
 const okbExplorePrefix = 'okchain-test';
-const host = window.location.hostname;
-
-// online
-let apiUrl = BASE_HOST;
+const apiUrl = 'http://www.okex.com';
 const exploreUrl = 'https://www.oklink.com'; // OKChain区块链浏览器基础URL - 域名
-
-// test
-if (host.includes('192.168.') || host.includes('localhost') || host.includes('127.0.0.1')) { // 本地调试
-  apiUrl = 'http://127.0.0.1:7777';
-}
-
-if (navigator.userAgent.includes('Electron') && window.location.protocol.includes('file')) {
-  apiUrl = 'http://www.okex.com';
-}
 
 // 浏览器URL修改 /explorer
 const Config = {
@@ -25,7 +12,6 @@ const Config = {
     browserAddressUrl: `${exploreUrl}/${okbExplorePrefix}/address`, // 我的地址
     clientUrl: apiUrl,
   },
-  jwtTokenExpiredTime: 30 * 24 * 60 * 60 * 1000, // 30天 60 * 1000, //
   validatePwdDeferSecond: 100, // 100ms
   operateResultDelaySecond: 500, // 500ms
   operateResultTipInterval: 2.5 * 1000, // 2.5秒

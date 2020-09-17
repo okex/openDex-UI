@@ -1,13 +1,3 @@
-import Config from './Config';
-
-// function getContextPath() {
-//     const pathName = document.location.pathname;
-//     const index = pathName.substr(1).indexOf('/');
-//     const result = pathName.substr(0, index + 1);
-//     return result;
-// }
-
-// var OKEX_BASE_URL = location.protocol + '//' + location.host + getContextPath() + PROJECT_PRXFIX_URL;
 const OKDEX_BASE_URL = '{domain}/okchain/v1';
 const MASTER_BASE_URL = 'https://www.okex.com/okchain/v1';
 

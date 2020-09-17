@@ -10,12 +10,9 @@ import util from '_src/utils/util';
 import Icon from '_src/component/IconLite';
 import { withRouter, NavLink } from 'react-router-dom';
 import PageURL from '_constants/PageURL';
-import Config from '_constants/Config';
 import PassWordDialog from '_component/PasswordDialog';
 import * as CommonAction from '../../redux/actions/CommonAction';
 import WalletMenuTool from './WalletMenuTool';
-
-// import LinesEllipsis from 'react-lines-ellipsis';
 
 import './index.less';
 
@@ -120,11 +117,6 @@ class DexLoggedMenu extends React.Component {
           selectable={false}
           className="okdex-menu"
         >
-          {/*
-          <Menu.Item key="trade" >
-            <NavLink to={PageURL.spotFullPage} activeClassName="active-menu-item" >{toLocale('header_menu_trade')}</NavLink>
-          </Menu.Item>
-          */}
           <SubMenu
             key="wallet"
             title={
@@ -158,11 +150,6 @@ class DexLoggedMenu extends React.Component {
               <NavLink to={PageURL.spotDealsPage} activeClassName="active-menu-item" >{toLocale('header_menu_deal_entrust')}</NavLink>
             </Menu.Item>
           </SubMenu>
-          {/*
-          <Menu.Item key="okChain" >
-            <a target="_blank" rel="noopener noreferrer" href={Config.okchain.browserUrl}>{toLocale('header_menu_explorer_okchain')}</a>
-          </Menu.Item>
-          */}
         </Menu>
       </React.Fragment>
     );

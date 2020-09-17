@@ -14,7 +14,6 @@ export default {
   spotHistoryPage: `${contentPath}/spot/history`, // 历史委托
   spotDealsPage: `${contentPath}/spot/deals`, // 成交明细
   spotOrdersPage: `${contentPath}/spot/orders?isMargin={0}`, // 币币委托
-  // loginPage: `${contentPath}account/login?forward={0}&logout=true`, // 登录
   loginPage: `${contentPath}/wallet/import?forward={0}&logout=true`, // 登录
   wallet: `${contentPath}/wallet`, // 钱包
   walletAssets: `${contentPath}/wallet/assets`, // 钱包资产

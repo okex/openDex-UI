@@ -1,6 +1,4 @@
 const path = require('path');
-// const fs = require('fs');
-const HappyPack = require('happypack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const src = path.resolve(__dirname, '../src');
@@ -14,17 +12,8 @@ const base = {
   },
   module: {
     rules: [
-      /* {
-      test: /\.js$/,
-      use: [
-        'eslint-loader'
-      ],
-      exclude: /node_modules/,
-      enforce: 'pre',
-    }, */
       {
         test: /\.(js|jsx)$/,
-        // use: 'happypack/loader',
         loader: 'babel-loader',
         exclude: /node_modules\/(?!@ok\/)/,
         options: {
@@ -34,7 +23,6 @@ const base = {
             ['@babel/plugin-proposal-class-properties', { loose: true }]
           ]
         }
-      // exclude: /node_modules\/(?!(@ok|_@ok_.*)\/)/,
       },
       {
         test: /\.css$/,
@@ -96,14 +84,7 @@ const base = {
         filename: '[name]/index.css',
         chunkFilename: 'common/[name]/[name].css'
       })
-      : null,
-    new HappyPack({
-      loaders: [
-        {
-          loader: 'babel-loader'
-        }
-      ]
-    })
+      : null
   ]
 };
 

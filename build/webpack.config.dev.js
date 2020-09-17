@@ -1,16 +1,15 @@
 const path = require('path');
 const webpack = require('webpack');
-const env = require('./dev.env');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const base = require('./webpack.config.base');
-const config = require('./config');
 
 const address = '127.0.0.1';
-const mockUrl = 'http://mock.okcoin-inc.com';
-base.output.publicPath = `http://${address}:${config.dev.port}/`;
+const port = 5200;
+const apiUrl = 'https://www.okex.com';
+base.output.publicPath = `http://${address}:${port}/`;
 
 base.plugins.unshift(
-  new webpack.DefinePlugin(env),
+  new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify('development')}),
   new webpack.HotModuleReplacementPlugin({}),
   new HtmlWebpackPlugin({
     template: path.resolve(path.resolve(__dirname, '../src'), 'index.html'),
@@ -24,26 +23,20 @@ module.exports = Object.assign(base, {
     contentBase: path.resolve(__dirname, '../src'),
     hot: true,
     host: address,
-    port: config.dev.port,
+    port: 5200,
     proxy: {
-      '/rap/*': {
-        target: mockUrl,
-        changeOrigin: true,
-        secure: true,
-      },
       '/v2/*': {
-        target: config.dev.apiUrl,
+        target: apiUrl,
         changeOrigin: true,
         secure: true,
       },
       '/tradingview/*': {
         target: 'http://okcombeta.bafang.com/',
-        // pathRewrite: { '^/okui-tv/libs': '' },
         changeOrigin: true,
         secure: true,
       },
       '/v3/*': {
-        target: config.dev.apiUrl,
+        target: apiUrl,
         changeOrigin: true,
         secure: true,
       }
