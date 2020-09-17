@@ -63,7 +63,7 @@ function start(datadir, dispatch, getState,func) {
         data: datadir,
       });
       localNodeServerClient.set(child);
-      listenClient(dispatch, getState);
+      listenClient(dispatch, getState).start();
       reslove(true);
     } catch (err) {
       reject(err);
@@ -74,20 +74,30 @@ function start(datadir, dispatch, getState,func) {
 function listenClient(dispatch, getState) {
   const { localNodeServerClient } = electronUtils;
   const child = localNodeServerClient.get();
-  if(!child) return;
-  child.stdout.on('data', (data) => {
-    const { logs } = getState().LocalNodeStore;
-    const newLog = data + logs;
-    dispatch({
-      type: LocalNodeActionType.UPDATE_LOGS,
-      data: newLog,
-    });
-    dispatch({
-      type: LocalNodeActionType.UPDATE_OKCHAIND,
-      data: child,
-    });
-  });
-  return;
+  function getData(data) {
+    {
+      const { logs } = getState().LocalNodeStore;
+      const newLog = data + logs;
+      dispatch({
+        type: LocalNodeActionType.UPDATE_LOGS,
+        data: newLog,
+      });
+      dispatch({
+        type: LocalNodeActionType.UPDATE_OKCHAIND,
+        data: child,
+      });
+    }
+  }
+  return {
+    start() {
+      if(!child) return;
+      child.stdout.on('data', getData);
+    },
+    stop() {
+      if(!child) return;
+      child.stdout.off('data', getData);
+    }
+  };
 }
 
 function isDirExist(dir) {
@@ -352,7 +362,7 @@ export function startOkchaind(datadir) {
 
 export function startListen() {
   return async (dispatch, getState) => {
-    listenClient(dispatch, getState);
+    listenClient(dispatch, getState).start();
     startPoll(dispatch, getState);
   }
 }
