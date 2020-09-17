@@ -313,7 +313,6 @@ export function startOkchaind(datadir) {
     const statusInstance = localNodeDataStatus.getInstance(datadir);
     const dataStatus = statusInstance.get();
     const configDir = `${datadir}/config`;
-    console.log(dataStatus);
     if(!dataStatus.hasInitData) {
       await initData(datadir);
       statusInstance.set({hasInitData:true});

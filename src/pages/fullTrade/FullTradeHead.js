@@ -51,15 +51,19 @@ class FullTradeHead extends React.Component {
   isTradePage() {
     return this.props.location.pathname.indexOf(PageURL.spotFullPage) >= 0;
   }
+  goHome = () => {
+    window.location.href = PageURL.spotFullPage;
+  }
+
   render() {
     return (
       <div className="full-top-info-box">
-        <Link className="logo-wrap" to="/">
+        <a className="logo-wrap" onClick={this.goHome}>
           <img
             src={okchainLogo}
             style={this.iconStyle}
           />
-        </Link>
+        </a>
         <DesktopNodeMenu />
         {
           this.isTradePage() ? <FullTradeProductList /> : null
