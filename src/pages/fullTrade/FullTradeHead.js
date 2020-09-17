@@ -36,7 +36,7 @@ class FullTradeHead extends React.Component {
     super(props);
     this.iconStyle = {
       width: '100%',
-      marginTop: -25,
+      marginTop: 15,
     };
   }
   componentWillMount() {
