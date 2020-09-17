@@ -1,15 +1,10 @@
-// 对外暴露 col 变量值
-
 @import url('./config.less');
 
 #col-var() {
-  // .okg-col[x-y] 值
   .okg-col() {
 
-    // .col[x-y]
     each(#mediaSet(), .(@mediaVal, @mediaKey) {
 
-        // 栅格列数循环
         each(range(@mediaVal[@colCount]), {
             @{mediaKey}-@{value}: percentage(@value/@mediaVal[@colCount]);
           }

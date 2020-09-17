@@ -9,19 +9,19 @@ import './ImportWallet.less';
 const typeEnmu = {
   keystore: 'keystore',
   mnemonic: 'mnemonic',
-  private: 'private'
+  private: 'private',
 };
 class ImportWallet extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      imporyType: typeEnmu.keystore
+      imporyType: typeEnmu.keystore,
     };
   }
   activeTab = (imporyType) => {
     return () => {
       this.setState({
-        imporyType
+        imporyType,
       });
     };
   };
@@ -53,17 +53,20 @@ class ImportWallet extends Component {
             <div
               className={`${imporyType === typeEnmu.keystore && 'active'}`}
               onClick={this.activeTab(typeEnmu.keystore)}
-            >Keystore
+            >
+              Keystore
             </div>
             <div
               className={`${imporyType === typeEnmu.mnemonic && 'active'}`}
               onClick={this.activeTab(typeEnmu.mnemonic)}
-            >{toLocale('wallet_import_mnemonic')}
+            >
+              {toLocale('wallet_import_mnemonic')}
             </div>
             <div
               className={`${imporyType === typeEnmu.private && 'active'}`}
               onClick={this.activeTab(typeEnmu.private)}
-            >{toLocale('wallet_privateKey')}
+            >
+              {toLocale('wallet_privateKey')}
             </div>
           </div>
           {this.renderByType(imporyType)}

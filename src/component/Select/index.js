@@ -7,9 +7,7 @@ const arrowRenderer = ({ isOpen }) => {
 };
 
 const index = ({ ...props }) => {
-  return (
-    <Select {...props} arrowRenderer={arrowRenderer} />
-  );
+  return <Select {...props} arrowRenderer={arrowRenderer} />;
 };
 
 export default index;

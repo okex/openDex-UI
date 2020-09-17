@@ -25,15 +25,13 @@ function stopPoll() {
   tempBreakTimer && clearInterval(tempBreakTimer);
 }
 
-function start(datadir, dispatch, getState,func) {
+function start(datadir, dispatch, getState, func) {
   const { shell, localNodeServerClient } = electronUtils;
   const directory = getOkchaindDir();
   return new Promise((reslove, reject) => {
     try {
       shell.cd(directory);
-      const {
-        p2p, ws, rest, db,
-      } = getState().LocalNodeStore;
+      const { p2p, ws, rest, db } = getState().LocalNodeStore;
       const startCommand = getStartCommand({
         p2p,
         ws,
@@ -41,23 +39,25 @@ function start(datadir, dispatch, getState,func) {
         datadir,
         db,
       });
-      const child = localNodeServerClient.get() || shell.exec(`${startCommand}`, { async: true }, (code) => {
-        console.log(code);
-        if (code !== 130 && code !== 0) {
-          Message.error({
-            content: 'okchaind start error',
-          });
-          stopPoll();
-          dispatch({
-            type: LocalNodeActionType.UPDATE_IS_STARTED,
-            data: false,
-          });
-          dispatch({
-            type: LocalNodeActionType.UPDATE_DATADIR_AT_START,
-            data: '',
-          });
-        }
-      });
+      const child =
+        localNodeServerClient.get() ||
+        shell.exec(`${startCommand}`, { async: true }, (code) => {
+          console.log(code);
+          if (code !== 130 && code !== 0) {
+            Message.error({
+              content: 'okchaind start error',
+            });
+            stopPoll();
+            dispatch({
+              type: LocalNodeActionType.UPDATE_IS_STARTED,
+              data: false,
+            });
+            dispatch({
+              type: LocalNodeActionType.UPDATE_DATADIR_AT_START,
+              data: '',
+            });
+          }
+        });
       dispatch({
         type: LocalNodeActionType.UPDATE_DATADIR_AT_START,
         data: datadir,
@@ -90,13 +90,13 @@ function listenClient(dispatch, getState) {
   }
   return {
     start() {
-      if(!child) return;
+      if (!child) return;
       child.stdout.on('data', getData);
     },
     stop() {
-      if(!child) return;
+      if (!child) return;
       child.stdout.off('data', getData);
-    }
+    },
   };
 }
 
@@ -127,7 +127,6 @@ function baseDownload(dir, name, url) {
       const trigger = download(name, resolve);
       trigger(win, url, {
         directory,
-        // onProgress: genDownloadProgressHandler(name, resolve)
       });
     } catch (err) {
       console.log('doDownload error：', err);
@@ -141,11 +140,19 @@ function downloadGenesis(datadir) {
   const { shell } = electronUtils;
   shell.cd(datadir);
   shell.exec('rm -rf genesis.json');
-  return baseDownload(datadir, 'genesis', 'https://raw.githubusercontent.com/okex/testnets/master/latest/genesis.json');
+  return baseDownload(
+    datadir,
+    'genesis',
+    'https://raw.githubusercontent.com/okex/testnets/master/latest/genesis.json'
+  );
 }
 
 function downloadSeeds(datadir) {
-  return baseDownload(datadir, 'seeds', 'https://raw.githubusercontent.com/okex/testnets/master/latest/seeds.txt');
+  return baseDownload(
+    datadir,
+    'seeds',
+    'https://raw.githubusercontent.com/okex/testnets/master/latest/seeds.txt'
+  );
 }
 
 function setSeeds(configDir) {
@@ -155,7 +162,9 @@ function setSeeds(configDir) {
       shell.cd(configDir);
       shell.exec('cat seeds.txt', (code, stdout, stderr) => {
         const seeds = commaLineBreak(stdout).replace(/,$/, '');
-        shell.exec(`sed -i.bak 's/seeds = ""/seeds = "${seeds}"/g' config.toml`);
+        shell.exec(
+          `sed -i.bak 's/seeds = ""/seeds = "${seeds}"/g' config.toml`
+        );
         resolve(true);
       });
     } catch (err) {
@@ -170,9 +179,12 @@ function initData(datadir) {
   return new Promise((resolve, reject) => {
     try {
       shell.cd(okchaindDir);
-      shell.exec(`./okchaind init desktop --home ${datadir}`, (code, stdout, stderr) => {
-        resolve(true);
-      });
+      shell.exec(
+        `./okchaind init desktop --home ${datadir}`,
+        (code, stdout, stderr) => {
+          resolve(true);
+        }
+      );
     } catch (err) {
       reject(err);
     }
@@ -196,7 +208,7 @@ function updateEstimatedTime(dispatch, getState, info, diffLocalHeight) {
   });
 }
 
-function updateTempBreakTime (dispatch, getState) {
+function updateTempBreakTime(dispatch, getState) {
   const oldTempBreakTime = getState().LocalNodeStore.tempBreakTime;
   dispatch({
     type: LocalNodeActionType.UPDATE_TEMP_BREAK_TIME,
@@ -204,7 +216,7 @@ function updateTempBreakTime (dispatch, getState) {
   });
 }
 
-function updateBreakTime (dispatch, getState) {
+function updateBreakTime(dispatch, getState) {
   const oldBreakTime = getState().LocalNodeStore.breakTime;
   dispatch({
     type: LocalNodeActionType.UPDATE_BREAK_TIME,
@@ -222,89 +234,91 @@ export function restartTempBreakTimer() {
     tempBreakTimer = setInterval(() => {
       updateTempBreakTime(dispatch, getState);
     }, 1000);
-  }
+  };
 }
 
 function startPoll(dispatch, getState) {
   stopPoll();
   timer = setInterval(() => {
-    ont.get(`${LOCAL_PREFIX}26657/status?`).then((res) => {
-      console.log(res);
-    }).catch((rpcRes) => {
-      const { result = {} } = rpcRes;
-      const info = result.sync_info || {};
-      const oldLocalHeight = getState().LocalNodeStore.localHeight;
-      const localHeight = info.latest_block_height - 0;
-      const diffLocalHeight = localHeight - oldLocalHeight;
-      if (localHeight) {
-        dispatch({
-          type: LocalNodeActionType.UPDATE_LOCAL_HEIGHT,
-          data: localHeight,
-        });
-      }
-      oldLocalHeight > 0 && updateEstimatedTime(dispatch, getState, info, diffLocalHeight);
-      const nowSync = !info.catching_up;
-      const oldSync = getState().LocalNodeStore.isSync;
-      if (oldSync !== nowSync) {
-        if (nowSync) {
-          breakTimer && clearInterval(breakTimer);
-          tempBreakTimer && clearInterval(tempBreakTimer);
+    ont
+      .get(`${LOCAL_PREFIX}26657/status?`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((rpcRes) => {
+        const { result = {} } = rpcRes;
+        const info = result.sync_info || {};
+        const oldLocalHeight = getState().LocalNodeStore.localHeight;
+        const localHeight = info.latest_block_height - 0;
+        const diffLocalHeight = localHeight - oldLocalHeight;
+        if (localHeight) {
           dispatch({
-            type: LocalNodeActionType.UPDATE_BREAK_TIME,
-            data: 0,
+            type: LocalNodeActionType.UPDATE_LOCAL_HEIGHT,
+            data: localHeight,
           });
-          dispatch({
-            type: LocalNodeActionType.UPDATE_TEMP_BREAK_TIME,
-            data: 0,
-          });
-          dispatch({
-            type: LocalNodeActionType.UPDATE_IS_SYNC,
-            data: true,
-          });
-          const { currentNode } = getState().NodeStore;
-          if (currentNode.type === NODE_TYPE.NONE) {
-            const {
-              rest, ws,
-            } = getState().LocalNodeStore;
-            const localNode = {
-              name: 'Local',
-              httpUrl: `${LOCAL_PREFIX}${rest}`,
-              wsUrl: `${LOCAL_PREFIX_WS}${ws}/ws/v3?compress=true`,
-              latency: MAX_LATENCY,
-              id: '00000000',
-              type: NODE_TYPE.LOCAL,
-            };
-            storage.set('currentNode', localNode);
+        }
+        oldLocalHeight > 0 &&
+          updateEstimatedTime(dispatch, getState, info, diffLocalHeight);
+        const nowSync = !info.catching_up;
+        const oldSync = getState().LocalNodeStore.isSync;
+        if (oldSync !== nowSync) {
+          if (nowSync) {
+            breakTimer && clearInterval(breakTimer);
+            tempBreakTimer && clearInterval(tempBreakTimer);
             dispatch({
-              type: NodeActionType.UPDATE_CURRENT_NODE,
-              data: localNode,
+              type: LocalNodeActionType.UPDATE_BREAK_TIME,
+              data: 0,
             });
-          }
-        } else {
-          dispatch({
-            type: LocalNodeActionType.UPDATE_IS_SYNC,
-            data: false
-          });
-          if (!breakTimer) {
-            breakTimer = setInterval(() => {
-              updateBreakTime(dispatch, getState);
-            }, 1000);
-          }
-          if (!tempBreakTimer) {
-            tempBreakTimer = setInterval(() => {
-              updateTempBreakTime(dispatch, getState);
-            }, 1000);
-          }
-          const { currentNode } = getState().NodeStore;
-          if (currentNode.type === NODE_TYPE.LOCAL) {
             dispatch({
-              type: NodeActionType.UPDATE_CURRENT_NODE,
-              data: NONE_NODE
+              type: LocalNodeActionType.UPDATE_TEMP_BREAK_TIME,
+              data: 0,
             });
+            dispatch({
+              type: LocalNodeActionType.UPDATE_IS_SYNC,
+              data: true,
+            });
+            const { currentNode } = getState().NodeStore;
+            if (currentNode.type === NODE_TYPE.NONE) {
+              const { rest, ws } = getState().LocalNodeStore;
+              const localNode = {
+                name: 'Local',
+                httpUrl: `${LOCAL_PREFIX}${rest}`,
+                wsUrl: `${LOCAL_PREFIX_WS}${ws}/ws/v3?compress=true`,
+                latency: MAX_LATENCY,
+                id: '00000000',
+                type: NODE_TYPE.LOCAL,
+              };
+              storage.set('currentNode', localNode);
+              dispatch({
+                type: NodeActionType.UPDATE_CURRENT_NODE,
+                data: localNode,
+              });
+            }
+          } else {
+            dispatch({
+              type: LocalNodeActionType.UPDATE_IS_SYNC,
+              data: false,
+            });
+            if (!breakTimer) {
+              breakTimer = setInterval(() => {
+                updateBreakTime(dispatch, getState);
+              }, 1000);
+            }
+            if (!tempBreakTimer) {
+              tempBreakTimer = setInterval(() => {
+                updateTempBreakTime(dispatch, getState);
+              }, 1000);
+            }
+            const { currentNode } = getState().NodeStore;
+            if (currentNode.type === NODE_TYPE.LOCAL) {
+              dispatch({
+                type: NodeActionType.UPDATE_CURRENT_NODE,
+                data: NONE_NODE,
+              });
+            }
           }
         }
-      }
-    });
+      });
   }, pollInterval);
 }
 
@@ -323,40 +337,26 @@ export function startOkchaind(datadir) {
     const statusInstance = localNodeDataStatus.getInstance(datadir);
     const dataStatus = statusInstance.get();
     const configDir = `${datadir}/config`;
-    if(!dataStatus.hasInitData) {
+    if (!dataStatus.hasInitData) {
       await initData(datadir);
-      statusInstance.set({hasInitData:true});
+      statusInstance.set({ hasInitData: true });
     }
-    if(!dataStatus.hasDownloadGenesis) {
+    if (!dataStatus.hasDownloadGenesis) {
       await downloadGenesis(configDir);
-      statusInstance.set({hasDownloadGenesis:true});
+      statusInstance.set({ hasDownloadGenesis: true });
     }
-    if(!dataStatus.hasDownloadSeeds) {
+    if (!dataStatus.hasDownloadSeeds) {
       await downloadSeeds(configDir);
-      statusInstance.set({hasDownloadSeeds:true});
+      statusInstance.set({ hasDownloadSeeds: true });
     }
-    if(!dataStatus.hasSetSeeds) {
+    if (!dataStatus.hasSetSeeds) {
       await setSeeds(configDir);
-      statusInstance.set({hasSetSeeds:true});
+      statusInstance.set({ hasSetSeeds: true });
     }
-    if(dataStatus.success) {
+    if (dataStatus.success) {
       await start(datadir, dispatch, getState);
       startPoll(dispatch, getState);
     }
-
-    // const isExist = await isDirExist(datadir);
-    // const configDir = `${datadir}/config`;
-    // if (isExist) {
-    //   await start(datadir, dispatch, getState);
-    //   startPoll(dispatch, getState);
-    // } else {
-    //   await initData(datadir);
-    //   await downloadGenesis(configDir);
-    //   await downloadSeeds(configDir);
-    //   await setSeeds(configDir);
-    //   await start(datadir, dispatch, getState);
-    //   startPoll(dispatch, getState);
-    // }
   };
 }
 
@@ -364,14 +364,14 @@ export function startListen() {
   return async (dispatch, getState) => {
     listenClient(dispatch, getState).start();
     startPoll(dispatch, getState);
-  }
+  };
 }
 
 export function stopOkchaind() {
   return (dispatch, getState) => {
     stopPoll();
     const okchaindDir = getOkchaindDir();
-    const { shell,localNodeServerClient } = electronUtils;
+    const { shell, localNodeServerClient } = electronUtils;
     shell.cd(okchaindDir);
     shell.exec('./okchaind stop', (code, stdout, stderr) => {
       if (code === 0) {
@@ -384,13 +384,13 @@ export function stopOkchaind() {
     });
     dispatch({
       type: LocalNodeActionType.UPDATE_IS_SYNC,
-      data: false
+      data: false,
     });
     const { currentNode } = getState().NodeStore;
     if (currentNode.type === NODE_TYPE.LOCAL) {
       dispatch({
         type: NodeActionType.UPDATE_CURRENT_NODE,
-        data: NONE_NODE
+        data: NONE_NODE,
       });
     }
   };

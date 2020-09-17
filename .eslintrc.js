@@ -1,24 +1,24 @@
 var path = require('path');
 
 module.exports = {
-  "parser": "babel-eslint",
-  "extends": "airbnb",
-  "rules": {
-    "class-methods-use-this": 0
+  parser: 'babel-eslint',
+  extends: 'airbnb',
+  rules: {
+    'class-methods-use-this': 0,
   },
-  "env": {
-    "browser": true
+  env: {
+    browser: true,
   },
-  "settings": {
+  settings: {
     'import/resolver': {
       alias: {
         map: [
           ['_src', path.resolve(__dirname, './src/')],
           ['_component', path.resolve(__dirname, './src/component/')],
-          ['_constants', path.resolve(__dirname, './src/constants/')]
+          ['_constants', path.resolve(__dirname, './src/constants/')],
         ],
-        extensions: ['.js', '.less', '.jsx']
-      }
-    }
-  }
-}
+        extensions: ['.js', '.less', '.jsx'],
+      },
+    },
+  },
+};

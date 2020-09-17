@@ -8,7 +8,6 @@
 @info-color: @primary-color;
 @border-color: @primary-color;
 
-//未修改过的
 @default-color: #d9d9d9;
 @disabled-color: rgba(247, 247, 247, 1);
 
@@ -41,7 +40,6 @@
   box-sizing: border-box;
   .btn-hover(@default-color);
 
-  // 主按钮 样式
   &.btn-primary {
     .btn-hover(@primary-color);
     &:hover, &:active {
@@ -49,7 +47,6 @@
       border: 1px solid @primary-color-hover;
     }
   }
-  // 次要按钮 样式
   &.btn-default {
     color: @primary-color;
     background-color: #fff;
@@ -72,13 +69,11 @@
     .btn-hover(@info-color)
   }
 
-  // 块级 样式
   &.block {
     width: 100%;
     display: block;
   }
 
-  // 禁止 样式
   &.btn-disabled {
     cursor: no-drop;
     color: rgba(153, 153, 153, 1);
@@ -92,7 +87,6 @@
     }
   }
 
-  // 渲染为a标签的附加样式
   &.btn-link {
     text-decoration: none;
     box-sizing: border-box;
@@ -101,7 +95,6 @@
     }
   }
 
-  // 夜间模式 样式
   &.dark {
     &.btn-default {
       background-color: transparent;

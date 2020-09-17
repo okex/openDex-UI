@@ -13,7 +13,14 @@ import './index-xl.less';
 
 const StepItem = (props) => {
   const {
-    imgNum, index, icon, title, content, buttonTxt, buttonUrl, isLink
+    imgNum,
+    index,
+    icon,
+    title,
+    content,
+    buttonTxt,
+    buttonUrl,
+    isLink,
   } = props.data;
   return (
     <section className="step-item">
@@ -23,40 +30,39 @@ const StepItem = (props) => {
       </div>
       <div className="bottom">
         <p className="step-content">{toLocale(content)}</p>
-        {
-          isLink ? (
-            <Link
-              className="step-button"
-              to={getLangURL(buttonUrl)}
-              rel="noopener noreferrer"
-              title={toLocale(buttonTxt)}
-            />
-          ) : (
-            <a
-              className="step-button"
-              href={getLangURL(buttonUrl)}
-              rel="noopener noreferrer"
-              title={toLocale(buttonTxt)}
-            >
-              {toLocale(buttonTxt)}
-              <IconLite className="icon-go" />
-            </a>
-          )
-        }
+        {isLink ? (
+          <Link
+            className="step-button"
+            to={getLangURL(buttonUrl)}
+            rel="noopener noreferrer"
+            title={toLocale(buttonTxt)}
+          />
+        ) : (
+          <a
+            className="step-button"
+            href={getLangURL(buttonUrl)}
+            rel="noopener noreferrer"
+            title={toLocale(buttonTxt)}
+          >
+            {toLocale(buttonTxt)}
+            <IconLite className="icon-go" />
+          </a>
+        )}
       </div>
     </section>
   );
 };
 
 const getIcon = (imgNum, index, circleTime) => {
-  // const icon = { 4: 'icon-icon_one', 3: 'icon-icon_two', 2: 'icon-icon_three', 1: 'icon-icon_four' };
   const iconSelect = {
-    4000: 'icon-icon_one_', 3000: 'icon-icon_two_', 2000: 'icon-icon_three_', 1000: 'icon-icon_four_'
+    4000: 'icon-icon_one_',
+    3000: 'icon-icon_two_',
+    2000: 'icon-icon_three_',
+    1000: 'icon-icon_four_',
   };
   if (imgNum === index) {
     return iconSelect[circleTime];
   }
-  // const val = imgNum > index ? index + 1 : index;
   return 'icon-icon_four';
 };
 
@@ -78,7 +84,7 @@ const StepList = (props) => {
       content: 'home_steps_item0_content',
       buttonTxt: 'home_steps_item0_button',
       buttonUrl: PageURL.walletCreate,
-      isLink: true
+      isLink: true,
     },
     {
       imgNum,
@@ -88,7 +94,7 @@ const StepList = (props) => {
       content: 'home_steps_item1_content',
       buttonTxt: 'home_steps_item1_button',
       buttonUrl: Config.okchain.receiveCoinUrl,
-      isLink: false
+      isLink: false,
     },
     {
       imgNum,
@@ -98,7 +104,7 @@ const StepList = (props) => {
       content: 'home_steps_item2_content',
       buttonTxt: 'home_steps_item2_button',
       buttonUrl: PageURL.spotFullPage,
-      isLink: true
+      isLink: true,
     },
     {
       imgNum,
@@ -108,16 +114,14 @@ const StepList = (props) => {
       content: 'home_steps_item3_content',
       buttonTxt: 'home_steps_item3_button',
       buttonUrl: Config.okchain.browserUrl,
-      isLink: false
-    }
+      isLink: false,
+    },
   ];
   return (
     <div className="step-list-container">
-      {
-        list.map((item, index) => {
-          return (<StepItem key={index} data={item} />);
-        })
-      }
+      {list.map((item, index) => {
+        return <StepItem key={index} data={item} />;
+      })}
     </div>
   );
 };
@@ -126,8 +130,8 @@ class Steps extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      imgNum: 0, // 轮播图片的顺序
-      circleTime: 4000, // 轮播图片0的切换时间ms
+      imgNum: 0,
+      circleTime: 4000,
     };
   }
   componentDidMount() {
@@ -139,13 +143,13 @@ class Steps extends Component {
       if (circleTime > 1000) {
         const newTime = circleTime - 1000;
         this.setState({
-          circleTime: newTime
+          circleTime: newTime,
         });
       } else {
         const newImgNum = imgNum < 3 ? imgNum + 1 : 0;
         this.setState({
           imgNum: newImgNum,
-          circleTime: 4000
+          circleTime: 4000,
         });
       }
     }, 1000);
@@ -160,18 +164,16 @@ class Steps extends Component {
       <article className="steps-grid">
         <h2 className="steps-title">{toLocale('home_steps_title')}</h2>
         <div className="steps-content">
-          {
-            stepsImgList.map((img, index) => {
-              return (
-                <img
-                  key={index}
-                  className={index === imgNum ? `step-img${imgNum}` : 'non-dis'}
-                  src={toLocale(img) || Image[`step${imgNum}`]}
-                  alt={toLocale('home_steps_title')}
-                />
-              );
-            })
-          }
+          {stepsImgList.map((img, index) => {
+            return (
+              <img
+                key={index}
+                className={index === imgNum ? `step-img${imgNum}` : 'non-dis'}
+                src={toLocale(img) || Image[`step${imgNum}`]}
+                alt={toLocale('home_steps_title')}
+              />
+            );
+          })}
           <StepList data={{ imgNum, circleTime }} />
         </div>
       </article>

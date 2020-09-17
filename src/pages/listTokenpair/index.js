@@ -15,7 +15,7 @@ import './index.less';
 
 const showError = () => {
   Message.error({
-    content: '服务端异常，请稍后重试'
+    content: '服务端异常，请稍后重试',
   });
 };
 
@@ -34,15 +34,15 @@ class ListTokenpair extends Component {
 
   onBaseAssetChange = (e) => {
     this.setState({ baseAsset: e.target.value });
-  }
+  };
 
   onQuoteAssetChange = (e) => {
     this.setState({ quoteAsset: e.target.value });
-  }
+  };
 
   onInitPriceChange = (e) => {
     this.setState({ initPrice: e.target.value });
-  }
+  };
 
   onList = () => {
     this.setState({ isActionLoading: true });
@@ -51,50 +51,51 @@ class ListTokenpair extends Component {
     const fBase = baseAsset.toLowerCase();
     const fQuote = quoteAsset.toLowerCase();
     const fInitPrice = util.precisionInput(initPrice);
-    okchainClient.sendListTokenPairTransaction(fBase, fQuote, fInitPrice).then((res) => {
-      this.setState({ isActionLoading: false });
-      const { result } = res;
-      const { txhash } = result;
-      if (!validateTxs(res)) {
+    okchainClient
+      .sendListTokenPairTransaction(fBase, fQuote, fInitPrice)
+      .then((res) => {
+        this.setState({ isActionLoading: false });
+        const { result } = res;
+        const { txhash } = result;
+        if (!validateTxs(res)) {
+          showError();
+        } else {
+          const dialog = Dialog.success({
+            className: 'desktop-success-dialog',
+            confirmText: 'Get detail',
+            theme: 'dark',
+            title: 'List tokenpair success！',
+            windowStyle: {
+              background: '#112F62',
+            },
+            onConfirm: () => {
+              window.open(`${Config.okchain.browserUrl}/tx/${txhash}`);
+              dialog.destroy();
+            },
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        this.setState({ isActionLoading: false });
         showError();
-      } else {
-        const dialog = Dialog.success({
-          className: 'desktop-success-dialog',
-          confirmText: 'Get detail',
-          theme: 'dark',
-          title: 'List tokenpair success！',
-          windowStyle: {
-            background: '#112F62'
-          },
-          onConfirm: () => {
-            window.open(`${Config.okchain.browserUrl}/tx/${txhash}`);
-            dialog.destroy();
-          },
-        });
-      }
-    }).catch((err) => {
-      console.log(err);
-      this.setState({ isActionLoading: false });
-      showError();
-    });
-  }
+      });
+  };
 
   onPwdSuccess = () => {
     this.onList();
-  }
+  };
 
   handleList = () => {
     this.props.checkPK(this.onList);
-  }
+  };
 
   toRegister = () => {
     this.props.history.push(PageURL.registerPage);
-  }
+  };
 
   render() {
-    const {
-      baseAsset, quoteAsset, initPrice, isActionLoading
-    } = this.state;
+    const { baseAsset, quoteAsset, initPrice, isActionLoading } = this.state;
     return (
       <DexDesktopContainer
         isShowHelp
@@ -115,12 +116,17 @@ class ListTokenpair extends Component {
             value={initPrice}
             onChange={this.onInitPriceChange}
           />
-          <button className="dex-desktop-btn tokenpair-btn" onClick={this.handleList}>
+          <button
+            className="dex-desktop-btn tokenpair-btn"
+            onClick={this.handleList}
+          >
             {toLocale('listToken.list.btn')}
           </button>
           <div className="tokenpair-register-hint">
             {toLocale('listToken.hint')}
-            <span onClick={this.toRegister}>{toLocale('listToken.hint.register')}</span>
+            <span onClick={this.toRegister}>
+              {toLocale('listToken.hint.register')}
+            </span>
           </div>
         </div>
       </DexDesktopContainer>

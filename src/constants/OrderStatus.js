@@ -1,46 +1,44 @@
 export const OrderStatus = {
-  // 需要根据语义找到对应的状态码，还需要根据状态码找到对应的多语言配置
-  Open: '0', // 未成交
+  Open: '0',
   0: 'Open',
 
-  Filled: '1', // 完全成交
+  Filled: '1',
   1: 'Filled',
 
-  Cancelled: '2', // 已取消
+  Cancelled: '2',
   2: 'Cancelled',
 
-  Expired: '3', // 已过期
+  Expired: '3',
   3: 'Expired',
 
-  PartialFilledCancelled: '4', // 部分成交撤销
+  PartialFilledCancelled: '4',
   4: 'PartialFilledCancelled',
 
-  PartialFilledExpired: '5', // 部分成交过期
+  PartialFilledExpired: '5',
   5: 'PartialFilledExpired',
 
-  PartialFilled: '6', // 部分成交
+  PartialFilled: '6',
   6: 'PartialFilled',
 
-  Cancelling: '100', // 撤单中
-  100: 'Cancelling'
+  Cancelling: '100',
+  100: 'Cancelling',
 };
 
-// 冰山和时间加权委托的状态列表
 export const OrderStatusIceAndTime = {
-  TO_BE_FILLED: '1', // 待生效
+  TO_BE_FILLED: '1',
   1: 'toBeFilled',
 
-  COMPLETE_FILLED: '2', // 已生效
+  COMPLETE_FILLED: '2',
   2: 'completeFilled',
 
-  CANCELLED: '3', // 已撤销
+  CANCELLED: '3',
   3: 'cancelled',
 
-  PARTIAL_FILLED: '4', // 部分生效
+  PARTIAL_FILLED: '4',
   4: 'partialFilled',
 
-  PAUSED: '5', // 暂停生效
-  5: 'paused'
+  PAUSED: '5',
+  5: 'paused',
 };
 
 export const OrderType = {

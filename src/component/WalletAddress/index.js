@@ -27,7 +27,10 @@ class WalletAddress extends Component {
     const { copySuccess } = this.state;
     return (
       <div className="my-address">
-        <span>{toLocale('assets_address')}{senderAddr}</span>
+        <span>
+          {toLocale('assets_address')}
+          {senderAddr}
+        </span>
         <div className="qr-container">
           <Icon className="icon-icon_erweima" />
           <div className="qr-pic">
@@ -35,7 +38,10 @@ class WalletAddress extends Component {
           </div>
         </div>
         <CopyToClipboard text={senderAddr} onCopy={this.onCopy}>
-          <Icon className={copySuccess ? 'icon-icon_success' : 'icon-icon_copy'} isColor />
+          <Icon
+            className={copySuccess ? 'icon-icon_success' : 'icon-icon_copy'}
+            isColor
+          />
         </CopyToClipboard>
       </div>
     );

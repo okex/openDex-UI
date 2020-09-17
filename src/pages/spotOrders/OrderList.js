@@ -4,23 +4,22 @@ import { bindActionCreators } from 'redux';
 import NormalOrderList from './NormalOrderList';
 import Enum from '../../utils/Enum';
 import * as OrderAction from '../../redux/actions/OrderAction';
-import Config from "../../constants/Config";
+import Config from '../../constants/Config';
 
-function mapStateToProps(state) { // 绑定redux中相关state
+function mapStateToProps(state) {
   const { product } = state.SpotTrade;
-  const { entrustType, type } = state.OrderStore; // type是当前委托，历史委托，成交明细三种之一
+  const { entrustType, type } = state.OrderStore;
   return { product, entrustType, type };
 }
 
-function mapDispatchToProps(dispatch) { // 绑定action，以便向redux发送action
+function mapDispatchToProps(dispatch) {
   return {
-    orderAction: bindActionCreators(OrderAction, dispatch)
+    orderAction: bindActionCreators(OrderAction, dispatch),
   };
 }
 
-@connect(mapStateToProps, mapDispatchToProps) // 与redux相关的组件再用connect修饰，容器组件
+@connect(mapStateToProps, mapDispatchToProps)
 export default class OrderList extends React.Component {
-  // 页面已载入并不加载订单，只有在product, entrustType, type三个变化时才进入Receive逻辑
   componentWillReceiveProps(nextProps) {
     if (this.props.product !== nextProps.product) {
       if (nextProps.type === Enum.order.type.noDeal) {

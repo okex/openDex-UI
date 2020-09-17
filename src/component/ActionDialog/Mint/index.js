@@ -9,7 +9,7 @@ import { validateTxs } from '_src/utils/client';
 
 const showError = () => {
   Message.error({
-    content: '服务端异常，请稍后重试'
+    content: '服务端异常，请稍后重试',
   });
 };
 
@@ -24,43 +24,44 @@ class MintDialog extends Component {
 
   onChange = (e) => {
     this.setState({ value: e.target.value });
-  }
+  };
 
   onClose = () => {
     this.props.onClose();
     this.setState({
-      value: ''
+      value: '',
     });
-  }
+  };
 
   onMint = () => {
-    const {
-      okchainClient, token, beforeMint, afterMint
-    } = this.props;
+    const { okchainClient, token, beforeMint, afterMint } = this.props;
     isFunction(beforeMint) && beforeMint();
     const { value } = this.state;
     const amount = util.precisionInput(value);
-    okchainClient.sendTokenMintTransaction(token, amount).then((res) => {
-      this.setState({ value: '' });
-      isFunction(afterMint) && afterMint();
-      const { result } = res;
-      const { txhash } = result;
-      if (!validateTxs(res)) {
+    okchainClient
+      .sendTokenMintTransaction(token, amount)
+      .then((res) => {
+        this.setState({ value: '' });
+        isFunction(afterMint) && afterMint();
+        const { result } = res;
+        const { txhash } = result;
+        if (!validateTxs(res)) {
+          showError();
+        } else {
+          showSuccessDialog('Mint success！', txhash);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        isFunction(afterMint) && afterMint();
         showError();
-      } else {
-        showSuccessDialog('Mint success！', txhash);
-      }
-    }).catch((err) => {
-      console.log(err);
-      isFunction(afterMint) && afterMint();
-      showError();
-      this.setState({ value: '' });
-    });
-  }
+        this.setState({ value: '' });
+      });
+  };
 
   onPwdSuccess = () => {
     this.onMint();
-  }
+  };
 
   handleMint = () => {
     const { value } = this.state;
@@ -69,10 +70,10 @@ class MintDialog extends Component {
       this.props.checkPK(this.onMint);
     } else {
       Message.error({
-        content: '输入类型错误，请重新输入'
+        content: '输入类型错误，请重新输入',
       });
     }
-  }
+  };
 
   render() {
     const { visible } = this.props;

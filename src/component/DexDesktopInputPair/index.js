@@ -9,12 +9,18 @@ class DexDesktopInputPair extends Component {
 
   render() {
     const {
-      label, firstValue, secondValue, onFirstChange, onSecondChange
+      label,
+      firstValue,
+      secondValue,
+      onFirstChange,
+      onSecondChange,
     } = this.props;
 
     return (
       <div className="dex-desktop-input-pair-container">
-        <label className="input-pair-label" htmlFor="">{label}</label>
+        <label className="input-pair-label" htmlFor="">
+          {label}
+        </label>
         <div className="dex-desktop-input-pair-main">
           <input
             type="text"

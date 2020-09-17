@@ -5,7 +5,12 @@ import ProductListWrapper from '../../wrapper/ProductListWrapper';
 
 const ProductListMenu = (props) => {
   const {
-    dataSource, activeId, searchText, onSearch, onSelect, onClickStar
+    dataSource,
+    activeId,
+    searchText,
+    onSearch,
+    onSelect,
+    onClickStar,
   } = props;
   const listEmpty = toLocale('spot.noData');
   return (

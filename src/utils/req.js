@@ -1,6 +1,3 @@
-/**
- * 请求模块封装（暂时不用了，用ont）
- */
 import 'whatwg-fetch';
 import Message from '_src/component/Message';
 import util from './util';
@@ -12,10 +9,11 @@ const MOCK = false;
 function handleStatus(response) {
   const { status } = response;
   if ([401, 403].includes(status)) {
-    // 令牌失效 跳转登录
     const { pathname, search, hash } = window.location;
     const forward = encodeURIComponent(pathname + search + hash);
-    history.push(`${PageURL.homePage}/dex/account/login?logout=true&forward=${forward}`);
+    history.push(
+      `${PageURL.homePage}/dex/account/login?logout=true&forward=${forward}`
+    );
   }
   if (status >= 200 && status < 300) {
     const newToken = response.headers.get('x-ok-token');
@@ -46,10 +44,10 @@ export function doFetch(url, paramObj, successCallback, errorCallback) {
       Authorization: localStorage.getItem('dex_token') || '',
       devid: localStorage.getItem('devid') || '',
       Accept: 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     credentials: 'include',
-    ...paramObj
+    ...paramObj,
   };
   return fetch(url, fetchParam)
     .then(handleStatus)
@@ -57,18 +55,15 @@ export function doFetch(url, paramObj, successCallback, errorCallback) {
       return response.json();
     })
     .then((response) => {
-      // success
       if (response && response.code === 0) {
         if (successCallback) {
           return successCallback(response);
         }
         return response;
       } else if ([800].includes(response.code)) {
-        // 令牌失效 跳转登录
         window.location.href = '/account/login?logout=true';
         return false;
       }
-      // fail 处理各种状态码
       return handleError(response, errorCallback);
     })
     .catch((response) => {
@@ -77,7 +72,6 @@ export function doFetch(url, paramObj, successCallback, errorCallback) {
 }
 
 export function getData(url, params, successCallback, errorCallback) {
-  // 兼容不传递params的模式(url, successCallback, errorCallback)
   if (typeof params === 'function') {
     errorCallback = successCallback;
     successCallback = params;
@@ -89,7 +83,7 @@ export function getData(url, params, successCallback, errorCallback) {
     fetchUrl += url.indexOf('?') > 0 ? `&${queryString}` : `?${queryString}`;
   }
   const paramObj = {
-    method: 'GET'
+    method: 'GET',
   };
   return doFetch(fetchUrl, paramObj, successCallback, errorCallback);
 }
@@ -114,7 +108,7 @@ export function download(url, data) {
   const header = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    app_type: 'web'
+    app_type: 'web',
   };
   header.Authorization = localStorage.getItem('dex_token');
   let fetchUrl = url;
@@ -130,7 +124,7 @@ export function download(url, data) {
   return fetch(fetchUrl, {
     method: 'GET',
     headers: header,
-    credentials: 'include'
+    credentials: 'include',
   }).then((response) => {
     return response.blob();
   });

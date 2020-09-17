@@ -23,7 +23,7 @@ const getInitDb = () => {
   return db;
 };
 
-export default function() {
+export default function () {
   const initialState = {
     logs: '',
     okchaind: null,
@@ -35,13 +35,13 @@ export default function() {
     db: getInitDb(),
     isSync: false,
     localHeight: 0,
-    estimatedTime: 0, // unit:ms
-    breakTime: 0, // unit:s
-    tempBreakTime: 0, // unit:s
+    estimatedTime: 0,
+    breakTime: 0,
+    tempBreakTime: 0,
     datadirAtStart: '',
   };
 
-  return function(state = initialState, action) {
+  return function (state = initialState, action) {
     switch (action.type) {
       case LocalNodeActionType.UPDATE_LOGS:
         return {
@@ -121,5 +121,5 @@ export default function() {
       default:
         return state;
     }
-  }
+  };
 }

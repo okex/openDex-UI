@@ -9,12 +9,14 @@ const apiUrl = 'https://www.okex.com';
 base.output.publicPath = `http://${address}:${port}/`;
 
 base.plugins.unshift(
-  new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify('development')}),
+  new webpack.DefinePlugin({
+    'process.env.NODE_ENV': JSON.stringify('development'),
+  }),
   new webpack.HotModuleReplacementPlugin({}),
   new HtmlWebpackPlugin({
     template: path.resolve(path.resolve(__dirname, '../src'), 'index.html'),
-    filename: 'index.html'
-  }),
+    filename: 'index.html',
+  })
 );
 
 module.exports = Object.assign(base, {
@@ -39,13 +41,11 @@ module.exports = Object.assign(base, {
         target: apiUrl,
         changeOrigin: true,
         secure: true,
-      }
+      },
     },
     historyApiFallback: {
-      rewrites: [
-        { from: /^\/$/, to: '/okex/index.html' }
-      ]
-    }
+      rewrites: [{ from: /^\/$/, to: '/okex/index.html' }],
+    },
   },
-  devtool: 'source-map'
+  devtool: 'source-map',
 });

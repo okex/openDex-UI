@@ -38,14 +38,12 @@ class CreateWallet extends Component {
         break;
     }
     return component;
-  }
+  };
   render() {
     const { step } = this.props;
     return (
       <WalletContainer>
-        <div className="wallet-create-container">
-          {this.renderByStep(step)}
-        </div>
+        <div className="wallet-create-container">{this.renderByStep(step)}</div>
       </WalletContainer>
     );
   }

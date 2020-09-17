@@ -12,7 +12,7 @@ function mapStateToProps(state) {
     legalObj,
     tickers,
     currencyTicker,
-    product
+    product,
   };
 }
 
@@ -23,23 +23,27 @@ function mapDispatchToProps() {
 const TickerWrapper = (Component) => {
   @connect(mapStateToProps, mapDispatchToProps)
   class Ticker extends React.Component {
-    // 计算法币价格
     calcLegal = (baseCurr) => {
-      const { currencyTicker, tickers, legalObj } = this.props;
-      // const lastIndexTicker = tickers[`${baseCurr}_okb`] ? tickers[`${baseCurr}_okb`].price : 0;
-      // const baseTicker = baseCurr === 'okb' ? 1 : lastIndexTicker;
+      const { currencyTicker, legalObj } = this.props;
       const baseTicker = 1;
 
       let legalPrice = '--';
-      const currencySymbol = (legalObj.symbol || '');
+      const currencySymbol = legalObj.symbol || '';
       const digit = legalObj.precision || 0;
-      const min = 1 / (10 ** digit);
-      // currencyTicker.price = -1 表示从未成交过
-      if (baseTicker && legalObj.rate && currencyTicker && (Number(currencyTicker.price) !== -1)) {
+      const min = 1 / 10 ** digit;
+      if (
+        baseTicker &&
+        legalObj.rate &&
+        currencyTicker &&
+        Number(currencyTicker.price) !== -1
+      ) {
         legalPrice = calc.mul(baseTicker, currencyTicker.price);
         legalPrice = calc.mul(legalPrice, legalObj.rate);
         if (legalPrice >= min) {
-          return currencySymbol + calc.showFloorTruncation(legalPrice.toFixed(digit), digit);
+          return (
+            currencySymbol +
+            calc.showFloorTruncation(legalPrice.toFixed(digit), digit)
+          );
         }
         return `< ${currencySymbol}${min}`;
       }
@@ -47,12 +51,12 @@ const TickerWrapper = (Component) => {
     };
 
     render() {
-      const {
-        currencyTicker, product, legalObj
-      } = this.props;// 来自redux
+      const { currencyTicker, product, legalObj } = this.props;
       const config = window.OK_GLOBAL.productConfig;
-      const priceTruncate = 'max_price_digit' in config ? config.max_price_digit : 8;
-      const sizeTruncate = 'max_size_digit' in config ? config.max_size_digit : 8;
+      const priceTruncate =
+        'max_price_digit' in config ? config.max_price_digit : 8;
+      const sizeTruncate =
+        'max_size_digit' in config ? config.max_size_digit : 8;
       let price = '--';
       let open = 0;
       let low = 0;
@@ -71,24 +75,25 @@ const TickerWrapper = (Component) => {
         change = currencyTicker.change;
         changePercentage = currencyTicker.changePercentage;
       }
-      price = (price !== '--') ? calc.showFloorTruncation(price, priceTruncate) : '--';
-      // calc.showCeilTruncation(currencyTicker.price, priceTruncate) : '--';
-
-      // 更新document.title
-      const baseCurr = product && product.indexOf('_') > -1 ? product.split('_')[1] : '';
+      price =
+        price !== '--' ? calc.showFloorTruncation(price, priceTruncate) : '--';
+      const baseCurr =
+        product && product.indexOf('_') > -1 ? product.split('_')[1] : '';
       const desc = 'OKEX.com';
-      // 避免刷新频率过快
-      const newTitle = `${price.toString()} ${baseCurr.toUpperCase()}-${util.getShortName(product)} | ${desc}`;
+      const newTitle = `${price.toString()} ${baseCurr.toUpperCase()}-${util.getShortName(
+        product
+      )} | ${desc}`;
       if (document.title !== newTitle) {
         document.title = newTitle;
       }
-      const defaultLang = util.getSupportLocale(Cookies.get('locale') || 'en_US');
-      const isZhLang = defaultLang && (defaultLang.indexOf('zh') > -1);
+      const defaultLang = util.getSupportLocale(
+        Cookies.get('locale') || 'en_US'
+      );
+      const isZhLang = defaultLang && defaultLang.indexOf('zh') > -1;
 
       const dataSource = {
         product,
         price,
-        // price: calc.showCeilTruncation(currencyTicker.price, priceTruncate),
         change,
         changePercentage,
         legalPrice: this.calcLegal(baseCurr),
@@ -96,24 +101,11 @@ const TickerWrapper = (Component) => {
         dayHigh: high,
         dayLow: low,
         volume,
-        legalCurrency: ((legalObj && isZhLang) ? legalObj.displayName : legalObj.isoCode) || '--',
+        legalCurrency:
+          (legalObj && isZhLang ? legalObj.displayName : legalObj.isoCode) ||
+          '--',
       };
       return <Component dataSource={dataSource} />;
-      // if (currencyTicker && currencyTicker.price) {
-      //   const dataSource = {
-      //     product,
-      //     price: calc.showCeilTruncation(currencyTicker.price, priceTruncate),
-      //     change: currencyTicker.changePercentage,
-      //     legalPrice: this.calcLegal(baseCurr),
-      //     open: calc.showFloorTruncation(currencyTicker.open, priceTruncate),
-      //     dayHigh: calc.showFloorTruncation(currencyTicker.high, priceTruncate),
-      //     dayLow: calc.showFloorTruncation(currencyTicker.low, priceTruncate),
-      //     volume: calc.showFloorTruncation(currencyTicker.volume, sizeTruncate),
-      //     legalCurrency: legalObj.displayName || '--'
-      //   };
-      //   return <Component dataSource={dataSource} />;
-      // }
-      // return <Component dataSource={undefined} />;
     }
   }
 

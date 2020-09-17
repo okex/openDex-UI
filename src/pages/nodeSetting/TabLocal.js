@@ -10,14 +10,17 @@ import { htmlLineBreak } from '_src/utils/ramda';
 import { formatEstimatedTime } from '_src/utils/node';
 import './TabLocal.less';
 
-const defaultOptions = [
-  { value: 0, label: 'TestNet' },
-];
+const defaultOptions = [{ value: 0, label: 'TestNet' }];
 
-function mapStateToProps(state) { // 绑定redux中相关state
+function mapStateToProps(state) {
   const {
-    logs, isStarted,
-    p2p, rest, ws, datadir, db,
+    logs,
+    isStarted,
+    p2p,
+    rest,
+    ws,
+    datadir,
+    db,
     estimatedTime,
   } = state.LocalNodeStore;
   return {
@@ -32,9 +35,9 @@ function mapStateToProps(state) { // 绑定redux中相关state
   };
 }
 
-function mapDispatchToProps(dispatch) { // 绑定action，以便向redux发送action
+function mapDispatchToProps(dispatch) {
   return {
-    localNodeAction: bindActionCreators(LocalNodeAction, dispatch)
+    localNodeAction: bindActionCreators(LocalNodeAction, dispatch),
   };
 }
 
@@ -52,38 +55,38 @@ class TabLocal extends Component {
     return (option) => {
       this.setState({ selected: option });
     };
-  }
+  };
 
   onP2pChange = (e) => {
     const { localNodeAction } = this.props;
     localNodeAction.updateP2p(e.target.value);
-  }
+  };
 
   onRestChange = (e) => {
     const { localNodeAction } = this.props;
     localNodeAction.updateRest(e.target.value);
-  }
+  };
 
   onDatadirChange = (e) => {
     this.updateDatadir(e.target.value);
-  }
+  };
 
   onDatadirUpdate = (path) => {
     this.updateDatadir(path);
-  }
+  };
 
   onDbChange = (e) => {
     this.updateDb(e.target.value);
-  }
+  };
 
   onDbUpdate = (path) => {
     this.updateDb(path);
-  }
+  };
 
   onWsChange = (e) => {
     const { localNodeAction } = this.props;
     localNodeAction.updateWs(e.target.value);
-  }
+  };
 
   onSwitchChange = (checked) => {
     const { localNodeAction, datadir } = this.props;
@@ -94,27 +97,30 @@ class TabLocal extends Component {
       localNodeAction.switchIsStarted(false);
       localNodeAction.stopOkchaind();
     }
-  }
+  };
 
   updateDatadir = (datadir) => {
     const { localNodeAction } = this.props;
     localNodeAction.updateDatadir(datadir);
-  }
+  };
 
   updateDb = (db) => {
     const { localNodeAction } = this.props;
     localNodeAction.updateDb(db);
-  }
+  };
 
   render() {
     const {
-      logs, isStarted,
-      p2p, rest, ws, datadir, db,
+      logs,
+      isStarted,
+      p2p,
+      rest,
+      ws,
+      datadir,
+      db,
       estimatedTime,
     } = this.props;
-    const {
-      options, selected,
-    } = this.state;
+    const { options, selected } = this.state;
     const htmlLogs = htmlLineBreak(logs);
     const fEstimatedTime = formatEstimatedTime(estimatedTime);
 
@@ -122,9 +128,11 @@ class TabLocal extends Component {
       <div className="node-local-container">
         <div className="node-local-switch">
           <div className="local-switch-title">Locally hosted</div>
-          {
-            estimatedTime > 0 && <div className="local-switch-desc">（Estimated time {fEstimatedTime}）</div>
-          }
+          {estimatedTime > 0 && (
+            <div className="local-switch-desc">
+              （Estimated time {fEstimatedTime}）
+            </div>
+          )}
           <DexSwitch
             checked={isStarted}
             checkedChildren="开"
@@ -134,7 +142,9 @@ class TabLocal extends Component {
         </div>
         <div className="local-set-container">
           <div className="local-set-cell">
-            <label htmlFor="" className="local-set-label">Network</label>
+            <label htmlFor="" className="local-set-label">
+              Network
+            </label>
             <Select
               className="network-select"
               clearable={false}
@@ -187,7 +197,10 @@ class TabLocal extends Component {
         </div>
         <div className="local-set-terminal">
           <h4 className="local-terminal-title">Terminal</h4>
-          <div className="local-terminal-content" dangerouslySetInnerHTML={{ __html: htmlLogs }} />
+          <div
+            className="local-terminal-content"
+            dangerouslySetInnerHTML={{ __html: htmlLogs }}
+          />
         </div>
       </div>
     );

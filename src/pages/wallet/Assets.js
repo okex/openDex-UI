@@ -10,7 +10,6 @@ import AssetsTransactions from './AssetsTransactions';
 import assetsUtil from './assetsUtil';
 import './Assets.less';
 
-
 function mapStateToProps() {
   return {
     history: window.history,
@@ -42,8 +41,13 @@ class Assets extends Component {
   onChangeTab = (current) => {
     return () => {
       if (this.state.loading) return;
-      this.props.history.replace(current === 1 ? PageURL.walletAssets : PageURL.walletTransactions);
-      if ((current === 1 && this.isAssets) || (current === 2 && !this.isAssets)) {
+      this.props.history.replace(
+        current === 1 ? PageURL.walletAssets : PageURL.walletTransactions
+      );
+      if (
+        (current === 1 && this.isAssets) ||
+        (current === 2 && !this.isAssets)
+      ) {
         this.setState({ loading: true });
         setTimeout(() => {
           this.setState({ loading: false });
@@ -64,10 +68,16 @@ class Assets extends Component {
     return (
       <div className="wallet-main">
         <WalletAddress />
-        <DexTab tabs={assetsUtil.tabs} current={this.isAssets ? 1 : 2} onChangeTab={this.onChangeTab} />
-        {
-          loading ? null : (this.isAssets ? <AssetsAccounts /> : <AssetsTransactions />)
-        }
+        <DexTab
+          tabs={assetsUtil.tabs}
+          current={this.isAssets ? 1 : 2}
+          onChangeTab={this.onChangeTab}
+        />
+        {loading ? null : this.isAssets ? (
+          <AssetsAccounts />
+        ) : (
+          <AssetsTransactions />
+        )}
       </div>
     );
   }

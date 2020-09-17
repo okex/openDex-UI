@@ -1,5 +1,8 @@
 import React, { Component, Fragment } from 'react';
-import { AddDepositsDialog, WithdrawDepositsDialog } from '_component/ActionDialog';
+import {
+  AddDepositsDialog,
+  WithdrawDepositsDialog,
+} from '_component/ActionDialog';
 import ont from '_src/utils/dataProxy';
 import URL from '_constants/URL';
 import { toLocale } from '_src/locale/react-locale';
@@ -34,13 +37,13 @@ class DashboardTokenpair extends Component {
         project,
       });
     };
-  }
+  };
 
   onAddClose = () => {
     this.setState({
       isShowAddDialog: false,
     });
-  }
+  };
 
   onWithdrawOpen = (project) => {
     return () => {
@@ -49,21 +52,21 @@ class DashboardTokenpair extends Component {
         project,
       });
     };
-  }
+  };
 
   onWithdrawClose = () => {
     this.setState({
-      isShowWithdrawDialog: false
+      isShowWithdrawDialog: false,
     });
-  }
+  };
 
   afterAddOrWithdraw = () => {
     this.props.afterAddOrWithdraw();
     this.setState({
-      project: ''
+      project: '',
     });
     this.fetchAccountDeposit();
-  }
+  };
 
   fetchAccountDeposit = () => {
     const page = 1;
@@ -73,27 +76,37 @@ class DashboardTokenpair extends Component {
       per_page: 3,
     };
     this.setState({ loading: true });
-    ont.get(`${URL.GET_ACCOUNT_DEPOSIT}`, { params }).then(({ data }) => {
-      this.setState({ loading: false, deposits: data.data });
-    }).catch(() => {
-      this.setState({ loading: false });
-    });
-  }
+    ont
+      .get(`${URL.GET_ACCOUNT_DEPOSIT}`, { params })
+      .then(({ data }) => {
+        this.setState({ loading: false, deposits: data.data });
+      })
+      .catch(() => {
+        this.setState({ loading: false });
+      });
+  };
 
   toTokenpairDetail = () => {
     history.push(PageURL.tokenpairDetailPage);
-  }
+  };
 
   render() {
     const { beforeAddOrWithdraw } = this.props;
     const {
-      loading, deposits, isShowAddDialog, isShowWithdrawDialog, project
+      loading,
+      deposits,
+      isShowAddDialog,
+      isShowWithdrawDialog,
+      project,
     } = this.state;
     return (
       <Fragment>
         <DashboardSection
           title={toLocale('dashboard_tokenPair_title')}
-          columns={getDashboardTokenPairCols({ add: this.onAddOpen, withdraw: this.onWithdrawOpen })}
+          columns={getDashboardTokenPairCols({
+            add: this.onAddOpen,
+            withdraw: this.onWithdrawOpen,
+          })}
           dataSource={deposits}
           rowKey="product"
           isLoading={loading}

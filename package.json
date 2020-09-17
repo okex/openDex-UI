@@ -1,23 +1,12 @@
 {
-  "name": "spot",
-  "version": "0.2.2",
+  "name": "OKExChain-UI",
+  "version": "0.0.1",
   "description": "spot system",
   "scripts": {
     "dev": "webpack-dev-server --config build/webpack.config.dev.js",
-    "okcoin": "npm run dev -- okcoin",
-    "okex": "npm run dev -- okex",
-    "okkr": "npm run dev -- okkr",
-    "build": "webpack --config build/webpack.config.prod.js",
     "desktop": "webpack --config build/webpack.config.desktop.js",
-    "build-exv1": "webpack --config build/webpack.config.prod.js",
-    "build-okcom": "echo 1",
-    "daily": "cross-env ASSETS_BUILD_TYPE=daily npm run build",
-    "prepub": "cross-env ASSETS_BUILD_TYPE=prepub npm run build",
-    "publish": "cross-env ASSETS_BUILD_TYPE=publish npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "okcoin-fe",
-  "license": "ISC",
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",

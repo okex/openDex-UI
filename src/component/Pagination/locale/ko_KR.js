@@ -1,11 +1,9 @@
 export default {
-  // Options.jsx
   items_per_page: '/ 쪽',
   jump_to: '이동하기',
   jump_to_confirm: '확인하다',
   page: '',
 
-  // Pagination.jsx
   prev_page: '이전 페이지',
   next_page: '다음 페이지',
   prev_5: '이전 5 페이지',

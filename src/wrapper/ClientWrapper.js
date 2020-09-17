@@ -32,24 +32,26 @@ const ClientWrapper = (Com) => {
       };
     }
 
-    // 开启资金密码弹窗
     onPwdOpen = () => {
-      this.setState({
-        isShowPwdDialog: true
-      }, () => {
-        const o = window.document.getElementsByClassName('pwd-input');
-        if (o && o[0] && o[0].focus) {
-          o[0].focus();
+      this.setState(
+        {
+          isShowPwdDialog: true,
+        },
+        () => {
+          const o = window.document.getElementsByClassName('pwd-input');
+          if (o && o[0] && o[0].focus) {
+            o[0].focus();
+          }
         }
-      });
+      );
     };
 
     onPwdClose = () => {
       this.setState({
         isLoading: false,
-        isShowPwdDialog: false
+        isShowPwdDialog: false,
       });
-    }
+    };
 
     onPwdEnter = (password) => {
       const { commonAction } = this.props;
@@ -57,51 +59,58 @@ const ClientWrapper = (Com) => {
         return this.updateWarning(toLocale('spot.place.tips.pwd'));
       }
       this.updateWarning('');
-      this.setState({
-        isLoading: true
-      }, () => {
-        setTimeout(() => {
-          commonAction.validatePassword(password, () => {
-            this.setState({
-              isShowPwdDialog: false,
-            }, () => {
-              this.setAccountInfo(this.wrappedInstance.onPwdSuccess);
-            });
-          }, () => {
-            this.setState({
-              warning: toLocale('pwd_error'),
-              isLoading: false,
-            });
-          });
-        }, Config.validatePwdDeferSecond);
-      });
+      this.setState(
+        {
+          isLoading: true,
+        },
+        () => {
+          setTimeout(() => {
+            commonAction.validatePassword(
+              password,
+              () => {
+                this.setState(
+                  {
+                    isShowPwdDialog: false,
+                  },
+                  () => {
+                    this.setAccountInfo(this.wrappedInstance.onPwdSuccess);
+                  }
+                );
+              },
+              () => {
+                this.setState({
+                  warning: toLocale('pwd_error'),
+                  isLoading: false,
+                });
+              }
+            );
+          }, Config.validatePwdDeferSecond);
+        }
+      );
       return false;
-    }
+    };
 
     setAccountInfo = (success) => {
       const { okchainClient, privateKey } = this.props;
       okchainClient.setAccountInfo(privateKey).then(() => {
         success && success();
       });
-    }
+    };
 
     updateWarning = (warning) => {
       this.setState({
-        warning
+        warning,
       });
-    }
+    };
 
     checkPK = (success) => {
-      // 检查私钥，如果未过期直接取私钥，如果过期显示弹窗
       const expiredTime = window.localStorage.getItem('pExpiredTime') || 0;
-      // 小于30分钟，且privateKey，（true时），不需要输入密码，直接提交
-      if ((new Date().getTime() < +expiredTime) && this.props.privateKey) {
-        // 没过期、提交操作
+      if (new Date().getTime() < +expiredTime && this.props.privateKey) {
         this.setAccountInfo(success);
       } else {
         this.onPwdOpen();
       }
-    }
+    };
 
     render() {
       const { isShowPwdDialog, isLoading, warning } = this.state;
@@ -110,7 +119,9 @@ const ClientWrapper = (Com) => {
           <Com
             {...this.props}
             checkPK={this.checkPK}
-            ref={(instance) => { this.wrappedInstance = instance; }}
+            ref={(instance) => {
+              this.wrappedInstance = instance;
+            }}
           />
           <PasswordDialog
             btnLoading={isLoading}

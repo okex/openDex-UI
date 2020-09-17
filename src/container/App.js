@@ -1,9 +1,6 @@
 import { hot } from 'react-hot-loader/root';
 import React from 'react';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
-// import Load from '_component/Loadable';
-// import DexHeader from '_component/DexHeader';
-// import DexFooter from '_component/DexFooter';
 import PageURL from '_constants/PageURL';
 import { toLocale } from '_src/locale/react-locale';
 import util from '../utils/util';
@@ -19,53 +16,44 @@ class App extends React.Component {
     document.title = toLocale('seoTitle');
   }
   componentDidMount() {
-    // 初始化 主题
     const theme = localStorage.getItem('theme');
     if (theme === null) {
       localStorage.setItem('theme', 'theme-1');
       document.body.classList.add('theme-1');
-      // document.body.setAttribute('class', 'theme-1');
     } else {
       document.body.classList.add(theme);
-      // document.body.setAttribute('class', theme);
     }
   }
   render() {
     return (
       <Router basename={window.okGlobal.langPath} history={history}>
         <div className="main-container">
-
           <Switch>
-            {
-              routerConfig.map((router) => {
-                const { path, component: Page } = router;
-                return (
-                  <Route
-                    path={path}
-                    exact
-                    component={() => {
-                      return (
-                        <React.Fragment>
-                          {
-                            path === PageURL.spotFullPage ? '' : (
-                              <div className="full-head">
-                                <FullTradeHead />
-                              </div>
-                            )
-                          }
-                          <Page />
-                        </React.Fragment>
-                      );
-                    }}
-                    key={path}
-                  />
-                );
-              })
-            }
-            <Redirect
-              from="/"
-              to={PageURL.spotFullPage}
-            />
+            {routerConfig.map((router) => {
+              const { path, component: Page } = router;
+              return (
+                <Route
+                  path={path}
+                  exact
+                  component={() => {
+                    return (
+                      <React.Fragment>
+                        {path === PageURL.spotFullPage ? (
+                          ''
+                        ) : (
+                          <div className="full-head">
+                            <FullTradeHead />
+                          </div>
+                        )}
+                        <Page />
+                      </React.Fragment>
+                    );
+                  }}
+                  key={path}
+                />
+              );
+            })}
+            <Redirect from="/" to={PageURL.spotFullPage} />
           </Switch>
         </div>
       </Router>

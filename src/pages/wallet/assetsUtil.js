@@ -4,16 +4,17 @@ import FormatNum from '_src/utils/FormatNum';
 import Tooltip from '_src/component/Tooltip';
 import { calc } from '_component/okit';
 import { Button } from '_component/Button';
-import IconLite from '_src/component/IconLite';
 import { toLocale } from '_src/locale/react-locale';
 import utils from '../../utils/util';
 import Config from '../../constants/Config';
 
 const util = {};
 
-util.tabs = [{ id: 1, label: toLocale('assets_tab_accounts'), }, { id: 2, label: toLocale('assets_tab_transactions'), }];
+util.tabs = [
+  { id: 1, label: toLocale('assets_tab_accounts') },
+  { id: 2, label: toLocale('assets_tab_transactions') },
+];
 util.accountsCols = ({ transfer }, { valuationUnit }) => {
-  // const valuationName = valuationUnit || '--';
   return [
     {
       title: toLocale('assets_column_assets'),
@@ -34,7 +35,7 @@ util.accountsCols = ({ transfer }, { valuationUnit }) => {
             </Tooltip>
           </div>
         );
-      }
+      },
     },
     {
       title: toLocale('assets_column_total'),
@@ -42,7 +43,7 @@ util.accountsCols = ({ transfer }, { valuationUnit }) => {
       alignRight: true,
       render: (text) => {
         return text;
-      }
+      },
     },
     {
       title: toLocale('assets_column_balance'),
@@ -50,53 +51,26 @@ util.accountsCols = ({ transfer }, { valuationUnit }) => {
       alignRight: true,
       render: (text) => {
         return calc.showFloorTruncation(text, 8, false);
-      }
+      },
     },
-    // {
-    //   title: toLocale('assets_column_freeze'),
-    //   key: 'freeze',
-    //   alignRight: true,
-    //   render: (text) => {
-    //     return calc.showFloorTruncation(text, 8, false);
-    //   }
-    // },
     {
       title: toLocale('assets_column_list'),
       key: 'locked',
       alignRight: true,
       render: (text) => {
         return calc.showFloorTruncation(text, 8, false);
-      }
+      },
     },
-    // {
-    //   title: `OKB ${toLocale('valuation')}`,
-    //   key: 'okbValuation',
-    //   alignRight: true,
-    //   render: (text) => {
-    //     return text;
-    //   }
-    // },
-    // {
-    //   title: `${valuationName} ${toLocale('valuation')}`,
-    //   key: 'legalValuation',
-    //   alignRight: true,
-    //   render: (text) => {
-    //     return text;
-    //   }
-    // },
     {
       title: '',
       key: 'transfer',
       render: (text, { symbol }) => {
         return (
-          <Button
-            size={Button.size.mini}
-            onClick={transfer(symbol)}
-          >
+          <Button size={Button.size.mini} onClick={transfer(symbol)}>
             {toLocale('assets_trans_btn')}
           </Button>
         );
-      }
+      },
     },
   ];
 };
@@ -113,9 +87,17 @@ util.transactionsCols = [
   {
     title: toLocale('trade_column_hash'),
     key: 'txhash',
-    render: (text) => { // trade-info/
-      return <a href={`${Config.okchain.browserUrl}/tx/${text}`} target="_blank" rel="noopener noreferrer">{FormatNum.hashShort(text)}</a>;
-    }
+    render: (text) => {
+      return (
+        <a
+          href={`${Config.okchain.browserUrl}/tx/${text}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {FormatNum.hashShort(text)}
+        </a>
+      );
+    },
   },
   {
     title: toLocale('trade_column_time'),
@@ -123,16 +105,19 @@ util.transactionsCols = [
     alignRight: true,
     render: (text) => {
       return moment(Number(`${text}000`)).format('MM-DD HH:mm:ss');
-    }
+    },
   },
   {
     title: toLocale('trade_column_assets'),
     alignRight: true,
     key: 'symbol',
     render: (text) => {
-      const symbol = (text.indexOf('_') > 0) ? utils.getShortName(text) : utils.getSymbolShortName(text);
+      const symbol =
+        text.indexOf('_') > 0
+          ? utils.getShortName(text)
+          : utils.getSymbolShortName(text);
       return symbol.toUpperCase();
-    }
+    },
   },
   {
     title: toLocale('trade_column_type'),
@@ -140,7 +125,7 @@ util.transactionsCols = [
     key: 'type',
     render: (text) => {
       return transactionsTypesMap[text] || '';
-    }
+    },
   },
   {
     title: toLocale('trade_column_direction'),
@@ -167,12 +152,8 @@ util.transactionsCols = [
           color = 'primary-red';
         }
       }
-      return (
-        <span className={color}>
-          {sideText}
-        </span>
-      );
-    }
+      return <span className={color}>{sideText}</span>;
+    },
   },
   {
     title: toLocale('trade_column_amount'),
@@ -184,7 +165,7 @@ util.transactionsCols = [
     key: 'fee',
     render: (text) => {
       return String(text.split('-')[0]).toUpperCase();
-    }
+    },
   },
 ];
 export default util;

@@ -9,7 +9,7 @@ import { validateTxs } from '_src/utils/client';
 
 const showError = () => {
   Message.error({
-    content: '服务端异常，请稍后重试'
+    content: '服务端异常，请稍后重试',
   });
 };
 
@@ -24,43 +24,49 @@ class WithdrawDepositsDialog extends Component {
 
   onChange = (e) => {
     this.setState({ value: e.target.value });
-  }
+  };
 
   onClose = () => {
     this.props.onClose();
     this.setState({
-      value: ''
+      value: '',
     });
-  }
+  };
 
   onWithdraw = () => {
     const {
-      okchainClient, project, beforeWithdraw, afterWithdraw
+      okchainClient,
+      project,
+      beforeWithdraw,
+      afterWithdraw,
     } = this.props;
     isFunction(beforeWithdraw) && beforeWithdraw();
     const { value } = this.state;
     const amount = util.precisionInput(value);
-    okchainClient.sendWithdrawProductDepositTransaction(amount, project).then((res) => {
-      this.setState({ value: '' });
-      isFunction(afterWithdraw) && afterWithdraw();
-      const { result } = res;
-      const { txhash } = result;
-      if (!validateTxs(res)) {
+    okchainClient
+      .sendWithdrawProductDepositTransaction(amount, project)
+      .then((res) => {
+        this.setState({ value: '' });
+        isFunction(afterWithdraw) && afterWithdraw();
+        const { result } = res;
+        const { txhash } = result;
+        if (!validateTxs(res)) {
+          showError();
+        } else {
+          showSuccessDialog('Withdraw deposits success！', txhash);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        isFunction(afterWithdraw) && afterWithdraw();
         showError();
-      } else {
-        showSuccessDialog('Withdraw deposits success！', txhash);
-      }
-    }).catch((err) => {
-      console.log(err);
-      isFunction(afterWithdraw) && afterWithdraw();
-      showError();
-      this.setState({ value: '' });
-    });
-  }
+        this.setState({ value: '' });
+      });
+  };
 
   onPwdSuccess = () => {
     this.onWithdraw();
-  }
+  };
 
   handleWithdraw = () => {
     const { value } = this.state;
@@ -69,10 +75,10 @@ class WithdrawDepositsDialog extends Component {
       this.props.checkPK(this.onWithdraw);
     } else {
       Message.error({
-        content: '输入类型错误，请重新输入'
+        content: '输入类型错误，请重新输入',
       });
     }
-  }
+  };
 
   render() {
     const { visible } = this.props;

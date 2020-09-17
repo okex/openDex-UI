@@ -8,7 +8,6 @@ const electronUtils = window.require('electron').remote.require('./src/utils');
 function getInitCurrentNode(isStarted) {
   const n = storage.get('currentNode');
   if (!n || (n.type === NODE_TYPE.LOCAL && !isStarted)) {
-    // !isStarted 过滤存储为 LocalNode 情况
     storage.set('currentNode', DEFAULT_NODE);
     return DEFAULT_NODE;
   }
@@ -19,8 +18,8 @@ const initialState = {
   remoteList: NODE_LIST,
   customList: storage.get('customList') || [],
   currentNode: getInitCurrentNode(!!electronUtils.localNodeServerClient.get()),
-  breakTime: 0, // unit:s
-  tempBreakTime: 0, // unit:s
+  breakTime: 0,
+  tempBreakTime: 0,
 };
 
 export default function reducer(state = initialState, action) {

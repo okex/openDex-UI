@@ -1,11 +1,8 @@
 export default {
-  // Options.jsx
   items_per_page: '/ หน้า',
   jump_to: 'ไปยัง',
   jump_to_confirm: 'ยืนยัน',
   page: '',
-
-  // Pagination.jsx
   prev_page: 'หน้าก่อนหน้า',
   next_page: 'หน้าถัดไป',
   prev_5: 'ย้อนกลับ 5 หน้า',

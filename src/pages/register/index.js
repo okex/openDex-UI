@@ -20,13 +20,13 @@ const opJson = {
     branding: {
       logo_256: '',
       logo_1024: '',
-      logo_svg: ''
+      logo_svg: '',
     },
     location: {
       name: '',
       country: '',
       latitude: 0,
-      longitude: 0
+      longitude: 0,
     },
     social: {
       steemit: '',
@@ -36,8 +36,8 @@ const opJson = {
       github: '',
       reddit: '',
       keybase: '',
-      telegram: ''
-    }
+      telegram: '',
+    },
   },
   nodes: [
     {
@@ -48,24 +48,24 @@ const opJson = {
         longitude: 0,
       },
       node_type: '',
-      api_endpoint: ''
+      api_endpoint: '',
     },
     {
       location: {
         name: '',
         country: '',
         latitude: 0,
-        longitude: 0
+        longitude: 0,
       },
       node_type: '',
-      ws_endpoint: ''
-    }
-  ]
+      ws_endpoint: '',
+    },
+  ],
 };
 
 const showError = () => {
   Message.error({
-    content: '服务端异常，请稍后重试'
+    content: '服务端异常，请稍后重试',
   });
 };
 
@@ -82,64 +82,65 @@ class Register extends Component {
 
   onWebsiteChange = (e) => {
     this.setState({
-      websiteValue: e.target.value
+      websiteValue: e.target.value,
     });
-  }
+  };
 
   onFeeAddressChange = (e) => {
     this.setState({
-      feeAddressValue: e.target.value
+      feeAddressValue: e.target.value,
     });
-  }
+  };
 
   onRegister = () => {
     this.setState({ isActionLoading: true });
     const { websiteValue, feeAddressValue } = this.state;
     const { okchainClient } = this.props;
-    okchainClient.sendRegisterDexOperatorTransaction(websiteValue, feeAddressValue).then((res) => {
-      this.setState({ isActionLoading: false });
-      const { result } = res;
-      const { txhash } = result;
-      if (!validateTxs(res)) {
+    okchainClient
+      .sendRegisterDexOperatorTransaction(websiteValue, feeAddressValue)
+      .then((res) => {
+        this.setState({ isActionLoading: false });
+        const { result } = res;
+        const { txhash } = result;
+        if (!validateTxs(res)) {
+          showError();
+        } else {
+          const dialog = Dialog.success({
+            className: 'desktop-success-dialog',
+            confirmText: 'Get detail',
+            theme: 'dark',
+            title: 'Register success！',
+            windowStyle: {
+              background: '#112F62',
+            },
+            onConfirm: () => {
+              window.open(`${Config.okchain.browserUrl}/tx/${txhash}`);
+              dialog.destroy();
+            },
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        this.setState({ isActionLoading: false });
         showError();
-      } else {
-        const dialog = Dialog.success({
-          className: 'desktop-success-dialog',
-          confirmText: 'Get detail',
-          theme: 'dark',
-          title: 'Register success！',
-          windowStyle: {
-            background: '#112F62'
-          },
-          onConfirm: () => {
-            window.open(`${Config.okchain.browserUrl}/tx/${txhash}`);
-            dialog.destroy();
-          },
-        });
-      }
-    }).catch((err) => {
-      console.log(err);
-      this.setState({ isActionLoading: false });
-      showError();
-    });
-  }
+      });
+  };
 
   onPwdSuccess = () => {
     this.onRegister();
-  }
+  };
 
   handleRegister = () => {
     this.props.checkPK(this.onRegister);
-  }
+  };
 
   handleDownloadOperator = () => {
     util.downloadObjectAsJson(opJson, 'operator.json');
-  }
+  };
 
   render() {
-    const {
-      websiteValue, feeAddressValue, isActionLoading
-    } = this.state;
+    const { websiteValue, feeAddressValue, isActionLoading } = this.state;
     return (
       <DexDesktopContainer
         isShowHelp
@@ -161,7 +162,12 @@ class Register extends Component {
             hint={toLocale('register.feeAddress.hint')}
           />
           <div className="register-get-operato">
-            <span className="operato-dl-btn" onClick={this.handleDownloadOperator}>Get operato</span>
+            <span
+              className="operato-dl-btn"
+              onClick={this.handleDownloadOperator}
+            >
+              Get operato
+            </span>
           </div>
           <button
             className="dex-desktop-btn register-btn"

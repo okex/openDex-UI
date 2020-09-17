@@ -9,16 +9,17 @@ const base = require('./webpack.config.base');
 base.output.publicPath = 'file:./';
 base.output.path = path.resolve(__dirname, '../bundle');
 
-
 base.plugins.unshift(
   new CleanWebpackPlugin([path.resolve(__dirname, '../bundle')], {
-    root: path.resolve(__dirname, '../')
+    root: path.resolve(__dirname, '../'),
   }),
-  new webpack.DefinePlugin({ 'process.env.ROUTE_TYPE': JSON.stringify('hash') }),
+  new webpack.DefinePlugin({
+    'process.env.ROUTE_TYPE': JSON.stringify('hash'),
+  }),
   new HtmlWebpackPlugin({
     template: path.resolve(path.resolve(__dirname, '../src'), 'desktop.html'),
-    filename: 'index.html'
-  }),
+    filename: 'index.html',
+  })
 );
 
 base.devtool = 'source-map';
@@ -30,9 +31,9 @@ module.exports = Object.assign(base, {
     minimizer: [
       new UglifyJsPlugin({
         cache: true,
-        parallel: true
+        parallel: true,
       }),
-      new OptimizeCSSAssetsPlugin({})
-    ]
-  }
+      new OptimizeCSSAssetsPlugin({}),
+    ],
+  },
 });

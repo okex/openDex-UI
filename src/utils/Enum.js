@@ -6,58 +6,58 @@ const Enum = {
   spot: 'spot',
   margin: 'margin',
   tradeType: {
-    normalTrade: 'normalTrade', // 普通交易（非全屏）
-    fullTrade: 'fullTrade', // 全屏交易
+    normalTrade: 'normalTrade',
+    fullTrade: 'fullTrade',
   },
   themes: {
-    theme1: 'theme-1', // 白天模式
-    theme2: 'theme-2', // 夜间模式
+    theme1: 'theme-1',
+    theme2: 'theme-2',
   },
   spotOrMargin: {
-    spot: 1, // 币币模式
-    margin: 2 // 杠杆模式
+    spot: 1,
+    margin: 2,
   },
-  defaultMergeType: '0.001', // 默认深度合并系数
-  defaultMergeTypes: ['0.001', '0.01', '0.1'], // 默认深度合并系数选项
+  defaultMergeType: '0.001',
+  defaultMergeTypes: ['0.001', '0.01', '0.1'],
   placeOrder: {
-    type: { // 买卖类型
-      buy: 1, // 买
-      sell: 2 // 卖
+    type: {
+      buy: 1,
+      sell: 2,
     },
-    strategyType: { // 委托类型
-      limit: 1, // 限价单
-      market: 2, // 市价单
-      plan: 3, // 计划委托
-      track: 4, // 跟踪委托
-      iceberg: 5, // 冰山委托
-      timeWeight: 6, // 时间加权委托
-      advancedLimit: 7, // 高级限价单
+    strategyType: {
+      limit: 1,
+      market: 2,
+      plan: 3,
+      track: 4,
+      iceberg: 5,
+      timeWeight: 6,
+      advancedLimit: 7,
     },
-    advancedOrderType: { // 高级限价单类别
-      postOnly: 2, // 只做Maker（Post only）
-      FOK: 3, // 全部成交或立即取消（FillOrKill）
-      FAK: 4, // 立即成交并取消剩余（ImmediatelOrCancel）
+    advancedOrderType: {
+      postOnly: 2,
+      FOK: 3,
+      FAK: 4,
     },
   },
   order: {
-    type: { // 一级tab
-      noDeal: 0, // 未成交
-      history: 1, // 历史
-      detail: 2, // 成交明细
+    type: {
+      noDeal: 0,
+      history: 1,
+      detail: 2,
     },
-    entrustType: { // 二级委托类型
-      normal: 0, // 普通
-      plan: 1, // 计划
-      track: 2, // 跟踪
-      iceberg: 3, // 冰山
-      timeWeight: 4, // 时间加权
+    entrustType: {
+      normal: 0,
+      plan: 1,
+      track: 2,
+      iceberg: 3,
+      timeWeight: 4,
     },
     periodInterval: {
       oneDay: 'oneDay',
       oneWeek: 'oneWeek',
       oneMonth: 'oneMonth',
       threeMonth: 'threeMonth',
-    }
+    },
   },
   noticeTypes: {
     1: { icon: 'icon-weekly', locale: 'notice.category.week' },
