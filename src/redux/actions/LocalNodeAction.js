@@ -39,32 +39,13 @@ function start(datadir, dispatch, getState, func) {
         datadir,
         db,
       });
-<<<<<<< HEAD
-      const child = localNodeServerClient.get() || shell.exec(`${startCommand}`, { async: true }, (code) => {
-        console.log(code);
-        if (code !== 130 && code !== 0) {
-          Message.error({
-            content: 'okexchaind start error',
-          });
-          stopPoll();
-          dispatch({
-            type: LocalNodeActionType.UPDATE_IS_STARTED,
-            data: false,
-          });
-          dispatch({
-            type: LocalNodeActionType.UPDATE_DATADIR_AT_START,
-            data: '',
-          });
-        }
-      });
-=======
       const child =
         localNodeServerClient.get() ||
         shell.exec(`${startCommand}`, { async: true }, (code) => {
           console.log(code);
           if (code !== 130 && code !== 0) {
             Message.error({
-              content: 'okchaind start error',
+              content: 'okexchaind start error',
             });
             stopPoll();
             dispatch({
@@ -77,7 +58,6 @@ function start(datadir, dispatch, getState, func) {
             });
           }
         });
->>>>>>> zch/opendex
       dispatch({
         type: LocalNodeActionType.UPDATE_DATADIR_AT_START,
         data: datadir,
@@ -198,20 +178,13 @@ function initData(datadir) {
   const okexchaindDir = getOkexchaindDir();
   return new Promise((resolve, reject) => {
     try {
-<<<<<<< HEAD
       shell.cd(okexchaindDir);
-      shell.exec(`./okexchaind init desktop --home ${datadir}`, (code, stdout, stderr) => {
-        resolve(true);
-      });
-=======
-      shell.cd(okchaindDir);
       shell.exec(
-        `./okchaind init desktop --home ${datadir}`,
+        `./okexchaind init desktop --home ${datadir}`,
         (code, stdout, stderr) => {
           resolve(true);
         }
       );
->>>>>>> zch/opendex
     } catch (err) {
       reject(err);
     }
@@ -397,17 +370,10 @@ export function startListen() {
 export function stopOkexchaind() {
   return (dispatch, getState) => {
     stopPoll();
-<<<<<<< HEAD
     const okexchaindDir = getOkexchaindDir();
-    const { shell,localNodeServerClient } = electronUtils;
+    const { shell, localNodeServerClient } = electronUtils;
     shell.cd(okexchaindDir);
     shell.exec('./okexchaind stop', (code, stdout, stderr) => {
-=======
-    const okchaindDir = getOkchaindDir();
-    const { shell, localNodeServerClient } = electronUtils;
-    shell.cd(okchaindDir);
-    shell.exec('./okchaind stop', (code, stdout, stderr) => {
->>>>>>> zch/opendex
       if (code === 0) {
         localNodeServerClient.set(null);
         dispatch({

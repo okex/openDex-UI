@@ -4,25 +4,12 @@ import CommonActionType from '../actionTypes/CommonActionType';
 import Config from '../../constants/Config';
 import FormActionType from '../actionTypes/FormActionType';
 
-<<<<<<< HEAD
-/*
- * 初始化okexchain客户端
- * */
 export function initOKExChainClient() {
   return (dispatch) => {
     const client = new OKExChainClient(Config.okexchain.clientUrl);
-    // client.initChain();
     dispatch({
       type: CommonActionType.SET_OKEXCHAIN_CLIENT,
-      data: client
-=======
-export function initOKChainClient() {
-  return (dispatch) => {
-    const client = new OKChainClient(Config.okchain.clientUrl);
-    dispatch({
-      type: CommonActionType.SET_OKCHAIN_CLIENT,
       data: client,
->>>>>>> zch/opendex
     });
   };
 }
@@ -72,10 +59,6 @@ export function hidePwdDialog() {
   };
 }
 
-<<<<<<< HEAD
-// 更新OKExChain区块最新高度
-=======
->>>>>>> zch/opendex
 export function updateLatestHeight(height) {
   return (dispatch) => {
     dispatch({

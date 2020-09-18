@@ -255,31 +255,11 @@ export function updateEntrustType(entrustType) {
 
 export function cancelOrder(params, successCallback, errCallback) {
   return (dispatch, getState) => {
-<<<<<<< HEAD
     const { okexchainClient } = getState().Common;
-    // const { senderAddr } = window.OK_GLOBAL; // senderAddr,
-    okexchainClient.setAccountInfo(params.pk).then(() => {
-      okexchainClient.sendCancelOrderTransaction(params.order_id).then((r) => {
-        if (r.result.code) {
-          errCallback && errCallback({ msg: r.result.error });
-        } else {
-          successCallback && successCallback(r.result);
-          const searchConditions = {
-            // start: params.start,
-            // end: params.end,
-            product: params.product,
-            side: params.side
-          };
-          getNoDealList(searchConditions)(dispatch, getState);
-        }
-      }, (e) => {
-        errCallback && errCallback(e);
-=======
-    const { okchainClient } = getState().Common;
-    okchainClient
+    okexchainClient
       .setAccountInfo(params.pk)
       .then(() => {
-        okchainClient.sendCancelOrderTransaction(params.order_id).then(
+        okexchainClient.sendCancelOrderTransaction(params.order_id).then(
           (r) => {
             if (r.result.code) {
               errCallback && errCallback({ msg: r.result.error });
@@ -300,7 +280,6 @@ export function cancelOrder(params, successCallback, errCallback) {
       .catch((err) => {
         Message.error({ content: err.message, duration: 3 });
         errCallback && errCallback();
->>>>>>> zch/opendex
       });
   };
 }

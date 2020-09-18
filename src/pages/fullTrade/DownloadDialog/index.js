@@ -124,33 +124,18 @@ const onDownloadAndUpdate = () => {
   let isFinish = false;
   let config = {};
   let isInstall = true;
-<<<<<<< HEAD
-
-
   let okexchaindObj = {};
   let cliObj = {};
   let processTotal = 0;
   const transferredBytesMap = {
     okexchaind: 0,
-    okexchaincli: 0
-=======
-  let okchaindObj = {};
-  let cliObj = {};
-  let processTotal = 0;
-  const transferredBytesMap = {
-    okchaind: 0,
-    okchaincli: 0,
->>>>>>> zch/opendex
+    okexchaincli: 0,
   };
 
   const initTransferredBytes = () => {
     okexchaindObj = store.get('okexchaindObj');
     cliObj = store.get('cliObj');
-<<<<<<< HEAD
-    processTotal = okexchaindObj.size + cliObj.size; // 2 assets will be download
-=======
-    processTotal = okchaindObj.size + cliObj.size;
->>>>>>> zch/opendex
+    processTotal = okexchaindObj.size + cliObj.size;
   };
 
   const updateDialog = (option) => {
@@ -165,15 +150,9 @@ const onDownloadAndUpdate = () => {
     initTransferredBytes();
     option = config.install;
     option.onConfirm = () => {
-<<<<<<< HEAD
       setDownloadingDialog('okexchaind');
-      emitter.emit('downloadOkexchaind@download'); // trigger okexchaind download
-    }
-=======
-      setDownloadingDialog('okchaind');
-      emitter.emit('downloadOkchaind@download');
+      emitter.emit('downloadOkexchaind@download');
     };
->>>>>>> zch/opendex
     if (type === 'update') {
       option.children = option.children(version);
     }
@@ -184,14 +163,8 @@ const onDownloadAndUpdate = () => {
     option = config.downloading;
     const updateProcessDialog = () => {
       transferredBytesMap[name] = transferredBytes;
-<<<<<<< HEAD
       const { okexchaind = 0, okexchaincli = 0 } = transferredBytesMap;
       const ratio = calc.div(okexchaind + okexchaincli, processTotal);
-
-=======
-      const { okchaind = 0, okchaincli = 0 } = transferredBytesMap;
-      const ratio = calc.div(okchaind + okchaincli, processTotal);
->>>>>>> zch/opendex
       const percent = calc.truncate(ratio * 100, 1);
       option.children = (
         <Process
@@ -216,19 +189,10 @@ const onDownloadAndUpdate = () => {
     option = config.fail;
     option.onConfirm = () => {
       isFinish = false;
-<<<<<<< HEAD
-      // reset download process
       transferredBytesMap.okexchaind = 0;
       transferredBytesMap.okexchaincli = 0;
-
       emitter.emit('redownload');
-      emitter.emit('downloadOkexchaind@download'); // trigger okexchaind download
-=======
-      transferredBytesMap.okchaind = 0;
-      transferredBytesMap.okchaincli = 0;
-      emitter.emit('redownload');
-      emitter.emit('downloadOkchaind@download');
->>>>>>> zch/opendex
+      emitter.emit('downloadOkexchaind@download');
     };
     updateDialog(option);
   };
@@ -255,39 +219,21 @@ const onDownloadAndUpdate = () => {
         }
       });
 
-<<<<<<< HEAD
-      emitter.on('downloadProgress@okexchaind', data => {
+      emitter.on('downloadProgress@okexchaind', (data) => {
         setDownloadingDialog('okexchaind', data.transferredBytes || 0);
       });
-  
-      emitter.on('downloadProgress@okexchaincli', data => {
-=======
-      emitter.on('downloadProgress@okchaind', (data) => {
-        setDownloadingDialog('okchaind', data.transferredBytes || 0);
-      });
 
-      emitter.on('downloadProgress@okchaincli', (data) => {
->>>>>>> zch/opendex
+      emitter.on('downloadProgress@okexchaincli', (data) => {
         if (!isFinish) {
           setDownloadingDialog('okexchaincli', data.transferredBytes || 0);
         }
-<<<<<<< HEAD
-      })
-  
+      });
+
       emitter.on('downloadFinish@okexchaind', () => {
-        emitter.emit('downloadOkexchaincli@download'); // electron-dl bug on process, can not parallel download
+        emitter.emit('downloadOkexchaincli@download');
       });
-      
+
       emitter.on('downloadFinish@okexchaincli', () => {
-=======
-      });
-
-      emitter.on('downloadFinish@okchaind', () => {
-        emitter.emit('downloadOkchaincli@download');
-      });
-
-      emitter.on('downloadFinish@okchaincli', () => {
->>>>>>> zch/opendex
         setSuceesDialog();
       });
 
