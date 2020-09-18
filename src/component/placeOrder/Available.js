@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import React from 'react';
 import PropTypes from 'prop-types';
-import Cookies from 'js-cookie';
 import Icon from '_src/component/IconLite';
 import { toLocale } from '_src/locale/react-locale';
 import { calc } from '_component/okit';
@@ -36,19 +35,6 @@ class Available extends React.Component {
       return <Fee />;
     }
     let feeUrl = '/pages/products/fees.html';
-    const { webType, webTypes } = window.OK_GLOBAL;
-    if (webType === webTypes.OKCoin) {
-      if (
-        util.getSupportLocale(Cookies.get('locale') || 'en_US').indexOf('en') >
-        -1
-      ) {
-        feeUrl =
-          'https://support.okcoin.com/hc/en-us/articles/360015261532-OKCoin-Fee-Schedule';
-      } else {
-        feeUrl =
-          'https://support.okcoin.com/hc/zh-cn/articles/360015261532-OKCoin%E5%9B%BD%E9%99%85%E7%AB%99%E6%89%8B%E7%BB%AD%E8%B4%B9-OKCoin-Fee-Schedule-';
-      }
-    }
     return (
       <div className="spot-fee-link">
         <a rel="noopener noreferrer" href={feeUrl} target="_blank">

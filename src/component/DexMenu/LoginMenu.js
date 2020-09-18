@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import Menu from '_src/component/Menu';
 import { withRouter, Link } from 'react-router-dom';
 import { toLocale } from '_src/locale/react-locale';
-import Icon from '_src/component/IconLite';
 import { getLangURL } from '_src/utils/navigation';
 import PageURL from '_constants/PageURL';
 import * as walletActions from '_src/redux/actions/WalletAction';

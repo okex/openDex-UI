@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toLocale } from '_src/locale/react-locale';
 import util from '../../utils/util';
-import Enum from '../../utils/Enum';
 
 import './Introduce.less';
 
