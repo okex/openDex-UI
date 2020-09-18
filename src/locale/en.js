@@ -21,12 +21,10 @@ const enUS = {
   symbolDesc: 'Symbol Desc:',
   symbolWholeName: 'Symbol wholeName：',
   symbolId: 'Symbol ID：',
-  /* spot */
   'spot.coin': 'coin',
   'spot.marketDict': 'Markets',
   'spot.favorites': 'Favorites',
   'spot.account.spot': 'Spot Account',
-  /* spot asset */
   'spot.asset.newMarginTrade': 'Margin',
   'spot.asset.futureswapTrade': 'Perpetual',
   'spot.asset': 'Asset',
@@ -53,7 +51,6 @@ const enUS = {
   'spot.asset.repayBonus.tips-1': '1. Your unpaid bonus will be counted as a liability when calculating your risk rate.',
   'spot.asset.repayBonus.tips-2': '2. Your asset will not be allowed to transfer out before you repay the bonus.',
 
-  /* spot.market */
   'spot.market.more': 'more',
   'spot.market.orders': 'Details',
   'spot.menu.market.orders': 'Orders',
@@ -64,7 +61,6 @@ const enUS = {
   'spot.menu.market.history': 'Loan Records',
   'spot.menu.market.strategy': 'Algo Orders',
 
-  /* spot.orders */
   'spot.orders.currencies': 'Currency',
   'spot.orders.types': 'Filter',
   'spot.orders.last2': 'Last 2 Days',
@@ -72,7 +68,6 @@ const enUS = {
 
   'spot.search': 'Search',
 
-  // dex相关
   'spot.myOrder.detail': 'Details',
   'spot.myOrder.hash': 'TxHash',
   'spot.myOrder.date': 'Date',
@@ -229,7 +224,6 @@ const enUS = {
   'spot.orders.partialStatus': 'Partially effective',
   'spot.orders.pausedStatus': 'Order terminated',
 
-  /* spot.trade */
   'spot.trade': 'Trade',
   'spot.menu.orders': 'Spot Orders',
   'spot.orders.orderSuccess': 'Success',
@@ -374,7 +368,6 @@ const enUS = {
   'spot.page.title': '- The Leading Global Bitcoin/Cryptocurrency Exchange |',
   'spot.page.title.tokens': 'Token trading orders ',
 
-  /* not login */
   'spot.notlogin.tradenow': 'Start trading now',
   'spot.notlogin.preview': 'This is the preview of the {site} exchange All data is real-time',
   'spot.notlogin.logintoview1': 'You must be ',
@@ -387,10 +380,8 @@ const enUS = {
   'notice.category.act': 'Activities',
   'notice.category.treasure': 'Financial report',
   'notice.category.rate': 'Rating',
-  /* 项目披露 */
   'spot.project.info': 'Project Info',
 
-  /* 高阶限价单 */
   'spot.advancedLimitOrder': 'Advanced Limit Order',
   'spot.orders.triggerPopAdvancedLimitOrder': 'Advanced Limit Order offers 3 additional order options, including "Post Only", "Fill or Kill", and "Immediate or Cancel". For normal Limit Order, the order option is always defaulted as "Good till Canceled". ',
   'spot.orders.orderType': 'Order Types',
@@ -405,12 +396,10 @@ const enUS = {
   'spot.orders.actionBuyMargin': 'Buy (Long) ',
   'spot.orders.actionSellMargin': 'Sell (Short) ',
 
-  /* 深度tooltip */
   'spot.depth.tooltip.sumTrade': 'Total {trade}',
   'spot.depth.tooltip.sumBase': 'Total {base}',
   'spot.depth.tooltip.avgPrice': 'Average Price',
 
-  // 通用
   all: 'All',
   go_back: 'Back',
   next_step: 'Next',
@@ -422,8 +411,6 @@ const enUS = {
   pwd_error: 'Incorrect Password',
   valuation: ' Valuation',
   link_to_all: 'Click to see all >>',
-  // 钱包
-  // 创建钱包
   wallet_create_step1: 'Create Wallet',
   wallet_setPassword: 'Set up Password',
   wallet_password_placeholder: 'Please use 10 or more characters with a mix of letters and numbers for your password',
@@ -435,12 +422,10 @@ const enUS = {
   wallet_hadWallet: 'I already have a wallet',
   wallet_importNow: 'Import Now >>',
   wallet_nextStep: 'Next',
-  // safetip 安全提示
   wallet_safeTip_title: 'Security Alert',
   wallet_safeTip_beforeKeystore: 'Please download the file and record your mnemonic phrase ',
   wallet_safeTip_afterKeystore: 'in a secure environment. Do not take photos or screen capture to avoid leak.',
   wallet_known: 'I understand',
-  // step2 备份助记词
   wallet_create_step2: 'Mnemonic Phrase Backup',
   wallet_create_backupMnemonic: 'Please back up the below mnemonic phrases in sequence',
   wallet_create_backupMnemonic_error: 'Not verified. Please back up again',
@@ -456,10 +441,8 @@ const enUS = {
   wallet_toTrade: 'Trade Now',
   wallet_seePrivate: 'Check Private Key',
   wallet_privateKey: 'Private Key',
-  // 导入钱包
   wallet_import: 'Import Wallet',
   wallet_import_mnemonic: 'Mnemonic Phrase',
-  // keystore导入
   wallet_import_upload_todo: 'Drag here to upload keystore documents',
   wallet_import_upload_doing: 'Uploading',
   wallet_import_upload_retry: 'Re-Upload',
@@ -468,20 +451,17 @@ const enUS = {
   wallet_import_fileError: 'Incorrect document format/illegal content',
   wallet_import_noFile: 'Please upload keystore documents',
   wallet_import_passwordError: 'Incorrect Password',
-  // 助记词导入
   wallet_import_mnemonic_enter: 'Enter Mnemonic Phrase',
   wallet_import_mnemonic_splitTip: 'Enter space between the mnemonic phrases',
   wallet_import_mnemonic_error: 'Illegal mnemonic phrase',
   wallet_import_mnemonic_sessionPassword: 'Please setup a temporary password',
   wallet_import_mnemonic_sessionPasswordTip: 'This password is only valid for this login. It is not related to the password you set up when creating your wallet',
   wallet_import_mnemonic_none: 'Mnemonic cannot be empty',
-  // 私钥导入
   wallet_import_private_enter: 'Enter Wallet Private Key',
   wallet_import_password_placeholder: 'Setup a temporary password',
   wallet_import_private_error: 'Illegal Private Key',
   wallet_import_sessionPasswordTip: 'This password is valid only for this login',
   wallet_import_private_none: 'The private key cannot be empty',
-  // Header
   header_menu_trade: 'Trade',
   header_menu_order: 'Order',
   header_menu_create_wallet: 'Create Wallet',
@@ -500,8 +480,6 @@ const enUS = {
   header_menu_item_address: 'Address',
   header_menu_explorer_okchain: 'Explorer',
   footer_standard_rates: 'Transaction Fee Rates',
-
-  // 首页
   home_banner_title: 'OKEx DEX',
   home_banner_subtitle: 'Borderless decentralized trading platform',
   home_banner_btn_trade: 'Start trading',
@@ -537,7 +515,6 @@ const enUS = {
   home_receive_coin: 'Claim Test Token',
   home_step5_title: 'Help',
 
-  // 资产余额
   assets_tab_accounts: 'Asset Balance',
   assets_tab_transactions: 'Transaction Record',
   assets_address: 'Address:',
@@ -551,7 +528,6 @@ const enUS = {
   assets_column_list: 'Place Order',
   assets_trans_btn: 'Transfer',
   assets_copy_success: 'Copied',
-  // 交易记录
   trade_query_begin: 'Start Time',
   trade_query_end: 'End Time',
   trade_query_order_type: 'Order Type',
@@ -572,7 +548,6 @@ const enUS = {
   trade_type_pay: 'Pay',
   trade_type_buy: 'Buy',
   trade_type_sell: 'Sell',
-  // 转账
   trans_address: 'Transfer Address',
   trans_step_1: 'Transfer',
   trans_step_2: 'Please confirm the transaction details',
@@ -598,7 +573,6 @@ const enUS = {
   group_hot: '24h Vol',
   group_new: 'New Tokens',
 
-  // desktop新增
   'node.main.title': 'Node settings',
   'node.active.title': 'Active Node',
   'node.delay.type.low': 'Low latency',

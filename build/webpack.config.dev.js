@@ -25,7 +25,10 @@ module.exports = Object.assign(base, {
     contentBase: path.resolve(__dirname, '../src'),
     hot: true,
     host: address,
-    port: 5200
+    port: 5200,
+    historyApiFallback: {
+      rewrites: [{ from: /^\/$/, to: '/okex/index.html' }],
+    },
   },
   devtool: 'source-map',
 });

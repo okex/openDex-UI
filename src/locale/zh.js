@@ -21,7 +21,6 @@ const zhCN = {
   symbolDesc: '描述：',
   symbolWholeName: '全称：',
   symbolId: '币种ID：',
-  /* spot */
   'spot.noData': '暂无数据',
   'spot.asset': '资产',
   'spot.asset.marginTrade': '杠杆交易',
@@ -49,7 +48,6 @@ const zhCN = {
   'spot.asset.repayBonus.tips-0': '您的借币{currency}需要归还糖果{bonus}，请在币币账户中留足{bonus}',
   'spot.asset.repayBonus.tips-1': '1、未还糖果资产会计入负债计算风险率',
   'spot.asset.repayBonus.tips-2': '2、未还清糖果，该币对杠杆账户资产不可转出',
-  /* spot.bills */
   'spot.bills.allCurrency': '全部币种',
   'spot.bills.allProduct': '全部币对',
   'spot.bills.coin': '币种',
@@ -66,7 +64,6 @@ const zhCN = {
   'spot.coin': '币种',
   'spot.marketDict': '市场',
   'spot.favorites': '自选',
-  /* spot.market */
   'spot.market.more': '查看更多',
   'spot.market.orders': '交易信息',
   'spot.menu.market.orders': '币币委托',
@@ -78,7 +75,6 @@ const zhCN = {
   'spot.menu.market.strategy': '策略委托说明',
   'spot.menu.bills.force': '爆仓订单',
   'spot.menu.ready.risk': '风险准备金',
-  /* spot.orders */
   'spot.bills.spot': '币币账单',
   'spot.bills.margin': '币币杠杆账单',
   'spot.orders.currencies': '币对',
@@ -87,7 +83,6 @@ const zhCN = {
   'spot.orders.2daysago': '两天以前',
   'spot.search': '查询',
 
-  // dex相关
   'spot.myOrder.detail': '成交明细',
   'spot.myOrder.hash': '哈希值',
   'spot.myOrder.date': '委托时间',
@@ -231,7 +226,6 @@ const zhCN = {
   'spot.orders.partialStatus': '部分生效',
   'spot.orders.pausedStatus': '暂停生效',
 
-  /* spot.trade */
   'spot.trade': '交易',
   'spot.menu.orders': '币币委托',
   'spot.app': 'app',
@@ -382,20 +376,17 @@ const zhCN = {
   'spot.page.title': '- 全球领先的比特币/数字货币交易平台 |',
   'spot.page.title.tokens': '币币委托 ',
 
-  /* 未登录 */
   'spot.notlogin.tradenow': '立即开始交易',
   'spot.notlogin.preview': '此页面为{site}交易的预览，所有信息均为实时数据',
   'spot.notlogin.logintoview1': '您必须',
   'spot.notlogin.logintoview2': '登录',
   'spot.notlogin.logintoview3': '才可看到此信息',
 
-  /* 专业版 */
   'spot.all.bills': '全部账单',
   'spot.all.history': '全部借币历史记录',
   'spot.all.force': '全部爆仓订单',
   'spot.all.risk': '全部风险准备金',
 
-  /* 公告类别 */
   'notice.category.week': '周报',
   'notice.category.month': '月报',
   'notice.category.news': '快讯',
@@ -403,10 +394,8 @@ const zhCN = {
   'notice.category.treasure': '财报',
   'notice.category.rate': '评级报告',
 
-  /* 项目披露 */
   'spot.project.info': '项目披露',
 
-  /* 高阶限价单 */
   'spot.advancedLimitOrder': '高级限价委托',
   'spot.orders.triggerPopAdvancedLimitOrder': '高级限价委托相对于普通限价委托可选择三种生效机制，“只做Maker（Post only）”、“全部成交或立即取消（FillOrKill）”、“立即成交并取消剩余（ImmediatelOrCancel）”；而普通限价委托的生效机制默认是“一直有效”。',
   'spot.orders.orderType': '生效机制',
@@ -421,12 +410,10 @@ const zhCN = {
   'spot.orders.actionBuyMargin': '买入（做多）',
   'spot.orders.actionSellMargin': '卖出（做空）',
 
-  /* 深度tooltip */
   'spot.depth.tooltip.sumTrade': '合计{trade}',
   'spot.depth.tooltip.sumBase': '合计{base}',
   'spot.depth.tooltip.avgPrice': '均价',
 
-  // 通用
   all: '全部',
   go_back: '返回',
   next_step: '下一步',
@@ -438,8 +425,6 @@ const zhCN = {
   pwd_error: '密码错误',
   valuation: '估值',
   link_to_all: '点击查看全部<<',
-  // 钱包
-  // 创建钱包
   wallet_create_step1: '创建钱包',
   wallet_setPassword: '设置钱包密码',
   wallet_password_placeholder: '请输入至少10位，包含大小写字母和数字的密码',
@@ -451,12 +436,10 @@ const zhCN = {
   wallet_hadWallet: '已有钱包.',
   wallet_importNow: '立即导入>>',
   wallet_nextStep: '下一步',
-  // safetip 安全提示
   wallet_safeTip_title: '安全提示',
   wallet_safeTip_beforeKeystore: '请在安全环境下，下载',
   wallet_safeTip_afterKeystore: '文件，并记录您的助记词，为避免泄漏，请勿拍照或截屏',
   wallet_known: '知道了',
-  // step2 备份助记词
   wallet_create_step2: '备份助记词',
   wallet_create_backupMnemonic: '请将下列助记词按顺序进行备份',
   wallet_create_backupMnemonic_error: '未通过验证，请重新备份',
@@ -472,10 +455,8 @@ const zhCN = {
   wallet_toTrade: '立即开始交易',
   wallet_seePrivate: '查看私钥',
   wallet_privateKey: '私钥',
-  // 导入钱包
   wallet_import: '导入钱包',
   wallet_import_mnemonic: '助记词导入',
-  // keystore导入
   wallet_import_upload_todo: '上传Keystore文件，可直接拖动至此',
   wallet_import_upload_doing: '上传中',
   wallet_import_upload_retry: '重新上传',
@@ -484,20 +465,17 @@ const zhCN = {
   wallet_import_fileError: '文件格式错误/文件内容不合法',
   wallet_import_noFile: '请先上传Keystore文件',
   wallet_import_passwordError: '钱包密码错误',
-  // 助记词导入
   wallet_import_mnemonic_enter: '请输入助记词',
   wallet_import_mnemonic_splitTip: '不同单词请用空格分隔',
   wallet_import_mnemonic_error: '助记词非法',
   wallet_import_mnemonic_sessionPassword: '请设置一个临时密码',
   wallet_import_mnemonic_none: '助记词不能为空',
-  // 私钥导入
   wallet_import_private_enter: '请输入钱包私钥',
   wallet_import_password_placeholder: '请设置一个临时密码',
   wallet_import_private_error: '私钥非法',
   wallet_import_private_none: '私钥不能为空',
 
   wallet_import_sessionPasswordTip: '该密码只对本次登录有效，与其他场景下设置的密码无关',
-  // Header
   header_menu_trade: '交易',
   header_menu_order: '订单',
   header_menu_create_wallet: '创建钱包',
@@ -517,7 +495,6 @@ const zhCN = {
   header_menu_explorer_okchain: '浏览器',
   footer_standard_rates: '费率标准',
 
-  // 首页
   home_banner_title: 'OKEx DEX',
   home_banner_subtitle: '无边界去中心化交易平台',
   home_banner_btn_trade: '开始交易',
@@ -553,7 +530,6 @@ const zhCN = {
   home_receive_coin: '领取测试币',
   home_step5_title: '帮助文档',
 
-  // 资产余额
   assets_tab_accounts: '资产余额',
   assets_tab_transactions: '交易记录',
   assets_address: '地址：',
@@ -567,7 +543,6 @@ const zhCN = {
   assets_column_list: '挂单',
   assets_trans_btn: '转账',
   assets_copy_success: '复制成功',
-  // 交易记录
   trade_query_begin: '起始时间',
   trade_query_end: '截止时间',
   trade_query_order_type: '订单类型',
@@ -588,7 +563,6 @@ const zhCN = {
   trade_type_pay: '付款',
   trade_type_buy: '买',
   trade_type_sell: '卖',
-  // 转账
   trans_address: '转账地址',
   trans_step_1: '转账',
   trans_step_2: '请确认交易信息',
@@ -614,7 +588,6 @@ const zhCN = {
   group_hot: '热门榜',
   group_new: '打新榜',
 
-  // desktop新增
   'node.main.title': 'Node settings',
   'node.active.title': 'Active Node',
   'node.delay.type.low': 'Low latency',
