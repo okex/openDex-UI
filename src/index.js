@@ -13,12 +13,6 @@ import './assets/fonts/iconfont.css';
 import './assets/fonts/iconfont';
 import util from './utils/util';
 
-//  x
-// 是否开放交易所，来自javaWeb工程注入
-// window.isBroker = true;
-// window.brokerObj = {
-//   logo: ''
-// };
 
 window.OK_GLOBAL = {
   webTypes: { OKEx: 'OKEx', DEX: 'DEX' }, // 站点列表
@@ -34,14 +28,15 @@ window.OK_GLOBAL = {
   }, // 当前币对配置
   isLogin: undefined,
 };
-// const language = 'zh_CN';
-// 多语言配置
-const language = util.getSupportLocale(Cookies.get('locale') || 'en_US');
-const languageType = 2; // 1远程，2本地
-let localProviderProps = {};
 
-const renderDom = async () => {
-  const store = configureStore();
+
+const store = configureStore();
+import('./locale').then((localeMessage) => {
+  const language = util.getSupportLocale(Cookies.get('locale') || 'en_US');
+  const localProviderProps = {
+    localeData: localeMessage.default(language)
+  };
+
   render(
     <LocaleProvider {...localProviderProps} >
       <Provider store={store}>
@@ -50,22 +45,5 @@ const renderDom = async () => {
     </LocaleProvider>,
     document.querySelector('#app')
   );
-};
+});
 
-if (languageType === 2) {
-  import('./locale').then((localeMessage) => {
-    localProviderProps = {
-      localeData: localeMessage.default(language)
-    };
-    renderDom();
-  });
-} else {
-  const fetchConfig = {
-    site: 'okex',
-    project: 'spot',
-    locale: language,
-    needParts: ['transfer']
-  };
-  localProviderProps = { fetchConfig };
-  renderDom();
-}

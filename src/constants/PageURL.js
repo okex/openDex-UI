@@ -1,19 +1,12 @@
 const contentPath = '/dex-test';
 
-export const short = {
-  billForce: 'LiquidationOrders',
-  readyRisk: 'InsuranceFunds',
-};
-
 export default {
   homePage: `${contentPath}`,
-  indexPage: `${contentPath}/index`,
   spotDefaultPage: `${contentPath}/spot`, // 全屏交易
   spotFullPage: `${contentPath}/spot/trade`, // 全屏交易
   spotOpenPage: `${contentPath}/spot/open`, // 当前委托
   spotHistoryPage: `${contentPath}/spot/history`, // 历史委托
   spotDealsPage: `${contentPath}/spot/deals`, // 成交明细
-  spotOrdersPage: `${contentPath}/spot/orders?isMargin={0}`, // 币币委托
   loginPage: `${contentPath}/wallet/import?forward={0}&logout=true`, // 登录
   wallet: `${contentPath}/wallet`, // 钱包
   walletAssets: `${contentPath}/wallet/assets`, // 钱包资产
