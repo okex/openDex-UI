@@ -26,8 +26,15 @@ module.exports = Object.assign(base, {
     hot: true,
     host: address,
     port: 5200,
+    proxy: {
+      '/tradingview/*': {
+        target: 'http://okcombeta.bafang.com/',
+        changeOrigin: true,
+        secure: true,
+      },
+    },
     historyApiFallback: {
-      rewrites: [{ from: /^\/$/, to: '/okex/index.html' }],
+      rewrites: [{ from: /^\/$/, to: '/index.html' }],
     },
   },
   devtool: 'source-map',
