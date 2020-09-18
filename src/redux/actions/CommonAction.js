@@ -1,4 +1,4 @@
-import OKExChainClient, { crypto } from '@okexchain/javascript-sdk';
+import OKExChainClient, { crypto } from '@okchain/javascript-sdk';
 import { toLocale } from '_src/locale/react-locale';
 import CommonActionType from '../actionTypes/CommonActionType';
 import Config from '../../constants/Config';

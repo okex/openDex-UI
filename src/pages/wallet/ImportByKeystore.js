@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { UploadField } from '@navjobs/upload';
 import { toLocale } from '_src/locale/react-locale';
-import { crypto } from '@okexchain/javascript-sdk';
+import { crypto } from '@okchain/javascript-sdk';
 import { Button } from '_component/Button';
 import Icon from '_src/component/IconLite';
 import Input from '_component/Input';

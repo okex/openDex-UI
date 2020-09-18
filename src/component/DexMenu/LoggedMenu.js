@@ -3,7 +3,7 @@ import moment from 'moment';
 import { toLocale } from '_src/locale/react-locale';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { crypto } from '@okexchain/javascript-sdk';
+import { crypto } from '@okchain/javascript-sdk';
 import { Dialog } from '_component/Dialog';
 import Menu from '_src/component/Menu';
 import util from '_src/utils/util';
