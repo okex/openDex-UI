@@ -1,7 +1,6 @@
 import React from 'react';
 import { toLocale } from '_src/locale/react-locale';
 import { getLangURL } from '_src/utils/navigation';
-import PageURL from '_src/constants/PageURL';
 import IconLite from '_src/component/IconLite';
 import Config from '_src/constants/Config';
 import Image from '../image';

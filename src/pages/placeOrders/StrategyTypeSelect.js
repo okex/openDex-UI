@@ -71,12 +71,8 @@ class StrategyTypeSelect extends React.Component {
   };
 
   strategyDetailLink = (type) => {
-    const { webType, webTypes } = window.OK_GLOBAL;
     const linkLanguage = Cookies.get('locale') === 'zh_CN' ? 'zh-cn' : 'en-us';
     let tipsLink = `https://okexsupport.zendesk.com/hc/${linkLanguage}/articles/${supportMap[type]}`;
-    if (webType === webTypes.OKCoin) {
-      tipsLink = `https://support.okcoin.com/hc/${linkLanguage}/articles/360003483471`;
-    }
     return (
       <a
         className="strategy-type-more"

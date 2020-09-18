@@ -100,23 +100,6 @@ function listenClient(dispatch, getState) {
   };
 }
 
-function isDirExist(dir) {
-  const { shell } = electronUtils;
-  return new Promise((resolve, reject) => {
-    try {
-      shell.exec(`cd ${dir}`, (code, stdout, stderr) => {
-        if (code === 1) {
-          resolve(false);
-        } else {
-          resolve(true);
-        }
-      });
-    } catch (err) {
-      reject(err);
-    }
-  });
-}
-
 function baseDownload(dir, name, url) {
   const { BrowserWindow } = window.require('electron').remote;
   const win = BrowserWindow.getAllWindows()[0];
