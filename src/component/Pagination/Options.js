@@ -28,17 +28,17 @@ class Options extends React.Component {
 
   buildOptionText = (value) => {
     return `${value} ${this.props.locale.items_per_page}`;
-  }
+  };
 
   changeSize = (value) => {
     this.props.changeSize(Number(value));
-  }
+  };
 
   handleChange = (e) => {
     this.setState({
       goInputText: e.target.value,
     });
-  }
+  };
 
   go = (e) => {
     let val = this.state.goInputText;
@@ -52,7 +52,7 @@ class Options extends React.Component {
       });
       this.props.quickGo(val);
     }
-  }
+  };
 
   render() {
     const props = this.props;
@@ -76,7 +76,9 @@ class Options extends React.Component {
       const Option = Select.Option;
       const pageSize = props.pageSize || props.pageSizeOptions[0];
       const options = props.pageSizeOptions.map((opt, i) => (
-        <Option key={i} value={opt}>{buildOptionText(opt)}</Option>
+        <Option key={i} value={opt}>
+          {buildOptionText(opt)}
+        </Option>
       ));
 
       changeSelect = (
@@ -88,7 +90,7 @@ class Options extends React.Component {
           dropdownMatchSelectWidth={false}
           value={pageSize.toString()}
           onChange={this.changeSize}
-          getPopupContainer={triggerNode => triggerNode.parentNode}
+          getPopupContainer={(triggerNode) => triggerNode.parentNode}
         >
           {options}
         </Select>
@@ -99,20 +101,15 @@ class Options extends React.Component {
       if (goButton) {
         if (typeof goButton === 'boolean') {
           gotoButton = (
-            <button
-              type="button"
-              onClick={this.go}
-              onKeyUp={this.go}
-            >
+            <button type="button" onClick={this.go} onKeyUp={this.go}>
               {locale.jump_to_confirm}
             </button>
           );
         } else {
           gotoButton = (
-            <span
-              onClick={this.go}
-              onKeyUp={this.go}
-            >{goButton}</span>
+            <span onClick={this.go} onKeyUp={this.go}>
+              {goButton}
+            </span>
           );
         }
       }

@@ -5,7 +5,6 @@ import { toLocale } from '_src/locale/react-locale';
 import Alert from '_src/component/Alert';
 import './index.less';
 
-
 const delay = 250;
 const timeout = 20000;
 function loading(props) {
@@ -17,17 +16,28 @@ function loading(props) {
           type={Alert.TYPE.error}
           message={
             <div>
-              <span>{ toLocale(props.error ? 'spot.error' : 'spot.timeout') }! </span>
-              <a onClick={() => { window.location.reload(); }} >{ toLocale('spot.retry') }</a>
+              <span>
+                {toLocale(props.error ? 'spot.error' : 'spot.timeout')}!{' '}
+              </span>
+              <a
+                onClick={() => {
+                  window.location.reload();
+                }}
+              >
+                {toLocale('spot.retry')}
+              </a>
             </div>
           }
           closable={false}
         />
       </div>
-
     );
   } else if (props.pastDelay) {
-    loadingPart = <div className="loading-container"><Loading when={1} /></div>;
+    loadingPart = (
+      <div className="loading-container">
+        <Loading when={1} />
+      </div>
+    );
   }
   return loadingPart;
 }
@@ -36,6 +46,10 @@ export default (loader, showLoading = true) => {
     loader,
     delay,
     timeout,
-    loading: (showLoading ? loading : () => { return null; }), // 默认不显示loading
+    loading: showLoading
+      ? loading
+      : () => {
+          return null;
+        },
   });
 };

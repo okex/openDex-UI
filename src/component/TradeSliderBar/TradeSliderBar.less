@@ -4,7 +4,6 @@
 @bgline-color: #e6e6e6;
 
 .trade-slider-bar-comp {
-  // 防止拖拽时选中页面其他元素
   a, b, body, button, dd, div, dl, dt, em, footer, h1, h2, h3, h4, header,
   html, i, img, li, ol, p, select, span, strong, textarea, ul {
     -webkit-user-select: none;
@@ -15,7 +14,7 @@
 
   margin: 5px;
   position: relative;
-  z-index: 0; /*市价单时，影响上方的select*/
+  z-index: 0; 
   .trade-slider-bar {
     position: relative;
     padding-top: 2px;
@@ -116,7 +115,6 @@
   }
 });
 
-/*覆盖tooltip样式*/
 .trade-order-slider {
   opacity: 1;
   .rc-tooltip-inner {
@@ -173,7 +171,7 @@ body.full-body, body.theme-2 {
   height: 30px;
   .trade-slider-bar {
     .slider-bar-bgline {
-      background-color: #041025; // #606878;
+      background-color: #041025; 
     }
   }
   .bars-container {

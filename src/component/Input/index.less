@@ -4,18 +4,15 @@
 
 .placeholder(@color: @placeholderColor) {
 
-  // Firefox
   &::-moz-placeholder {
     color: @color;
-    opacity: 1; // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526
+    opacity: 1;
   }
 
-  // Internet Explorer 10+
   &:-ms-input-placeholder {
     color: @color;
   }
 
-  // Safari and Chrome
   &::-webkit-input-placeholder {
     color: @color;
   }
@@ -32,9 +29,7 @@
     padding: 4px 11px;
     color: @textColor;
     font-size: @fontSize;
-    // line-height: 1.5;
     background-color: #fff;
-    // background-image: none;
     border: 1px solid @borderColor;
     border-radius: @borderRadius;
     transition: all .3s;
@@ -52,12 +47,10 @@
     }
   }
 
-  // .@{inputPrefixCls}-prefix,
   .@{inputPrefixCls}-suffix {
     position: absolute;
     top: 50%;
     z-index: 2;
-    // color: @placeholderColor;
     line-height: 0;
     transform: translateY(-50%);
     line-height: 1;
@@ -68,9 +61,6 @@
     }
   }
 
-  // .@{inputPrefixCls}-prefix {
-  //   left: 12px;
-  // }
   .@{inputPrefixCls}-suffix {
     right: 12px;
   }

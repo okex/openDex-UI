@@ -7,8 +7,6 @@ import Icon from '_src/component/IconLite';
 import Config from '_constants/Config';
 import './index.less';
 
-
-/* eslint-disable react/sort-comp */
 class Index extends React.Component {
   static propTypes = {
     isShow: PropTypes.bool,
@@ -46,7 +44,6 @@ class Index extends React.Component {
         }, 100);
       }
       if (!nextProps.isShow) {
-        // 从显示到隐藏，清空密码框
         this.setState({
           password: '',
         });
@@ -58,7 +55,6 @@ class Index extends React.Component {
       this.pwdInput.focus();
     });
   };
-  // 输入密码
   onChangePwd = (e) => {
     const password = e.target.value;
     let localWarning = '';
@@ -66,11 +62,10 @@ class Index extends React.Component {
     const { lengthReg, chartReg } = Config.pwdValidate;
     const lengthCheck = lengthReg.test(password);
     const chartCheck = chartReg.test(password);
-    // todo: 是否要在onfirm的时候检查呢？
     if (!lengthCheck) {
-      localWarning = toLocale('wallet_password_lengthValidate'); // 至少10位字符
+      localWarning = toLocale('wallet_password_lengthValidate');
     } else if (!chartCheck) {
-      localWarning = toLocale('wallet_password_chartValidate'); // 必须包含数字、大小写字母
+      localWarning = toLocale('wallet_password_chartValidate');
     }
     this.props.updateWarning(localWarning);
   };
@@ -82,9 +77,7 @@ class Index extends React.Component {
     return password === '' || !lengthCheck || !chartCheck;
   };
   render() {
-    const {
-      btnLoading, isShow, onEnter, onClose, warning
-    } = this.props;
+    const { btnLoading, isShow, onEnter, onClose, warning } = this.props;
     const { password } = this.state;
     return (
       <Dialog
@@ -101,12 +94,17 @@ class Index extends React.Component {
             autoComplete="new-pwd-input"
             value={password}
             onChange={this.onChangePwd}
-            onPaste={(e) => { e.preventDefault(); }}
+            onPaste={(e) => {
+              e.preventDefault();
+            }}
             ref={(dom) => {
               this.pwdInput = dom;
             }}
           />
-          <Icon className="clear-pwd icon-close-circle" onClick={this.clearPwd} />
+          <Icon
+            className="clear-pwd icon-close-circle"
+            onClick={this.clearPwd}
+          />
           <p className="pwd-error">{warning}</p>
           <Button
             block

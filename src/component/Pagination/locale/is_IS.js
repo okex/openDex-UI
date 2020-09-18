@@ -1,11 +1,9 @@
 export default {
-  // Options.jsx
   items_per_page: '/ síðu',
   jump_to: 'Síða',
   jump_to_confirm: 'staðfest',
   page: '',
 
-  // Pagination.jsx
   prev_page: 'Fyrri síða',
   next_page: 'Næsta síða',
   prev_5: 'Til baka 5 síður',

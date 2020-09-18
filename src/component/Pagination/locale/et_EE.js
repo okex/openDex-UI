@@ -1,11 +1,9 @@
 export default {
-  // Options.jsx
   items_per_page: '/ leheküljel',
   jump_to: 'Hüppa',
   jump_to_confirm: 'Kinnitage',
   page: '',
 
-  // Pagination.jsx
   prev_page: 'Eelmine leht',
   next_page: 'Järgmine leht',
   prev_5: 'Eelmised 5 lehekülge',

@@ -30,55 +30,61 @@ class Dashboard extends Component {
 
   showActionLoading = () => {
     this.setState({ isActionLoading: true });
-  }
+  };
 
   hideActionLoading = () => {
     this.setState({ isActionLoading: false });
-  }
+  };
 
   afterMintOrBurn = () => {
     this.setState({ isActionLoading: false });
     this.fetchAccounts();
     this.fetchTokens();
-  }
+  };
 
   fetchAccounts = () => {
     this.setState({ isAccountsLoading: true });
-    ont.get(`${URL.GET_ACCOUNTS}/${this.addr}`).then(({ data }) => {
-      const { currencies } = data;
-      this.setState({
-        currencies: currencies || [],
-        isAccountsLoading: false,
+    ont
+      .get(`${URL.GET_ACCOUNTS}/${this.addr}`)
+      .then(({ data }) => {
+        const { currencies } = data;
+        this.setState({
+          currencies: currencies || [],
+          isAccountsLoading: false,
+        });
+      })
+      .catch(() => {
+        this.setState({ isAccountsLoading: false });
       });
-    }).catch(() => {
-      this.setState({ isAccountsLoading: false });
-    });
-  }
+  };
 
   fetchTokens = () => {
     this.setState({ isTokensLoading: true });
-    ont.get(URL.GET_TOKENS).then(({ data }) => {
-      this.setState({
-        tokens: data,
-        isTokensLoading: false,
+    ont
+      .get(URL.GET_TOKENS)
+      .then(({ data }) => {
+        this.setState({
+          tokens: data,
+          isTokensLoading: false,
+        });
+      })
+      .catch(() => {
+        this.setState({ isTokensLoading: false });
       });
-    }).catch(() => {
-      this.setState({ isTokensLoading: false });
-    });
-  }
+  };
 
   render() {
     const {
-      currencies, tokens, isTokensLoading, isAccountsLoading, isActionLoading
+      currencies,
+      tokens,
+      isTokensLoading,
+      isAccountsLoading,
+      isActionLoading,
     } = this.state;
 
     return (
-      <DexDesktopContainer
-        isShowAddress
-        needLogin
-        loading={isActionLoading}
-      >
-        <div className="dashboard-page-container" >
+      <DexDesktopContainer isShowAddress needLogin loading={isActionLoading}>
+        <div className="dashboard-page-container">
           <DashboardAsset
             tokens={tokens}
             currencies={currencies}

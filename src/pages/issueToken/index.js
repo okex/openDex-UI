@@ -13,7 +13,7 @@ import './index.less';
 
 const showError = () => {
   Message.error({
-    content: '服务端异常，请稍后重试'
+    content: '服务端异常，请稍后重试',
   });
 };
 
@@ -33,82 +33,88 @@ class IssueToken extends Component {
 
   onSymbolChange = (e) => {
     this.setState({
-      symbol: e.target.value
+      symbol: e.target.value,
     });
-  }
+  };
 
   onWholenameChange = (e) => {
     this.setState({
-      wholename: e.target.value
+      wholename: e.target.value,
     });
-  }
+  };
 
   onTotalSupplyChange = (e) => {
     this.setState({
-      totalSupply: e.target.value
+      totalSupply: e.target.value,
     });
-  }
+  };
 
   onMintableChange = (e) => {
     this.setState({
-      mintable: e.target.checked ? 1 : 0
+      mintable: e.target.checked ? 1 : 0,
     });
-  }
+  };
 
   onDescChange = (e) => {
     this.setState({
-      desc: e.target.value
+      desc: e.target.value,
     });
-  }
+  };
 
   onIssue = () => {
     this.setState({ isActionLoading: true });
-    const {
-      symbol, wholename, totalSupply, mintable, desc
-    } = this.state;
+    const { symbol, wholename, totalSupply, mintable, desc } = this.state;
     const { okchainClient } = this.props;
     const fSymbol = symbol.toLowerCase();
     const fTotal = util.precisionInput(totalSupply);
     const fMintable = mintable === 1;
-    okchainClient.sendTokenIssueTransaction(fSymbol, wholename, fTotal, fMintable, desc).then((res) => {
-      this.setState({ isActionLoading: false });
-      const { result } = res;
-      const { txhash } = result;
-      if (!validateTxs(res)) {
+    okchainClient
+      .sendTokenIssueTransaction(fSymbol, wholename, fTotal, fMintable, desc)
+      .then((res) => {
+        this.setState({ isActionLoading: false });
+        const { result } = res;
+        const { txhash } = result;
+        if (!validateTxs(res)) {
+          showError();
+        } else {
+          const dialog = Dialog.success({
+            className: 'desktop-success-dialog',
+            confirmText: 'Get Detail',
+            theme: 'dark',
+            title: 'Issue success！',
+            windowStyle: {
+              background: '#112F62',
+            },
+            onConfirm: () => {
+              window.open(`${Config.okchain.browserUrl}/tx/${txhash}`);
+              dialog.destroy();
+            },
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        this.setState({ isActionLoading: false });
         showError();
-      } else {
-        const dialog = Dialog.success({
-          className: 'desktop-success-dialog',
-          confirmText: 'Get Detail',
-          theme: 'dark',
-          title: 'Issue success！',
-          windowStyle: {
-            background: '#112F62'
-          },
-          onConfirm: () => {
-            window.open(`${Config.okchain.browserUrl}/tx/${txhash}`);
-            dialog.destroy();
-          },
-        });
-      }
-    }).catch((err) => {
-      console.log(err);
-      this.setState({ isActionLoading: false });
-      showError();
-    });
-  }
+      });
+  };
 
   onPwdSuccess = () => {
     this.onIssue();
-  }
+  };
 
   handleIssue = () => {
     this.props.checkPK(this.onIssue);
-  }
+  };
 
   render() {
     const {
-      symbol, wholename, totalSupply, desc, mintable, isActionLoading
+      symbol,
+      wholename,
+      totalSupply,
+      desc,
+      mintable,
+      isActionLoading,
     } = this.state;
     return (
       <DexDesktopContainer

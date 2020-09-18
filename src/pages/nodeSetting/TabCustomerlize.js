@@ -9,19 +9,17 @@ import { randomStrNumber } from '_src/utils/random';
 import NodeItem from './NodeItem';
 import './TabCustomerlize.less';
 
-function mapStateToProps(state) { // 绑定redux中相关state
-  const {
-    currentNode, customList
-  } = state.NodeStore;
+function mapStateToProps(state) {
+  const { currentNode, customList } = state.NodeStore;
   return {
     currentNode,
     customList,
   };
 }
 
-function mapDispatchToProps(dispatch) { // 绑定action，以便向redux发送action
+function mapDispatchToProps(dispatch) {
   return {
-    nodeActions: bindActionCreators(NodeActions, dispatch)
+    nodeActions: bindActionCreators(NodeActions, dispatch),
   };
 }
 
@@ -39,20 +37,20 @@ class TabCustomerlize extends Component {
 
   onValueNameChange = (e) => {
     this.setState({ valueName: e.target.value });
-  }
+  };
 
   onValueWsChange = (e) => {
     this.setState({ valueWs: e.target.value });
-  }
+  };
 
   onValueHttpChange = (e) => {
     this.setState({ valueHttp: e.target.value });
-  }
+  };
 
   onCancel = () => {
     this.closeDialog();
     this.clearInputValues();
-  }
+  };
 
   onConfirm = () => {
     const { valueName, valueWs, valueHttp } = this.state;
@@ -80,15 +78,15 @@ class TabCustomerlize extends Component {
     nodeActions.updateCustomList(newList);
     this.closeDialog();
     this.clearInputValues();
-  }
+  };
 
   showDialog = () => {
     this.setState({ isDialogShow: true });
-  }
+  };
 
   closeDialog = () => {
     this.setState({ isDialogShow: false });
-  }
+  };
 
   clearInputValues = () => {
     this.setState({
@@ -96,14 +94,14 @@ class TabCustomerlize extends Component {
       valueWs: '',
       valueHttp: '',
     });
-  }
+  };
 
   handleChange = (node) => {
     return () => {
       const { nodeActions } = this.props;
       nodeActions.updateCurrentNode(node);
     };
-  }
+  };
 
   handleDelete = (node) => {
     return (e) => {
@@ -119,12 +117,10 @@ class TabCustomerlize extends Component {
         nodeActions.updateCustomList(newList);
       }
     };
-  }
+  };
 
   render() {
-    const {
-      isDialogShow, valueName, valueWs, valueHttp
-    } = this.state;
+    const { isDialogShow, valueName, valueWs, valueHttp } = this.state;
     const { customList, currentNode } = this.props;
     const showList = customList.filter((node) => {
       return currentNode.id !== node.id;
@@ -147,49 +143,62 @@ class TabCustomerlize extends Component {
           <div className="cd-main">
             <div className="cd-input-container">
               <label className="cd-label">Name</label>
-              <input className="cd-input" type="text" value={valueName} onChange={this.onValueNameChange} />
+              <input
+                className="cd-input"
+                type="text"
+                value={valueName}
+                onChange={this.onValueNameChange}
+              />
             </div>
             <div className="cd-input-container">
               <label className="cd-label">WS</label>
-              <input className="cd-input" type="text" value={valueWs} onChange={this.onValueWsChange} />
+              <input
+                className="cd-input"
+                type="text"
+                value={valueWs}
+                onChange={this.onValueWsChange}
+              />
             </div>
             <div className="cd-input-container">
               <label className="cd-label">RPC</label>
-              <input className="cd-input" type="text" value={valueHttp} onChange={this.onValueHttpChange} />
+              <input
+                className="cd-input"
+                type="text"
+                value={valueHttp}
+                onChange={this.onValueHttpChange}
+              />
             </div>
           </div>
           <div className="cd-btn-container">
-            <div className="cd-btn cd-btn-cancel" onClick={this.closeDialog}>Cancel</div>
-            <div className="cd-btn cd-btn-confirm" onClick={this.onConfirm}>Confirm</div>
+            <div className="cd-btn cd-btn-cancel" onClick={this.closeDialog}>
+              Cancel
+            </div>
+            <div className="cd-btn cd-btn-confirm" onClick={this.onConfirm}>
+              Confirm
+            </div>
           </div>
         </Dialog>
-        {
-          showList.length > 0 && (
-            <ul className="custom-node-list">
-              {
-                showList.map((node) => {
-                  const {
-                    id, name, wsUrl, httpUrl, latency
-                  } = node;
-                  return (
-                    <li className="node-set-list-item" key={id}>
-                      <NodeItem
-                        name={name}
-                        ws={wsUrl}
-                        http={httpUrl}
-                        delayTime={latency}
-                        disabled={false}
-                        onClick={this.handleChange(node)}
-                        isRenderDelete
-                        onDelete={this.handleDelete(node)}
-                      />
-                    </li>
-                  );
-                })
-              }
-            </ul>
-          )
-        }
+        {showList.length > 0 && (
+          <ul className="custom-node-list">
+            {showList.map((node) => {
+              const { id, name, wsUrl, httpUrl, latency } = node;
+              return (
+                <li className="node-set-list-item" key={id}>
+                  <NodeItem
+                    name={name}
+                    ws={wsUrl}
+                    http={httpUrl}
+                    delayTime={latency}
+                    disabled={false}
+                    onClick={this.handleChange(node)}
+                    isRenderDelete
+                    onDelete={this.handleDelete(node)}
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        )}
       </div>
     );
   }

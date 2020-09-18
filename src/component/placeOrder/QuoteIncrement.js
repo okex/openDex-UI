@@ -5,7 +5,7 @@ export default class QuoteIncrement extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      extra: ''
+      extra: '',
     };
   }
 
@@ -15,14 +15,13 @@ export default class QuoteIncrement extends React.Component {
     if (quoteIncrement != 0) {
       return (
         <div className="tooltip-content">
-          {
-            toLocale('spot.place.tips.must') +
-            quoteIncrement + this.state.extra +
-            toLocale('spot.place.tips.multiple')
-          }
+          {toLocale('spot.place.tips.must') +
+            quoteIncrement +
+            this.state.extra +
+            toLocale('spot.place.tips.multiple')}
         </div>
       );
     }
-    return (<div />);
+    return <div />;
   }
 }

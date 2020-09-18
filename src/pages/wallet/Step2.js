@@ -25,10 +25,10 @@ function mapDispatchToProps(dispatch) {
 class Step2 extends Component {
   onNext = () => {
     this.props.walletAction.updateCreateStep(3);
-  }
+  };
   handleSafeTipEnsure = () => {
     this.props.walletAction.updateIsShowSafeTip(false);
-  }
+  };
   render() {
     const { isPass, isShowSafeTip, mnemonic } = this.props;
     return (
@@ -45,23 +45,20 @@ class Step2 extends Component {
                 {toLocale('wallet_create_backupMnemonic')}
               </div>
               <div className="mnemonic-content">
-                {
-                  mnemonic.split(' ').map((item, index) => {
-                    return (
-                      <div className="mnemonic-item" key={item}>
-                        <span className="mnemonic-item-no">{index + 1}</span>
-                        <span className="mnemonic-item-word">{item}</span>
-                      </div>
-                    );
-                  })
-                }
+                {mnemonic.split(' ').map((item, index) => {
+                  return (
+                    <div className="mnemonic-item" key={item}>
+                      <span className="mnemonic-item-no">{index + 1}</span>
+                      <span className="mnemonic-item-word">{item}</span>
+                    </div>
+                  );
+                })}
               </div>
-              {
-                !isPass &&
+              {!isPass && (
                 <span className="error-tip">
                   {toLocale('wallet_create_backupMnemonic_error')}
                 </span>
-              }
+              )}
             </div>
             <div className="next-row">
               <Button type="primary" onClick={this.onNext}>
@@ -71,10 +68,7 @@ class Step2 extends Component {
           </WalletRight>
         </div>
 
-        <SafeTip
-          visible={isShowSafeTip}
-          onEnsure={this.handleSafeTipEnsure}
-        />
+        <SafeTip visible={isShowSafeTip} onEnsure={this.handleSafeTipEnsure} />
       </div>
     );
   }

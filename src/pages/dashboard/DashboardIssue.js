@@ -26,13 +26,13 @@ class DashboardIssue extends Component {
         currentToken: token,
       });
     };
-  }
+  };
 
   onMintClose = () => {
     this.setState({
       isShowMintDialog: false,
     });
-  }
+  };
 
   onBurnOpen = (token) => {
     return () => {
@@ -41,29 +41,27 @@ class DashboardIssue extends Component {
         currentToken: token,
       });
     };
-  }
+  };
 
   onBurnClose = () => {
     this.setState({
       isShowBurnDialog: false,
     });
-  }
+  };
 
   afterMintOrBurn = () => {
     this.props.afterMintOrBurn();
     this.setState({
-      currentToken: ''
+      currentToken: '',
     });
-  }
+  };
 
   toIssueDetail = () => {
     history.push(PageURL.issueDetailPage);
-  }
+  };
 
   render() {
-    const {
-      loading, tokens, beforeMintOrBurn
-    } = this.props;
+    const { loading, tokens, beforeMintOrBurn } = this.props;
     const { isShowMintDialog, isShowBurnDialog, currentToken } = this.state;
     const fTokens = tokens.slice(0, 3).filter((token) => {
       return token.owner === this.addr;
@@ -72,7 +70,10 @@ class DashboardIssue extends Component {
       <Fragment>
         <DashboardSection
           title={toLocale('dashboard_issue_title')}
-          columns={getIssueCols({ mint: this.onMintOpen, burn: this.onBurnOpen })}
+          columns={getIssueCols({
+            mint: this.onMintOpen,
+            burn: this.onBurnOpen,
+          })}
           dataSource={fTokens}
           rowKey="symbol"
           isLoading={loading}

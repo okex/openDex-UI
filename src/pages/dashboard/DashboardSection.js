@@ -4,13 +4,21 @@ import { toLocale } from '_src/locale/react-locale';
 import './DashboardSection.less';
 
 const DashboardSection = ({
-  title, columns, dataSource, rowKey, onClickMore = () => {}, isLoading = false, empty = '',
+  title,
+  columns,
+  dataSource,
+  rowKey,
+  onClickMore = () => {},
+  isLoading = false,
+  empty = '',
 }) => {
   return (
     <section className="dashboard-section">
       <div className="ds-top">
         <h2 className="ds-title">{title}</h2>
-        <span className="ds-more" onClick={onClickMore}>{toLocale('dashboard_more')}</span>
+        <span className="ds-more" onClick={onClickMore}>
+          {toLocale('dashboard_more')}
+        </span>
       </div>
       <DexTable
         columns={columns}

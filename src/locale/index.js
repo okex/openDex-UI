@@ -5,13 +5,13 @@ import KoKR from './ko';
 
 export default (language) => {
   let messages = null;
-  if (language === 'zh_CN') { // 简体中文
+  if (language === 'zh_CN') {
     messages = ZhCN;
-  } else if (language === 'en_US') { // 英文
+  } else if (language === 'en_US') {
     messages = EnUS;
-  } else if (language === 'zh_HK') { // 繁体中文
+  } else if (language === 'zh_HK') {
     messages = ZhHK;
-  } else if (language === 'ko_KR') { // 韩文
+  } else if (language === 'ko_KR') {
     messages = KoKR;
   }
   return messages;

@@ -39,21 +39,24 @@ class DashboardAsset extends Component {
 
   toAssets = () => {
     history.push(PageURL.walletAssets);
-  }
+  };
 
   render() {
-    const {
-      valuationUnit, showTransfer, transferSymbol,
-    } = this.state;
+    const { valuationUnit, showTransfer, transferSymbol } = this.state;
     const { currencies, tokens, loading } = this.props;
     const tokenMap = {};
     const tokenList = tokens.map((token) => {
       const { symbol, original_symbol, whole_name } = token;
-      const originalAndWhole = `${original_symbol.toUpperCase()}___${whole_name}`; // 用于计算数量
+      const originalAndWhole = `${original_symbol.toUpperCase()}___${whole_name}`;
       tokenMap[symbol] = { ...token, originalAndWhole };
       return {
         value: symbol,
-        label: <span><span className="symbol-left">{original_symbol.toUpperCase()}</span>{whole_name}</span>,
+        label: (
+          <span>
+            <span className="symbol-left">{original_symbol.toUpperCase()}</span>
+            {whole_name}
+          </span>
+        ),
       };
     });
     const originalAndWholeCounts = {};
@@ -68,22 +71,23 @@ class DashboardAsset extends Component {
       }
     });
     const allCurrencies = currencies.map((curr) => {
-      const {
-        symbol, available, freeze, locked
-      } = curr;
+      const { symbol, available, freeze, locked } = curr;
       const tokenObj = tokenMap[symbol] || {
         original_symbol: '',
       };
-      const { original_symbol, originalAndWhole } = tokenObj; // 兼容旧版币种简称
+      const { original_symbol, originalAndWhole } = tokenObj;
       const symbolUp = symbol.toUpperCase();
       const assetToken = (original_symbol || '').toUpperCase() || symbolUp;
-      const sumOKB = calc.add(calc.add(available || 0, freeze || 0), locked || 0);
+      const sumOKB = calc.add(
+        calc.add(available || 0, freeze || 0),
+        locked || 0
+      );
       return {
         ...curr,
         ...tokenObj,
         assetToken,
         symbolId: originalAndWholeCounts[originalAndWhole] <= 1 ? '' : symbolUp,
-        total: calc.showFloorTruncation(sumOKB, 8, false), // 资产返回8位，2020-01-10
+        total: calc.showFloorTruncation(sumOKB, 8, false),
       };
     });
     const fCurrencies = allCurrencies.slice(0, 3);
@@ -92,7 +96,10 @@ class DashboardAsset extends Component {
       <Fragment>
         <DashboardSection
           title={toLocale('dashboard_asset_title')}
-          columns={getAccountsCols({ transfer: this.openTransfer }, { valuationUnit })}
+          columns={getAccountsCols(
+            { transfer: this.openTransfer },
+            { valuationUnit }
+          )}
           dataSource={fCurrencies}
           rowKey="symbol"
           isLoading={loading}

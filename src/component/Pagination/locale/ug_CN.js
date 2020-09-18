@@ -1,10 +1,8 @@
 export default {
-  // Options.jsx
   items_per_page: 'تال/ھەر بەت',
   jump_to: 'بەتكە سەكرەش',
   jump_to_confirm: 'مۇقىملاشتۇرۇش',
   page: 'بەت',
-  // Pagination.jsx
   prev_page: 'ئالدىنقى',
   next_page: 'كېيىنكى',
   prev_5: 'ئالدىغا 5 بەت',

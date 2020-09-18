@@ -8,13 +8,9 @@ import { NODE_TYPE } from '_constants/Node';
 import NodeItem from './NodeItem';
 import './NodeList.less';
 
-function mapStateToProps(state) { // 绑定redux中相关state
-  const {
-    currentNode, remoteList
-  } = state.NodeStore;
-  const {
-    isSync, isStarted: isLocalNodeStarted,
-  } = state.LocalNodeStore;
+function mapStateToProps(state) {
+  const { currentNode, remoteList } = state.NodeStore;
+  const { isSync, isStarted: isLocalNodeStarted } = state.LocalNodeStore;
   return {
     currentNode,
     remoteList,
@@ -23,7 +19,7 @@ function mapStateToProps(state) { // 绑定redux中相关state
   };
 }
 
-function mapDispatchToProps(dispatch) { // 绑定action，以便向redux发送action
+function mapDispatchToProps(dispatch) {
   return {
     nodeActions: bindActionCreators(NodeActions, dispatch),
   };
@@ -46,39 +42,48 @@ class NodeList extends Component {
         });
       }
     };
-  }
+  };
 
   render() {
     const { remoteList, currentNode, isSync } = this.props;
     const notCurrentList = remoteList.filter((node) => {
       return currentNode.id !== node.id;
     });
-    const showList = !(isSync && currentNode.type === NODE_TYPE.LOCAL) ? notCurrentList : notCurrentList.filter((node) => {
-      return node.type !== NODE_TYPE.NONE;
-    });
+    const showList = !(isSync && currentNode.type === NODE_TYPE.LOCAL)
+      ? notCurrentList
+      : notCurrentList.filter((node) => {
+          return node.type !== NODE_TYPE.NONE;
+        });
 
     return (
       <ul className="node-set-list">
-        {
-          showList.map((node) => {
-            const {
-              id, region, country, location, wsUrl, latency, httpUrl
-            } = node;
-            const name = node.id === NONE_NODE.id ? 'None' : `${region} - ${country} - ${location}`;
-            return (
-              <li className="node-set-list-item" key={id}>
-                <NodeItem
-                  name={name}
-                  ws={wsUrl || '- -'}
-                  http={httpUrl || '- -'}
-                  delayTime={latency}
-                  disabled={false}
-                  onClick={this.handleChange(node)}
-                />
-              </li>
-            );
-          })
-        }
+        {showList.map((node) => {
+          const {
+            id,
+            region,
+            country,
+            location,
+            wsUrl,
+            latency,
+            httpUrl,
+          } = node;
+          const name =
+            node.id === NONE_NODE.id
+              ? 'None'
+              : `${region} - ${country} - ${location}`;
+          return (
+            <li className="node-set-list-item" key={id}>
+              <NodeItem
+                name={name}
+                ws={wsUrl || '- -'}
+                http={httpUrl || '- -'}
+                delayTime={latency}
+                disabled={false}
+                onClick={this.handleChange(node)}
+              />
+            </li>
+          );
+        })}
       </ul>
     );
   }

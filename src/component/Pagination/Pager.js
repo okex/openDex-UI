@@ -17,7 +17,7 @@ const Pager = (props) => {
     props.onClick(props.page);
   };
 
-  const handleKeyPress = e => {
+  const handleKeyPress = (e) => {
     props.onKeyPress(e, props.onClick, props.page);
   };
 

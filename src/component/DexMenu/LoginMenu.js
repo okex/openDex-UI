@@ -11,11 +11,10 @@ import * as walletActions from '_src/redux/actions/WalletAction';
 
 import './index.less';
 
-function mapStateToProps(state) { // 绑定redux中相关state
+function mapStateToProps(state) {
   const { WalletStore } = state;
-  // step 创建钱包状态
   return {
-    WalletStore
+    WalletStore,
   };
 }
 
@@ -28,24 +27,24 @@ function mapDispatchToProps(dispatch) {
 @withRouter
 @connect(mapStateToProps, mapDispatchToProps)
 class DexLoginMenu extends React.Component {
-  handleCreateWallet=() => {
+  handleCreateWallet = () => {
     const { walletAction } = this.props;
     walletAction.updateCreateStep(1);
-    // 重新走流程，需要出现安全提示
     walletAction.updateIsShowSafeTip(true);
   };
 
   render() {
     return (
-      <Menu
-        mode="horizontal"
-        className="okdex-menu"
-      >
+      <Menu mode="horizontal" className="okdex-menu">
         <Menu.Item key="createWallet">
-          <Link to={getLangURL(`${PageURL.homePage}/wallet/create`)} >{toLocale('header_menu_create_wallet')}</Link>
+          <Link to={getLangURL(`${PageURL.homePage}/wallet/create`)}>
+            {toLocale('header_menu_create_wallet')}
+          </Link>
         </Menu.Item>
-        <Menu.Item key="importWallet" >
-          <Link to={getLangURL(`${PageURL.homePage}/wallet/import`)} >{toLocale('header_menu_import_wallet')}</Link>
+        <Menu.Item key="importWallet">
+          <Link to={getLangURL(`${PageURL.homePage}/wallet/import`)}>
+            {toLocale('header_menu_import_wallet')}
+          </Link>
         </Menu.Item>
       </Menu>
     );

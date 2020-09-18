@@ -16,24 +16,19 @@ const OrderHeader = (props) => {
   return (
     <div className={`clear-fix ${headerContainerCls}`}>
       <ul className="tabs clear-fix">
-        {/* 币币页面去掉，全屏页面保留 from PM张博 */}
-        {/* {tradeType === Enum.tradeType.fullTrade ? `(${noDeal.length > 20 ? 20 : noDeal.length})` : null} */}
-        {
-          dataSource.map(({ type: headerType, name }) => {
-            return (
-              <li
-                key={headerType}
-                className={type === headerType ? 'active' : ''}
-                onClick={onTabChange(headerType)}
-              >
-                {name}
-              </li>
-            );
-          })
-        }
+        {dataSource.map(({ type: headerType, name }) => {
+          return (
+            <li
+              key={headerType}
+              className={type === headerType ? 'active' : ''}
+              onClick={onTabChange(headerType)}
+            >
+              {name}
+            </li>
+          );
+        })}
       </ul>
       {props.children}
-      {/* orderPageLink */}
     </div>
   );
 };

@@ -7,17 +7,12 @@ import NodeActionType from '../actionTypes/NodeActionType';
 let breakTimer = null;
 let tempBreakTimer = null;
 
-/**
- * 更新当前节点
- */
 export function updateCurrentNode(node) {
   return (dispatch, getState) => {
     let n;
     const { isSync } = getState().LocalNodeStore;
     if (node.type === NODE_TYPE.NONE && isSync) {
-      const {
-        rest, ws,
-      } = getState().LocalNodeStore;
+      const { rest, ws } = getState().LocalNodeStore;
       const localNode = {
         name: 'Local',
         httpUrl: `${LOCAL_PREFIX}${rest}`,
@@ -43,8 +38,8 @@ export function updateRemoteList(list) {
     dispatch({
       type: NodeActionType.UPDATE_REMOTE_LIST,
       data: list,
-    })
-  }
+    });
+  };
 }
 
 export function updateCustomList(list) {
@@ -53,11 +48,11 @@ export function updateCustomList(list) {
     dispatch({
       type: NodeActionType.UPDATE_CUSTOM_LIST,
       data: list,
-    })
-  }
+    });
+  };
 }
 
-function updateTempBreakTime (dispatch, getState) {
+function updateTempBreakTime(dispatch, getState) {
   const oldTempBreakTime = getState().NodeStore.tempBreakTime;
   dispatch({
     type: NodeActionType.UPDATE_TEMP_BREAK_TIME,
@@ -65,7 +60,7 @@ function updateTempBreakTime (dispatch, getState) {
   });
 }
 
-function updateBreakTime (dispatch, getState) {
+function updateBreakTime(dispatch, getState) {
   const oldBreakTime = getState().NodeStore.breakTime;
   dispatch({
     type: NodeActionType.UPDATE_BREAK_TIME,
@@ -83,7 +78,7 @@ export function restartTempBreakTimer() {
     tempBreakTimer = setInterval(() => {
       updateTempBreakTime(dispatch, getState);
     }, 1000);
-  }
+  };
 }
 
 export function startCheckBreakTime() {
@@ -98,7 +93,7 @@ export function startCheckBreakTime() {
         updateTempBreakTime(dispatch, getState);
       }, 1000);
     }
-  }
+  };
 }
 
 export function stopCheckBreakTime() {
@@ -113,5 +108,5 @@ export function stopCheckBreakTime() {
       type: NodeActionType.UPDATE_TEMP_BREAK_TIME,
       data: 0,
     });
-  }
+  };
 }

@@ -35,22 +35,26 @@ export const getIssueCols = ({ mint, burn }) => {
       title: toLocale('issue_column_mintable'),
       key: 'mintable',
       render(text) {
-        return text ? <Icon className="icon-check" style={{ color: '#00BC6C' }} /> : <Icon className="icon-close" style={{ color: '#E35E5E' }} />;
-      }
+        return text ? (
+          <Icon className="icon-check" style={{ color: '#00BC6C' }} />
+        ) : (
+          <Icon className="icon-close" style={{ color: '#E35E5E' }} />
+        );
+      },
     },
     {
       title: toLocale('issue_column_original'),
       key: 'original_total_supply',
       render: (text) => {
         return calc.showFloorTruncation(text, 8, false);
-      }
+      },
     },
     {
       title: toLocale('issue_column_total'),
       key: 'total_supply',
       render: (text) => {
         return calc.showFloorTruncation(text, 8, false);
-      }
+      },
     },
     {
       title: '',
@@ -58,29 +62,21 @@ export const getIssueCols = ({ mint, burn }) => {
       render(text, { mintable, symbol }) {
         return (
           <div className="complex-action-container">
-            {
-              mintable && (
-                <Fragment>
-                  <span
-                    className="td-action"
-                    onClick={mint(symbol)}
-                  >
-                    {toLocale('issue_cell_mint')}
-                  </span>
-                  <div className="action-boundary" />
-                </Fragment>
-              )
-            }
-            <span
-              className="td-action"
-              onClick={burn(symbol)}
-            >
+            {mintable && (
+              <Fragment>
+                <span className="td-action" onClick={mint(symbol)}>
+                  {toLocale('issue_cell_mint')}
+                </span>
+                <div className="action-boundary" />
+              </Fragment>
+            )}
+            <span className="td-action" onClick={burn(symbol)}>
               {toLocale('issue_cell_burn')}
             </span>
           </div>
         );
-      }
-    }
+      },
+    },
   ];
 };
 
@@ -91,21 +87,30 @@ export const getDashboardTokenPairCols = ({ add, withdraw }) => {
       key: 'product',
       render: (text) => {
         return util.getShortName(text);
-      }
+      },
     },
     {
       title: toLocale('tokenPair_column_birth'),
       key: 'block_height',
       render: (text) => {
-        return <a className="one-line" href={`${Config.okchain.browserUrl}/block/${text}`} target="_blank" rel="noopener noreferrer">{text}</a>;
-      }
+        return (
+          <a
+            className="one-line"
+            href={`${Config.okchain.browserUrl}/block/${text}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {text}
+          </a>
+        );
+      },
     },
     {
       title: toLocale('tokenPair_column_deposit'),
       key: 'deposits',
       render: (text) => {
         return calc.showFloorTruncation(text.amount, 8, false);
-      }
+      },
     },
     {
       title: toLocale('tokenPair_column_rank'),
@@ -117,23 +122,17 @@ export const getDashboardTokenPairCols = ({ add, withdraw }) => {
       render: (text, { product }) => {
         return (
           <div className="complex-action-container">
-            <span
-              className="td-action"
-              onClick={add(product)}
-            >
+            <span className="td-action" onClick={add(product)}>
               {toLocale('tokenPair_cell_add')}
             </span>
             <div className="action-boundary" />
-            <span
-              className="td-action"
-              onClick={withdraw(product)}
-            >
+            <span className="td-action" onClick={withdraw(product)}>
               {toLocale('tokenPair_cell_withdraw')}
             </span>
           </div>
         );
-      }
-    }
+      },
+    },
   ];
 };
 
@@ -152,21 +151,30 @@ export const getDetailTokenPairCols = ({ add, withdraw }) => {
       key: 'product',
       render: (text) => {
         return util.getShortName(text);
-      }
+      },
     },
     {
       title: toLocale('tokenPair_column_birth'),
       key: 'block_height',
       render: (text) => {
-        return <a className="one-line" href={`${Config.okchain.browserUrl}/block/${text}`} target="_blank" rel="noopener noreferrer">{text}</a>;
-      }
+        return (
+          <a
+            className="one-line"
+            href={`${Config.okchain.browserUrl}/block/${text}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {text}
+          </a>
+        );
+      },
     },
     {
       title: toLocale('tokenPair_column_deposit'),
       key: 'deposits',
       render: (text) => {
         return calc.showFloorTruncation(text.amount, 8, false);
-      }
+      },
     },
     {
       title: '',
@@ -174,23 +182,17 @@ export const getDetailTokenPairCols = ({ add, withdraw }) => {
       render: (text, { product }) => {
         return (
           <div className="complex-action-container">
-            <span
-              className="td-action"
-              onClick={add(product)}
-            >
+            <span className="td-action" onClick={add(product)}>
               {toLocale('tokenPair_cell_add')}
             </span>
             <div className="action-boundary" />
-            <span
-              className="td-action"
-              onClick={withdraw(product)}
-            >
+            <span className="td-action" onClick={withdraw(product)}>
               {toLocale('tokenPair_cell_withdraw')}
             </span>
           </div>
         );
-      }
-    }
+      },
+    },
   ];
 };
 
@@ -215,42 +217,39 @@ export const getAccountsCols = ({ transfer }) => {
             </Tooltip>
           </div>
         );
-      }
+      },
     },
     {
       title: toLocale('assets_column_total'),
       key: 'total',
       render: (text) => {
         return text;
-      }
+      },
     },
     {
       title: toLocale('assets_column_balance'),
       key: 'available',
       render: (text) => {
         return calc.showFloorTruncation(text, 8, false);
-      }
+      },
     },
     {
       title: toLocale('assets_column_list'),
       key: 'locked',
       render: (text) => {
         return calc.showFloorTruncation(text, 8, false);
-      }
+      },
     },
     {
       title: '',
       key: 'transfer',
       render: (text, { symbol }) => {
         return (
-          <span
-            className="td-action"
-            onClick={transfer(symbol)}
-          >
+          <span className="td-action" onClick={transfer(symbol)}>
             {toLocale('assets_trans_btn')}
           </span>
         );
-      }
+      },
     },
   ];
 };
@@ -272,22 +271,31 @@ export const getTransactionsCols = () => {
       title: toLocale('trade_column_hash'),
       key: 'txhash',
       render: (text) => {
-        return <a className="one-line" href={`${Config.okchain.browserUrl}/tx/${text}`} target="_blank" rel="noopener noreferrer">{text}</a>;
-      }
+        return (
+          <a
+            className="one-line"
+            href={`${Config.okchain.browserUrl}/tx/${text}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {text}
+          </a>
+        );
+      },
     },
     {
       title: toLocale('trade_column_time'),
       key: 'timestamp',
       render: (text) => {
         return moment(Number(`${text}000`)).format('MM-DD HH:mm:ss');
-      }
+      },
     },
     {
       title: toLocale('trade_column_type'),
       key: 'type',
       render: (text) => {
         return transactionsTypesMap[text] || '';
-      }
+      },
     },
     {
       title: toLocale('trade_column_amount'),
@@ -321,6 +329,6 @@ export const getFeesCols = () => {
     {
       title: 'HandlingFee',
       key: 'fee',
-    }
+    },
   ];
 };

@@ -21,7 +21,9 @@ class AssetsTransactions extends Component {
     this.minDate = moment().subtract(1, 'years');
     this.maxDate = moment();
     this.defaultPage = {
-      page: 1, per_page: 20, total: 0
+      page: 1,
+      per_page: 20,
+      total: 0,
     };
     this.state = {
       transactions: [],
@@ -29,13 +31,16 @@ class AssetsTransactions extends Component {
       endDate: 0,
       type: 0,
       loading: false,
-      param_page: this.defaultPage
+      param_page: this.defaultPage,
     };
-    this.typeOptions = [{ value: 0, label: toLocale('all') }].concat(assetsUtil.transactionsTypes);
+    this.typeOptions = [{ value: 0, label: toLocale('all') }].concat(
+      assetsUtil.transactionsTypes
+    );
     this.addr = window.OK_GLOBAL.senderAddr;
   }
   componentDidMount() {
-    document.title = toLocale('assets_tab_transactions') + toLocale('spot.page.title');
+    document.title =
+      toLocale('assets_tab_transactions') + toLocale('spot.page.title');
     if (this.addr) {
       this.fetchTransactions();
     }
@@ -55,30 +60,48 @@ class AssetsTransactions extends Component {
       page,
       per_page: 20,
       type: type || undefined,
-      start: startDate ? calc.div(moment(startDate).startOf('day').valueOf(), 1000) : undefined,
-      end: endDate ? calc.div(moment(endDate).endOf('day').valueOf() - 999, 1000) : undefined,
+      start: startDate
+        ? calc.div(moment(startDate).startOf('day').valueOf(), 1000)
+        : undefined,
+      end: endDate
+        ? calc.div(moment(endDate).endOf('day').valueOf() - 999, 1000)
+        : undefined,
     };
     this.setState({ loading: true });
-    ont.get(URL.GET_TRANSACTIONS, { params }).then(({ data }) => {
-      const list = data.data.map((item) => {
-        const newItem = { ...item };
-        newItem.uniqueKey = newItem.txhash + newItem.type + newItem.side + newItem.symbol + newItem.timestamp;
-        return newItem;
+    ont
+      .get(URL.GET_TRANSACTIONS, { params })
+      .then(({ data }) => {
+        const list = data.data.map((item) => {
+          const newItem = { ...item };
+          newItem.uniqueKey =
+            newItem.txhash +
+            newItem.type +
+            newItem.side +
+            newItem.symbol +
+            newItem.timestamp;
+          return newItem;
+        });
+        this.setState({
+          transactions: list || [],
+          param_page: data.param_page || this.defaultPage,
+        });
+      })
+      .catch()
+      .then(() => {
+        this.setState({ loading: false });
       });
-      this.setState({
-        transactions: list || [],
-        param_page: data.param_page || this.defaultPage
-      });
-    }).catch().then(() => {
-      this.setState({ loading: false });
-    });
   };
   handleDateChangeRaw = (e) => {
     e.preventDefault();
   };
   render() {
     const {
-      transactions, startDate, endDate, type, loading, param_page
+      transactions,
+      startDate,
+      endDate,
+      type,
+      loading,
+      param_page,
     } = this.state;
     return (
       <div>
@@ -96,7 +119,9 @@ class AssetsTransactions extends Component {
               onChangeRaw={this.handleDateChangeRaw}
               minDate={this.minDate}
               maxDate={endDate || this.maxDate}
-              locale={util.getSupportLocale(Cookies.get('locale') || 'en_US').toLocaleLowerCase()}
+              locale={util
+                .getSupportLocale(Cookies.get('locale') || 'en_US')
+                .toLocaleLowerCase()}
               onChange={this.onDatePickerChange('startDate')}
             />
             <div className="dash" />
@@ -112,7 +137,9 @@ class AssetsTransactions extends Component {
               onChangeRaw={this.handleDateChangeRaw}
               minDate={startDate || this.minDate}
               maxDate={this.maxDate}
-              locale={util.getSupportLocale(Cookies.get('locale') || 'en_US').toLocaleLowerCase()}
+              locale={util
+                .getSupportLocale(Cookies.get('locale') || 'en_US')
+                .toLocaleLowerCase()}
               onChange={this.onDatePickerChange('endDate')}
             />
             <span>{toLocale('trade_query_order_type')}</span>
@@ -126,13 +153,22 @@ class AssetsTransactions extends Component {
               onChange={this.onTypeChange}
               style={{ width: 180 }}
             />
-            <Button size={Button.size.small} type={Button.btnType.primary} onClick={() => { this.fetchTransactions(); }}>{toLocale('trade_query_search')}</Button>
+            <Button
+              size={Button.size.small}
+              type={Button.btnType.primary}
+              onClick={() => {
+                this.fetchTransactions();
+              }}
+            >
+              {toLocale('trade_query_search')}
+            </Button>
           </div>
           <a
             href={Config.okchain.browserUrl}
             target="_blank"
             rel="noopener noreferrer"
-          >{toLocale('trade_query_more')} &gt;&gt;
+          >
+            {toLocale('trade_query_more')} &gt;&gt;
           </a>
         </div>
         <DexTable

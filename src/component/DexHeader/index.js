@@ -13,33 +13,26 @@ import util from '../../utils/util';
 import './index.less';
 import PageURL from '../../constants/PageURL';
 
-function mapStateToProps(state) { // 绑定redux中相关state
-  const {
-    privateKey
-  } = state.Common;
+function mapStateToProps(state) {
+  const { privateKey } = state.Common;
   return {
-    privateKey
+    privateKey,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    commonAction: bindActionCreators(CommonAction, dispatch)
+    commonAction: bindActionCreators(CommonAction, dispatch),
   };
 }
 
 @withRouter
 @connect(mapStateToProps, mapDispatchToProps)
 class DexHeader extends React.Component {
-  componentWillMount() {
-  }
   componentDidMount() {
-    // 初始化okchain客户端
     this.props.commonAction.initOKChainClient();
   }
 
-  componentWillReceiveProps(nextProps) {
-  }
   onLanguageSelect(item) {
     Cookies.set('locale', item.rel);
     window.location.reload();
@@ -50,7 +43,11 @@ class DexHeader extends React.Component {
       <header className="okdex-header">
         <input style={{ display: 'none' }} type="password" />
         <Link to={PageURL.homePage} className="logo-wrap">
-          <Icon className="icon-dex-logo-new" isColor style={{ width: '103px', height: '45px' }} />
+          <Icon
+            className="icon-dex-logo-new"
+            isColor
+            style={{ width: '103px', height: '45px' }}
+          />
         </Link>
         <div className="okdex-header-right">
           {util.isLogined() ? <LoggedMenu /> : <LoginMenu />}

@@ -8,7 +8,7 @@ const showSuccessDialog = (title, txhash) => {
     theme: 'dark',
     title,
     windowStyle: {
-      background: '#112F62'
+      background: '#112F62',
     },
     onConfirm: () => {
       window.open(`${Config.okchain.browserUrl}/tx/${txhash}`);

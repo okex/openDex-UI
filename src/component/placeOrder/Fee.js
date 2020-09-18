@@ -6,26 +6,25 @@ import Tooltip from 'rc-tooltip';
 
 import Enum from '../../utils/Enum';
 
-function mapStateToProps(state) { // 绑定redux中相关state
+function mapStateToProps(state) {
   const { fee } = state.SpotTrade;
   return { fee };
 }
 
-function mapDispatchToProps() { // 绑定action，以便向redux发送action
+function mapDispatchToProps() {
   return {};
 }
 
-@connect(mapStateToProps, mapDispatchToProps) // 与redux相关的组件再用connect修饰，容器组件
+@connect(mapStateToProps, mapDispatchToProps)
 class Fee extends React.Component {
   static propTypes = {
-    fee: PropTypes.object
+    fee: PropTypes.object,
   };
   static defaultProps = {
-    // maker挂单; taker吃单
     fee: {
       maker: '--',
-      taker: '--'
-    }
+      taker: '--',
+    },
   };
 
   render() {
@@ -44,13 +43,8 @@ class Fee extends React.Component {
       </div>
     );
     return (
-      <Tooltip
-        placement={toolTipDirection}
-        overlay={feeMT}
-      >
-        <label className="detail float-right">
-          {toLocale('spot.fee')}
-        </label>
+      <Tooltip placement={toolTipDirection} overlay={feeMT}>
+        <label className="detail float-right">{toLocale('spot.fee')}</label>
       </Tooltip>
     );
   }

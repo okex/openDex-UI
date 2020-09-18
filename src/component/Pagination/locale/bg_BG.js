@@ -1,11 +1,9 @@
 export default {
-  // Options.jsx
   items_per_page: '/ страница',
   jump_to: 'Към',
   jump_to_confirm: 'потвърждавам',
   page: '',
 
-  // Pagination.jsx
   prev_page: 'Предишна страница',
   next_page: 'Следваща страница',
   prev_5: 'Предишни 5 страници',

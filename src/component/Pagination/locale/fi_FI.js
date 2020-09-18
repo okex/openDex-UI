@@ -1,11 +1,9 @@
 export default {
-  // Options.jsx
   items_per_page: '/ sivu',
   jump_to: 'Mene',
   jump_to_confirm: 'Potvrdite',
   page: '',
 
-  // Pagination.jsx
   prev_page: 'Edellinen sivu',
   next_page: 'Seuraava sivu',
   prev_5: 'Edelliset 5 sivua',

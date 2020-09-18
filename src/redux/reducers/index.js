@@ -8,7 +8,7 @@ import WalletStore from './WalletReducer';
 import NodeStore from './NodeReducer';
 import LocalNodeStore from './LocalNodeReducer';
 
-export default function() {
+export default function () {
   return combineReducers({
     Common,
     Spot,
@@ -17,6 +17,6 @@ export default function() {
     OrderStore,
     WalletStore,
     NodeStore,
-    LocalNodeStore:LocalNodeStore(),
-  })
-};
+    LocalNodeStore: LocalNodeStore(),
+  });
+}

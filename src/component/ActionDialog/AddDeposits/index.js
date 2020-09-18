@@ -9,7 +9,7 @@ import { validateTxs } from '_src/utils/client';
 
 const showError = () => {
   Message.error({
-    content: '服务端异常，请稍后重试'
+    content: '服务端异常，请稍后重试',
   });
 };
 
@@ -24,43 +24,44 @@ class AddDepositsDialog extends Component {
 
   onChange = (e) => {
     this.setState({ value: e.target.value });
-  }
+  };
 
   onClose = () => {
     this.props.onClose();
     this.setState({
-      value: ''
+      value: '',
     });
-  }
+  };
 
   onAdd = () => {
-    const {
-      okchainClient, project, beforeAdd, afterAdd
-    } = this.props;
+    const { okchainClient, project, beforeAdd, afterAdd } = this.props;
     isFunction(beforeAdd) && beforeAdd();
     const { value } = this.state;
     const amount = util.precisionInput(value);
-    okchainClient.sendAddProductDepositTransaction(amount, project).then((res) => {
-      this.setState({ value: '' });
-      isFunction(afterAdd) && afterAdd();
-      const { result } = res;
-      const { txhash } = result;
-      if (!validateTxs(res)) {
+    okchainClient
+      .sendAddProductDepositTransaction(amount, project)
+      .then((res) => {
+        this.setState({ value: '' });
+        isFunction(afterAdd) && afterAdd();
+        const { result } = res;
+        const { txhash } = result;
+        if (!validateTxs(res)) {
+          showError();
+        } else {
+          showSuccessDialog('Add deposits success！', txhash);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        isFunction(afterAdd) && afterAdd();
         showError();
-      } else {
-        showSuccessDialog('Add deposits success！', txhash);
-      }
-    }).catch((err) => {
-      console.log(err);
-      isFunction(afterAdd) && afterAdd();
-      showError();
-      this.setState({ value: '' });
-    });
-  }
+        this.setState({ value: '' });
+      });
+  };
 
   onPwdSuccess = () => {
     this.onAdd();
-  }
+  };
 
   handleAdd = () => {
     const { value } = this.state;
@@ -69,10 +70,10 @@ class AddDepositsDialog extends Component {
       this.props.checkPK(this.onAdd);
     } else {
       Message.error({
-        content: '输入类型错误，请重新输入'
+        content: '输入类型错误，请重新输入',
       });
     }
-  }
+  };
 
   render() {
     const { visible } = this.props;

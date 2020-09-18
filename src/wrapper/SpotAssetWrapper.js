@@ -6,27 +6,23 @@ import * as SpotTradeActions from '../redux/actions/SpotTradeAction';
 import FormatAsset from '../utils/FormatAsset';
 import navigation from '../utils/navigation';
 
-function mapStateToProps(state) { // 绑定redux中相关state
-  const {
-    product, spotAsset
-  } = state.SpotTrade;
+function mapStateToProps(state) {
+  const { product, spotAsset } = state.SpotTrade;
   return {
     product,
-    // 资产
-    spotAsset
+    spotAsset,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(SpotTradeActions, dispatch)
+    actions: bindActionCreators(SpotTradeActions, dispatch),
   };
 }
 
 const SpotAssetWrapper = (SpotAssetComponent) => {
   @connect(mapStateToProps, mapDispatchToProps)
   class SpotAsset extends React.Component {
-    // 点击-资金划转
     onTransfer = (currencyName) => {
       const { actions } = this.props;
       return (e) => {
@@ -34,12 +30,11 @@ const SpotAssetWrapper = (SpotAssetComponent) => {
         if (this.checkLogin()) {
           actions.updateTransfer({
             currencyName,
-            isShowTransfer: true
+            isShowTransfer: true,
           });
         }
       };
     };
-    // check login
     checkLogin = () => {
       const { isLogin } = window.OK_GLOBAL;
       if (!isLogin) {
@@ -49,11 +44,8 @@ const SpotAssetWrapper = (SpotAssetComponent) => {
       return true;
     };
     render() {
-      // 根据当前情况决定加载哪种资产组件
       const { isLogin } = window.OK_GLOBAL;
-      const {
-        spotAsset, product
-      } = this.props;
+      const { spotAsset, product } = this.props;
       let spotDataSource;
       if (isLogin && spotAsset && spotAsset.length === 2) {
         spotDataSource = spotAsset;
@@ -61,7 +53,10 @@ const SpotAssetWrapper = (SpotAssetComponent) => {
         spotDataSource = FormatAsset.getSpotDataNotLogin(product);
       }
       return (
-        <SpotAssetComponent dataSource={spotDataSource} onTransfer={this.onTransfer} />
+        <SpotAssetComponent
+          dataSource={spotDataSource}
+          onTransfer={this.onTransfer}
+        />
       );
     }
   }

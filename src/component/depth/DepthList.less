@@ -57,9 +57,8 @@
     }
   }
   .scroll-container {
-    transform: translate(0, 0); //设置transform可以让子元素(ticker-clone)相对该dom进行fixed定位
-    //position: relative;
-    height: calc(~"100% - 38px"); //100% - title高度 28+10
+    transform: translate(0, 0); 
+    height: calc(~"100% - 38px"); 
     .scroll-box {
       height: 100%;
       position: relative;
@@ -145,53 +144,6 @@
       .ticker {
         .ticker();
       }
-      //.center-bar {
-      //  position: relative;
-      //  display: flex;
-      //  justify-content: space-between;
-      //  align-items: center;
-      //  border-top: 1px solid;
-      //  border-bottom: 1px solid;
-      //  //padding: 5px 0;
-      //  margin: 0 5px 0 0;
-      //  text-align: right;
-      //  font-size: 15px;
-      //  .ticker {
-      //    .ticker();
-      //  }
-      //  .spot-depth-drop {
-      //    cursor: pointer;
-      //    user-select: none;
-      //    display: inline-block;
-      //    color: rgba(0,0,0,.43);
-      //    .spot-depth-desc {
-      //      height: 18px;
-      //      font-size: 12px;
-      //      text-align: right;
-      //    }
-      //    .icon {
-      //      display: inline-block;
-      //      font-size: 12px;
-      //      transform: scale(0.7);
-      //    }
-      //    .spot-depth-drop-list {
-      //      display: none;
-      //      z-index: 100;
-      //      position: absolute;
-      //      right: 0;
-      //      border-radius: 4px;
-      //      border: solid 1px;
-      //      box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
-      //      border: 1px solid #d8d8d8;
-      //      p {
-      //        box-sizing: border-box;
-      //        cursor: pointer;
-      //        padding: 7px 10px;
-      //        font-size: 12px;
-      //      }
-      //    }
-      //  }
-      //}
     }
     .ticker-clone {
       .ticker-clone();
@@ -230,9 +182,6 @@
           &.sell-item::before, &.buy-item::after {
             border-top-color: @depth-dash;
           }
-          //&:hover {
-          //  background: @brand-active-bg;
-          //}
         }
       }
       .scroll-box .center-bar {
@@ -270,7 +219,6 @@
 .ok-depth-container-dark {
   .ok-depth-container();
   flex: 1 1 100px;
-  //以下为样式覆盖
   .title {
     color: @full-white30;
     overflow: hidden;
@@ -288,9 +236,6 @@
           &.sell-item::before, &.buy-item::after {
             border-top-color: fade(#D0E0FF, 45%);
           }
-          //&:hover {
-          //  background-color: @full-deep-blue;
-          //}
           span {
             &:last-child {
               color: @full-white60;
@@ -308,30 +253,6 @@
       .ticker {
         .dark-ticker();
       }
-      //.center-bar {
-      //  background: @full-deep-blue;
-      //  border-top: 0;
-      //  border-bottom: 1px solid #041025;
-      //  //border-bottom: 1px solid #252f41;
-      //  //border: 0;
-      //  .ticker {
-      //    //.dark-ticker();
-      //  }
-      //  .spot-depth-drop {
-      //    color: @full-white60;
-      //    .spot-depth-drop-list {
-      //      background-color: #1c283e;
-      //      border: none;
-      //      p {
-      //        color: #4396f8;
-      //        &:hover {
-      //          color: #f4934d;
-      //          background-color: #1c283e;
-      //        }
-      //      }
-      //    }
-      //  }
-      //}
     }
     .ticker-clone {
       .dark-ticker();

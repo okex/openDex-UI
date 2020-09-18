@@ -2,30 +2,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Enum from '../../utils/Enum';
 import util from '../../utils/util';
-
-// 全屏交易独立组件
 import FullTradeHead from './FullTradeHead';
 import FullTradeData from './FullTradeData';
 import downloadDialog from './DownloadDialog';
 import SpotAsset from '../trade/SpotAsset';
-import SpotPlaceOrderNotLogin from '../placeOrders/NotLogin';
 import SpotOrder from '../trade/SpotOrder';
-// import FullTradeProduct from './FullTradeProduct';
-// import FullTradeTicker from './FullTradeTicker';
-import FullDepthDeal from './FullDepthDeal';
-// import FullLeftMenu from './FullLeftMenu';
 import FullTradeKLine from './FullTradeKLine';
-
-// right
 import FullDepth from './FullDepth';
 import SpotPlaceOrder from '../trade/SpotPlaceOrder';
 import FullTradeDeals from './FullTradeDeals';
-
 import './FullTrade.less';
-import {bindActionCreators} from "redux";
-import * as CommonAction from "../../redux/actions/CommonAction";
+import { bindActionCreators } from 'redux';
+import * as CommonAction from '../../redux/actions/CommonAction';
 
-function mapStateToProps(state) { // 绑定redux中相关state
+function mapStateToProps(state) {
   const { product, productObj } = state.SpotTrade;
   const { privateKey } = state.Common;
   return { product, productObj, privateKey };
@@ -33,7 +23,7 @@ function mapStateToProps(state) { // 绑定redux中相关state
 
 function mapDispatchToProps(dispatch) {
   return {
-    commonAction: bindActionCreators(CommonAction, dispatch)
+    commonAction: bindActionCreators(CommonAction, dispatch),
   };
 }
 
@@ -47,21 +37,21 @@ export default class FullTradeFrame extends React.Component {
   }
 
   componentWillMount() {
-    if (document.querySelector("#headerContainer")) {
-      document.querySelector("#headerContainer").style.display = 'none';
+    if (document.querySelector('#headerContainer')) {
+      document.querySelector('#headerContainer').style.display = 'none';
     }
-    if (document.querySelector("#footerContainer")) {
-      document.querySelector("#footerContainer").style.display = 'none';
+    if (document.querySelector('#footerContainer')) {
+      document.querySelector('#footerContainer').style.display = 'none';
     }
     downloadDialog();
   }
 
   componentWillUnmount() {
-    if (document.querySelector("#headerContainer")) {
-      document.querySelector("#headerContainer").style.display = 'block';
+    if (document.querySelector('#headerContainer')) {
+      document.querySelector('#headerContainer').style.display = 'block';
     }
-    if (document.querySelector("#footerContainer")) {
-      document.querySelector("#footerContainer").style.display = 'block';
+    if (document.querySelector('#footerContainer')) {
+      document.querySelector('#footerContainer').style.display = 'block';
     }
     window.removeEventListener('resize', this.onResize);
   }
@@ -80,7 +70,6 @@ export default class FullTradeFrame extends React.Component {
   });
 
   render() {
-    // const { isLogin } = window.OK_GLOBAL;
     const isLogin = util.isLogined();
     return (
       <div className="full-wrap">

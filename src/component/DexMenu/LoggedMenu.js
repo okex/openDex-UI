@@ -17,19 +17,25 @@ import WalletMenuTool from './WalletMenuTool';
 import './index.less';
 
 const SubMenu = Menu.SubMenu;
-const IconFountUnfold = () => { return <Icon className="icon-Unfold" style={{ fontSize: '14px', marginLeft: '6px' }} />; };
+const IconFountUnfold = () => {
+  return (
+    <Icon
+      className="icon-Unfold"
+      style={{ fontSize: '14px', marginLeft: '6px' }}
+    />
+  );
+};
 
-
-function mapStateToProps(state) { // 绑定redux中相关state
+function mapStateToProps(state) {
   const { privateKey } = state.Common;
   return {
-    privateKey
+    privateKey,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    commonAction: bindActionCreators(CommonAction, dispatch)
+    commonAction: bindActionCreators(CommonAction, dispatch),
   };
 }
 
@@ -40,15 +46,13 @@ class DexLoggedMenu extends React.Component {
     isShowPassword: false,
     passwordError: '',
   };
-  // 下载keyStore 显示输入密码窗口
   handleDownKeyStore = () => {
     this.setState({
-      isShowPassword: true, passwordError: ''
+      isShowPassword: true,
+      passwordError: '',
     });
   };
-  // Dailog Down KeyStore Core function
   downKeyStoreCore = (passValue) => {
-    // 2019-08-13 增加用户清空全部缓存的判断
     if (!util.isLogined()) {
       window.location.reload();
     }
@@ -59,24 +63,28 @@ class DexLoggedMenu extends React.Component {
       try {
         const UserObj = JSON.parse(User);
         const { info: keyStore } = UserObj;
-        const privateKey = crypto.getPrivateKeyFromKeyStore(keyStore, passValue);
+        const privateKey = crypto.getPrivateKeyFromKeyStore(
+          keyStore,
+          passValue
+        );
         if (privateKey) {
           util.downloadObjectAsJson(keyStore || '', `${keyStoreName}.txt`);
           this.setState({ isShowPassword: false, passwordError: '' });
         }
       } catch (e) {
-        this.setState({ isShowPassword: true, passwordError: toLocale('pwd_error') });
+        this.setState({
+          isShowPassword: true,
+          passwordError: toLocale('pwd_error'),
+        });
       }
     }
   };
-  // 下载KeyStore时，取消输入密码
   handleClosePassWordDialog = () => {
     this.setState({
-      isShowPassword: false
+      isShowPassword: false,
     });
   };
 
-  // 退出登录
   handleLogOut = () => {
     const dialog = Dialog.confirm({
       title: toLocale('header_menu_logout1'),
@@ -85,7 +93,7 @@ class DexLoggedMenu extends React.Component {
       theme: 'dark',
       dialogId: 'okdex-logout',
       windowStyle: {
-        background: '#112F62'
+        background: '#112F62',
       },
       onConfirm: () => {
         util.doLogout();
@@ -109,45 +117,74 @@ class DexLoggedMenu extends React.Component {
           isShow={isShowPassword}
           onEnter={this.downKeyStoreCore}
           warning={passwordError}
-          updateWarning={(err) => { this.setState({ passwordError: err }); }}
+          updateWarning={(err) => {
+            this.setState({ passwordError: err });
+          }}
           onClose={this.handleClosePassWordDialog}
         />
-        <Menu
-          mode="horizontal"
-          selectable={false}
-          className="okdex-menu"
-        >
+        <Menu mode="horizontal" selectable={false} className="okdex-menu">
           <SubMenu
             key="wallet"
             title={
-              <React.Fragment>{toLocale('header_menu_wallet')}<IconFountUnfold /></React.Fragment>
+              <React.Fragment>
+                {toLocale('header_menu_wallet')}
+                <IconFountUnfold />
+              </React.Fragment>
             }
           >
-            <Menu.Item key="wallet-1" style={{ height: 'auto', cursor: 'default' }}>
+            <Menu.Item
+              key="wallet-1"
+              style={{ height: 'auto', cursor: 'default' }}
+            >
               <WalletMenuTool address={addr} />
             </Menu.Item>
             <Menu.Item key="wallet-2">
-              <NavLink to={PageURL.walletAssets} activeClassName="active-menu-item" >{toLocale('header_menu_assets')}</NavLink>
+              <NavLink
+                to={PageURL.walletAssets}
+                activeClassName="active-menu-item"
+              >
+                {toLocale('header_menu_assets')}
+              </NavLink>
             </Menu.Item>
             <Menu.Item key="wallet-3" onClick={this.handleDownKeyStore}>
               {toLocale('header_menu_down_keystore')}
             </Menu.Item>
-            <Menu.Item key="wallet-4" onClick={this.handleLogOut} >{toLocale('header_menu_logout')}</Menu.Item>
+            <Menu.Item key="wallet-4" onClick={this.handleLogOut}>
+              {toLocale('header_menu_logout')}
+            </Menu.Item>
           </SubMenu>
           <SubMenu
             key="order"
             title={
-              <React.Fragment>{toLocale('header_menu_order')}<IconFountUnfold /></React.Fragment>
+              <React.Fragment>
+                {toLocale('header_menu_order')}
+                <IconFountUnfold />
+              </React.Fragment>
             }
           >
             <Menu.Item key="order-1">
-              <NavLink to={PageURL.spotOpenPage} activeClassName="active-menu-item" >{toLocale('header_menu_current_entrust')}</NavLink>
+              <NavLink
+                to={PageURL.spotOpenPage}
+                activeClassName="active-menu-item"
+              >
+                {toLocale('header_menu_current_entrust')}
+              </NavLink>
             </Menu.Item>
             <Menu.Item key="order-2">
-              <NavLink to={PageURL.spotHistoryPage} activeClassName="active-menu-item" >{toLocale('header_menu_history_entrust')}</NavLink>
+              <NavLink
+                to={PageURL.spotHistoryPage}
+                activeClassName="active-menu-item"
+              >
+                {toLocale('header_menu_history_entrust')}
+              </NavLink>
             </Menu.Item>
             <Menu.Item key="order-3">
-              <NavLink to={PageURL.spotDealsPage} activeClassName="active-menu-item" >{toLocale('header_menu_deal_entrust')}</NavLink>
+              <NavLink
+                to={PageURL.spotDealsPage}
+                activeClassName="active-menu-item"
+              >
+                {toLocale('header_menu_deal_entrust')}
+              </NavLink>
             </Menu.Item>
           </SubMenu>
         </Menu>

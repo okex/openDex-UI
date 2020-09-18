@@ -5,43 +5,44 @@ import { withRouter } from 'react-router-dom';
 import PageURL from '../constants/PageURL';
 import * as SpotActions from '../redux/actions/SpotAction';
 
-function mapStateToProps(state) { // 绑定redux中相关state
+function mapStateToProps(state) {
   return {
     productList: state.SpotTrade.productList,
-    activeMarket: state.Spot.activeMarket
+    activeMarket: state.Spot.activeMarket,
   };
 }
 
-function mapDispatchToProps(dispatch) { // 绑定action，以便向redux发送action
+function mapDispatchToProps(dispatch) {
   return {
-    spotActions: bindActionCreators(SpotActions, dispatch)
+    spotActions: bindActionCreators(SpotActions, dispatch),
   };
 }
 
 const TradeAreaWrapper = (Component) => {
   @withRouter
-  @connect(mapStateToProps, mapDispatchToProps) // 与redux相关的组件再用connect修饰，容器组件
+  @connect(mapStateToProps, mapDispatchToProps)
   class TradeArea extends React.Component {
-    // 改变交易区
     onTabChange = (key) => {
       return () => {
         const { productList } = this.props;
-        // const { pathname } = window.location;
-        const pathname = window.OK_GLOBAL.isMarginType ? PageURL.spotMarginTradePage : PageURL.spotTradePage;
+        const pathname = window.OK_GLOBAL.isMarginType
+          ? PageURL.spotMarginTradePage
+          : PageURL.spotTradePage;
         let product = '';
         let newHash = '';
-        if (Number(key) === 1) { // 自选
+        if (Number(key) === 1) {
           const collectList = productList.filter((product) => {
             return +product.collect === 1;
           });
-          product = collectList.length > 0 ? collectList[0].product : productList[0].product;
+          product =
+            collectList.length > 0
+              ? collectList[0].product
+              : productList[0].product;
           newHash = `#product=${product.toLowerCase()}&favorites=1`;
-        } else { // 其他交易区
-          // forEach方法不能break，故用some方法
+        } else {
           productList.some((item) => {
             const thisMarket = item.product.split('_')[1];
             if (key === thisMarket) {
-              // 选中交易区的第一个(非隐藏)币对
               product = item.product;
               newHash = `#product=${product.toLowerCase()}`;
               return true;

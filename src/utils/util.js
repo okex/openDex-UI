@@ -21,7 +21,11 @@ const util = {
     if (+ticker.price === -1) {
       return '+0.00%';
     }
-    const changePercent = calc.floorDiv(calc.sub(ticker.price, ticker.open) * 100, ticker.open, 2);
+    const changePercent = calc.floorDiv(
+      calc.sub(ticker.price, ticker.open) * 100,
+      ticker.open,
+      2
+    );
     const changeSignStr = changePercent >= 0 ? '+' : '';
     return `${changeSignStr}${changePercent}%`;
   },
@@ -71,10 +75,9 @@ const util = {
     let addr = '';
     try {
       const user = JSON.parse(window.localStorage.getItem('dex_user') || '{}');
-      addr = (user && user.addr) ? user.addr : '';
+      addr = user && user.addr ? user.addr : '';
     } catch (e) {
       console.warn(e.message);
-      // throw e;
     }
     return addr;
   },
@@ -106,17 +109,17 @@ const util = {
     }
     return window.OK_GLOBAL.isLogin;
   },
-  // js生成文件，下载
   downloadObjectAsJson(exportObj, exportName) {
-    const dataStr = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(exportObj))}`;
+    const dataStr = `data:text/json;charset=utf-8,${encodeURIComponent(
+      JSON.stringify(exportObj)
+    )}`;
     const downloadAnchorNode = document.createElement('a');
     downloadAnchorNode.setAttribute('href', dataStr);
     downloadAnchorNode.setAttribute('download', exportName);
-    document.body.appendChild(downloadAnchorNode); // required for firefox
+    document.body.appendChild(downloadAnchorNode);
     downloadAnchorNode.click();
     downloadAnchorNode.remove();
   },
-  // IE11判断
   lessThanIE11() {
     const UA = navigator.userAgent;
     const isIE = UA.indexOf('MSIE') > -1;
@@ -142,16 +145,25 @@ const util = {
     return '';
   },
   timeStampToTime(timestamp) {
-    const date = timestamp.toString().length === 10 ? new Date(timestamp * 1000) : new Date(timestamp);
+    const date =
+      timestamp.toString().length === 10
+        ? new Date(timestamp * 1000)
+        : new Date(timestamp);
     const Y = `${date.getFullYear()}-`;
-    const M = `${date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1}-`;
-    const D = `${date.getDate() < 10 ? (`0${date.getDate()}`) : date.getDate()} `;
-    const h = `${date.getHours() < 10 ? (`0${date.getHours()}`) : date.getHours()}:`;
-    const m = `${date.getMinutes() < 10 ? (`0${date.getMinutes()}`) : date.getMinutes()}:`;
-    const s = (date.getSeconds() < 10 ? (`0${date.getSeconds()}`) : date.getSeconds());
+    const M = `${
+      date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1
+    }-`;
+    const D = `${date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()} `;
+    const h = `${
+      date.getHours() < 10 ? `0${date.getHours()}` : date.getHours()
+    }:`;
+    const m = `${
+      date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()
+    }:`;
+    const s =
+      date.getSeconds() < 10 ? `0${date.getSeconds()}` : date.getSeconds();
     return Y + M + D + h + m + s;
   },
-  // 数组转对象
   arrayToObj(arr, keyName) {
     const result = {};
     arr.forEach((item) => {
@@ -171,15 +183,20 @@ const util = {
       if (sec >= 60) {
         const min = Math.floor(sec / 60);
         if (sec % 60 === 0) {
-          return `${hours > 10 ? hours : `0${hours}`}:${min > 10 ? min : `0${min}`}:00`;
+          return `${hours > 10 ? hours : `0${hours}`}:${
+            min > 10 ? min : `0${min}`
+          }:00`;
         }
 
-        sec = (timestamp / 1000) - (hours * 3600) - (min * 60);
-        return `${hours > 10 ? hours : `0${hours}`}:${min > 10 ? min : `0${min}`}:${sec >= 10 ? sec : `0${sec}`}`;
+        sec = timestamp / 1000 - hours * 3600 - min * 60;
+        return `${hours > 10 ? hours : `0${hours}`}:${
+          min > 10 ? min : `0${min}`
+        }:${sec >= 10 ? sec : `0${sec}`}`;
       }
 
-
-      return `${hours > 10 ? hours : `0${hours}`}:00:${sec >= 10 ? sec : `0${sec}`}`;
+      return `${hours > 10 ? hours : `0${hours}`}:00:${
+        sec >= 10 ? sec : `0${sec}`
+      }`;
     } else if (sec >= 60) {
       if (sec % 60 === 0) {
         const min = Math.floor(sec / 60);
@@ -193,14 +210,11 @@ const util = {
 
     return `00:${sec >= 10 ? sec : `0${sec}`}`;
   },
-  // ctrl or tab
   ctrlAorTab(e) {
-    // control-17;tab-9;
     if (e != null && (e.keyCode === 17 || e.keyCode === 9)) {
       return true;
     }
-    // ctrl + A   A-65
-    return (e != null && e.ctrlKey && e.keyCode === 65);
+    return e != null && e.ctrlKey && e.keyCode === 65;
   },
   cloneDeep(obj) {
     return JSON.parse(JSON.stringify(obj));
@@ -208,7 +222,6 @@ const util = {
   isEmpty(obj) {
     return Object.keys(obj).length === 0;
   },
-  // 函数防抖
   debounce(fn, delay = 200) {
     let timer = null;
     return (...args) => {
@@ -218,7 +231,6 @@ const util = {
       }, delay);
     };
   },
-  // 函数节流
   throttle(fn, delay = 200) {
     let timer = null;
     return (...args) => {
@@ -234,7 +246,6 @@ const util = {
     let colorClass = '';
     let textShown = text;
     const num = Number(text);
-    // text为0则不添加颜色
     if (num > 0) {
       colorClass = 'primary-green';
       textShown = `+${calc.thousandFormat(text)}`;
@@ -245,8 +256,8 @@ const util = {
     }
     return <label className={colorClass}>{textShown}</label>;
   },
-  logRecord() { // 当前页面打log
-    if (window.location.hostname.indexOf('local') === -1) { // 本地就不发log了
+  logRecord() {
+    if (window.location.hostname.indexOf('local') === -1) {
       ont.post(URL.LOG_RECORD, { c_url: window.location.href }).catch(() => {});
     }
   },
@@ -255,7 +266,7 @@ const util = {
   },
   precisionInput(num) {
     return Number(num).toFixed(8);
-  }
+  },
 };
 
 export default util;

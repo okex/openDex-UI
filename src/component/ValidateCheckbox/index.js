@@ -7,13 +7,11 @@ const typeEnum = {
   none: 'icon-icon_circlex',
   warning: 'icon-icon_warningx',
   wrong: 'icon-icon_wrongx',
-  right: 'icon-icon_success'
+  right: 'icon-icon_success',
 };
 
 const ValidateCheckbox = (props) => {
-  const {
-    type, children, className, style
-  } = props;
+  const { type, children, className, style } = props;
   const clsName = typeEnum[type] || 'icon-icon_circle';
   return (
     <div className={`${className} validate-checkbox ${type}`} style={style}>
@@ -26,9 +24,9 @@ const ValidateCheckbox = (props) => {
   );
 };
 ValidateCheckbox.propTypes = {
-  type: PropTypes.oneOf(['none', 'warning', 'wrong', 'right'])
+  type: PropTypes.oneOf(['none', 'warning', 'wrong', 'right']),
 };
 ValidateCheckbox.defaultProps = {
-  type: 'none'
+  type: 'none',
 };
 export default ValidateCheckbox;

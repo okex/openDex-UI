@@ -14,11 +14,10 @@ export default class Depth extends React.Component {
     this.init = false;
     this.enum = {
       buy: Enum.placeOrder.type.buy,
-      sell: Enum.placeOrder.type.sell
+      sell: Enum.placeOrder.type.sell,
     };
   }
 
-  // 选择某一档深度
   onChooseOneDepth = (index, type) => {
     const config = window.OK_GLOBAL.productConfig;
     const { onChooseOneDepth, listSource } = this.props;
@@ -38,57 +37,64 @@ export default class Depth extends React.Component {
     }
   };
 
-  // 将DepthList中的方法scrollToPosition，传给平级的DepthTitle
   onDepthPosition = (position) => {
     this.depthList.scrollToPosition(position);
   };
-  // 生成DepthList组件需要的数据格式
   getListDataSource = () => {
-    const {
-      needSum, listSource, tickerSource, product
-    } = this.props;
-    const tradeCurr = product.indexOf('_') > -1 ? product.split('_')[0].toUpperCase() : '';
-    const baseCurr = product.indexOf('_') > -1 ? product.split('_')[1].toUpperCase() : '';
+    const { needSum, listSource, tickerSource, product } = this.props;
+    const tradeCurr =
+      product.indexOf('_') > -1 ? product.split('_')[0].toUpperCase() : '';
+    const baseCurr =
+      product.indexOf('_') > -1 ? product.split('_')[1].toUpperCase() : '';
 
     const listDataSource = {
       ...listSource,
       ticker: {
         price: tickerSource.price,
-        trend: (tickerSource.change && tickerSource.change.toString().indexOf('-') > -1) ? 'down' : 'up'
-      }
+        trend:
+          tickerSource.change &&
+          tickerSource.change.toString().indexOf('-') > -1
+            ? 'down'
+            : 'up',
+      },
     };
     const priceTitle = (
       <span>
-        {toLocale('spot.price')}
-        (<em>{baseCurr}</em>)
+        {toLocale('spot.price')}(<em>{baseCurr}</em>)
       </span>
     );
     const sizeTitle = (
       <span>
-        {toLocale('spot.depth.amount')}
-        (<em>{util.getSymbolShortName(tradeCurr)}</em>)
+        {toLocale('spot.depth.amount')}(
+        <em>{util.getSymbolShortName(tradeCurr)}</em>)
       </span>
     );
     const columnTitle = [priceTitle, sizeTitle];
     if (needSum) {
       const sumTitle = (
         <span>
-          {toLocale('spot.depth.sum')}
-          (<em>{util.getSymbolShortName(tradeCurr)}</em>)
+          {toLocale('spot.depth.sum')}(
+          <em>{util.getSymbolShortName(tradeCurr)}</em>)
         </span>
       );
       columnTitle.push(sumTitle);
     }
     return {
       columnTitle,
-      dataSource: listDataSource
+      dataSource: listDataSource,
     };
   };
 
   render() {
     const listDataSource = this.getListDataSource();
     const {
-      needHeadBtn, needBgColor, needSum, product, isShowMerge, onChooseMergeType, theme
+      needHeadBtn,
+      needBgColor,
+      needSum,
+      product,
+      isShowMerge,
+      onChooseMergeType,
+      theme,
     } = this.props;
     return (
       <div className="spot-depth">
@@ -125,17 +131,14 @@ Depth.propTypes = {
   needBgColor: PropTypes.bool,
   theme: PropTypes.oneOf(['light', 'dark']),
   onChooseMergeType: PropTypes.func,
-  onChooseOneDepth: PropTypes.func
+  onChooseOneDepth: PropTypes.func,
 };
 
 Depth.defaultProps = {
-  // dataSource: {},
-  // tickerDataSource: {},
-  // product: '',
   needSum: false,
   needHeadBtn: false,
   needBgColor: false,
   theme: 'light',
   onChooseMergeType: null,
-  onChooseOneDepth: null
+  onChooseOneDepth: null,
 };

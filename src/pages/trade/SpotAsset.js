@@ -3,7 +3,6 @@ import AssetSpot from '../../component/asset/AssetSpot';
 import SpotAssetWrapper from '../../wrapper/SpotAssetWrapper';
 import './SpotAsset.less';
 
-
 const AssetWrapper = (Component) => {
   return (props) => {
     return (

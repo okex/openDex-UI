@@ -45,19 +45,19 @@ class Step4 extends Component {
       const selectArrTemp = [...selectArr];
       selectArrTemp[questionNo] = selectedIndex;
       this.setState({
-        selectArr: selectArrTemp
+        selectArr: selectArrTemp,
       });
     };
-  }
+  };
   showPrivate = () => {
     this.privateDialog = Dialog.show({
       windowStyle: { backgroundColor: '#112F62' },
       children: this.renderPrivateDialog(),
     });
-  }
+  };
   hidePrivate = () => {
     this.privateDialog.destroy();
-  }
+  };
   handleCopy = () => {
     this.privateDialog.update({
       children: this.renderPrivateDialog(true),
@@ -68,23 +68,24 @@ class Step4 extends Component {
         children: this.renderPrivateDialog(false),
       });
     }, 1000);
-  }
+  };
   onRedirctToTradePage = () => {
     const { privateKey } = this.props;
     return () => {
-      // console.log('step4 click next');
       this.props.commonAction.setPrivateKey(privateKey);
       this.props.history.push(PageURL.spotFullPage);
     };
-  }
+  };
   renderPrivateDialog = (copySuccess = false) => {
     const { privateKey } = this.props;
     return (
       <div className="private-container">
-        <div className="private-title">
-          {toLocale('wallet_privateKey')}
-        </div>
-        <Icon className="icon-icon_successfuzhi" isColor style={{ width: 60, height: 60, marginBottom: 30 }} />
+        <div className="private-title">{toLocale('wallet_privateKey')}</div>
+        <Icon
+          className="icon-icon_successfuzhi"
+          isColor
+          style={{ width: 60, height: 60, marginBottom: 30 }}
+        />
         <div className="private-content">
           <span id="okdex-wallet-private-key">{privateKey}</span>
           <span data-clipboard-target="#okdex-wallet-private-key">
@@ -97,7 +98,6 @@ class Step4 extends Component {
             </CopyToClipboard>
           </span>
         </div>
-        {/* <div className="private-success-tip">{successTip}</div> */}
         <Button type="primary" onClick={this.hidePrivate}>
           {toLocale('wallet_ensure')}
         </Button>
@@ -115,13 +115,21 @@ class Step4 extends Component {
           />
           <WalletRight>
             <div className="validate-success-container">
-              <Icon className="icon-icon_success" isColor style={{ width: 60, height: 60 }} />
+              <Icon
+                className="icon-icon_success"
+                isColor
+                style={{ width: 60, height: 60 }}
+              />
               <div className="validate-success-text">
                 {toLocale('wallet_mnemonicSuccess')}
               </div>
               <div className="next-row">
-                <Button type="primary" onClick={this.onRedirctToTradePage()}>{toLocale('wallet_toTrade')}</Button>
-                <div className="see-private" onClick={this.showPrivate}>{toLocale('wallet_seePrivate')}</div>
+                <Button type="primary" onClick={this.onRedirctToTradePage()}>
+                  {toLocale('wallet_toTrade')}
+                </Button>
+                <div className="see-private" onClick={this.showPrivate}>
+                  {toLocale('wallet_seePrivate')}
+                </div>
               </div>
             </div>
           </WalletRight>

@@ -24,17 +24,17 @@ function mapDispatchToProps(dispatch) {
 @connect(mapStateToProps, mapDispatchToProps)
 class SafeTip extends Component {
   static propTypes = {
-    visible: PropTypes.bool
-  }
+    visible: PropTypes.bool,
+  };
 
   static defaultProps = {
-    visible: true
-  }
+    visible: true,
+  };
   constructor(props) {
     super(props);
     this.state = {
       visible: props.visible,
-      hasDownload: false
+      hasDownload: false,
     };
   }
   componentDidMount() {
@@ -42,7 +42,7 @@ class SafeTip extends Component {
       this.dialog = Dialog.show({
         hideCloseBtn: true,
         width: '440px',
-        children: this.renderContent()
+        children: this.renderContent(),
       });
     }
   }
@@ -51,25 +51,21 @@ class SafeTip extends Component {
     const keyStoreName = `keystore_${moment().format('YYYY-MM-DD HH:mm:ss')}`;
     util.downloadObjectAsJson(keyStore, `${keyStoreName}.txt`);
     this.setState({
-      hasDownload: true
+      hasDownload: true,
     });
-  }
+  };
   handleKnew = () => {
     const { onEnsure } = this.props;
     if (!this.state.hasDownload) {
-      // const { keyStore } = this.props;
-      // const keyStoreName = `keystore_${moment().format('YYYY-MM-DD HH:mm:ss')}`;
       this.downloadKeyStore();
     }
     this.dialog.destroy();
     onEnsure && onEnsure();
-  }
+  };
   renderContent = () => {
     return (
       <div className="wallet-safe-tip">
-        <div style={{ fontSize: 18 }}>
-          {toLocale('wallet_safeTip_title')}
-        </div>
+        <div style={{ fontSize: 18 }}>{toLocale('wallet_safeTip_title')}</div>
         <img
           className="mar-top30"
           src="https://static.bafang.com/cdn/assets/imgs/MjAxOTQ/EB1742AFFE1C68081E13A3404A79A141.png"
@@ -88,7 +84,7 @@ class SafeTip extends Component {
         </Button>
       </div>
     );
-  }
+  };
   render() {
     return null;
   }
