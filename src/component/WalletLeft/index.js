@@ -8,16 +8,10 @@ const WalletLeft = (props) => {
     <div className="wallet-left">
       <div className="title">
         <div className="step-no">
-          <span className="current">
-            {stepNo}
-          </span>
-          <span className="total">
-            /3
-          </span>
+          <span className="current">{stepNo}</span>
+          <span className="total">/3</span>
         </div>
-        <div className="step-name">
-          {stepName}
-        </div>
+        <div className="step-name">{stepName}</div>
       </div>
 
       <div className="img">
@@ -29,11 +23,11 @@ const WalletLeft = (props) => {
 WalletLeft.propTypes = {
   stepNo: PropTypes.number,
   stepName: PropTypes.string,
-  imgUrl: PropTypes.string
+  imgUrl: PropTypes.string,
 };
 WalletLeft.defaultProps = {
   stepNo: 1,
   stepName: '',
-  imgUrl: ''
+  imgUrl: '',
 };
 export default WalletLeft;

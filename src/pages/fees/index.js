@@ -38,15 +38,15 @@ class FeesPage extends Component {
     this.setState({
       address: e.target.value,
     });
-  }
+  };
 
   onBaseAssetChange = (e) => {
     this.setState({ baseAsset: e.target.value });
-  }
+  };
 
   onQuoteAssetChange = (e) => {
     this.setState({ quoteAsset: e.target.value });
-  }
+  };
 
   onPageChange = (pageSize) => {
     const pagination = {
@@ -54,12 +54,12 @@ class FeesPage extends Component {
       page: pageSize,
     };
     this.fetchFees(pagination);
-  }
+  };
 
   fetchFeesByState = () => {
     const { pagination } = this.state;
     this.fetchFees(pagination);
-  }
+  };
 
   fetchFees = (pagination) => {
     const { page, per_page } = pagination;
@@ -75,28 +75,35 @@ class FeesPage extends Component {
         base_asset: baseAsset,
         quote_asset: quoteAsset,
       };
-      ont.get(`${URL.GET_FEES}`, { params }).then(({ data }) => {
-        this.setState({
-          loading: false,
-          fees: data.data || [],
-          pagination: data.param_page || DEFAULT_PAGINATION,
+      ont
+        .get(`${URL.GET_FEES}`, { params })
+        .then(({ data }) => {
+          this.setState({
+            loading: false,
+            fees: data.data || [],
+            pagination: data.param_page || DEFAULT_PAGINATION,
+          });
+        })
+        .catch((err) => {
+          this.setState({ loading: false });
+          console.log(err);
         });
-      }).catch((err) => {
-        this.setState({ loading: false });
-        console.log(err);
-      });
     }
-  }
+  };
 
   handleQuery = () => {
     const pagination = DEFAULT_PAGINATION;
     this.fetchFees(pagination);
-  }
+  };
 
   render() {
     const {
-      loading, address, baseAsset, quoteAsset,
-      pagination, fees,
+      loading,
+      address,
+      baseAsset,
+      quoteAsset,
+      pagination,
+      fees,
     } = this.state;
 
     return (

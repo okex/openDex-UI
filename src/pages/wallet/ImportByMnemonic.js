@@ -32,8 +32,6 @@ class ImportByMnemonic extends Component {
       password: '',
       isValidatedMnemonic: true,
       buttonLoading: false,
-      // updateLengthCheck: 'none',
-      // updateChartCheck: 'none',
       isNone: false,
     };
     this.isValidatedPassword = false;
@@ -47,51 +45,46 @@ class ImportByMnemonic extends Component {
     });
   };
   changePassword = ({ value, lengthCheck, chartCheck }) => {
-    this.isValidatedPassword = lengthCheck === 'right' && chartCheck === 'right';
+    this.isValidatedPassword =
+      lengthCheck === 'right' && chartCheck === 'right';
     this.setState({
       password: value,
     });
-  }
+  };
   handleEnsure = () => {
     if (this.state.mnemonic.length === 0) {
       this.setState({
-        isNone: true
+        isNone: true,
       });
       return;
     }
-    // 密码校验失败 或者 助记词校验失败
     if (!this.isValidatedPassword || !this.state.isValidatedMnemonic) {
       this.setState({
         updateLengthCheck: 'wrong',
-        updateChartCheck: 'wrong'
+        updateChartCheck: 'wrong',
       });
       return;
     }
-    this.setState({
-      buttonLoading: true,
-    }, () => {
-      setTimeout(this.validateMnemonic, 10);
-    });
+    this.setState(
+      {
+        buttonLoading: true,
+      },
+      () => {
+        setTimeout(this.validateMnemonic, 10);
+      }
+    );
   };
-  // 校验助记词
   validateMnemonic = () => {
     try {
       const { password } = this.state;
       const mnemonic = this.state.mnemonic.trim();
-      // 在getPrivateKeyFromMnemonic的时候，会自动校验助记词格式
-      // if (crypto.validateMnemonic(mnemonic)) {
-      //   this.setState({
-      //     isValidatedMnemonic: false
-      //   });
-      //   return;
-      // }
       const privateKey = crypto.getPrivateKeyFromMnemonic(mnemonic);
       const keyStore = crypto.generateKeyStore(privateKey, password);
       walletUtil.setUserInSessionStroage(privateKey, keyStore);
       this.setState({
         isValidatedMnemonic: true,
         buttonLoading: false,
-        isNone: false
+        isNone: false,
       });
       this.props.commonAction.setPrivateKey(privateKey);
       this.props.history.push(PageURL.spotFullPage);
@@ -99,14 +92,12 @@ class ImportByMnemonic extends Component {
       this.setState({
         isValidatedMnemonic: false,
         buttonLoading: false,
-        isNone: false
+        isNone: false,
       });
     }
-  }
+  };
   render() {
-    const {
-      mnemonic, isValidatedMnemonic, buttonLoading, isNone
-    } = this.state;
+    const { mnemonic, isValidatedMnemonic, buttonLoading, isNone } = this.state;
     let p;
     let className = '';
     if (isNone) {
@@ -123,7 +114,9 @@ class ImportByMnemonic extends Component {
         <div className="mnemonic-container">
           <div>{toLocale('wallet_import_mnemonic_enter')}</div>
           <textarea value={mnemonic} onChange={this.changeMnemonic} />
-          <div className={className} style={{ fontSize: '12px' }}>{toLocale(p)}</div>
+          <div className={className} style={{ fontSize: '12px' }}>
+            {toLocale(p)}
+          </div>
         </div>
         <div className="password-container">
           <WalletPassword

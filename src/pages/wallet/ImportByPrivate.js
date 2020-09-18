@@ -32,8 +32,6 @@ class ImportByprivateKey extends Component {
       password: '',
       isValidatedPrivateKey: true,
       buttonLoading: false,
-      // updateLengthCheck: 'none',
-      // updateChartCheck: 'none',
       isNone: false,
     };
     this.isValidatedPassword = false;
@@ -43,37 +41,39 @@ class ImportByprivateKey extends Component {
     this.setState({
       privateKey,
       isValidatedPrivateKey: true,
-      isNone: false
+      isNone: false,
     });
   };
   changePassword = ({ value, lengthCheck, chartCheck }) => {
-    this.isValidatedPassword = lengthCheck === 'right' && chartCheck === 'right';
+    this.isValidatedPassword =
+      lengthCheck === 'right' && chartCheck === 'right';
     this.setState({
-      password: value
+      password: value,
     });
   };
   handleEnsure = () => {
     if (this.state.privateKey.length === 0) {
       this.setState({
-        isNone: true
+        isNone: true,
       });
       return;
     }
-    // 密码校验失败 或者 私钥校验失败
     if (!this.isValidatedPassword || !this.state.isValidatedPrivateKey) {
       this.setState({
         updateLengthCheck: 'wrong',
-        updateChartCheck: 'wrong'
+        updateChartCheck: 'wrong',
       });
       return;
     }
-    this.setState({
-      buttonLoading: true
-    }, () => {
-      setTimeout(this.validatePrivateKey, 10);
-    });
+    this.setState(
+      {
+        buttonLoading: true,
+      },
+      () => {
+        setTimeout(this.validatePrivateKey, 10);
+      }
+    );
   };
-  // 校验私钥
   validatePrivateKey = () => {
     try {
       const { privateKey, password } = this.state;
@@ -85,7 +85,7 @@ class ImportByprivateKey extends Component {
       this.setState({
         isValidatedPrivateKey: true,
         buttonLoading: false,
-        isNone: false
+        isNone: false,
       });
       this.props.commonAction.setPrivateKey(privateKey);
       this.props.history.push(PageURL.spotFullPage);
@@ -93,13 +93,16 @@ class ImportByprivateKey extends Component {
       this.setState({
         isValidatedPrivateKey: false,
         buttonLoading: false,
-        isNone: false
+        isNone: false,
       });
     }
-  }
+  };
   render() {
     const {
-      privateKey, isValidatedPrivateKey, buttonLoading, isNone
+      privateKey,
+      isValidatedPrivateKey,
+      buttonLoading,
+      isNone,
     } = this.state;
     let p;
     if (isNone) {
@@ -112,9 +115,7 @@ class ImportByprivateKey extends Component {
         <div className="privateKey-container">
           <div>{toLocale('wallet_import_private_enter')}</div>
           <textarea value={privateKey} onChange={this.changePrivateKey} />
-          <div style={{ color: '#FB6262' }}>
-            {toLocale(p)}
-          </div>
+          <div style={{ color: '#FB6262' }}>{toLocale(p)}</div>
         </div>
         <div className="password-container">
           <WalletPassword

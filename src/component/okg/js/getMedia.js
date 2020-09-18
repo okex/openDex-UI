@@ -1,7 +1,3 @@
-/*
- * @Descripttion: 获取当前设备类型
- * @LastEditors: 翟懿博
- */
 import mediaSet from '../mediaSet';
 
 const getMedia = () => {

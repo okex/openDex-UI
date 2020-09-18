@@ -15,7 +15,9 @@ const Banner = () => {
         <div className="banner-grid">
           <section className="banner-content">
             <h1 className="title">{toLocale('home_banner_title')}</h1>
-            <h2 className="title banner-subtitle ">{toLocale('home_banner_subtitle')}</h2>
+            <h2 className="title banner-subtitle ">
+              {toLocale('home_banner_subtitle')}
+            </h2>
             <p className="banner-paragraph">{toLocale('home_subtitle')}</p>
             <div className="button-container">
               <a

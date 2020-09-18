@@ -1,6 +1,3 @@
-/**
- * Created by oker on 2018/1/24.
- */
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -12,20 +9,19 @@ import Colors from '../../utils/Colors';
 import Enum from '../../utils/Enum';
 
 export default class Kline extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  // }
-
   componentDidMount() {
     const { dataSource, theme } = this.props;
     this.echartMain = echarts.init(this.chartDom, undefined, {
-      animationLoopDelta: 64
+      animationLoopDelta: 64,
     });
     let localeText = {
       time: '时间',
-      price: '价格'
+      price: '价格',
     };
-    const language = Cookies.get('locale') || (navigator.languages && navigator.languages[0]) || navigator.language;
+    const language =
+      Cookies.get('locale') ||
+      (navigator.languages && navigator.languages[0]) ||
+      navigator.language;
     let axisLineColor = Colors.blackRGB(0.1);
     let axisTextColor = Colors.blackRGB(0.25);
     if (theme === Enum.themes.theme2) {
@@ -37,19 +33,19 @@ export default class Kline extends React.Component {
       case 'en_US':
         localeText = {
           time: 'time',
-          price: 'price'
+          price: 'price',
         };
         break;
       case 'zh_HK':
         localeText = {
           time: '時間',
-          price: '價咯'
+          price: '價咯',
         };
         break;
       case 'ko_KR':
         localeText = {
           time: '시간',
-          price: '가격'
+          price: '가격',
         };
         break;
       default:
@@ -61,7 +57,7 @@ export default class Kline extends React.Component {
         right: 0,
         top: 10,
         bottom: 0,
-        containLabel: true
+        containLabel: true,
       },
       tooltip: {
         trigger: 'axis',
@@ -77,65 +73,49 @@ export default class Kline extends React.Component {
         },
         formatter: (param) => {
           const item = param[0];
-          return `${localeText.time} : ${item.name}` +
-            `<br/> ${localeText.price} : ${item.data}`;
-        }
-        // position: (point, params, dom, rect, size) => {
-        //   // 固定在顶部
-        //   return [point[0] - (size.contentSize[0] / 2), point[1] - 80];
-        // }
+          return (
+            `${localeText.time} : ${item.name}` +
+            `<br/> ${localeText.price} : ${item.data}`
+          );
+        },
       },
       axisPointer: {
-        // link: { xAxisIndex: 'all' },
         lineStyle: {
-          color: axisLineColor
+          color: axisLineColor,
         },
-        // splitLine: {
-        //   show: true,
-        // },
-        // label: {
-        //   backgroundColor: '#777'
-        // }
       },
       xAxis: [
         {
-          type: 'category', // time类型的不太靠谱，xAxis的data传啥都不对
+          type: 'category',
           axisLine: {
             lineStyle: {
-              color: axisLineColor
-            }
+              color: axisLineColor,
+            },
           },
           axisLabel: {
             textStyle: {
-              color: axisTextColor
+              color: axisTextColor,
             },
           },
           axisTick: {
-            show: false
+            show: false,
           },
-          // axisPointer: {
-          //   z: 100,
-          //   label: {
-          //     margin: 0,
-          //     color: 'red'
-          //   }
-          // }
-        }
+        },
       ],
       yAxis: [
         {
           type: 'value',
           show: true,
           axisPointer: {
-            show: false
+            show: false,
           },
           axisLabel: {
             textStyle: {
-              color: axisTextColor
+              color: axisTextColor,
             },
           },
           axisLine: {
-            show: false
+            show: false,
           },
           splitLine: {
             show: false,
@@ -145,7 +125,7 @@ export default class Kline extends React.Component {
           },
           splitNumber: 3,
           scale: true,
-        }
+        },
       ],
       series: [
         {
@@ -164,10 +144,10 @@ export default class Kline extends React.Component {
           },
           lineStyle: {
             color: '#5795F1',
-            width: 1
+            width: 1,
           },
-        }
-      ]
+        },
+      ],
     };
     this.echartMain.setOption(options);
     this.renderChart(dataSource);
@@ -187,7 +167,7 @@ export default class Kline extends React.Component {
       }
       const chartData = {
         time: [],
-        price: []
+        price: [],
       };
       let min = 0;
       let max = 0;
@@ -207,37 +187,43 @@ export default class Kline extends React.Component {
         chartData.price.push(currClose);
       });
       this.echartMain.setOption({
-        xAxis: [{
-          data: chartData.time,
-          axisLabel: {
-            interval: (index, value) => { return /(.*)(:30|:00)+(.*)/.test(value); }, // 仅展示整点或者半点的刻度
-            textStyle: {
-              color: axisTextColor
+        xAxis: [
+          {
+            data: chartData.time,
+            axisLabel: {
+              interval: (index, value) => {
+                return /(.*)(:30|:00)+(.*)/.test(value);
+              },
+              textStyle: {
+                color: axisTextColor,
+              },
+            },
+            axisLine: {
+              lineStyle: {
+                color: axisLineColor,
+              },
             },
           },
-          axisLine: {
-            lineStyle: {
-              color: axisLineColor
-            }
-          }
-        }],
+        ],
         axisPointer: {
           lineStyle: {
-            color: axisLineColor
+            color: axisLineColor,
           },
         },
-        yAxis: [{
-          // min: min * 0.99,
-          // max: max * 1,
-          axisLabel: {
-            textStyle: {
-              color: axisTextColor
+        yAxis: [
+          {
+            axisLabel: {
+              textStyle: {
+                color: axisTextColor,
+              },
             },
           },
-        }],
-        series: [{
-          data: chartData.price
-        }]
+        ],
+        series: [
+          {
+            data: chartData.price,
+          },
+        ],
       });
     }
   };
@@ -248,17 +234,17 @@ export default class Kline extends React.Component {
       <div
         style={{ ...style, height: '220px' }}
         ref={(chartDom) => {
-                   this.chartDom = chartDom;
-               }}
+          this.chartDom = chartDom;
+        }}
       />
     );
   }
 }
 Kline.defaultProps = {
   style: {},
-  dataSource: []
+  dataSource: [],
 };
 Kline.propTypes = {
   style: PropTypes.object,
-  dataSource: PropTypes.array
+  dataSource: PropTypes.array,
 };

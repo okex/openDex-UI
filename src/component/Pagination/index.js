@@ -4,9 +4,7 @@ import classNames from 'classnames';
 import Icon from '../IconLite';
 import OkPagination from './OkPagination';
 
-
-function noop() {
-}
+function noop() {}
 
 export default class Pagination extends React.Component {
   static propTypes = {
@@ -19,13 +17,9 @@ export default class Pagination extends React.Component {
     hideOnSinglePage: PropTypes.bool,
     showQuickJumper: PropTypes.bool,
     showTotal: PropTypes.func,
-    /** (page: number, type: 'page' | 'prev' | 'next' | 'jump-prev' | 'jump-next') => React.ReactNode
-     * 用于自定义页码的结构，可用于优化 SEO
-     *  */
     itemRender: PropTypes.func,
     size: PropTypes.string,
     dark: PropTypes.bool,
-    // 兼容老版本
     totalPage: PropTypes.number,
   };
   static defaultProps = {
@@ -57,10 +51,7 @@ export default class Pagination extends React.Component {
     const jumpPrevIcon = (
       <a className={`${prefixCls}-item-link`}>
         <div className={`${prefixCls}-item-container`}>
-          <Icon
-            className={`${prefixCls}-item-link-icon`}
-            type="double-left"
-          />
+          <Icon className={`${prefixCls}-item-link-icon`} type="double-left" />
           <span className={`${prefixCls}-item-ellipsis`}>•••</span>
         </div>
       </a>
@@ -68,10 +59,7 @@ export default class Pagination extends React.Component {
     const jumpNextIcon = (
       <a className={`${prefixCls}-item-link`}>
         <div className={`${prefixCls}-item-container`}>
-          <Icon
-            className={`${prefixCls}-item-link-icon`}
-            type="double-right"
-          />
+          <Icon className={`${prefixCls}-item-link-icon`} type="double-right" />
           <span className={`${prefixCls}-item-ellipsis`}>•••</span>
         </div>
       </a>
@@ -85,9 +73,7 @@ export default class Pagination extends React.Component {
   };
 
   render() {
-    const {
-      className, size, locale, ...restProps
-    } = this.props;
+    const { className, size, locale, ...restProps } = this.props;
     const isSmall = size === 'small';
     return (
       <OkPagination
@@ -99,4 +85,3 @@ export default class Pagination extends React.Component {
     );
   }
 }
-

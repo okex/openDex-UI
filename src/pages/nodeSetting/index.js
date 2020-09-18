@@ -14,10 +14,8 @@ import './index.less';
 
 const loopTime = 10000;
 
-function mapStateToProps(state) { // 绑定redux中相关state
-  const {
-    currentNode, remoteList, customList
-  } = state.NodeStore;
+function mapStateToProps(state) {
+  const { currentNode, remoteList, customList } = state.NodeStore;
   return {
     currentNode,
     remoteList,
@@ -25,18 +23,17 @@ function mapStateToProps(state) { // 绑定redux中相关state
   };
 }
 
-function mapDispatchToProps(dispatch) { // 绑定action，以便向redux发送action
+function mapDispatchToProps(dispatch) {
   return {
-    nodeActions: bindActionCreators(NodeActions, dispatch)
+    nodeActions: bindActionCreators(NodeActions, dispatch),
   };
 }
 
-@connect(mapStateToProps, mapDispatchToProps) // 与redux相关的组件再用connect修饰，容器组件
+@connect(mapStateToProps, mapDispatchToProps)
 class NodeSetting extends Component {
   constructor() {
     super();
-    this.state = {
-    };
+    this.state = {};
   }
 
   componentDidMount() {
@@ -59,7 +56,7 @@ class NodeSetting extends Component {
     this.timer && clearInterval(this.timer);
   }
 
-  fetchNodesLatency  = () => {
+  fetchNodesLatency = () => {
     const { remoteList, customList } = this.props;
     const hasVisited = {};
 
@@ -70,13 +67,20 @@ class NodeSetting extends Component {
           const { nodeActions } = this.props;
           nodeActions.updateCurrentNode({
             ...currentNode,
-            latency
+            latency,
           });
         });
       }
     };
 
-    const updateLatency = (list, updateList, updateNode, currentNode, node, latency) => {
+    const updateLatency = (
+      list,
+      updateList,
+      updateNode,
+      currentNode,
+      node,
+      latency
+    ) => {
       let hasNode = false;
       const newList = list.slice();
       for (let i = 0; i < newList.length; i++) {
@@ -93,12 +97,26 @@ class NodeSetting extends Component {
 
     const updateRemote = (node, latency) => {
       const { nodeActions, currentNode } = this.props;
-      updateLatency(this.props.remoteList, nodeActions.updateRemoteList, nodeActions.updateCurrentNode, currentNode, node, latency);
+      updateLatency(
+        this.props.remoteList,
+        nodeActions.updateRemoteList,
+        nodeActions.updateCurrentNode,
+        currentNode,
+        node,
+        latency
+      );
     };
 
     const updateCustom = (node, latency) => {
       const { nodeActions, currentNode } = this.props;
-      updateLatency(this.props.customList, nodeActions.updateCustomList, nodeActions.updateCurrentNode, currentNode, node, latency);
+      updateLatency(
+        this.props.customList,
+        nodeActions.updateCustomList,
+        nodeActions.updateCurrentNode,
+        currentNode,
+        node,
+        latency
+      );
     };
 
     const fetchListLatency = (list) => {
@@ -116,7 +134,7 @@ class NodeSetting extends Component {
     fetchLocalNode();
     fetchListLatency(remoteList);
     fetchListLatency(customList);
-  }
+  };
 
   render() {
     const { currentNode } = this.props;

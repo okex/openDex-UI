@@ -13,27 +13,25 @@ function mapStateToProps(state) {
   const { strategyType } = state.FormStore;
   const { entrustType } = state.OrderStore;
   return {
-    product, strategyType, entrustType
+    product,
+    strategyType,
+    entrustType,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     formAction: bindActionCreators(FormAction, dispatch),
-    orderAction: bindActionCreators(OrderAction, dispatch)
+    orderAction: bindActionCreators(OrderAction, dispatch),
   };
 }
-
 
 const StrategyTypeWrapper = (Component) => {
   @connect(mapStateToProps, mapDispatchToProps)
   class StrategyType extends React.Component {
-    // 切换委托类型
     onChangeStrategyType = (e) => {
-      const {
-        formAction, orderAction, strategyType, entrustType
-      } = this.props;
-      if (e.value !== strategyType) { // 选择不同的委托类型才刷新下单区域
+      const { formAction, orderAction, strategyType, entrustType } = this.props;
+      if (e.value !== strategyType) {
         if (strategyType === 1 || strategyType === 7) {
           formAction.updateDepthInput({
             type: Enum.placeOrder.type.buy,
@@ -45,7 +43,7 @@ const StrategyTypeWrapper = (Component) => {
         }
         formAction.updateWarning('');
         formAction.updateStrategyType(e.value);
-        const newEntrustType = (e.value < 3 || e.value === 7) ? 0 : (e.value - 2);
+        const newEntrustType = e.value < 3 || e.value === 7 ? 0 : e.value - 2;
         if (entrustType !== newEntrustType) {
           orderAction.updateEntrustType(newEntrustType);
         }
@@ -70,19 +68,16 @@ const StrategyTypeWrapper = (Component) => {
         { value: strategyTypes.track, label: toLocale(trackId) },
         { value: strategyTypes.iceberg, label: toLocale(icebergId) },
         { value: strategyTypes.timeWeight, label: toLocale(timeWeightId) },
-        { value: strategyTypes.advancedLimit, label: toLocale(advancedLimitId) },
+        {
+          value: strategyTypes.advancedLimit,
+          label: toLocale(advancedLimitId),
+        },
       ];
-      // TODO
       if (tradeType === Enum.tradeType.fullTrade) {
-        // 全屏交易只有市价和限价
         limitId = 'spot.FullLimitOrder';
         marketId = 'spot.shortMarketOrder';
-        options = [
-          { value: 1, label: toLocale(limitId) },
-          // { value: 2, label: toLocale(marketId) }
-        ];
+        options = [{ value: 1, label: toLocale(limitId) }];
       }
-      // console.log('options', options);
       return (
         <Component
           strategyType={strategyType}

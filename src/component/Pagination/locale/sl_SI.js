@@ -1,11 +1,8 @@
 export default {
-  // Options.jsx
   items_per_page: '/ strani',
   jump_to: 'Pojdi na',
   jump_to_confirm: 'potrdi',
   page: '',
-
-  // Pagination.jsx
   prev_page: 'Prejšnja stran',
   next_page: 'Naslednja stran',
   prev_5: 'Prejšnjih 5 strani',

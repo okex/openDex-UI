@@ -1,6 +1,3 @@
-/**
- * Created by zhaiyibo on 2018/1/15.
- */
 import React from 'react';
 import PropTypes from 'prop-types';
 import Icon from '_src/component/IconLite';
@@ -10,7 +7,7 @@ import './index.less';
 const SortTypes = {
   noSort: 'noSort',
   asc: 'asc',
-  des: 'des'
+  des: 'des',
 };
 export default class LeftMenu extends React.Component {
   static propTypes = {
@@ -26,7 +23,7 @@ export default class LeftMenu extends React.Component {
     canStar: PropTypes.bool,
     onSearch: PropTypes.func,
     onSelect: PropTypes.func,
-    onClickStar: PropTypes.func
+    onClickStar: PropTypes.func,
   };
   static defaultProps = {
     menuList: [],
@@ -41,7 +38,7 @@ export default class LeftMenu extends React.Component {
     canStar: false,
     onSearch: null,
     onSelect: null,
-    onClickStar: null
+    onClickStar: null,
   };
 
   constructor(props) {
@@ -49,28 +46,19 @@ export default class LeftMenu extends React.Component {
     this.state = {
       menuList: props.menuList,
       sortType: SortTypes.noSort,
-      activeId: props.activeId
+      activeId: props.activeId,
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    // const { sortType } = this.state;
+    const { sortType } = this.state;
     const { menuList, activeId } = nextProps;
-    // const newList = [...menuList];
-    // if (sortType === SortTypes.noSort) {
-    //   newList.sort((a, b) => { return (a.text).localeCompare(b.text); });
-    // } else if (sortType === SortTypes.asc) {
-    //   newList.sort((a, b) => { return parseFloat(a.changePercentage) - parseFloat(b.changePercentage); });
-    // } else if (sortType === SortTypes.des) {
-    //   newList.sort((a, b) => { return parseFloat(b.changePercentage) - parseFloat(a.changePercentage); });
-    // }
     this.setState({
       menuList,
-      activeId
+      activeId,
     });
   }
 
-  // 模糊搜索
   handleSearchChange = (e) => {
     const args = e.target.value;
     if (this.props.onSearch) {
@@ -82,31 +70,35 @@ export default class LeftMenu extends React.Component {
       return [args.toLowerCase(), args.toUpperCase()].includes(item.text);
     });
     this.setState({
-      menuList: filterList
+      menuList: filterList,
     });
     return false;
   };
-  // 排序
   handleSort = () => {
     const { sortType, menuList } = this.state;
     const newList = [...menuList];
     let newSortType = SortTypes.noSort;
-    if (sortType === SortTypes.asc) { // 升序切换为降序
-      newList.sort((a, b) => { return parseFloat(b.changePercentage) - parseFloat(a.changePercentage); });
+    if (sortType === SortTypes.asc) {
+      newList.sort((a, b) => {
+        return parseFloat(b.changePercentage) - parseFloat(a.changePercentage);
+      });
       newSortType = SortTypes.des;
-    } else if (sortType === SortTypes.des) { // 降序切换为默认
-      newList.sort((a, b) => { return (a.text).localeCompare(b.text); });
+    } else if (sortType === SortTypes.des) {
+      newList.sort((a, b) => {
+        return a.text.localeCompare(b.text);
+      });
       newSortType = SortTypes.noSort;
-    } else { // 默认切换为升序
-      newList.sort((a, b) => { return parseFloat(a.changePercentage) - parseFloat(b.changePercentage); });
+    } else {
+      newList.sort((a, b) => {
+        return parseFloat(a.changePercentage) - parseFloat(b.changePercentage);
+      });
       newSortType = SortTypes.asc;
     }
     this.setState({
       sortType: newSortType,
-      menuList: newList
+      menuList: newList,
     });
   };
-  // 收藏/取消收藏
   handleStar = (item) => {
     return (e) => {
       e.preventDefault();
@@ -117,7 +109,6 @@ export default class LeftMenu extends React.Component {
       }
     };
   };
-  // 选中菜单项
   handleSelect = (item) => {
     return () => {
       const { onSelect } = this.props;
@@ -126,54 +117,57 @@ export default class LeftMenu extends React.Component {
       }
     };
   };
-  // 渲染list
   renderList = (menuList) => {
     const { canStar } = this.props;
     const { activeId } = this.state;
     return (
       <div>
-        {
-          menuList.map((item, index) => {
-            const {
-              id, stared, text, change, changePercentage, lever
-            } = item;
+        {menuList.map((item, index) => {
+          const { id, stared, text, change, changePercentage, lever } = item;
 
-            const color = change.toString().indexOf('-') > -1 ? 'red' : 'green';
-            return (
-              <li
-                key={index}
-                className={id === activeId ? 'active' : ''}
-                onClick={this.handleSelect(item)}
+          const color = change.toString().indexOf('-') > -1 ? 'red' : 'green';
+          return (
+            <li
+              key={index}
+              className={id === activeId ? 'active' : ''}
+              onClick={this.handleSelect(item)}
+            >
+              <span
+                style={{ display: canStar ? 'block' : 'none' }}
+                onClick={this.handleStar(item)}
               >
-                <span
-                  style={{ display: canStar ? 'block' : 'none' }}
-                  onClick={this.handleStar(item)}
-                >
-                  <Icon className={stared ? 'icon-Star' : 'icon-Star-o'} />
+                <Icon className={stared ? 'icon-Star' : 'icon-Star-o'} />
+              </span>
+              <label className="pair">{util.getShortName(text)}</label>
+              {lever ? (
+                <span className="lever">
+                  <span>{lever}X</span>
                 </span>
-                <label className="pair">{util.getShortName(text)}</label>
-                {lever ? <span className="lever"><span>{lever}X</span></span> : null}
-                <label className={`change change-${color}`}>{changePercentage}</label>
-              </li>
-            );
-          })
-        }
+              ) : null}
+              <label className={`change change-${color}`}>
+                {changePercentage}
+              </label>
+            </li>
+          );
+        })}
       </div>
     );
   };
   renderEmpty = () => {
     const { listEmpty } = this.props;
-    return (
-      <div className="empty-container">
-        {listEmpty}
-      </div>
-    );
+    return <div className="empty-container">{listEmpty}</div>;
   };
 
   render() {
     const {
-      searchPlaceholder, searchBar, subTitle, title, style,
-      searchText, listHeight, theme
+      searchPlaceholder,
+      searchBar,
+      subTitle,
+      title,
+      style,
+      searchText,
+      listHeight,
+      theme,
     } = this.props;
     let pair = '';
     let change = '';
@@ -188,11 +182,15 @@ export default class LeftMenu extends React.Component {
     const hasScroll = menuList && menuList.length > 9;
     const themeClass = theme || '';
     return (
-      <div className={`ok-left-menu ${themeClass} ${hasScroll ? 'has-scroll' : ''}`} style={style}>
-        {searchBar ?
+      <div
+        className={`ok-left-menu ${themeClass} ${
+          hasScroll ? 'has-scroll' : ''
+        }`}
+        style={style}
+      >
+        {searchBar ? (
           <div className="list-search">
             <div className="search-wrap">
-              {/* debug-chrome自动记住用户名 */}
               <input type="text" style={{ display: 'none' }} />
               <input
                 type="text"
@@ -204,10 +202,11 @@ export default class LeftMenu extends React.Component {
               />
               <Icon className="icon-search" />
             </div>
-          </div> : null}
+          </div>
+        ) : null}
         <div className={`${searchBar ? '' : 'top-border'} list-container`}>
           {title}
-          {subTitle ?
+          {subTitle ? (
             <div className="list-head">
               <div className="head-left">{pair}</div>
               <div className="head-right" onClick={this.handleSort}>
@@ -217,7 +216,8 @@ export default class LeftMenu extends React.Component {
                   <Icon className={`${desSort ? 'active' : ''} icon-spread`} />
                 </span>
               </div>
-            </div> : null}
+            </div>
+          ) : null}
 
           <ul className="list-main" style={{ height: listHeight }}>
             {haveData ? this.renderList(menuList) : this.renderEmpty()}

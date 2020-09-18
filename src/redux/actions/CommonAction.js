@@ -4,6 +4,7 @@ import CommonActionType from '../actionTypes/CommonActionType';
 import Config from '../../constants/Config';
 import FormActionType from '../actionTypes/FormActionType';
 
+<<<<<<< HEAD
 /*
  * 初始化okexchain客户端
  * */
@@ -14,29 +15,33 @@ export function initOKExChainClient() {
     dispatch({
       type: CommonActionType.SET_OKEXCHAIN_CLIENT,
       data: client
+=======
+export function initOKChainClient() {
+  return (dispatch) => {
+    const client = new OKChainClient(Config.okchain.clientUrl);
+    dispatch({
+      type: CommonActionType.SET_OKCHAIN_CLIENT,
+      data: client,
+>>>>>>> zch/opendex
     });
   };
 }
 
-/*
- * 验证密码
- * */
 export function validatePassword(pwd, successCallback, errorCallback) {
   return (dispatch) => {
-    // 校验密码
     try {
       const user = JSON.parse(window.localStorage.getItem('dex_user') || '{}');
       const pk = crypto.getPrivateKeyFromKeyStore(user.info, pwd);
-      this.setPrivateKey(pk); // 重置私钥，30分钟后过期
+      this.setPrivateKey(pk);
       successCallback && successCallback(pk);
       dispatch({
         type: FormActionType.UPDATE_WARNING,
-        data: '' // e.message
+        data: '',
       });
     } catch (e) {
       dispatch({
         type: FormActionType.UPDATE_WARNING,
-        data: toLocale('pwd_error') // e.message
+        data: toLocale('pwd_error'),
       });
       errorCallback && errorCallback();
       return false;
@@ -45,39 +50,37 @@ export function validatePassword(pwd, successCallback, errorCallback) {
   };
 }
 
-/*
- * 设置密钥 & 更新过期时间
- * */
 export function setPrivateKey(pk) {
   return (dispatch) => {
-    window.localStorage.setItem('pExpiredTime', new Date().getTime() + Config.timeoutMinute);
-    // 隐去弹窗
+    window.localStorage.setItem(
+      'pExpiredTime',
+      new Date().getTime() + Config.timeoutMinute
+    );
     dispatch({
       type: CommonActionType.SET_PRIVATE_KEY,
-      data: pk
+      data: pk,
     });
   };
 }
 
-/*
- * 隐藏密码弹窗
- * */
 export function hidePwdDialog() {
   return (dispatch) => {
-    // 隐去弹窗
     dispatch({
       type: CommonActionType.IS_SHOW_PWD_DIALOG,
-      data: false
+      data: false,
     });
   };
 }
 
+<<<<<<< HEAD
 // 更新OKExChain区块最新高度
+=======
+>>>>>>> zch/opendex
 export function updateLatestHeight(height) {
   return (dispatch) => {
     dispatch({
       type: CommonActionType.UPDATE_LATEST_HEIGHT,
-      data: height
+      data: height,
     });
   };
 }

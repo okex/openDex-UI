@@ -24,7 +24,6 @@
 @scrollbar-track-dark: #09142a;
 @scrollbar-thumb-dark: fade(#fff, 5%);
 
-// 用来处理select的已选择value
 .select-theme(@rules) {
   .Select-placeholder, .Select--single > .Select-control .Select-value {
     @rules();
@@ -102,17 +101,17 @@
       max-height: 180px;
       border-radius: 4px;
       &::-webkit-scrollbar {
-        width: 4px; // y轴宽度
+        width: 4px; 
       }
-      &::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
+      &::-webkit-scrollbar-thumb { 
         background: @scrollbar-thumb;
         border-radius: 2px;
       }
-      &::-webkit-scrollbar-track { /*滚动条里面轨道*/
+      &::-webkit-scrollbar-track { 
         width: 4px;
         background: @scrollbar-track;
       }
-      &::-webkit-scrollbar-corner{ /*右下角按钮样式*/
+      &::-webkit-scrollbar-corner{ 
         background: @scrollbar-track;
       }
     }
@@ -175,7 +174,6 @@
       }
     }
   }
-  // 黑夜模式
   &.dark {
     .select-theme({
       color: @value-color-dark;
@@ -191,14 +189,14 @@
       box-shadow: 0 2px 6px 0 @shadow-dark;
       background: @bg-dark;
       .Select-menu {
-        &::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
+        &::-webkit-scrollbar-thumb { 
           background: @scrollbar-thumb-dark;
         }
-        &::-webkit-scrollbar-track { /*滚动条里面轨道*/
+        &::-webkit-scrollbar-track {
           width: 4px;
           background: @scrollbar-track-dark;
         }
-        &::-webkit-scrollbar-corner{ /*右下角按钮样式*/
+        &::-webkit-scrollbar-corner{ 
           background: @scrollbar-track-dark;
         }
       }

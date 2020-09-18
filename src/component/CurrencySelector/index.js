@@ -2,7 +2,6 @@ import React from 'react';
 import { DialogTwoBtn } from '_component/Dialog';
 import { toLocale } from '_src/locale/react-locale';
 
-
 import './index.less';
 
 export default class CurrencySelector extends React.Component {
@@ -28,7 +27,7 @@ export default class CurrencySelector extends React.Component {
   };
   onClose = () => {
     this.setState({
-      showChangeDialog: false
+      showChangeDialog: false,
     });
     this.setActiveId(this.props.legalId);
   };
@@ -37,13 +36,13 @@ export default class CurrencySelector extends React.Component {
     const { legalObj } = this.props;
     if (legalObj.isoCode) {
       this.setState({
-        showChangeDialog: true
+        showChangeDialog: true,
       });
     }
   };
   setActiveId = (activeId) => {
     this.setState({
-      activeId
+      activeId,
     });
   };
   getContent = () => {
@@ -54,19 +53,20 @@ export default class CurrencySelector extends React.Component {
         <div className="selector-content">
           <h2>{toLocale('spot.ticker.legal.unit')}</h2>
           <div className={`selector-list ${legalList.length < 5 ? 'lt5' : ''}`}>
-            {
-              legalList && legalList.map(({ legalId, isoCode }) => {
+            {legalList &&
+              legalList.map(({ legalId, isoCode }) => {
                 return (
                   <label
                     key={legalId}
                     className={activeId === legalId ? 'active' : ''}
-                    onClick={() => { this.setActiveId(legalId); }}
+                    onClick={() => {
+                      this.setActiveId(legalId);
+                    }}
                   >
                     {isoCode}
                   </label>
                 );
-              })
-            }
+              })}
           </div>
         </div>
       </div>
@@ -77,7 +77,8 @@ export default class CurrencySelector extends React.Component {
     const { legalObj } = this.props;
     return (
       <div className="currency-selector-container">
-        {toLocale('spot.ticker.legal.unit')}<a onClick={this.onClickCurrency}>{legalObj.isoCode || '--'}</a>
+        {toLocale('spot.ticker.legal.unit')}
+        <a onClick={this.onClickCurrency}>{legalObj.isoCode || '--'}</a>
         <DialogTwoBtn
           theme="dark"
           title={toLocale('settings')}

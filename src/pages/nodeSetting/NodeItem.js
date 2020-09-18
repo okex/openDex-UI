@@ -40,19 +40,28 @@ class NodeItem extends Component {
     if (!disabled) {
       onClick && onClick();
     }
-  }
+  };
 
   render() {
     const {
-      name, ws, http, delayTime, disabled,
-      isRenderDelete, onDelete
+      name,
+      ws,
+      http,
+      delayTime,
+      disabled,
+      isRenderDelete,
+      onDelete,
     } = this.props;
     const delayType = getDelayType(delayTime);
     const delayCls = `node-delay node-delay-${delayType}`;
     const delayTypeTxt = toLocale(`node.delay.type.${delayType}`);
 
     return (
-      <div className="node-set-item" onClick={this.handleClick} style={{ cursor: disabled ? 'normal' : 'pointer' }}>
+      <div
+        className="node-set-item"
+        onClick={this.handleClick}
+        style={{ cursor: disabled ? 'normal' : 'pointer' }}
+      >
         <div className="node-name">{name}</div>
         <div className="node-link">
           <div className="node-link-item one-line">{ws}</div>
@@ -65,13 +74,11 @@ class NodeItem extends Component {
         <div className="node-icon">
           <Icon className={`icon-node color-${delayType}`} />
         </div>
-        {
-          isRenderDelete && (
-            <div className="node-delete extend-click" onClick={onDelete}>
-              <img width="100%" src={iconNodeDelete} alt="delete" />
-            </div>
-          )
-        }
+        {isRenderDelete && (
+          <div className="node-delete extend-click" onClick={onDelete}>
+            <img width="100%" src={iconNodeDelete} alt="delete" />
+          </div>
+        )}
       </div>
     );
   }

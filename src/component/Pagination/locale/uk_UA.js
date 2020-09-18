@@ -1,11 +1,8 @@
 export default {
-  // Options.jsx
   items_per_page: '/ сторінці',
   jump_to: 'Перейти',
   jump_to_confirm: 'підтвердити',
   page: '',
-
-  // Pagination.jsx
   prev_page: 'Попередня сторінка',
   next_page: 'Наступна сторінка',
   prev_5: 'Попередні 5 сторінок',

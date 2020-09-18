@@ -25,24 +25,28 @@ import normalColumns from '../spotOrders/normalColumns';
 import commonUtil from '../spotOrders/commonUtil';
 import util from '../../utils/util';
 
-function mapStateToProps(state) { // 绑定redux中相关state'
+function mapStateToProps(state) {
   const { product, productList, productObj } = state.SpotTrade;
   const { data } = state.OrderStore;
   const { theme } = state.Spot;
   return {
-    product, productList, productObj, data, theme
+    product,
+    productList,
+    productObj,
+    data,
+    theme,
   };
 }
 
-function mapDispatchToProps(dispatch) { // 绑定action，以便向redux发送action
+function mapDispatchToProps(dispatch) {
   return {
     spotActions: bindActionCreators(SpotActions, dispatch),
-    orderActions: bindActionCreators(OrderActions, dispatch)
+    orderActions: bindActionCreators(OrderActions, dispatch),
   };
 }
 
 @withRouter
-@connect(mapStateToProps, mapDispatchToProps) // 与redux相关的组件再用connect修饰，容器组件
+@connect(mapStateToProps, mapDispatchToProps)
 class DealsList extends RouterCredential {
   constructor(props, context) {
     super(props, context);
@@ -54,7 +58,7 @@ class DealsList extends RouterCredential {
       product: 'all',
       side: 'all',
       start: this.threeDaysAgo,
-      end: this.todayAgo
+      end: this.todayAgo,
     };
   }
   componentWillMount() {
@@ -62,7 +66,7 @@ class DealsList extends RouterCredential {
     orderActions.resetData();
     if (this.props.location.state && this.props.location.state.product) {
       this.setState({
-        product: this.props.location.state.product
+        product: this.props.location.state.product,
       });
     }
     if (this.props.location.state && this.props.location.state.period) {
@@ -79,7 +83,7 @@ class DealsList extends RouterCredential {
       const end = moment().subtract(0, 'days').endOf('day');
       this.setState({
         start,
-        end
+        end,
       });
     }
   }
@@ -88,26 +92,27 @@ class DealsList extends RouterCredential {
     const { spotActions } = this.props;
     spotActions.fetchProducts();
     const { webType } = window.OK_GLOBAL;
-    document.title = toLocale('spot.myOrder.detail') + toLocale('spot.page.title');
+    document.title =
+      toLocale('spot.myOrder.detail') + toLocale('spot.page.title');
     this.onSearch();
   }
-  componentWillReceiveProps(nextProps) {
-  }
+  componentWillReceiveProps(nextProps) {}
 
   componentWillUnmount() {
     const { orderActions } = this.props;
     orderActions.resetData();
   }
-  // 查询
+
   onBtnSearch = () => {
     this.onSearch({ page: 1 });
   };
+
   onSearch = (param) => {
     const { orderActions } = this.props;
     const { start, end } = this.state;
     const params = {
       ...this.state,
-      ...param
+      ...param,
     };
     params.start = Math.floor(start.valueOf() / 1000) - 86400;
     params.end = Math.floor(end.valueOf() / 1000);
@@ -118,18 +123,21 @@ class DealsList extends RouterCredential {
     params.from = 'IndependentPage';
     orderActions.getDetailList(params);
   };
-  // 币对改变
+
   onProductsChange = (obj) => {
     const value = obj.value;
     if (value.length > 0) {
-      this.setState({
-        product: value
-      }, () => {
-        this.onSearch({ page: 1 });
-      });
+      this.setState(
+        {
+          product: value,
+        },
+        () => {
+          this.onSearch({ page: 1 });
+        }
+      );
     }
   };
-  // 买卖筛选的改版
+
   onSideChange = (obj) => {
     const value = obj.value;
     let side = 'all';
@@ -138,43 +146,52 @@ class DealsList extends RouterCredential {
     } else if (+value === 2) {
       side = 'SELL';
     }
-    this.setState({
-      side
-    }, () => {
-      this.onSearch({ page: 1 });
-    });
+    this.setState(
+      {
+        side,
+      },
+      () => {
+        this.onSearch({ page: 1 });
+      }
+    );
   };
-  // 设置日期
+
   onDatePickerChange(key) {
     return (date) => {
-      this.setState({
-        [key]: date
-      }, () => {
-        this.onSearch({ page: 1 });
-      });
+      this.setState(
+        {
+          [key]: date,
+        },
+        () => {
+          this.onSearch({ page: 1 });
+        }
+      );
     };
   }
-  // 页码变化
+
   onPageChange = (page) => {
     this.onSearch({ page });
   };
   handleDateChangeRaw = (e) => {
     e.preventDefault();
   };
-  // 渲染查询条件行
+
   renderQuery = () => {
     const { productList } = this.props;
-    const sortProductList = productList.sort((a, b) => { return (a.base_asset_symbol).localeCompare(b.base_asset_symbol); });
+    const sortProductList = productList.sort((a, b) => {
+      return a.base_asset_symbol.localeCompare(b.base_asset_symbol);
+    });
     const newProductList = sortProductList.map((obj) => {
       return {
         value: obj.product,
-        label: obj.product.replace('_', '/').toUpperCase()
+        label: obj.product.replace('_', '/').toUpperCase(),
       };
     });
-    const {
-      product, side, start, end
-    } = this.state;
-    newProductList.unshift({ value: 'all', label: toLocale('spot.orders.allProduct') });
+    const { product, side, start, end } = this.state;
+    newProductList.unshift({
+      value: 'all',
+      label: toLocale('spot.orders.allProduct'),
+    });
     return (
       <div className="query-container">
         <div className="sub-query">
@@ -197,7 +214,7 @@ class DealsList extends RouterCredential {
             small
             theme="dark"
             name="form-field-name"
-            value={side === 'all' ? 0 : (side === 'BUY' ? 1 : 2)}
+            value={side === 'all' ? 0 : side === 'BUY' ? 1 : 2}
             onChange={this.onSideChange}
             options={orderUtil.sideList()}
             className="select-theme-controls mar-rig16 select-container"
@@ -216,7 +233,9 @@ class DealsList extends RouterCredential {
             onChangeRaw={this.handleDateChangeRaw}
             minDate={this.minDate}
             maxDate={end || this.maxDate}
-            locale={util.getSupportLocale(Cookies.get('locale') || 'en_US').toLocaleLowerCase()}
+            locale={util
+              .getSupportLocale(Cookies.get('locale') || 'en_US')
+              .toLocaleLowerCase()}
             onChange={this.onDatePickerChange('start')}
           />
           <div className="dash" />
@@ -232,10 +251,18 @@ class DealsList extends RouterCredential {
             onChangeRaw={this.handleDateChangeRaw}
             minDate={start || this.minDate}
             maxDate={this.maxDate}
-            locale={util.getSupportLocale(Cookies.get('locale') || 'en_US').toLocaleLowerCase()}
+            locale={util
+              .getSupportLocale(Cookies.get('locale') || 'en_US')
+              .toLocaleLowerCase()}
             onChange={this.onDatePickerChange('end')}
           />
-          <Button size={Button.size.small} type={Button.btnType.primary} onClick={this.onBtnSearch}>{toLocale('spot.search')}</Button>
+          <Button
+            size={Button.size.small}
+            type={Button.btnType.primary}
+            onClick={this.onBtnSearch}
+          >
+            {toLocale('spot.search')}
+          </Button>
         </div>
       </div>
     );
@@ -243,7 +270,7 @@ class DealsList extends RouterCredential {
   render() {
     const { theme, productObj, data } = this.props;
     const { orderList, isLoading, page } = data;
-    const themeColor = (theme === Enum.themes.theme2) ? 'dark' : '';
+    const themeColor = theme === Enum.themes.theme2 ? 'dark' : '';
     return (
       <div className="spot-orders flex10">
         <div className="title">{toLocale('spot.myOrder.detail')}</div>

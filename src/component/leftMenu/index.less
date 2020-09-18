@@ -10,8 +10,6 @@
     font-size: 14px;
   }
   .list-container {
-    //border: solid 1px;
-    //border-top-width: 0;
     border: none;
     border-radius: 0 0 4px 4px;
     padding-bottom: 10px;
@@ -27,7 +25,7 @@
       display: flex;
       align-items: center;
       i {
-        margin-right: 6px; //4px;
+        margin-right: 6px;
       }
     }
   }
@@ -36,7 +34,6 @@
     .search-wrap {
       position: relative;
       font-size: 12px;
-      //line-height: 14px;
       height: 36px;
       border: solid 1px;
       border-bottom: none;
@@ -50,19 +47,8 @@
         height: 100%;
         border: none;
         background: transparent;
-        //height: 36px;
-        //border-radius: 4px 4px 0 0;
-        //padding: 0 8px 0 30px;
-        //border: solid 1px;
-        //&:hover, &:focus {
-        //  border-color: @brand;
-        //}
       }
       .icon {
-        //display: inline-block;
-        //position: absolute;
-        //left: 13px;
-        //top: 12px;
         font-size: 12px;
         width: 12px;
         height: 12px;
@@ -90,7 +76,7 @@
       user-select: none;
       display: flex;
       align-items: center;
-      padding-right: 8px;//15
+      padding-right: 8px;
       .change-icons {
         height: 18px;
         margin-left: 4px;
@@ -112,7 +98,6 @@
 
   .list-main {
     overflow-x: hidden;
-    //overflow-y: auto;
     .empty-container {
       display: flex;
       height: 100%;
@@ -127,7 +112,7 @@
       user-select: none;
       box-sizing: border-box;
       list-style: none;
-      padding: 0 8px; // 11
+      padding: 0 8px; 
       display: flex;
       align-items: center;
       position: relative;
@@ -150,7 +135,7 @@
       }
       .icon {
         display: inline-block;
-        font-size: 14px; // 13
+        font-size: 14px; 
         line-height: 1;
         width: 14px;
         height: 14px;
@@ -189,16 +174,6 @@
         background: fade(@warn, 10%);
         color: @warn;
         border: 2px solid @warn;
-        //width: 22px;
-        //height: 15px;
-        //border-radius: 4px;
-        //font-size: 12px;
-        //margin-left: 3px;
-        //background: fade(@warn, 10%);
-        //color: @warn;
-        //display: flex;
-        //align-items: center;
-        //justify-content: center;
         span {
           font-size: 14px;
           display: block;
@@ -247,12 +222,10 @@
   }
 }
 
-// 主题色元素提取
 @ok-left-menu-rules: {
   .ok-left-menu {
     .list-container {
       box-shadow: inset 0 0 0 1px @border;
-      //border-color: @border;
       .trade-info-title {
         i {
           color: @text-disabled;
@@ -263,9 +236,6 @@
       .search-wrap {
         input {
           color: @text-title;
-          //background-color: @bg;
-          //border-color: @border;
-          //caret-color: @text-primary;
           &::-webkit-input-placeholder {
             color: @text-second;
           }
@@ -300,9 +270,6 @@
       &::-webkit-scrollbar-track {
         background: #323750;
       }
-      &::-webkit-scrollbar-track {
-        //background: @input-disabled;
-      }
       li {
         .icon {
           &.icon-Star-o {
@@ -330,14 +297,12 @@
   }
 }
 
-// 生成主题
 .theme-fun(@ok-left-menu-rules);
 
 
 .ok-left-menu.dark {
   width: 246px;
   .list-container {
-    //border: 0;
     padding-top: 0;
     &.top-border {
       border-top-width: 0;
@@ -359,10 +324,10 @@
   }
   .list-main {
     background: @dark-deep-blue;
-    &::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
+    &::-webkit-scrollbar-thumb { 
       background: rgba(255, 255, 255, 0.25);
     }
-    &::-webkit-scrollbar-track { /*滚动条里面轨道*/
+    &::-webkit-scrollbar-track { 
       background: #1c283e;
     }
     li {
@@ -371,9 +336,6 @@
         background: rgba(255, 255, 255, 0.1);
       }
       &.active {
-        //background: rgba(255, 255, 255, 0.1);
-        //border-left: 0;
-        //padding-left: 10px;
         border-left: 0;
         box-shadow: none;
         .pair {
@@ -395,10 +357,6 @@
           opacity: 0.25;
         }
       }
-      /*.lever {
-          color: #d9d9d9;
-          border: solid 1px #d9d9d9;
-      }*/
     }
     .empty-container {
       color: @dark-primary-white;
@@ -423,10 +381,10 @@
   }
   .list-main {
     background: @dark-deep-blue;
-    &::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
+    &::-webkit-scrollbar-thumb { 
       background: rgba(255, 255, 255, 0.25);
     }
-    &::-webkit-scrollbar-track { /*滚动条里面轨道*/
+    &::-webkit-scrollbar-track { 
       background: #1c283e;
     }
     li {
@@ -448,10 +406,6 @@
           opacity: 0.25;
         }
       }
-      /*.lever {
-          color: #d9d9d9;
-          border: solid 1px #d9d9d9;
-      }*/
     }
     .empty-container {
       color: @dark-primary-white;

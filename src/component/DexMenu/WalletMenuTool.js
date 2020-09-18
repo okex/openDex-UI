@@ -11,7 +11,6 @@ class WalletMenuTool extends React.Component {
       copySuccess: false,
     };
   }
-  // 复制地址
   handleCopy = () => {
     this.setState({ copySuccess: true });
     clearTimeout(this.copyTimer);
@@ -23,24 +22,27 @@ class WalletMenuTool extends React.Component {
     const { address } = this.props;
     const { copySuccess } = this.state;
     return (
-      <ul className="wallet-menu-address" >
-        <li className="wallet-menu-address-tool" >
+      <ul className="wallet-menu-address">
+        <li className="wallet-menu-address-tool">
           {toLocale('header_menu_item_address')}
-          {/* <span id="okdex-wallet-address" style={{ display: 'none' }}>{address}</span> */}
-
           <CopyToClipboard text={address} onCopy={this.handleCopy}>
             <Icon
               className={copySuccess ? 'icon-icon_success' : 'icon-icon_copy'}
               isColor
               style={{
-                width: 14, height: 14, cursor: 'pointer'
+                width: 14,
+                height: 14,
+                cursor: 'pointer',
               }}
             />
           </CopyToClipboard>
-
         </li>
-        <li className="wallet-menu-address-text" >
-          <a target="_blank" rel="noopener noreferrer" href={`${Config.okexchain.browserAddressUrl}/${address}`} >
+        <li className="wallet-menu-address-text">
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href={`${Config.okexchain.browserAddressUrl}/${address}`}
+          >
             {`${address.substr(0, 20)}…`}
           </a>
         </li>

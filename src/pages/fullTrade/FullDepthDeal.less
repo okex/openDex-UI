@@ -22,7 +22,6 @@
       cursor: pointer;
       &.active {
         cursor: default;
-        //border-bottom: 3px solid;
       }
       &:nth-child(1).active {
         color: @brand;
@@ -40,8 +39,8 @@
     }
   }
   .depth-deal-tab-container {
-    transform: translate(0, 0); //设置transform可以让子元素(ticker-clone)相对该dom进行fixed定位
-    height: calc(~"100% - 28px"); //100% - title高度
+    transform: translate(0, 0); 
+    height: calc(~"100% - 28px"); 
     display: flex;
     flex: auto;
     flex-direction: column;

@@ -11,15 +11,14 @@ import { connect } from 'react-redux';
 import * as commonActions from '_src/redux/actions/CommonAction';
 import ValidateCheckbox from '_component/ValidateCheckbox';
 import PageURL from '_constants/PageURL';
-// import util from '_src/utils/util';
 import walletUtil from './walletUtil';
 import './ImportByKeystore.less';
 
-const fileStatusEnum = { // 文件导入状态
-  todo: 'todo', // 待导入
-  doing: 'doing', // 导入中
-  retry: 'retry', // 内容非法
-  done: 'done', // 已完成
+const fileStatusEnum = {
+  todo: 'todo',
+  doing: 'doing',
+  retry: 'retry',
+  done: 'done',
 };
 
 function mapStateToProps() {
@@ -38,12 +37,12 @@ class ImportByKeystore extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fileStatus: fileStatusEnum.todo, // 文件导入状态
-      fileName: '', // keystore文件名
-      fileError: '', // 文件错误提示
-      password: '', // 密码
-      pwdError: '', // 密码错误
-      buttonLoading: false
+      fileStatus: fileStatusEnum.todo,
+      fileName: '',
+      fileError: '',
+      password: '',
+      pwdError: '',
+      buttonLoading: false,
     };
     this.keyStore = null;
   }
@@ -51,7 +50,7 @@ class ImportByKeystore extends Component {
     const file = files[0];
     if (file.type !== 'text/plain') {
       this.setState({
-        fileError: toLocale('wallet_import_fileError')
+        fileError: toLocale('wallet_import_fileError'),
       });
       return;
     }
@@ -59,7 +58,6 @@ class ImportByKeystore extends Component {
     fileReader.readAsText(file);
     const total = file.size;
     fileReader.onprogress = (e) => {
-      // util.throttle(() => {
       const progress = (e.loaded / total).toFixed(2);
       if (Number(progress) !== 1) {
         this.setState({
@@ -69,17 +67,11 @@ class ImportByKeystore extends Component {
       } else {
         try {
           this.keyStore = JSON.parse(e.target.result);
-          // const errArr = crypto.checkKeyStore(this.keyStore);
-          // if (errArr && errArr.length) {
-          //   throw (new Error(errArr[0]));
-          // }
-          // setTimeout(() => {
           this.setState({
             fileStatus: fileStatusEnum.done,
             fileError: '',
-            fileName: file.name
+            fileName: file.name,
           });
-          // }, 0);
         } catch (err) {
           this.setState({
             fileStatus: fileStatusEnum.retry,
@@ -87,36 +79,33 @@ class ImportByKeystore extends Component {
           });
         }
       }
-      // });
     };
-    // fileReader.onload = (e) => {
-
-    // };
   };
   changePwd = (e) => {
     const password = e.target.value;
     this.setState({
       password,
-      pwdError: ''
+      pwdError: '',
     });
   };
   handleEnsure = () => {
     const { fileStatus, fileError } = this.state;
-    // 文件未上传 或者 文件格式错误
     if (fileStatus !== fileStatusEnum.done || fileError) {
       this.setState({
         fileError: toLocale('wallet_import_noFile'),
-        buttonLoading: false
+        buttonLoading: false,
       });
       return;
     }
-    this.setState({
-      buttonLoading: true
-    }, () => {
-      setTimeout(this.validateKeyStore, 10);
-    });
+    this.setState(
+      {
+        buttonLoading: true,
+      },
+      () => {
+        setTimeout(this.validateKeyStore, 10);
+      }
+    );
   };
-  // 校验keystore
   validateKeyStore = () => {
     try {
       const { keyStore } = this;
@@ -124,18 +113,17 @@ class ImportByKeystore extends Component {
       const privateKey = crypto.getPrivateKeyFromKeyStore(keyStore, password);
       walletUtil.setUserInSessionStroage(privateKey, keyStore);
       this.setState({
-        buttonLoading: false
+        buttonLoading: false,
       });
-      // this.props.walletAction.updatePrivate(privateKey);
       this.props.commonAction.setPrivateKey(privateKey);
       this.props.history.push(PageURL.spotFullPage);
     } catch (e) {
       this.setState({
         pwdError: toLocale('wallet_import_passwordError'),
-        buttonLoading: false
+        buttonLoading: false,
       });
     }
-  }
+  };
   renderUploadIcon = () => {
     const { fileStatus, fileName } = this.state;
     const iconStyle = { width: 34, height: 34 };
@@ -145,7 +133,9 @@ class ImportByKeystore extends Component {
         dom = (
           <div>
             <Icon className="icon-txtx" isColor style={iconStyle} />
-            <div className="icon-desc">{toLocale('wallet_import_upload_todo')}</div>
+            <div className="icon-desc">
+              {toLocale('wallet_import_upload_todo')}
+            </div>
           </div>
         );
         break;
@@ -153,7 +143,9 @@ class ImportByKeystore extends Component {
         dom = (
           <div>
             <Icon className="icon-txtCopyx" isColor style={iconStyle} />
-            <div className="icon-desc">{toLocale('wallet_import_upload_retry')}</div>
+            <div className="icon-desc">
+              {toLocale('wallet_import_upload_retry')}
+            </div>
           </div>
         );
         break;
@@ -168,24 +160,27 @@ class ImportByKeystore extends Component {
       default:
         dom = (
           <div>
-            <div className="file-progress" style={{ width: `${fileStatus * 100}%` }} />
+            <div
+              className="file-progress"
+              style={{ width: `${fileStatus * 100}%` }}
+            />
             <Icon className="icon-txtx" isColor style={iconStyle} />
-            <div className="icon-desc">{toLocale('wallet_import_upload_doing')}</div>
+            <div className="icon-desc">
+              {toLocale('wallet_import_upload_doing')}
+            </div>
           </div>
         );
         break;
     }
     return dom;
-  }
+  };
   clearPwdInput = () => {
     this.setState({
-      password: ''
+      password: '',
     });
-  }
+  };
   render() {
-    const {
-      fileError, password, pwdError, buttonLoading
-    } = this.state;
+    const { fileError, password, pwdError, buttonLoading } = this.state;
     return (
       <div className="import-by-keystore-container">
         <UploadField
@@ -196,24 +191,19 @@ class ImportByKeystore extends Component {
           {this.renderUploadIcon()}
         </UploadField>
 
-        <div className="file-error">
-          {fileError}
-        </div>
+        <div className="file-error">{fileError}</div>
         <div className="password-container">
           <span>
             <Input
               value={password}
               placeholder={toLocale('wallet_import_enterPassword')}
               onChange={this.changePwd}
-              onPaste={(e) => { e.preventDefault(); }}
+              onPaste={(e) => {
+                e.preventDefault();
+              }}
               error={pwdError}
               theme="dark"
               allowClear
-              // suffix={
-              //   () => {
-              //     return <Icon className="icon-close-circle" onClick={this.clearPwdInput} />;
-              //   }
-              // }
             />
           </span>
           <ValidateCheckbox type="warning" className="mar-top10">
@@ -228,7 +218,7 @@ class ImportByKeystore extends Component {
         >
           {toLocale('wallet_ensure')}
         </Button>
-      </div >
+      </div>
     );
   }
 }

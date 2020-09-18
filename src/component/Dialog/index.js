@@ -14,7 +14,6 @@ function createFunction(type) {
   };
 }
 
-// 完全一个数组遍历来写，只不过用的时候就没有提示了
 Dialog.success = createFunction(PromptDialog.infoType.success);
 Dialog.info = createFunction(PromptDialog.infoType.info);
 Dialog.prompt = createFunction(PromptDialog.infoType.prompt);
@@ -33,6 +32,5 @@ Dialog.confirm = (props) => {
 Dialog.show = (props) => {
   return Dialog.create(props);
 };
-
 
 export { Dialog, DialogOneBtn, DialogTwoBtn, PromptDialog };

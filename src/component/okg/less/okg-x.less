@@ -1,5 +1,3 @@
-// 对外暴露 .okg-x 类名，用于不同设备动态显隐
-
 @import './config.less';
 
 @_smWidth   : #mediaQuerySM()[@mediaWidth];
@@ -34,7 +32,6 @@
 
 #okg-x() {
   each(#_mediaSet(), .(@mediaVal, @mediaKey) {
-      // okg-sm,okg-md,okg-lg,okg-xl   display:none
       .okg-@{mediaKey} {
         display: none;
       }
@@ -45,8 +42,6 @@
         .okg-@{mediaKey} {
           display: flex;
         }
-
-        // okg-sm-hide
         .okg-@{mediaKey}-hide {
           display: none;
         }

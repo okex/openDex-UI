@@ -31,24 +31,32 @@ class DashboardTransaction extends Component {
       per_page: 20,
     };
     this.setState({ loading: true });
-    ont.get(URL.GET_TRANSACTIONS, { params }).then(({ data }) => {
-      const list = data.data.map((item) => {
-        const newItem = { ...item };
-        newItem.uniqueKey = newItem.txhash + newItem.type + newItem.side + newItem.symbol + newItem.timestamp;
-        return newItem;
+    ont
+      .get(URL.GET_TRANSACTIONS, { params })
+      .then(({ data }) => {
+        const list = data.data.map((item) => {
+          const newItem = { ...item };
+          newItem.uniqueKey =
+            newItem.txhash +
+            newItem.type +
+            newItem.side +
+            newItem.symbol +
+            newItem.timestamp;
+          return newItem;
+        });
+        this.setState({
+          loading: false,
+          transactions: list || [],
+        });
+      })
+      .catch(() => {
+        this.setState({ loading: false });
       });
-      this.setState({
-        loading: false,
-        transactions: list || [],
-      });
-    }).catch(() => {
-      this.setState({ loading: false });
-    });
   };
 
   toTransactions = () => {
     history.push(PageURL.walletTransactions);
-  }
+  };
 
   render() {
     const { loading, transactions } = this.state;

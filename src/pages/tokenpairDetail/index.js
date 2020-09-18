@@ -5,7 +5,10 @@ import DexDesktopContainer from '_component/DexDesktopContainer';
 import DexDesktopInput from '_component/DexDesktopInput';
 import DexDesktopInputPair from '_component/DexDesktopInputPair';
 import DexTable from '_component/DexTable';
-import { AddDepositsDialog, WithdrawDepositsDialog } from '_component/ActionDialog';
+import {
+  AddDepositsDialog,
+  WithdrawDepositsDialog,
+} from '_component/ActionDialog';
 import { toLocale } from '_src/locale/react-locale';
 import ont from '_src/utils/dataProxy';
 import URL from '_constants/URL';
@@ -41,15 +44,15 @@ class TokenpairDetail extends Component {
 
   onBaseAssetChange = (e) => {
     this.setState({ baseAsset: e.target.value });
-  }
+  };
 
   onQuoteAssetChange = (e) => {
     this.setState({ quoteAsset: e.target.value });
-  }
+  };
 
   onAddressChange = (e) => {
     this.setState({ address: e.target.value });
-  }
+  };
 
   onPageChange = (pageSize) => {
     const pagination = {
@@ -57,7 +60,7 @@ class TokenpairDetail extends Component {
       page: pageSize,
     };
     this.fetchTokenpairs(pagination);
-  }
+  };
 
   onAddOpen = (project) => {
     return () => {
@@ -66,13 +69,13 @@ class TokenpairDetail extends Component {
         project,
       });
     };
-  }
+  };
 
   onAddClose = () => {
     this.setState({
       isShowAddDialog: false,
     });
-  }
+  };
 
   onWithdrawOpen = (project) => {
     return () => {
@@ -81,30 +84,30 @@ class TokenpairDetail extends Component {
         project,
       });
     };
-  }
+  };
 
   onWithdrawClose = () => {
     this.setState({
-      isShowWithdrawDialog: false
+      isShowWithdrawDialog: false,
     });
-  }
+  };
 
   beforeAddOrWithdraw = () => {
     this.setState({ isActionLoading: true });
-  }
+  };
 
   afterAddOrWithdraw = () => {
     this.setState({
       isActionLoading: false,
-      project: ''
+      project: '',
     });
     this.fetchTokenpairsByState();
-  }
+  };
 
   fetchTokenpairsByState = () => {
     const { pagination } = this.state;
     this.fetchTokenpairs(pagination);
-  }
+  };
 
   fetchTokenpairs = (pagination) => {
     const { page, per_page } = pagination;
@@ -120,29 +123,38 @@ class TokenpairDetail extends Component {
         base_asset: baseAsset,
         quote_asset: quoteAsset,
       };
-      ont.get(`${URL.GET_ACCOUNT_DEPOSIT}`, { params }).then(({ data }) => {
-        this.setState({
-          loading: false,
-          tokenpairs: data.data || [],
-          pagination: data.param_page || DEFAULT_PAGINATION,
+      ont
+        .get(`${URL.GET_ACCOUNT_DEPOSIT}`, { params })
+        .then(({ data }) => {
+          this.setState({
+            loading: false,
+            tokenpairs: data.data || [],
+            pagination: data.param_page || DEFAULT_PAGINATION,
+          });
+        })
+        .catch(() => {
+          this.setState({ loading: false });
         });
-      }).catch(() => {
-        this.setState({ loading: false });
-      });
     }
-  }
+  };
 
   handleQuery = () => {
     const pagination = DEFAULT_PAGINATION;
     this.fetchTokenpairs(pagination);
-  }
+  };
 
   render() {
     const {
-      isActionLoading, loading,
-      baseAsset, quoteAsset, address,
-      tokenpairs, pagination,
-      isShowAddDialog, isShowWithdrawDialog, project
+      isActionLoading,
+      loading,
+      baseAsset,
+      quoteAsset,
+      address,
+      tokenpairs,
+      pagination,
+      isShowAddDialog,
+      isShowWithdrawDialog,
+      project,
     } = this.state;
 
     return (
@@ -170,7 +182,10 @@ class TokenpairDetail extends Component {
             Query
           </button>
           <DexTable
-            columns={getDetailTokenPairCols({ add: this.onAddOpen, withdraw: this.onWithdrawOpen })}
+            columns={getDetailTokenPairCols({
+              add: this.onAddOpen,
+              withdraw: this.onWithdrawOpen,
+            })}
             dataSource={tokenpairs}
             rowKey="product"
             isLoading={loading}

@@ -9,7 +9,7 @@ import { validateTxs } from '_src/utils/client';
 
 const showError = () => {
   Message.error({
-    content: '服务端异常，请稍后重试'
+    content: '服务端异常，请稍后重试',
   });
 };
 
@@ -24,43 +24,44 @@ class BurnDialog extends Component {
 
   onChange = (e) => {
     this.setState({ value: e.target.value });
-  }
+  };
 
   onClose = () => {
     this.props.onClose();
     this.setState({
-      value: ''
+      value: '',
     });
-  }
+  };
 
   onBurn = () => {
-    const {
-      okexchainClient, token, beforeBurn, afterBurn
-    } = this.props;
+    const { okexchainClient, token, beforeBurn, afterBurn } = this.props;
     isFunction(beforeBurn) && beforeBurn();
     const { value } = this.state;
     const amount = util.precisionInput(value);
-    okexchainClient.sendTokenBurnTransaction(token, amount).then((res) => {
-      this.setState({ value: '' });
-      isFunction(afterBurn) && afterBurn();
-      const { result } = res;
-      const { txhash } = result;
-      if (!validateTxs(res)) {
+    okexchainClient
+      .sendTokenBurnTransaction(token, amount)
+      .then((res) => {
+        this.setState({ value: '' });
+        isFunction(afterBurn) && afterBurn();
+        const { result } = res;
+        const { txhash } = result;
+        if (!validateTxs(res)) {
+          showError();
+        } else {
+          showSuccessDialog('Burn success！', txhash);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        isFunction(afterBurn) && afterBurn();
         showError();
-      } else {
-        showSuccessDialog('Burn success！', txhash);
-      }
-    }).catch((err) => {
-      console.log(err);
-      isFunction(afterBurn) && afterBurn();
-      showError();
-      this.setState({ value: '' });
-    });
-  }
+        this.setState({ value: '' });
+      });
+  };
 
   onPwdSuccess = () => {
     this.onBurn();
-  }
+  };
 
   handleBurn = () => {
     const { value } = this.state;
@@ -69,10 +70,10 @@ class BurnDialog extends Component {
       this.props.checkPK(this.onBurn);
     } else {
       Message.error({
-        content: '输入类型错误，请重新输入'
+        content: '输入类型错误，请重新输入',
       });
     }
-  }
+  };
 
   render() {
     const { visible } = this.props;

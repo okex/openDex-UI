@@ -18,7 +18,9 @@ export const compose = (...fns) => {
   };
 };
 
-export const replace = curry((re, rpl, str) => { return str.replace(re, rpl); });
+export const replace = curry((re, rpl, str) => {
+  return str.replace(re, rpl);
+});
 
 export const noLineBreak = replace(/\n|\r/g);
 

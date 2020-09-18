@@ -11,4 +11,4 @@ export const NODE_LATENCY_TYPE = {
   UNREACHABLE: 'unreachable',
 };
 
-export const MAX_LATENCY = 2147483647; // -1 >>> 1
+export const MAX_LATENCY = 2147483647;

@@ -1,11 +1,8 @@
 export default {
-  // Options.jsx
   items_per_page: '/ strana',
   jump_to: 'Choď na',
   jump_to_confirm: 'potvrdit',
   page: '',
-
-  // Pagination.jsx
   prev_page: 'Predchádzajúca strana',
   next_page: 'Nasledujúca strana',
   prev_5: 'Predchádzajúcich 5 strán',

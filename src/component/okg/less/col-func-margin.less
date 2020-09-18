@@ -1,8 +1,5 @@
-// 对外暴露 col 方法，以margin形式创建gutter
-
 @import url('./config.less');
 
-// 设置栅格列的CSS属性
 #setCol() {
   box-sizing   : border-box;
   width        : percentage(@value / @colCount);
@@ -12,18 +9,14 @@
   margin-right : (@gutter / 2);
 }
 
-// 对外接口
 #col-func-margin() {
   #col-y();
   #col-x-y();
 }
 
-// 生成 .okgm-col-y() 和 .okgm-col-offset-y() 方法
 #col-y() {
-  // 默认设备，且最多是4列
   @gutter  : @defaultMedia[@gutter];
   @colCount: @defaultMedia[@colCount];
-  // 12的特殊身份，100%宽
   .okg-col-12 {
     @value: 4;
     #setCol();
@@ -40,13 +33,10 @@
 
   );
 
-  // 其他设备
   each(range(@_okg_col_max), {
       each(#excludeDefaultSet(), .(@mediaVal, @mediaKey) {
           @gutter   : @mediaVal[@gutter];
           @colCount : @mediaVal[@colCount];
-
-          // .okgm-col-y()
           .okgm-col-@{value} {
 
             @media @mediaVal[@mediaQuery] {
@@ -61,17 +51,13 @@
   )
 }
 
-// 生成 .col-x-y() 和 .col-x-offset-y() 方法
 #col-x-y() {
-
-  // 阈值类型循环
   each(#mediaSet(), .(@mediaVal, @mediaKey) {
       @gutter : @mediaVal[@gutter];
 
       each(range(@mediaVal[@colCount]), {
           @colCount : @mediaVal[@colCount];
 
-          // .okgm-col-x-y()
           .okgm-col-@{mediaKey}-@{value} {
             @media @mediaVal[@mediaQuery] {
               #setCol();

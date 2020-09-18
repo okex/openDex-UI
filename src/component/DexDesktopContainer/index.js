@@ -23,28 +23,29 @@ class DexDesktopContainer extends Component {
 
   render() {
     const {
-      isShowHelp, isShowAddress, loading = false, className
+      isShowHelp,
+      isShowAddress,
+      loading = false,
+      className,
     } = this.props;
     const { senderAddr } = window.OK_GLOBAL || {};
-    const cls = className ? `dex-desktop-container ${className}` : 'dex-desktop-container';
+    const cls = className
+      ? `dex-desktop-container ${className}`
+      : 'dex-desktop-container';
 
     return (
       <div className={cls}>
         <Loading when={loading} />
-        {
-          (isShowAddress && senderAddr) && (
-            <div className="dex-chain-address">
-              <div className="address-main">
-                <WalletAddress />
-              </div>
+        {isShowAddress && senderAddr && (
+          <div className="dex-chain-address">
+            <div className="address-main">
+              <WalletAddress />
             </div>
-          )
-        }
+          </div>
+        )}
         <div className="dex-desktop-main">
-          {
-            isShowHelp && <DexHelp />
-          }
-          { this.props.children }
+          {isShowHelp && <DexHelp />}
+          {this.props.children}
         </div>
       </div>
     );

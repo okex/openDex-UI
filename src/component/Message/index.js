@@ -10,7 +10,6 @@ function createFunction(type) {
   };
 }
 
-// 完全一个数组遍历来写，只不过用的时候就没有提示了
 Message.success = createFunction(Message.TYPE.success);
 Message.info = createFunction(Message.TYPE.info);
 Message.warn = createFunction(Message.TYPE.warn);

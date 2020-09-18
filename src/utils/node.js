@@ -71,9 +71,7 @@ export const getNodeLatency = (node) => {
 
 export const getNodeRenderName = (node) => {
   let renderName = '';
-  const {
-    type, region, country, location, name
-  } = node;
+  const { type, region, country, location, name } = node;
   if (type === NODE_TYPE.REMOTE) {
     renderName = `${region} - ${country} - ${location}`;
   } else if (type === NODE_TYPE.CUSTOM || type === NODE_TYPE.LOCAL) {
@@ -92,9 +90,6 @@ export const timeUnit = (t) => {
   return `${parseFloat(fixed(2, time))}${suffix}`;
 };
 
-/**
- * @param {string} timestamp
- */
 export const formatEstimatedTime = (t) => {
   const [time, suffix] = carry(timeData, fixed0(t));
   return `${fixed0(time)}${suffix}`;

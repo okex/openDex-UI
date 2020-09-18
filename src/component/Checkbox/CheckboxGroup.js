@@ -7,20 +7,13 @@ const prefixCls = 'ok-ui-checkbox';
 
 export default class CheckboxGroup extends React.Component {
   static propTypes = {
-    /** 名称 */
     name: PropTypes.string,
-    /** 类名 */
     className: PropTypes.string,
-    /** 是否禁止 */
     disabled: PropTypes.bool,
-    /** 变化时回调函数 */
     onChange: PropTypes.func,
-    /** 指定被选中的值 */
     value: PropTypes.array,
-    /** checkbox 列表 */
     options: PropTypes.array,
-    /** 默认指定的值 */
-    defaultValue: PropTypes.array
+    defaultValue: PropTypes.array,
   };
 
   static defaultProps = {
@@ -40,7 +33,6 @@ export default class CheckboxGroup extends React.Component {
     };
   }
 
-  // 新版方法 代替componentWillReceiveProps
   static getDerivedStateFromProps(nextProps) {
     if ('value' in nextProps) {
       return {
@@ -56,7 +48,7 @@ export default class CheckboxGroup extends React.Component {
       if (typeof item === 'string') {
         return {
           value: item,
-          label: item
+          label: item,
         };
       }
       return item;
@@ -79,34 +71,40 @@ export default class CheckboxGroup extends React.Component {
   };
 
   render() {
-    const {
-      disabled, options
-    } = this.props;
+    const { disabled, options } = this.props;
     const { value } = this.state;
     return (
       <div className={`${prefixCls}`}>
-        {
-          options && options.length > 0 && this.getOptions().map((item) => {
+        {options &&
+          options.length > 0 &&
+          this.getOptions().map((item) => {
             return (
               <label
                 key={item.value}
                 className={classnames({
                   'checkbox-wrapper': true,
                   'checkbox-wrapper-checked': value.indexOf(item.value) !== -1,
-                  'checkbox-wrapper-disabled': item.disabled ? item.disabled : disabled
+                  'checkbox-wrapper-disabled': item.disabled
+                    ? item.disabled
+                    : disabled,
                 })}
               >
-                <span className={classnames({
-                  checkbox: true,
-                  'checkbox-checked': value.indexOf(item.value) !== -1,
-                  'checkbox-disabled': item.disabled ? item.disabled : disabled
-                })}
+                <span
+                  className={classnames({
+                    checkbox: true,
+                    'checkbox-checked': value.indexOf(item.value) !== -1,
+                    'checkbox-disabled': item.disabled
+                      ? item.disabled
+                      : disabled,
+                  })}
                 >
                   <input
                     type="checkbox"
                     placeholder=""
                     checked={value.indexOf(item.value) !== -1}
-                    onChange={() => { this.toggleOption(item); }}
+                    onChange={() => {
+                      this.toggleOption(item);
+                    }}
                     className="check-input"
                     disabled={item.disabled ? item.disabled : disabled}
                   />
@@ -115,8 +113,7 @@ export default class CheckboxGroup extends React.Component {
                 <span className="check-des">{item.label}</span>
               </label>
             );
-          })
-        }
+          })}
       </div>
     );
   }

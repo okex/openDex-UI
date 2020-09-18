@@ -9,14 +9,10 @@ import { toLocale } from '_src/locale/react-locale';
 import Message from '_src/component/Message';
 import { Dialog } from '_component/Dialog';
 import Icon from '_src/component/IconLite';
-import Checkbox from 'rc-checkbox';
 import moment from 'moment';
 import Cookies from 'js-cookie';
-import Loading from '_component/Loading';
 import RouterCredential from '../../RouterCredential';
-import ont from '../../utils/dataProxy';
 import DexTable from '../../component/DexTable';
-import URL from '../../constants/URL';
 import * as SpotActions from '../../redux/actions/SpotAction';
 import * as OrderActions from '../../redux/actions/OrderAction';
 import Enum from '../../utils/Enum';
@@ -31,28 +27,34 @@ import * as FormAction from '../../redux/actions/FormAction';
 import Config from '../../constants/Config';
 import util from '../../utils/util';
 
-function mapStateToProps(state) { // 绑定redux中相关state'
+function mapStateToProps(state) {
   const { product, productList, productObj } = state.SpotTrade;
   const { data } = state.OrderStore;
   const { theme } = state.Spot;
   const { privateKey } = state.Common;
   const { FormStore } = state;
   return {
-    product, productList, productObj, data, theme, privateKey, FormStore
+    product,
+    productList,
+    productObj,
+    data,
+    theme,
+    privateKey,
+    FormStore,
   };
 }
 
-function mapDispatchToProps(dispatch) { // 绑定action，以便向redux发送action
+function mapDispatchToProps(dispatch) {
   return {
     commonAction: bindActionCreators(CommonAction, dispatch),
     formActions: bindActionCreators(FormAction, dispatch),
     spotActions: bindActionCreators(SpotActions, dispatch),
-    orderActions: bindActionCreators(OrderActions, dispatch)
+    orderActions: bindActionCreators(OrderActions, dispatch),
   };
 }
 
 @withRouter
-@connect(mapStateToProps, mapDispatchToProps) // 与redux相关的组件再用connect修饰，容器组件
+@connect(mapStateToProps, mapDispatchToProps)
 class OpenList extends RouterCredential {
   constructor(props, context) {
     super(props, context);
@@ -62,12 +64,12 @@ class OpenList extends RouterCredential {
     this.maxDate = moment();
     this.state = {
       isLoading: false,
-      isShowPwdDialog: false, // 资金密码弹窗
-      cancelLoading: false, // 取消订单期间的loading状态
+      isShowPwdDialog: false,
+      cancelLoading: false,
       product: 'all',
       side: 'all',
       start: this.threeDaysAgo,
-      end: this.todayAgo
+      end: this.todayAgo,
     };
     this.targetNode = null;
   }
@@ -76,7 +78,7 @@ class OpenList extends RouterCredential {
     orderActions.resetData();
     if (this.props.location.state && this.props.location.state.product) {
       this.setState({
-        product: this.props.location.state.product
+        product: this.props.location.state.product,
       });
     }
     if (this.props.location.state && this.props.location.state.period) {
@@ -93,50 +95,35 @@ class OpenList extends RouterCredential {
       const end = moment().subtract(0, 'days').endOf('day');
       this.setState({
         start,
-        end
+        end,
       });
     }
   }
   componentDidMount() {
-    // 初始化okexchain客户端。原因是交易页、未成交委托页撤单和资产页转账都需要
     this.props.commonAction.initOKExChainClient();
-
     const { spotActions, orderActions } = this.props;
     spotActions.fetchProducts();
     const { webType } = window.OK_GLOBAL;
-    document.title = toLocale('spot.orders.openOrders') + toLocale('spot.page.title');
-    // orderActions.getNoDealList();
+    document.title =
+      toLocale('spot.orders.openOrders') + toLocale('spot.page.title');
     this.onSearch();
   }
-  componentWillReceiveProps(nextProps) {
-  }
+  componentWillReceiveProps(nextProps) {}
 
   componentWillUnmount() {
     const { orderActions } = this.props;
     orderActions.resetData();
   }
-  // 撤销订单
+
   onCancelOrder = (order) => {
     return (e) => {
-      e.persist(); // 移出事件池从而保留事件对象
-
-      // 2019-08-13 增加用户清空全部缓存的判断
+      e.persist();
       if (!util.isLogined()) {
         window.location.reload();
       }
-
-      // this.formParam = { product, order_id };
-      // // 检查私钥，如果未过期直接取私钥，如果过期显示弹窗
-      // const expiredTime = localStorage.getItem('pExpiredTime') || 0;
-      // // 小于30分钟，且privateKey，（true时），不需要输入密码，直接提交
-      // if ((new Date().getTime() < +expiredTime) && this.props.privateKey) {
-      //   const param = { ...this.formParam, pk: this.props.privateKey };
-      //   return this.props.orderActions.cancelOrder(param, this.successToast, this.onSubmitErr);
-      // }
-      // return this.onPwdOpen();
       const order_id = order.order_id;
       let title = toLocale('spot.myOrder.cancelPartDealTip');
-      if ((order.quantity - order.remain_quantity) === 0) { // 未成交
+      if (order.quantity - order.remain_quantity === 0) {
         title = toLocale('spot.myOrder.cancelNoDealTip');
       }
       const _this = this;
@@ -147,7 +134,7 @@ class OpenList extends RouterCredential {
         theme: 'dark',
         dialogId: 'okdex-confirm',
         windowStyle: {
-          background: '#112F62'
+          background: '#112F62',
         },
         onConfirm: () => {
           dialog.destroy();
@@ -156,25 +143,37 @@ class OpenList extends RouterCredential {
           }
           e.target.setAttribute('canceling', 1);
           this.targetNode = e.target;
-          this.formParam = { order_id, start: Math.floor(_this.state.start.valueOf() / 1000 - 86400), end: Math.floor(_this.state.end.valueOf() / 1000) };
+          this.formParam = {
+            order_id,
+            start: Math.floor(_this.state.start.valueOf() / 1000 - 86400),
+            end: Math.floor(_this.state.end.valueOf() / 1000),
+          };
           if (_this.state.product !== 'all') {
-            this.formParam = { ...this.formParam, product: _this.state.product };
+            this.formParam = {
+              ...this.formParam,
+              product: _this.state.product,
+            };
           }
           if (_this.state.side !== 'all') {
             this.formParam = { ...this.formParam, side: _this.state.side };
           }
-          // 检查私钥，如果未过期直接取私钥，如果过期显示弹窗
           const expiredTime = window.localStorage.getItem('pExpiredTime') || 0;
-          // 小于30分钟，且privateKey，（true时），不需要输入密码，直接提交
-          if ((new Date().getTime() < +expiredTime) && this.props.privateKey) {
+          if (new Date().getTime() < +expiredTime && this.props.privateKey) {
             const param = { ...this.formParam, pk: this.props.privateKey };
-            this.setState({
-              isShowPwdDialog: false,
-              cancelLoading: true,
-            }, () => {
-              e.target.setAttribute('canceling', 0);
-              this.props.orderActions.cancelOrder(param, this.successToast, this.onSubmitErr);
-            });
+            this.setState(
+              {
+                isShowPwdDialog: false,
+                cancelLoading: true,
+              },
+              () => {
+                e.target.setAttribute('canceling', 0);
+                this.props.orderActions.cancelOrder(
+                  param,
+                  this.successToast,
+                  this.onSubmitErr
+                );
+              }
+            );
           } else {
             e.target.setAttribute('canceling', 0);
             this.onPwdOpen();
@@ -183,7 +182,7 @@ class OpenList extends RouterCredential {
       });
     };
   };
-  // 查询
+
   onBtnSearch = () => {
     this.onSearch({ page: 1 });
   };
@@ -195,7 +194,7 @@ class OpenList extends RouterCredential {
       start: this.state.start,
       end: this.state.end,
       side: this.state.side,
-      ...param
+      ...param,
     };
     params.start = Math.floor(start.valueOf() / 1000) - 86400;
     params.end = Math.floor(end.valueOf() / 1000);
@@ -206,18 +205,21 @@ class OpenList extends RouterCredential {
     params.from = 'IndependentPage';
     orderActions.getNoDealList(params);
   };
-  // 币对改变
+
   onProductsChange = (obj) => {
     const value = obj.value;
     if (value.length > 0) {
-      this.setState({
-        product: value
-      }, () => {
-        this.onSearch({ page: 1 });
-      });
+      this.setState(
+        {
+          product: value,
+        },
+        () => {
+          this.onSearch({ page: 1 });
+        }
+      );
     }
   };
-  // 买卖筛选的改版
+
   onSideChange = (obj) => {
     const value = obj.value;
     let side = 'all';
@@ -226,43 +228,52 @@ class OpenList extends RouterCredential {
     } else if (+value === 2) {
       side = 'SELL';
     }
-    this.setState({
-      side
-    }, () => {
-      this.onSearch({ page: 1 });
-    });
+    this.setState(
+      {
+        side,
+      },
+      () => {
+        this.onSearch({ page: 1 });
+      }
+    );
   };
-  // 设置日期
+
   onDatePickerChange(key) {
     return (date) => {
-      this.setState({
-        [key]: date
-      }, () => {
-        this.onSearch({ page: 1 });
-      });
+      this.setState(
+        {
+          [key]: date,
+        },
+        () => {
+          this.onSearch({ page: 1 });
+        }
+      );
     };
   }
-  // 页码变化
+
   onPageChange = (page) => {
     this.onSearch({ page });
   };
   handleDateChangeRaw = (e) => {
     e.preventDefault();
   };
-  // 渲染查询条件行
+
   renderQuery = () => {
     const { productList } = this.props;
-    const sortProductList = productList.sort((a, b) => { return (a.base_asset_symbol).localeCompare(b.base_asset_symbol); });
+    const sortProductList = productList.sort((a, b) => {
+      return a.base_asset_symbol.localeCompare(b.base_asset_symbol);
+    });
     const newProductList = sortProductList.map((obj) => {
       return {
         value: obj.product,
-        label: obj.product.replace('_', '/').toUpperCase()
+        label: obj.product.replace('_', '/').toUpperCase(),
       };
     });
-    const {
-      product, side, start, end
-    } = this.state;
-    newProductList.unshift({ value: 'all', label: toLocale('spot.orders.allProduct') });
+    const { product, side, start, end } = this.state;
+    newProductList.unshift({
+      value: 'all',
+      label: toLocale('spot.orders.allProduct'),
+    });
     return (
       <div className="query-container">
         <div className="sub-query">
@@ -285,7 +296,7 @@ class OpenList extends RouterCredential {
             small
             theme="dark"
             name="form-field-name"
-            value={side === 'all' ? 0 : (side === 'BUY' ? 1 : 2)}
+            value={side === 'all' ? 0 : side === 'BUY' ? 1 : 2}
             onChange={this.onSideChange}
             options={orderUtil.sideList()}
             className="select-theme-controls mar-rig16 select-container"
@@ -304,7 +315,9 @@ class OpenList extends RouterCredential {
             onChangeRaw={this.handleDateChangeRaw}
             minDate={this.minDate}
             maxDate={end || this.maxDate}
-            locale={util.getSupportLocale(Cookies.get('locale') || 'en_US').toLocaleLowerCase()}
+            locale={util
+              .getSupportLocale(Cookies.get('locale') || 'en_US')
+              .toLocaleLowerCase()}
             onChange={this.onDatePickerChange('start')}
           />
           <div className="dash" />
@@ -320,7 +333,9 @@ class OpenList extends RouterCredential {
             onChangeRaw={this.handleDateChangeRaw}
             minDate={start || this.minDate}
             maxDate={this.maxDate}
-            locale={util.getSupportLocale(Cookies.get('locale') || 'en_US').toLocaleLowerCase()}
+            locale={util
+              .getSupportLocale(Cookies.get('locale') || 'en_US')
+              .toLocaleLowerCase()}
             onChange={this.onDatePickerChange('end')}
           />
           <Button
@@ -335,94 +350,98 @@ class OpenList extends RouterCredential {
       </div>
     );
   };
-  // 下单成功提示
+
   successToast = () => {
     this.successCallback && this.successCallback();
-    // setTimeout(() => {
-    //   this.setState({cancelLoading: false});
-    //   const dialog = Dialog.show({
-    //     theme: 'dark operate-alert',
-    //     hideCloseBtn: true,
-    //     children: <div className="operate-msg"><Icon className="icon-icon_success" isColor />{toLocale('spot.myOrder.cancelSuccessed')}</div>,
-    //   });
-    //   setTimeout(() => {
-    //     dialog.destroy();
-    //   }, Config.operateResultTipInterval);
-    // }, Config.operateResultDelaySecond);
     this.setState({ cancelLoading: false });
-    Message.success({ content: toLocale('spot.myOrder.cancelSuccessed'), duration: 3 });
+    Message.success({
+      content: toLocale('spot.myOrder.cancelSuccessed'),
+      duration: 3,
+    });
   };
-  // 后端返回失败时
+
   onSubmitErr = (err) => {
     this.onPwdClose();
     this.targetNode.removeAttribute('canceling');
     this.errorCallback && this.errorCallback(err);
-    // setTimeout(() => {
-    //   this.setState({cancelLoading: false});
-    //   const dialog = Dialog.show({
-    //     theme: 'dark operate-alert',
-    //     hideCloseBtn: true,
-    //     children: <div className="operate-msg"><Icon className="icon-icon_fail" isColor />{toLocale('spot.myOrder.cancelFailed')}</div>,
-    //   });
-    //   setTimeout(() => {
-    //     dialog.destroy();
-    //   }, Config.operateResultTipInterval);
-    // }, Config.operateResultDelaySecond);
     this.setState({ cancelLoading: false });
-    Message.error({ content: toLocale('spot.myOrder.cancelFailed'), duration: 3 });
+    Message.error({
+      content: toLocale('spot.myOrder.cancelFailed'),
+      duration: 3,
+    });
   };
-  // 开启资金密码弹窗
+
   onPwdOpen = () => {
-    this.setState({
-      isShowPwdDialog: true
-    }, () => {
-      const o = window.document.getElementsByClassName('pwd-input');
-      if (o && o[0] && o[0].focus) {
-        o[0].focus();
+    this.setState(
+      {
+        isShowPwdDialog: true,
+      },
+      () => {
+        const o = window.document.getElementsByClassName('pwd-input');
+        if (o && o[0] && o[0].focus) {
+          o[0].focus();
+        }
       }
-    });
+    );
   };
-  // 关闭资金密码弹窗
+
   onPwdClose = () => {
-    this.setState({
-      isLoading: false,
-      isShowPwdDialog: false
-    }, () => {
-      this.errorCallback && this.errorCallback();
-    });
+    this.setState(
+      {
+        isLoading: false,
+        isShowPwdDialog: false,
+      },
+      () => {
+        this.errorCallback && this.errorCallback();
+      }
+    );
   };
-  // 资金密码弹窗点击提交
+
   onPwdEnter = (password) => {
     const { formActions, orderActions, commonAction } = this.props;
     if (password.trim() === '') {
       return formActions.updateWarning(toLocale('spot.place.tips.pwd'));
     }
     formActions.updateWarning('');
-    this.setState({
-      isLoading: true
-    }, () => {
-      setTimeout(() => {
-        commonAction.validatePassword(password, (pk) => {
-          const param = { ...this.formParam, pk };
-          this.setState({
-            isShowPwdDialog: false,
-            cancelLoading: true
-          }, () => {
-            orderActions.cancelOrder(param, () => {
-              this.successToast();
-              this.onPwdClose();
-            }, this.onSubmitErr);
-          });
-        }, () => {
-          this.setState({
-            isLoading: false
-          });
-        });
-      }, Config.validatePwdDeferSecond);
-    });
+    this.setState(
+      {
+        isLoading: true,
+      },
+      () => {
+        setTimeout(() => {
+          commonAction.validatePassword(
+            password,
+            (pk) => {
+              const param = { ...this.formParam, pk };
+              this.setState(
+                {
+                  isShowPwdDialog: false,
+                  cancelLoading: true,
+                },
+                () => {
+                  orderActions.cancelOrder(
+                    param,
+                    () => {
+                      this.successToast();
+                      this.onPwdClose();
+                    },
+                    this.onSubmitErr
+                  );
+                }
+              );
+            },
+            () => {
+              this.setState({
+                isLoading: false,
+              });
+            }
+          );
+        }, Config.validatePwdDeferSecond);
+      }
+    );
     return false;
   };
-  // 资金密码弹窗
+
   renderPwdDialog = () => {
     const { isLoading, isShowPwdDialog } = this.state;
     const { warning } = this.props.FormStore;
@@ -442,7 +461,7 @@ class OpenList extends RouterCredential {
   render() {
     const { theme, productObj, data } = this.props;
     const { orderList, isLoading, page } = data;
-    const themeColor = (theme === Enum.themes.theme2) ? 'dark' : '';
+    const themeColor = theme === Enum.themes.theme2 ? 'dark' : '';
     let newList = orderList;
     if (orderList.length && orderList[0].uniqueKey) {
       newList = [];
@@ -465,8 +484,12 @@ class OpenList extends RouterCredential {
         <p className="spot-orders-utips c-disabled" style={{ display: 'none' }}>
           {toLocale('spot.bills.clearTips')}
         </p>
-        <div className={`wait-loading ${this.state.cancelLoading ? '' : 'hide'}`} >
-          <div className="loading-icon"><Icon className="icon-loadingCopy" isColor /></div>
+        <div
+          className={`wait-loading ${this.state.cancelLoading ? '' : 'hide'}`}
+        >
+          <div className="loading-icon">
+            <Icon className="icon-loadingCopy" isColor />
+          </div>
         </div>
         {this.renderPwdDialog()}
       </div>

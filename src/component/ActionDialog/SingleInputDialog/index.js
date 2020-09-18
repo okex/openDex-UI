@@ -9,9 +9,7 @@ class SingleInputDialog extends Component {
   }
 
   render() {
-    const {
-      visible, title, value, onChange, onClose, onConfirm
-    } = this.props;
+    const { visible, title, value, onChange, onClose, onConfirm } = this.props;
 
     return (
       <div className="sid-container">
@@ -25,7 +23,9 @@ class SingleInputDialog extends Component {
             <input className="sid-input" value={value} onChange={onChange} />
           </div>
           <div className="sid-confirm">
-            <button className="sid-confirm-btn" onClick={onConfirm}>OK</button>
+            <button className="sid-confirm-btn" onClick={onConfirm}>
+              OK
+            </button>
           </div>
         </Dialog>
       </div>

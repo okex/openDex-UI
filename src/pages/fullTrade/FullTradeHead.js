@@ -14,12 +14,10 @@ import './FullTradeHead.less';
 import util from '../../utils/util';
 import { LoggedMenu, LoginMenu } from '../../component/DexMenu';
 
-function mapStateToProps(state) { // 绑定redux中相关state
-  const {
-    product
-  } = state.SpotTrade;
+function mapStateToProps(state) {
+  const { product } = state.SpotTrade;
   return {
-    product
+    product,
   };
 }
 
@@ -39,38 +37,27 @@ class FullTradeHead extends React.Component {
       marginTop: 15,
     };
   }
-  componentWillMount() {
-  }
-  // 获取法币计价货币列表及配置
+  componentWillMount() {}
   componentDidMount() {
-    // 初始化okexchain客户端。原因是交易页、未成交委托页撤单和资产页转账都需要
     this.props.commonAction.initOKExChainClient();
   }
-  componentWillReceiveProps(nextProps) {
-  }
+  componentWillReceiveProps(nextProps) {}
   isTradePage() {
     return this.props.location.pathname.indexOf(PageURL.spotFullPage) >= 0;
   }
   goHome = () => {
     window.location.href = PageURL.spotFullPage;
-  }
+  };
 
   render() {
     return (
       <div className="full-top-info-box">
         <a className="logo-wrap" onClick={this.goHome}>
-          <img
-            src={okexchainLogo}
-            style={this.iconStyle}
-          />
+          <img src={okexchainLogo} style={this.iconStyle} />
         </a>
         <DesktopNodeMenu />
-        {
-          this.isTradePage() ? <FullTradeProductList /> : null
-        }
-        {
-          this.isTradePage() ? <FullTradeTicker /> : null
-        }
+        {this.isTradePage() ? <FullTradeProductList /> : null}
+        {this.isTradePage() ? <FullTradeTicker /> : null}
 
         <div className="okdex-header-right">
           {util.isLogined() ? <LoggedMenu /> : <LoginMenu />}

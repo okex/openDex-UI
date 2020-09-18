@@ -5,38 +5,30 @@ import Cookies from 'js-cookie';
 import * as CommonAction from '../redux/actions/CommonAction';
 import util from '../utils/util';
 
-function mapStateToProps(state) { // 绑定redux中相关state
-  const {
-    privateKey
-  } = state.Common;
+function mapStateToProps(state) {
+  const { privateKey } = state.Common;
   return {
-    privateKey
+    privateKey,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    commonAction: bindActionCreators(CommonAction, dispatch)
+    commonAction: bindActionCreators(CommonAction, dispatch),
   };
 }
 const OKExHeaderWrapper = (Component) => {
   @connect(mapStateToProps, mapDispatchToProps)
   class CommonHeader extends React.Component {
-    componentWillMount() {
-    }
+    componentWillMount() {}
     componentDidMount() {
       console.log('OKExHeaderWrapper 1');
-      // 初始化okexchain客户端
       this.props.commonAction.initOKExChainClient();
-    }
-
-    //
-    componentWillReceiveProps(nextProps) {
     }
 
     render() {
       const lang = util.getSupportLocale(Cookies.get('locale') || 'en_US');
-      return (<Component {...this.props} />);
+      return <Component {...this.props} />;
     }
   }
   return CommonHeader;

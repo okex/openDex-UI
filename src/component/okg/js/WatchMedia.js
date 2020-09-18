@@ -1,12 +1,6 @@
-/*
- * @Descripttion: 监听设备类型
- * @LastEditors: 翟懿博
- */
 import mediaSet from '../mediaSet';
 
-const {
-  _sm, _md, _lg, _xl
-} = mediaSet;
+const { _sm, _md, _lg, _xl } = mediaSet;
 const getResult = (media, mediaQueryEvent) => {
   let result = mediaSet[media];
   if (mediaQueryEvent && !mediaQueryEvent.matches) {
@@ -35,8 +29,6 @@ class WatchMedia {
     const result = getResult('_xl', mediaQueryEvent);
     this.fn(result);
   };
-  // 监听设备
-  // boolean:runNow  是否立即执行回调，默认true
   watch(fn, { runNow = true } = {}) {
     this.fn = fn;
     this.mdWatcher.addListener(this._mdListener);

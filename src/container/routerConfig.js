@@ -24,71 +24,71 @@ const routes = [
   },
   {
     path: PageURL.spotFullPage,
-    component: FullTrade
+    component: FullTrade,
   },
   {
     path: PageURL.spotOpenPage,
-    component: OpenOrders
+    component: OpenOrders,
   },
   {
     path: PageURL.spotHistoryPage,
-    component: HistoryOrders
+    component: HistoryOrders,
   },
   {
     path: PageURL.spotDealsPage,
-    component: DealOrders
+    component: DealOrders,
   },
   {
     path: PageURL.spotDefaultPage,
-    component: FullTrade
+    component: FullTrade,
   },
   {
     path: PageURL.walletCreate,
-    component: CreateWallet
+    component: CreateWallet,
   },
   {
     path: PageURL.walletImport,
-    component: ImportWallet
+    component: ImportWallet,
   },
   {
     path: PageURL.walletAssets,
-    component: AssetsWallet
+    component: AssetsWallet,
   },
   {
     path: PageURL.walletTransactions,
-    component: AssetsWallet
+    component: AssetsWallet,
   },
   {
     path: PageURL.nodeSettingPage,
-    component: NodeSetting
+    component: NodeSetting,
   },
   {
     path: PageURL.registerPage,
-    component: Register
+    component: Register,
   },
   {
     path: PageURL.issueTokenPage,
-    component: IssueToken
+    component: IssueToken,
   },
   {
     path: PageURL.listTokenpairPage,
-    component: ListTokenpair
+    component: ListTokenpair,
   },
   {
     path: PageURL.dashboardPage,
-    component: Dashboard
+    component: Dashboard,
   },
   {
     path: PageURL.issueDetailPage,
-    component: IssueDetail
+    component: IssueDetail,
   },
   {
     path: PageURL.tokenpairDetailPage,
-    component: TokenpairDetail
+    component: TokenpairDetail,
   },
   {
     path: PageURL.feesPage,
-    component: Fees
+    component: Fees,
   },
 ];
 

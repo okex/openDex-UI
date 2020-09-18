@@ -9,7 +9,13 @@ import util from '../../utils/util';
 const SubmitButton = (props) => {
   const { webType, webTypes, tradeType } = window.OK_GLOBAL;
   const {
-    type, isLoading, canSubmit, warning, unit, onClick, isMargin
+    type,
+    isLoading,
+    canSubmit,
+    warning,
+    unit,
+    onClick,
+    isMargin,
   } = props;
   const extra = isMargin ? 'Margin' : '';
   let intlId = `spot.orders.actionBuy${extra}`;
@@ -18,13 +24,14 @@ const SubmitButton = (props) => {
     intlId = `spot.orders.actionSell${extra}`;
     classFix = 'sell';
   }
-  let btnContent = `${toLocale(intlId)  } ${  unit}`;
+  let btnContent = `${toLocale(intlId)} ${unit}`;
   if (webType === webTypes.OKKr) {
     btnContent = unit + toLocale(intlId);
   }
-  // 修改文案
   if (!util.isLogined()) {
-    btnContent = `${toLocale('header_menu_create_wallet')  } / ${  toLocale('header_menu_import_wallet')}`;
+    btnContent = `${toLocale('header_menu_create_wallet')} / ${toLocale(
+      'header_menu_import_wallet'
+    )}`;
   }
   const isFullTrade = tradeType === Enum.tradeType.fullTrade;
   const hasWarn = warning.trim() !== '';
@@ -37,7 +44,10 @@ const SubmitButton = (props) => {
       >
         {isLoading ? toLocale('spot.submit.loading') : btnContent}
       </button>
-      <div className="mar-top5 fz12" style={{ display: hasWarn ? 'block' : 'none', height: '13px' }}>
+      <div
+        className="mar-top5 fz12"
+        style={{ display: hasWarn ? 'block' : 'none', height: '13px' }}
+      >
         {window.isBroker && !isFullTrade && !hasWarn ? <Fee /> : null}
         {hasWarn ? <div className="spot-err-tips">{warning}</div> : null}
       </div>
@@ -61,7 +71,6 @@ SubmitButton.defaultProps = {
   isLoading: false,
   warning: '',
   isMargin: false,
-  onClick: () => {
-  }
+  onClick: () => {},
 };
 export default SubmitButton;

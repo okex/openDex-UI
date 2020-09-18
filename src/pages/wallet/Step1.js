@@ -33,11 +33,11 @@ class Step1 extends Component {
     this.state = {
       pwdFirst: '',
       pwdTwice: '',
-      showTwicePwd: false, // 第一次设置密码的input type在WalletPassword中控制
+      showTwicePwd: false,
       isSamePwd: true,
       knowCheck: false,
       canNext: false,
-      nextLoading: false
+      nextLoading: false,
     };
     this.isValidatedPassword = false;
   }
@@ -45,73 +45,80 @@ class Step1 extends Component {
     if (this.state.nextLoading) {
       return false;
     }
-    return this.setState({
-      nextLoading: true
-    }, () => {
-      setTimeout(() => {
-        const { walletAction } = this.props;
-        const mnemonic = crypto.generateMnemonic(); // => 12 words
-        const privateKey = crypto.getPrivateKeyFromMnemonic(mnemonic);
-        const keyStore = crypto.generateKeyStore(privateKey, this.state.pwdFirst);
-        // const mnemonic = '1 2 3 4 5 6 7 8 9 10 11 12'; // 12 words
-        // const privateKey = 'XHOW23EdWEDXl123D';
-        // const keyStore = {
-        //   address: 'tbnb18fxxgw720n7xterpl4e6qxcq80t8lq05z7cd22',
-        //   privateKey: {
-        //     version: 1,
-        //     id: 'bc5c22c1-2c8'
-        //   }
-        // };
-        walletAction.updateMnemonic(mnemonic);
-        walletAction.updatePrivate(privateKey);
-        walletAction.updateKeyStore(keyStore);
-        return walletAction.updateCreateStep(2);
-      }, 20);
-    });
+    return this.setState(
+      {
+        nextLoading: true,
+      },
+      () => {
+        setTimeout(() => {
+          const { walletAction } = this.props;
+          const mnemonic = crypto.generateMnemonic();
+          const privateKey = crypto.getPrivateKeyFromMnemonic(mnemonic);
+          const keyStore = crypto.generateKeyStore(
+            privateKey,
+            this.state.pwdFirst
+          );
+          walletAction.updateMnemonic(mnemonic);
+          walletAction.updatePrivate(privateKey);
+          walletAction.updateKeyStore(keyStore);
+          return walletAction.updateCreateStep(2);
+        }, 20);
+      }
+    );
   };
 
   validateCanNext = () => {
-    const {
-      isSamePwd,
-      pwdTwice,
-      knowCheck,
-    } = this.state;
+    const { isSamePwd, pwdTwice, knowCheck } = this.state;
     this.setState({
-      canNext: this.isValidatedPassword && isSamePwd && (pwdTwice != '') && knowCheck // && knowCheck
+      canNext:
+        this.isValidatedPassword && isSamePwd && pwdTwice != '' && knowCheck,
     });
-  }
+  };
   tooglePwdTwiceType = () => {
     this.setState({
-      showTwicePwd: !this.state.showTwicePwd
+      showTwicePwd: !this.state.showTwicePwd,
     });
-  }
+  };
   changePwdFirst = ({ value, lengthCheck, chartCheck }) => {
-    this.isValidatedPassword = lengthCheck === 'right' && chartCheck === 'right';
+    this.isValidatedPassword =
+      lengthCheck === 'right' && chartCheck === 'right';
     const pwdFirst = value;
     const { pwdTwice } = this.state;
-    this.setState({
-      pwdFirst,
-      isSamePwd: pwdTwice === '' ? true : pwdFirst === pwdTwice
-    }, this.validateCanNext);
-  }
+    this.setState(
+      {
+        pwdFirst,
+        isSamePwd: pwdTwice === '' ? true : pwdFirst === pwdTwice,
+      },
+      this.validateCanNext
+    );
+  };
   changePwdTwice = (e) => {
     const pwdTwice = e.target.value;
     const { pwdFirst } = this.state;
-    this.setState({
-      pwdTwice,
-      isSamePwd: (pwdTwice != '') && (pwdFirst === pwdTwice)
-    }, this.validateCanNext);
-  }
+    this.setState(
+      {
+        pwdTwice,
+        isSamePwd: pwdTwice != '' && pwdFirst === pwdTwice,
+      },
+      this.validateCanNext
+    );
+  };
   changeKnow = (checked) => {
-    this.setState({
-      knowCheck: checked
-    }, this.validateCanNext);
-  }
+    this.setState(
+      {
+        knowCheck: checked,
+      },
+      this.validateCanNext
+    );
+  };
   render() {
     const {
-      showTwicePwd, pwdTwice,
-      isSamePwd, canNext, nextLoading,
-      knowCheck
+      showTwicePwd,
+      pwdTwice,
+      isSamePwd,
+      canNext,
+      nextLoading,
+      knowCheck,
     } = this.state;
     return (
       <div className="create-wallet-step1 wallet-step-dialog">
@@ -123,27 +130,40 @@ class Step1 extends Component {
         <WalletRight>
           <div className="set-password-container">
             <div className="set-password-first">
-              <WalletPassword
-                onChange={this.changePwdFirst}
-              />
+              <WalletPassword onChange={this.changePwdFirst} />
             </div>
             <div className="set-password-twice">
               <Input
                 value={pwdTwice}
                 placeholder={toLocale('wallet_twicePassword')}
                 onChange={this.changePwdTwice}
-                onPaste={(e) => { e.preventDefault(); }}
+                onPaste={(e) => {
+                  e.preventDefault();
+                }}
                 error={isSamePwd ? '' : toLocale('wallet_passwordNotSame')}
                 className={showTwicePwd ? 'show' : ''}
                 theme="dark"
                 suffix={() => {
-                const IconClsName = showTwicePwd ? 'icon-icon_display' : 'icon-icon_hide';
-                return <Icon className={IconClsName} onClick={this.tooglePwdTwiceType} />;
-              }}
+                  const IconClsName = showTwicePwd
+                    ? 'icon-icon_display'
+                    : 'icon-icon_hide';
+                  return (
+                    <Icon
+                      className={IconClsName}
+                      onClick={this.tooglePwdTwiceType}
+                    />
+                  );
+                }}
               />
               <div className="mar-top8">
-                <Checkbox checked={knowCheck} className="mar-top8" onChange={this.changeKnow}>
-                  <span className="know-check">{toLocale('wallet_unsaveTip')}</span>
+                <Checkbox
+                  checked={knowCheck}
+                  className="mar-top8"
+                  onChange={this.changeKnow}
+                >
+                  <span className="know-check">
+                    {toLocale('wallet_unsaveTip')}
+                  </span>
                 </Checkbox>
               </div>
             </div>

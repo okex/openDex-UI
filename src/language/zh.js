@@ -21,7 +21,6 @@ const zhCN = {
   symbolDesc: '描述：',
   symbolWholeName: '全称：',
   symbolId: '币种ID：',
-  /* spot */
   'spot.noData': '暂无数据',
   'spot.asset': '资产',
   'spot.asset.marginTrade': '杠杆交易',
@@ -46,10 +45,10 @@ const zhCN = {
   'spot.asset.repayBill': '还币',
   'spot.asset.repayBillSuccess': '还币成功',
   'spot.asset.repayBonus': '还糖果',
-  'spot.asset.repayBonus.tips-0': '您的借币{currency}需要归还糖果{bonus}，请在币币账户中留足{bonus}',
+  'spot.asset.repayBonus.tips-0':
+    '您的借币{currency}需要归还糖果{bonus}，请在币币账户中留足{bonus}',
   'spot.asset.repayBonus.tips-1': '1、未还糖果资产会计入负债计算风险率',
   'spot.asset.repayBonus.tips-2': '2、未还清糖果，该币对杠杆账户资产不可转出',
-  /* spot.bills */
   'spot.bills.allCurrency': '全部币种',
   'spot.bills.allProduct': '全部币对',
   'spot.bills.coin': '币种',
@@ -59,14 +58,17 @@ const zhCN = {
   'spot.bills.tradeAmount': '数量',
   'spot.bills.balance': '余额',
   'spot.bills.fee': '手续费',
-  'spot.bills.clearTips': '为了提升系统性能，我们会根据空间情况，定期清除部分用户3个月前的历史数据。',
-  'spot.bills.sentOngoing': '您所需的历史数据正在查询中，预计在10分钟内，下载链接将发送至您的{contactType}{contact}。如有其它问题，请联系在线客服。',
-  'spot.bills.sentConflict': '您当前仍有查询任务正在进行中，查询完成后，下载链接将发送至您的{contactType}{contact}。如有其它问题，请联系在线客服。',
-  'spot.bills.sentTooMany': '对不起，您所下载数据量太大，请分批下载（目前单次下载最多支持1000万条数据）。',
+  'spot.bills.clearTips':
+    '为了提升系统性能，我们会根据空间情况，定期清除部分用户3个月前的历史数据。',
+  'spot.bills.sentOngoing':
+    '您所需的历史数据正在查询中，预计在10分钟内，下载链接将发送至您的{contactType}{contact}。如有其它问题，请联系在线客服。',
+  'spot.bills.sentConflict':
+    '您当前仍有查询任务正在进行中，查询完成后，下载链接将发送至您的{contactType}{contact}。如有其它问题，请联系在线客服。',
+  'spot.bills.sentTooMany':
+    '对不起，您所下载数据量太大，请分批下载（目前单次下载最多支持1000万条数据）。',
   'spot.coin': '币种',
   'spot.marketDict': '市场',
   'spot.favorites': '自选',
-  /* spot.market */
   'spot.market.more': '查看更多',
   'spot.market.orders': '交易信息',
   'spot.menu.market.orders': '币币委托',
@@ -78,7 +80,6 @@ const zhCN = {
   'spot.menu.market.strategy': '策略委托说明',
   'spot.menu.bills.force': '爆仓订单',
   'spot.menu.ready.risk': '风险准备金',
-  /* spot.orders */
   'spot.bills.spot': '币币账单',
   'spot.bills.margin': '币币杠杆账单',
   'spot.orders.currencies': '币对',
@@ -87,7 +88,6 @@ const zhCN = {
   'spot.orders.2daysago': '两天以前',
   'spot.search': '查询',
 
-  // dex相关
   'spot.myOrder.detail': '成交明细',
   'spot.myOrder.hash': '哈希值',
   'spot.myOrder.date': '委托时间',
@@ -118,7 +118,8 @@ const zhCN = {
   'spot.myOrder.PartialFilled': '部分成交',
   'spot.myOrder.cancelFailed': '撤单失败',
   'spot.myOrder.cancelSuccessed': '撤单成功',
-  'spot.myOrder.cancelNoDealTip': '未成交的订单撤销时将会收取手续费，是否确定撤单？',
+  'spot.myOrder.cancelNoDealTip':
+    '未成交的订单撤销时将会收取手续费，是否确定撤单？',
   'spot.myOrder.cancelPartDealTip': '是否确定撤单？',
 
   'spot.orders.allOrders': '全部挂单',
@@ -203,35 +204,46 @@ const zhCN = {
   'spot.orders.fall': '下跌',
   'spot.orders.higher': '高于',
   'spot.orders.lower': '低于',
-  'spot.orders.entrustWords': '当价格{direction}至或{compare}{triggerPrice}{baseCurr}时，则以{tradePrice}{baseCurr}的价格{action}{amount}{tradeCurr}',
+  'spot.orders.entrustWords':
+    '当价格{direction}至或{compare}{triggerPrice}{baseCurr}时，则以{tradePrice}{baseCurr}的价格{action}{amount}{tradeCurr}',
   'spot.orders.cancelExplanation0': '委托超时撤单',
   'spot.orders.cancelExplanation1': '用户手动撤单',
   'spot.orders.cancelExplanation3': '下单失败撤单',
   'spot.orders.actionBuy': '买入',
   'spot.orders.actionSell': '卖出',
-  'spot.orders.triggerPop': '当市场最新成交价达到您设置的触发价格时，系统将自动按您设置的委托价格和数量下达限价委托单。',
-  'spot.orders.triggerPopPlanOrder': '计划委托是指用户预先设置好委托单和委托单触发价格，当市场的最新成交价达到设置的触发价格时，系统即会将用户事先设置的委托单送入市场的交易策略。',
+  'spot.orders.triggerPop':
+    '当市场最新成交价达到您设置的触发价格时，系统将自动按您设置的委托价格和数量下达限价委托单。',
+  'spot.orders.triggerPopPlanOrder':
+    '计划委托是指用户预先设置好委托单和委托单触发价格，当市场的最新成交价达到设置的触发价格时，系统即会将用户事先设置的委托单送入市场的交易策略。',
   'spot.orders.triggerPopDetail': '更多详情',
-  'spot.orders.triggerPopLimitOrder': '限价单是指用户设置委托数量以及可接受的最高买价或最低卖价，当市场价格符合用户预期时，系统会以限价范围内的最优价格进行成交。',
-  'spot.orders.triggerPopMarketOrder': '市价单是指用户以当前市场最优价格立即执行买入或者卖出。',
-  'spot.orders.triggerPopTrackOrder': '跟踪委托无数量限制，跟踪委托被触发时下达的',
-  'spot.orders.triggerPopTrackOrder2': '委托单数量以当时用户可下达的最大数量与用户跟踪委托设置的委托数量，两者中小者为准。',
-  'spot.orders.triggerPopIcebergOrder': '冰山委托无数量限制，当冰⼭委托在委托时的可下单数量为0时，则冰山委托将被撤销。每个⽤户最多可同时持有6笔冰山委托。',
-  'spot.orders.triggerPopTimeWeightOrder': '时间加权委托无数量限制，当时间加权委托在委托时的可下单数量为0时，则时间加权委托将被撤销。每个用户最多同时持有6笔时间加权委托。',
+  'spot.orders.triggerPopLimitOrder':
+    '限价单是指用户设置委托数量以及可接受的最高买价或最低卖价，当市场价格符合用户预期时，系统会以限价范围内的最优价格进行成交。',
+  'spot.orders.triggerPopMarketOrder':
+    '市价单是指用户以当前市场最优价格立即执行买入或者卖出。',
+  'spot.orders.triggerPopTrackOrder':
+    '跟踪委托无数量限制，跟踪委托被触发时下达的',
+  'spot.orders.triggerPopTrackOrder2':
+    '委托单数量以当时用户可下达的最大数量与用户跟踪委托设置的委托数量，两者中小者为准。',
+  'spot.orders.triggerPopIcebergOrder':
+    '冰山委托无数量限制，当冰⼭委托在委托时的可下单数量为0时，则冰山委托将被撤销。每个⽤户最多可同时持有6笔冰山委托。',
+  'spot.orders.triggerPopTimeWeightOrder':
+    '时间加权委托无数量限制，当时间加权委托在委托时的可下单数量为0时，则时间加权委托将被撤销。每个用户最多同时持有6笔时间加权委托。',
   'spot.orders.priceVariance': '委托深度',
-  'spot.orders.priceVarianceExplain': '买单时，系统将以下达限价单时的买一价 * （1-委托深度）作为限价单的价格。卖单时，系统将以下达限价单时的卖一价 * (1+委托深度)作为限价单的价格。',
+  'spot.orders.priceVarianceExplain':
+    '买单时，系统将以下达限价单时的买一价 * （1-委托深度）作为限价单的价格。卖单时，系统将以下达限价单时的卖一价 * (1+委托深度)作为限价单的价格。',
   'spot.orders.totalAmount': '委托总数',
   'spot.orders.totalAmountExplain': '您希望买入或卖出的总数量。',
   'spot.orders.avgAmount': '单笔均值',
-  'spot.orders.avgAmountExplain': '系统将在您设置的数量的范围内，设定每次限价单的数量。',
+  'spot.orders.avgAmountExplain':
+    '系统将在您设置的数量的范围内，设定每次限价单的数量。',
   'spot.orders.priceLimit': '价格限制',
-  'spot.orders.priceLimitExplain': '买单时，当最新成交价大于您设置的价格限制后，该冰山委托将暂停；卖单时，当最新成交价小于您设置的价格限制后，该冰山委托将暂停。',
+  'spot.orders.priceLimitExplain':
+    '买单时，当最新成交价大于您设置的价格限制后，该冰山委托将暂停；卖单时，当最新成交价小于您设置的价格限制后，该冰山委托将暂停。',
   'spot.orders.filledCount': '已成交量',
   'spot.orders.entrustedCount': '已委托量',
   'spot.orders.partialStatus': '部分生效',
   'spot.orders.pausedStatus': '暂停生效',
 
-  /* spot.trade */
   'spot.trade': '交易',
   'spot.menu.orders': '币币委托',
   'spot.app': 'app',
@@ -317,16 +329,21 @@ const zhCN = {
   'spot.place.tips.priceLimit': '价格限制不能为空',
   'spot.place.tips.priceVarianceNotGreaterThan': '委托深度不能大于{max}%',
   'spot.place.tips.timeWeight.priceVariance': '扫单范围不能为空',
-  'spot.place.tips.timeWeight.priceVarianceNotGreaterThan': '扫单范围不能超过{max}%',
+  'spot.place.tips.timeWeight.priceVarianceNotGreaterThan':
+    '扫单范围不能超过{max}%',
   'spot.place.tips.timeWeight.sweepRatio': '扫单比例不能为空',
-  'spot.place.tips.timeWeight.sweepRatioNotGreaterThan': '扫单比例不能超过{max}%',
+  'spot.place.tips.timeWeight.sweepRatioNotGreaterThan':
+    '扫单比例不能超过{max}%',
   'spot.place.tips.timeWeight.totalAmount': '委托总数不能为空',
   'spot.place.tips.timeWeight.priceLimitTrade': '单笔上限不能为空',
-  'spot.place.tips.timeWeight.priceLimitTradeLessThanMin': '单笔上限不能小于委托总数千分之一',
-  'spot.place.tips.timeWeight.priceLimitTradeLargerThanMax': '单笔上限不能大于委托总数',
+  'spot.place.tips.timeWeight.priceLimitTradeLessThanMin':
+    '单笔上限不能小于委托总数千分之一',
+  'spot.place.tips.timeWeight.priceLimitTradeLargerThanMax':
+    '单笔上限不能大于委托总数',
   'spot.place.tips.timeWeight.priceLimitBase': '价格限制不能为空',
   'spot.place.tips.timeWeight.timeInterval': '委托间隔不能为空',
-  'spot.place.tips.timeWeight.timeIntervalRange': '委托间隔不能小于{min}秒大于{max}秒',
+  'spot.place.tips.timeWeight.timeIntervalRange':
+    '委托间隔不能小于{min}秒大于{max}秒',
   'spot.place.confirm.buy': '确认买入',
   'spot.place.confirm.sell': '确认卖出',
   'spot.place.confirm.normalTrade.buy': '输入资金密码',
@@ -382,20 +399,17 @@ const zhCN = {
   'spot.page.title': '- 全球领先的比特币/数字货币交易平台 |',
   'spot.page.title.tokens': '币币委托 ',
 
-  /* 未登录 */
   'spot.notlogin.tradenow': '立即开始交易',
   'spot.notlogin.preview': '此页面为{site}交易的预览，所有信息均为实时数据',
   'spot.notlogin.logintoview1': '您必须',
   'spot.notlogin.logintoview2': '登录',
   'spot.notlogin.logintoview3': '才可看到此信息',
 
-  /* 专业版 */
   'spot.all.bills': '全部账单',
   'spot.all.history': '全部借币历史记录',
   'spot.all.force': '全部爆仓订单',
   'spot.all.risk': '全部风险准备金',
 
-  /* 公告类别 */
   'notice.category.week': '周报',
   'notice.category.month': '月报',
   'notice.category.news': '快讯',
@@ -403,12 +417,11 @@ const zhCN = {
   'notice.category.treasure': '财报',
   'notice.category.rate': '评级报告',
 
-  /* 项目披露 */
   'spot.project.info': '项目披露',
 
-  /* 高阶限价单 */
   'spot.advancedLimitOrder': '高级限价委托',
-  'spot.orders.triggerPopAdvancedLimitOrder': '高级限价委托相对于普通限价委托可选择三种生效机制，“只做Maker（Post only）”、“全部成交或立即取消（FillOrKill）”、“立即成交并取消剩余（ImmediatelOrCancel）”；而普通限价委托的生效机制默认是“一直有效”。',
+  'spot.orders.triggerPopAdvancedLimitOrder':
+    '高级限价委托相对于普通限价委托可选择三种生效机制，“只做Maker（Post only）”、“全部成交或立即取消（FillOrKill）”、“立即成交并取消剩余（ImmediatelOrCancel）”；而普通限价委托的生效机制默认是“一直有效”。',
   'spot.orders.orderType': '生效机制',
   'spot.orders.orderType.postOnly': '只做Maker（Post only）',
   'spot.orders.orderType.FOK': '全部成交或立即取消（FillOrKill）',
@@ -417,16 +430,15 @@ const zhCN = {
   'spot.orders.orderTypeShort.postOnly': 'Post only',
   'spot.orders.orderTypeShort.FOK': 'FillOrKill',
   'spot.orders.orderTypeShort.FAK': 'ImmediateOrCancel',
-  'spot.place.tips.orderType': '该委托的生效机制。默认是“只做Maker（Post only）”，不会立刻在市场成交，保证用户始终为Maker；如果委托会立即与已有委托成交，那么该委托会被取消。如果你的委托被设置为“全部成交或立即取消（FillOrKill）”，该委托只会立即全部成交，否则将被取消。如果你的委托被设置为“立即成交并取消剩余（ImmediatelOrCancel）”，任何未被成交的部分将被立即取消。',
+  'spot.place.tips.orderType':
+    '该委托的生效机制。默认是“只做Maker（Post only）”，不会立刻在市场成交，保证用户始终为Maker；如果委托会立即与已有委托成交，那么该委托会被取消。如果你的委托被设置为“全部成交或立即取消（FillOrKill）”，该委托只会立即全部成交，否则将被取消。如果你的委托被设置为“立即成交并取消剩余（ImmediatelOrCancel）”，任何未被成交的部分将被立即取消。',
   'spot.orders.actionBuyMargin': '买入（做多）',
   'spot.orders.actionSellMargin': '卖出（做空）',
 
-  /* 深度tooltip */
   'spot.depth.tooltip.sumTrade': '合计{trade}',
   'spot.depth.tooltip.sumBase': '合计{base}',
   'spot.depth.tooltip.avgPrice': '均价',
 
-  // 通用
   all: '全部',
   go_back: '返回',
   next_step: '下一步',
@@ -438,8 +450,6 @@ const zhCN = {
   pwd_error: '密码错误',
   valuation: '估值',
   link_to_all: '点击查看全部<<',
-  // 钱包
-  // 创建钱包
   wallet_create_step1: '创建钱包',
   wallet_setPassword: '设置钱包密码',
   wallet_password_placeholder: '请输入至少10位，包含大小写字母和数字的密码',
@@ -451,12 +461,11 @@ const zhCN = {
   wallet_hadWallet: '已有钱包.',
   wallet_importNow: '立即导入>>',
   wallet_nextStep: '下一步',
-  // safetip 安全提示
   wallet_safeTip_title: '安全提示',
   wallet_safeTip_beforeKeystore: '请在安全环境下，下载',
-  wallet_safeTip_afterKeystore: '文件，并记录您的助记词，为避免泄漏，请勿拍照或截屏',
+  wallet_safeTip_afterKeystore:
+    '文件，并记录您的助记词，为避免泄漏，请勿拍照或截屏',
   wallet_known: '知道了',
-  // step2 备份助记词
   wallet_create_step2: '备份助记词',
   wallet_create_backupMnemonic: '请将下列助记词按顺序进行备份',
   wallet_create_backupMnemonic_error: '未通过验证，请重新备份',
@@ -472,32 +481,29 @@ const zhCN = {
   wallet_toTrade: '立即开始交易',
   wallet_seePrivate: '查看私钥',
   wallet_privateKey: '私钥',
-  // 导入钱包
   wallet_import: '导入钱包',
   wallet_import_mnemonic: '助记词导入',
-  // keystore导入
   wallet_import_upload_todo: '上传Keystore文件，可直接拖动至此',
   wallet_import_upload_doing: '上传中',
   wallet_import_upload_retry: '重新上传',
-  wallet_import_passwordTip: '该密码为生成Keystore文件时设置的密码，若丢失则无法导入钱包',
+  wallet_import_passwordTip:
+    '该密码为生成Keystore文件时设置的密码，若丢失则无法导入钱包',
   wallet_import_enterPassword: '请输入钱包密码',
   wallet_import_fileError: '文件格式错误/文件内容不合法',
   wallet_import_noFile: '请先上传Keystore文件',
   wallet_import_passwordError: '钱包密码错误',
-  // 助记词导入
   wallet_import_mnemonic_enter: '请输入助记词',
   wallet_import_mnemonic_splitTip: '不同单词请用空格分隔',
   wallet_import_mnemonic_error: '助记词非法',
   wallet_import_mnemonic_sessionPassword: '请设置一个临时密码',
   wallet_import_mnemonic_none: '助记词不能为空',
-  // 私钥导入
   wallet_import_private_enter: '请输入钱包私钥',
   wallet_import_password_placeholder: '请设置一个临时密码',
   wallet_import_private_error: '私钥非法',
   wallet_import_private_none: '私钥不能为空',
 
-  wallet_import_sessionPasswordTip: '该密码只对本次登录有效，与其他场景下设置的密码无关',
-  // Header
+  wallet_import_sessionPasswordTip:
+    '该密码只对本次登录有效，与其他场景下设置的密码无关',
   header_menu_trade: '交易',
   header_menu_order: '订单',
   header_menu_create_wallet: '创建钱包',
@@ -517,32 +523,40 @@ const zhCN = {
   header_menu_explorer_okexchain: '浏览器',
   footer_standard_rates: '费率标准',
 
-  // 首页
   home_banner_title: 'OKEx DEX',
   home_banner_subtitle: '无边界去中心化交易平台',
   home_banner_btn_trade: '开始交易',
   home_adv_title: '产品优势',
   home_adv_item0_title: '安全可靠',
-  home_adv_item0_content: '依靠Secp256k1椭圆曲线算法，用户数字资产存放在自己的钱包中，无需托管即可交易',
+  home_adv_item0_content:
+    '依靠Secp256k1椭圆曲线算法，用户数字资产存放在自己的钱包中，无需托管即可交易',
   home_adv_item1_title: '快捷便利',
-  home_adv_item1_content: 'OKEx DEX严格审核链上资产，以价值稳定数字资产作为计价货币，提供多种交易选择',
+  home_adv_item1_content:
+    'OKEx DEX严格审核链上资产，以价值稳定数字资产作为计价货币，提供多种交易选择',
   home_adv_item2_title: '持续迭代',
-  home_adv_item2_content: 'OKEx DEX会第一时间支持OKExChain的各项新功能，提供更优的交易体验',
+  home_adv_item2_content:
+    'OKEx DEX会第一时间支持OKExChain的各项新功能，提供更优的交易体验',
   home_exp_title: '体验模拟交易',
-  home_exp_content: '已经创建过OKExChain钱包的OKEx用户，我们将会为您发放一定数量的测试币，数量有限，先到先得。',
+  home_exp_content:
+    '已经创建过OKExChain钱包的OKEx用户，我们将会为您发放一定数量的测试币，数量有限，先到先得。',
   home_steps_title: '快速开始',
   home_steps_item0_title: '1.创建OKExChain钱包',
-  home_steps_item0_content: 'DEX不会保存您链上钱包的任何信息；助记词和keystore文件是您拥有个人资产的唯一凭证，请妥善保管，若已经创建完成，您可以直接导入钱包。',
+  home_steps_item0_content:
+    'DEX不会保存您链上钱包的任何信息；助记词和keystore文件是您拥有个人资产的唯一凭证，请妥善保管，若已经创建完成，您可以直接导入钱包。',
   home_steps_item0_button: '创建钱包',
   home_steps_item1_title: '2.钱包充值',
-  home_steps_item1_content: '登录OKExChain链上钱包，进入资产管理，获得OKExChain链上地址；测试网可以通过领取测试币直接参与DEX交易；到账记录可在链上钱包——资产记录里面查看。',
+  home_steps_item1_content:
+    '登录OKExChain链上钱包，进入资产管理，获得OKExChain链上地址；测试网可以通过领取测试币直接参与DEX交易；到账记录可在链上钱包——资产记录里面查看。',
   home_steps_item1_button: '领取测试币',
   home_steps_item2_title: '3.去交易',
-  home_steps_item2_content: '使用领取的测试币在任意交易对进行交易；您的每次下单、撤单操作都会生成一个哈希值，被广播至区块链网络。',
+  home_steps_item2_content:
+    '使用领取的测试币在任意交易对进行交易；您的每次下单、撤单操作都会生成一个哈希值，被广播至区块链网络。',
   home_steps_item2_button: '立即交易',
   home_steps_item3_title: '4.查看交易信息',
-  home_steps_item3_content: '每一笔交易、转账都可以通过交易哈希值、地址等在区块链浏览器中查询相应信息。',
+  home_steps_item3_content:
+    '每一笔交易、转账都可以通过交易哈希值、地址等在区块链浏览器中查询相应信息。',
   home_steps_item3_button: '查看区块数据',
+<<<<<<< HEAD
   home_steps_item0_img: 'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/5BBC703C1C9BF16E9B3DBE44E9306EBD.png',
   home_steps_item1_img: 'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/EA5B9697721EAAE780B6A0D18D5F6DE5.png',
   home_steps_item2_img: 'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/0A848CAA0FA942D868854F6F469ADEC1.png',
@@ -550,10 +564,23 @@ const zhCN = {
   home_exp_more: '想要进一步了解「DEX、OKExChain详细设计规则」',
   home_exp_img: 'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/3AF196CA9B03F9FFAE8A519469FBB6AD.png',
   home_subtitle: 'OKExChain测试网上线，所有交易记录链上可查',
+=======
+  home_steps_item0_img:
+    'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/5BBC703C1C9BF16E9B3DBE44E9306EBD.png',
+  home_steps_item1_img:
+    'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/EA5B9697721EAAE780B6A0D18D5F6DE5.png',
+  home_steps_item2_img:
+    'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/0A848CAA0FA942D868854F6F469ADEC1.png',
+  home_steps_item3_img:
+    'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/F497569D03E57047301DAC9E4CB05207.png',
+  home_exp_more: '想要进一步了解「DEX、OKExChain详细设计规则」',
+  home_exp_img:
+    'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/3AF196CA9B03F9FFAE8A519469FBB6AD.png',
+  home_subtitle: 'OKExChain测试网上线，所有交易记录链上可查',
+>>>>>>> zch/opendex
   home_receive_coin: '领取测试币',
   home_step5_title: '帮助文档',
 
-  // 资产余额
   assets_tab_accounts: '资产余额',
   assets_tab_transactions: '交易记录',
   assets_address: '地址：',
@@ -567,7 +594,6 @@ const zhCN = {
   assets_column_list: '挂单',
   assets_trans_btn: '转账',
   assets_copy_success: '复制成功',
-  // 交易记录
   trade_query_begin: '起始时间',
   trade_query_end: '截止时间',
   trade_query_order_type: '订单类型',
@@ -588,7 +614,6 @@ const zhCN = {
   trade_type_pay: '付款',
   trade_type_buy: '买',
   trade_type_sell: '卖',
-  // 转账
   trans_address: '转账地址',
   trans_step_1: '转账',
   trans_step_2: '请确认交易信息',
@@ -614,7 +639,6 @@ const zhCN = {
   group_hot: '热门榜',
   group_new: '打新榜',
 
-  // desktop新增
   'node.main.title': 'Node settings',
   'node.active.title': 'Active Node',
   'node.delay.type.low': 'Low latency',
@@ -628,11 +652,14 @@ const zhCN = {
   'dex.help.item2': '-  DEX Operators Guide (CLI)',
   'dex.help.item3': '-  DEX Operators  FAQ',
   'register.website.label': 'Website',
-  'register.website.hint': 'Other partners in the ecosystem can get more information through websita. Such as logo, community contact information, etc.',
+  'register.website.hint':
+    'Other partners in the ecosystem can get more information through websita. Such as logo, community contact information, etc.',
   'register.feeAddress.label': 'HandlingFeeAddress',
-  'register.feeAddress.hint': 'For security reasons, you can designate another address to collect handling fees.',
+  'register.feeAddress.hint':
+    'For security reasons, you can designate another address to collect handling fees.',
   'issueToken.symbol.label': 'Symbol',
-  'issueToken.symbol.hint': 'symbol is a non-case-sensitive token ticker limited to 6 alphanumeric characters, but the first character cannot be a number, eg. “bcoin” since the system will automatically add 3 random characters, such as “bcoin-gf6”',
+  'issueToken.symbol.hint':
+    'symbol is a non-case-sensitive token ticker limited to 6 alphanumeric characters, but the first character cannot be a number, eg. “bcoin” since the system will automatically add 3 random characters, such as “bcoin-gf6”',
   'issueToken.wholename.label': 'Wholename',
   'issueToken.totalSupply.label': 'TotalSupply',
   'issueToken.desc.label': 'Desc',

@@ -5,30 +5,44 @@ import Icon from '_src/component/IconLite';
 import './Depth.less';
 
 export default class DepthTitle extends React.Component {
-  // 生成深度按钮风格
   renderMergeButton = () => {
     const { onDepthPosition, theme } = this.props;
     const btnStyle = { width: '18px', height: '18px' };
     const isDark = theme === 'dark';
     return (
       <div className="spot-depth-button">
-        <div onClick={() => {
-          onDepthPosition('center');
-        }}
+        <div
+          onClick={() => {
+            onDepthPosition('center');
+          }}
         >
-          <Icon className={isDark ? 'icon-center' : 'icon-Buyandsell-L'} style={btnStyle} isColor />
+          <Icon
+            className={isDark ? 'icon-center' : 'icon-Buyandsell-L'}
+            style={btnStyle}
+            isColor
+          />
         </div>
-        <div onClick={() => {
-          onDepthPosition('bottom');
-        }}
+        <div
+          onClick={() => {
+            onDepthPosition('bottom');
+          }}
         >
-          <Icon className={isDark ? 'icon-sell' : 'icon-sell-L'} style={btnStyle} isColor />
+          <Icon
+            className={isDark ? 'icon-sell' : 'icon-sell-L'}
+            style={btnStyle}
+            isColor
+          />
         </div>
-        <div onClick={() => {
-          onDepthPosition('top');
-        }}
+        <div
+          onClick={() => {
+            onDepthPosition('top');
+          }}
         >
-          <Icon className={isDark ? 'icon-buy' : 'icon-buy-L'} style={btnStyle} isColor />
+          <Icon
+            className={isDark ? 'icon-buy' : 'icon-buy-L'}
+            style={btnStyle}
+            isColor
+          />
         </div>
       </div>
     );
@@ -38,12 +52,7 @@ export default class DepthTitle extends React.Component {
     const { needHeadBtn } = this.props;
     return (
       <div className="spot-depth-title">
-        {
-          needHeadBtn ?
-            this.renderMergeButton()
-            :
-            toLocale('spot.group')
-        }
+        {needHeadBtn ? this.renderMergeButton() : toLocale('spot.group')}
       </div>
     );
   }
@@ -51,9 +60,9 @@ export default class DepthTitle extends React.Component {
 
 DepthTitle.propTypes = {
   needHeadBtn: PropTypes.bool,
-  onDepthPosition: PropTypes.func
+  onDepthPosition: PropTypes.func,
 };
 DepthTitle.defaultProps = {
   needHeadBtn: false,
-  onDepthPosition: null
+  onDepthPosition: null,
 };

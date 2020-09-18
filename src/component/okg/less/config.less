@@ -1,18 +1,12 @@
-// 基础配置信息，以局部变量方式使用
-
-// 最多栅格列数
 @_okg_col_max: 12;
-// 默认设备
 @defaultMedia: #mediaQuerySM();
 
-// 排除默认的媒体类型枚举，供默认设备单独配置使用
 #excludeDefaultSet() {
   md: #mediaQueryMD();
   lg: #mediaQueryLG();
   xl: #mediaQueryXL();
 }
 
-// 媒体类型枚举，供循环生成变量使用
 #mediaSet() {
   sm: #mediaQuerySM();
   md: #mediaQueryMD();
@@ -20,44 +14,40 @@
   xl: #mediaQueryXL();
 }
 
-// mobile
 #mediaQuerySM() {
-  @mediaWidth  : 767px; // 媒体宽度查询值
-  @mediaQuery  : (max-width: @mediaWidth); // 媒体查询值
-  @gutter      : 16px; // gutter
-  @colCount    : 4; // 栅格列数
-  @bodyPadding : 8px; // grid-padding
-  @designWidth : 372px; // 设计稿宽度
+  @mediaWidth  : 767px; 
+  @mediaQuery  : (max-width: @mediaWidth); 
+  @gutter      : 16px; 
+  @colCount    : 4; 
+  @bodyPadding : 8px; 
+  @designWidth : 372px; 
 }
 
-// ipad
 #mediaQueryMD() {
-  @mediaWidth  : 768px; // 媒体宽度查询值
-  @mediaQuery  : (min-width: @mediaWidth); // 媒体查询值
-  @gutter      : 24px; // gutter
-  @colCount    : 12; // 栅格列数
-  @bodyPadding : 12px; // grid-padding
-  @designWidth : 768px; // 设计稿宽度
+  @mediaWidth  : 768px; 
+  @mediaQuery  : (min-width: @mediaWidth); 
+  @gutter      : 24px; 
+  @colCount    : 12; 
+  @bodyPadding : 12px; 
+  @designWidth : 768px; 
 }
 
-// pc
 #mediaQueryLG() {
-  @mediaWidth  : 1024px; // 媒体宽度查询值
-  @mediaQuery  : (min-width: @mediaWidth); // 媒体查询值
-  @gutter      : 24px; // gutter
-  @colCount    : 12; // 栅格列数
-  @bodyPadding : 0; // grid-padding
-  @contentWidth: 960px; // 版心宽度
-  @designWidth : 1024px; // 设计稿宽度
+  @mediaWidth  : 1024px;
+  @mediaQuery  : (min-width: @mediaWidth); 
+  @gutter      : 24px; 
+  @colCount    : 12; 
+  @bodyPadding : 0; 
+  @contentWidth: 960px; 
+  @designWidth : 1024px; 
 }
 
-// 宽屏PC
 #mediaQueryXL() {
-  @mediaWidth  : 1280px; // 媒体宽度查询值
-  @mediaQuery  : (min-width: @mediaWidth); // 媒体查询值
-  @gutter      : 24px; // gutter
-  @colCount    : 12; // 栅格列数
-  @bodyPadding : 0; // grid-padding
-  @contentWidth: 1248px; // 版心宽度
-  @designWidth : 1440px; // 设计稿宽度
+  @mediaWidth  : 1280px; 
+  @mediaQuery  : (min-width: @mediaWidth); 
+  @gutter      : 24px; 
+  @colCount    : 12; 
+  @bodyPadding : 0; 
+  @contentWidth: 1248px; 
+  @designWidth : 1440px;
 }

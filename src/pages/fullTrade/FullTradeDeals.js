@@ -9,11 +9,7 @@ const FullTradeDeals = (props) => {
   return (
     <div className="full-deals">
       <div className="full-deals-title">{toLocale('spot.deals.title')}</div>
-      <Deals
-        dataSource={dataSource}
-        columns={columns}
-        empty={empty}
-      />
+      <Deals dataSource={dataSource} columns={columns} empty={empty} />
     </div>
   );
 };

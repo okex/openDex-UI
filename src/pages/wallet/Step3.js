@@ -27,7 +27,7 @@ class Step3 extends Component {
     super(props);
     this.questions = questionGenerator.getQuestions(props.mnemonic.split(' '));
     this.state = {
-      selectArr: []
+      selectArr: [],
     };
   }
   selectOption = (questionNo, selectedIndex) => {
@@ -36,17 +36,15 @@ class Step3 extends Component {
       const selectArrTemp = [...selectArr];
       selectArrTemp[questionNo] = selectedIndex;
       this.setState({
-        selectArr: selectArrTemp
+        selectArr: selectArrTemp,
       });
     };
-  }
-  // 返回上一步
+  };
   handlePrevStep = () => {
     const { walletAction } = this.props;
     walletAction.updateIsPass(true);
     walletAction.updateCreateStep(2);
-  }
-  // 点击确定
+  };
   handleEnsure = () => {
     const { selectArr } = this.state;
     const { questions } = this;
@@ -60,39 +58,34 @@ class Step3 extends Component {
     } else {
       walletAction.updateCreateStep(4);
     }
-  }
+  };
   renderQuestion = (question, selectedOption) => {
     const { no, title } = question;
     return (
       <div className="question-item" key={`question${no}`}>
         <div className="question-title">
-          {no + 1})
-          {toLocale('wallet_choiceMnemonicPre')}
-          <span style={{ color: '#3075EE', margin: '0 3px' }}>
-            {title}
-          </span>
+          {no + 1}){toLocale('wallet_choiceMnemonicPre')}
+          <span style={{ color: '#3075EE', margin: '0 3px' }}>{title}</span>
           {toLocale('wallet_choiceMnemonicSuf')}
         </div>
         <div className="options-container">
-          {
-            question.options.map((optionItem, optionIndex) => {
-              const isActive = selectedOption === optionIndex;
-              const clsName = `option-item ${isActive ? 'active' : ''}`;
-              return (
-                <div
-                  className={clsName}
-                  key={`question${no}-option${optionIndex}`}
-                  onClick={this.selectOption(no, optionIndex)}
-                >
-                  {optionItem}
-                </div>
-              );
-            })
-          }
+          {question.options.map((optionItem, optionIndex) => {
+            const isActive = selectedOption === optionIndex;
+            const clsName = `option-item ${isActive ? 'active' : ''}`;
+            return (
+              <div
+                className={clsName}
+                key={`question${no}-option${optionIndex}`}
+                onClick={this.selectOption(no, optionIndex)}
+              >
+                {optionItem}
+              </div>
+            );
+          })}
         </div>
       </div>
     );
-  }
+  };
 
   render() {
     const { selectArr } = this.state;
@@ -106,14 +99,19 @@ class Step3 extends Component {
           />
           <WalletRight>
             <div className="questions-container">
-              {
-                this.questions.map((questionItem, questionIndex) => {
-                  return this.renderQuestion(questionItem, selectArr[questionIndex]);
-                })
-              }
+              {this.questions.map((questionItem, questionIndex) => {
+                return this.renderQuestion(
+                  questionItem,
+                  selectArr[questionIndex]
+                );
+              })}
             </div>
             <div className="next-row">
-              <Button type="primary" className="prev-btn" onClick={this.handlePrevStep}>
+              <Button
+                type="primary"
+                className="prev-btn"
+                onClick={this.handlePrevStep}
+              >
                 {toLocale('prev_step')}
               </Button>
               <Button type="primary" onClick={this.handleEnsure}>

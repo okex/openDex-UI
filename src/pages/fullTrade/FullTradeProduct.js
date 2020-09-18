@@ -8,47 +8,44 @@ import './FullTradeProduct.less';
 import * as SpotActions from '../../redux/actions/SpotAction';
 import Introduce from '../../component/kline/Introduce';
 
-function mapStateToProps(state) { // 绑定redux中相关state
+function mapStateToProps(state) {
   const { product } = state.SpotTrade;
   return {
-    product
+    product,
   };
 }
 
-function mapDispatchToProps(dispatch) { // 绑定action，以便向redux发送action
+function mapDispatchToProps(dispatch) {
   return {
-    spotActions: bindActionCreators(SpotActions, dispatch)
+    spotActions: bindActionCreators(SpotActions, dispatch),
   };
 }
 
 @withRouter
-@connect(mapStateToProps, mapDispatchToProps) // 与redux相关的组件再用connect修饰，容器组件
+@connect(mapStateToProps, mapDispatchToProps)
 export default class FullTradeProduct extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isShowProduction: false
+      isShowProduction: false,
     };
   }
 
-  // 显示币种介绍
   showProduction = () => {
     this.setState({
-      isShowProduction: true
+      isShowProduction: true,
     });
   };
-  // 隐藏币种介绍
+
   hideProduction = () => {
     this.setState({
-      isShowProduction: false
+      isShowProduction: false,
     });
   };
 
   render() {
     const { product } = this.props;
-    const {
-      isShowProduction
-    } = this.state;
+    const { isShowProduction } = this.state;
     return (
       <div className="full-product-list">
         <span>
@@ -72,6 +69,7 @@ export default class FullTradeProduct extends React.Component {
             <Introduce />
           </div>
         </span>
-      </div>);
+      </div>
+    );
   }
 }

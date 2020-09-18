@@ -40,13 +40,13 @@ class IssueDetail extends Component {
         currentToken: token,
       });
     };
-  }
+  };
 
   onMintClose = () => {
     this.setState({
       isShowMintDialog: false,
     });
-  }
+  };
 
   onBurnOpen = (token) => {
     return () => {
@@ -55,63 +55,74 @@ class IssueDetail extends Component {
         currentToken: token,
       });
     };
-  }
+  };
 
   onBurnClose = () => {
     this.setState({
       isShowBurnDialog: false,
     });
-  }
+  };
 
   onPageChange = (page) => {
     this.setState({ page });
-  }
+  };
 
   onSearchChange = (e) => {
     this.setState({
       searchText: e.target.value,
       page: 1,
     });
-  }
+  };
 
   beforeMintOrBurn = () => {
     this.setState({ isActionLoading: true });
-  }
+  };
 
   afterMintOrBurn = () => {
     this.setState({ isActionLoading: false, currentToken: '' });
     this.fetchTokens();
-  }
+  };
 
   fetchTokens = () => {
     this.setState({ loading: true });
     const params = {
       address: this.addr,
     };
-    ont.get(URL.GET_TOKENS, { params }).then(({ data }) => {
-      this.setState({
-        issueTokens: data || [],
-        loading: false,
+    ont
+      .get(URL.GET_TOKENS, { params })
+      .then(({ data }) => {
+        this.setState({
+          issueTokens: data || [],
+          loading: false,
+        });
+      })
+      .catch(() => {
+        this.setState({ loading: false });
       });
-    }).catch(() => {
-      this.setState({ loading: false });
-    });
-  }
+  };
 
   render() {
     const {
-      loading, issueTokens,
-      isShowMintDialog, isShowBurnDialog, currentToken,
+      loading,
+      issueTokens,
+      isShowMintDialog,
+      isShowBurnDialog,
+      currentToken,
       isActionLoading,
       page,
       searchText,
     } = this.state;
     const pageSize = defaultPageSize;
     const filterTokens = issueTokens.filter((token) => {
-      return token.symbol.indexOf(searchText.trim().toLowerCase().toString()) > -1;
+      return (
+        token.symbol.indexOf(searchText.trim().toLowerCase().toString()) > -1
+      );
     });
     const total = filterTokens.length;
-    const renderTokens = filterTokens.slice((page - 1) * pageSize, page * pageSize);
+    const renderTokens = filterTokens.slice(
+      (page - 1) * pageSize,
+      page * pageSize
+    );
 
     return (
       <DexDesktopContainer
@@ -135,7 +146,10 @@ class IssueDetail extends Component {
               </div>
             );
           }}
-          columns={getIssueCols({ mint: this.onMintOpen, burn: this.onBurnOpen })}
+          columns={getIssueCols({
+            mint: this.onMintOpen,
+            burn: this.onBurnOpen,
+          })}
           dataSource={renderTokens}
           rowKey="symbol"
           isLoading={loading}
