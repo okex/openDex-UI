@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import Icon from '_component/IconLite';
 import DesktopNodeMenu from '_component/DesktopNodeMenu';
 import DesktopLinkMenu from '_component/DesktopLinkMenu';
-import okchainLogo from '_src/assets/images/OKChain.png';
+import okexchainLogo from '_src/assets/images/OKExChain.png';
 import * as CommonAction from '../../redux/actions/CommonAction';
 import PageURL from '../../constants/PageURL';
 import FullTradeTicker from './FullTradeTicker';
@@ -34,12 +34,12 @@ class FullTradeHead extends React.Component {
     super(props);
     this.iconStyle = {
       width: '100%',
-      marginTop: -25,
+      marginTop: 15,
     };
   }
   componentWillMount() {}
   componentDidMount() {
-    this.props.commonAction.initOKChainClient();
+    this.props.commonAction.initOKExChainClient();
   }
   componentWillReceiveProps(nextProps) {}
   isTradePage() {
@@ -53,7 +53,7 @@ class FullTradeHead extends React.Component {
     return (
       <div className="full-top-info-box">
         <a className="logo-wrap" onClick={this.goHome}>
-          <img src={okchainLogo} style={this.iconStyle} />
+          <img src={okexchainLogo} style={this.iconStyle} />
         </a>
         <DesktopNodeMenu />
         {this.isTradePage() ? <FullTradeProductList /> : null}

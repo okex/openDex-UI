@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { toLocale } from '_src/locale/react-locale';
 import Image from '../image';
 import './index.less';

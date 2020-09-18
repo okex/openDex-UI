@@ -1,9 +1,9 @@
-const okbExplorePrefix = 'okchain-test';
+const okbExplorePrefix = 'okexchain-test';
 const apiUrl = 'http://www.okex.com';
 const exploreUrl = 'https://www.oklink.com';
 
 const Config = {
-  okchain: {
+  okexchain: {
     browserUrl: `${exploreUrl}/${okbExplorePrefix}`,
     browserAddressUrl: `${exploreUrl}/${okbExplorePrefix}/address`,
     clientUrl: apiUrl,

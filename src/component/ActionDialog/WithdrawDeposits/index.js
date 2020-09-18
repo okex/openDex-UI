@@ -35,7 +35,7 @@ class WithdrawDepositsDialog extends Component {
 
   onWithdraw = () => {
     const {
-      okchainClient,
+      okexchainClient,
       project,
       beforeWithdraw,
       afterWithdraw,
@@ -43,7 +43,7 @@ class WithdrawDepositsDialog extends Component {
     isFunction(beforeWithdraw) && beforeWithdraw();
     const { value } = this.state;
     const amount = util.precisionInput(value);
-    okchainClient
+    okexchainClient
       .sendWithdrawProductDepositTransaction(amount, project)
       .then((res) => {
         this.setState({ value: '' });

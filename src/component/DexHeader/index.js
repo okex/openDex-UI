@@ -5,7 +5,6 @@ import Icon from '_src/component/IconLite';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Cookies from 'js-cookie';
-import CurrencySelector from '../CurrencySelector';
 import * as CommonAction from '../../redux/actions/CommonAction';
 import { LoggedMenu, LoginMenu } from '../DexMenu';
 import util from '../../utils/util';
@@ -30,7 +29,7 @@ function mapDispatchToProps(dispatch) {
 @connect(mapStateToProps, mapDispatchToProps)
 class DexHeader extends React.Component {
   componentDidMount() {
-    this.props.commonAction.initOKChainClient();
+    this.props.commonAction.initOKExChainClient();
   }
 
   onLanguageSelect(item) {

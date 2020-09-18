@@ -47,11 +47,11 @@ class ListTokenpair extends Component {
   onList = () => {
     this.setState({ isActionLoading: true });
     const { baseAsset, quoteAsset, initPrice } = this.state;
-    const { okchainClient } = this.props;
+    const { okexchainClient } = this.props;
     const fBase = baseAsset.toLowerCase();
     const fQuote = quoteAsset.toLowerCase();
     const fInitPrice = util.precisionInput(initPrice);
-    okchainClient
+    okexchainClient
       .sendListTokenPairTransaction(fBase, fQuote, fInitPrice)
       .then((res) => {
         this.setState({ isActionLoading: false });
@@ -69,7 +69,7 @@ class ListTokenpair extends Component {
               background: '#112F62',
             },
             onConfirm: () => {
-              window.open(`${Config.okchain.browserUrl}/tx/${txhash}`);
+              window.open(`${Config.okexchain.browserUrl}/tx/${txhash}`);
               dialog.destroy();
             },
           });

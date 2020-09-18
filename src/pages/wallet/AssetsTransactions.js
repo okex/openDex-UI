@@ -164,7 +164,7 @@ class AssetsTransactions extends Component {
             </Button>
           </div>
           <a
-            href={Config.okchain.browserUrl}
+            href={Config.okexchain.browserUrl}
             target="_blank"
             rel="noopener noreferrer"
           >

@@ -1,7 +1,7 @@
 import CommonActionType from '../actionTypes/CommonActionType';
 
 const initialState = {
-  okchainClient: {},
+  okexchainClient: {},
   privateKey: '',
   legalList: [],
   legalId: -1,
@@ -10,10 +10,10 @@ const initialState = {
 };
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case CommonActionType.SET_OKCHAIN_CLIENT:
+    case CommonActionType.SET_OKEXCHAIN_CLIENT:
       return {
         ...state,
-        okchainClient: action.data,
+        okexchainClient: action.data,
       };
     case CommonActionType.UPDATE_CURRENCY_LIST:
       return {

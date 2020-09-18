@@ -63,7 +63,7 @@ const index = () => {
           </a>
           <a
             className="div2"
-            href={Config.okchain.browserUrl}
+            href={Config.okexchain.browserUrl}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -75,13 +75,13 @@ const index = () => {
           </a>
           <a
             className="div3"
-            href={Config.okchain.docUrl}
+            href={Config.okexchain.docUrl}
             target="_blank"
             rel="noopener noreferrer"
           >
             <span>
               <Icon className="icon-help" />
-              <span href={Config.okchain.docUrl}>
+              <span href={Config.okexchain.docUrl}>
                 {toLocale('home_instructions')}
               </span>
             </span>
@@ -134,7 +134,7 @@ const index = () => {
               <li>{toLocale('home_step2_li3')}</li>
             </ul>
             <a
-              href={Config.okchain.receiveCoinUrl}
+              href={Config.okexchain.receiveCoinUrl}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -183,7 +183,7 @@ const index = () => {
               <li>{toLocale('home_step4_li1')}</li>
             </ul>
             <a
-              href={Config.okchain.browserUrl}
+              href={Config.okexchain.browserUrl}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -207,7 +207,7 @@ const index = () => {
               <li>{toLocale('home_step5_li1')}</li>
             </ul>
             <a
-              href={Config.okchain.docUrl}
+              href={Config.okexchain.docUrl}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -222,7 +222,7 @@ const index = () => {
         <a
           target="_blank"
           rel="noopener noreferrer"
-          href={Config.okchain.receiveCoinUrl}
+          href={Config.okexchain.receiveCoinUrl}
         >
           {toLocale('home_receive_coin')} &gt;&gt;
         </a>

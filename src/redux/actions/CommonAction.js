@@ -1,14 +1,14 @@
-import OKChainClient, { crypto } from '@okchain/javascript-sdk';
+import OKExChainClient, { crypto } from '@okexchain/javascript-sdk';
 import { toLocale } from '_src/locale/react-locale';
 import CommonActionType from '../actionTypes/CommonActionType';
 import Config from '../../constants/Config';
 import FormActionType from '../actionTypes/FormActionType';
 
-export function initOKChainClient() {
+export function initOKExChainClient() {
   return (dispatch) => {
-    const client = new OKChainClient(Config.okchain.clientUrl);
+    const client = new OKExChainClient(Config.okexchain.clientUrl);
     dispatch({
-      type: CommonActionType.SET_OKCHAIN_CLIENT,
+      type: CommonActionType.SET_OKEXCHAIN_CLIENT,
       data: client,
     });
   };

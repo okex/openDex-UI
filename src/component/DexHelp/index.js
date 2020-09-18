@@ -12,7 +12,7 @@ const DexHelp = () => {
             className="help-list-item-link"
             target="_blank"
             rel="noopener noreferrer"
-            href="https://okchain-docs.readthedocs.io/en/latest/dex-operators/dex-operators-overview.html"
+            href="https://okexchain-docs.readthedocs.io/en/latest/dex-operators/dex-operators-overview.html"
           >
             {toLocale('dex.help.item1')}
           </a>
@@ -22,7 +22,7 @@ const DexHelp = () => {
             className="help-list-item-link"
             target="_blank"
             rel="noopener noreferrer"
-            href="https://okchain-docs.readthedocs.io/en/latest/dex-operators/dex-operators-guide-cli.html"
+            href="https://okexchain-docs.readthedocs.io/en/latest/dex-operators/dex-operators-guide-cli.html"
           >
             {toLocale('dex.help.item2')}
           </a>
@@ -32,7 +32,7 @@ const DexHelp = () => {
             className="help-list-item-link"
             target="_blank"
             rel="noopener noreferrer"
-            href="https://okchain-docs.readthedocs.io/en/latest/dex-operators/dex-operators-faq.html"
+            href="https://okexchain-docs.readthedocs.io/en/latest/dex-operators/dex-operators-faq.html"
           >
             {toLocale('dex.help.item3')}
           </a>

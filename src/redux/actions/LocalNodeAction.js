@@ -15,9 +15,9 @@ const pollInterval = 3000;
 let breakTimer = null;
 let tempBreakTimer = null;
 
-function getOkchaindDir() {
+function getOkexchaindDir() {
   const { store } = electronUtils;
-  return store.get('okchaindDirectory');
+  return store.get('okexchaindDirectory');
 }
 
 function stopPoll() {
@@ -27,7 +27,7 @@ function stopPoll() {
 
 function start(datadir, dispatch, getState, func) {
   const { shell, localNodeServerClient } = electronUtils;
-  const directory = getOkchaindDir();
+  const directory = getOkexchaindDir();
   return new Promise((reslove, reject) => {
     try {
       shell.cd(directory);
@@ -45,7 +45,7 @@ function start(datadir, dispatch, getState, func) {
           console.log(code);
           if (code !== 130 && code !== 0) {
             Message.error({
-              content: 'okchaind start error',
+              content: 'okexchaind start error',
             });
             stopPoll();
             dispatch({
@@ -83,7 +83,7 @@ function listenClient(dispatch, getState) {
         data: newLog,
       });
       dispatch({
-        type: LocalNodeActionType.UPDATE_OKCHAIND,
+        type: LocalNodeActionType.UPDATE_OKEXCHAIND,
         data: child,
       });
     }
@@ -98,23 +98,6 @@ function listenClient(dispatch, getState) {
       child.stdout.off('data', getData);
     },
   };
-}
-
-function isDirExist(dir) {
-  const { shell } = electronUtils;
-  return new Promise((resolve, reject) => {
-    try {
-      shell.exec(`cd ${dir}`, (code, stdout, stderr) => {
-        if (code === 1) {
-          resolve(false);
-        } else {
-          resolve(true);
-        }
-      });
-    } catch (err) {
-      reject(err);
-    }
-  });
 }
 
 function baseDownload(dir, name, url) {
@@ -175,12 +158,12 @@ function setSeeds(configDir) {
 
 function initData(datadir) {
   const { shell } = electronUtils;
-  const okchaindDir = getOkchaindDir();
+  const okexchaindDir = getOkexchaindDir();
   return new Promise((resolve, reject) => {
     try {
-      shell.cd(okchaindDir);
+      shell.cd(okexchaindDir);
       shell.exec(
-        `./okchaind init desktop --home ${datadir}`,
+        `./okexchaind init desktop --home ${datadir}`,
         (code, stdout, stderr) => {
           resolve(true);
         }
@@ -331,7 +314,7 @@ export function updateLogs(logs) {
   };
 }
 
-export function startOkchaind(datadir) {
+export function startOkexchaind(datadir) {
   return async (dispatch, getState) => {
     const { localNodeDataStatus } = electronUtils;
     const statusInstance = localNodeDataStatus.getInstance(datadir);
@@ -367,17 +350,17 @@ export function startListen() {
   };
 }
 
-export function stopOkchaind() {
+export function stopOkexchaind() {
   return (dispatch, getState) => {
     stopPoll();
-    const okchaindDir = getOkchaindDir();
+    const okexchaindDir = getOkexchaindDir();
     const { shell, localNodeServerClient } = electronUtils;
-    shell.cd(okchaindDir);
-    shell.exec('./okchaind stop', (code, stdout, stderr) => {
+    shell.cd(okexchaindDir);
+    shell.exec('./okexchaind stop', (code, stdout, stderr) => {
       if (code === 0) {
         localNodeServerClient.set(null);
         dispatch({
-          type: LocalNodeActionType.UPDATE_OKCHAIND,
+          type: LocalNodeActionType.UPDATE_OKEXCHAIND,
           data: null,
         });
       }

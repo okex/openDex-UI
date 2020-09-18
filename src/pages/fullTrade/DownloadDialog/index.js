@@ -124,18 +124,18 @@ const onDownloadAndUpdate = () => {
   let isFinish = false;
   let config = {};
   let isInstall = true;
-  let okchaindObj = {};
+  let okexchaindObj = {};
   let cliObj = {};
   let processTotal = 0;
   const transferredBytesMap = {
-    okchaind: 0,
-    okchaincli: 0,
+    okexchaind: 0,
+    okexchaincli: 0,
   };
 
   const initTransferredBytes = () => {
-    okchaindObj = store.get('okchaindObj');
+    okexchaindObj = store.get('okexchaindObj');
     cliObj = store.get('cliObj');
-    processTotal = okchaindObj.size + cliObj.size;
+    processTotal = okexchaindObj.size + cliObj.size;
   };
 
   const updateDialog = (option) => {
@@ -150,8 +150,8 @@ const onDownloadAndUpdate = () => {
     initTransferredBytes();
     option = config.install;
     option.onConfirm = () => {
-      setDownloadingDialog('okchaind');
-      emitter.emit('downloadOkchaind@download');
+      setDownloadingDialog('okexchaind');
+      emitter.emit('downloadOkexchaind@download');
     };
     if (type === 'update') {
       option.children = option.children(version);
@@ -159,12 +159,12 @@ const onDownloadAndUpdate = () => {
     updateDialog(option);
   };
 
-  const setDownloadingDialog = (name = 'okchaind', transferredBytes) => {
+  const setDownloadingDialog = (name = 'okexchaind', transferredBytes) => {
     option = config.downloading;
     const updateProcessDialog = () => {
       transferredBytesMap[name] = transferredBytes;
-      const { okchaind = 0, okchaincli = 0 } = transferredBytesMap;
-      const ratio = calc.div(okchaind + okchaincli, processTotal);
+      const { okexchaind = 0, okexchaincli = 0 } = transferredBytesMap;
+      const ratio = calc.div(okexchaind + okexchaincli, processTotal);
       const percent = calc.truncate(ratio * 100, 1);
       option.children = (
         <Process
@@ -189,10 +189,10 @@ const onDownloadAndUpdate = () => {
     option = config.fail;
     option.onConfirm = () => {
       isFinish = false;
-      transferredBytesMap.okchaind = 0;
-      transferredBytesMap.okchaincli = 0;
+      transferredBytesMap.okexchaind = 0;
+      transferredBytesMap.okexchaincli = 0;
       emitter.emit('redownload');
-      emitter.emit('downloadOkchaind@download');
+      emitter.emit('downloadOkexchaind@download');
     };
     updateDialog(option);
   };
@@ -219,21 +219,21 @@ const onDownloadAndUpdate = () => {
         }
       });
 
-      emitter.on('downloadProgress@okchaind', (data) => {
-        setDownloadingDialog('okchaind', data.transferredBytes || 0);
+      emitter.on('downloadProgress@okexchaind', (data) => {
+        setDownloadingDialog('okexchaind', data.transferredBytes || 0);
       });
 
-      emitter.on('downloadProgress@okchaincli', (data) => {
+      emitter.on('downloadProgress@okexchaincli', (data) => {
         if (!isFinish) {
-          setDownloadingDialog('okchaincli', data.transferredBytes || 0);
+          setDownloadingDialog('okexchaincli', data.transferredBytes || 0);
         }
       });
 
-      emitter.on('downloadFinish@okchaind', () => {
-        emitter.emit('downloadOkchaincli@download');
+      emitter.on('downloadFinish@okexchaind', () => {
+        emitter.emit('downloadOkexchaincli@download');
       });
 
-      emitter.on('downloadFinish@okchaincli', () => {
+      emitter.on('downloadFinish@okexchaincli', () => {
         setSuceesDialog();
       });
 

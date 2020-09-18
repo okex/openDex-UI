@@ -30,7 +30,7 @@ const Banner = () => {
               </a>
               <a
                 className="button"
-                href={getLangURL(Config.okchain.receiveCoinUrl)}
+                href={getLangURL(Config.okexchain.receiveCoinUrl)}
                 rel="noopener noreferrer"
                 target="_blank"
                 title={toLocale('home_receive_coin')}

@@ -23,7 +23,7 @@ const OKExHeaderWrapper = (Component) => {
     componentWillMount() {}
     componentDidMount() {
       console.log('OKExHeaderWrapper 1');
-      this.props.commonAction.initOKChainClient();
+      this.props.commonAction.initOKExChainClient();
     }
 
     render() {

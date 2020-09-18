@@ -514,7 +514,7 @@ const enUS = {
   header_menu_instructions: 'Documentation',
   header_menu_draw_okdex: 'Claim Test Token',
   header_menu_item_address: 'Address',
-  header_menu_explorer_okchain: 'Explorer',
+  header_menu_explorer_okexchain: 'Explorer',
   footer_standard_rates: 'Transaction Fee Rates',
 
   home_banner_title: 'OKEx DEX',
@@ -529,18 +529,18 @@ const enUS = {
     'OKEx DEX reviews the on-chain assets with a strict standard, sets stable digital assets as the pricing currency, and provides various trading options.',
   home_adv_item2_title: 'Continuous iteration',
   home_adv_item2_content:
-    'OKEx DEX will support the new functions of OKChain sooner to providing a better trading experience for users.',
+    'OKEx DEX will support the new functions of OKExChain sooner to providing a better trading experience for users.',
   home_exp_title: 'Experience simulated trading',
   home_exp_content:
-    'OKEx users who have created OKChain wallets will be distributed with a certain amount of testing currencies. The amount is limited, first come first served.',
+    'OKEx users who have created OKExChain wallets will be distributed with a certain amount of testing currencies. The amount is limited, first come first served.',
   home_steps_title: 'Quick start',
-  home_steps_item0_title: '1.Create OKChain wallet',
+  home_steps_item0_title: '1.Create OKExChain wallet',
   home_steps_item0_content:
     'DEX will not save any information of your wallet on the chain; mnemonic words and keystore files are the only proofs for your personal assets, please keep them properly. If mnemonic words and keystore files have been created, you can directly import them into the wallet.',
   home_steps_item0_button: 'Create wallet',
   home_steps_item1_title: '2.Wallet deposit',
   home_steps_item1_content:
-    'Log in to the OKChain on-chain wallet, enter asset management, and obtain the OKChain on-chain address; DEX trading can be initiated on TestNet by getting the test currencies; the account record can be viewed in on-chain wallet- -asset record.',
+    'Log in to the OKExChain on-chain wallet, enter asset management, and obtain the OKExChain on-chain address; DEX trading can be initiated on TestNet by getting the test currencies; the account record can be viewed in on-chain wallet- -asset record.',
   home_steps_item1_button: 'Get testing currencies',
   home_steps_item2_title: '3.Go trading',
   home_steps_item2_content:
@@ -558,11 +558,11 @@ const enUS = {
     'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/1CDBD8D16A98147F82E9E7703FE9DE61.png',
   home_steps_item3_img:
     'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/298BA40D0EF5D30907E47C018D8D1B7B.png',
-  home_exp_more: 'Learn more about "DEX, OKChain detailed design rules',
+  home_exp_more: 'Learn more about "DEX, OKExChain detailed design rules',
   home_exp_img:
     'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/A4C4128B4E548183A3D05A8463ED45F6.png',
   home_subtitle:
-    'OKChain testnet is launched. Check your transaction history on-chain.',
+    'OKExChain testnet is launched. Check your transaction history on-chain.',
   home_receive_coin: 'Claim Test Token',
   home_step5_title: 'Help',
 

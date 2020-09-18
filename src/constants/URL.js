@@ -1,5 +1,5 @@
-const OKDEX_BASE_URL = '{domain}/okchain/v1';
-const MASTER_BASE_URL = 'https://www.okex.com/okchain/v1';
+const OKDEX_BASE_URL = '{domain}/okexchain/v1';
+const MASTER_BASE_URL = 'https://www.okex.com/okexchain/v1';
 
 const URL = {
   GET_ORDER_OPEN: `${OKDEX_BASE_URL}/order/list/open`,

@@ -16,9 +16,9 @@ import ont from '../../utils/dataProxy';
 import './TransferDialog.less';
 
 function mapStateToProps(state) {
-  const { okchainClient } = state.Common;
+  const { okexchainClient } = state.Common;
   const { valuationToken } = state.Spot;
-  return { okchainClient, valuationToken };
+  return { okexchainClient, valuationToken };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -32,7 +32,7 @@ class TransferDialog extends Component {
   constructor(props) {
     super(props);
     this.feeToken = this.props.valuationToken;
-    this.addrReg = /^okchain/i;
+    this.addrReg = /^okexchain/i;
     this.loadingDur = 500;
     this.transDur = 2500;
     this.initState = {
@@ -227,13 +227,13 @@ class TransferDialog extends Component {
           this.props.commonAction.validatePassword(
             pwd,
             (privateKey) => {
-              const { onClose, onSuccess, okchainClient } = this.props;
+              const { onClose, onSuccess, okexchainClient } = this.props;
               const { symbol, address, amount, note } = this.state;
               onClose();
               this.setState({ transferring: true });
               const amountStr = Number(amount).toFixed(8);
-              okchainClient.setAccountInfo(privateKey).then(() => {
-                okchainClient
+              okexchainClient.setAccountInfo(privateKey).then(() => {
+                okexchainClient
                   .sendSendTransaction(address, amountStr, symbol, note)
                   .then((res) => {
                     if (res.result.code) {

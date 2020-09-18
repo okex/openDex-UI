@@ -3,7 +3,6 @@ import { toLocale } from '_src/locale/react-locale';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Cookies from 'js-cookie';
-import { calc } from '_component/okit';
 import DepthTooltip from './DepthTooltip';
 import './DepthList.less';
 import DepthBar from '../../utils/DepthBar';

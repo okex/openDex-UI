@@ -189,10 +189,9 @@ class FullTradeProductList extends React.Component {
   };
   filterGroupList = () => {
     const { groupList, spotOrMargin } = this.props;
-    const { webTypes, webType } = window.OK_GLOBAL;
+    const { webType } = window.OK_GLOBAL;
     if (
-      webType !== webTypes.OKCoin ||
-      spotOrMargin === Enum.spotOrMargin.spot
+      webType !== (spotOrMargin === Enum.spotOrMargin.spot)
     ) {
       return groupList;
     }

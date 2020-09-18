@@ -64,11 +64,11 @@ class IssueToken extends Component {
   onIssue = () => {
     this.setState({ isActionLoading: true });
     const { symbol, wholename, totalSupply, mintable, desc } = this.state;
-    const { okchainClient } = this.props;
+    const { okexchainClient } = this.props;
     const fSymbol = symbol.toLowerCase();
     const fTotal = util.precisionInput(totalSupply);
     const fMintable = mintable === 1;
-    okchainClient
+    okexchainClient
       .sendTokenIssueTransaction(fSymbol, wholename, fTotal, fMintable, desc)
       .then((res) => {
         this.setState({ isActionLoading: false });
@@ -86,7 +86,7 @@ class IssueToken extends Component {
               background: '#112F62',
             },
             onConfirm: () => {
-              window.open(`${Config.okchain.browserUrl}/tx/${txhash}`);
+              window.open(`${Config.okexchain.browserUrl}/tx/${txhash}`);
               dialog.destroy();
             },
           });

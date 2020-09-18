@@ -93,7 +93,7 @@ const StepList = (props) => {
       title: 'home_steps_item1_title',
       content: 'home_steps_item1_content',
       buttonTxt: 'home_steps_item1_button',
-      buttonUrl: Config.okchain.receiveCoinUrl,
+      buttonUrl: Config.okexchain.receiveCoinUrl,
       isLink: false,
     },
     {
@@ -113,7 +113,7 @@ const StepList = (props) => {
       title: 'home_steps_item3_title',
       content: 'home_steps_item3_content',
       buttonTxt: 'home_steps_item3_button',
-      buttonUrl: Config.okchain.browserUrl,
+      buttonUrl: Config.okexchain.browserUrl,
       isLink: false,
     },
   ];

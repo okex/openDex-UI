@@ -90,7 +90,7 @@ util.transactionsCols = [
     render: (text) => {
       return (
         <a
-          href={`${Config.okchain.browserUrl}/tx/${text}`}
+          href={`${Config.okexchain.browserUrl}/tx/${text}`}
           target="_blank"
           rel="noopener noreferrer"
         >

@@ -82,7 +82,7 @@ export default class FullTradeKLine extends React.Component {
     const Kline = window.okui.CombKline || window.okui.Kline;
     this.kline = new Kline({
       element: '#dex-full-kline-container',
-      klineUrl: httpUrl + '/okchain/v1/candles/<symbol>',
+      klineUrl: httpUrl + '/okexchain/v1/candles/<symbol>',
       klineType: 'TradingView',
       showToggle: false,
       wsUrl,

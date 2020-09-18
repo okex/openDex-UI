@@ -51,7 +51,7 @@ class AssetsAccounts extends Component {
     this.addr = window.OK_GLOBAL.senderAddr;
   }
   componentDidMount() {
-    this.props.commonAction.initOKChainClient();
+    this.props.commonAction.initOKExChainClient();
     document.title =
       toLocale('assets_tab_accounts') + toLocale('spot.page.title');
     if (this.addr) {

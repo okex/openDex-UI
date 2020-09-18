@@ -520,7 +520,7 @@ const zhCN = {
   header_menu_instructions: '说明文档',
   header_menu_draw_okdex: '领取测试币',
   header_menu_item_address: '地址',
-  header_menu_explorer_okchain: '浏览器',
+  header_menu_explorer_okexchain: '浏览器',
   footer_standard_rates: '费率标准',
 
   home_banner_title: 'OKEx DEX',
@@ -535,18 +535,18 @@ const zhCN = {
     'OKEx DEX严格审核链上资产，以价值稳定数字资产作为计价货币，提供多种交易选择',
   home_adv_item2_title: '持续迭代',
   home_adv_item2_content:
-    'OKEx DEX会第一时间支持OKChain的各项新功能，提供更优的交易体验',
+    'OKEx DEX会第一时间支持OKExChain的各项新功能，提供更优的交易体验',
   home_exp_title: '体验模拟交易',
   home_exp_content:
-    '已经创建过OKChain钱包的OKEx用户，我们将会为您发放一定数量的测试币，数量有限，先到先得。',
+    '已经创建过OKExChain钱包的OKEx用户，我们将会为您发放一定数量的测试币，数量有限，先到先得。',
   home_steps_title: '快速开始',
-  home_steps_item0_title: '1.创建OKChain钱包',
+  home_steps_item0_title: '1.创建OKExChain钱包',
   home_steps_item0_content:
     'DEX不会保存您链上钱包的任何信息；助记词和keystore文件是您拥有个人资产的唯一凭证，请妥善保管，若已经创建完成，您可以直接导入钱包。',
   home_steps_item0_button: '创建钱包',
   home_steps_item1_title: '2.钱包充值',
   home_steps_item1_content:
-    '登录OKChain链上钱包，进入资产管理，获得OKChain链上地址；测试网可以通过领取测试币直接参与DEX交易；到账记录可在链上钱包——资产记录里面查看。',
+    '登录OKExChain链上钱包，进入资产管理，获得OKExChain链上地址；测试网可以通过领取测试币直接参与DEX交易；到账记录可在链上钱包——资产记录里面查看。',
   home_steps_item1_button: '领取测试币',
   home_steps_item2_title: '3.去交易',
   home_steps_item2_content:
@@ -564,10 +564,10 @@ const zhCN = {
     'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/0A848CAA0FA942D868854F6F469ADEC1.png',
   home_steps_item3_img:
     'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/F497569D03E57047301DAC9E4CB05207.png',
-  home_exp_more: '想要进一步了解「DEX、OKChain详细设计规则」',
+  home_exp_more: '想要进一步了解「DEX、OKExChain详细设计规则」',
   home_exp_img:
     'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/3AF196CA9B03F9FFAE8A519469FBB6AD.png',
-  home_subtitle: 'OKChain测试网上线，所有交易记录链上可查',
+  home_subtitle: 'OKExChain测试网上线，所有交易记录链上可查',
   home_receive_coin: '领取测试币',
   home_step5_title: '帮助文档',
 

@@ -41,7 +41,7 @@ class WalletMenuTool extends React.Component {
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href={`${Config.okchain.browserAddressUrl}/${address}`}
+            href={`${Config.okexchain.browserAddressUrl}/${address}`}
           >
             {`${address.substr(0, 20)}…`}
           </a>

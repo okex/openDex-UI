@@ -100,7 +100,7 @@ class OpenList extends RouterCredential {
     }
   }
   componentDidMount() {
-    this.props.commonAction.initOKChainClient();
+    this.props.commonAction.initOKExChainClient();
     const { spotActions, orderActions } = this.props;
     spotActions.fetchProducts();
     const { webType } = window.OK_GLOBAL;

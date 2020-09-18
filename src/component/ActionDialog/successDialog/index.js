@@ -11,7 +11,7 @@ const showSuccessDialog = (title, txhash) => {
       background: '#112F62',
     },
     onConfirm: () => {
-      window.open(`${Config.okchain.browserUrl}/tx/${txhash}`);
+      window.open(`${Config.okexchain.browserUrl}/tx/${txhash}`);
       dialog.destroy();
     },
   });

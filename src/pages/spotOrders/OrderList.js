@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import NormalOrderList from './NormalOrderList';
 import Enum from '../../utils/Enum';
 import * as OrderAction from '../../redux/actions/OrderAction';
-import Config from '../../constants/Config';
 
 function mapStateToProps(state) {
   const { product } = state.SpotTrade;

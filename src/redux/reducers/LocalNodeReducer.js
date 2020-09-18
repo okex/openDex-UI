@@ -13,20 +13,20 @@ const getHomePath = () => {
 
 const getInitDataDir = () => {
   const path = getHomePath();
-  const datadir = `${emptyLineBreak(path)}/.okchaind`;
+  const datadir = `${emptyLineBreak(path)}/.okexchaind`;
   return datadir;
 };
 
 const getInitDb = () => {
   const path = getHomePath();
-  const db = `${emptyLineBreak(path)}/.okchaind/data/backend.sqlite3`;
+  const db = `${emptyLineBreak(path)}/.okexchaind/data/backend.sqlite3`;
   return db;
 };
 
 export default function () {
   const initialState = {
     logs: '',
-    okchaind: null,
+    okexchaind: null,
     isStarted: !!electronUtils.localNodeServerClient.get(),
     p2p: '26656',
     rest: '26659',
@@ -48,10 +48,10 @@ export default function () {
           ...state,
           logs: action.data,
         };
-      case LocalNodeActionType.UPDATE_OKCHAIND:
+      case LocalNodeActionType.UPDATE_OKEXCHAIND:
         return {
           ...state,
-          okchaind: action.data,
+          okexchaind: action.data,
         };
       case LocalNodeActionType.UPDATE_IS_STARTED:
         return {

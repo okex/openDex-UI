@@ -20,7 +20,7 @@ const commonUtil = {
         key: 'txhash',
         render: (text) => {
           const str = FormatNum.hashShort(text);
-          const href = `${Config.okchain.browserUrl}/tx/${text}`;
+          const href = `${Config.okexchain.browserUrl}/tx/${text}`;
           return (
             <a
               title={text}

@@ -96,7 +96,7 @@ export const getDashboardTokenPairCols = ({ add, withdraw }) => {
         return (
           <a
             className="one-line"
-            href={`${Config.okchain.browserUrl}/block/${text}`}
+            href={`${Config.okexchain.browserUrl}/block/${text}`}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -160,7 +160,7 @@ export const getDetailTokenPairCols = ({ add, withdraw }) => {
         return (
           <a
             className="one-line"
-            href={`${Config.okchain.browserUrl}/block/${text}`}
+            href={`${Config.okexchain.browserUrl}/block/${text}`}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -274,7 +274,7 @@ export const getTransactionsCols = () => {
         return (
           <a
             className="one-line"
-            href={`${Config.okchain.browserUrl}/tx/${text}`}
+            href={`${Config.okexchain.browserUrl}/tx/${text}`}
             target="_blank"
             rel="noopener noreferrer"
           >
