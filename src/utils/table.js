@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import React, { Fragment } from 'react';
 import moment from 'moment';
 import Tooltip from '_component/Tooltip';

@@ -23,7 +23,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-/* eslint-disable react/sort-comp, no-nested-ternary */
 @connect(mapStateToProps, mapDispatchToProps)
 class Assets extends Component {
   constructor(props) {

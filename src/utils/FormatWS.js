@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { calc } from '_component/okit';
 import util from './util';
 

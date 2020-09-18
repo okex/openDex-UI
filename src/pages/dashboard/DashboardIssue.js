@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import React, { Component, Fragment } from 'react';
 import { toLocale } from '_src/locale/react-locale';
 import { MintDialog, BurnDialog } from '_component/ActionDialog';

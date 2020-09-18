@@ -31,7 +31,6 @@ function mapDispatchToProps(dispatch) {
 
 @connect(mapStateToProps, mapDispatchToProps)
 class AssetsAccounts extends Component {
-  /* eslint-disable react/sort-comp, camelcase */
   constructor(props) {
     super(props);
     this.allCurrencies = [];

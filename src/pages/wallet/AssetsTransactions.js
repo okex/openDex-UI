@@ -14,7 +14,6 @@ import './Assets.less';
 import ont from '../../utils/dataProxy';
 import util from '../../utils/util';
 
-/* eslint-disable react/sort-comp */
 class AssetsTransactions extends Component {
   constructor(props) {
     super(props);

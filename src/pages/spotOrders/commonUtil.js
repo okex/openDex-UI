@@ -1,4 +1,3 @@
-/* eslint-disable no-else-return */
 import React from 'react';
 import Tooltip from 'rc-tooltip';
 import { Link } from 'react-router-dom';

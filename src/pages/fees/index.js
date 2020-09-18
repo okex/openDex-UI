@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import React, { Component } from 'react';
 import Message from '_src/component/Message';
 import DexDesktopContainer from '_component/DexDesktopContainer';

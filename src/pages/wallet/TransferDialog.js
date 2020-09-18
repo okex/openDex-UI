@@ -26,7 +26,6 @@ function mapDispatchToProps(dispatch) {
     commonAction: bindActionCreators(CommonAction, dispatch),
   };
 }
-/* eslint-disable react/sort-comp */
 @connect(mapStateToProps, mapDispatchToProps)
 class TransferDialog extends Component {
   constructor(props) {

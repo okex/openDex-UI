@@ -2,7 +2,6 @@ import { storage } from '_component/okit';
 import { NODE_TYPE, MAX_LATENCY } from '_constants/Node';
 import { LOCAL_PREFIX, LOCAL_PREFIX_WS } from '_constants/apiConfig';
 import NodeActionType from '../actionTypes/NodeActionType';
-/* eslint-disable */
 
 let breakTimer = null;
 let tempBreakTimer = null;
