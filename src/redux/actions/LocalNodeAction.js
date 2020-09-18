@@ -336,10 +336,8 @@ export function startOkexchaind(datadir) {
       await setSeeds(configDir);
       statusInstance.set({ hasSetSeeds: true });
     }
-    if (dataStatus.success) {
-      await start(datadir, dispatch, getState);
-      startPoll(dispatch, getState);
-    }
+    await start(datadir, dispatch, getState);
+    startPoll(dispatch, getState);
   };
 }
 
