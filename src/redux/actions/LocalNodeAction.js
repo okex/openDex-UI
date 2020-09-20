@@ -25,7 +25,7 @@ function stopPoll() {
   tempBreakTimer && clearInterval(tempBreakTimer);
 }
 
-function start(datadir, dispatch, getState, func) {
+function start(datadir, dispatch, getState) {
   const { shell, localNodeServerClient } = electronUtils;
   const directory = getOkexchaindDir();
   return new Promise((reslove, reject) => {
