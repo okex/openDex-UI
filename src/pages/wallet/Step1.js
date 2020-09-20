@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { toLocale } from '_src/locale/react-locale';
-import { crypto } from '@okchain/javascript-sdk';
+import { crypto } from '@okexchain/javascript-sdk';
 import Icon from '_src/component/IconLite';
 import Input from '_component/Input';
 import WalletPassword from '_component/WalletPassword';

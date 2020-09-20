@@ -1,4 +1,4 @@
-import { crypto } from '@okchain/javascript-sdk';
+import { crypto } from '@okexchain/javascript-sdk';
 
 const walletUtil = {
   setUserInSessionStroage(privateKey, keyStore) {
