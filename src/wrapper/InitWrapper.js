@@ -67,8 +67,6 @@ const InitWrapper = (Component) => {
       }
     }
 
-    componentWillUnmount() {}
-
     sendBasicAjax = () => {
       const { spotActions } = this.props;
       spotActions.fetchCollectAndProducts();
@@ -100,6 +98,7 @@ const InitWrapper = (Component) => {
       return fns[table.split(':')[0]];
     };
     startInitWebSocket = (wsUrl) => {
+      if(!window.WebSocketCore) return;
       const OK_GLOBAL = window.OK_GLOBAL;
       if (!OK_GLOBAL.ws_v3) {
         const { spotActions, nodeActions } = this.props;
@@ -144,7 +143,7 @@ const InitWrapper = (Component) => {
               Number(errorCode) === 30008 ||
               Number(errorCode) === 30006)
           ) {
-            util.doLogout();
+            // util.doLogout();
           }
         });
         v3.connect();
