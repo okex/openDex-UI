@@ -25,7 +25,13 @@ function stopPoll() {
   tempBreakTimer && clearInterval(tempBreakTimer);
 }
 
-function start(datadir, dispatch, getState) {
+function getListenClient(dispatch, getState) {
+  if(!getListenClient.instance) getListenClient.instance = listenClient(dispatch, getState);
+  return getListenClient.instance;
+  
+}
+
+function start(datadir, dispatch, getState, terminal=false) {
   const { shell, localNodeServerClient } = electronUtils;
   const directory = getOkexchaindDir();
   return new Promise((reslove, reject) => {
@@ -63,7 +69,7 @@ function start(datadir, dispatch, getState) {
         data: datadir,
       });
       localNodeServerClient.set(child);
-      listenClient(dispatch, getState).start();
+      if(terminal) getListenClient(dispatch, getState).start();
       reslove(true);
     } catch (err) {
       reject(err);
@@ -314,7 +320,7 @@ export function updateLogs(logs) {
   };
 }
 
-export function startOkexchaind(datadir) {
+export function startOkexchaind(datadir, terminal = false) {
   return async (dispatch, getState) => {
     const { localNodeDataStatus } = electronUtils;
     const statusInstance = localNodeDataStatus.getInstance(datadir);
@@ -336,19 +342,30 @@ export function startOkexchaind(datadir) {
       await setSeeds(configDir);
       statusInstance.set({ hasSetSeeds: true });
     }
-    await start(datadir, dispatch, getState);
+    await start(datadir, dispatch, getState, terminal);
     startPoll(dispatch, getState);
   };
 }
 
 export function startListen() {
   return async (dispatch, getState) => {
-    listenClient(dispatch, getState).start();
     startPoll(dispatch, getState);
   };
 }
 
-export function stopOkexchaind() {
+export function startTerminal() {
+  return async (dispatch, getState) => {
+    getListenClient(dispatch, getState).start();
+  }
+}
+
+export function stopTerminal() {
+  return async (dispatch, getState) => {
+    getListenClient(dispatch, getState).stop();
+  }
+}
+
+export function stopOkexchaind(terminal = false) {
   return (dispatch, getState) => {
     stopPoll();
     const okexchaindDir = getOkexchaindDir();
@@ -356,6 +373,7 @@ export function stopOkexchaind() {
     shell.cd(okexchaindDir);
     shell.exec('./okexchaind stop', (code, stdout, stderr) => {
       if (code === 0) {
+        if(terminal) getListenClient(dispatch, getState).stop();
         localNodeServerClient.set(null);
         dispatch({
           type: LocalNodeActionType.UPDATE_OKEXCHAIND,

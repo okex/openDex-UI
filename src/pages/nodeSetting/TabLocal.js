@@ -92,10 +92,10 @@ class TabLocal extends Component {
     const { localNodeAction, datadir } = this.props;
     if (checked) {
       localNodeAction.switchIsStarted(true);
-      localNodeAction.startOkexchaind(datadir);
+      localNodeAction.startOkexchaind(datadir, true);
     } else {
       localNodeAction.switchIsStarted(false);
-      localNodeAction.stopOkexchaind();
+      localNodeAction.stopOkexchaind(true);
     }
   };
 
@@ -108,6 +108,16 @@ class TabLocal extends Component {
     const { localNodeAction } = this.props;
     localNodeAction.updateDb(db);
   };
+
+  componentDidMount() {
+    const { isStarted, localNodeAction } = this.props;
+    if (isStarted) localNodeAction.startTerminal();
+  }
+
+  componentWillUnmount() {
+    const { isStarted, localNodeAction } = this.props;
+    if (isStarted) localNodeAction.stopTerminal();
+  }
 
   render() {
     const {
