@@ -143,7 +143,7 @@ const InitWrapper = (Component) => {
               Number(errorCode) === 30008 ||
               Number(errorCode) === 30006)
           ) {
-            // util.doLogout();
+            util.doLogout();
           }
         });
         v3.connect();
