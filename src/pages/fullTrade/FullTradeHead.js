@@ -1,8 +1,7 @@
 import React from 'react';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Icon from '_component/IconLite';
 import DesktopNodeMenu from '_component/DesktopNodeMenu';
 import DesktopLinkMenu from '_component/DesktopLinkMenu';
 import okexchainLogo from '_src/assets/images/OKExChain.png';
@@ -46,7 +45,12 @@ class FullTradeHead extends React.Component {
     return this.props.location.pathname.indexOf(PageURL.spotFullPage) >= 0;
   }
   goHome = () => {
-    window.location.href = PageURL.spotFullPage;
+    const url = window.location.href.split('#')[0];
+    if (/^file/i.test(url)) {
+      window.location.href = `${url}#${PageURL.spotFullPage}`;
+    } else {
+      window.location.href = PageURL.spotFullPage;
+    }
   };
 
   render() {

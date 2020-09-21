@@ -28,7 +28,7 @@ input, select, textarea {
     list-style: none;
     -webkit-font-feature-settings: 'tnum';
     font-feature-settings: 'tnum';
-    display: inline-block;
+    display: flex;
     line-height: unset;
     cursor: pointer;
     &:not(last-child) {
@@ -45,7 +45,7 @@ input, select, textarea {
       -webkit-font-feature-settings: 'tnum';
       font-feature-settings: 'tnum';
       position: relative;
-      display: inline-block;
+      display: flex;
       line-height: 1;
       white-space: nowrap;
       vertical-align: middle;
@@ -155,7 +155,8 @@ input, select, textarea {
       }
     }
     .check-des {
-      display: inline-block;
+      display: flex;
+      flex: 1;
       cursor: pointer;
       margin-left: 5px;
     }
