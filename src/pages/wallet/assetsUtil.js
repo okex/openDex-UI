@@ -11,8 +11,8 @@ import Config from '../../constants/Config';
 const util = {};
 
 util.tabs = [
-  { id: 1, label: toLocale('assets_tab_accounts') },
-  { id: 2, label: toLocale('assets_tab_transactions') },
+  { id: 1, label: 'assets_tab_accounts' },
+  { id: 2, label: 'assets_tab_transactions' },
 ];
 util.accountsCols = ({ transfer }, { valuationUnit }) => {
   return [

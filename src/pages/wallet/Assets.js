@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as CommonActions from '_src/redux/actions/CommonAction';
+import { withRouter } from 'react-router-dom';
 import PageURL from '_src/constants/PageURL';
 import DexTab from '_component/DexTab';
 import WalletAddress from '_component/WalletAddress';
@@ -12,7 +13,6 @@ import './Assets.less';
 
 function mapStateToProps() {
   return {
-    history: window.history,
     location: window.location,
   };
 }
@@ -24,6 +24,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
+@withRouter
 class Assets extends Component {
   constructor(props) {
     super(props);
@@ -31,7 +32,7 @@ class Assets extends Component {
       loading: false,
       copySuccess: false,
     };
-    this.isAssets = this.props.location.pathname === PageURL.walletAssets;
+    this.isAssets = this.props.location.pathname.includes(PageURL.walletAssets);
     if (!window.OK_GLOBAL.senderAddr) {
       this.props.history.replace(PageURL.walletImport);
     }
