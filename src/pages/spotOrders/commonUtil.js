@@ -300,11 +300,11 @@ const commonUtil = {
       <div className="order-list-not-login">
         <p className="c-title">
           <br />
-          <Link to={`${PageURL.homePage}/wallet/create`}>
+          <Link to={PageURL.walletCreate}>
             {toLocale('wallet_create_step1')}
           </Link>
           <a> / </a>
-          <Link to={`${PageURL.homePage}/wallet/import`}>
+          <Link to={PageURL.walletImport}>
             {toLocale('wallet_import')}
           </Link>
         </p>

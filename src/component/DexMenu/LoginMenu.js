@@ -36,12 +36,12 @@ class DexLoginMenu extends React.Component {
     return (
       <Menu mode="horizontal" className="okdex-menu">
         <Menu.Item key="createWallet">
-          <Link to={getLangURL(`${PageURL.homePage}/wallet/create`)}>
+          <Link to={getLangURL(PageURL.walletCreate)}>
             {toLocale('header_menu_create_wallet')}
           </Link>
         </Menu.Item>
         <Menu.Item key="importWallet">
-          <Link to={getLangURL(`${PageURL.homePage}/wallet/import`)}>
+          <Link to={getLangURL(PageURL.walletImport)}>
             {toLocale('header_menu_import_wallet')}
           </Link>
         </Menu.Item>

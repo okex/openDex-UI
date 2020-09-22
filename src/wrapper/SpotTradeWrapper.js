@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { storage } from '_component/okit';
 import { wsV3, channelsV3 } from '../utils/websocket';
-import * as CommonActions from '../redux/actions/CommonAction';
 import * as SpotTradeActions from '../redux/actions/SpotTradeAction';
 import * as SpotActions from '../redux/actions/SpotAction';
 import * as OrderActions from '../redux/actions/OrderAction';
@@ -26,7 +25,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    commonActions: bindActionCreators(CommonActions, dispatch),
     spotActions: bindActionCreators(SpotActions, dispatch),
     spotTradeActions: bindActionCreators(SpotTradeActions, dispatch),
     orderActions: bindActionCreators(OrderActions, dispatch),
@@ -47,7 +45,6 @@ const SpotTradeWrapper = (Component) => {
     componentDidMount() {
       const {
         spotActions,
-        commonActions,
         wsIsOnlineV3,
         product,
         productObj,
