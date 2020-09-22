@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import Tabs, { TabPane } from 'rc-tabs';
 import { toLocale } from '_src/locale/react-locale';
 import * as NodeActions from '_src/redux/actions/NodeAction';
+import * as LocalNodeAction from '_src/redux/actions/LocalNodeAction';
 import { getNodeLatency, getNodeRenderName } from '_src/utils/node';
 import { NODE_TYPE } from '_constants/Node';
 import NodeItem from './NodeItem';
@@ -16,16 +17,19 @@ const loopTime = 10000;
 
 function mapStateToProps(state) {
   const { currentNode, remoteList, customList } = state.NodeStore;
+  const { isStarted } = state.LocalNodeStore;
   return {
     currentNode,
     remoteList,
     customList,
+    isStarted,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     nodeActions: bindActionCreators(NodeActions, dispatch),
+    localNodeAction: bindActionCreators(LocalNodeAction, dispatch),
   };
 }
 
@@ -136,6 +140,19 @@ class NodeSetting extends Component {
     fetchListLatency(customList);
   };
 
+  changeTab = key => {
+    const { isStarted, localNodeAction } = this.props;
+    if(!isStarted) return;
+    if(key === '2') localNodeAction.startTerminal();
+    else localNodeAction.stopTerminal();
+    return;
+  }
+
+  componentWillUnmount() {
+    const { isStarted, localNodeAction } = this.props;
+    if(isStarted) localNodeAction.stopTerminal();
+  }
+
   render() {
     const { currentNode } = this.props;
     const { wsUrl, latency, httpUrl } = currentNode;
@@ -154,7 +171,7 @@ class NodeSetting extends Component {
           />
         </div>
         <div className="node-select-container">
-          <Tabs defaultActiveKey="1" prefixCls="node-select">
+          <Tabs defaultActiveKey="1" prefixCls="node-select" onChange={this.changeTab}>
             <TabPane tab={toLocale('node.tab.wellenow')} key="1">
               <NodeList />
             </TabPane>

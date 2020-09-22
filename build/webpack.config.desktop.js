@@ -32,6 +32,14 @@ module.exports = Object.assign(base, {
       new UglifyJsPlugin({
         cache: true,
         parallel: true,
+        uglifyOptions: {
+          compress: {
+            warnings: false,
+            drop_console: true,
+            collapse_vars: true,
+            reduce_vars: true,
+          },
+        }
       }),
       new OptimizeCSSAssetsPlugin({}),
     ],

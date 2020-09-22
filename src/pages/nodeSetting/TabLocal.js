@@ -109,16 +109,6 @@ class TabLocal extends Component {
     localNodeAction.updateDb(db);
   };
 
-  componentDidMount() {
-    const { isStarted, localNodeAction } = this.props;
-    if (isStarted) localNodeAction.startTerminal();
-  }
-
-  componentWillUnmount() {
-    const { isStarted, localNodeAction } = this.props;
-    if (isStarted) localNodeAction.stopTerminal();
-  }
-
   render() {
     const {
       logs,

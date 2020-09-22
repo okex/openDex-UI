@@ -48,7 +48,6 @@ function start(datadir, dispatch, getState, terminal=false) {
       const child =
         localNodeServerClient.get() ||
         shell.exec(`${startCommand}`, { async: true }, (code) => {
-          console.log(code);
           if (code !== 130 && code !== 0) {
             Message.error({
               content: 'okexchaind start error',
@@ -371,7 +370,7 @@ export function stopOkexchaind(terminal = false) {
     const okexchaindDir = getOkexchaindDir();
     const { shell, localNodeServerClient } = electronUtils;
     shell.cd(okexchaindDir);
-    shell.exec('./okexchaind stop', (code, stdout, stderr) => {
+    shell.exec('./okexchaind stop', (code) => {
       if (code === 0) {
         if(terminal) getListenClient(dispatch, getState).stop();
         localNodeServerClient.set(null);
