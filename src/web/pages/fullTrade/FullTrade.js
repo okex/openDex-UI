@@ -4,7 +4,6 @@ import Enum from '_src/utils/Enum';
 import util from '_src/utils/util';
 import FullTradeHead from './FullTradeHead';
 import FullTradeData from '_src/pages/fullTrade/FullTradeData';
-import downloadDialog from './DownloadDialog';
 import SpotAsset from '_src/pages/trade/SpotAsset';
 import SpotOrder from '_src/pages/trade/SpotOrder';
 import FullTradeKLine from '_src/pages/fullTrade/FullTradeKLine';
@@ -34,10 +33,6 @@ export default class FullTradeFrame extends React.Component {
     window.OK_GLOBAL.tradeType = Enum.tradeType.fullTrade;
     window.OK_GLOBAL.isMarginType = false;
     window.addEventListener('resize', this.onResize);
-  }
-
-  componentWillMount() {
-    downloadDialog();
   }
 
   componentWillUnmount() {

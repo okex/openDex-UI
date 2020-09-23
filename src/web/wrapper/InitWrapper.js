@@ -2,7 +2,6 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as NodeActions from '_app/redux/actions/NodeAction';
 import FormatWS from '_src/utils/FormatWS';
 import { wsV3 } from '_src/utils/websocket';
 import * as SpotActions from '_src/redux/actions/SpotAction';
@@ -28,7 +27,6 @@ function mapDispatchToProps(dispatch) {
     spotActions: bindActionCreators(SpotActions, dispatch),
     spotTradeActions: bindActionCreators(SpotTradeActions, dispatch),
     orderAction: bindActionCreators(OrderAction, dispatch),
-    nodeActions: bindActionCreators(NodeActions, dispatch),
   };
 }
 
@@ -101,7 +99,7 @@ const InitWrapper = (Component) => {
       if(!window.WebSocketCore) return;
       const OK_GLOBAL = window.OK_GLOBAL;
       if (!OK_GLOBAL.ws_v3) {
-        const { spotActions, nodeActions } = this.props;
+        const { spotActions } = this.props;
         OK_GLOBAL.ws_v3 = new window.WebSocketCore({ connectUrl: wsUrl });
         const v3 = OK_GLOBAL.ws_v3;
         v3.onSocketConnected(() => {
@@ -120,7 +118,6 @@ const InitWrapper = (Component) => {
           spotActions.updateWsStatus(true);
         });
         v3.onSocketError(() => {
-          nodeActions.startCheckBreakTime();
           spotActions.addWsErrCounter();
           spotActions.updateWsStatus(false);
           spotActions.updateWsIsDelay(false);

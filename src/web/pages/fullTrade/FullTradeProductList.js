@@ -6,7 +6,6 @@ import Message from '_component/Message';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
-import * as NodeActions from '_app/redux/actions/NodeAction';
 import { wsV3, channelsV3 } from '_src/utils/websocket';
 import Enum from '_src/utils/Enum';
 import util from '_src/utils/util';
@@ -45,7 +44,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     spotActions: bindActionCreators(SpotActions, dispatch),
-    nodeActions: bindActionCreators(NodeActions, dispatch),
   };
 }
 
@@ -70,11 +68,10 @@ class FullTradeProductList extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { spotActions, nodeActions } = this.props;
+    const { spotActions } = this.props;
     const newWsIsOnline = nextProps.wsIsOnlineV3;
     const oldWsIsOnline = this.props.wsIsOnlineV3;
     if (!oldWsIsOnline && newWsIsOnline) {
-      nodeActions.stopCheckBreakTime();
       this.startWs();
     }
     const oldWsErrCounter = this.props.wsErrCounterV3;

@@ -23,8 +23,8 @@ module.exports = Object.assign(base, {
   devServer: {
     contentBase: baseSrc,
     hot: true,
-    host: address,
-    port: 5200,
+    host: '0.0.0.0',
+    port,
     proxy: {
       '/tradingview/*': {
         target: 'http://okcombeta.bafang.com/',
@@ -32,6 +32,7 @@ module.exports = Object.assign(base, {
         secure: true,
       },
     },
+    disableHostCheck: true,
     historyApiFallback: {
       rewrites: [{ from: /^\/$/, to: '/index.html' }],
     },
