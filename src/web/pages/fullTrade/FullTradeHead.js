@@ -2,16 +2,16 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import DesktopNodeMenu from '_component/DesktopNodeMenu';
+import DesktopNodeMenu from '_app/component/DesktopNodeMenu';
 import DesktopLinkMenu from '_component/DesktopLinkMenu';
 import okexchainLogo from '_src/assets/images/OKExChain.png';
-import * as CommonAction from '../../redux/actions/CommonAction';
-import PageURL from '../../constants/PageURL';
-import FullTradeTicker from './FullTradeTicker';
+import * as CommonAction from '_src/redux/actions/CommonAction';
+import PageURL from '_src/constants/PageURL';
+import FullTradeTicker from '_src/pages/fullTrade/FullTradeTicker';
 import FullTradeProductList from './FullTradeProductList';
 import './FullTradeHead.less';
-import util from '../../utils/util';
-import { LoggedMenu, LoginMenu } from '../../component/DexMenu';
+import util from '_src/utils/util';
+import { LoggedMenu, LoginMenu } from '_src/component/DexMenu';
 
 function mapStateToProps(state) {
   const { product } = state.SpotTrade;

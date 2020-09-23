@@ -1,16 +1,14 @@
 const path = require('path');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
 const base = require('./webpack.config.base');
-
-base.entry = path.resolve(__dirname,'../src/web/index.js');
-base.output.publicPath = 'file:./';
+base.output.publicPath = '/';
 base.output.path = path.resolve(__dirname, '../bundle-web');
-
-base.plugins.unshift(
+base.mode = 'production';
+base.plugins = [
   new CleanWebpackPlugin([path.resolve(__dirname, '../bundle-web')], {
     root: path.resolve(__dirname, '../'),
   }),
@@ -20,33 +18,19 @@ base.plugins.unshift(
   new HtmlWebpackPlugin({
     template: path.resolve(path.resolve(__dirname, '../src/web'), 'index.html'),
     filename: 'index.html',
-  })
-);
-
-base.resolve.alias = Object.assign(base.resolve.alias,{
-  _app:path.resolve(__dirname, '../src/web/'),
-});
-
-base.devtool = 'source-map';
-base.mode = 'production';
+  }),
+  new MiniCssExtractPlugin({
+    filename: '[name]/index.css',
+    chunkFilename: 'common/[name]/[name].css',
+  }),
+  new CopyWebpackPlugin([
+    {
+      from: path.resolve(__dirname,'../src/favicon-okex.ico'),
+      to: path.resolve(__dirname,'../bundle-web/favicon-okex.ico'),
+    },
+  ])
+];
 
 module.exports = Object.assign(base, {
-  mode: 'production',
-  optimization: {
-    minimizer: [
-      new UglifyJsPlugin({
-        cache: true,
-        parallel: true,
-        uglifyOptions: {
-          compress: {
-            warnings: false,
-            drop_console: true,
-            collapse_vars: true,
-            reduce_vars: true,
-          },
-        }
-      }),
-      new OptimizeCSSAssetsPlugin({}),
-    ],
-  },
+  mode: 'production'
 });

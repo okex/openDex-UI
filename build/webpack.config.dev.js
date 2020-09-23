@@ -2,32 +2,26 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const base = require('./webpack.config.base');
-
+const client = process.env.CLIENT || 'desktop';
+const baseSrc = path.resolve(__dirname, `../src/${client}`);
 const address = '127.0.0.1';
 const port = 5200;
-
-base.entry = path.resolve(__dirname,'../src/desktop/index.js');
 base.output.publicPath = `http://${address}:${port}/`;
-
-base.plugins.unshift(
+base.plugins = [
   new webpack.DefinePlugin({
     'process.env.NODE_ENV': JSON.stringify('development'),
   }),
   new webpack.HotModuleReplacementPlugin({}),
   new HtmlWebpackPlugin({
-    template: path.resolve(path.resolve(__dirname, '../src/desktop'), 'index.html'),
+    template: path.resolve(baseSrc, 'index.html'),
     filename: 'index.html',
   })
-);
-
-base.resolve.alias = Object.assign(base.resolve.alias,{
-  _app:path.resolve(__dirname, '../src/desktop/'),
-});
+];
 
 module.exports = Object.assign(base, {
   mode: 'development',
   devServer: {
-    contentBase: path.resolve(__dirname, '../src/desktop'),
+    contentBase: baseSrc,
     hot: true,
     host: address,
     port: 5200,

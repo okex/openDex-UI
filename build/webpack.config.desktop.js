@@ -1,16 +1,13 @@
 const path = require('path');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
 const base = require('./webpack.config.base');
-
-base.entry = path.resolve(__dirname,'../src/desktop/index.js');
 base.output.publicPath = 'file:./';
 base.output.path = path.resolve(__dirname, '../bundle');
-
-base.plugins.unshift(
+base.mode = 'production';
+base.plugins = [
   new CleanWebpackPlugin([path.resolve(__dirname, '../bundle')], {
     root: path.resolve(__dirname, '../'),
   }),
@@ -20,33 +17,15 @@ base.plugins.unshift(
   new HtmlWebpackPlugin({
     template: path.resolve(path.resolve(__dirname, '../src/desktop'), 'desktop.html'),
     filename: 'index.html',
-  })
-);
-
-base.resolve.alias = Object.assign(base.resolve.alias,{
-  _app:path.resolve(__dirname, '../src/desktop/'),
-});
-
-base.devtool = 'source-map';
-base.mode = 'production';
+  }),
+  new CopyWebpackPlugin([
+    {
+      from: path.resolve(__dirname,'../src/favicon-okex.ico'),
+      to: path.resolve(__dirname,'../bundle/favicon-okex.ico'),
+    },
+  ])
+];
 
 module.exports = Object.assign(base, {
-  mode: 'production',
-  optimization: {
-    minimizer: [
-      new UglifyJsPlugin({
-        cache: true,
-        parallel: true,
-        uglifyOptions: {
-          compress: {
-            warnings: false,
-            drop_console: true,
-            collapse_vars: true,
-            reduce_vars: true,
-          },
-        }
-      }),
-      new OptimizeCSSAssetsPlugin({}),
-    ],
-  },
+  mode: 'production'
 });

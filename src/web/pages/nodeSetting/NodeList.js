@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as NodeActions from '_src/redux/actions/NodeAction';
+import * as NodeActions from '_app/redux/actions/NodeAction';
 import Message from '_src/component/Message';
 import { NONE_NODE } from '_constants/apiConfig';
 import { NODE_TYPE } from '_constants/Node';

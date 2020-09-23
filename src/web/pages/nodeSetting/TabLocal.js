@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as LocalNodeAction from '_src/redux/actions/LocalNodeAction';
+import * as LocalNodeAction from '_app/redux/actions/LocalNodeAction';
 import DexSwitch from '_component/DexSwitch';
 import Select from '_component/ReactSelect';
 import DexDesktopInput from '_component/DexDesktopInput';
-import DexUpload from '_component/DexUpload';
+import DexUpload from '_app/component/DexUpload';
 import { htmlLineBreak } from '_src/utils/ramda';
 import { formatEstimatedTime } from '_src/utils/node';
 import './TabLocal.less';

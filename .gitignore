@@ -9,5 +9,6 @@ tsconfig.json
 .history/
 /dist
 /bundle
+/bundle-web
 /okline
 *.bak

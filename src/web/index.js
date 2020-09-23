@@ -4,7 +4,7 @@ import { render } from 'react-dom';
 import { LocaleProvider } from '_src/locale/react-locale';
 import Cookies from 'js-cookie';
 
-import configureStore from './redux/store';
+import configureStore from '_src/redux/store';
 import App from './container/App';
 import './index.less';
 import '_src/assets/fonts/iconfont.css';

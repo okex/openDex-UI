@@ -1,13 +1,14 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const src = path.resolve(__dirname, '../src');
-
+const client = process.env.CLIENT || 'desktop';
 const base = {
+  entry:path.resolve(__dirname,`../src/${client}/index.js`),
   output: {
     filename: '[name]/index.js',
     chunkFilename: 'common/[name]/[name].js',
-    path: path.resolve(__dirname, '../bundle'),
   },
   module: {
     rules: [
@@ -82,23 +83,27 @@ const base = {
       _src: path.resolve(__dirname, '../src/common/'),
       _component: path.resolve(__dirname, '../src/common/component/'),
       _constants: path.resolve(__dirname, '../src/common/constants/'),
+      _app:path.resolve(__dirname, `../src/${client}/`),
     },
   },
-  plugins: [
-    process.env.NODE_ENV === 'production'
-      ? new MiniCssExtractPlugin({
-          filename: '[name]/index.css',
-          chunkFilename: 'common/[name]/[name].css',
-        })
-      : null,
-  ],
 };
-
-base.plugins = base.plugins.filter((item) => {
-  if (item !== null) {
-    return item;
+if(process.env.NODE_ENV === 'production') {
+  base.optimization = {
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        uglifyOptions: {
+          compress: {
+            warnings: false,
+            drop_console: true,
+            collapse_vars: true,
+            reduce_vars: true,
+          },
+        }
+      }),
+      new OptimizeCSSAssetsPlugin({}),
+    ],
   }
-  return false;
-});
-
+}
 module.exports = base;

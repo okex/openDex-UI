@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as NodeActions from '_src/redux/actions/NodeAction';
+import * as NodeActions from '_app/redux/actions/NodeAction';
 import { Dialog } from '_component/Dialog';
 import iconNodeAdd from '_src/assets/images/icon_node_add.png';
 import { MAX_LATENCY, NODE_TYPE } from '_constants/Node';

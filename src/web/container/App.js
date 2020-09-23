@@ -3,8 +3,8 @@ import React from 'react';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import PageURL from '_constants/PageURL';
 import { toLocale } from '_src/locale/react-locale';
-import util from '../utils/util';
-import history from '../utils/history';
+import util from '_src/utils/util';
+import history from '_src/utils/history';
 import FullTradeHead from '../pages/fullTrade/FullTradeHead';
 import routerConfig from './routerConfig';
 

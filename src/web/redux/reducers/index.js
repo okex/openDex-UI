@@ -1,21 +1,11 @@
 import { combineReducers } from 'redux';
-import Common from './CommonReducer';
-import Spot from './SpotReducer';
-import SpotTrade from './SpotTradeReducer';
-import FormStore from './FormReducer';
-import OrderStore from './OrderReducer';
-import WalletStore from './WalletReducer';
+import reducers from '_src/redux/reducers';
 import NodeStore from './NodeReducer';
 import LocalNodeStore from './LocalNodeReducer';
 
 export default function () {
   return combineReducers({
-    Common,
-    Spot,
-    SpotTrade,
-    FormStore,
-    OrderStore,
-    WalletStore,
+    ...reducers,
     NodeStore,
     LocalNodeStore: LocalNodeStore(),
   });

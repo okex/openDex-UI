@@ -2,14 +2,14 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as NodeActions from '_src/redux/actions/NodeAction';
-import FormatWS from '../utils/FormatWS';
-import { wsV3 } from '../utils/websocket';
-import * as SpotActions from '../redux/actions/SpotAction';
-import * as SpotTradeActions from '../redux/actions/SpotTradeAction';
-import * as OrderAction from '../redux/actions/OrderAction';
+import * as NodeActions from '_app/redux/actions/NodeAction';
+import FormatWS from '_src/utils/FormatWS';
+import { wsV3 } from '_src/utils/websocket';
+import * as SpotActions from '_src/redux/actions/SpotAction';
+import * as SpotTradeActions from '_src/redux/actions/SpotTradeAction';
+import * as OrderAction from '_src/redux/actions/OrderAction';
 
-import util from '../utils/util';
+import util from '_src/utils/util';
 
 function mapStateToProps(state) {
   const { tickers } = state.Spot;

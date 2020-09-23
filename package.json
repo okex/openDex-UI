@@ -4,7 +4,9 @@
   "description": "spot system",
   "scripts": {
     "dev": "webpack-dev-server --config build/webpack.config.dev.js",
-    "desktop": "webpack --config build/webpack.config.desktop.js",
+    "dev:web": "cross-env CLIENT=web npm run dev",
+    "desktop": "cross-env webpack --config build/webpack.config.desktop.js",
+    "web": "cross-env NODE_ENV=production webpack --config build/webpack.config.web.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
@@ -26,7 +28,7 @@
     "babel-eslint": "^9.0.0",
     "babel-loader": "^8.0.0",
     "clean-webpack-plugin": "^0.1.19",
-    "copy-webpack-plugin": "^4.5.2",
+    "copy-webpack-plugin": "^4.6.0",
     "css-loader": "^0.28.11",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^18.2.0",
