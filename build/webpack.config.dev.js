@@ -15,7 +15,7 @@ base.plugins = [
   new HtmlWebpackPlugin({
     template: path.resolve(baseSrc, 'index.html'),
     filename: 'index.html',
-  })
+  }),
 ];
 
 module.exports = Object.assign(base, {
