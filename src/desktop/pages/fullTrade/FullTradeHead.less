@@ -1,0 +1,107 @@
+@import "~_src/assets/css/theme";
+.full-head div {
+  box-sizing: border-box;
+}
+.full-top-info-box {
+  position: relative;
+  display: flex;
+  min-width: 1280px;
+  height: 50px;
+  line-height: 50px;
+  background-image: linear-gradient(to right, #041636, #0b2758);
+
+  .logo-wrap {
+    margin-left: 15px;
+    height: 45px;
+    overflow: hidden;
+    width: 102px;
+    &.is-broker {
+      width: auto;
+    }
+  }
+  .top-info-title {
+    font-size: 16px;
+    font-weight: 500;
+    margin-left: 25px;
+    >.current-trade-title {
+      cursor: pointer;
+      height: 45px;
+      > .down-arrow {
+        border-style: solid;
+        border-width: 5px 4px 0;
+        border-color: @full-white50 transparent transparent;
+        display: inline-block;
+        margin-left: 8px;
+        margin-top: -5px;
+        vertical-align: middle;
+        transition: transform 0.3s, -webkit-transform 0.3s;
+      }
+      > div.combo-box {
+        position: absolute;
+        display: none;
+        z-index: 10;
+        height: 50px;
+        line-height: 50px;
+        top: 45px;
+        padding-top: 5px;
+      }
+      &:hover {
+        > div.combo-box {
+          display: block;
+        }
+        > .down-arrow.has-more {
+          transform: rotate(180deg);
+          transform-origin: center;
+        }
+      }
+    }
+
+  }
+
+  .okdex-header-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-left: auto;
+    .line-divider {
+      height: 14px;
+      border-right: 1px solid fade(#FFFCFC, 10%);
+      margin: 0 20px;
+    }
+    .ok-ui-curreny {
+      cursor: pointer;
+      .curreny-title {
+        color: fade(#fff, 65%);
+      }
+      i {
+        font-size: 14px !important;
+        color: #fff !important;
+        margin-left: 6px !important;
+      }
+    }
+    .ok-menu-submenu-title {
+      padding: 0;
+    }
+  }
+
+  .right-settings {
+    padding-right: 16px;
+    display: flex;
+    .currency-selector-container {
+      color: fade(#fff, 55%);
+    }
+  }
+}
+
+.ok-trading-mode {
+  border-radius: 14px;
+  background-color: rgba(255, 255, 255, 0.43);
+  height: 28px !important;
+  line-height: 28px !important;
+  box-sizing: border-box;
+  padding: 0 16px;
+  margin-top: 11px;
+  font-size: 14px;
+  color: #fff;
+  margin-left: 8px;
+}

@@ -1,0 +1,40 @@
+@import url('./walletColor.less');
+
+.wallet-import-container {
+  box-sizing: border-box;
+  border-radius: 4px;
+  padding: 20px 40px 30px;
+  width: 480px;
+  background: @blue5;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  color: @white65;
+  .wallet-import-title {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 25px;
+    color: @white85;
+  }
+
+  .wallet-import-tab {
+    border-bottom: 1px solid @white10;
+    display: flex;
+    margin: 20px 0;
+    height: 30px;
+
+    div {
+      flex: 1;
+      text-align: center;
+      cursor: pointer;
+
+      &.active {
+        color: @blue3;
+        border-bottom: 2px solid @blue3;
+      }
+    }
+  }
+}

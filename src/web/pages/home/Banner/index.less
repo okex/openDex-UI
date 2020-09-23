@@ -1,0 +1,51 @@
+@import "~_component/okg/index.less";
+
+.banner-container {
+  background: linear-gradient(90deg, rgba(16, 26, 60, 1) 0%, rgba(7, 13, 35, 1) 100%);
+
+  .banner-background {
+    padding: 120px 0 84px 0;
+    background: url('https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/410648F9E8DB41A5152E0908A3D7E204.png');
+    background-size: 384px 450px;
+    background-repeat: no-repeat;
+    background-position: top right;
+
+    .banner-grid {
+      .okg();
+
+      .banner-content {
+        .okg-col-4();
+
+        .title {
+          font-size: 28px;
+          font-weight: 500;
+          color: rgba(255, 255, 255, 1);
+          line-height: 34px;
+        }
+
+        .banner-subtitle {
+          line-height: 38px;
+          margin: 8px 0 24px 0;
+        }
+
+        .banner-paragraph {
+          font-size: 12px;
+          font-weight: 400;
+          color: rgba(255, 255, 255, .45);
+          line-height: 22px;
+        }
+
+        .button-container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 72px;
+
+          .button {
+            width: 47.916667%;
+          }
+        }
+      }
+    }
+  }
+}

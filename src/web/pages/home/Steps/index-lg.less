@@ -1,0 +1,63 @@
+@import "~_component/okg/index.less";
+
+@media .okg-query[lg] {
+  .steps-grid {
+    padding-bottom: 64px;
+
+    .steps-title {
+      margin: 64px auto 33px auto;
+      width: 720px;
+      font-size: 32px;
+      line-height: 45px;
+    }
+
+    .steps-content {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .step-img0,
+      .step-img1 {
+        max-width: unset;
+        width: 316.8px;
+        height: 347.2px;
+        margin: 0;
+      }
+
+      .step-img3,
+      .step-img2 {
+        height: 289px;
+        width: 399px;
+        margin: 0;
+      }
+
+      .step-list-container {
+        width: 49.57265%;
+        margin: 0 0 0 16px;
+        order: -1;
+
+        .step-item {
+          .bottom {
+            margin: 8px 0 24px 10px;
+
+            .step-button {
+              margin: 7px 0 24px 0;
+            }
+          }
+        }
+
+        &>:last-child {
+          .bottom {
+            border-left: none;
+            margin: 8px 0 0 10px;
+
+            .step-button {
+              margin: 7px 0 0 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}

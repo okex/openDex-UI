@@ -4,7 +4,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const src = path.resolve(__dirname, '../src');
 
 const base = {
-  entry: path.resolve(src, 'index.js'),
   output: {
     filename: '[name]/index.js',
     chunkFilename: 'common/[name]/[name].js',
@@ -80,9 +79,9 @@ const base = {
       path.resolve(__dirname, '../node_modules'),
     ],
     alias: {
-      _src: path.resolve(__dirname, '../src/'),
-      _component: path.resolve(__dirname, '../src/component/'),
-      _constants: path.resolve(__dirname, '../src/constants/'),
+      _src: path.resolve(__dirname, '../src/common/'),
+      _component: path.resolve(__dirname, '../src/common/component/'),
+      _constants: path.resolve(__dirname, '../src/common/constants/'),
     },
   },
   plugins: [

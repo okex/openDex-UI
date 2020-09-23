@@ -1,0 +1,134 @@
+@import "../../assets/css/theme";
+
+.full-fee-tooltip {
+  background: rgba(40, 74, 124, 1);
+  color: white;
+  padding: 6px 9px;
+  border-radius: 4px;
+}
+
+.full-wrap {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  min-height: 600px;
+  min-width: 1280px;
+  background: black;
+  color: white;
+  div, span, ul {
+    box-sizing: border-box;
+    &::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    &::-webkit-scrollbar-track {
+      background: #1c283e;
+    }
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+  }
+
+  .trade-container {
+    display: flex;
+    flex: auto;
+    flex-direction: row;
+    min-height: 550px;
+    .full-left {
+      width: calc(100vw - 540px);
+      padding-right: 4px;
+      display: flex;
+      flex-direction: column;
+      .full-left-top {
+        display: flex;
+        flex: 7;
+        .full-left-top-right {
+          width: 100%;
+          height: 100%;
+          display: flex;
+
+          .full-ticker-kline {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            background-color: #141d2d;
+          }
+        }
+      }
+
+      .full-left-bottom {
+        flex: 0 0 265px; 
+        display: flex;
+        flex-direction: column;
+        overflow-y: hidden;
+        overflow-x: auto;
+      }
+
+      .ok-ui-loading {
+        background: #1c283e;
+      }
+    }
+
+    .full-dark {
+      background-color: #141d2d !important;
+    }
+
+    .full-right {
+      display: flex;
+      .full-right-left {
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        padding-right: 4px; 
+      }
+      .full-right-right {
+        width: 240px;
+      }
+    }
+  }
+}
+
+@media screen and (min-height: 720px) {
+  .full-wrap {
+    .trade-container {
+      .full-left {
+        .full-left-bottom {
+          flex: 3;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .full-wrap {
+    .trade-container {
+      .full-left {
+        width: 736px;
+      }
+    }
+  }
+}
+
+@media screen and (min-height: 1440px) and (max-width: 1280px) {
+  html, body {
+    min-width: unset;
+  }
+  .full-wrap {
+    min-width: unset;
+    .trade-container {
+      .full-left {
+        width: 57.81%;
+      }
+      .full-right {
+        width: 42.19%;
+        .full-right-left {
+          width: 55.55%;
+        }
+        .full-right-right {
+          width: 44.45%;
+        }
+      }
+    }
+  }
+}

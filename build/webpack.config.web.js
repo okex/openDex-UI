@@ -6,25 +6,25 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const base = require('./webpack.config.base');
 
-base.entry = path.resolve(__dirname,'../src/desktop/index.js');
+base.entry = path.resolve(__dirname,'../src/web/index.js');
 base.output.publicPath = 'file:./';
-base.output.path = path.resolve(__dirname, '../bundle');
+base.output.path = path.resolve(__dirname, '../bundle-web');
 
 base.plugins.unshift(
-  new CleanWebpackPlugin([path.resolve(__dirname, '../bundle')], {
+  new CleanWebpackPlugin([path.resolve(__dirname, '../bundle-web')], {
     root: path.resolve(__dirname, '../'),
   }),
   new webpack.DefinePlugin({
     'process.env.ROUTE_TYPE': JSON.stringify('hash'),
   }),
   new HtmlWebpackPlugin({
-    template: path.resolve(path.resolve(__dirname, '../src/desktop'), 'desktop.html'),
+    template: path.resolve(path.resolve(__dirname, '../src/web'), 'index.html'),
     filename: 'index.html',
   })
 );
 
 base.resolve.alias = Object.assign(base.resolve.alias,{
-  _app:path.resolve(__dirname, '../src/desktop/'),
+  _app:path.resolve(__dirname, '../src/web/'),
 });
 
 base.devtool = 'source-map';

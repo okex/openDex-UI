@@ -5,7 +5,8 @@ const base = require('./webpack.config.base');
 
 const address = '127.0.0.1';
 const port = 5200;
-const apiUrl = 'https://www.okex.com';
+
+base.entry = path.resolve(__dirname,'../src/desktop/index.js');
 base.output.publicPath = `http://${address}:${port}/`;
 
 base.plugins.unshift(
@@ -14,15 +15,19 @@ base.plugins.unshift(
   }),
   new webpack.HotModuleReplacementPlugin({}),
   new HtmlWebpackPlugin({
-    template: path.resolve(path.resolve(__dirname, '../src'), 'index.html'),
+    template: path.resolve(path.resolve(__dirname, '../src/desktop'), 'index.html'),
     filename: 'index.html',
   })
 );
 
+base.resolve.alias = Object.assign(base.resolve.alias,{
+  _app:path.resolve(__dirname, '../src/desktop/'),
+});
+
 module.exports = Object.assign(base, {
   mode: 'development',
   devServer: {
-    contentBase: path.resolve(__dirname, '../src'),
+    contentBase: path.resolve(__dirname, '../src/desktop'),
     hot: true,
     host: address,
     port: 5200,

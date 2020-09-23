@@ -1,0 +1,60 @@
+@import url('./walletColor.less');
+
+.create-wallet-step2 {
+  .mnemonic-container {
+    padding-top: 40px;
+    color: @white85;
+    width: 450px;
+    margin: 0 auto;
+    .mnemonic-title {
+      text-align: center;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 40px;
+    }
+
+    .mnemonic-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      .mnemonic-item {
+        display: flex;
+        background: @blue5;
+        font-size: 12px;
+        padding: 0 6px;
+        margin-right: 16px;
+        margin-bottom: 15px;
+        width: 100px;
+        height: 30px;
+        line-height: 30px;
+        text-align: left;
+
+        &:nth-child(4n) {
+          margin-right: 0;
+        }
+
+        .mnemonic-item-no {
+          color: #3075EE;
+          margin-right: 10px;
+        }
+        .mnemonic-item-word {
+          flex: 1;
+          text-align: center;
+        }
+      }
+    }
+    .error-tip {
+      color: #FB6262;
+      font-size: 12px;
+    }
+  }
+
+  .next-row {
+    margin-top: 60px;
+    text-align: center;
+
+    button {
+      width: 260px;
+    }
+  }
+}

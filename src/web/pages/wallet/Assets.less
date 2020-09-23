@@ -1,0 +1,136 @@
+@import "~_src/assets/css/theme";
+
+.wallet-main {
+  padding: 0 20px 20px;
+  .query-container {
+    position: relative;
+    height: 50px;
+    padding: 0 0 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .icon-date {
+      color: @brand;
+    }
+    .ok-datepicker.small {
+      width: 180px;
+    }
+    .total-v {
+      color: @text-primary-dark;
+      span {
+        color: @brand;
+        margin-left: 5px;
+      }
+    }
+    .dash {
+      width: 16px;
+      height: 1px;
+      background: fade(#fff, 15%);
+      margin: 0 10px;
+    }
+    .sub-query {
+      display: flex;
+      align-items: center;
+      > span {
+        font-size: 12px;
+        color: @text-second-dark;
+        margin: 0 10px 0 30px;
+      }
+      button.btn {
+        margin-left: 40px;
+        min-width: 60px;
+        padding: 0 15px;
+        height: 28px;
+      }
+    }
+    > a {
+      font-size: 12px;
+      color: fade(@brand, 85);
+    }
+    input.search-symbol {
+      box-shadow: inset 0 0 0 1px @border-dark;
+      height: 30px;
+      width: 280px;
+      border-radius: 2px;
+      padding: 0 10px 0 34px;
+      font-size: 12px;
+      line-height: 18px;
+      color: @text-title-dark;
+      box-sizing: border-box;
+      &::placeholder {
+        color: @text-second-dark;
+      }
+    }
+    i.search-symbol-icon {
+      position: absolute;
+      font-size: 14px;
+      color: @text-disabled-dark;
+      left: 30px;
+      top: 18px;
+    }
+    .hide-zero-checkbox {
+      margin-left: 40px;
+      font-size: 12px;
+      color: @text-second-dark;
+      .rc-checkbox {
+        margin-right: 10px;
+      }
+      .rc-checkbox-inner {
+        box-sizing: border-box;
+        background: transparent;
+        border-color: @full-white25;
+        &:after {
+          top: 1px;
+          left: 4px;
+          width: 3px;
+          height: 6px;
+          border-color: transparent;
+        }
+      }
+      .rc-checkbox-checked {
+        .rc-checkbox-inner{
+          border-color: @brand;
+          background-color: @brand;
+          &:after {
+            top: 1px;
+            left: 4px;
+            width: 3px;
+            height: 6px;
+            border-color: #fff;
+          }
+        }
+      }
+    }
+  }
+  .dex-table {
+    button {
+      height: 24px;
+      background: transparent;
+      min-width: 60px;
+      padding: 0 15px;
+      margin-right: 10px;
+    }
+
+  }
+  .symbol-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    svg.icon {
+      width: 14px;
+      height: 14px;
+      cursor: pointer;
+    }
+  }
+}
+
+.symbol-tooltip {
+  .ok-tooltip-inner {
+    background: #fff;
+    border-radius: 2px;
+    padding: 6px 10px;
+    font-size: 12px;
+    line-height: 18px;
+    color: @text-primary-default;
+  }
+}

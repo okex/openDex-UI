@@ -1,0 +1,359 @@
+@import "../../assets/css/theme";
+
+.order-list-not-login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  img {
+    width: 48px;
+    height: 48px;
+  }
+  p {
+    margin-top: 16px;
+    font-size: 14px;
+  }
+}
+
+.spot-trade-order-wrap {
+  position: relative;
+  z-index: 3;
+  .tab-heads {
+    height: 40px;
+    line-height: 40px;
+    ul {
+      float: left;
+    }
+    .cancel-all {
+      cursor: pointer;
+      user-select: none;
+      height: 20px;
+      line-height: 18px;
+      margin-top: 9px;
+      border: 1px solid;
+      padding: 0 10px;
+      border-radius: 2px;
+    }
+    .order-page-link {
+      float: right;
+    }
+    .rc-checkbox-inner {
+      width: 10px;
+      height: 10px;
+      &::after {
+        width: 3px;
+        height: 6px;
+        left: 3px;
+        top: 0;
+      }
+    }
+  }
+
+  .sell {
+    color: @sell;
+  }
+  .buy {
+    color: @buy;
+  }
+  .types-line {
+    margin-top: 16px;
+    margin-bottom: 6px;
+    .type-btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 96px;
+      height: 28px;
+      border-radius: 4px;
+      border: solid 1px;
+      margin-left: 24px;
+      cursor: pointer;
+      user-select: none;
+      padding: 0 16px;
+      &.current, &:hover {
+        border-color: @brand !important;
+        color: @brand !important;
+      }
+      &:first-of-type {
+        margin-left: 0;
+      }
+    }
+  }
+  .hide {
+    display: none;
+  }
+};
+
+.theme-fun({
+  .spot-trade-order-wrap {
+    .tab-heads {
+      .cancel-all {
+        border-color: @border;
+      }
+    }
+    .types-line {
+      .type-btn:not(.current) {
+        border-color: @border;
+        color: @text-primary;
+      }
+    }
+  }
+});
+
+.full-tab-lists-box {
+  background-color: @full-deep-blue;
+  color: rgba(255, 255, 255, 0.3);
+  height: 100%;
+  .order-list-not-login {
+    p {
+      color: #fff;
+    }
+  }
+  .full-trade-order-head {
+    height: 28px;
+    line-height: 28px;
+    background-color: @full-shallow-black;
+    .tabs {
+      float: left;
+      position: relative;
+      li {
+        display: inline-block;
+        height: 28px;
+        padding: 0 15px;
+        text-align: center;
+        line-height: 28px;
+        cursor: pointer;
+        user-select: none;
+        &.active {
+          color: white;
+          background-color: #1c283e;
+        }
+      }
+    }
+    .order-page-link {
+      float: right;
+      color: @brand;
+      margin-right: 8px;
+      margin-left: 8px;
+    }
+    .rc-checkbox-inner {
+      background-color: @full-shallow-black;
+      border-color: @full-white25;
+      width: 10px;
+      height: 10px;
+      &::after {
+        width: 3px;
+        height: 6px;
+        left: 3px;
+        top: 0;
+        border-color: @full-shallow-black;
+      }
+    }
+    .rc-checkbox-checked {
+      .rc-checkbox-inner {
+        background-color: @brand;
+        border-color: @brand;
+      }
+    }
+  }
+
+  .full-trade-order-sec-head {
+    height: 30px;
+    line-height: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 5px;
+    background-color: black;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 12px;
+
+    .hide-others {
+      .rc-checkbox-inner {
+        background-color: @full-shallow-black;
+        border-color: @border-dark;
+        width: 10px;
+        height: 10px;
+        &::after {
+          width: 3px;
+          height: 6px;
+          left: 3px;
+          top: 0;
+          border-color: @full-shallow-black;
+        }
+      }
+      .rc-checkbox-checked {
+        .rc-checkbox-inner {
+          background-color: @brand;
+        }
+      }
+    }
+    .period-interval {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      > div {
+        padding: 0 16px;
+        text-align: center;
+        height: 14px;
+        line-height: 14px;
+        border-right: 1px solid rgba(255,255,255,0.25);;
+      }
+      div:hover {
+        cursor: pointer;
+      }
+      div:last-child {
+        padding-right: 0;
+        border-right: none;
+      }
+      .active {
+        color: #3075EE;
+      }
+    }
+  }
+
+  .ok-table-container {
+    overflow-y: scroll;
+    padding: 0;
+    height: 185px;
+    .ok-table {
+      font-size: 12px;
+      border-spacing: 0;
+      width: 100%;
+      padding-bottom: 9px;
+      > thead {
+        border-bottom: 1px solid #252f41;
+        th {
+          padding: 0 5px;
+          border-bottom: none;
+          font-weight: normal;
+          color: @full-white80;
+          height: 28px;
+          box-sizing: border-box;
+        }
+      }
+      > tbody {
+        height: 130px;
+        overflow-y: scroll;
+        color: @full-white60;
+        > tr {
+          height: 28px;
+          &:hover {
+            background: @full-shallow-black;
+          }
+          > td {
+            padding: 5px;
+            border: none;
+            height: 28px;
+            box-sizing: initial;
+          }
+          > td:first-child {
+            min-width: 63px;
+          }
+          > td:last-child {
+            padding-right: 10px;
+          }
+        }
+        > tr:first-child {
+          td {
+            border-top: 0;
+            border-top: none;
+          }
+          table-layout: fixed;
+        }
+      }
+    }
+  }
+  .ok-ui-pagination {
+    margin-top: 3px;
+  }
+  .paginationDiv {
+    height: 31px;
+    margin: 11px 0 5px 0;
+    a, span {
+      width: 14px;
+      height: 14px;
+      line-height: 14px;
+      color: @full-white80;
+      background: @full-white20;
+      font-size: 12px;
+      border: none;
+      border-radius: 2px;
+
+    }
+    a.next::before, a.prev::before {
+      line-height: 12px;
+    }
+    span {
+      a.num {
+        color: @full-white80;
+        border: none;
+        &.current {
+          background: @brand;
+        }
+      }
+
+    }
+    .rightDiv {
+      display: inline-block;
+      height: 14px;
+      line-height: 14px;
+      vertical-align: middle;
+      margin-top: 0;
+      font-size: 12px;
+      input {
+        height: 14px;
+        color: @full-white80;
+        border-color: @full-white80;
+      }
+    }
+  }
+  .okcoin-loading-box {
+    background: @full-shallow-black;
+  }
+  .icon-Nodeallist {
+    .mar-top10 {
+      color: #e6e6e6;
+    }
+  }
+  .cancel-all {
+    cursor: pointer;
+    user-select: none;
+    display: inline-flex;
+    align-items: center;
+    margin-right: 0;
+    height: 20px;
+    box-sizing: border-box;
+    border: 1px solid @full-white25;
+    border-radius: 4px;
+    margin-top: 4px;
+    color: @full-white80;
+    padding: 0 12px;
+  }
+  .auto-convert {
+    padding-right: 3px;
+    padding-left: 5px;
+    display: inline-block;
+    vertical-align: top;
+    > .switch {
+      display: inline-block;
+      vertical-align: top;
+      margin-top: 12px;
+      margin-right: 5px;
+    }
+    > span {
+      color: rgba(255, 255, 255, 0.3);
+      display: inline-block;
+      vertical-align: top;
+      height: 16px;
+      line-height: 16px;
+      margin-top: 12px;
+    }
+  }
+
+  .buy {
+    color: @buy;
+  }
+  .sell {
+    color: @sell;
+  }
+}

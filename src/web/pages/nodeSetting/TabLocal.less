@@ -1,0 +1,113 @@
+.node-local-container {
+  position: relative;
+
+  .node-local-switch {
+    position: absolute;
+    top: -54px;
+    right: 0;
+    display: flex;
+    align-items: center;
+    line-height: 22px;
+  }
+
+  .local-switch-title {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .local-switch-desc {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.45);
+  }
+
+  .local-set-container {
+    margin-right: -132px;
+  }
+
+  .local-set-cell {
+    margin-right: 132px;
+    display: inline-block;
+    width: 320px;
+    vertical-align: top;
+
+    &:nth-of-type(n + 4) {
+      margin-top: 24px;
+    }
+
+    .dex-desktop-input-container {
+      margin-top: initial;
+      width: initial;
+    }
+  }
+
+  .local-set-label {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.45);
+    line-height: 22px;
+  }
+
+  .network-select {
+    margin-top: 6px;
+    height: 32px;
+    background: #1E2F4F;
+
+    &.dark {
+
+      .Select-control {
+        border: 0;
+      }
+    }
+
+    .Select-input {
+      height: 32px;
+    }
+
+    &.Select--single>.Select-control .Select-value, .Select-placeholder {
+      height: 32px;
+      line-height: 32px;
+    }
+
+    &.Select.ok-select.dark.has-value.Select--single > .Select-control .Select-value .Select-value-label, &.Select.ok-select.dark.has-value.is-pseudo-focused.Select--single > .Select-control .Select-value .Select-value-label {
+      font-size: 14px;
+      line-height: 22px;
+      color: #FFFFFF;
+    }
+  }
+
+  .local-set-terminal {
+    margin-top: 40px;
+  }
+
+  .local-terminal-title {
+    padding: 8px 12px;
+    font-size: 16px;
+    line-height: 24px;
+    background: #1B273D;
+  }
+
+  .local-terminal-content {
+    padding: 20px 28px 20px 20px;
+    height: 360px;
+    font-size: 12px;
+    line-height: 16px;
+    color: rgba(255, 255, 255, 0.65);
+    background: #1E2F4F;
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      height: 100px;
+      background: #0F1D35;
+      box-shadow: 0px -1px 0px 0px rgba(15, 29, 53, 1);
+      border-radius: 2px;
+      opacity: 0.6;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #1E2F4F;
+    }
+  }
+}
