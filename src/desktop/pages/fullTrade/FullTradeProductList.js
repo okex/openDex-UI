@@ -1,20 +1,20 @@
 import React from 'react';
 import Tabs, { TabPane } from 'rc-tabs';
 import { toLocale } from '_src/locale/react-locale';
-import Icon from '_src/component/IconLite';
-import Message from '_src/component/Message';
+import Icon from '_component/IconLite';
+import Message from '_component/Message';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
-import * as NodeActions from '_src/redux/actions/NodeAction';
-import { wsV3, channelsV3 } from '../../utils/websocket';
-import Enum from '../../utils/Enum';
-import util from '../../utils/util';
+import * as NodeActions from '_app/redux/actions/NodeAction';
+import { wsV3, channelsV3 } from '_src/utils/websocket';
+import Enum from '_src/utils/Enum';
+import util from '_src/utils/util';
 import './FullTradeProductList.less';
-import Introduce from '../../component/kline/Introduce';
-import FullTradeProductListTab from './FullTradeProductListTab';
-import * as SpotActions from '../../redux/actions/SpotAction';
-import PageURL from '../../constants/PageURL';
+import Introduce from '_component/kline/Introduce';
+import FullTradeProductListTab from '_src/pages/fullTrade/FullTradeProductListTab';
+import * as SpotActions from '_src/redux/actions/SpotAction';
+import PageURL from '_src/constants/PageURL';
 
 function mapStateToProps(state) {
   const { wsIsOnlineV3, wsErrCounterV3, tickers, activeMarket } = state.Spot;

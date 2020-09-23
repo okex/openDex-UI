@@ -1,7 +1,7 @@
 import PageURL from '_constants/PageURL';
 
 import Home from '../pages/home/index';
-import FullTrade from '../pages/fullTrade/FullTrade';
+import FullTrade from '_app/pages/fullTrade/FullTrade';
 import OpenOrders from '../pages/orders/OpenList';
 import HistoryOrders from '../pages/orders/HistoryList';
 import DealOrders from '../pages/orders/DealsList';

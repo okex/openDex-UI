@@ -1,8 +1,7 @@
 import React from 'react';
 import DialogSet from '../../pages/DialogSet';
 import SpotTradeWrapper from '../../wrapper/SpotTradeWrapper';
-import InitWrapper from '../../wrapper/InitWrapper';
-import './FullTrade.less';
+import InitWrapper from '_app/wrapper/InitWrapper';
 
 @InitWrapper
 @SpotTradeWrapper
