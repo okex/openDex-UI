@@ -7,7 +7,7 @@ import FullTradeData from '_src/pages/fullTrade/FullTradeData';
 import downloadDialog from './DownloadDialog';
 import SpotAsset from '_src/pages/trade/SpotAsset';
 import SpotOrder from '_src/pages/trade/SpotOrder';
-import FullTradeKLine from '_src/pages/fullTrade/FullTradeKLine';
+import FullTradeKLine from './FullTradeKLine';
 import FullDepth from '_src/pages/fullTrade/FullDepth';
 import SpotPlaceOrder from '_src/pages/trade/SpotPlaceOrder';
 import FullTradeDeals from '_src/pages/fullTrade/FullTradeDeals';

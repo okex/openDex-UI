@@ -3,22 +3,19 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import FormatWS from '_src/utils/FormatWS';
-import { wsV3 } from '_src/utils/websocket';
+import { getConnectCfg, wsV3 } from '_src/utils/websocket';
 import * as SpotActions from '_src/redux/actions/SpotAction';
 import * as SpotTradeActions from '_src/redux/actions/SpotTradeAction';
 import * as OrderAction from '_src/redux/actions/OrderAction';
-
 import util from '_src/utils/util';
+import PageURL from '_src/constants/PageURL';
 
 function mapStateToProps(state) {
   const { tickers } = state.Spot;
   const { currencyList, productList } = state.SpotTrade;
-  const { currentNode } = state.NodeStore;
+  const { jwtTokenClient } = state.Common;
   return {
-    currencyList,
-    productList,
-    tickers,
-    currentNode,
+    currencyList, productList, tickers, jwtTokenClient
   };
 }
 
@@ -35,20 +32,12 @@ const InitWrapper = (Component) => {
   @connect(mapStateToProps, mapDispatchToProps)
   class SpotInit extends React.Component {
     componentDidMount() {
-      const { match, currentNode } = this.props;
-      const { wsUrl, httpUrl } = currentNode;
-      if (
-        match.path.includes('/spot/fullMargin') ||
-        match.path.includes('/spot/marginTrade')
-      ) {
+      const { match } = this.props;
+      if (match.path.includes('/spot/fullMargin') || match.path.includes('/spot/marginTrade')) {
         window.OK_GLOBAL.isMarginType = true;
       }
-      if (httpUrl) {
-        this.sendBasicAjax();
-      }
-      if (wsUrl) {
-        this.startInitWebSocket(wsUrl);
-      }
+      this.sendBasicAjax();
+      this.startInitWebSocket();
       const header = document.querySelector('.spot-head-box');
       const left = document.querySelector('.left-menu-container');
       if (header) {
@@ -58,13 +47,7 @@ const InitWrapper = (Component) => {
         left.style = 'block';
       }
     }
-
-    componentDidUpdate(prevProps) {
-      if (prevProps.currentNode !== this.props.currentNode) {
-        window.location.reload();
-      }
-    }
-
+    
     sendBasicAjax = () => {
       const { spotActions } = this.props;
       spotActions.fetchCollectAndProducts();
@@ -95,30 +78,30 @@ const InitWrapper = (Component) => {
       };
       return fns[table.split(':')[0]];
     };
-    startInitWebSocket = (wsUrl) => {
+    startInitWebSocket = () => {
       if(!window.WebSocketCore) return;
       const OK_GLOBAL = window.OK_GLOBAL;
       if (!OK_GLOBAL.ws_v3) {
         const { spotActions } = this.props;
-        OK_GLOBAL.ws_v3 = new window.WebSocketCore({ connectUrl: wsUrl });
+        OK_GLOBAL.ws_v3 = new window.WebSocketCore(getConnectCfg());
         const v3 = OK_GLOBAL.ws_v3;
         v3.onSocketConnected(() => {
           function getJwtToken() {
-            if (!util.isLogined()) {
+            if (!util.isWsLogin()) {
               setTimeout(getJwtToken, 1000);
             } else {
-              wsV3.login(util.getMyAddr());
+              wsV3.login(util.getMyToken());
             }
           }
-          if (!util.isLogined()) {
+          if (!util.isWsLogin()) {
             getJwtToken();
           } else {
-            wsV3.login(util.getMyAddr());
+            wsV3.login(util.getMyToken());
           }
           spotActions.updateWsStatus(true);
         });
         v3.onSocketError(() => {
-          spotActions.addWsErrCounter();
+          spotActions.addWsErrCounter(); 
           spotActions.updateWsStatus(false);
           spotActions.updateWsIsDelay(false);
         });
@@ -126,7 +109,9 @@ const InitWrapper = (Component) => {
           v3.sendChannel('ping');
         });
         v3.setPushDataResolver((pushData) => {
-          const { table, data, event, success, errorCode } = pushData;
+          const {
+            table, data, event, success, errorCode
+          } = pushData;
           if (table && data) {
             const handler = this.wsHandler(table);
             handler && handler(data, pushData);
@@ -134,34 +119,23 @@ const InitWrapper = (Component) => {
           if (event === 'dex_login' && success === true) {
             spotActions.updateWsIsDelay(true);
           }
-          if (
-            event === 'error' &&
-            (Number(errorCode) === 30043 ||
-              Number(errorCode) === 30008 ||
-              Number(errorCode) === 30006)
-          ) {
+          if (event === 'error' && (Number(errorCode) === 30043 || Number(errorCode) === 30008 || Number(errorCode) === 30006)) {
             util.doLogout();
+            window.location.href = PageURL.homePage;
           }
         });
         v3.connect();
       }
 
-      if (
-        OK_GLOBAL.ws_v3 &&
-        OK_GLOBAL.ws_v3.isConnected() &&
-        util.isLogined()
-      ) {
-        wsV3.login(util.getMyAddr());
+      if (OK_GLOBAL.ws_v3 && OK_GLOBAL.ws_v3.isConnected() && util.isWsLogin()) {
+        wsV3.login(util.getMyToken());
       }
     };
     render() {
-      const { currencyList, productList } = this.props;
-      if (
-        currencyList &&
-        currencyList.length &&
-        productList &&
-        productList.length
-      ) {
+      const { currencyList, productList, tickers } = this.props;
+      if (currencyList && currencyList.length 
+        && productList && productList.length 
+      ) { 
         return <Component />;
       }
       return null;
