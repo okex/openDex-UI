@@ -200,14 +200,8 @@ class FullTradeProductList extends React.Component {
     wsV3.stop(channelsV3.getAllMarketTickers());
   };
   filterGroupList = () => {
-    const { groupList, spotOrMargin } = this.props;
-    const { webTypes, webType } = window.OK_GLOBAL;
-    if (webType !== webTypes.OKCoin || spotOrMargin === Enum.spotOrMargin.spot) {
-      return groupList;
-    }
-    return groupList.filter((g) => {
-      return g.marginCount > 0;
-    });
+    const { groupList = [] } = this.props;
+    return groupList;
   };
   renderMarginTip = () => {
     const { productConfig } = window.OK_GLOBAL;
