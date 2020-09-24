@@ -36,20 +36,20 @@ export default class FullTradeFrame extends React.Component {
   }
 
   componentWillMount() {
-    if (document.querySelector("#headerContainer")) {
-      document.querySelector("#headerContainer").style.display = 'none';
+    if (document.querySelector('#headerContainer')) {
+      document.querySelector('#headerContainer').style.display = 'none';
     }
-    if (document.querySelector("#footerContainer")) {
-      document.querySelector("#footerContainer").style.display = 'none';
+    if (document.querySelector('#footerContainer')) {
+      document.querySelector('#footerContainer').style.display = 'none';
     }
   }
 
   componentWillUnmount() {
-    if (document.querySelector("#headerContainer")) {
-      document.querySelector("#headerContainer").style.display = 'block';
+    if (document.querySelector('#headerContainer')) {
+      document.querySelector('#headerContainer').style.display = 'block';
     }
-    if (document.querySelector("#footerContainer")) {
-      document.querySelector("#footerContainer").style.display = 'block';
+    if (document.querySelector('#footerContainer')) {
+      document.querySelector('#footerContainer').style.display = 'block';
     }
     window.removeEventListener('resize', this.onResize);
   }

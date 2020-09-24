@@ -24,12 +24,11 @@ window.OK_GLOBAL = {
   isLogin: undefined,
 };
 
-
 const store = configureStore();
 import('_src/locale').then((localeMessage) => {
   const language = util.getSupportLocale(Cookies.get('locale') || 'en_US');
   const localProviderProps = {
-    localeData: localeMessage.default(language)
+    localeData: localeMessage.default(language),
   };
 
   render(
@@ -41,4 +40,3 @@ import('_src/locale').then((localeMessage) => {
     document.querySelector('#app')
   );
 });
-

@@ -11,7 +11,7 @@ function mapStateToProps(state) {
   return {
     product,
     depth200,
-    currencyTicker
+    currencyTicker,
   };
 }
 
@@ -39,10 +39,10 @@ export default class FullTradeKLine extends React.Component {
         this.kline.setSymbol(newProduct.toLowerCase());
       }
     }
-    if (newTicker && (oldTicker !== newTicker)) {
+    if (newTicker && oldTicker !== newTicker) {
       const { price } = newTicker;
       this.kline.updateLastData({
-        close: Number(price)
+        close: Number(price),
       });
     }
     const depth = nextProps.depth200;
@@ -77,7 +77,8 @@ export default class FullTradeKLine extends React.Component {
   initKline = (product) => {
     let wsUrl = getWsUrl();
     let logo;
-    let screenshotIcon = 'https://img.bafang.com/cdn/assets/imgs/MjAxOTM/05D71CB3408AD30681388F4D774BABBA.png';
+    let screenshotIcon =
+      'https://img.bafang.com/cdn/assets/imgs/MjAxOTM/05D71CB3408AD30681388F4D774BABBA.png';
     const Kline = window.okui.CombKline || window.okui.Kline;
     this.kline = new Kline({
       element: '#full-kline-container',
@@ -89,12 +90,12 @@ export default class FullTradeKLine extends React.Component {
       exchange: 'DEX',
       symbol: product.toLowerCase(),
       convertName: (name) => {
-        return util.getShortName(name)
+        return util.getShortName(name);
       },
       language: util.getSupportLocale(Cookies.get('locale') || 'en_US'),
       showIndics: false,
       logo,
-      screenshotIcon
+      screenshotIcon,
     });
   };
   convertedDepthData = (datas) => {
@@ -107,7 +108,7 @@ export default class FullTradeKLine extends React.Component {
     });
     return {
       asks: newAsks,
-      bids: newBids
+      bids: newBids,
     };
   };
   render() {

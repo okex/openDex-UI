@@ -47,9 +47,12 @@ const enUS = {
   'spot.asset.repayBill': 'Repay',
   'spot.asset.repayBillSuccess': 'Repay Success',
   'spot.asset.repayBonus': 'Repay Bonus',
-  'spot.asset.repayBonus.tips-0': 'You are requested to repay the {bonus} bonus generated from your {currency} margin lending. Please reserve a sufficient amount of {bonus} in your spot account.',
-  'spot.asset.repayBonus.tips-1': '1. Your unpaid bonus will be counted as a liability when calculating your risk rate.',
-  'spot.asset.repayBonus.tips-2': '2. Your asset will not be allowed to transfer out before you repay the bonus.',
+  'spot.asset.repayBonus.tips-0':
+    'You are requested to repay the {bonus} bonus generated from your {currency} margin lending. Please reserve a sufficient amount of {bonus} in your spot account.',
+  'spot.asset.repayBonus.tips-1':
+    '1. Your unpaid bonus will be counted as a liability when calculating your risk rate.',
+  'spot.asset.repayBonus.tips-2':
+    '2. Your asset will not be allowed to transfer out before you repay the bonus.',
 
   'spot.market.more': 'more',
   'spot.market.orders': 'Details',
@@ -98,7 +101,8 @@ const enUS = {
   'spot.myOrder.PartialFilled': 'PartialFilled',
   'spot.myOrder.cancelFailed': 'Cancel Failed',
   'spot.myOrder.cancelSuccessed': 'Cancel Successed',
-  'spot.myOrder.cancelNoDealTip': 'Cancelling an unfulfilled order involves transaction fees. Are you sure you want to cancel?',
+  'spot.myOrder.cancelNoDealTip':
+    'Cancelling an unfulfilled order involves transaction fees. Are you sure you want to cancel?',
   'spot.myOrder.cancelPartDealTip': 'Confirm to cancel order?',
 
   'spot.orders.amount': 'Amount',
@@ -112,7 +116,8 @@ const enUS = {
   'spot.orders.completeFilled': 'Filled',
   'spot.orders.noorders': 'You have no open orders.',
   'spot.orders.noorders2day': 'You have no filled orders in the last two days.',
-  'spot.orders.noorders2dayago': 'You have no filled orders in the two days ago.',
+  'spot.orders.noorders2dayago':
+    'You have no filled orders in the two days ago.',
   'spot.orders.more': 'More',
   'spot.orders.open': 'Open',
   'spot.orders.openOrders': 'Open Orders',
@@ -134,7 +139,8 @@ const enUS = {
   'spot.orders.status': 'Status',
   'spot.orders.operation': 'Action',
   'spot.orders.tips.datepicker': 'please select date',
-  'spot.orders.tips.dateRange': 'The end date must be later than the start date',
+  'spot.orders.tips.dateRange':
+    'The end date must be later than the start date',
   'spot.orders.title': 'spot orders',
   'spot.orders.total': 'Total',
   'spot.orders.type': 'Type',
@@ -149,7 +155,8 @@ const enUS = {
   'spot.orders.entrustMount': 'Volume',
   'spot.orders.direction': 'side',
   'spot.orders.myDealList': 'My orders',
-  'spot.orders.toast.unhis': 'Please select a trading pair to view order history',
+  'spot.orders.toast.unhis':
+    'Please select a trading pair to view order history',
 
   'spot.orders.allOrders': 'All Orders',
   'spot.orders.download': 'Download',
@@ -194,32 +201,45 @@ const enUS = {
   'spot.orders.fall': ' fall ',
   'spot.orders.higher': ' higher than ',
   'spot.orders.lower': ' lower than ',
-  'spot.orders.entrustWords': 'When the market price is {direction} to or {compare} {triggerPrice}{baseCurr},it will trigger the order of {action} {amount}{tradeCurr} at the price {tradePrice}{baseCurr}',
+  'spot.orders.entrustWords':
+    'When the market price is {direction} to or {compare} {triggerPrice}{baseCurr},it will trigger the order of {action} {amount}{tradeCurr} at the price {tradePrice}{baseCurr}',
   'spot.orders.cancelExplanation0': 'Cancelled due to timeout',
   'spot.orders.cancelExplanation1': 'Cancelled manually by user',
   'spot.orders.cancelExplanation3': 'Cancel failed order',
   'spot.orders.actionBuy': 'Buy',
   'spot.orders.actionSell': 'Sell',
-  'spot.orders.triggerPop': 'When the last traded price hits the stop price, system will execute the order you set to buy or sell at a specified price and volume. ',
-  'spot.orders.triggerPopPlanOrder': 'Trigger order is an instruction to submit a limit order at a specified price and volume when the user-specified stop trigger price is attained or penetrated.',
+  'spot.orders.triggerPop':
+    'When the last traded price hits the stop price, system will execute the order you set to buy or sell at a specified price and volume. ',
+  'spot.orders.triggerPopPlanOrder':
+    'Trigger order is an instruction to submit a limit order at a specified price and volume when the user-specified stop trigger price is attained or penetrated.',
   'spot.orders.triggerPopDetail': 'Detail',
-  'spot.orders.triggerPopLimitOrder': 'A limit order is an order to buy or sell an amount of digital asset at a specific price or better.',
-  'spot.orders.triggerPopMarketOrder': 'A market order is an order to buy or sell an amount of digital asset immediately at current market prices.',
-  'spot.orders.triggerPopTrackOrder': 'Trail Order Quantity: Of the maximum number of trail orders for any trigger price and the maximum number for currently held contracts, the smaller of the two will apply. Each user can hold up to 10 non-triggered trail orders at once.',
+  'spot.orders.triggerPopLimitOrder':
+    'A limit order is an order to buy or sell an amount of digital asset at a specific price or better.',
+  'spot.orders.triggerPopMarketOrder':
+    'A market order is an order to buy or sell an amount of digital asset immediately at current market prices.',
+  'spot.orders.triggerPopTrackOrder':
+    'Trail Order Quantity: Of the maximum number of trail orders for any trigger price and the maximum number for currently held contracts, the smaller of the two will apply. Each user can hold up to 10 non-triggered trail orders at once.',
   'spot.orders.triggerPopTrackOrder2': ' ',
-  'spot.orders.triggerPopIcebergOrder': 'No limit on the order amount. Each user can place up to 6 orders simultaneously.',
-  'spot.orders.triggerPopTimeWeightOrder': 'No limit on the order amount. Each user can place up to 6 orders simultaneously.',
+  'spot.orders.triggerPopIcebergOrder':
+    'No limit on the order amount. Each user can place up to 6 orders simultaneously.',
+  'spot.orders.triggerPopTimeWeightOrder':
+    'No limit on the order amount. Each user can place up to 6 orders simultaneously.',
   'spot.orders.range': 'Callback Rate',
-  'spot.orders.rangeExplain': 'The callback rate is one condition for a trail order, satisfied when the last price compared with the maximum market price / minimum market price is greater than or equal to the user-defined callback rate.',
-  'spot.orders.activatePriceExplain': 'The trigger price is one condition for a trail order, satisfied when it is met or exceeded by the maximum or minimum market price.',
+  'spot.orders.rangeExplain':
+    'The callback rate is one condition for a trail order, satisfied when the last price compared with the maximum market price / minimum market price is greater than or equal to the user-defined callback rate.',
+  'spot.orders.activatePriceExplain':
+    'The trigger price is one condition for a trail order, satisfied when it is met or exceeded by the maximum or minimum market price.',
   'spot.orders.priceVariance': 'Price variance',
-  'spot.orders.priceVarianceExplain': 'The buy order price will be the latest buy price* (1-price variance). The sell order price will be the latest buy price* (1-price variance).',
+  'spot.orders.priceVarianceExplain':
+    'The buy order price will be the latest buy price* (1-price variance). The sell order price will be the latest buy price* (1-price variance).',
   'spot.orders.totalAmount': 'Total amount',
   'spot.orders.totalAmountExplain': 'The total amount you wish to buy or sell',
   'spot.orders.avgAmount': 'Average amount',
-  'spot.orders.avgAmountExplain': 'The amount you wish to buy or sell in each order',
+  'spot.orders.avgAmountExplain':
+    'The amount you wish to buy or sell in each order',
   'spot.orders.priceLimit': 'Price limit',
-  'spot.orders.priceLimitExplain': 'When the last market price exceeds the price limit, the iceberg order would be temporarily halted.',
+  'spot.orders.priceLimitExplain':
+    'When the last market price exceeds the price limit, the iceberg order would be temporarily halted.',
   'spot.orders.filledCount': 'Filled',
   'spot.orders.partialStatus': 'Partially effective',
   'spot.orders.pausedStatus': 'Order terminated',
@@ -282,7 +302,6 @@ const enUS = {
   'spot.callmarket.unmatched': 'Orders not yet matched',
   'spot.callmarket.startingsoon': 'Starting soon',
 
-
   'spot.fee': 'Fee',
   'spot.fee.broker': 'Current fee rate:',
   'spot.submit.loading': 'Loading...',
@@ -302,20 +321,24 @@ const enUS = {
   'spot.place.tips.minbuy': 'Minimum buying',
   'spot.place.tips.minsell': 'Minimum selling',
   'spot.place.tips.pwd': 'Please enter the transaction password',
-  'spot.place.tips.margin': 'Margin trading involves significant risks which include forced liquidation of all the assets in your account. Please invest responsibly',
+  'spot.place.tips.margin':
+    'Margin trading involves significant risks which include forced liquidation of all the assets in your account. Please invest responsibly',
   'spot.place.tips.priceVariance': 'Price variance Cannot be empty',
   'spot.place.tips.totalAmount': 'Total amount Cannot be empty',
   'spot.place.tips.avgAmount': 'Average amount Cannot be empty',
-  'spot.place.tips.avgAmountLessThanMin': 'Single order average amount cannot be lower than 0.1% of total order amount',
-  'spot.place.tips.avgAmountLargerThanMax': 'Single order average amount cannot exceed total order amount',
+  'spot.place.tips.avgAmountLessThanMin':
+    'Single order average amount cannot be lower than 0.1% of total order amount',
+  'spot.place.tips.avgAmountLargerThanMax':
+    'Single order average amount cannot exceed total order amount',
   'spot.place.tips.priceLimit': 'Price limit Cannot be empty',
-  'spot.place.tips.priceVarianceNotGreaterThan': 'Order variance cannot exceed {max}%',
+  'spot.place.tips.priceVarianceNotGreaterThan':
+    'Order variance cannot exceed {max}%',
   'spot.place.marketPrice': 'Execute at the best available price',
   'spot.place.forgetPwd': 'Forgot password',
   'spot.place.nopwd': 'Password settings',
   'spot.place.autoBorrowWarn': ' Buy on margin to complete the trade',
   'spot.place.forcePrice': 'Est. Liq. Price',
-  'spot.place.noWarn': 'Don\'t show this again',
+  'spot.place.noWarn': "Don't show this again",
   'spot.place.kline': 'K Line',
   'spot.place.kline.title': 'Real-Time Quotes',
   'spot.place.kline.more': 'More',
@@ -369,7 +392,8 @@ const enUS = {
   'spot.page.title.tokens': 'Token trading orders ',
 
   'spot.notlogin.tradenow': 'Start trading now',
-  'spot.notlogin.preview': 'This is the preview of the {site} exchange All data is real-time',
+  'spot.notlogin.preview':
+    'This is the preview of the {site} exchange All data is real-time',
   'spot.notlogin.logintoview1': 'You must be ',
   'spot.notlogin.logintoview2': 'logged in',
   'spot.notlogin.logintoview3': ' to view this content.',
@@ -383,7 +407,8 @@ const enUS = {
   'spot.project.info': 'Project Info',
 
   'spot.advancedLimitOrder': 'Advanced Limit Order',
-  'spot.orders.triggerPopAdvancedLimitOrder': 'Advanced Limit Order offers 3 additional order options, including "Post Only", "Fill or Kill", and "Immediate or Cancel". For normal Limit Order, the order option is always defaulted as "Good till Canceled". ',
+  'spot.orders.triggerPopAdvancedLimitOrder':
+    'Advanced Limit Order offers 3 additional order options, including "Post Only", "Fill or Kill", and "Immediate or Cancel". For normal Limit Order, the order option is always defaulted as "Good till Canceled". ',
   'spot.orders.orderType': 'Order Types',
   'spot.orders.orderType.postOnly': 'Post Only',
   'spot.orders.orderType.FOK': 'Fill or Kill',
@@ -392,7 +417,8 @@ const enUS = {
   'spot.orders.orderTypeShort.postOnly': 'Post only',
   'spot.orders.orderTypeShort.FOK': 'FillorKill',
   'spot.orders.orderTypeShort.FAK': 'ImmediateorCancel',
-  'spot.place.tips.orderType': 'How the order is executed. "Post Only" never takes liquidity and makes sure the trader will be a market maker. If your order would cause a match with a pre-existing order, your post-only limit order will be canceled. "Fill or Kill" makes sure the buy/sell order is executed or canceled entirely without partial fulfillments. "Immediate or Cancel" requires all or part of the order to be executed immediately, and any unfilled parts of the order are canceled.',
+  'spot.place.tips.orderType':
+    'How the order is executed. "Post Only" never takes liquidity and makes sure the trader will be a market maker. If your order would cause a match with a pre-existing order, your post-only limit order will be canceled. "Fill or Kill" makes sure the buy/sell order is executed or canceled entirely without partial fulfillments. "Immediate or Cancel" requires all or part of the order to be executed immediately, and any unfilled parts of the order are canceled.',
   'spot.orders.actionBuyMargin': 'Buy (Long) ',
   'spot.orders.actionSellMargin': 'Sell (Short) ',
 
@@ -413,21 +439,27 @@ const enUS = {
   link_to_all: 'Click to see all >>',
   wallet_create_step1: 'Create Wallet',
   wallet_setPassword: 'Set up Password',
-  wallet_password_placeholder: 'Please use 10 or more characters with a mix of letters and numbers for your password',
+  wallet_password_placeholder:
+    'Please use 10 or more characters with a mix of letters and numbers for your password',
   wallet_password_lengthValidate: 'At least 10 or more characters',
-  wallet_password_chartValidate: 'At least an upper-case letter, a lower-case letter and a number',
+  wallet_password_chartValidate:
+    'At least an upper-case letter, a lower-case letter and a number',
   wallet_twicePassword: 'Re-enter your password',
   wallet_passwordNotSame: 'Passwords do not match',
-  wallet_unsaveTip: 'I confirm DEX will not save any of passwords/mnemonic phrases/keystores/private keys',
+  wallet_unsaveTip:
+    'I confirm DEX will not save any of passwords/mnemonic phrases/keystores/private keys',
   wallet_hadWallet: 'I already have a wallet',
   wallet_importNow: 'Import Now >>',
   wallet_nextStep: 'Next',
   wallet_safeTip_title: 'Security Alert',
-  wallet_safeTip_beforeKeystore: 'Please download the file and record your mnemonic phrase ',
-  wallet_safeTip_afterKeystore: 'in a secure environment. Do not take photos or screen capture to avoid leak.',
+  wallet_safeTip_beforeKeystore:
+    'Please download the file and record your mnemonic phrase ',
+  wallet_safeTip_afterKeystore:
+    'in a secure environment. Do not take photos or screen capture to avoid leak.',
   wallet_known: 'I understand',
   wallet_create_step2: 'Mnemonic Phrase Backup',
-  wallet_create_backupMnemonic: 'Please back up the below mnemonic phrases in sequence',
+  wallet_create_backupMnemonic:
+    'Please back up the below mnemonic phrases in sequence',
   wallet_create_backupMnemonic_error: 'Not verified. Please back up again',
   wallet_create_beginValidate: 'I have copied it. Verify now',
   wallet_create_step3: 'Mnemonic Phrase Verification',
@@ -437,7 +469,8 @@ const enUS = {
   wallet_ensure: 'Confirm',
   wallet_confirm: 'Confirm',
   wallet_create_step4: 'Verification Successful',
-  wallet_mnemonicSuccess: 'Congratulations! You have verified your mnemonic phrase. Please keep it safe.',
+  wallet_mnemonicSuccess:
+    'Congratulations! You have verified your mnemonic phrase. Please keep it safe.',
   wallet_toTrade: 'Trade Now',
   wallet_seePrivate: 'Check Private Key',
   wallet_privateKey: 'Private Key',
@@ -446,7 +479,8 @@ const enUS = {
   wallet_import_upload_todo: 'Drag here to upload keystore documents',
   wallet_import_upload_doing: 'Uploading',
   wallet_import_upload_retry: 'Re-Upload',
-  wallet_import_passwordTip: 'This password is generated from the keystore document setup. You can’t import your wallet without this password',
+  wallet_import_passwordTip:
+    'This password is generated from the keystore document setup. You can’t import your wallet without this password',
   wallet_import_enterPassword: 'Enter your wallet password',
   wallet_import_fileError: 'Incorrect document format/illegal content',
   wallet_import_noFile: 'Please upload keystore documents',
@@ -455,12 +489,14 @@ const enUS = {
   wallet_import_mnemonic_splitTip: 'Enter space between the mnemonic phrases',
   wallet_import_mnemonic_error: 'Illegal mnemonic phrase',
   wallet_import_mnemonic_sessionPassword: 'Please setup a temporary password',
-  wallet_import_mnemonic_sessionPasswordTip: 'This password is only valid for this login. It is not related to the password you set up when creating your wallet',
+  wallet_import_mnemonic_sessionPasswordTip:
+    'This password is only valid for this login. It is not related to the password you set up when creating your wallet',
   wallet_import_mnemonic_none: 'Mnemonic cannot be empty',
   wallet_import_private_enter: 'Enter Wallet Private Key',
   wallet_import_password_placeholder: 'Setup a temporary password',
   wallet_import_private_error: 'Illegal Private Key',
-  wallet_import_sessionPasswordTip: 'This password is valid only for this login',
+  wallet_import_sessionPasswordTip:
+    'This password is valid only for this login',
   wallet_import_private_none: 'The private key cannot be empty',
   header_menu_trade: 'Trade',
   header_menu_order: 'Order',
@@ -485,33 +521,47 @@ const enUS = {
   home_banner_btn_trade: 'Start trading',
   home_adv_title: 'Product advantages',
   home_adv_item0_title: 'Secure and reliable',
-  home_adv_item0_content: 'Relying on the Secp256k1 elliptic curve algorithm, users\' digital assets are stored in their own wallets and can be traded without custody',
+  home_adv_item0_content:
+    "Relying on the Secp256k1 elliptic curve algorithm, users' digital assets are stored in their own wallets and can be traded without custody",
   home_adv_item1_title: 'Fast and convenient',
-  home_adv_item1_content: 'OKEx DEX reviews the on-chain assets with a strict standard, sets stable digital assets as the pricing currency, and provides various trading options.',
+  home_adv_item1_content:
+    'OKEx DEX reviews the on-chain assets with a strict standard, sets stable digital assets as the pricing currency, and provides various trading options.',
   home_adv_item2_title: 'Continuous iteration',
-  home_adv_item2_content: 'OKEx DEX will support the new functions of OKExChain sooner to providing a better trading experience for users.',
+  home_adv_item2_content:
+    'OKEx DEX will support the new functions of OKExChain sooner to providing a better trading experience for users.',
   home_exp_title: 'Experience simulated trading',
-  home_exp_content: 'OKEx users who have created OKExChain wallets will be distributed with a certain amount of testing currencies. The amount is limited, first come first served.',
+  home_exp_content:
+    'OKEx users who have created OKExChain wallets will be distributed with a certain amount of testing currencies. The amount is limited, first come first served.',
   home_steps_title: 'Quick start',
   home_steps_item0_title: '1.Create OKExChain wallet',
-  home_steps_item0_content: 'DEX will not save any information of your wallet on the chain; mnemonic words and keystore files are the only proofs for your personal assets, please keep them properly. If mnemonic words and keystore files have been created, you can directly import them into the wallet.',
+  home_steps_item0_content:
+    'DEX will not save any information of your wallet on the chain; mnemonic words and keystore files are the only proofs for your personal assets, please keep them properly. If mnemonic words and keystore files have been created, you can directly import them into the wallet.',
   home_steps_item0_button: 'Create wallet',
   home_steps_item1_title: '2.Wallet deposit',
-  home_steps_item1_content: 'Log in to the OKExChain on-chain wallet, enter asset management, and obtain the OKExChain on-chain address; DEX trading can be initiated on TestNet by getting the test currencies; the account record can be viewed in on-chain wallet- -asset record.',
+  home_steps_item1_content:
+    'Log in to the OKExChain on-chain wallet, enter asset management, and obtain the OKExChain on-chain address; DEX trading can be initiated on TestNet by getting the test currencies; the account record can be viewed in on-chain wallet- -asset record.',
   home_steps_item1_button: 'Get testing currencies',
   home_steps_item2_title: '3.Go trading',
-  home_steps_item2_content: 'Trade any trading pair with the testing currencies; Each time you place an order or cancel an order, a hash value is generated and broadcast to the blockchain network.',
+  home_steps_item2_content:
+    'Trade any trading pair with the testing currencies; Each time you place an order or cancel an order, a hash value is generated and broadcast to the blockchain network.',
   home_steps_item2_button: 'Trade now',
   home_steps_item3_title: '4.Check trading info',
-  home_steps_item3_content: 'For each transaction and transfer, you can query the corresponding information in the blockchain browser through the transaction hash value and address.',
+  home_steps_item3_content:
+    'For each transaction and transfer, you can query the corresponding information in the blockchain browser through the transaction hash value and address.',
   home_steps_item3_button: 'Check block data',
-  home_steps_item0_img: 'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/7285906D63E20BD639AA7C8A3429755E.png',
-  home_steps_item1_img: 'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/9088F851DF59FD358F6EAA08BFDE08A4.png',
-  home_steps_item2_img: 'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/1CDBD8D16A98147F82E9E7703FE9DE61.png',
-  home_steps_item3_img: 'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/298BA40D0EF5D30907E47C018D8D1B7B.png',
+  home_steps_item0_img:
+    'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/7285906D63E20BD639AA7C8A3429755E.png',
+  home_steps_item1_img:
+    'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/9088F851DF59FD358F6EAA08BFDE08A4.png',
+  home_steps_item2_img:
+    'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/1CDBD8D16A98147F82E9E7703FE9DE61.png',
+  home_steps_item3_img:
+    'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/298BA40D0EF5D30907E47C018D8D1B7B.png',
   home_exp_more: 'Learn more about "DEX, OKExChain detailed design rules',
-  home_exp_img: 'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/A4C4128B4E548183A3D05A8463ED45F6.png',
-  home_subtitle: 'OKExChain testnet is launched. Check your transaction history on-chain.',
+  home_exp_img:
+    'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/A4C4128B4E548183A3D05A8463ED45F6.png',
+  home_subtitle:
+    'OKExChain testnet is launched. Check your transaction history on-chain.',
   home_receive_coin: 'Claim Test Token',
   home_step5_title: 'Help',
 
@@ -531,7 +581,8 @@ const enUS = {
   trade_query_begin: 'Start Time',
   trade_query_end: 'End Time',
   trade_query_order_type: 'Order Type',
-  trade_query_more: 'For more transaction records, please search on the blockchain explorer',
+  trade_query_more:
+    'For more transaction records, please search on the blockchain explorer',
   trade_query_search: 'Search',
   trade_emtpy: 'No Transaction Record',
   trade_column_hash: 'Transaction Hash',
@@ -554,7 +605,7 @@ const enUS = {
   trans_choose_token: 'Select Asset',
   trans_no_token_found: 'No Asset Found',
   trans_err_addr_format: 'Invalid Address Format',
-  trans_err_addr_same: 'Please Don\'t Transfer to Yourself',
+  trans_err_addr_same: "Please Don't Transfer to Yourself",
   trans_amount: 'Transfer Amount',
   trans_available: 'Available Transferrable Amount:',
   trans_available_not_enough: 'Insufficient Balance',
@@ -586,11 +637,14 @@ const enUS = {
   'dex.help.item2': '-  DEX Operators Guide (CLI)',
   'dex.help.item3': '-  DEX Operators  FAQ',
   'register.website.label': 'Website',
-  'register.website.hint': 'Other partners in the ecosystem can get more information through websita. Such as logo, community contact information, etc.',
+  'register.website.hint':
+    'Other partners in the ecosystem can get more information through websita. Such as logo, community contact information, etc.',
   'register.feeAddress.label': 'HandlingFeeAddress',
-  'register.feeAddress.hint': 'For security reasons, you can designate another address to collect handling fees.',
+  'register.feeAddress.hint':
+    'For security reasons, you can designate another address to collect handling fees.',
   'issueToken.symbol.label': 'Symbol',
-  'issueToken.symbol.hint': 'symbol is a non-case-sensitive token ticker limited to 6 alphanumeric characters, but the first character cannot be a number, eg. “bcoin” since the system will automatically add 3 random characters, such as “bcoin-gf6”',
+  'issueToken.symbol.hint':
+    'symbol is a non-case-sensitive token ticker limited to 6 alphanumeric characters, but the first character cannot be a number, eg. “bcoin” since the system will automatically add 3 random characters, such as “bcoin-gf6”',
   'issueToken.wholename.label': 'Wholename',
   'issueToken.totalSupply.label': 'TotalSupply',
   'issueToken.desc.label': 'Desc',

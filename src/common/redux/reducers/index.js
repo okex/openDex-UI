@@ -5,4 +5,4 @@ import FormStore from './FormReducer';
 import OrderStore from './OrderReducer';
 import WalletStore from './WalletReducer';
 
-export default {Common,Spot,SpotTrade,FormStore,OrderStore,WalletStore};
+export default { Common, Spot, SpotTrade, FormStore, OrderStore, WalletStore };

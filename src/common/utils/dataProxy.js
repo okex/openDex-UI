@@ -43,7 +43,11 @@ function toLogin() {
   if (!isInApp) {
     const { pathname, search, hash } = window.location;
     const forwardUrl = `${pathname}${search}${hash}`;
-    history.push(`${PageURL.walletImport}?logout=true&forward=${encodeURIComponent(forwardUrl)}`);
+    history.push(
+      `${PageURL.walletImport}?logout=true&forward=${encodeURIComponent(
+        forwardUrl
+      )}`
+    );
   }
 
   return Promise.reject(new Error('Need Login'));

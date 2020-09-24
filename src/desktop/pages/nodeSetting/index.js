@@ -140,17 +140,17 @@ class NodeSetting extends Component {
     fetchListLatency(customList);
   };
 
-  changeTab = key => {
+  changeTab = (key) => {
     const { isStarted, localNodeAction } = this.props;
-    if(!isStarted) return;
-    if(key === '2') localNodeAction.startTerminal();
+    if (!isStarted) return;
+    if (key === '2') localNodeAction.startTerminal();
     else localNodeAction.stopTerminal();
     return;
-  }
+  };
 
   componentWillUnmount() {
     const { isStarted, localNodeAction } = this.props;
-    if(isStarted) localNodeAction.stopTerminal();
+    if (isStarted) localNodeAction.stopTerminal();
   }
 
   render() {
@@ -171,7 +171,11 @@ class NodeSetting extends Component {
           />
         </div>
         <div className="node-select-container">
-          <Tabs defaultActiveKey="1" prefixCls="node-select" onChange={this.changeTab}>
+          <Tabs
+            defaultActiveKey="1"
+            prefixCls="node-select"
+            onChange={this.changeTab}
+          >
             <TabPane tab={toLocale('node.tab.wellenow')} key="1">
               <NodeList />
             </TabPane>

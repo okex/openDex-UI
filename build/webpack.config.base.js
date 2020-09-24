@@ -5,7 +5,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const src = path.resolve(__dirname, '../src');
 const client = process.env.CLIENT || 'desktop';
 const base = {
-  entry:path.resolve(__dirname,`../src/${client}/index.js`),
+  entry: path.resolve(__dirname, `../src/${client}/index.js`),
   output: {
     filename: '[name]/index.js',
     chunkFilename: 'common/[name]/[name].js',
@@ -83,11 +83,11 @@ const base = {
       _src: path.resolve(__dirname, '../src/common/'),
       _component: path.resolve(__dirname, '../src/common/component/'),
       _constants: path.resolve(__dirname, '../src/common/constants/'),
-      _app:path.resolve(__dirname, `../src/${client}/`),
+      _app: path.resolve(__dirname, `../src/${client}/`),
     },
   },
 };
-if(process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
   base.optimization = {
     minimizer: [
       new UglifyJsPlugin({
@@ -100,10 +100,10 @@ if(process.env.NODE_ENV === 'production') {
             collapse_vars: true,
             reduce_vars: true,
           },
-        }
+        },
       }),
       new OptimizeCSSAssetsPlugin({}),
     ],
-  }
+  };
 }
 module.exports = base;

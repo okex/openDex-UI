@@ -15,7 +15,10 @@ function mapStateToProps(state) {
   const { currencyList, productList } = state.SpotTrade;
   const { jwtTokenClient } = state.Common;
   return {
-    currencyList, productList, tickers, jwtTokenClient
+    currencyList,
+    productList,
+    tickers,
+    jwtTokenClient,
   };
 }
 
@@ -33,7 +36,10 @@ const InitWrapper = (Component) => {
   class SpotInit extends React.Component {
     componentDidMount() {
       const { match } = this.props;
-      if (match.path.includes('/spot/fullMargin') || match.path.includes('/spot/marginTrade')) {
+      if (
+        match.path.includes('/spot/fullMargin') ||
+        match.path.includes('/spot/marginTrade')
+      ) {
         window.OK_GLOBAL.isMarginType = true;
       }
       this.sendBasicAjax();
@@ -47,7 +53,7 @@ const InitWrapper = (Component) => {
         left.style = 'block';
       }
     }
-    
+
     sendBasicAjax = () => {
       const { spotActions } = this.props;
       spotActions.fetchCollectAndProducts();
@@ -79,7 +85,7 @@ const InitWrapper = (Component) => {
       return fns[table.split(':')[0]];
     };
     startInitWebSocket = () => {
-      if(!window.WebSocketCore) return;
+      if (!window.WebSocketCore) return;
       const OK_GLOBAL = window.OK_GLOBAL;
       if (!OK_GLOBAL.ws_v3) {
         const { spotActions } = this.props;
@@ -101,7 +107,7 @@ const InitWrapper = (Component) => {
           spotActions.updateWsStatus(true);
         });
         v3.onSocketError(() => {
-          spotActions.addWsErrCounter(); 
+          spotActions.addWsErrCounter();
           spotActions.updateWsStatus(false);
           spotActions.updateWsIsDelay(false);
         });
@@ -109,9 +115,7 @@ const InitWrapper = (Component) => {
           v3.sendChannel('ping');
         });
         v3.setPushDataResolver((pushData) => {
-          const {
-            table, data, event, success, errorCode
-          } = pushData;
+          const { table, data, event, success, errorCode } = pushData;
           if (table && data) {
             const handler = this.wsHandler(table);
             handler && handler(data, pushData);
@@ -119,7 +123,12 @@ const InitWrapper = (Component) => {
           if (event === 'dex_login' && success === true) {
             spotActions.updateWsIsDelay(true);
           }
-          if (event === 'error' && (Number(errorCode) === 30043 || Number(errorCode) === 30008 || Number(errorCode) === 30006)) {
+          if (
+            event === 'error' &&
+            (Number(errorCode) === 30043 ||
+              Number(errorCode) === 30008 ||
+              Number(errorCode) === 30006)
+          ) {
             util.doLogout();
             window.location.href = PageURL.homePage;
           }
@@ -127,15 +136,22 @@ const InitWrapper = (Component) => {
         v3.connect();
       }
 
-      if (OK_GLOBAL.ws_v3 && OK_GLOBAL.ws_v3.isConnected() && util.isWsLogin()) {
+      if (
+        OK_GLOBAL.ws_v3 &&
+        OK_GLOBAL.ws_v3.isConnected() &&
+        util.isWsLogin()
+      ) {
         wsV3.login(util.getMyToken());
       }
     };
     render() {
       const { currencyList, productList, tickers } = this.props;
-      if (currencyList && currencyList.length 
-        && productList && productList.length 
-      ) { 
+      if (
+        currencyList &&
+        currencyList.length &&
+        productList &&
+        productList.length
+      ) {
         return <Component />;
       }
       return null;

@@ -26,12 +26,12 @@ function stopPoll() {
 }
 
 function getListenClient(dispatch, getState) {
-  if(!getListenClient.instance) getListenClient.instance = listenClient(dispatch, getState);
+  if (!getListenClient.instance)
+    getListenClient.instance = listenClient(dispatch, getState);
   return getListenClient.instance;
-  
 }
 
-function start(datadir, dispatch, getState, terminal=false) {
+function start(datadir, dispatch, getState, terminal = false) {
   const { shell, localNodeServerClient } = electronUtils;
   const directory = getOkexchaindDir();
   return new Promise((reslove, reject) => {
@@ -68,7 +68,7 @@ function start(datadir, dispatch, getState, terminal=false) {
         data: datadir,
       });
       localNodeServerClient.set(child);
-      if(terminal) getListenClient(dispatch, getState).start();
+      if (terminal) getListenClient(dispatch, getState).start();
       reslove(true);
     } catch (err) {
       reject(err);
@@ -355,13 +355,13 @@ export function startListen() {
 export function startTerminal() {
   return async (dispatch, getState) => {
     getListenClient(dispatch, getState).start();
-  }
+  };
 }
 
 export function stopTerminal() {
   return async (dispatch, getState) => {
     getListenClient(dispatch, getState).stop();
-  }
+  };
 }
 
 export function stopOkexchaind(terminal = false) {
@@ -372,7 +372,7 @@ export function stopOkexchaind(terminal = false) {
     shell.cd(okexchaindDir);
     shell.exec('./okexchaind stop', (code) => {
       if (code === 0) {
-        if(terminal) getListenClient(dispatch, getState).stop();
+        if (terminal) getListenClient(dispatch, getState).stop();
         localNodeServerClient.set(null);
         dispatch({
           type: LocalNodeActionType.UPDATE_OKEXCHAIND,

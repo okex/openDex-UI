@@ -98,7 +98,7 @@ const InitWrapper = (Component) => {
       return fns[table.split(':')[0]];
     };
     startInitWebSocket = (wsUrl) => {
-      if(!window.WebSocketCore) return;
+      if (!window.WebSocketCore) return;
       const OK_GLOBAL = window.OK_GLOBAL;
       if (!OK_GLOBAL.ws_v3) {
         const { spotActions, nodeActions } = this.props;

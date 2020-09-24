@@ -1,5 +1,5 @@
 import React from 'react';
-import { toLocale } from '_src/locale/react-locale'
+import { toLocale } from '_src/locale/react-locale';
 import './index.less';
 
 const index = ({ tabs = [], current, onChangeTab, optional = null }) => {

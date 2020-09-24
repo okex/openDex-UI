@@ -15,17 +15,20 @@ base.plugins = [
     'process.env.ROUTE_TYPE': JSON.stringify('hash'),
   }),
   new HtmlWebpackPlugin({
-    template: path.resolve(path.resolve(__dirname, '../src/desktop'), 'desktop.html'),
+    template: path.resolve(
+      path.resolve(__dirname, '../src/desktop'),
+      'desktop.html'
+    ),
     filename: 'index.html',
   }),
   new CopyWebpackPlugin([
     {
-      from: path.resolve(__dirname,'../src/favicon-okex.ico'),
-      to: path.resolve(__dirname,'../bundle/favicon-okex.ico'),
+      from: path.resolve(__dirname, '../src/favicon-okex.ico'),
+      to: path.resolve(__dirname, '../bundle/favicon-okex.ico'),
     },
-  ])
+  ]),
 ];
 
 module.exports = Object.assign(base, {
-  mode: 'production'
+  mode: 'production',
 });

@@ -304,9 +304,7 @@ const commonUtil = {
             {toLocale('wallet_create_step1')}
           </Link>
           <a> / </a>
-          <Link to={PageURL.walletImport}>
-            {toLocale('wallet_import')}
-          </Link>
+          <Link to={PageURL.walletImport}>{toLocale('wallet_import')}</Link>
         </p>
       </div>
     );

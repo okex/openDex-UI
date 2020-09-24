@@ -25,12 +25,12 @@ base.plugins = [
   }),
   new CopyWebpackPlugin([
     {
-      from: path.resolve(__dirname,'../src/favicon-okex.ico'),
-      to: path.resolve(__dirname,'../bundle-web/favicon-okex.ico'),
+      from: path.resolve(__dirname, '../src/favicon-okex.ico'),
+      to: path.resolve(__dirname, '../bundle-web/favicon-okex.ico'),
     },
-  ])
+  ]),
 ];
 
 module.exports = Object.assign(base, {
-  mode: 'production'
+  mode: 'production',
 });
