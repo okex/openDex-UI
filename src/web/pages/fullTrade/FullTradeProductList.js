@@ -10,22 +10,17 @@ import { wsV3, channelsV3 } from '_src/utils/websocket';
 import Enum from '_src/utils/Enum';
 import util from '_src/utils/util';
 import './FullTradeProductList.less';
-import LeftMenu from '_component/leftMenu';
-import Introduce from '_component/kline/Introduce';
+import LeftMenu from '_src/component/leftMenu';
+import Introduce from '_src/component/kline/Introduce';
 import * as SpotActions from '_src/redux/actions/SpotAction';
-
-import PageURL from '_constants/PageURL';
-
-
-const { langForRaw } = util;
-
+import PageURL from '_src/constants/PageURL';
 
 function mapStateToProps(state) {
   const {
     wsIsOnlineV3, wsErrCounterV3, tickers, activeMarket
   } = state.Spot;
   const {
-    groupList, productList, product, productObj, isMarginOpen, spotOrMargin, localCollects
+    groupList, productList, product, productObj, isMarginOpen, spotOrMargin
   } = state.SpotTrade;
   return {
     wsIsOnlineV3,
@@ -83,11 +78,6 @@ class FullTradeProductList extends React.Component {
     if (this.state.isShowList) {
       return false;
     }
-    if (nextProps.activeMarket && this.state.activeMarket !== nextProps.activeMarket) {
-      this.setState({
-        activeMarket: nextProps.activeMarket
-      });
-    }
     return false;
   }
 
@@ -99,48 +89,44 @@ class FullTradeProductList extends React.Component {
   }
 
   getCurrListByArea = (productList, activeMarket) => {
-    const { webTypes, webType } = window.OK_GLOBAL;
-    const { groupId, groupName } = activeMarket;
-    const quoteSymbol = groupName || 'TUSDK';
-    const { spotOrMargin } = this.props;
-    let currList = [];
-    if (groupId === -1) {
-      currList = productList.filter((item) => {
-        return item.quoteAssetSymbol.toUpperCase() === quoteSymbol;
-      });
-    } else {
-      currList = productList.filter((item) => {
-        return item.quoteAssetSymbol.toUpperCase() === quoteSymbol;
-      });
-    }
-    if (webType !== webTypes.OKCoin || spotOrMargin === Enum.spotOrMargin.spot) {
-      return currList;
-    }
-    return currList.filter((product) => {
-      return product.isMarginOpen;
+    const { groupId } = activeMarket;
+    return productList.filter((item) => {
+      return item.groupIds.includes(groupId);
     });
   };
 
   showList = () => {
     this.setState({
-      isShowList: true 
+      isShowList: true
+    }, () => {
+      const { groupList, spotActions } = this.props;
+      groupList.forEach((g) => {
+        const { type, groupId } = g;
+        if (type !== 'normal') {
+          spotActions.fetchProducts(type, groupId, true);
+        }
+      });
     });
   };
+
   hideList = () => {
     this.setState({
-      isShowList: false 
+      isShowList: false
     });
   };
+
   showProduction = () => {
     this.setState({
       isShowProduction: true
     });
   };
+
   hideProduction = () => {
     this.setState({
       isShowProduction: false
     });
   };
+
   handleMarketChange = (market) => {
     return () => {
       this.setState({
@@ -149,11 +135,13 @@ class FullTradeProductList extends React.Component {
       });
     };
   };
+
   handleSearch = (e) => {
     this.setState({
       searchText: e.target.value
     });
   };
+
   handleSelectMenu = (item) => {
     const { spotActions } = this.props;
     const product = item.product;
@@ -195,14 +183,20 @@ class FullTradeProductList extends React.Component {
   startWs = () => {
     wsV3.send(channelsV3.getAllMarketTickers());
   };
-
   stopWs = () => {
     wsV3.stop(channelsV3.getAllMarketTickers());
   };
   filterGroupList = () => {
-    const { groupList = [] } = this.props;
-    return groupList;
+    const { groupList, spotOrMargin } = this.props;
+    const { webTypes, webType } = window.OK_GLOBAL;
+    if (webType !== webTypes.OKCoin || spotOrMargin === Enum.spotOrMargin.spot) {
+      return groupList;
+    }
+    return groupList.filter((g) => {
+      return g.marginCount > 0;
+    });
   };
+
   renderMarginTip = () => {
     const { productConfig } = window.OK_GLOBAL;
     const { isMarginOpen } = this.props;
@@ -250,6 +244,7 @@ class FullTradeProductList extends React.Component {
       const [symbol] = productIterative.split('_');
       const [shortToken] = symbol.split('-');
       return {
+        ...item,
         id: productIterative.toUpperCase().replace('_', '/'),
         price: (price !== '--') ? calc.showFloorTruncation(price, max_price_digit) : '--',
         volume: (volume !== '--') ? calc.showFloorTruncation(volume, 0) : '--',
@@ -265,19 +260,13 @@ class FullTradeProductList extends React.Component {
       };
     }).filter((item) => {
       let filterTag = true;
-      if (item.listDisplay == 1) {
-        filterTag = false;
-      }
-      if (activeMarket.groupId === -1) {
-        filterTag = true;
-      }
       if (searchText.trim() !== '') {
-        filterTag = false;
-        if (item.shortToken.indexOf(searchText.toLowerCase().toString()) > -1) {
-          filterTag = true;
-        }
+        filterTag = item.shortToken.indexOf(searchText.trim().toLowerCase().toString()) > -1;
       }
       return filterTag;
+    }).sort((itemA, itemB) => {
+      const sortKey = `productSort${activeMarket.groupId}`;
+      return itemA[sortKey] - itemB[sortKey];
     });
     const listEmpty = toLocale('spot.noData');
     return (
@@ -307,14 +296,14 @@ class FullTradeProductList extends React.Component {
                   </li>
                   {
                     this.filterGroupList().map((market) => {
-                      const { groupId, groupName } = market;
+                      const { groupId, groupName, groupKey } = market;
                       return (
                         <li
                           key={groupId}
-                          className={groupId === activeMarket.groupId ? 'active' : 'active'}
+                          className={groupId === activeMarket.groupId ? 'active' : ''}
                           onClick={this.handleMarketChange(market)}
                         >
-                          {groupName}
+                          {groupKey ? toLocale(groupKey) : groupName}
                         </li>
                       );
                     })
@@ -328,7 +317,7 @@ class FullTradeProductList extends React.Component {
                 listHeight={360}
                 listEmpty={listEmpty}
                 activeId={activeId}
-                canStar
+                canStar={false}
                 theme="dark"
                 onSelect={this.handleSelectMenu}
                 onClickStar={this.handleClickStar}

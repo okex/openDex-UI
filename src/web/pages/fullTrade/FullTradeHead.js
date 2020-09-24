@@ -80,7 +80,7 @@ class FullTradeHead extends React.Component {
         </a>
         <div className="top-info-title">
           <div className="current-trade-title">
-            DEX交易
+            {toLocale('spot.asset.dexTest')}
             <a className={`down-arrow${headTypeList.length > 1 ? ' has-more' : ''}`} style={{ display: 'inline-block' }} />
             <div className="combo-box">
               <ComboBox

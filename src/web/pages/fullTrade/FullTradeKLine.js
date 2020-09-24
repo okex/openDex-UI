@@ -60,6 +60,7 @@ export default class FullTradeKLine extends React.Component {
   componentWillUnmount() {
     window.removeEventListener('resize', this.onResize);
   }
+
   onResize = () => {
     if (!this.kline) return;
     const winHeight = window.innerHeight;
@@ -67,7 +68,9 @@ export default class FullTradeKLine extends React.Component {
     const bottomHeight = 265;
     const minWinHeight = 600;
     const minHeight = minWinHeight - topHeight - bottomHeight;
+
     const height = Math.max(winHeight - topHeight - bottomHeight, minHeight);
+
     const { offsetWidth } = this.klineDom;
     this.kline.resize(offsetWidth, height);
   };
