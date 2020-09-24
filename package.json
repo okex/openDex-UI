@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "description": "spot system",
   "scripts": {
-    "dev": "webpack-dev-server --config build/webpack.config.dev.js",
-    "dev:web": "cross-env CLIENT=web npm run dev",
+    "dev": "cross-env CLIENT=desktop npm run dev:web",
+    "dev:web": "webpack-dev-server --config build/webpack.config.dev.js",
     "desktop": "webpack --config build/webpack.config.desktop.js",
     "web": "cross-env NODE_ENV=production webpack --config build/webpack.config.web.js",
     "build": "npm run desktop && npm run web",

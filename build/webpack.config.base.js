@@ -3,7 +3,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const src = path.resolve(__dirname, '../src');
-const client = process.env.CLIENT || 'desktop';
+const client = process.env.CLIENT || 'web';
 const base = {
   entry: path.resolve(__dirname, `../src/${client}/index.js`),
   output: {
