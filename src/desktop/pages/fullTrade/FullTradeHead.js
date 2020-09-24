@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import DesktopNodeMenu from '_app/component/DesktopNodeMenu';
 import DesktopLinkMenu from '_component/DesktopLinkMenu';
-import okexchainLogo from '_src/assets/images/OKExChain.png';
+import okexchainLogo from '_src/assets/images/OKExChainLogo.png';
 import * as CommonAction from '_src/redux/actions/CommonAction';
 import PageURL from '_src/constants/PageURL';
 import FullTradeTicker from '_src/pages/fullTrade/FullTradeTicker';
