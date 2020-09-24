@@ -1,30 +1,31 @@
 import React from 'react';
-import Tabs, { TabPane } from 'rc-tabs';
 import { toLocale } from '_src/locale/react-locale';
 import Icon from '_component/IconLite';
 import Message from '_component/Message';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
+import { calc } from '_component/okit';
 import { wsV3, channelsV3 } from '_src/utils/websocket';
 import Enum from '_src/utils/Enum';
 import util from '_src/utils/util';
 import './FullTradeProductList.less';
+import LeftMenu from '_component/leftMenu';
 import Introduce from '_component/kline/Introduce';
-import FullTradeProductListTab from '_src/pages/fullTrade/FullTradeProductListTab';
 import * as SpotActions from '_src/redux/actions/SpotAction';
-import PageURL from '_src/constants/PageURL';
+
+import PageURL from '_constants/PageURL';
+
+
+const { langForRaw } = util;
+
 
 function mapStateToProps(state) {
-  const { wsIsOnlineV3, wsErrCounterV3, tickers, activeMarket } = state.Spot;
   const {
-    groupList,
-    productList,
-    product,
-    productObj,
-    isMarginOpen,
-    spotOrMargin,
-    favorites,
+    wsIsOnlineV3, wsErrCounterV3, tickers, activeMarket
+  } = state.Spot;
+  const {
+    groupList, productList, product, productObj, isMarginOpen, spotOrMargin, localCollects
   } = state.SpotTrade;
   return {
     wsIsOnlineV3,
@@ -36,14 +37,13 @@ function mapStateToProps(state) {
     product,
     productObj,
     isMarginOpen,
-    spotOrMargin,
-    favorites,
+    spotOrMargin
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    spotActions: bindActionCreators(SpotActions, dispatch),
+    spotActions: bindActionCreators(SpotActions, dispatch)
   };
 }
 
@@ -54,10 +54,11 @@ class FullTradeProductList extends React.Component {
     super(props);
     this.state = {
       activeMarket: props.activeMarket,
-      isShowList: false,
-      isShowProduction: false,
+      searchText: '',
+      isShowList: false, 
+      isShowProduction: false
     };
-    this.canStar = true;
+    this.canStar = true; 
   }
 
   componentDidMount() {
@@ -82,6 +83,11 @@ class FullTradeProductList extends React.Component {
     if (this.state.isShowList) {
       return false;
     }
+    if (nextProps.activeMarket && this.state.activeMarket !== nextProps.activeMarket) {
+      this.setState({
+        activeMarket: nextProps.activeMarket
+      });
+    }
     return false;
   }
 
@@ -93,42 +99,67 @@ class FullTradeProductList extends React.Component {
   }
 
   getCurrListByArea = (productList, activeMarket) => {
-    const { groupId } = activeMarket;
-    return productList.filter((item) => {
-      return item.groupIds.includes(groupId);
+    const { webTypes, webType } = window.OK_GLOBAL;
+    const { groupId, groupName } = activeMarket;
+    const quoteSymbol = groupName || 'TUSDK';
+    const { spotOrMargin } = this.props;
+    let currList = [];
+    if (groupId === -1) {
+      currList = productList.filter((item) => {
+        return item.quoteAssetSymbol.toUpperCase() === quoteSymbol;
+      });
+    } else {
+      currList = productList.filter((item) => {
+        return item.quoteAssetSymbol.toUpperCase() === quoteSymbol;
+      });
+    }
+    if (webType !== webTypes.OKCoin || spotOrMargin === Enum.spotOrMargin.spot) {
+      return currList;
+    }
+    return currList.filter((product) => {
+      return product.isMarginOpen;
     });
   };
 
   showList = () => {
     this.setState({
-      isShowList: true,
+      isShowList: true 
     });
   };
   hideList = () => {
     this.setState({
-      isShowList: false,
+      isShowList: false 
     });
   };
   showProduction = () => {
     this.setState({
-      isShowProduction: true,
+      isShowProduction: true
     });
   };
   hideProduction = () => {
     this.setState({
-      isShowProduction: false,
+      isShowProduction: false
     });
   };
-
+  handleMarketChange = (market) => {
+    return () => {
+      this.setState({
+        searchText: '',
+        activeMarket: market
+      });
+    };
+  };
+  handleSearch = (e) => {
+    this.setState({
+      searchText: e.target.value
+    });
+  };
   handleSelectMenu = (item) => {
     const { spotActions } = this.props;
-
     const product = item.product;
     let urlLink = `${PageURL.spotFullPage}#product=${product.toLowerCase()}`;
     if (window.OK_GLOBAL.isMarginType) {
-      urlLink = `${
-        PageURL.spotFullMarginPage
-      }#product=${product.toLowerCase()}`;
+      urlLink = `${PageURL.spotFullMarginPage}#product=${product.toLowerCase()}`;
     }
     if (this.state.activeMarket.groupId === -1) {
       this.props.history.replace(`${urlLink}&favorites=1`);
@@ -147,10 +178,9 @@ class FullTradeProductList extends React.Component {
       const product = {
         productId: item.productId,
         collect: isStared ? 1 : 0,
-        symbol: item.symbol,
+        symbol: item.symbol
       };
-      spotActions
-        .collectProduct(product)
+      spotActions.collectProduct(product)
         .catch((res) => {
           if (res && res.msg) {
             Message.error({ content: res.msg });
@@ -162,32 +192,17 @@ class FullTradeProductList extends React.Component {
     }
   };
 
-  handleClickFavorite = (item) => {
-    const { isFavorite, product } = item;
-    const { spotActions, favorites } = this.props;
-    if (!isFavorite) {
-      spotActions.updateFavoriteList([...favorites, product]);
-    } else {
-      const dList = util.cloneDeep(favorites);
-      const list = dList.filter((l) => {
-        return l !== product;
-      });
-      spotActions.updateFavoriteList(list);
-    }
-  };
-
   startWs = () => {
     wsV3.send(channelsV3.getAllMarketTickers());
   };
+
   stopWs = () => {
     wsV3.stop(channelsV3.getAllMarketTickers());
   };
   filterGroupList = () => {
     const { groupList, spotOrMargin } = this.props;
-    const { webType } = window.OK_GLOBAL;
-    if (
-      webType !== (spotOrMargin === Enum.spotOrMargin.spot)
-    ) {
+    const { webTypes, webType } = window.OK_GLOBAL;
+    if (webType !== webTypes.OKCoin || spotOrMargin === Enum.spotOrMargin.spot) {
       return groupList;
     }
     return groupList.filter((g) => {
@@ -198,60 +213,78 @@ class FullTradeProductList extends React.Component {
     const { productConfig } = window.OK_GLOBAL;
     const { isMarginOpen } = this.props;
     if (isMarginOpen) {
-      return (
-        <span className="margin-x">{productConfig.maxMarginLeverage}X</span>
-      );
+      return <span className="margin-x">{productConfig.maxMarginLeverage}X</span>;
     }
     return null;
   };
 
   render() {
-    const { tickers, productList, product, favorites } = this.props;
-
-    const { isShowList, isShowProduction } = this.state;
+    const {
+      tickers, productList, product, productObj
+    } = this.props;
+    const {
+      isShowList, isShowProduction, searchText, activeMarket
+    } = this.state;
+    const currList = this.getCurrListByArea(productList, activeMarket);
     let activeId = product ? product.toUpperCase().replace('_', '/') : '';
-    let favoriteList = [];
-    const tabList = productList.map((item) => {
+    const menuList = currList.map((item) => {
       const productIterative = item.product;
       const pair = productIterative.toUpperCase().replace('_', '/');
-      const isFavorite = favorites.some((fav) => {
-        return fav === item.product;
-      });
       if (!activeId) {
         activeId = pair;
       }
       let change = 0;
       let changePercentage = '--';
+      let volume = '--';
       const currTicker = tickers[productIterative];
+      const initPrice = (productObj && productObj[productIterative]) ? productObj[productIterative].price : 0;
+      let price = '--';
       if (currTicker) {
+        if (+currTicker.price === -1) {
+          price = initPrice;
+        } else {
+          price = currTicker.price;
+        }
         change = currTicker.change;
         changePercentage = currTicker.changePercentage;
+        volume = currTicker.volume;
       }
+      const {
+        productId, collect, isMarginOpen, maxMarginLeverage
+      } = item;
+      const max_price_digit = item.max_price_digit || 4;
       const [symbol] = productIterative.split('_');
       const [shortToken] = symbol.split('-');
-      const exItem = {
-        ...item,
-        changePercentage,
+      return {
+        id: productIterative.toUpperCase().replace('_', '/'),
+        price: (price !== '--') ? calc.showFloorTruncation(price, max_price_digit) : '--',
+        volume: (volume !== '--') ? calc.showFloorTruncation(volume, 0) : '--',
+        productId,
+        product: item.product,
         text: pair,
         change,
-        id: productIterative.toUpperCase().replace('_', '/'),
+        changePercentage,
         shortToken,
-        isFavorite,
+        stared: Number(collect) == 1,
+        lever: isMarginOpen ? maxMarginLeverage : false,
+        listDisplay: item.listDisplay
       };
-      if (isFavorite) {
-        favoriteList.push(exItem);
+    }).filter((item) => {
+      let filterTag = true;
+      if (item.listDisplay == 1) {
+        filterTag = false;
       }
-      return exItem;
+      if (activeMarket.groupId === -1) {
+        filterTag = true;
+      }
+      if (searchText.trim() !== '') {
+        filterTag = false;
+        if (item.shortToken.indexOf(searchText.toLowerCase().toString()) > -1) {
+          filterTag = true;
+        }
+      }
+      return filterTag;
     });
-    favoriteList = favorites
-      .map((fav) => {
-        return favoriteList.find((item) => {
-          return fav === item.product;
-        });
-      })
-      .filter((item) => {
-        return !!item;
-      });
     const listEmpty = toLocale('spot.noData');
     return (
       <div className="full-product-list">
@@ -263,45 +296,52 @@ class FullTradeProductList extends React.Component {
           <em>{util.getShortName(product)}</em>
           {this.renderMarginTip()}
           <a className="down-arrow" />
-          <div
-            className="product-list-container-new"
-            style={{ display: isShowList ? 'block' : 'none' }}
-          >
-            <Tabs defaultActiveKey="1" prefixCls="product-list-tab">
-              <TabPane tab={toLocale('productList.favorite')} key="1">
-                <FullTradeProductListTab
-                  tabList={favoriteList}
-                  type={FullTradeProductListTab.TYPE.FAVORITE}
-                  searchType={FullTradeProductListTab.SEARCH_TYPE.TOKEN}
-                  activeId={activeId}
-                  onSelect={this.handleSelectMenu}
-                  onFavorite={this.handleClickFavorite}
-                />
-              </TabPane>
-              <TabPane tab={toLocale('productList.owner')} key="2">
-                <FullTradeProductListTab
-                  tabList={tabList}
-                  type={FullTradeProductListTab.TYPE.NORMAL}
-                  searchType={FullTradeProductListTab.SEARCH_TYPE.OWNER}
-                  activeId={activeId}
-                  onSelect={this.handleSelectMenu}
-                  onFavorite={this.handleClickFavorite}
-                />
-              </TabPane>
-              <TabPane tab={toLocale('productList.token')} key="3">
-                <FullTradeProductListTab
-                  tabList={tabList}
-                  type={FullTradeProductListTab.TYPE.NORMAL}
-                  searchType={FullTradeProductListTab.SEARCH_TYPE.TOKEN}
-                  activeId={activeId}
-                  onSelect={this.handleSelectMenu}
-                  onFavorite={this.handleClickFavorite}
-                />
-              </TabPane>
-            </Tabs>
+          <div className="product-list-container" style={{ display: isShowList ? 'block' : 'none' }}>
+            <div className="search-bar">
+              <input
+                placeholder={toLocale('search')}
+                onChange={this.handleSearch}
+                value={searchText}
+              />
+              <Icon className="icon-search" />
+            </div>
+            <div className="product-list">
+              <div className="trad-area">
+                <ul className="spot-head-tab">
+                  <li className="market-label" style={{ cursor: 'default', height: '26px', lineHeight: '26px' }}>
+                    { toLocale('spot.marketDict') }
+                  </li>
+                  {
+                    this.filterGroupList().map((market) => {
+                      const { groupId, groupName } = market;
+                      return (
+                        <li
+                          key={groupId}
+                          className={groupId === activeMarket.groupId ? 'active' : 'active'}
+                          onClick={this.handleMarketChange(market)}
+                        >
+                          {groupName}
+                        </li>
+                      );
+                    })
+                  }
+                </ul>
+              </div>
+              <LeftMenu
+                subTitle={[toLocale('pair'), toLocale('change')]}
+                searchPlaceholder={toLocale('search')}
+                menuList={menuList}
+                listHeight={360}
+                listEmpty={listEmpty}
+                activeId={activeId}
+                canStar
+                theme="dark"
+                onSelect={this.handleSelectMenu}
+                onClickStar={this.handleClickStar}
+              />
+            </div>
           </div>
         </span>
-
         <span
           onMouseEnter={this.showProduction}
           onMouseLeave={this.hideProduction}
@@ -312,17 +352,15 @@ class FullTradeProductList extends React.Component {
             isColor
             style={{ width: '16px', height: '16px', marginBottom: '-3px' }}
           />
-          <div
-            style={{ display: isShowProduction ? 'block' : 'none' }}
-            className="production-container-outer"
-          >
-            <div className="production-container">
+          <div style={{ display: isShowProduction ? 'block' : 'none' }} className="production-container-outer">
+            <div
+              className="production-container"
+            >
               <Introduce />
             </div>
           </div>
         </span>
-      </div>
-    );
+      </div>);
   }
 }
 export default FullTradeProductList;

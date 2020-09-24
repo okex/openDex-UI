@@ -9,6 +9,8 @@ import PageURL from '_src/constants/PageURL';
 import FullTradeTicker from '_src/pages/fullTrade/FullTradeTicker';
 import FullTradeProductList from './FullTradeProductList';
 import './FullTradeHead.less';
+import { toLocale } from '_src/locale/react-locale';
+import ComboBox from '_component/ComboBox/ComboBox';
 import util from '_src/utils/util';
 import { LoggedMenu, LoginMenu } from '_src/component/DexMenu';
 
@@ -34,6 +36,23 @@ class FullTradeHead extends React.Component {
       width: '100%',
       marginTop: 15,
     };
+    this.headTypeOKEx = [
+      {
+        url: '/derivatives/futures/full', type: '/derivatives/futures/full', label: toLocale('spot.asset.futureTrade'), monitor: 'full_header,nav_future,nav_enter_future'
+      },
+      {
+        url: '/derivatives/swap/full', type: '/derivatives/swap/full', label: toLocale('spot.asset.futureswapTrade'), monitor: 'full_header,nav_swap,nav_enter_swap'
+      },
+      {
+        url: '/spot/full', type: '/spot/full', label: toLocale('spot.asset.spotTrade'), monitor: 'full_header,nav_spot,nav_enter_spot'
+      },
+      {
+        url: '/spot/fullMargin', type: '/spot/fullMargin', label: toLocale('spot.asset.newMarginTrade'), monitor: 'full_header,nav_margin,nav_enter_margin'
+      },
+      {
+        url: `${PageURL.homePage}/spot/trade`, type: '/dex-test/spot/trade', label: toLocale('spot.asset.dexTest'), monitor: 'full_header,nav_dex,nav_enter_dex'
+      }
+    ];
   }
   componentWillMount() {}
   componentDidMount() {
@@ -53,11 +72,24 @@ class FullTradeHead extends React.Component {
   };
 
   render() {
+    const headTypeList = this.headTypeOKEx;
     return (
       <div className="full-top-info-box">
         <a className="logo-wrap" onClick={this.goHome}>
           <img src={okexchainLogo} style={this.iconStyle} />
         </a>
+        <div className="top-info-title">
+          <div className="current-trade-title">
+            DEX交易
+            <a className={`down-arrow${headTypeList.length > 1 ? ' has-more' : ''}`} style={{ display: 'inline-block' }} />
+            <div className="combo-box">
+              <ComboBox
+                current={this.props.location.pathname}
+                comboBoxDataSource={headTypeList.length > 1 ? headTypeList : []}
+              />
+            </div>
+          </div>
+        </div> 
         {this.isTradePage() ? <FullTradeProductList /> : null}
         {this.isTradePage() ? <FullTradeTicker /> : null}
 
