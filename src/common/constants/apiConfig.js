@@ -1,6 +1,6 @@
 import { NODE_TYPE, MAX_LATENCY } from './Node';
-
-const httpUrl = 'https://www.okex.com';
+import getApiUrl from './getApiUrl';
+const httpUrl = getApiUrl();
 const wsUrl = 'wss://dexcomreal.bafang.com:8443/ws/v3';
 
 const commonNodeItems = {

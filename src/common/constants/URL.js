@@ -1,5 +1,5 @@
 import getApiUrl from './getApiUrl';
-const OKDEX_BASE_URL = '{domain}/okexchain/v1';
+const OKDEX_BASE_URL = `${getApiUrl()}/okexchain/v1`;
 
 const URL = {
   GET_ORDER_OPEN: `${OKDEX_BASE_URL}/order/list/open`,
