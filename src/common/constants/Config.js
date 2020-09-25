@@ -1,12 +1,12 @@
+import getApiUrl from './getApiUrl';
 const okbExplorePrefix = 'okexchain-test';
-const apiUrl = 'http://www.okex.com';
 const exploreUrl = 'https://www.oklink.com';
 
 const Config = {
   okexchain: {
     browserUrl: `${exploreUrl}/${okbExplorePrefix}`,
     browserAddressUrl: `${exploreUrl}/${okbExplorePrefix}/address`,
-    clientUrl: apiUrl,
+    clientUrl: getApiUrl(),
   },
   validatePwdDeferSecond: 100,
   operateResultDelaySecond: 500,
