@@ -1,5 +1,7 @@
 import getApiUrl from './getApiUrl';
-const OKDEX_BASE_URL = `${getApiUrl()}/okexchain/v1`;
+const url = getApiUrl();
+const OKDEX_BASE_URL = `${url}/okexchain/v1`;
+const OKDEX_SUPPORT_ROOT = `${url}/okdex/v1`;
 
 const URL = {
   GET_ORDER_OPEN: `${OKDEX_BASE_URL}/order/list/open`,
@@ -16,6 +18,8 @@ const URL = {
   GET_LATEST_HEIGHT: `${OKDEX_BASE_URL}/latestheight`,
   GET_ACCOUNT_DEPOSIT: `${OKDEX_BASE_URL}/dex/deposits`,
   GET_FEES: `${OKDEX_BASE_URL}/dex/fees`,
-  GET_LATEST_HEIGHT_MASTER: `${getApiUrl()}/latestheight`,
+  GET_LATEST_HEIGHT_MASTER: `${url}/latestheight`,
+  GET_LEGAL_LIST: `${OKDEX_SUPPORT_ROOT}/index/legalList`,
+  GET_LEGAL_RATE: `${OKDEX_SUPPORT_ROOT}/index/currency2LegalRate?quoteCurrency={quote}&legalTender={base}`,
 };
 export default URL;

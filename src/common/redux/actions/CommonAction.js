@@ -1,8 +1,14 @@
 import OKExChainClient, { crypto } from '@okexchain/javascript-sdk';
 import { toLocale } from '_src/locale/react-locale';
+import Cookies from 'js-cookie';
 import CommonActionType from '../actionTypes/CommonActionType';
 import Config from '../../constants/Config';
 import FormActionType from '../actionTypes/FormActionType';
+import ont from '../../utils/dataProxy';
+import URL from '../../constants/URL';
+import util from '../../utils/util';
+
+const legalCurrencyId = 'dex_legalCurrencyId';
 
 export function initOKExChainClient() {
   return (dispatch) => {
@@ -65,5 +71,73 @@ export function updateLatestHeight(height) {
       type: CommonActionType.UPDATE_LATEST_HEIGHT,
       data: height,
     });
+  };
+}
+
+export function fetchLegalList() {
+  return (dispatch) => {
+    ont.get(`${URL.GET_LEGAL_LIST}?locale=${util.getSupportLocale(Cookies.get('locale') || 'en_US')}`).then((res) => {
+      dispatch({
+        type: CommonActionType.UPDATE_CURRENCY_LIST,
+        data: res.data
+      });
+    }).catch(() => {
+      dispatch({
+        type: CommonActionType.UPDATE_CURRENCY_LIST,
+        data: []
+      });
+    });
+  };
+}
+
+export function fetchChargeUnit() {
+  return (dispatch, getState) => {
+    let id = 0;
+    const legalId = window.localStorage.getItem(legalCurrencyId);
+    if (legalId) {
+      id = Number(legalId);
+    }
+    setChargeUnit(id)(dispatch, getState);
+  };
+}
+
+export function setChargeUnit(legalId) {
+  return (dispatch, getState) => {
+    const { legalId: oldCurrencyId } = getState().Common; // getState().Spot
+    const setCId = (cId) => {
+      window.localStorage.setItem(legalCurrencyId, String(cId));
+      dispatch({
+        type: CommonActionType.UPDATE_CURRENCY_ID,
+        data: cId
+      });
+    };
+    if (oldCurrencyId !== legalId) {
+      setCId(legalId);
+    }
+  };
+}
+
+export function setChargeUnitObj(legalObj) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: CommonActionType.UPDATE_CURRENCY_OBJ,
+      data: legalObj
+    });
+    fetchCurrency2LegalRate(legalObj)(dispatch, getState);
+  };
+}
+
+export function fetchCurrency2LegalRate(legalObj) {
+  return (dispatch, getState) => {
+    const { activeMarket } = getState().Spot;
+    const quote = (activeMarket.groupName && activeMarket.groupName.toLowerCase()) || 'tusdk';
+    ont.get(URL.GET_LEGAL_RATE.replace('{quote}', quote).replace('{base}', legalObj.isoCode))
+      .then((res) => {
+        dispatch({
+          type: CommonActionType.UPDATE_CURRENCY_OBJ,
+          data: { ...legalObj, rate: res.data.index }
+        });
+      }).catch(() => {
+      });
   };
 }

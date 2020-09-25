@@ -2,8 +2,15 @@ import { storage } from '_src/component/okit';
 import { DEFAULT_NODE } from '_constants/apiConfig';
 import websocketURL from '../constants/websocketURL';
 
+function canSend() {
+  if(window.OK_GLOBAL && window.OK_GLOBAL.ws_v3 && window.OK_GLOBAL.ws_v3.isConnected()) return true;
+  return false;
+}
+
 export const wsV3 = {
+  canSend,
   login: (token) => {
+    if(!canSend()) return;
     window.OK_GLOBAL.ws_v3.sendChannel(
       JSON.stringify({
         op: 'dex_jwt',
@@ -12,6 +19,7 @@ export const wsV3 = {
     );
   },
   send: (subChannelsArgs = []) => {
+    if(!canSend()) return;
     if (subChannelsArgs.length) {
       window.OK_GLOBAL.ws_v3.sendChannel(
         JSON.stringify({
@@ -22,6 +30,7 @@ export const wsV3 = {
     }
   },
   stop: (subChannelsArgs = []) => {
+    if(!canSend()) return;
     if (subChannelsArgs.length) {
       window.OK_GLOBAL.ws_v3.sendChannel(
         JSON.stringify({

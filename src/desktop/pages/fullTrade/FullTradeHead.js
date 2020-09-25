@@ -36,11 +36,9 @@ class FullTradeHead extends React.Component {
       marginTop: 15,
     };
   }
-  componentWillMount() {}
   componentDidMount() {
     this.props.commonAction.initOKExChainClient();
   }
-  componentWillReceiveProps(nextProps) {}
   isTradePage() {
     return this.props.location.pathname.indexOf(PageURL.spotFullPage) >= 0;
   }

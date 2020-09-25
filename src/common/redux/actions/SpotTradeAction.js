@@ -1,4 +1,3 @@
-import moment from 'moment';
 import { calc, depth } from '_component/okit';
 import ont from '../../utils/dataProxy';
 import util from '../../utils/util';
@@ -7,6 +6,7 @@ import SpotTradeActionType from '../actionTypes/SpotTradeActionType';
 import Enum from '../../utils/Enum';
 import SpotActionType from '../actionTypes/SpotActionType';
 import FormatAsset from '../../utils/FormatAsset';
+import { wsV3 } from '../../utils/websocket';
 
 export function fetchAccountAssets(callback) {
   return (dispatch, getState) => {
@@ -78,9 +78,9 @@ export function clearSortPushDepthData() {
 }
 
 export function fetchDepth(product) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     ont.get(URL.GET_DEPTH_BOOK, { params: { product } }).then((res) => {
-      if (window.OK_GLOBAL.ws_v3.isConnected()) {
+      if (wsV3.canSend()) {
         console.log('trace,websocket,error,ajax回调发生在websocket推送之后');
         return;
       }

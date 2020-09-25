@@ -150,8 +150,7 @@ const InitWrapper = (Component) => {
       }
 
       if (
-        OK_GLOBAL.ws_v3 &&
-        OK_GLOBAL.ws_v3.isConnected() &&
+        wsV3.canSend() &&
         util.isLogined()
       ) {
         wsV3.login(util.getMyAddr());

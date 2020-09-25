@@ -45,12 +45,6 @@ export default class FullTradeFrame extends React.Component {
   }
 
   componentWillUnmount() {
-    if (document.querySelector('#headerContainer')) {
-      document.querySelector('#headerContainer').style.display = 'block';
-    }
-    if (document.querySelector('#footerContainer')) {
-      document.querySelector('#footerContainer').style.display = 'block';
-    }
     window.removeEventListener('resize', this.onResize);
   }
 
@@ -66,6 +60,15 @@ export default class FullTradeFrame extends React.Component {
       document.body.style.overflowY = 'scroll';
     }
   });
+
+  goHome = () => {
+    const url = window.location.href.split('#')[0];
+    if (/^file/i.test(url)) {
+      window.location.href = `${url}#${PageURL.spotFullPage}`;
+    } else {
+      window.location.href = PageURL.spotFullPage;
+    }
+  };
 
   render() {
     return (
