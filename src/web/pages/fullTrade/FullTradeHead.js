@@ -67,6 +67,7 @@ class FullTradeHead extends React.Component {
         url: `${PageURL.homePage}/spot/trade`, type: '/dex-test/spot/trade', label: toLocale('spot.asset.dexTest'), monitor: 'full_header,nav_dex,nav_enter_dex'
       }
     ];
+    this.currentHead = this.headTypeOKEx[4].url;
   }
   
   componentDidMount() {
@@ -109,7 +110,7 @@ class FullTradeHead extends React.Component {
       window.location.href = PageURL.spotFullPage;
     }
   }
-  
+
   render() {
     const {
       productObj, product, callMarketObj
@@ -134,7 +135,7 @@ class FullTradeHead extends React.Component {
             <a className={`down-arrow${headTypeList.length > 1 ? ' has-more' : ''}`} style={{ display: 'inline-block' }} />
             <div className="combo-box">
               <ComboBox
-                current={this.props.location.pathname}
+                current={this.currentHead}
                 comboBoxDataSource={headTypeList.length > 1 ? headTypeList : []}
               />
             </div>
