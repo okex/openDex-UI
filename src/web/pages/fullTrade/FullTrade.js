@@ -45,6 +45,12 @@ export default class FullTradeFrame extends React.Component {
   }
 
   componentWillUnmount() {
+    if (document.querySelector("#headerContainer")) {
+      document.querySelector("#headerContainer").style.display = 'block';
+    }
+    if (document.querySelector("#footerContainer")) {
+      document.querySelector("#footerContainer").style.display = 'block';
+    }
     window.removeEventListener('resize', this.onResize);
   }
 

@@ -99,13 +99,11 @@ class FullTradeProductList extends React.Component {
     let currList = [];
     if (groupId === -1) {
       currList = productList.filter((item) => {
-        if(!item.quoteAssetSymbol) item.quoteAssetSymbol = item.quote_asset_symbol;
-        return item.quoteAssetSymbol.toUpperCase() === quoteSymbol;
+        return item.quote_asset_symbol.toUpperCase() === quoteSymbol;
       });
     } else {
       currList = productList.filter((item) => {
-        if(!item.quoteAssetSymbol) item.quoteAssetSymbol = item.quote_asset_symbol;
-        return item.quoteAssetSymbol.toUpperCase() === quoteSymbol;
+        return item.quote_asset_symbol.toUpperCase() === quoteSymbol;
       });
     }
     return currList;
@@ -276,6 +274,11 @@ class FullTradeProductList extends React.Component {
       }
       return filterTag;
     });
+    if(activeMarket.groupId === 2) {
+      menuList.sort(function(a,b) { return parseFloat(a.changePercentage) - parseFloat(b.changePercentage); })
+    } else if(activeMarket.groupId === 3) {
+      menuList.sort(function(a,b) { return parseFloat(b.changePercentage) - parseFloat(a.changePercentage); })
+    }
     const listEmpty = toLocale('spot.noData');
     return (
       <div className="full-product-list">
@@ -308,7 +311,7 @@ class FullTradeProductList extends React.Component {
                       return (
                         <li
                           key={groupId}
-                          className={groupId === activeMarket.groupId ? 'active' : 'active'}
+                          className={groupId === activeMarket.groupId ? 'active' : ''}
                           onClick={this.handleMarketChange(market)}
                         >
                           {groupKey ? toLocale(groupKey) : groupName}
@@ -325,7 +328,7 @@ class FullTradeProductList extends React.Component {
                 listHeight={360}
                 listEmpty={listEmpty}
                 activeId={activeId}
-                canStar
+                canStar={false}
                 theme="dark"
                 onSelect={this.handleSelectMenu}
                 onClickStar={this.handleClickStar}

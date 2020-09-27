@@ -253,7 +253,6 @@ class FullTradeProductList extends React.Component {
       .filter((item) => {
         return !!item;
       });
-    const listEmpty = toLocale('spot.noData');
     return (
       <div className="full-product-list">
         <span
