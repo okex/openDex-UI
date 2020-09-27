@@ -18,7 +18,7 @@ const URL = {
   GET_LATEST_HEIGHT: `${OKDEX_BASE_URL}/latestheight`,
   GET_ACCOUNT_DEPOSIT: `${OKDEX_BASE_URL}/dex/deposits`,
   GET_FEES: `${OKDEX_BASE_URL}/dex/fees`,
-  GET_LATEST_HEIGHT_MASTER: `${url}/latestheight`,
+  GET_LATEST_HEIGHT_MASTER: `${OKDEX_BASE_URL}/latestheight`,
   GET_LEGAL_LIST: `${OKDEX_SUPPORT_ROOT}/index/legalList`,
   GET_LEGAL_RATE: `${OKDEX_SUPPORT_ROOT}/index/currency2LegalRate?quoteCurrency={quote}&legalTender={base}`,
 };
