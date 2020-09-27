@@ -29,8 +29,8 @@ function mapDispatchToProps(dispatch) {
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class FullTradeFrame extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     window.OK_GLOBAL.tradeType = Enum.tradeType.fullTrade;
     window.OK_GLOBAL.isMarginType = false;
     window.addEventListener('resize', this.onResize);

@@ -7,24 +7,17 @@ import { crypto } from '@okexchain/javascript-sdk';
 import { Dialog } from '_component/Dialog';
 import Menu from '_src/component/Menu';
 import util from '_src/utils/util';
-import Icon from '_src/component/IconLite';
+import IconFountUnfold from './IconFountUnfold';
 import { withRouter, NavLink } from 'react-router-dom';
 import PageURL from '_constants/PageURL';
 import PassWordDialog from '_component/PasswordDialog';
 import * as CommonAction from '../../redux/actions/CommonAction';
 import WalletMenuTool from './WalletMenuTool';
+import DocMenu from './DocMenu';
 
 import './index.less';
 
 const SubMenu = Menu.SubMenu;
-const IconFountUnfold = () => {
-  return (
-    <Icon
-      className="icon-Unfold"
-      style={{ fontSize: '14px', marginLeft: '6px' }}
-    />
-  );
-};
 
 function mapStateToProps(state) {
   const { privateKey } = state.Common;
@@ -103,6 +96,7 @@ class DexLoggedMenu extends React.Component {
     });
   };
   render() {
+    const { hasDoc } = this.props;
     const { isShowPassword, passwordError } = this.state;
     let addr = '';
     try {
@@ -187,6 +181,7 @@ class DexLoggedMenu extends React.Component {
               </NavLink>
             </Menu.Item>
           </SubMenu>
+          {hasDoc && <DocMenu/>}
         </Menu>
       </React.Fragment>
     );

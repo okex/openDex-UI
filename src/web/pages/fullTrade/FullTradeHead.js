@@ -13,7 +13,7 @@ import FullTradeProductList from './FullTradeProductList';
 import './FullTradeHead.less';
 import ComboBox from '_src/component/ComboBox/ComboBox';
 import util from '_src/utils/util';
-import { LoggedMenu, LoginMenu } from '_src/component/DexMenu';
+import { LoggedMenu, LoginMenu,DocMenu } from '_src/component/DexMenu';
 
 
 function mapStateToProps(state) {
@@ -144,8 +144,9 @@ class FullTradeHead extends React.Component {
         {this.isTradePage() ? <FullTradeProductList /> : null}
         {this.isTradePage() ? <FullTradeTicker /> : null}
         <div className="okdex-header-right">
-          {util.isLogined() ? <LoggedMenu /> : <LoginMenu />}
-          <DesktopLinkMenu />
+          {util.isLogined() ? <LoggedMenu/> : <LoginMenu/>}
+          <DocMenu/>
+          <DesktopLinkMenu hasVersion={false}/>
         </div>
       </div>
     );
