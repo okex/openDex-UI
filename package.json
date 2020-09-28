@@ -4,7 +4,9 @@
   "description": "spot system",
   "scripts": {
     "dev": "cross-env CLIENT=desktop npm run dev:web",
+    "dev:mock": "cross-env MOCK_DATA=mock npm run dev",
     "dev:web": "webpack-dev-server --config build/webpack.config.dev.js",
+    "dev:web:mock": "cross-env MOCK_DATA=mock npm run dev:web",
     "desktop": "cross-env CLIENT=desktop webpack --config build/webpack.config.desktop.js",
     "web": "cross-env NODE_ENV=production webpack --config build/webpack.config.web.js",
     "build": "npm run desktop && npm run web",
@@ -46,6 +48,7 @@
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
     "mini-css-extract-plugin": "^0.4.1",
+    "mockjs": "^1.1.0",
     "optimize-css-assets-webpack-plugin": "^5.0.0",
     "postcss-loader": "^2.1.5",
     "prettier": "^2.1.2",

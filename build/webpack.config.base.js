@@ -14,15 +14,23 @@ const base = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        loader: 'babel-loader',
         exclude: /node_modules\/(?!@ok\/)/,
-        options: {
-          presets: ['@babel/preset-react'],
-          plugins: [
-            ['@babel/plugin-proposal-decorators', { legacy: true }],
-            ['@babel/plugin-proposal-class-properties', { loose: true }],
-          ],
-        },
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-react'],
+              plugins: [
+                ['@babel/plugin-proposal-decorators', { legacy: true }],
+                ['@babel/plugin-proposal-class-properties', { loose: true }],
+              ],
+            },
+          },
+          ...(() =>
+            process.env.MOCK_DATA === 'mock'
+              ? [{ loader: 'mock-loader', options: { enable: true } }]
+              : [])(),
+        ],
       },
       {
         test: /\.css$/,
@@ -71,6 +79,9 @@ const base = {
         },
       },
     ],
+  },
+  resolveLoader: {
+    modules: ['node_modules', path.resolve(__dirname, 'loaders')],
   },
   resolve: {
     extensions: ['.js', '.less', '.jsx'],
