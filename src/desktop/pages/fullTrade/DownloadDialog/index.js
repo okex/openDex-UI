@@ -139,7 +139,7 @@ const onDownloadAndUpdate = () => {
   };
 
   const updateDialog = (option) => {
-    if (dialog) {
+    if (dialog && !dialog.isDestroyed()) {
       dialog.update(option);
     } else {
       dialog = Dialog.show(option);
@@ -177,7 +177,7 @@ const onDownloadAndUpdate = () => {
     updateProcessDialog();
   };
 
-  const setSuceesDialog = () => {
+  const setSuccessDialog = () => {
     isFinish = true;
     option = config.success;
     option.onConfirm = () => dialog.destroy();
@@ -234,7 +234,7 @@ const onDownloadAndUpdate = () => {
       });
 
       emitter.on('downloadFinish@okexchaincli', () => {
-        setSuceesDialog();
+        setSuccessDialog();
       });
 
       emitter.on('downloadError', () => {

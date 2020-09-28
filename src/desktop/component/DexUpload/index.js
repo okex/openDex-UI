@@ -11,10 +11,6 @@ class DexUpload extends Component {
 
   onFileChange = (e) => {
     const { onUpload } = this.props;
-    console.log(e.target);
-    console.log(e.target.value);
-    console.log(e.target.files[0]);
-    console.log(e.target.files[0].path);
     const filePath = e.target.files[0].path;
     onUpload && onUpload(filePath);
   };

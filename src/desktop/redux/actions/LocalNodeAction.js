@@ -7,6 +7,7 @@ import { NONE_NODE, LOCAL_PREFIX, LOCAL_PREFIX_WS } from '_constants/apiConfig';
 import { getStartCommand } from '_src/utils/command';
 import LocalNodeActionType from '../actionTypes/LocalNodeActionType';
 import NodeActionType from '../actionTypes/NodeActionType';
+import downloadDialog from '_app/pages/fullTrade/DownloadDialog';
 
 const electronUtils = window.require('electron').remote.require('./src/utils');
 
@@ -32,10 +33,14 @@ function getListenClient(dispatch, getState) {
 }
 
 function start(datadir, dispatch, getState, terminal = false) {
-  const { shell, localNodeServerClient } = electronUtils;
+  const { shell, localNodeServerClient,localNodeDataStatus } = electronUtils;
   const directory = getOkexchaindDir();
   return new Promise((reslove, reject) => {
     try {
+      if(!localNodeDataStatus.checkOKExchain(true)) {
+        downloadDialog(true);
+        return;
+      }
       shell.cd(directory);
       const { p2p, ws, rest, db } = getState().LocalNodeStore;
       const startCommand = getStartCommand({
@@ -342,6 +347,7 @@ export function startOkexchaind(datadir, terminal = false) {
       statusInstance.set({ hasSetSeeds: true });
     }
     await start(datadir, dispatch, getState, terminal);
+    switchIsStarted(true)(dispatch);
     startPoll(dispatch, getState);
   };
 }
@@ -378,6 +384,7 @@ export function stopOkexchaind(terminal = false) {
           type: LocalNodeActionType.UPDATE_OKEXCHAIND,
           data: null,
         });
+        switchIsStarted(false)(dispatch);
       }
     });
     dispatch({

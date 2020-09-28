@@ -100,7 +100,7 @@ function create(config) {
 
   let parentContainer = document.body;
   const { parentSelector } = config;
-
+  let hasDestroy = false;
   if (parentSelector && document.querySelector(parentSelector)) {
     parentContainer = document.querySelector(parentSelector);
   }
@@ -111,6 +111,7 @@ function create(config) {
     if (unmountResult && div.parentNode) {
       div.parentNode.removeChild(div);
     }
+    hasDestroy = true;
   }
 
   function close() {
@@ -143,6 +144,9 @@ function create(config) {
   return {
     destroy,
     update,
+    isDestroyed() {
+      return hasDestroy;
+    }
   };
 }
 

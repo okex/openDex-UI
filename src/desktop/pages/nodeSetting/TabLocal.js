@@ -91,10 +91,8 @@ class TabLocal extends Component {
   onSwitchChange = (checked) => {
     const { localNodeAction, datadir } = this.props;
     if (checked) {
-      localNodeAction.switchIsStarted(true);
       localNodeAction.startOkexchaind(datadir, true);
     } else {
-      localNodeAction.switchIsStarted(false);
       localNodeAction.stopOkexchaind(true);
     }
   };
