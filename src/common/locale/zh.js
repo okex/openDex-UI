@@ -704,5 +704,6 @@ const zhCN = {
   issue_column_original: 'Original totalsupply',
   issue_column_total: 'Totalsupply',
   dashboard_transaction_title: 'Transaction',
+  'spot.asset.swap': 'SWAP Trade'
 };
 export default zhCN;

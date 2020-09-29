@@ -23,4 +23,5 @@ export default {
   issueDetailPage: `${contentPath}/issue`,
   tokenpairDetailPage: `${contentPath}/tokenpair`,
   feesPage: `${contentPath}/fees`,
+  swapPage: `${contentPath}/swap`,
 };

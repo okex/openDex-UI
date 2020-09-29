@@ -15,6 +15,7 @@ import Dashboard from '../pages/dashboard';
 import IssueDetail from '../pages/issueDetail';
 import TokenpairDetail from '../pages/tokenpairDetail';
 import Fees from '../pages/fees';
+import Swap from '../pages/swap';
 
 const routes = [
   {
@@ -84,6 +85,10 @@ const routes = [
   {
     path: PageURL.feesPage,
     component: Fees,
+  },
+  {
+    path: PageURL.SwapPage,
+    component: Swap,
   },
 ];
 

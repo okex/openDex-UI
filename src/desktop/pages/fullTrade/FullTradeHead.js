@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import DesktopNodeMenu from '_app/component/DesktopNodeMenu';
 import DesktopLinkMenu from '_component/DesktopLinkMenu';
+import DesktopTypeMenu from '_component/DesktopTypeMenu';
 import okexchainLogo from '_src/assets/images/OKExChainLogo.png';
 import * as CommonAction from '_src/redux/actions/CommonAction';
 import PageURL from '_src/constants/PageURL';
@@ -57,6 +58,7 @@ class FullTradeHead extends React.Component {
         <a className="logo-wrap" onClick={this.goHome}>
           <img src={okexchainLogo} style={this.iconStyle} />
         </a>
+        <DesktopTypeMenu isDexDesk={true}/>
         <DesktopNodeMenu />
         {this.isTradePage() ? <FullTradeProductList /> : null}
         {this.isTradePage() ? <FullTradeTicker /> : null}

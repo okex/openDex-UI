@@ -1,0 +1,39 @@
+@import "~_src/assets/css/theme";
+.top-info-title {
+  font-size: 16px;
+  font-weight: 500;
+  margin-left: 25px;
+  >.current-trade-title {
+    cursor: pointer;
+    height: 45px;
+    > .down-arrow {
+      border-style: solid;
+      border-width: 5px 4px 0;
+      border-color: @full-white50 transparent transparent;
+      display: inline-block;
+      margin-left: 8px;
+      margin-top: -5px;
+      vertical-align: middle;
+      transition: transform 0.3s, -webkit-transform 0.3s;
+    }
+    > div.combo-box {
+      position: absolute;
+      display: none;
+      z-index: 10;
+      height: 50px;
+      line-height: 50px;
+      top: 45px;
+      padding-top: 5px;
+    }
+    &:hover {
+      > div.combo-box {
+        display: block;
+      }
+      > .down-arrow.has-more {
+        transform: rotate(180deg);
+        transform-origin: center;
+      }
+    }
+  }
+
+}
