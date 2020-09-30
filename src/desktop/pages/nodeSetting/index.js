@@ -60,11 +60,10 @@ class NodeSetting extends Component {
     const hasVisited = {};
 
     const fetchLocalNode = () => {
-      const { currentNode, isStarted } = this.props;
+      const { currentNode, isStarted, nodeActions } = this.props;
       const isLocal = currentNode.type === NODE_TYPE.LOCAL || currentNode.type === NODE_TYPE.NONE;
       if ( isStarted && isLocal && currentNode.wsUrl) {
         getNodeLatency(currentNode).then((latency) => {
-          const { nodeActions } = this.props;
           nodeActions.updateCurrentNode({
             ...currentNode,
             latency,
