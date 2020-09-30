@@ -149,10 +149,7 @@ const InitWrapper = (Component) => {
         v3.connect();
       }
 
-      if (
-        wsV3.canSend() &&
-        util.isLogined()
-      ) {
+      if (wsV3.canSend() && util.isLogined()) {
         wsV3.login(util.getMyAddr());
       }
     };

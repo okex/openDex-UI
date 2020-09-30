@@ -146,7 +146,7 @@ function create(config) {
     update,
     isDestroyed() {
       return hasDestroy;
-    }
+    },
   };
 }
 

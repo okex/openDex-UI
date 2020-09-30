@@ -1,13 +1,12 @@
 import ont from '_src/utils/dataProxy';
 import { commaLineBreak, divide, multiply } from '_src/utils/ramda';
-import { storage } from '_component/okit';
 import Message from '_src/component/Message';
-import { NODE_TYPE, MAX_LATENCY } from '_constants/Node';
-import { NONE_NODE, LOCAL_PREFIX, LOCAL_PREFIX_WS } from '_constants/apiConfig';
+import { LOCAL_PREFIX } from '_constants/apiConfig';
 import { getStartCommand } from '_src/utils/command';
 import LocalNodeActionType from '../actionTypes/LocalNodeActionType';
 import NodeActionType from '../actionTypes/NodeActionType';
 import downloadDialog from '_app/pages/fullTrade/DownloadDialog';
+import { htmlLineBreak } from '_src/utils/ramda';
 
 const electronUtils = window.require('electron').remote.require('./src/utils');
 
@@ -26,19 +25,19 @@ function stopPoll() {
   tempBreakTimer && clearInterval(tempBreakTimer);
 }
 
-function getListenClient(dispatch, getState) {
-  if (!getListenClient.instance)
-    getListenClient.instance = listenClient(dispatch, getState);
+function getListenClient() {
+  if (!getListenClient.instance) getListenClient.instance = listenClient();
   return getListenClient.instance;
 }
 
 function start(datadir, dispatch, getState, terminal = false) {
-  const { shell, localNodeServerClient,localNodeDataStatus } = electronUtils;
+  const { shell, localNodeServerClient, localNodeDataStatus } = electronUtils;
   const directory = getOkexchaindDir();
   return new Promise((reslove, reject) => {
     try {
-      if(!localNodeDataStatus.checkOKExchain(true)) {
+      if (!localNodeDataStatus.checkOKExchain(true)) {
         downloadDialog(true);
+        reject();
         return;
       }
       shell.cd(directory);
@@ -54,9 +53,9 @@ function start(datadir, dispatch, getState, terminal = false) {
         localNodeServerClient.get() ||
         shell.exec(`${startCommand}`, { async: true }, (code) => {
           if (code !== 130 && code !== 0) {
-            Message.error({
-              content: 'okexchaind start error',
-            });
+            // Message.error({
+            //   content: 'okexchaind start error',
+            // });
             stopPoll();
             dispatch({
               type: LocalNodeActionType.UPDATE_IS_STARTED,
@@ -73,7 +72,7 @@ function start(datadir, dispatch, getState, terminal = false) {
         data: datadir,
       });
       localNodeServerClient.set(child);
-      if (terminal) getListenClient(dispatch, getState).start();
+      if (terminal) getListenClient().start();
       reslove(true);
     } catch (err) {
       reject(err);
@@ -81,31 +80,46 @@ function start(datadir, dispatch, getState, terminal = false) {
   });
 }
 
-function listenClient(dispatch, getState) {
+function listenClient() {
   const { localNodeServerClient } = electronUtils;
-  const child = localNodeServerClient.get();
+  let logs = [],
+    interval = null;
+  const MAXLOGCOUNT = 20;
   function getData(data) {
-    {
-      const { logs } = getState().LocalNodeStore;
-      const newLog = data + logs;
-      dispatch({
-        type: LocalNodeActionType.UPDATE_LOGS,
-        data: newLog,
-      });
-      dispatch({
-        type: LocalNodeActionType.UPDATE_OKEXCHAIND,
-        data: child,
-      });
+    const temp = htmlLineBreak(data);
+    if (logs.length >= MAXLOGCOUNT) logs.shift();
+    logs.push(temp);
+  }
+
+  function outData(start = true) {
+    if (start && !interval) {
+      interval = setInterval(() => {
+        const terminalDom = document.getElementById('local-terminal-content');
+        if (terminalDom) {
+          terminalDom.innerHTML = logs.join();
+        }
+      }, 50);
+    } else if (!start && interval) {
+      clearInterval(interval);
+      interval = null;
     }
   }
+
   return {
+    getChild() {
+      return localNodeServerClient.get();
+    },
     start() {
+      const child = this.getChild();
       if (!child) return;
       child.stdout.on('data', getData);
+      outData();
     },
     stop() {
+      const child = this.getChild();
       if (!child) return;
       child.stdout.off('data', getData);
+      outData(false);
     },
   };
 }
@@ -270,23 +284,6 @@ function startPoll(dispatch, getState) {
               type: LocalNodeActionType.UPDATE_IS_SYNC,
               data: true,
             });
-            const { currentNode } = getState().NodeStore;
-            if (currentNode.type === NODE_TYPE.NONE) {
-              const { rest, ws } = getState().LocalNodeStore;
-              const localNode = {
-                name: 'Local',
-                httpUrl: `${LOCAL_PREFIX}${rest}`,
-                wsUrl: `${LOCAL_PREFIX_WS}${ws}/ws/v3?compress=true`,
-                latency: MAX_LATENCY,
-                id: '00000000',
-                type: NODE_TYPE.LOCAL,
-              };
-              storage.set('currentNode', localNode);
-              dispatch({
-                type: NodeActionType.UPDATE_CURRENT_NODE,
-                data: localNode,
-              });
-            }
           } else {
             dispatch({
               type: LocalNodeActionType.UPDATE_IS_SYNC,
@@ -302,26 +299,10 @@ function startPoll(dispatch, getState) {
                 updateTempBreakTime(dispatch, getState);
               }, 1000);
             }
-            const { currentNode } = getState().NodeStore;
-            if (currentNode.type === NODE_TYPE.LOCAL) {
-              dispatch({
-                type: NodeActionType.UPDATE_CURRENT_NODE,
-                data: NONE_NODE,
-              });
-            }
           }
         }
       });
   }, pollInterval);
-}
-
-export function updateLogs(logs) {
-  return (dispatch) => {
-    dispatch({
-      type: LocalNodeActionType.UPDATE_LOGS,
-      data: logs,
-    });
-  };
 }
 
 export function startOkexchaind(datadir, terminal = false) {
@@ -330,25 +311,29 @@ export function startOkexchaind(datadir, terminal = false) {
     const statusInstance = localNodeDataStatus.getInstance(datadir);
     const dataStatus = statusInstance.get();
     const configDir = `${datadir}/config`;
-    if (!dataStatus.hasInitData) {
-      await initData(datadir);
-      statusInstance.set({ hasInitData: true });
+    try {
+      if (!dataStatus.hasInitData) {
+        await initData(datadir);
+        statusInstance.set({ hasInitData: true });
+      }
+      if (!dataStatus.hasDownloadGenesis) {
+        await downloadGenesis(configDir);
+        statusInstance.set({ hasDownloadGenesis: true });
+      }
+      if (!dataStatus.hasDownloadSeeds) {
+        await downloadSeeds(configDir);
+        statusInstance.set({ hasDownloadSeeds: true });
+      }
+      if (!dataStatus.hasSetSeeds) {
+        await setSeeds(configDir);
+        statusInstance.set({ hasSetSeeds: true });
+      }
+      await start(datadir, dispatch, getState, terminal);
+      switchIsStarted(true)(dispatch);
+      startPoll(dispatch, getState);
+    } catch(e) {
+      console.log(e);
     }
-    if (!dataStatus.hasDownloadGenesis) {
-      await downloadGenesis(configDir);
-      statusInstance.set({ hasDownloadGenesis: true });
-    }
-    if (!dataStatus.hasDownloadSeeds) {
-      await downloadSeeds(configDir);
-      statusInstance.set({ hasDownloadSeeds: true });
-    }
-    if (!dataStatus.hasSetSeeds) {
-      await setSeeds(configDir);
-      statusInstance.set({ hasSetSeeds: true });
-    }
-    await start(datadir, dispatch, getState, terminal);
-    switchIsStarted(true)(dispatch);
-    startPoll(dispatch, getState);
   };
 }
 
@@ -359,14 +344,14 @@ export function startListen() {
 }
 
 export function startTerminal() {
-  return async (dispatch, getState) => {
-    getListenClient(dispatch, getState).start();
+  return () => {
+    getListenClient().start();
   };
 }
 
 export function stopTerminal() {
-  return async (dispatch, getState) => {
-    getListenClient(dispatch, getState).stop();
+  return () => {
+    getListenClient().stop();
   };
 }
 
@@ -378,7 +363,7 @@ export function stopOkexchaind(terminal = false) {
     shell.cd(okexchaindDir);
     shell.exec('./okexchaind stop', (code) => {
       if (code === 0) {
-        if (terminal) getListenClient(dispatch, getState).stop();
+        if (terminal) getListenClient().stop();
         localNodeServerClient.set(null);
         dispatch({
           type: LocalNodeActionType.UPDATE_OKEXCHAIND,
@@ -391,13 +376,6 @@ export function stopOkexchaind(terminal = false) {
       type: LocalNodeActionType.UPDATE_IS_SYNC,
       data: false,
     });
-    const { currentNode } = getState().NodeStore;
-    if (currentNode.type === NODE_TYPE.LOCAL) {
-      dispatch({
-        type: NodeActionType.UPDATE_CURRENT_NODE,
-        data: NONE_NODE,
-      });
-    }
   };
 }
 
@@ -451,15 +429,6 @@ export function updateDb(db) {
     dispatch({
       type: LocalNodeActionType.UPDATE_DB,
       data: db,
-    });
-  };
-}
-
-export function updateIsSync(isSync) {
-  return (dispatch) => {
-    dispatch({
-      type: LocalNodeActionType.UPDATE_IS_SYNC,
-      data: isSync,
     });
   };
 }

@@ -6,7 +6,6 @@ import DexSwitch from '_component/DexSwitch';
 import Select from '_component/ReactSelect';
 import DexDesktopInput from '_component/DexDesktopInput';
 import DexUpload from '_app/component/DexUpload';
-import { htmlLineBreak } from '_src/utils/ramda';
 import { formatEstimatedTime } from '_src/utils/node';
 import './TabLocal.less';
 
@@ -14,7 +13,6 @@ const defaultOptions = [{ value: 0, label: 'TestNet' }];
 
 function mapStateToProps(state) {
   const {
-    logs,
     isStarted,
     p2p,
     rest,
@@ -24,7 +22,6 @@ function mapStateToProps(state) {
     estimatedTime,
   } = state.LocalNodeStore;
   return {
-    logs,
     isStarted,
     p2p,
     rest,
@@ -108,18 +105,8 @@ class TabLocal extends Component {
   };
 
   render() {
-    const {
-      logs,
-      isStarted,
-      p2p,
-      rest,
-      ws,
-      datadir,
-      db,
-      estimatedTime,
-    } = this.props;
+    const { isStarted, p2p, rest, ws, datadir, db, estimatedTime } = this.props;
     const { options, selected } = this.state;
-    const htmlLogs = htmlLineBreak(logs);
     const fEstimatedTime = formatEstimatedTime(estimatedTime);
 
     return (
@@ -195,10 +182,7 @@ class TabLocal extends Component {
         </div>
         <div className="local-set-terminal">
           <h4 className="local-terminal-title">Terminal</h4>
-          <div
-            className="local-terminal-content"
-            dangerouslySetInnerHTML={{ __html: htmlLogs }}
-          />
+          <div className="local-terminal-content" id="local-terminal-content" />
         </div>
       </div>
     );

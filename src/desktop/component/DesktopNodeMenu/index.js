@@ -33,7 +33,6 @@ function mapStateToProps(state) {
     tempBreakTime: remoteNodeTempBreakTime,
   } = state.NodeStore;
   const {
-    logs,
     isStarted,
     datadir,
     localHeight,
@@ -47,7 +46,6 @@ function mapStateToProps(state) {
     currentNode,
     remoteList,
     customList,
-    logs,
     isStarted,
     datadir,
     localHeight,

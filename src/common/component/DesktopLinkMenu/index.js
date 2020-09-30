@@ -31,7 +31,7 @@ class DesktopLinkMenu extends Component {
   };
 
   render() {
-    const { hasVersion=true } = this.props;
+    const { hasVersion = true } = this.props;
     const { isMenuShow } = this.state;
     const { version } = config;
     return (
@@ -106,14 +106,16 @@ class DesktopLinkMenu extends Component {
                 </div>
               </div>
             </div>
-            {hasVersion && 
+            {hasVersion && (
               <div className="link-menu-item-container">
                 <div className="link-menu-version">
                   {toLocale('linkMenu.version')}
                 </div>
-                <div className="link-menu-version-detail">OPENDEX {version}</div>
+                <div className="link-menu-version-detail">
+                  OPENDEX {version}
+                </div>
               </div>
-            }
+            )}
           </div>
         </div>
       </div>

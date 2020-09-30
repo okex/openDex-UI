@@ -53,7 +53,7 @@ export default class LeftMenu extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { menuList, activeId } = nextProps;
     this.setState({
-      menuList:menuList.map(d => d),
+      menuList: menuList.map((d) => d),
       activeId,
     });
   }

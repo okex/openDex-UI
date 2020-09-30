@@ -25,7 +25,6 @@ const getInitDb = () => {
 
 export default function () {
   const initialState = {
-    logs: '',
     okexchaind: null,
     isStarted: !!electronUtils.localNodeServerClient.get(),
     p2p: '26656',
@@ -43,11 +42,6 @@ export default function () {
 
   return function (state = initialState, action) {
     switch (action.type) {
-      case LocalNodeActionType.UPDATE_LOGS:
-        return {
-          ...state,
-          logs: action.data,
-        };
       case LocalNodeActionType.UPDATE_OKEXCHAIND:
         return {
           ...state,

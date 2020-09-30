@@ -9,14 +9,13 @@ let tempBreakTimer = null;
 export function updateCurrentNode(node) {
   return (dispatch, getState) => {
     let n;
-    const { isSync } = getState().LocalNodeStore;
-    if (node.type === NODE_TYPE.NONE && isSync) {
+    if (node.type === NODE_TYPE.NONE || node.type === NODE_TYPE.LOCAL) {
       const { rest, ws } = getState().LocalNodeStore;
       const localNode = {
         name: 'Local',
         httpUrl: `${LOCAL_PREFIX}${rest}`,
         wsUrl: `${LOCAL_PREFIX_WS}${ws}/ws/v3?compress=true`,
-        latency: MAX_LATENCY,
+        latency: node.latency || MAX_LATENCY,
         id: '00000000',
         type: NODE_TYPE.LOCAL,
       };
@@ -30,6 +29,16 @@ export function updateCurrentNode(node) {
       data: n,
     });
   };
+}
+
+export function setNONE() {
+  return (dispatch) => {
+    storage.set('currentNode', NODE_TYPE.NONE);
+    dispatch({
+      type: NodeActionType.UPDATE_CURRENT_NODE,
+      data: NODE_TYPE.NONE,
+    });
+  }
 }
 
 export function updateRemoteList(list) {
