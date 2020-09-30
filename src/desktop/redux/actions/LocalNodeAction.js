@@ -1,6 +1,7 @@
 import ont from '_src/utils/dataProxy';
 import { commaLineBreak, divide, multiply } from '_src/utils/ramda';
 import Message from '_src/component/Message';
+import { NODE_TYPE } from '_constants/Node';
 import { LOCAL_PREFIX } from '_constants/apiConfig';
 import { getStartCommand } from '_src/utils/command';
 import LocalNodeActionType from '../actionTypes/LocalNodeActionType';
@@ -52,10 +53,10 @@ function start(datadir, dispatch, getState, terminal = false) {
       const child =
         localNodeServerClient.get() ||
         shell.exec(`${startCommand}`, { async: true }, (code) => {
-          if (code !== 130 && code !== 0) {
-            // Message.error({
-            //   content: 'okexchaind start error',
-            // });
+          if (code !== 130 && code !== 0 && code !== 2) {
+            Message.error({
+              content: 'okexchaind start error',
+            });
             stopPoll();
             dispatch({
               type: LocalNodeActionType.UPDATE_IS_STARTED,
@@ -376,6 +377,13 @@ export function stopOkexchaind(terminal = false) {
       type: LocalNodeActionType.UPDATE_IS_SYNC,
       data: false,
     });
+    const { currentNode } = getState().NodeStore;
+    if(currentNode.type === NODE_TYPE.LOCAL) {
+      dispatch({
+        type: NodeActionType.UPDATE_CURRENT_NODE,
+        data: NODE_TYPE.NONE,
+      });
+    }
   };
 }
 
