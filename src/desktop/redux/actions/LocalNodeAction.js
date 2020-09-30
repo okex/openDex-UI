@@ -28,17 +28,16 @@ function stopPoll() {
 }
 
 function getListenClient() {
-  if (!getListenClient.instance)
-    getListenClient.instance = listenClient();
+  if (!getListenClient.instance) getListenClient.instance = listenClient();
   return getListenClient.instance;
 }
 
 function start(datadir, dispatch, getState, terminal = false) {
-  const { shell, localNodeServerClient,localNodeDataStatus } = electronUtils;
+  const { shell, localNodeServerClient, localNodeDataStatus } = electronUtils;
   const directory = getOkexchaindDir();
   return new Promise((reslove, reject) => {
     try {
-      if(!localNodeDataStatus.checkOKExchain(true)) {
+      if (!localNodeDataStatus.checkOKExchain(true)) {
         downloadDialog(true);
         reject();
         return;
@@ -85,23 +84,24 @@ function start(datadir, dispatch, getState, terminal = false) {
 
 function listenClient() {
   const { localNodeServerClient } = electronUtils;
-  let logs = [],interval = null;
+  let logs = [],
+    interval = null;
   const MAXLOGCOUNT = 20;
   function getData(data) {
     const temp = htmlLineBreak(data);
-    if(logs.length >= MAXLOGCOUNT) logs.shift();
+    if (logs.length >= MAXLOGCOUNT) logs.shift();
     logs.push(temp);
   }
 
-  function outData(start=true) {
-    if(start && !interval) {
+  function outData(start = true) {
+    if (start && !interval) {
       interval = setInterval(() => {
         const terminalDom = document.getElementById('local-terminal-content');
-        if(terminalDom) {
+        if (terminalDom) {
           terminalDom.innerHTML = logs.join();
         }
-      },50);
-    } else if(!start && interval) {
+      }, 50);
+    } else if (!start && interval) {
       clearInterval(interval);
       interval = null;
     }
@@ -368,13 +368,13 @@ export function startListen() {
 export function startTerminal() {
   return () => {
     getListenClient().start();
-  }
+  };
 }
 
 export function stopTerminal() {
   return () => {
     getListenClient().stop();
-  }
+  };
 }
 
 export function stopOkexchaind(terminal = false) {

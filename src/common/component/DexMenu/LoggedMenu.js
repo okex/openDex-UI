@@ -181,7 +181,7 @@ class DexLoggedMenu extends React.Component {
               </NavLink>
             </Menu.Item>
           </SubMenu>
-          {hasDoc && <DocMenu/>}
+          {hasDoc && <DocMenu />}
         </Menu>
       </React.Fragment>
     );

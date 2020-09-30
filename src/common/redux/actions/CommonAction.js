@@ -76,17 +76,24 @@ export function updateLatestHeight(height) {
 
 export function fetchLegalList() {
   return (dispatch) => {
-    ont.get(`${URL.GET_LEGAL_LIST}?locale=${util.getSupportLocale(Cookies.get('locale') || 'en_US')}`).then((res) => {
-      dispatch({
-        type: CommonActionType.UPDATE_CURRENCY_LIST,
-        data: res.data
+    ont
+      .get(
+        `${URL.GET_LEGAL_LIST}?locale=${util.getSupportLocale(
+          Cookies.get('locale') || 'en_US'
+        )}`
+      )
+      .then((res) => {
+        dispatch({
+          type: CommonActionType.UPDATE_CURRENCY_LIST,
+          data: res.data,
+        });
+      })
+      .catch(() => {
+        dispatch({
+          type: CommonActionType.UPDATE_CURRENCY_LIST,
+          data: [],
+        });
       });
-    }).catch(() => {
-      dispatch({
-        type: CommonActionType.UPDATE_CURRENCY_LIST,
-        data: []
-      });
-    });
   };
 }
 
@@ -108,7 +115,7 @@ export function setChargeUnit(legalId) {
       window.localStorage.setItem(legalCurrencyId, String(cId));
       dispatch({
         type: CommonActionType.UPDATE_CURRENCY_ID,
-        data: cId
+        data: cId,
       });
     };
     if (oldCurrencyId !== legalId) {
@@ -121,7 +128,7 @@ export function setChargeUnitObj(legalObj) {
   return (dispatch, getState) => {
     dispatch({
       type: CommonActionType.UPDATE_CURRENCY_OBJ,
-      data: legalObj
+      data: legalObj,
     });
     fetchCurrency2LegalRate(legalObj)(dispatch, getState);
   };
@@ -130,14 +137,22 @@ export function setChargeUnitObj(legalObj) {
 export function fetchCurrency2LegalRate(legalObj) {
   return (dispatch, getState) => {
     const { activeMarket } = getState().Spot;
-    const quote = (activeMarket.groupName && activeMarket.groupName.toLowerCase()) || 'tusdk';
-    ont.get(URL.GET_LEGAL_RATE.replace('{quote}', quote).replace('{base}', legalObj.isoCode))
+    const quote =
+      (activeMarket.groupName && activeMarket.groupName.toLowerCase()) ||
+      'tusdk';
+    ont
+      .get(
+        URL.GET_LEGAL_RATE.replace('{quote}', quote).replace(
+          '{base}',
+          legalObj.isoCode
+        )
+      )
       .then((res) => {
         dispatch({
           type: CommonActionType.UPDATE_CURRENCY_OBJ,
-          data: { ...legalObj, rate: res.data.index }
+          data: { ...legalObj, rate: res.data.index },
         });
-      }).catch(() => {
-      });
+      })
+      .catch(() => {});
   };
 }

@@ -105,15 +105,7 @@ class TabLocal extends Component {
   };
 
   render() {
-    const {
-      isStarted,
-      p2p,
-      rest,
-      ws,
-      datadir,
-      db,
-      estimatedTime,
-    } = this.props;
+    const { isStarted, p2p, rest, ws, datadir, db, estimatedTime } = this.props;
     const { options, selected } = this.state;
     const fEstimatedTime = formatEstimatedTime(estimatedTime);
 
@@ -190,9 +182,7 @@ class TabLocal extends Component {
         </div>
         <div className="local-set-terminal">
           <h4 className="local-terminal-title">Terminal</h4>
-          <div
-            className="local-terminal-content" id="local-terminal-content"
-          />
+          <div className="local-terminal-content" id="local-terminal-content" />
         </div>
       </div>
     );

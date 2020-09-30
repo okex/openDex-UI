@@ -35,11 +35,6 @@ function mapDispatchToProps(dispatch) {
 
 @connect(mapStateToProps, mapDispatchToProps)
 class NodeSetting extends Component {
-  constructor() {
-    super();
-    this.state = {};
-  }
-
   componentDidMount() {
     this.fetchNodesLatency();
     this.timer = setInterval(this.fetchNodesLatency, loopTime);
@@ -65,8 +60,12 @@ class NodeSetting extends Component {
     const hasVisited = {};
 
     const fetchLocalNode = () => {
-      const { currentNode } = this.props;
-      if (currentNode.type === NODE_TYPE.LOCAL) {
+      const { currentNode, isStarted } = this.props;
+      if (
+        isStarted &&
+        (currentNode.type === NODE_TYPE.LOCAL ||
+          currentNode.type === NODE_TYPE.NONE)
+      ) {
         getNodeLatency(currentNode).then((latency) => {
           const { nodeActions } = this.props;
           nodeActions.updateCurrentNode({

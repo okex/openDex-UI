@@ -13,16 +13,11 @@ import FullTradeProductList from './FullTradeProductList';
 import './FullTradeHead.less';
 import ComboBox from '_src/component/ComboBox/ComboBox';
 import util from '_src/utils/util';
-import { LoggedMenu, LoginMenu,DocMenu } from '_src/component/DexMenu';
-
+import { LoggedMenu, LoginMenu, DocMenu } from '_src/component/DexMenu';
 
 function mapStateToProps(state) {
-  const {
-    product, productObj, callMarketObj, spotOrMargin
-  } = state.SpotTrade;
-  const {
-    legalList, legalId, legalObj
-  } = state.Common;
+  const { product, productObj, callMarketObj, spotOrMargin } = state.SpotTrade;
+  const { legalList, legalId, legalObj } = state.Common;
   return {
     product,
     callMarketObj,
@@ -52,24 +47,39 @@ class FullTradeHead extends React.Component {
     };
     this.headTypeOKEx = [
       {
-        url: '/derivatives/futures/full', type: '/derivatives/futures/full', label: toLocale('spot.asset.futureTrade'), monitor: 'full_header,nav_future,nav_enter_future'
+        url: '/derivatives/futures/full',
+        type: '/derivatives/futures/full',
+        label: toLocale('spot.asset.futureTrade'),
+        monitor: 'full_header,nav_future,nav_enter_future',
       },
       {
-        url: '/derivatives/swap/full', type: '/derivatives/swap/full', label: toLocale('spot.asset.futureswapTrade'), monitor: 'full_header,nav_swap,nav_enter_swap'
+        url: '/derivatives/swap/full',
+        type: '/derivatives/swap/full',
+        label: toLocale('spot.asset.futureswapTrade'),
+        monitor: 'full_header,nav_swap,nav_enter_swap',
       },
       {
-        url: '/spot/full', type: '/spot/full', label: toLocale('spot.asset.spotTrade'), monitor: 'full_header,nav_spot,nav_enter_spot'
+        url: '/spot/full',
+        type: '/spot/full',
+        label: toLocale('spot.asset.spotTrade'),
+        monitor: 'full_header,nav_spot,nav_enter_spot',
       },
       {
-        url: '/spot/fullMargin', type: '/spot/fullMargin', label: toLocale('spot.asset.newMarginTrade'), monitor: 'full_header,nav_margin,nav_enter_margin'
+        url: '/spot/fullMargin',
+        type: '/spot/fullMargin',
+        label: toLocale('spot.asset.newMarginTrade'),
+        monitor: 'full_header,nav_margin,nav_enter_margin',
       },
       {
-        url: `${PageURL.homePage}/spot/trade`, type: '/dex-test/spot/trade', label: toLocale('spot.asset.dexTest'), monitor: 'full_header,nav_dex,nav_enter_dex'
-      }
+        url: `${PageURL.homePage}/spot/trade`,
+        type: '/dex-test/spot/trade',
+        label: toLocale('spot.asset.dexTest'),
+        monitor: 'full_header,nav_dex,nav_enter_dex',
+      },
     ];
     this.currentHead = this.headTypeOKEx[4].url;
   }
-  
+
   componentDidMount() {
     const { commonAction } = this.props;
     commonAction.fetchLegalList();
@@ -77,13 +87,12 @@ class FullTradeHead extends React.Component {
     commonAction.initOKExChainClient();
   }
   componentWillReceiveProps(nextProps) {
-    const {
-      legalList, legalId
-    } = nextProps;
-    const {
-      legalList: oldCurrencyList, legalId: oldCurrencyId
-    } = this.props;
-    if (legalId !== oldCurrencyId || legalList.length !== oldCurrencyList.length) {
+    const { legalList, legalId } = nextProps;
+    const { legalList: oldCurrencyList, legalId: oldCurrencyId } = this.props;
+    if (
+      legalId !== oldCurrencyId ||
+      legalList.length !== oldCurrencyList.length
+    ) {
       this.resetCurrencyObj(legalList, legalId);
     }
   }
@@ -109,16 +118,21 @@ class FullTradeHead extends React.Component {
     } else {
       window.location.href = PageURL.spotFullPage;
     }
-  }
+  };
 
   render() {
-    const {
-      productObj, product, callMarketObj
-    } = this.props;
-    const tradingMode = productObj[product] ? Number(productObj[product].tradingMode) : 0;
+    const { productObj, product, callMarketObj } = this.props;
+    const tradingMode = productObj[product]
+      ? Number(productObj[product].tradingMode)
+      : 0;
     if (tradingMode > 0 && tradingMode < 3) {
-      if (callMarketObj[product] && callMarketObj[product].nowDate >= callMarketObj[product].startTime) {
-        callMarketName = toLocale('spot.callmarket.title.all.withStep', { step: tradingMode });
+      if (
+        callMarketObj[product] &&
+        callMarketObj[product].nowDate >= callMarketObj[product].startTime
+      ) {
+        callMarketName = toLocale('spot.callmarket.title.all.withStep', {
+          step: tradingMode,
+        });
       } else {
         callMarketName = toLocale('spot.callmarket.startingsoon');
       }
@@ -132,7 +146,12 @@ class FullTradeHead extends React.Component {
         <div className="top-info-title">
           <div className="current-trade-title">
             {toLocale('spot.asset.dexTest')}
-            <a className={`down-arrow${headTypeList.length > 1 ? ' has-more' : ''}`} style={{ display: 'inline-block' }} />
+            <a
+              className={`down-arrow${
+                headTypeList.length > 1 ? ' has-more' : ''
+              }`}
+              style={{ display: 'inline-block' }}
+            />
             <div className="combo-box">
               <ComboBox
                 current={this.currentHead}
@@ -144,9 +163,9 @@ class FullTradeHead extends React.Component {
         {this.isTradePage() ? <FullTradeProductList /> : null}
         {this.isTradePage() ? <FullTradeTicker /> : null}
         <div className="okdex-header-right">
-          {util.isLogined() ? <LoggedMenu/> : <LoginMenu/>}
-          <DocMenu/>
-          <DesktopLinkMenu hasVersion={false}/>
+          {util.isLogined() ? <LoggedMenu /> : <LoginMenu />}
+          <DocMenu />
+          <DesktopLinkMenu hasVersion={false} />
         </div>
       </div>
     );

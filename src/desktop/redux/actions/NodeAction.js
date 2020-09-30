@@ -9,8 +9,7 @@ let tempBreakTimer = null;
 export function updateCurrentNode(node) {
   return (dispatch, getState) => {
     let n;
-    const { isSync } = getState().LocalNodeStore;
-    if (node.type === NODE_TYPE.NONE && isSync) {
+    if (node.type === NODE_TYPE.NONE && node.type === NODE_TYPE.LOCAL) {
       const { rest, ws } = getState().LocalNodeStore;
       const localNode = {
         name: 'Local',
