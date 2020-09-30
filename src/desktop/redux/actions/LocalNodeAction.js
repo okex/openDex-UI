@@ -1,9 +1,7 @@
 import ont from '_src/utils/dataProxy';
 import { commaLineBreak, divide, multiply } from '_src/utils/ramda';
-import { storage } from '_component/okit';
 import Message from '_src/component/Message';
-import { NODE_TYPE, MAX_LATENCY } from '_constants/Node';
-import { NONE_NODE, LOCAL_PREFIX, LOCAL_PREFIX_WS } from '_constants/apiConfig';
+import { LOCAL_PREFIX } from '_constants/apiConfig';
 import { getStartCommand } from '_src/utils/command';
 import LocalNodeActionType from '../actionTypes/LocalNodeActionType';
 import NodeActionType from '../actionTypes/NodeActionType';
@@ -55,9 +53,9 @@ function start(datadir, dispatch, getState, terminal = false) {
         localNodeServerClient.get() ||
         shell.exec(`${startCommand}`, { async: true }, (code) => {
           if (code !== 130 && code !== 0) {
-            Message.error({
-              content: 'okexchaind start error',
-            });
+            // Message.error({
+            //   content: 'okexchaind start error',
+            // });
             stopPoll();
             dispatch({
               type: LocalNodeActionType.UPDATE_IS_STARTED,
@@ -286,23 +284,6 @@ function startPoll(dispatch, getState) {
               type: LocalNodeActionType.UPDATE_IS_SYNC,
               data: true,
             });
-            const { currentNode } = getState().NodeStore;
-            if (currentNode.type === NODE_TYPE.NONE) {
-              const { rest, ws } = getState().LocalNodeStore;
-              const localNode = {
-                name: 'Local',
-                httpUrl: `${LOCAL_PREFIX}${rest}`,
-                wsUrl: `${LOCAL_PREFIX_WS}${ws}/ws/v3?compress=true`,
-                latency: MAX_LATENCY,
-                id: '00000000',
-                type: NODE_TYPE.LOCAL,
-              };
-              storage.set('currentNode', localNode);
-              dispatch({
-                type: NodeActionType.UPDATE_CURRENT_NODE,
-                data: localNode,
-              });
-            }
           } else {
             dispatch({
               type: LocalNodeActionType.UPDATE_IS_SYNC,
@@ -318,13 +299,6 @@ function startPoll(dispatch, getState) {
                 updateTempBreakTime(dispatch, getState);
               }, 1000);
             }
-            const { currentNode } = getState().NodeStore;
-            if (currentNode.type === NODE_TYPE.LOCAL) {
-              dispatch({
-                type: NodeActionType.UPDATE_CURRENT_NODE,
-                data: NONE_NODE,
-              });
-            }
           }
         }
       });
@@ -337,25 +311,29 @@ export function startOkexchaind(datadir, terminal = false) {
     const statusInstance = localNodeDataStatus.getInstance(datadir);
     const dataStatus = statusInstance.get();
     const configDir = `${datadir}/config`;
-    if (!dataStatus.hasInitData) {
-      await initData(datadir);
-      statusInstance.set({ hasInitData: true });
+    try {
+      if (!dataStatus.hasInitData) {
+        await initData(datadir);
+        statusInstance.set({ hasInitData: true });
+      }
+      if (!dataStatus.hasDownloadGenesis) {
+        await downloadGenesis(configDir);
+        statusInstance.set({ hasDownloadGenesis: true });
+      }
+      if (!dataStatus.hasDownloadSeeds) {
+        await downloadSeeds(configDir);
+        statusInstance.set({ hasDownloadSeeds: true });
+      }
+      if (!dataStatus.hasSetSeeds) {
+        await setSeeds(configDir);
+        statusInstance.set({ hasSetSeeds: true });
+      }
+      await start(datadir, dispatch, getState, terminal);
+      switchIsStarted(true)(dispatch);
+      startPoll(dispatch, getState);
+    } catch(e) {
+      console.log(e);
     }
-    if (!dataStatus.hasDownloadGenesis) {
-      await downloadGenesis(configDir);
-      statusInstance.set({ hasDownloadGenesis: true });
-    }
-    if (!dataStatus.hasDownloadSeeds) {
-      await downloadSeeds(configDir);
-      statusInstance.set({ hasDownloadSeeds: true });
-    }
-    if (!dataStatus.hasSetSeeds) {
-      await setSeeds(configDir);
-      statusInstance.set({ hasSetSeeds: true });
-    }
-    await start(datadir, dispatch, getState, terminal);
-    switchIsStarted(true)(dispatch);
-    startPoll(dispatch, getState);
   };
 }
 
@@ -398,13 +376,6 @@ export function stopOkexchaind(terminal = false) {
       type: LocalNodeActionType.UPDATE_IS_SYNC,
       data: false,
     });
-    const { currentNode } = getState().NodeStore;
-    if (currentNode.type === NODE_TYPE.LOCAL) {
-      dispatch({
-        type: NodeActionType.UPDATE_CURRENT_NODE,
-        data: NONE_NODE,
-      });
-    }
   };
 }
 
