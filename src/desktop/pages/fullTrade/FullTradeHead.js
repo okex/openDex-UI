@@ -12,12 +12,14 @@ import FullTradeTicker from '_src/pages/fullTrade/FullTradeTicker';
 import FullTradeProductList from './FullTradeProductList';
 import './FullTradeHead.less';
 import util from '_src/utils/util';
-import { LoggedMenu, LoginMenu } from '_src/component/DexMenu';
+import { LoggedMenu, LoginMenu,SwapSetting } from '_src/component/DexMenu';
 
 function mapStateToProps(state) {
   const { product } = state.SpotTrade;
+  const { hasSetting } = state.SwapStore;
   return {
     product,
+    hasSetting
   };
 }
 
@@ -53,18 +55,20 @@ class FullTradeHead extends React.Component {
   };
 
   render() {
+    const {hasSetting} = this.props;
+    const current = PageURL.getCurrent();
     return (
       <div className="full-top-info-box">
         <a className="logo-wrap" onClick={this.goHome}>
           <img src={okexchainLogo} style={this.iconStyle} />
         </a>
-        <DesktopTypeMenu isDexDesk={true}/>
+        <DesktopTypeMenu isDexDesk={true} current={current}/>
         <DesktopNodeMenu />
         {this.isTradePage() ? <FullTradeProductList /> : null}
         {this.isTradePage() ? <FullTradeTicker /> : null}
-
         <div className="okdex-header-right">
           {util.isLogined() ? <LoggedMenu /> : <LoginMenu />}
+          {hasSetting && <SwapSetting />}
           <DesktopLinkMenu />
         </div>
       </div>

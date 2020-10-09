@@ -1,6 +1,6 @@
 const contentPath = '/dex-test';
 
-export default {
+const paths = {
   homePage: `${contentPath}`,
   indexPage: `${contentPath}/index`,
   spotDefaultPage: `${contentPath}/spot`,
@@ -24,4 +24,16 @@ export default {
   tokenpairDetailPage: `${contentPath}/tokenpair`,
   feesPage: `${contentPath}/fees`,
   swapPage: `${contentPath}/swap`,
+}
+
+export default {
+  ...paths,
+  getCurrent() {
+    const {pathname,hash} = window.location;
+    const match = hash ? hash.slice(1):pathname;
+    for(name in paths) {
+      if(match === paths[name]) return match;
+    }
+    return '';
+  }
 };

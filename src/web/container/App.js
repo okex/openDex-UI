@@ -29,7 +29,7 @@ class App extends React.Component {
       <Router basename={window.okGlobal.langPath} history={history}>
         <div className="main-container">
           <Switch>
-            {routerConfig.map((router) => {
+            {routerConfig.map((router,index) => {
               const { path, component: Page } = router;
               return (
                 <Route
@@ -49,7 +49,7 @@ class App extends React.Component {
                       </React.Fragment>
                     );
                   }}
-                  key={path}
+                  key={index}
                 />
               );
             })}

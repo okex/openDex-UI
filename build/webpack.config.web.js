@@ -12,9 +12,6 @@ base.plugins = [
   new CleanWebpackPlugin([path.resolve(__dirname, '../bundle-web')], {
     root: path.resolve(__dirname, '../'),
   }),
-  new webpack.DefinePlugin({
-    'process.env.ROUTE_TYPE': JSON.stringify('hash'),
-  }),
   new HtmlWebpackPlugin({
     template: path.resolve(path.resolve(__dirname, '../src/web'), 'index.html'),
     filename: 'index.html',

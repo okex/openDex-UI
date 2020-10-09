@@ -13,11 +13,12 @@ import FullTradeTicker from '_src/pages/fullTrade/FullTradeTicker';
 import FullTradeProductList from './FullTradeProductList';
 import './FullTradeHead.less';
 import util from '_src/utils/util';
-import { LoggedMenu, LoginMenu, DocMenu } from '_src/component/DexMenu';
+import { LoggedMenu, LoginMenu, DocMenu,SwapSetting } from '_src/component/DexMenu';
 
 function mapStateToProps(state) {
   const { product, productObj, callMarketObj, spotOrMargin } = state.SpotTrade;
   const { legalList, legalId, legalObj } = state.Common;
+  const { hasSetting } = state.SwapStore;
   return {
     product,
     callMarketObj,
@@ -26,6 +27,7 @@ function mapStateToProps(state) {
     legalId,
     legalObj,
     spotOrMargin,
+    hasSetting
   };
 }
 
@@ -45,39 +47,6 @@ class FullTradeHead extends React.Component {
       width: '100%',
       marginTop: 15,
     };
-    this.headTypeOKEx = [
-      {
-        url: '/derivatives/futures/full',
-        type: '/derivatives/futures/full',
-        label: toLocale('spot.asset.futureTrade'),
-        monitor: 'full_header,nav_future,nav_enter_future',
-      },
-      {
-        url: '/derivatives/swap/full',
-        type: '/derivatives/swap/full',
-        label: toLocale('spot.asset.futureswapTrade'),
-        monitor: 'full_header,nav_swap,nav_enter_swap',
-      },
-      {
-        url: '/spot/full',
-        type: '/spot/full',
-        label: toLocale('spot.asset.spotTrade'),
-        monitor: 'full_header,nav_spot,nav_enter_spot',
-      },
-      {
-        url: '/spot/fullMargin',
-        type: '/spot/fullMargin',
-        label: toLocale('spot.asset.newMarginTrade'),
-        monitor: 'full_header,nav_margin,nav_enter_margin',
-      },
-      {
-        url: `${PageURL.homePage}/spot/trade`,
-        type: '/dex-test/spot/trade',
-        label: toLocale('spot.asset.dexTest'),
-        monitor: 'full_header,nav_dex,nav_enter_dex',
-      },
-    ];
-    this.currentHead = this.headTypeOKEx[4].url;
   }
 
   componentDidMount() {
@@ -121,7 +90,8 @@ class FullTradeHead extends React.Component {
   };
 
   render() {
-    const { productObj, product, callMarketObj } = this.props;
+    const { productObj, product, callMarketObj,hasSetting } = this.props;
+    const current = PageURL.getCurrent();
     const tradingMode = productObj[product]
       ? Number(productObj[product].tradingMode)
       : 0;
@@ -142,27 +112,12 @@ class FullTradeHead extends React.Component {
         <a className="logo-wrap" onClick={this.goHome}>
           <img src={okexchainLogo} style={this.iconStyle} />
         </a>
-        <div className="top-info-title">
-          <div className="current-trade-title">
-            {toLocale('spot.asset.dexTest')}
-            <a
-              className={`down-arrow${
-                headTypeList.length > 1 ? ' has-more' : ''
-              }`}
-              style={{ display: 'inline-block' }}
-            />
-            <div className="combo-box">
-              <ComboBox
-                current={this.currentHead}
-                comboBoxDataSource={headTypeList.length > 1 ? headTypeList : []}
-              />
-            </div>
-          </div>
-        </div>
+        <DesktopTypeMenu current={current}/>
         {this.isTradePage() ? <FullTradeProductList /> : null}
         {this.isTradePage() ? <FullTradeTicker /> : null}
         <div className="okdex-header-right">
           {util.isLogined() ? <LoggedMenu /> : <LoginMenu />}
+          {hasSetting && <SwapSetting />}
           <DocMenu />
           <DesktopLinkMenu hasVersion={false} />
         </div>

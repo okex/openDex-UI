@@ -1,9 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import './ComboBox.less';
 
 export default class ComboBox extends React.Component {
+
+  change(item) {
+    const {onChange} = this.props;
+    if(typeof onChange === 'function') onChange(item);
+  }
+
   render() {
+    const current = this.props.current.url || this.props.current;
     return (
       <div className="ok-combo-box">
         <ul>
@@ -11,9 +19,9 @@ export default class ComboBox extends React.Component {
             return (
               <li
                 key={index}
-                className={this.props.current === item.type ? 'active' : ''}
+                className={current === item.type ? 'active' : ''}
               >
-                <a href={item.url}>{item.label}</a>
+                {!item.isRoute ? <a href={item.url}>{item.label}</a> : <Link to={item.url} onClick={() => {this.change(item)}}>{item.label}</Link>}
               </li>
             );
           })}
