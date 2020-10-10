@@ -36,7 +36,10 @@ const StepItem = (props) => {
             to={getLangURL(buttonUrl)}
             rel="noopener noreferrer"
             title={toLocale(buttonTxt)}
-          />
+          >
+            {toLocale(buttonTxt)}
+            <IconLite className="icon-go" />
+          </Link>
         ) : (
           <a
             className="step-button"
