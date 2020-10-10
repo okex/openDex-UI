@@ -735,6 +735,23 @@ const zhCN = {
   'Intial Price':'Intial Price',
   'Input Pool':'Input Pool',
   'Error':'Error',
-  'Existed Pool':'Existed Pool'
+  'Existed Pool':'Existed Pool',
+  'Reduce Liquidity':'Reduce Liquidity',
+  'Withdraw assets':'Withdraw assets',
+  'All':'All',
+  'Confirm':'Confirm',
+  'Swap Pair':'Swap Pair',
+  'Liquidity':'Liquidity',
+  '24H Volume':'24H Volume',
+  'Fee APY':'Fee APY',
+  'Last Price':'Last Price',
+  '24H Change':'24H Change',
+  'Action':'Action',
+  'Trade':'Trade',
+  'Advanced setting':'Advanced setting',
+  'Set slippage tolerance':'Set slippage tolerance',
+  'Your transaction may fail':'Your transaction may fail',
+  'Transaction deadline':'Transaction deadline',
+  'Minutes':'Minutes'
 };
 export default zhCN;

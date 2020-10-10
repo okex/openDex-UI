@@ -234,7 +234,7 @@ export default class PoolPanel extends React.Component {
             </div>
           </div>
         </div>
-        
+
         <div className="panel">
           <div className="panel-header">
             <i className="iconfont before"></i>
@@ -250,20 +250,61 @@ export default class PoolPanel extends React.Component {
             </div>
             <div className="sep add-sep"></div>
             <div className="coin-dropdown">
-                <div className="coin-select">
-                  <img className="coin-icon" src={coinDefault} />
-                  <span className="text">{toLocale('Select a token')}</span>
-                  <i className="iconfont" />
-                </div>
+              <div className="coin-select">
+                <img className="coin-icon" src={coinDefault} />
+                <span className="text">{toLocale('Select a token')}</span>
+                <i className="iconfont" />
+              </div>
             </div>
-        <div className="error-tip">{toLocale('Error')}：{toLocale('Existed Pool')}</div>
-        {/* <div className="error-tip">{toLocale('Error')}：{toLocale('Invalid Pair')}</div> */}
+            <div className="error-tip">{toLocale('Error')}：{toLocale('Existed Pool')}</div>
+            {/* <div className="error-tip">{toLocale('Error')}：{toLocale('Invalid Pair')}</div> */}
             <div className="btn-wrap">
               <div className="btn">{toLocale('Create Liquidity')}</div>
               {/* <div className="btn disabled">{toLocale('Create Liquidity')}</div> */}
             </div>
           </div>
         </div>
+
+        <div className="panel">
+          <div className="panel-header">
+            <i className="iconfont before"></i>
+            {toLocale('Reduce Liquidity')}
+          </div>
+          <div className="add-liquidity-content">
+            <div className="coin-item">
+              <div className="coin-item-title">
+                <div>{toLocale('Input')}</div>
+                <div className="txt">{toLocale('Balance')}: 70.123456</div>
+              </div>
+              <div className="coin-item-content">
+                <div className="input"><input type="text" placeholder="0.000000" /></div>
+                <div className="coin-rate-select">
+                  <div className="check-btn active">25%</div>
+                  <div className="check-btn">50%</div>
+                  <div className="check-btn">75%</div>
+                  <div className="check-btn">{toLocale('All')}</div>
+                </div>
+              </div>
+            </div>
+        <div className="withdraw">{toLocale('Withdraw assets')}</div>
+        <div className="space-between coin-withdraw">
+            <div className="left">
+              <img src={coinOkt}/>USDK
+            </div>
+            <div className="right">70.123456 USDK</div>
+          </div>
+          <div className="space-between coin-withdraw">
+          <div className="left">
+              <img src={coinDefault}/>ABC-4ad
+            </div>
+            <div className="right">670.123456 ABC-4ad</div>
+          </div>
+            <div className="btn-wrap">
+              <div className="btn">{toLocale('Confirm')}</div>
+              {/* <div className="btn disabled">{toLocale('Create Liquidity')}</div> */}
+            </div>
+          </div>
+        </div>  
       </>
     );
   }

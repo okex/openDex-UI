@@ -12,7 +12,8 @@ import FullTradeTicker from '_src/pages/fullTrade/FullTradeTicker';
 import FullTradeProductList from './FullTradeProductList';
 import './FullTradeHead.less';
 import util from '_src/utils/util';
-import { LoggedMenu, LoginMenu,SwapSetting } from '_src/component/DexMenu';
+import { LoggedMenu, LoginMenu } from '_src/component/DexMenu';
+import SwapSetting from '_src/pages/swap/SwapSetting';
 
 function mapStateToProps(state) {
   const { product } = state.SpotTrade;
