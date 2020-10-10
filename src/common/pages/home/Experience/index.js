@@ -11,7 +11,8 @@ import './index-xl.less';
 
 const Experience = () => {
   return (
-    <article className="experience-grid">
+    <div className="experience-grid-wrap">
+      <article className="experience-grid">
       <section className="top">
         <div className="top-content">
           <h2 className="experience-title">{toLocale('home_exp_title')}</h2>
@@ -48,6 +49,7 @@ const Experience = () => {
         </div>
       </section>
     </article>
+    </div>
   );
 };
 

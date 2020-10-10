@@ -164,7 +164,8 @@ class Steps extends Component {
   render() {
     const { imgNum, circleTime } = this.state;
     return (
-      <article className="steps-grid">
+      <div className="steps-grid-wrap">
+        <article className="steps-grid">
         <h2 className="steps-title">{toLocale('home_steps_title')}</h2>
         <div className="steps-content">
           {stepsImgList.map((img, index) => {
@@ -180,6 +181,7 @@ class Steps extends Component {
           <StepList data={{ imgNum, circleTime }} />
         </div>
       </article>
+      </div>
     );
   }
 }
