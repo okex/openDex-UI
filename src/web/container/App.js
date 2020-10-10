@@ -38,7 +38,7 @@ class App extends React.Component {
                   component={() => {
                     return (
                       <React.Fragment>
-                        {path === PageURL.spotFullPage ? (
+                        {path === PageURL.spotFullPage || path === PageURL.homePage ? (
                           ''
                         ) : (
                           <div className="full-head">

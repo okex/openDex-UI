@@ -15,6 +15,20 @@ class index extends Component {
       });
   }
 
+  componentWillMount() {
+    const headerContainer = document.getElementById('headerContainer');
+    const footerContainer = document.getElementById('footerContainer');
+    if (headerContainer) headerContainer.setAttribute('style','display:block !important');
+    if (footerContainer) footerContainer.setAttribute('style','display:block !important');
+  }
+
+  componentWillUnmount() {
+    const headerContainer = document.getElementById('headerContainer');
+    const footerContainer = document.getElementById('footerContainer');
+    if (headerContainer) headerContainer.setAttribute('style','display:none');
+    if (footerContainer) footerContainer.setAttribute('style','display:none');
+  }
+
   render() {
     return (
       <main className="home-container">
