@@ -2,6 +2,7 @@ import getApiUrl from './getApiUrl';
 const url = getApiUrl();
 const OKDEX_BASE_URL = `${url}/okexchain/v1`;
 const OKDEX_SUPPORT_ROOT = `${url}/okdex/v1`;
+const SWAP = `${OKDEX_BASE_URL}/swap`;
 
 const URL = {
   GET_ORDER_OPEN: `${OKDEX_BASE_URL}/order/list/open`,
@@ -21,5 +22,13 @@ const URL = {
   GET_LATEST_HEIGHT_MASTER: `${OKDEX_BASE_URL}/latestheight`,
   GET_LEGAL_LIST: `${OKDEX_SUPPORT_ROOT}/index/legalList`,
   GET_LEGAL_RATE: `${OKDEX_SUPPORT_ROOT}/index/currency2LegalRate?quoteCurrency={quote}&legalTender={base}`,
+  GET_SWAP_TOKENS: `${SWAP}/tokens`,
+  GET_SWAP_BUY_INFO: `${SWAP}/buy_info`,
+  GET_SWAP_LIQUIDITY_INFO: `${SWAP}/liquidity_info`,
+  GET_SWAP_ADD_INFO: `${SWAP}/add_info`,
+  GET_SWAP_REDEEMABLE_ASSETS: `${SWAP}/redeemable_assets`,
+  GET_SWAP_TOKEN_PAIR: `${SWAP}/swap_token_pair`,
+  GET_SWAP_CREATE_LIQUIDITY_TOKENS: `${SWAP}/create_liquidity_tokens`,
+  GET_SWAP_WATCHLIST: `${SWAP}/watchlist`,
 };
 export default URL;

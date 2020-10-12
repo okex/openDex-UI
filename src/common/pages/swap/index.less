@@ -37,6 +37,8 @@
     height: 48px;
     background: rgba(45, 96, 224, 0.15);
     margin-bottom: 12px;
+    background: url(../../assets/images/nav_back.png) 0 0 no-repeat;
+    background-size: 48px auto;
   }
 }
 
@@ -115,7 +117,7 @@
       color: #FFFFFF;
     }
   }
-  .iconfont::after {
+  & > .iconfont::after {
     content: "\E660";
     font-size: 14px;
     color:rgba(255,255,255,0.35);
@@ -234,6 +236,7 @@
       }
     }
     .coin-item-content {
+      position: relative;
       display: flex;
       flex: 1;
       justify-content: space-between;
@@ -256,10 +259,18 @@
         }
       }
       .coin-select {
+        position: relative;
         .coin-select;
       }
+        
       .coin-rate-select {
         display: flex;
+      }
+      .panel-coin-search {
+        position: absolute;
+        right: 0;
+        top: 27px;
+        z-index: 100;
       }
     }
   }
@@ -269,24 +280,21 @@
     height: 60px;
     justify-content: center;
     align-items: center;
-    &::before {
+    &.transformation-sep i {
       display: flex;
-      content: '';
       width: 24px;
       height: 24px;
+      cursor: pointer;
       background: 0 0 no-repeat;
       background-size: 24px auto;
-    }
-    &.transformation-sep::before {
-      width: 32px;
-      height: 32px;
-      cursor: pointer;
-      background-size: 32px auto;
-      background-image: url(../../assets/images/transformation.png);
+      background-image: url(../../assets/images/change.png);
     }
     &.add-sep::before {
+      display: flex;
+      content: '';
       width: 20px;
       height: 20px;
+      background: 0 0 no-repeat;
       background-size: 20px auto;
       background-image: url(../../assets/images/add@2x.png);
     }
@@ -324,6 +332,8 @@
           width: 14px;
           height: 15px;
           margin-right: 10px;
+          background: url(../../assets/images/exchange.png) 0 0 no-repeat;
+          background-size: 14px 15px;
         }
         .coin {
           display: flex;
@@ -340,6 +350,7 @@
     padding: 0 20px;
     background: #183D80;
     border-radius: 4px;
+    position: relative;
     .coin-select {
       .coin-select;
       height: 48px;
@@ -575,6 +586,8 @@
               height: 14px;
               margin-left: 1px;
               margin-right: 9px;
+              background: url(../../assets/images/exchange.png) 0 0 no-repeat;
+              background-size: 13px 14px;
             }
           }
           .blod {
@@ -713,14 +726,14 @@
 }
 
 .panel-coin-search {
-  position: absolute;
-  left: 72;
-  top: 50%;
-  z-index: 100;
   width: 400px;
   background: #1B283E;
   box-shadow: 0px 2px 8px 0px rgba(31, 37, 51, 0.2);
   border-radius: 2px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+
   .search-wrap {
     display: flex;
     flex: 1;
@@ -735,6 +748,7 @@
       height: 16px;
       margin-left: 10px;
       margin-right: 8px;
+      line-height: normal;
       content:'\E6BE';
       color: rgba(255, 255, 255, 0.35);
     }
@@ -766,6 +780,8 @@
       padding: 0 20px;
       cursor: pointer;
       .name {
+        display: flex;
+        align-items: center;
         font-size: 14px;
         font-weight: 400;
         color: #FFFFFF;

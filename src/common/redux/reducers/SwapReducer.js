@@ -6,6 +6,22 @@ const initialState = {
   setting: {
     slippageTolerance: 0.1,
     transactionDeadline: '',
+  },
+  baseToken: {
+    available:'',
+    value:'',
+    symbol:'',
+  },
+  targetToken: {
+    available:'',
+    value:'',
+    symbol:'',
+  },
+  exchangeInfo: {
+    price:'',
+    price_impact:'',
+    fee:'',
+    route:''
   }
 };
 export default function reducer(state = initialState, action) {
@@ -21,6 +37,9 @@ export default function reducer(state = initialState, action) {
         hasSetting: action.data,
       };
     default:
-      return state;
+      return {
+        ...state,
+        ...action.data
+      };
   }
 }

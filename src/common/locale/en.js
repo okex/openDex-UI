@@ -747,6 +747,11 @@ const enUS = {
   'Set slippage tolerance':'Set slippage tolerance',
   'Your transaction may fail':'Your transaction may fail',
   'Transaction deadline':'Transaction deadline',
-  'Minutes':'Minutes'
+  'Minutes':'Minutes',
+  'Minimum received help':'Your transaction will revert if there is a large, unfavorable price movement before it is confirmed',
+  'Price Impact help':'The difference between the market price and estimated price due to trade size.',
+  'Liquidity Provider Fee help':'A portion of each trade (0.3%) goes to liquidity providers as a protocol incentive.',
+  'pending transactions':'pending transactions',
+  'transaction confirmed':'transaction confirmed'
 };
 export default enUS;

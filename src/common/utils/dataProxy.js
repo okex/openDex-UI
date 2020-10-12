@@ -17,6 +17,7 @@ axios.interceptors.request.use(
     const queryMark = url.indexOf('?') > -1 ? '&' : '?';
 
     request.url += `${queryMark}t=${time}`;
+    //@mock request.url = url;
 
     const currentNode = storage.get('currentNode') || DEFAULT_NODE;
     const { httpUrl = '' } = currentNode;
