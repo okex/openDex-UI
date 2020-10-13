@@ -1,9 +1,61 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { toLocale } from '_src/locale/react-locale';
+import * as SwapAction from '_src/redux/actions/SwapAction';
+import InputNum from '_component/InputNum';
+import * as util from './util';
+import Message from '_src/component/Message';
 
+function mapStateToProps(state) {
+  const { setting } = state.SwapStore;
+  return { setting };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    swapAction: bindActionCreators(SwapAction, dispatch),
+  };
+}
+@connect(mapStateToProps, mapDispatchToProps)
 export default class SwapSetting extends React.Component {
 
+  constructor() {
+    super();
+    this.ratios = [
+      {name:'0.1%',value:0.1},
+      {name:'0.5%',value:0.5},
+      {name:'1%',value:1},
+    ];  
+  }
+
+  changeSlippageTolerance = (value) => {
+    const setting = {...this.props.setting};
+    setting.slippageTolerance = value;
+    this.props.swapAction.setting(setting);
+  }
+
+  changeTransactionDeadline = (value) => {
+    const setting = {...this.props.setting};
+    setting.transactionDeadline = value;
+    this.props.swapAction.setting(setting);
+  }
+
+  change = (ratio) => {
+    this.changeSlippageTolerance(ratio.value);
+  }
+
+  confirm = () => {
+    util.setting(this.props.setting);
+    Message.success({
+      content: toLocale('transaction confirmed'),
+      duration: 3,
+    });
+  }
+
   render() {
+    const ratios = this.ratios;
+    const { setting } = this.props;
     return (
       <div className="swap-setting-container">
         <i className="iconfont iconmenu-administration" />
@@ -17,15 +69,19 @@ export default class SwapSetting extends React.Component {
               <div className="space-between check-btns">
                 <div className="left">
                   <div className="check-btn-wrap">
-                    <div className="check-btn-item">0.1%</div>
-                    <div className="check-btn-item active">0.5%</div>
-                    <div className="check-btn-item">1%</div>
+                    {ratios.map((d,index) =>
+                      <div key={index} className={'check-btn-item'+(d.value==setting.slippageTolerance?' active':'')} onClick={() => this.change(d)}>{d.name}</div>
+                    )}
                   </div>
                 </div>
                 <div className="right">
                   <div className="check-btn-input">
                     <div className="input">
-                      <input type="text" />
+                    <InputNum
+                      type="text"
+                      value={setting.slippageTolerance}
+                      onChange={this.changeSlippageTolerance}
+                    />
                     </div>
                     <i>%</i>
                   </div>
@@ -38,11 +94,15 @@ export default class SwapSetting extends React.Component {
               </div>
               <div className="deadline-input">
                 <div className="input">
-                  <input type="text" />
+                <InputNum
+                  type="text"
+                  value={setting.transactionDeadline}
+                  onChange={this.changeTransactionDeadline}
+                />
                 </div>
                 <i>{toLocale('Minutes')}</i>
               </div>
-              <div className="setting-btn">{toLocale('Confirm')}</div>
+              <div className="setting-btn" onClick={this.confirm}>{toLocale('Confirm')}</div>
             </div>
           </div>
       </div>

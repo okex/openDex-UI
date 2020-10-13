@@ -8,9 +8,9 @@ import { getLangURL } from '_src/utils/navigation';
 import PageURL from '_constants/PageURL';
 import { withRouter, Link } from 'react-router-dom';
 import CoinItem from './CoinItem';
-import { getCoinIcon } from './coinIcon';
+import { getCoinIcon } from './util/coinIcon';
 import * as SwapAction from '_src/redux/actions/SwapAction';
-import * as api from './api';
+import * as api from './util/api';
 import Message from '_src/component/Message';
 
 function mapStateToProps(state) {
@@ -44,21 +44,25 @@ export default class SwapPanel extends React.Component {
 
   initBaseToken = async () => {
     const { baseToken } = this.props;
-    const { native_token = '', tokens = [] } = await api.tokens();
+    const { native_token = '', tokens = [] } = await api.tokens({support_route:true});
     const base = tokens.filter(d => d.symbol === native_token)[0];
     if (!base) return;
     this.props.swapAction.setBaseToken({ ...baseToken, ...base });
   }
 
   loadBaseCoinList = async () => {
-    const { tokens = [] } = await api.tokens();
+    const { tokens = [] } = await api.tokens({support_route:true});
     return tokens;
   }
 
   loadTargetCoinList = async () => {
     const { baseToken: { symbol } } = this.props;
-    const { tokens = [] } = await api.tokens({ symbol });
+    const { tokens = [] } = await api.tokens({ symbol,support_route:true });
     return tokens;
+  }
+
+  revert = () => {
+    this.props.swapAction.revertPrice();
   }
 
   componentDidMount() {
@@ -66,21 +70,25 @@ export default class SwapPanel extends React.Component {
   }
 
   getExchangeInfo() {
-    const { baseToken, targetToken, exchangeInfo, setting: { slippageTolerance } } = this.props;
+    const { baseToken, targetToken, exchangeInfo } = this.props;
     if (baseToken.symbol && targetToken.symbol) {
       if (!baseToken.value || !targetToken.value) {
         return <div className="coin-exchange-detail">
           <div className="info">
             <div className="info-name">{toLocale('Price')}</div>
-            <div className="info-value"><i className="exchange" />1{baseToken.symbol} ≈ -{targetToken.symbol}</div>
+            <div className="info-value"><i className="exchange"/>1{baseToken.symbol} ≈ -{targetToken.symbol}</div>
           </div>
         </div>
       } else {
+        let priceInfo = `1${baseToken.symbol} ≈ ${exchangeInfo.price}${targetToken.symbol}`;
+        if(exchangeInfo.isReverse) priceInfo = `1${targetToken.symbol} ≈ ${calc.div(1,exchangeInfo.price)}${baseToken.symbol}`;
         return (
           <div className="coin-exchange-detail">
             <div className="info">
               <div className="info-name">{toLocale('Price')}</div>
-              <div className="info-value"><i className="exchange" />1{baseToken.symbol} ≈ {exchangeInfo.price}{targetToken.symbol}</div>
+              <div className="info-value">
+                <i className="exchange" onClick={this.revert}/>{priceInfo}<i/>
+              </div>
             </div>
             <div className="info">
               <div className="info-name">{toLocale('Minimum received')}<i className="help" title={toLocale('Minimum received help')} /></div>
@@ -108,7 +116,7 @@ export default class SwapPanel extends React.Component {
 
   getMinimumReceived() {
     const { targetToken, setting: { slippageTolerance } } = this.props;
-    return calc.mul(targetToken.value, 1 - slippageTolerance);
+    return calc.mul(targetToken.value, 1 - slippageTolerance * 0.01);
   }
 
   getBtn() {
@@ -130,6 +138,8 @@ export default class SwapPanel extends React.Component {
   }
 
   confirm = async () => {
+    if(this.confirm.loading) return;
+    this.confirm.loading = true;
     const toast = Message.loading({
       content: toLocale('pending transactions'),
       duration: 0,
@@ -142,6 +152,7 @@ export default class SwapPanel extends React.Component {
         content: toLocale('transaction confirmed'),
         duration: 3,
       });
+      this.confirm.loading = false;
     }, 3000);
   }
 
@@ -153,7 +164,7 @@ export default class SwapPanel extends React.Component {
       <div className="panel panel-swap">
         <CoinItem label={toLocale('From')} token={baseToken} onChange={this.changeBase} loadCoinList={this.loadBaseCoinList} />
         <div className="sep transformation-sep"><i onClick={this.exchange} /></div>
-        <CoinItem label={toLocale('To(estimated)')} token={targetToken} onChange={this.changeTarget} loadCoinList={this.loadTargetCoinList} />
+        <CoinItem label={toLocale('To(estimated)')} disabled={true} token={targetToken} onChange={this.changeTarget} loadCoinList={this.loadTargetCoinList} />
         {exchangeInfo}
         {btn}
       </div>

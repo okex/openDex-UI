@@ -1,73 +1,169 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import Pagination from '_component/Pagination';
+import {getCoinIcon} from './util/coinIcon';
 import { toLocale } from '_src/locale/react-locale';
-import coinDefault from '_src/assets/images/icon_f2pool@2x.png';
-import coinOkt from '_src/assets/images/icon_usdt@2x.png';
-
-function mapStateToProps(state) {
-  return {};
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-  };
-}
-
-@connect(mapStateToProps, mapDispatchToProps)
+import WatchList from './Watchlist';
+import * as api from './util/api';
+import calc from '_src/utils/calc';
+import { withRouter } from 'react-router-dom';
+import PageURL from '_src/constants/PageURL';
+@withRouter
 export default class WatchlistPanel extends React.Component {
 
+  constructor() {
+    super();
+    this.state = {
+      sort:null,
+      data:[],
+      current:1,
+      pageSize:10,
+      total:0
+    };
+    this.columns = [
+      {
+        field:'swap_pair',
+        name:toLocale('Swap Pair'),
+        width:'269',
+        component: ({row,data}) => {
+          const tokens = data.split('_');
+          if(row.isRevert) tokens.reverse();
+          let baseSymbol = tokens[0];
+          let targetSymbol = tokens[1];
+          return (
+            <div className="coin2coin">
+              <span className="exchange" onClick={() => this.exchange(row)}/>
+              <img src={getCoinIcon(baseSymbol)} />
+              <img src={getCoinIcon(targetSymbol)} />
+              <span>{baseSymbol}/{targetSymbol}</span>
+            </div>
+          )
+        }
+      },
+      {
+        field:'liquidity',
+        name:toLocale('Liquidity'),
+        canSort:true,
+        width:'164',
+        component(props) {
+          return props.data;
+        }
+      },
+      {
+        field:'volume24h',
+        name:toLocale('24H Volume'),
+        canSort:true,
+        width:'164',
+        component(props) {
+          return props.data;
+        }
+      },
+      {
+        field:'fee_apy',
+        name:toLocale('Fee APY'),
+        canSort:true,
+        width:'102',
+        component(props) {
+          return props.data;
+        }
+      },
+      {
+        field:'last_price',
+        name:toLocale('Last Price'),
+        canSort:true,
+        width:'194',
+        component({row,data}) {
+          const tokens = row.swap_pair.split('_');
+          let price = data;
+          if(row.isRevert) {
+            tokens.reverse();
+            price = calc.div(1,data);
+          }
+          let baseSymbol = tokens[0];
+          let targetSymbol = tokens[1]; 
+          return `1 ${baseSymbol}≈${price} ${targetSymbol}`;
+        }
+      },
+      {
+        field:'change24h',
+        name:toLocale('24H Change'),
+        canSort:true,
+        width:'128',
+        component({row,data}) {
+          let change = calc.add(data,0);
+          if(row.isRevert) change = calc.div(1,calc.add(data,1)) - 1;
+          if(change > 0) return <span className="green">{change}</span>
+          else if(change < 0) return <span className="red">{change}</span>;
+          return change;
+        }
+      },
+      {
+        name:toLocale('Action'),
+        component:({row}) => {
+          return <div className="action-opt-wrap">
+          <div className="action-opt" onClick={() => this.addLiquidity(row)}>+ {toLocale('Add Liquidity')}</div>
+          <div className="action-sep"></div>
+          <div className="action-opt" onClick={() => this.goTrade(row)}>{toLocale('Trade')}</div>
+        </div>
+        }
+      }
+    ]
+  }
+
+  exchange(row) {
+    row.isRevert = !row.isRevert;
+    this.setState({});
+  }
+
+  addLiquidity(row) {
+
+  }
+
+  goTrade(row) {
+    const url = `${PageURL.spotFullPage}#product=${row.swap_pair.toLowerCase()}`;
+    this.props.history.replace(url);
+  }
+
+  init = async (current) => {
+    const {pageSize,sort} = this.state;
+    const params = {page:current,per_page:pageSize};
+    if(sort) {
+      params.field = sort.field;
+      params.sort = sort.sort;
+    }
+    const {data,param_page} = await api.watchlist(params);
+    return {data,total:param_page.total};
+  }
+
+  onChange = async current => {
+    const data = await this.init(current);
+    this.setState({...data,current})
+  }
+
+  onSort = (sort) => {
+    this.setState({sort});
+  }
+
+  async componentDidMount() {
+    const data = await this.init(this.state.current);
+    this.setState(data);
+  }
+
   render() {
-    const data = [1,2,3,4,1,2,3,4,1,2,3,4,1,2];
+    const {sort,data,current,pageSize,total} = this.state;
+    if(!total) return null;
     return (
       <div className="panel-watchlist">
-        <table>
-          <tbody>
-            <tr className="table-head">
-              <td width="269">{toLocale('Swap Pair')}</td>
-              <td width="164"><div className="head-sort">{toLocale('Liquidity')}<div><i className="up"/><i className="down"/></div></div></td>
-              <td width="164"><div className="head-sort">{toLocale('24H Volume')}<div><i className="up"/><i className="down"/></div></div></td>
-              <td width="102"><div className="head-sort">{toLocale('Fee APY')}<div><i className="up"/><i className="down active"/></div></div></td>
-              <td width="194"><div className="head-sort">{toLocale('Last Price')}<div><i className="up"/><i className="down"/></div></div></td>
-              <td width="128"><div className="head-sort">{toLocale('24H Change')}<div><i className="up"/><i className="down"/></div></div></td>
-              <td>{toLocale('Action')}</td>
-            </tr>
-            {data.map((d,index) =>
-              <tr key={index}>
-                <td>
-                  <div className="coin2coin">
-                    <img src={coinOkt} />
-                    <img src={coinDefault} />
-                    <span>OKT/USDK</span>
-                  </div>
-                </td>
-                <td>$24,163,003.20</td>
-                <td>$24,163,003.20</td>
-                <td>102.12%</td>
-                <td className="green">1 OKT≈10.1234 USDK</td>
-                <td className="red">-12.12%</td>
-                <td>
-                  <div className="action-opt-wrap">
-            <div className="action-opt">+ {toLocale('Add Liquidity')}</div>
-                    <div className="action-sep"></div>
-                    <div className="action-opt">{toLocale('Trade')}</div>
-                  </div>
-                </td>
-              </tr>
-            )}</tbody>
-        </table>
+        <WatchList sort={sort} data={data} columns={this.columns} onSort={this.onSort}/>
         <div className="pagination-wrap">
-          <div className="pagination">
-            <div className="pagination-prev disabled"><i className="iconfont before" /></div>
-            <div className="pagination-page">1</div>
-            <div className="pagination-more"><i className="iconfont more" /></div>
-            <div className="pagination-page active">6</div>
-            <div className="pagination-page">7</div>
-            <div className="pagination-page">8</div>
-            <div className="pagination-page">9</div>
-            <div className="pagination-page">10</div>
-            <div className="pagination-next"><i className="iconfont after" /></div>
-          </div>
-        </div>
+          <Pagination
+              className="watchlist-pagination"
+              total={total}
+              pageSize={pageSize}
+              current={current}
+              onChange={this.onChange}
+              hideOnSinglePage={false}
+            />
+        </div> 
       </div>
     );
   }

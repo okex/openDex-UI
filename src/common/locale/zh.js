@@ -735,7 +735,7 @@ const zhCN = {
   'Intial Price':'Intial Price',
   'Input Pool':'Input Pool',
   'Error':'Error',
-  'Existed Pool':'Existed Pool',
+  'Existed Pool':'Existed Pool, go add directly >',
   'Reduce Liquidity':'Reduce Liquidity',
   'Withdraw assets':'Withdraw assets',
   'All':'All',

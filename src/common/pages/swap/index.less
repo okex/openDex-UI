@@ -328,6 +328,7 @@
         display: flex;
         align-items: center;
         .exchange {
+          cursor: pointer;
           display: flex;
           width: 14px;
           height: 15px;
@@ -351,6 +352,7 @@
     background: #183D80;
     border-radius: 4px;
     position: relative;
+    cursor: pointer;
     .coin-select {
       .coin-select;
       height: 48px;
@@ -361,6 +363,13 @@
         margin-right: 0;
       }
     }
+    .panel-coin-search {
+      position: absolute;
+      right: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+    }
   }
 
   .error-tip {
@@ -370,6 +379,9 @@
     font-weight: 400;
     color: #E35E5E;
     line-height: 16px;
+    &.error-tip-link {
+      cursor: pointer;
+    }
   }
   
   .btn {
@@ -540,6 +552,7 @@
     box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.15);
     .before {
       .before;
+      cursor: pointer;
     }
   }
 
@@ -579,9 +592,9 @@
           box-sizing: border-box;
           .coin2coin {
             min-height: 48px;
-            &::before {
+            .exchange {
+              cursor: pointer;
               display: flex;
-              content:'';
               width: 13px;
               height: 14px;
               margin-left: 1px;
@@ -589,16 +602,23 @@
               background: url(../../assets/images/exchange.png) 0 0 no-repeat;
               background-size: 13px 14px;
             }
+            img:nth-child(2) {
+              margin: 0;
+            }
+            img:nth-child(3) {
+              margin-left: -5px;
+              margin-right: 10px;
+            }
           }
           .blod {
             font-family: PingFangSC-Medium, PingFang SC;
             font-weight: 500;
           }
-          &.red {
+          &.red,.red {
             .blod;
             color: #E35E5E;
           }
-          &.green {
+          &.green,.green {
             .blod;
             color: #2EAD65;
           }
@@ -722,6 +742,63 @@
       }
     }
   }
+
+  .watchlist-pagination {
+    display: flex;
+    width: 316px;
+    justify-content: space-around;
+    cursor: pointer; 
+    .ok-ui-pagination-total-text {
+      display: none;
+    }
+    .ok-ui-pagination-prev,.ok-ui-pagination-item,.ok-ui-pagination-next {
+      border:none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 28px;
+      height: 28px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      font-size: 12px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #FFFFFF;
+      line-height: 18px;
+      a {
+        color:#fff;
+      }
+      &.ok-ui-pagination-item-active {
+        background: #3075EE;
+      }
+      &.ok-ui-pagination-disabled {
+        color: rgba(255, 255, 255, 0.65)
+      }
+    }
+    .ok-ui-pagination-prev a {
+      font-family: "iconfont" !important;
+      font-size: 16px;
+      font-style: normal;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      &::after {
+        content:'\e65e'
+      };
+    }
+    .ok-ui-pagination-next a {
+      font-family: "iconfont" !important;
+      font-size: 16px;
+      font-style: normal;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      &::after {
+        content:'\e65d'
+      };
+    }
+    .ok-ui-pagination-jump-prev::after,.ok-ui-pagination-jump-next::after {
+      color:#fff;
+    }
+  }
   
 }
 
@@ -833,6 +910,7 @@
     position: absolute;
     right: 10px;
     top: 50px;
+    z-index: 100;
   }
 }
 

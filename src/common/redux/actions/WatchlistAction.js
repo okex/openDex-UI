@@ -1,10 +1,10 @@
-import SwapActionType from '../actionTypes/SwapActionType';
-import * as api from '../../pages/swap/util/api';
+import WatchlistActionType from '../actionTypes/WatchlistActionType';
+import * as api from '../../pages/swap/api';
 
 export function setting(data) {
   return (dispatch) => {
     dispatch({
-      type: SwapActionType.SETTING,
+      type: WatchlistActionType.SETTING,
       data,
     });
   };
@@ -13,20 +13,17 @@ export function setting(data) {
 export function hasSetting(data) {
   return (dispatch) => {
     dispatch({
-      type: SwapActionType.SETTING_ICON,
+      type: WatchlistActionType.SETTING_ICON,
       data,
     });
   };
 }
 
 export function exchange(baseToken,targetToken) {
-  return async (dispatch,getState) => {
-    const data = {...getState().SwapStore,baseToken:targetToken,targetToken:baseToken};
-    data.targetToken.value = '';
-    await updateSwapInfo(data,'baseToken');
+  return (dispatch) => {
     dispatch({
-      type: SwapActionType.ALL,
-      data,
+      type: WatchlistActionType.ALL,
+      data: {baseToken:targetToken,targetToken:baseToken},
     });
   };
 }
@@ -38,8 +35,10 @@ async function updateSwapInfo(data,key) {
     const {buy_amount,price,price_impact,fee,route} = await api.buyInfo({amount_to_sell:`${value}${symbol}`,token_to_buy:target.symbol});
     data.exchangeInfo = {price,price_impact,fee,route};
     target.value = buy_amount;
-  } else {
-    target.value = '';
+    if(key !== 'baseToken') {
+      const temp = await api.buyInfo({amount_to_sell:`${target.value}${target.symbol}`,token_to_buy:symbol});
+      data.exchangeInfo = {price:temp.price,price_impact:temp.price_impact,fee:temp.fee,route:temp.route};
+    }
   }
 }
 
@@ -48,7 +47,7 @@ export function setBaseToken(baseToken) {
     const data = {...getState().SwapStore,baseToken};
     await updateSwapInfo(data,'baseToken');
     dispatch({
-      type: SwapActionType.ALL,
+      type: WatchlistActionType.ALL,
       data,
     });
   };
@@ -57,21 +56,10 @@ export function setBaseToken(baseToken) {
 export function setTargetToken(targetToken) {
   return async (dispatch,getState) => {
     const data = {...getState().SwapStore,targetToken};
-    await updateSwapInfo(data,'baseToken');
+    await updateSwapInfo(data,'targetToken');
     dispatch({
-      type: SwapActionType.ALL,
+      type: WatchlistActionType.ALL,
       data,
-    });
-  };
-}
-
-export function revertPrice() {
-  return (dispatch,getState) => {
-    const {exchangeInfo} = getState().SwapStore;
-    exchangeInfo.isReverse = !exchangeInfo.isReverse;
-    dispatch({
-      type: SwapActionType.ALL,
-      data:{exchangeInfo:{...exchangeInfo}},
     });
   };
 }
