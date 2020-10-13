@@ -2,10 +2,10 @@ import React from 'react';
 import { toLocale } from '_src/locale/react-locale';
 import InputNum from '_component/InputNum';
 import SelectCoin from '../SelectCoin';
-import {getCoinIcon} from '../coinIcon';
+import {getCoinIcon} from '../util/coinIcon';
 
 export default class CoinItem extends React.Component {
-
+  
   constructor() {
     super();
     this.state = {
@@ -57,13 +57,13 @@ export default class CoinItem extends React.Component {
   }
 
   render() {
-    const { label, token:{available, symbol,value}, loadCoinList } = this.props;
+    const { label, token:{available, symbol,value}, loadCoinList,disabled } = this.props;
     const {show} = this.state;
     return (
       <div className="coin-item">
         <div className="coin-item-title">
           <div>{label}</div>
-          <div className="txt">{toLocale('Balance')}: {available || '0.000000'}{available && <span className='max' onClick={this.setMaxValue}>MAX</span>}</div>
+          <div className="txt">{toLocale('Balance')}: {available || '0.000000'}{available && !disabled && <span className='max' onClick={this.setMaxValue}>MAX</span>}</div>
         </div>
         <div className="coin-item-content">
           <div className="input">
@@ -72,6 +72,7 @@ export default class CoinItem extends React.Component {
               value={value}
               onChange={this.onInputChange}
               placeholder="0.000000"
+              disabled={disabled}
             />
           </div>
           <div className="coin-select" onClick={this.showCoinSelectList}>

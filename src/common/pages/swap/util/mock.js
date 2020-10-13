@@ -1,4 +1,4 @@
-let Mock = require('mockjs');
+const Mock = require('mockjs');
 
 module.exports = {
   tokens(url) {
@@ -41,19 +41,19 @@ module.exports = {
       "code": 0,
       "msg": "",
       "detail_msg": "",
-      "data": [
+      "data|10": [
         {
           "base_pooled_coin": {
             "denom": "eos-c9f",
-            "amount": "0.00000000"
+            "amount": /(0\.00000000)|(10\.00000000)/
           },
           "quote_pooled_coin": {
             "denom": "okt",
-            "amount": "0.00000000"
+            "amount": /(0\.00000000)|(10\.00000000)/
           },
           "pool_token_coin": {
             "denom": "ammswap_eos-c9f_okt",
-            "amount": "0.00000000"
+            "amount": "100.00000000"
           },
           "pool_token_ratio": "0.042"
         }
@@ -67,7 +67,6 @@ module.exports = {
       "detail_msg": "",
       "data": {
         "base_token_amount": "19.88846512",
-        "price": "0.96",
         "pool_share": "0.58"
       }
     });
@@ -90,21 +89,23 @@ module.exports = {
     });
   },
   tokenPair(url) {
+    const random = Math.random(1);
+    const data = random < 0.5 ? null : {
+      "quote_pooled_coin": {
+        "denom": "rxb-276",
+        "amount": "9997.01288057"
+      },
+      "base_pooled_coin": {
+        "denom": "okt",
+        "amount": "10002.99700300"
+      },
+      "pool_token_name": "ammswap_okt_rxb-276"
+    }
     Mock.mock(url, {
       "code": 0,
       "msg": "",
       "detail_msg": "",
-      "data": {
-        "quote_pooled_coin": {
-          "denom": "rxb-276",
-          "amount": "9997.01288057"
-        },
-        "base_pooled_coin": {
-          "denom": "okt",
-          "amount": "10002.99700300"
-        },
-        "pool_token_name": "ammswap_okt_rxb-276"
-      }
+      data 
     });
   },
   createLiquidityTokens(url) {
@@ -155,7 +156,7 @@ module.exports = {
       "msg": "",
       "detail_msg": "",
       "data": {
-        "data": [
+        "data|10": [
           {
             "swap_pair": "eos-d07_okt",
             "liquidity": "2411223",
@@ -168,7 +169,7 @@ module.exports = {
         "param_page": {
           "page": 1,
           "per_page": 50,
-          "total": 1
+          "total": 100
         }
       }
     });

@@ -19,7 +19,7 @@ function get(url, params = {}) {
 export function tokens(params={}) {
   //@mock mocker.tokens(URL.GET_SWAP_TOKENS);
   const address = util.getMyAddr();
-  return get(URL.GET_SWAP_TOKENS, {base_token_name:params.symbol || '',address})
+  return get(URL.GET_SWAP_TOKENS, {base_token_name:params.symbol || '',address,support_route:!!params.support_route})
 }
 
 export function buyInfo(params) {
