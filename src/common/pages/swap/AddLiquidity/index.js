@@ -260,7 +260,7 @@ export default class AddLiquidity extends React.Component {
   };
 
   render() {
-    const { back, showLiquidity = true } = this.props;
+    const { back, showLiquidity = true,disabledChangeCoin=false } = this.props;
     const {
       baseToken,
       targetToken,
@@ -282,6 +282,7 @@ export default class AddLiquidity extends React.Component {
               token={baseToken}
               onChange={this.changeBase}
               loadCoinList={this.loadBaseCoinList}
+              disabledChangeCoin={disabledChangeCoin}
             />
             <div className="sep add-sep"></div>
             <CoinItem
@@ -290,6 +291,7 @@ export default class AddLiquidity extends React.Component {
               disabled={targetTokenDisabled}
               onChange={this.changeTarget}
               loadCoinList={this.loadBaseCoinList}
+              disabledChangeCoin={disabledChangeCoin}
             />
             {exchangeInfo}
             <div className="btn-wrap">{btn}</div>

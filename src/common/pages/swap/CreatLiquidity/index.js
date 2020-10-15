@@ -88,6 +88,7 @@ export default class CreatLiquidity extends React.Component {
       props: {
         liquidity,
         showLiquidity: false,
+        disabledChangeCoin:!!liquidity
       },
     });
   };
