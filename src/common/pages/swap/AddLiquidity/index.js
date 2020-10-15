@@ -5,7 +5,7 @@ import calc from '_src/utils/calc';
 import util from '_src/utils/util';
 import * as api from '../util/api';
 import Message from '_src/component/Message';
-import InfoItem from '../LiquidityInfo/InfoItem';
+import InfoItem from '../InfoItem';
 import ReduceLiquidity from '../ReduceLiquidity';
 export default class AddLiquidity extends React.Component {
   constructor(props) {

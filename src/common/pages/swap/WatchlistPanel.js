@@ -7,6 +7,7 @@ import * as api from './util/api';
 import calc from '_src/utils/calc';
 import { withRouter } from 'react-router-dom';
 import PageURL from '_src/constants/PageURL';
+import AddLiquidity from './AddLiquidity';
 @withRouter
 export default class WatchlistPanel extends React.Component {
   constructor() {
@@ -124,7 +125,22 @@ export default class WatchlistPanel extends React.Component {
     this.setState({});
   }
 
-  addLiquidity(row) {}
+  async addLiquidity(row) {
+    const tokens = row.swap_pair.split('_');
+    const liquidityInfo = await api.liquidityInfo({
+      base_token: tokens[0],
+      quote_token: tokens[1],
+    });
+    const liquidity = liquidityInfo[0];
+    this.props.push({
+      component: AddLiquidity,
+      props: {
+        liquidity,
+        showLiquidity:false,
+        disabledChangeCoin:!!liquidity
+      },
+    });
+  }
 
   goTrade(row) {
     const url = `${

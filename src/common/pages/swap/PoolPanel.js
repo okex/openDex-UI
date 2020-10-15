@@ -1,62 +1,83 @@
 import React from 'react';
-import LiquidityInfo from './LiquidityInfo';
+import { toLocale } from '_src/locale/react-locale';
+import * as api from './util/api';
+import InfoItem from './InfoItem';
+import AddLiquidity from './AddLiquidity';
+import CreateLiquidity from './CreatLiquidity';
+import ReduceLiquidity from './ReduceLiquidity';
 
 export default class PoolPanel extends React.Component {
   constructor() {
     super();
+    this.init = false;
     this.state = {
-      currentComponent: null,
-      currentRoute: null,
-      router: [],
-    };
+      liquidityInfo:[]
+    }
   }
 
-  push = (route) => {
-    const { router } = this.state;
-    if (!route.component) route.component = null;
-    if (!route.props) route.props = {};
-    if (!route.props.back) {
-      route.props.back = this.back;
-    }
-    if (!route.props.push) {
-      route.props.push = this.push;
-    }
-    route = { ...route };
-    router.push(route);
-    this.renderRoute(route);
-  };
-
-  back = () => {
-    const { router } = this.state;
-    if (router.length <= 1) return;
-    router.pop();
-    const route = router[router.length - 1];
-    this.renderRoute(route);
-  };
-
-  renderRoute(route) {
-    this.setState({
-      currentRoute: route,
-      currentComponent: this.createComponentInstance(route),
-    });
+  async getLiquidityInfo() {
+    const liquidityInfo = await api.liquidityInfo();
+    this.setState({liquidityInfo});
   }
 
-  createComponentInstance(route) {
-    if (!route.component) return null;
-    if (!route._instance) {
-      const Component = route.component;
-      route._instance = <Component {...route.props} />;
-    }
-    return route._instance;
+  liquidity(liquidityInfo = []) {
+    return liquidityInfo.map((d, index) => (
+      <InfoItem key={index} data={d} add={this.add} reduce={this.reduce} />
+    ));
   }
 
   componentDidMount() {
-    this.push({
-      component: LiquidityInfo,
-    });
+    this.init = true;
+    this.getLiquidityInfo();
   }
 
+  add = (liquidity) => {
+    this.props.push({
+      component: AddLiquidity,
+      props: {
+        liquidity,
+        showLiquidity:false,
+        disabledChangeCoin:!!liquidity
+      },
+    });
+  };
+
+  create = () => {
+    this.props.push({
+      component: CreateLiquidity,
+    });
+  };
+
+  reduce = (liquidity) => {
+    this.props.push({
+      component: ReduceLiquidity,
+      props: {
+        liquidity,
+      },
+    });
+  };
+
   render() {
-    return this.state.currentComponent;
+    const { liquidityInfo } = this.state;
+    return (
+      <div className="panel panel-pool">
+        <div className="btn add-icon" onClick={() => this.add()}>
+          {toLocale('Add Liquidity')}
+        </div>
+        <div className="liquidity">
+          <div className="left">{toLocale('Your Liquidity')}</div>
+          <div className="right" onClick={this.create}>
+            {toLocale('Create Liquidity')}
+          </div>
+        </div>
+        {this.init && liquidityInfo.length ? (
+          <div className="poll-items-wrap">
+            <div className="poll-items">{this.liquidity(liquidityInfo)}</div>
+          </div>
+        ) : (
+          <div className="nodata">{toLocale('No Liquidity Found')}</div>
+        )}
+      </div>
+    );
   }
 }
