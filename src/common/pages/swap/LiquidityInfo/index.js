@@ -1,35 +1,23 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { toLocale } from '_src/locale/react-locale';
-import * as PoolAction from '_src/redux/actions/PoolAction';
 import * as api from '../util/api';
 import InfoItem from './InfoItem';
 import AddLiquidity from '../AddLiquidity';
 import CreateLiquidity from '../CreatLiquidity';
 import ReduceLiquidity from '../ReduceLiquidity';
 
-function mapStateToProps(state) {
-  const { liquidityInfo } = state.PoolStore;
-  return { liquidityInfo };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    poolAction: bindActionCreators(PoolAction, dispatch),
-  };
-}
-
-@connect(mapStateToProps, mapDispatchToProps)
 export default class LiquidityInfo extends React.Component {
   constructor() {
     super();
     this.init = false;
+    this.state = {
+      liquidityInfo:[]
+    }
   }
 
   async getLiquidityInfo() {
     const liquidityInfo = await api.liquidityInfo();
-    this.props.poolAction.liquidityInfo(liquidityInfo);
+    this.setState({liquidityInfo});
   }
 
   liquidity(liquidityInfo = []) {
@@ -70,7 +58,7 @@ export default class LiquidityInfo extends React.Component {
   };
 
   render() {
-    const { liquidityInfo } = this.props;
+    const { liquidityInfo } = this.state;
     return (
       <div className="panel panel-pool">
         <div className="btn add-icon" onClick={() => this.add()}>

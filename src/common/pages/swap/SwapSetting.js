@@ -52,15 +52,6 @@ export default class SwapSetting extends React.Component {
     });
   };
 
-  constructor() {
-    super();
-    this.ratios = [
-      {name:'0.1%',value:0.1},
-      {name:'0.5%',value:0.5},
-      {name:'1%',value:1},
-    ];  
-  }
-
   changeSlippageTolerance = (value) => {
     const setting = {...this.props.setting};
     setting.slippageTolerance = value;
