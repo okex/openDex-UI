@@ -29,7 +29,8 @@ export default class AddLiquidity extends React.Component {
         pool_share: '',
         isReverse: false,
       },
-      liquidity: props.liquidity,
+      liquidity:props.liquidity,
+      userLiquidity: props.userLiquidity,
       targetTokenDisabled,
     };
   }
@@ -101,12 +102,15 @@ export default class AddLiquidity extends React.Component {
 
   async _check(data) {
     const { baseToken, targetToken } = data;
-    const liquidityInfo = await api.liquidityInfo({
+    const params = {
       base_token: baseToken.symbol,
       quote_token: targetToken.symbol,
-    });
-    const { targetTokenDisabled } = this._process(liquidityInfo[0]);
-    data.liquidity = liquidityInfo[0];
+    };
+    const liquidity = await api.tokenPair(params);
+    const liquidityInfo = await api.liquidityInfo(params);
+    const { targetTokenDisabled } = this._process(liquidity);
+    data.liquidity = liquidity;
+    data.userLiquidity = liquidityInfo && liquidityInfo[0];
     data.targetTokenDisabled = targetTokenDisabled;
   }
 
@@ -262,14 +266,13 @@ export default class AddLiquidity extends React.Component {
   render() {
     const {
       back,
-      showLiquidity = true,
       disabledChangeCoin = false,
     } = this.props;
     const {
       baseToken,
       targetToken,
       targetTokenDisabled,
-      liquidity,
+      userLiquidity,
     } = this.state;
     const exchangeInfo = this.getExchangeInfo();
     const btn = this.getBtn();
@@ -301,9 +304,9 @@ export default class AddLiquidity extends React.Component {
             <div className="btn-wrap">{btn}</div>
           </div>
         </div>
-        {showLiquidity && liquidity && (
+        {userLiquidity && (
           <div className="panel">
-            <InfoItem data={liquidity} reduce={this.reduce} />
+            <InfoItem data={userLiquidity} reduce={this.reduce} />
           </div>
         )}
       </>

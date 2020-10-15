@@ -11,17 +11,17 @@ export default class PoolPanel extends React.Component {
     super();
     this.init = false;
     this.state = {
-      liquidityInfo: [],
+      userLiquidityInfo: [],
     };
   }
 
   async getLiquidityInfo() {
-    const liquidityInfo = await api.liquidityInfo();
-    this.setState({ liquidityInfo });
+    const userLiquidityInfo = await api.liquidityInfo();
+    this.setState({ userLiquidityInfo });
   }
 
-  liquidity(liquidityInfo = []) {
-    return liquidityInfo.map((d, index) => (
+  liquidity(userLiquidityInfo = []) {
+    return userLiquidityInfo.map((d, index) => (
       <InfoItem key={index} data={d} add={this.add} reduce={this.reduce} />
     ));
   }
@@ -31,16 +31,22 @@ export default class PoolPanel extends React.Component {
     this.getLiquidityInfo();
   }
 
-  add = (liquidity) => {
+  add = async userLiquidity => {
+    if(!userLiquidity) this.goAddLiquidity();
+    const liquidity = await api.tokenPair({base_token:userLiquidity.base_pooled_coin.denom,quote_token:userLiquidity.quote_pooled_coin.denom})
+    this.goAddLiquidity({liquidity,userLiquidity});
+  };
+
+  goAddLiquidity({liquidity,userLiquidity}) {
     this.props.push({
       component: AddLiquidity,
       props: {
         liquidity,
-        showLiquidity: false,
-        disabledChangeCoin: !!liquidity,
+        userLiquidity,
+        disabledChangeCoin: !!userLiquidity,
       },
     });
-  };
+  }
 
   create = () => {
     this.props.push({
@@ -58,7 +64,7 @@ export default class PoolPanel extends React.Component {
   };
 
   render() {
-    const { liquidityInfo } = this.state;
+    const { userLiquidityInfo } = this.state;
     return (
       <div className="panel panel-pool">
         <div className="btn add-icon" onClick={() => this.add()}>
@@ -70,9 +76,9 @@ export default class PoolPanel extends React.Component {
             {toLocale('Create Liquidity')}
           </div>
         </div>
-        {this.init && liquidityInfo.length ? (
+        {this.init && userLiquidityInfo.length ? (
           <div className="poll-items-wrap">
-            <div className="poll-items">{this.liquidity(liquidityInfo)}</div>
+            <div className="poll-items">{this.liquidity(userLiquidityInfo)}</div>
           </div>
         ) : (
           <div className="nodata">{toLocale('No Liquidity Found')}</div>

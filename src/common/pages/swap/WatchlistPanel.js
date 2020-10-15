@@ -127,17 +127,19 @@ export default class WatchlistPanel extends React.Component {
 
   async addLiquidity(row) {
     const tokens = row.swap_pair.split('_');
-    const liquidityInfo = await api.liquidityInfo({
+    const params = {
       base_token: tokens[0],
       quote_token: tokens[1],
-    });
-    const liquidity = liquidityInfo ? liquidityInfo[0]:null;
+    };
+    const liquidity = await api.tokenPair(params);
+    const liquidityInfo = await api.liquidityInfo(params);
+    const userLiquidity = liquidityInfo && liquidityInfo[0];
     this.props.push({
       component: AddLiquidity,
       props: {
         liquidity,
-        showLiquidity: false,
-        disabledChangeCoin: !!liquidity,
+        userLiquidity,
+        disabledChangeCoin: false,
       },
     });
   }
