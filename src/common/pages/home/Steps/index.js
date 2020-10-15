@@ -166,21 +166,21 @@ class Steps extends Component {
     return (
       <div className="steps-grid-wrap">
         <article className="steps-grid">
-        <h2 className="steps-title">{toLocale('home_steps_title')}</h2>
-        <div className="steps-content">
-          {stepsImgList.map((img, index) => {
-            return (
-              <img
-                key={index}
-                className={index === imgNum ? `step-img${imgNum}` : 'non-dis'}
-                src={toLocale(img) || Image[`step${imgNum}`]}
-                alt={toLocale('home_steps_title')}
-              />
-            );
-          })}
-          <StepList data={{ imgNum, circleTime }} />
-        </div>
-      </article>
+          <h2 className="steps-title">{toLocale('home_steps_title')}</h2>
+          <div className="steps-content">
+            {stepsImgList.map((img, index) => {
+              return (
+                <img
+                  key={index}
+                  className={index === imgNum ? `step-img${imgNum}` : 'non-dis'}
+                  src={toLocale(img) || Image[`step${imgNum}`]}
+                  alt={toLocale('home_steps_title')}
+                />
+              );
+            })}
+            <StepList data={{ imgNum, circleTime }} />
+          </div>
+        </article>
       </div>
     );
   }

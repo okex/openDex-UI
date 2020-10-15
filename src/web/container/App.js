@@ -29,7 +29,7 @@ class App extends React.Component {
       <Router basename={window.okGlobal.langPath} history={history}>
         <div className="main-container">
           <Switch>
-            {routerConfig.map((router,index) => {
+            {routerConfig.map((router, index) => {
               const { path, component: Page } = router;
               return (
                 <Route
@@ -38,7 +38,8 @@ class App extends React.Component {
                   component={() => {
                     return (
                       <React.Fragment>
-                        {path === PageURL.spotFullPage || path === PageURL.homePage ? (
+                        {path === PageURL.spotFullPage ||
+                        path === PageURL.homePage ? (
                           ''
                         ) : (
                           <div className="full-head">

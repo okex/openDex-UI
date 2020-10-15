@@ -4,10 +4,9 @@ import { Link } from 'react-router-dom';
 import './ComboBox.less';
 
 export default class ComboBox extends React.Component {
-
   change(item) {
-    const {onChange} = this.props;
-    if(typeof onChange === 'function') onChange(item);
+    const { onChange } = this.props;
+    if (typeof onChange === 'function') onChange(item);
   }
 
   render() {
@@ -17,11 +16,19 @@ export default class ComboBox extends React.Component {
         <ul>
           {this.props.comboBoxDataSource.map((item, index) => {
             return (
-              <li
-                key={index}
-                className={current === item.type ? 'active' : ''}
-              >
-                {!item.isRoute ? <a href={item.url}>{item.label}</a> : <Link to={item.url} onClick={() => {this.change(item)}}>{item.label}</Link>}
+              <li key={index} className={current === item.type ? 'active' : ''}>
+                {!item.isRoute ? (
+                  <a href={item.url}>{item.label}</a>
+                ) : (
+                  <Link
+                    to={item.url}
+                    onClick={() => {
+                      this.change(item);
+                    }}
+                  >
+                    {item.label}
+                  </Link>
+                )}
               </li>
             );
           })}

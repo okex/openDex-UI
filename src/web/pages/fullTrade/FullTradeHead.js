@@ -6,7 +6,7 @@ import { toLocale } from '_src/locale/react-locale';
 import * as SpotActions from '_src/redux/actions/SpotAction';
 import * as CommonAction from '_src/redux/actions/CommonAction';
 import DesktopTypeMenu from '_component/DesktopTypeMenu';
-import DesktopLinkMenu from '_component/DesktopLinkMenu'
+import DesktopLinkMenu from '_component/DesktopLinkMenu';
 import okexchainLogo from '_src/assets/images/OKExChainLogo.png';
 import PageURL from '_src/constants/PageURL';
 import FullTradeTicker from '_src/pages/fullTrade/FullTradeTicker';
@@ -28,7 +28,7 @@ function mapStateToProps(state) {
     legalId,
     legalObj,
     spotOrMargin,
-    hasSetting
+    hasSetting,
   };
 }
 
@@ -91,7 +91,7 @@ class FullTradeHead extends React.Component {
   };
 
   render() {
-    const { productObj, product, callMarketObj,hasSetting } = this.props;
+    const { productObj, product, callMarketObj, hasSetting } = this.props;
     const current = PageURL.getCurrent();
     const tradingMode = productObj[product]
       ? Number(productObj[product].tradingMode)
@@ -113,7 +113,7 @@ class FullTradeHead extends React.Component {
         <a className="logo-wrap" onClick={this.goHome}>
           <img src={okexchainLogo} style={this.iconStyle} />
         </a>
-        <DesktopTypeMenu current={current}/>
+        <DesktopTypeMenu current={current} />
         {this.isTradePage() ? <FullTradeProductList /> : null}
         {this.isTradePage() ? <FullTradeTicker /> : null}
         <div className="okdex-header-right">

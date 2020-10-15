@@ -38,7 +38,7 @@ export function setNONE() {
       type: NodeActionType.UPDATE_CURRENT_NODE,
       data: NODE_TYPE.NONE,
     });
-  }
+  };
 }
 
 export function updateRemoteList(list) {

@@ -5,7 +5,7 @@ export function liquidityInfo(liquidityInfo) {
   return (dispatch) => {
     dispatch({
       type: PoolActionType.ALL,
-      data:{liquidityInfo},
+      data: { liquidityInfo },
     });
   };
 }

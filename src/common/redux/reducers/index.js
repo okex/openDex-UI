@@ -8,4 +8,14 @@ import SwapStore from './SwapReducer';
 import PoolStore from './SwapReducer';
 import WatchlistStore from './SwapReducer';
 
-export default { Common, Spot, SpotTrade, FormStore, OrderStore, WalletStore, SwapStore,PoolStore,WatchlistStore };
+export default {
+  Common,
+  Spot,
+  SpotTrade,
+  FormStore,
+  OrderStore,
+  WalletStore,
+  SwapStore,
+  PoolStore,
+  WatchlistStore,
+};

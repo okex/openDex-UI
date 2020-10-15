@@ -20,7 +20,7 @@ function mapStateToProps(state) {
   const { hasSetting } = state.SwapStore;
   return {
     product,
-    hasSetting
+    hasSetting,
   };
 }
 
@@ -56,14 +56,14 @@ class FullTradeHead extends React.Component {
   };
 
   render() {
-    const {hasSetting} = this.props;
+    const { hasSetting } = this.props;
     const current = PageURL.getCurrent();
     return (
       <div className="full-top-info-box">
         <a className="logo-wrap" onClick={this.goHome}>
           <img src={okexchainLogo} style={this.iconStyle} />
         </a>
-        <DesktopTypeMenu isDexDesk={true} current={current}/>
+        <DesktopTypeMenu isDexDesk={true} current={current} />
         <DesktopNodeMenu />
         {this.isTradePage() ? <FullTradeProductList /> : null}
         {this.isTradePage() ? <FullTradeTicker /> : null}

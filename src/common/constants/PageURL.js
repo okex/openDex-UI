@@ -24,16 +24,17 @@ const paths = {
   tokenpairDetailPage: `${contentPath}/tokenpair`,
   feesPage: `${contentPath}/fees`,
   swapPage: `${contentPath}/swap`,
-}
+};
 
 export default {
   ...paths,
   getCurrent() {
-    const {pathname,hash} = window.location;
-    const match = hash ? hash.slice(1):pathname;
-    for(name in paths) {
-      if(match === paths[name] || match === paths[name]+'/') return paths[name];
+    const { pathname, hash } = window.location;
+    const match = hash ? hash.slice(1) : pathname;
+    for (name in paths) {
+      if (match === paths[name] || match === paths[name] + '/')
+        return paths[name];
     }
     return '';
-  }
+  },
 };

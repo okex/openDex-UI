@@ -332,7 +332,7 @@ export function startOkexchaind(datadir, terminal = false) {
       await start(datadir, dispatch, getState, terminal);
       switchIsStarted(true)(dispatch);
       startPoll(dispatch, getState);
-    } catch(e) {
+    } catch (e) {
       console.log(e);
     }
   };
@@ -378,7 +378,7 @@ export function stopOkexchaind(terminal = false) {
       data: false,
     });
     const { currentNode } = getState().NodeStore;
-    if(currentNode.type === NODE_TYPE.LOCAL) {
+    if (currentNode.type === NODE_TYPE.LOCAL) {
       dispatch({
         type: NodeActionType.UPDATE_CURRENT_NODE,
         data: NODE_TYPE.NONE,

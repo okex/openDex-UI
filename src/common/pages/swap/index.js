@@ -12,8 +12,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return {
-  };
+  return {};
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -21,20 +20,25 @@ export default class Swap extends React.Component {
   constructor() {
     super();
     this.state = {
-      tabsClass: ''
-    }
+      tabsClass: '',
+    };
   }
 
-  changeTab = key => {
+  changeTab = (key) => {
     const tabsClass = key === '3' ? 'watchlist' : '';
     this.setState({ tabsClass });
-  }
+  };
 
   render() {
     const { tabsClass } = this.state;
     return (
       <div className="swap-container">
-        <Tabs defaultActiveKey="1" prefixCls="swap" onChange={this.changeTab} className={tabsClass}>
+        <Tabs
+          defaultActiveKey="1"
+          prefixCls="swap"
+          onChange={this.changeTab}
+          className={tabsClass}
+        >
           <TabPane tab={toLocale('Swap')} key="1">
             <SwapPanel />
           </TabPane>

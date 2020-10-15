@@ -6,22 +6,22 @@ const initialState = {
   hasSetting: PageURL.getCurrent() === PageURL.swapPage,
   setting: util.getSetting(),
   baseToken: {
-    available:'',
-    value:'',
-    symbol:'',
+    available: '',
+    value: '',
+    symbol: '',
   },
   targetToken: {
-    available:'',
-    value:'',
-    symbol:'',
+    available: '',
+    value: '',
+    symbol: '',
   },
   exchangeInfo: {
-    price:'',
-    price_impact:'',
-    fee:'',
-    route:'',
-    isReverse:false,
-  }
+    price: '',
+    price_impact: '',
+    fee: '',
+    route: '',
+    isReverse: false,
+  },
 };
 export default function reducer(state = initialState, action) {
   switch (action.type) {
@@ -38,7 +38,7 @@ export default function reducer(state = initialState, action) {
     default:
       return {
         ...state,
-        ...action.data
+        ...action.data,
       };
   }
 }

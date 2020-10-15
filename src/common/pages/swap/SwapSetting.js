@@ -19,31 +19,30 @@ function mapDispatchToProps(dispatch) {
 }
 @connect(mapStateToProps, mapDispatchToProps)
 export default class SwapSetting extends React.Component {
-
   constructor() {
     super();
     this.ratios = [
-      {name:'0.1%',value:0.1},
-      {name:'0.5%',value:0.5},
-      {name:'1%',value:1},
-    ];  
+      { name: '0.1%', value: 0.1 },
+      { name: '0.5%', value: 0.5 },
+      { name: '1%', value: 1 },
+    ];
   }
 
   changeSlippageTolerance = (value) => {
-    const setting = {...this.props.setting};
+    const setting = { ...this.props.setting };
     setting.slippageTolerance = value;
     this.props.swapAction.setting(setting);
-  }
+  };
 
   changeTransactionDeadline = (value) => {
-    const setting = {...this.props.setting};
+    const setting = { ...this.props.setting };
     setting.transactionDeadline = value;
     this.props.swapAction.setting(setting);
-  }
+  };
 
   change = (ratio) => {
     this.changeSlippageTolerance(ratio.value);
-  }
+  };
 
   confirm = () => {
     util.setting(this.props.setting);
@@ -51,7 +50,7 @@ export default class SwapSetting extends React.Component {
       content: toLocale('transaction confirmed'),
       duration: 3,
     });
-  }
+  };
 
   render() {
     const ratios = this.ratios;
@@ -60,51 +59,70 @@ export default class SwapSetting extends React.Component {
       <div className="swap-setting-container">
         <i className="iconfont iconmenu-administration" />
         <div className="panel-swap-setting">
-            <div className="swap-setting-header">{toLocale('Advanced setting')}</div>
-            <div className="swap-setting-content">
-              <div className="space-between">
-                <div className="left">{toLocale('Set slippage tolerance')}</div>
-                <div className="right"><i className="help" /></div>
+          <div className="swap-setting-header">
+            {toLocale('Advanced setting')}
+          </div>
+          <div className="swap-setting-content">
+            <div className="space-between">
+              <div className="left">{toLocale('Set slippage tolerance')}</div>
+              <div className="right">
+                <i className="help" />
               </div>
-              <div className="space-between check-btns">
-                <div className="left">
-                  <div className="check-btn-wrap">
-                    {ratios.map((d,index) =>
-                      <div key={index} className={'check-btn-item'+(d.value==setting.slippageTolerance?' active':'')} onClick={() => this.change(d)}>{d.name}</div>
-                    )}
-                  </div>
+            </div>
+            <div className="space-between check-btns">
+              <div className="left">
+                <div className="check-btn-wrap">
+                  {ratios.map((d, index) => (
+                    <div
+                      key={index}
+                      className={
+                        'check-btn-item' +
+                        (d.value == setting.slippageTolerance ? ' active' : '')
+                      }
+                      onClick={() => this.change(d)}
+                    >
+                      {d.name}
+                    </div>
+                  ))}
                 </div>
-                <div className="right">
-                  <div className="check-btn-input">
-                    <div className="input">
+              </div>
+              <div className="right">
+                <div className="check-btn-input">
+                  <div className="input">
                     <InputNum
                       type="text"
                       value={setting.slippageTolerance}
                       onChange={this.changeSlippageTolerance}
                     />
-                    </div>
-                    <i>%</i>
                   </div>
+                  <i>%</i>
                 </div>
               </div>
-              <div className="error-tip">*{toLocale('Your transaction may fail')}</div>
-              <div className="space-between deadline">
-                <div className="left">{toLocale('Transaction deadline')}</div>
-                <div className="right"><i className="help" /></div>
+            </div>
+            <div className="error-tip">
+              *{toLocale('Your transaction may fail')}
+            </div>
+            <div className="space-between deadline">
+              <div className="left">{toLocale('Transaction deadline')}</div>
+              <div className="right">
+                <i className="help" />
               </div>
-              <div className="deadline-input">
-                <div className="input">
+            </div>
+            <div className="deadline-input">
+              <div className="input">
                 <InputNum
                   type="text"
                   value={setting.transactionDeadline}
                   onChange={this.changeTransactionDeadline}
                 />
-                </div>
-                <i>{toLocale('Minutes')}</i>
               </div>
-              <div className="setting-btn" onClick={this.confirm}>{toLocale('Confirm')}</div>
+              <i>{toLocale('Minutes')}</i>
+            </div>
+            <div className="setting-btn" onClick={this.confirm}>
+              {toLocale('Confirm')}
             </div>
           </div>
+        </div>
       </div>
     );
   }
