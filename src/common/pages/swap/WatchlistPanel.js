@@ -136,8 +136,8 @@ export default class WatchlistPanel extends React.Component {
       component: AddLiquidity,
       props: {
         liquidity,
-        showLiquidity:false,
-        disabledChangeCoin:!!liquidity
+        showLiquidity: false,
+        disabledChangeCoin: !!liquidity,
       },
     });
   }

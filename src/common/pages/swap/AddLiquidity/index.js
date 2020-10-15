@@ -260,7 +260,11 @@ export default class AddLiquidity extends React.Component {
   };
 
   render() {
-    const { back, showLiquidity = true,disabledChangeCoin=false } = this.props;
+    const {
+      back,
+      showLiquidity = true,
+      disabledChangeCoin = false,
+    } = this.props;
     const {
       baseToken,
       targetToken,

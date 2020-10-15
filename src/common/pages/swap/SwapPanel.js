@@ -70,7 +70,7 @@ export default class SwapPanel extends React.Component {
 
   revert = () => {
     this.props.swapAction.revertPrice();
-  }
+  };
 
   componentDidMount() {
     this.initBaseToken();

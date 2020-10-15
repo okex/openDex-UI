@@ -42,7 +42,7 @@ export default class Router extends React.Component {
       currentRoute: route,
       currentComponent: this.createComponentInstance(route),
     });
-    if(this.props.onChange) this.props.onChange(route);
+    if (this.props.onChange) this.props.onChange(route);
   }
 
   createComponentInstance(route) {
@@ -55,8 +55,8 @@ export default class Router extends React.Component {
   }
 
   componentDidMount() {
-    const {route} = this.props;
-    if(route) this.push(route);
+    const { route } = this.props;
+    if (route) this.push(route);
   }
 
   render() {

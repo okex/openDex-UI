@@ -23,10 +23,10 @@ export default class Swap extends React.Component {
     this.setState({ tabsClass });
   };
 
-  changeRoute = ({component}) => {
+  changeRoute = ({ component }) => {
     const key = component === WatchlistPanel ? WATCHLIST : '';
     this.changeTab(key);
-  }
+  };
 
   render() {
     const { tabsClass } = this.state;
@@ -42,10 +42,13 @@ export default class Swap extends React.Component {
             <SwapPanel />
           </TabPane>
           <TabPane tab={toLocale('Pool')} key={POOL}>
-            <Router route={{component:PoolPanel}}/>
+            <Router route={{ component: PoolPanel }} />
           </TabPane>
           <TabPane tab={toLocale('Watchlist')} key={WATCHLIST}>
-            <Router route={{component:WatchlistPanel}} onChange={this.changeRoute}/>
+            <Router
+              route={{ component: WatchlistPanel }}
+              onChange={this.changeRoute}
+            />
           </TabPane>
         </Tabs>
       </div>

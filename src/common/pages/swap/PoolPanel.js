@@ -11,13 +11,13 @@ export default class PoolPanel extends React.Component {
     super();
     this.init = false;
     this.state = {
-      liquidityInfo:[]
-    }
+      liquidityInfo: [],
+    };
   }
 
   async getLiquidityInfo() {
     const liquidityInfo = await api.liquidityInfo();
-    this.setState({liquidityInfo});
+    this.setState({ liquidityInfo });
   }
 
   liquidity(liquidityInfo = []) {
@@ -36,8 +36,8 @@ export default class PoolPanel extends React.Component {
       component: AddLiquidity,
       props: {
         liquidity,
-        showLiquidity:false,
-        disabledChangeCoin:!!liquidity
+        showLiquidity: false,
+        disabledChangeCoin: !!liquidity,
       },
     });
   };

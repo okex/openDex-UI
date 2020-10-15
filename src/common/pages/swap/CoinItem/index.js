@@ -62,7 +62,7 @@ export default class CoinItem extends React.Component {
       token: { available, symbol, value },
       loadCoinList,
       disabled,
-      disabledChangeCoin
+      disabledChangeCoin,
     } = this.props;
     const { show } = this.state;
     return (
@@ -88,7 +88,12 @@ export default class CoinItem extends React.Component {
               disabled={disabled}
             />
           </div>
-          <div className={classNames('coin-select',{disabled:disabledChangeCoin})} onClick={this.showCoinSelectList}>
+          <div
+            className={classNames('coin-select', {
+              disabled: disabledChangeCoin,
+            })}
+            onClick={this.showCoinSelectList}
+          >
             <img className="coin-icon" src={getCoinIcon(symbol)} />
             {symbol ? (
               <span className="text active">{symbol}</span>
@@ -97,7 +102,7 @@ export default class CoinItem extends React.Component {
             )}
             {!disabledChangeCoin && <i className="iconfont" />}
             {show && !disabledChangeCoin && (
-              <SelectCoin onSelect={this.select} loadCoinList={loadCoinList}/>
+              <SelectCoin onSelect={this.select} loadCoinList={loadCoinList} />
             )}
           </div>
         </div>
