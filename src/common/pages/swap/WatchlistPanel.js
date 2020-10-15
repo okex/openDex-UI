@@ -131,7 +131,7 @@ export default class WatchlistPanel extends React.Component {
       base_token: tokens[0],
       quote_token: tokens[1],
     });
-    const liquidity = liquidityInfo[0];
+    const liquidity = liquidityInfo ? liquidityInfo[0]:null;
     this.props.push({
       component: AddLiquidity,
       props: {
@@ -153,7 +153,7 @@ export default class WatchlistPanel extends React.Component {
     const { pageSize, sort } = this.state;
     const params = { page: current, per_page: pageSize };
     if (sort) {
-      params.field = sort.field;
+      params.order_column = sort.field;
       params.sort = sort.sort;
     }
     const { data, param_page } = await api.watchlist(params);

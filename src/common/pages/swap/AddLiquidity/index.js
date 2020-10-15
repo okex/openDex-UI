@@ -294,7 +294,7 @@ export default class AddLiquidity extends React.Component {
               token={targetToken}
               disabled={targetTokenDisabled}
               onChange={this.changeTarget}
-              loadCoinList={this.loadBaseCoinList}
+              loadCoinList={this.loadTargetCoinList}
               disabledChangeCoin={disabledChangeCoin}
             />
             {exchangeInfo}

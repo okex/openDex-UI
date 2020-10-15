@@ -31,9 +31,11 @@ export function buyInfo(params) {
   return get(URL.GET_SWAP_BUY_INFO, params);
 }
 
-export function liquidityInfo(params) {
+export function liquidityInfo(params={}) {
   //@mock mocker.liquidityInfo(URL.GET_SWAP_LIQUIDITY_INFO);
-  return get(URL.GET_SWAP_LIQUIDITY_INFO, params);
+  const address = util.getMyAddr();
+  const _params = {...params,address};
+  return get(URL.GET_SWAP_LIQUIDITY_INFO, _params);
 }
 
 export function addInfo(params) {
