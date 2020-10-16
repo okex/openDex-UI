@@ -151,8 +151,10 @@ export default class WatchlistPanel extends React.Component {
     this.props.history.replace(url);
   }
 
-  init = async (current) => {
-    const { pageSize, sort } = this.state;
+  init = async ({current,sort}) => {
+    const { pageSize } = this.state;
+    if(!current) current = this.state.current;
+    if(!sort) sort = this.state.sort;
     const params = { page: current, per_page: pageSize };
     if (sort) {
       params.sort_column = sort.field;
@@ -163,16 +165,17 @@ export default class WatchlistPanel extends React.Component {
   };
 
   onChange = async (current) => {
-    const data = await this.init(current);
+    const data = await this.init({current});
     this.setState({ ...data, current });
   };
 
-  onSort = (sort) => {
-    this.setState({ sort });
+  onSort = async (sort) => {
+    const data = await this.init({sort});
+    this.setState({ ...data, sort });
   };
 
   async componentDidMount() {
-    const data = await this.init(this.state.current);
+    const data = await this.init({current:this.state.current});
     this.setState(data);
   }
 
