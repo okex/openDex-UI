@@ -133,12 +133,16 @@ export default class AddLiquidity extends React.Component {
   async _updateExchange(data) {
     const { baseToken, targetToken, exchangeInfo } = data;
     if (baseToken.symbol && targetToken.symbol && data.targetTokenDisabled) {
-      const { base_token_amount, pool_share } = await api.addInfo({
-        base_token: baseToken.symbol,
-        quote_token_amount: baseToken.value + targetToken.symbol,
-      });
-      targetToken.value = baseToken.value ? base_token_amount : '';
-      exchangeInfo.pool_share = pool_share;
+      if(baseToken.value) {
+        const { base_token_amount, pool_share } = await api.addInfo({
+          base_token: baseToken.symbol,
+          quote_token_amount: baseToken.value + targetToken.symbol,
+        });
+        targetToken.value = baseToken.value ? base_token_amount : '';
+        exchangeInfo.pool_share = pool_share;
+      } else {
+        exchangeInfo.pool_share = 0;
+      }
     }
   }
 

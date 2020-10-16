@@ -30,9 +30,10 @@ export default class CreatLiquidity extends React.Component {
     if (baseToken) this.setState({ baseToken });
   }
 
-  getTokens = async () => {
+  getTokens = async (token) => {
     if (!this.tokens) this.tokens = await api.createLiquidityTokens();
-    return this.tokens;
+    if(!token) return this.tokens;
+    return this.tokens.filter(d => d.symbol !== token.symbol);
   };
 
   componentDidMount() {
@@ -106,13 +107,13 @@ export default class CreatLiquidity extends React.Component {
           <CoinDropdown
             token={baseToken}
             onChange={this.changeBase}
-            loadCoinList={this.getTokens}
+            loadCoinList={() => this.getTokens(targetToken)}
           />
           <div className="sep add-sep"></div>
           <CoinDropdown
             token={targetToken}
             onChange={this.changeTarget}
-            loadCoinList={this.getTokens}
+            loadCoinList={() => this.getTokens(baseToken)}
           />
           {error && (
             <div
