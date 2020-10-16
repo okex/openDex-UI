@@ -1,4 +1,4 @@
-export default function (apiUrl = 'http://10.0.66.18:26659') {
+export default function (apiUrl = 'https://www.okex.com') {
   const protocol = window.location.protocol;
   if (/file/.test(protocol) || window.location.hostname === '127.0.0.1')
     return apiUrl;
