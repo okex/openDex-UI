@@ -46,6 +46,8 @@ export default class ReduceLiquidity extends React.Component {
   };
 
   onInputChange = async (value) => {
+    const max = this.props.liquidity.pool_token_coin.amount;
+    if(calc.div(max,1)<=calc.div(value,1)) value = max;
     this.setState({ value, ratio: null });
     this.updateCoins(value);
   };
