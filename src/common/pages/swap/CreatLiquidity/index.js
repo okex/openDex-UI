@@ -46,6 +46,7 @@ export default class CreatLiquidity extends React.Component {
   };
 
   changeTarget = (targetToken) => {
+    console.log(targetToken);
     const data = { ...this.state, targetToken };
     this.check(data);
   };

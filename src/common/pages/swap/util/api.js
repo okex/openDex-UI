@@ -18,8 +18,10 @@ function get(url, params = {}) {
 function exchange(params) {
   if(params.base_token && params.quote_token) {
     const temp = params.base_token;
-    if(params.base_token > params.quote_token) params.base_token = params.quote_token;
-    params.quote_token = temp;
+    if(params.base_token > params.quote_token) {
+      params.base_token = params.quote_token;
+      params.quote_token = temp;
+    }
   }
 }
 

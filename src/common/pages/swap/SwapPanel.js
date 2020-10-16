@@ -205,6 +205,7 @@ export default class SwapPanel extends React.Component {
       min_buy_amount: this.getMinimumReceived(),
       deadline: Date.now() + 1000000,
     };
+    console.log(params);
     setTimeout(() => {
       toast.destroy();
       Message.success({
