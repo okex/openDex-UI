@@ -60,13 +60,32 @@ export default class ReduceLiquidity extends React.Component {
     this.setState({ coins });
   };
 
+  _exchangeTokenData() {
+    let baseToken = this.state.coins[0],targetToken = this.state.coins[1];
+    if(baseToken.denom && targetToken.denom) {
+      const temp = baseToken;
+      if(baseToken.denom > targetToken.denom) {
+        baseToken = targetToken;
+        targetToken = temp;
+      }
+    }
+    return {baseToken,targetToken}
+  }
+
   confirm = async () => {
     if (this.confirm.loading) return;
     this.confirm.loading = true;
+    const {baseToken,targetToken} = this._exchangeTokenData();
     const toast = Message.loading({
       content: toLocale('pending transactions'),
       duration: 0,
     });
+    const params = {
+      liquidity:this.state.value,
+      min_base_amount:`${baseToken.amount}${baseToken.denom}`,
+      min_quote_amount:`${targetToken.amount}${targetToken.denom}`,
+    }
+    console.log(params)
     setTimeout(() => {
       toast.destroy();
       Message.success({

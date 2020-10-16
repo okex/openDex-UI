@@ -239,13 +239,32 @@ export default class AddLiquidity extends React.Component {
     return btn;
   }
 
+  _exchangeTokenData() {
+    let {baseToken,targetToken} = this.state;
+    if(baseToken.symbol && targetToken.symbol) {
+      const temp = baseToken;
+      if(baseToken.symbol > targetToken.symbol) {
+        baseToken = targetToken;
+        targetToken = temp;
+      }
+    }
+    return {baseToken,targetToken}
+  }
+
   confirm = async () => {
     if (this.confirm.loading) return;
+    let {baseToken,targetToken} = this._exchangeTokenData();
     this.confirm.loading = true;
     const toast = Message.loading({
       content: toLocale('pending transactions'),
       duration: 0,
     });
+    const params = {
+      'min-liquidity':0,
+      quote_amount:`${targetToken.value}${targetToken.symbol}`,
+      max_base_amount:`${baseToken.value}${baseToken.symbol}`,
+    }
+    console.log(params);
     setTimeout(() => {
       toast.destroy();
       Message.success({

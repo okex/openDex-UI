@@ -199,10 +199,11 @@ export default class SwapPanel extends React.Component {
       content: toLocale('pending transactions'),
       duration: 0,
     });
-    const { baseToken } = this.props;
+    const { baseToken,targetToken } = this.props;
     const params = {
-      sell_amount: baseToken.value,
-      min_buy_amount: this.getMinimumReceived(),
+      sell_amount: `${baseToken.value}${baseToken.symbol}`,
+      min_buy_amount: `${this.getMinimumReceived()}${targetToken.symbol}`,
+      quote_token: targetToken.symbol,
       deadline: Date.now() + 1000000,
     };
     console.log(params);

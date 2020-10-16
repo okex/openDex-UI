@@ -46,7 +46,6 @@ export default class CreatLiquidity extends React.Component {
   };
 
   changeTarget = (targetToken) => {
-    console.log(targetToken);
     const data = { ...this.state, targetToken };
     this.check(data);
   };
@@ -73,6 +72,9 @@ export default class CreatLiquidity extends React.Component {
       content: toLocale('pending transactions'),
       duration: 0,
     });
+    const {baseToken,targetToken} = this.state;
+    const params = [baseToken.symbol,targetToken.symbol];
+    console.log(params);
     setTimeout(() => {
       toast.destroy();
       Message.success({
