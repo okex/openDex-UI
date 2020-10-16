@@ -34,7 +34,7 @@ export function tokens(params = {}) {
   });
 }
 
-export function buyInfo(params) {
+export function buyInfo(params = {}) {
   //@mock mocker.buyInfo(URL.GET_SWAP_BUY_INFO);
   return get(URL.GET_SWAP_BUY_INFO, params);
 }
