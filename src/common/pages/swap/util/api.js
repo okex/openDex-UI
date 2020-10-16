@@ -15,6 +15,16 @@ function get(url, params = {}) {
   return ajax(method, url, { params });
 }
 
+function exchange(params) {
+  if(params.base_token && params.quote_token) {
+    const temp = params.base_token;
+    if(params.base_token > params.quote_token) {
+      params.base_token = params.quote_token;
+      params.quote_token = temp;
+    }
+  }
+}
+
 //@mock let mocker = require('./mock');
 export function tokens(params = {}) {
   //@mock mocker.tokens(URL.GET_SWAP_TOKENS);
@@ -26,7 +36,7 @@ export function tokens(params = {}) {
   });
 }
 
-export function buyInfo(params) {
+export function buyInfo(params = {}) {
   //@mock mocker.buyInfo(URL.GET_SWAP_BUY_INFO);
   return get(URL.GET_SWAP_BUY_INFO, params);
 }
@@ -35,6 +45,7 @@ export function liquidityInfo(params={}) {
   //@mock mocker.liquidityInfo(URL.GET_SWAP_LIQUIDITY_INFO);
   const address = util.getMyAddr();
   const _params = {...params,address};
+  exchange(_params);
   return get(URL.GET_SWAP_LIQUIDITY_INFO, _params);
 }
 
@@ -43,19 +54,24 @@ export function addInfo(params) {
   return get(URL.GET_SWAP_ADD_INFO, params);
 }
 
-export function redeemableAssets(params) {
+export function redeemableAssets(params={}) {
   //@mock mocker.redeemableAssets(URL.GET_SWAP_REDEEMABLE_ASSETS);
-  return get(URL.GET_SWAP_REDEEMABLE_ASSETS, params);
+  const _params = {...params};
+  exchange(_params);
+  return get(URL.GET_SWAP_REDEEMABLE_ASSETS, _params);
 }
 
 export function tokenPair(params) {
   //@mock mocker.tokenPair(URL.GET_SWAP_TOKEN_PAIR);
-  return get(URL.GET_SWAP_TOKEN_PAIR, params);
+  const _params = {...params};
+  exchange(_params);
+  return get(URL.GET_SWAP_TOKEN_PAIR, _params);
 }
 
-export function createLiquidityTokens(params) {
+export function createLiquidityTokens(params={}) {
   //@mock mocker.createLiquidityTokens(URL.GET_SWAP_CREATE_LIQUIDITY_TOKENS);
-  return get(URL.GET_SWAP_CREATE_LIQUIDITY_TOKENS, params);
+  const address = util.getMyAddr();
+  return get(URL.GET_SWAP_CREATE_LIQUIDITY_TOKENS, {...params,address});
 }
 
 export function watchlist(params) {
