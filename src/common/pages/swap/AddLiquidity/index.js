@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as CommonAction from '_src/redux/actions/CommonAction';
 import { toLocale } from '_src/locale/react-locale';
 import CoinItem from '../CoinItem';
 import calc from '_src/utils/calc';
@@ -7,6 +10,19 @@ import * as api from '../util/api';
 import Message from '_src/component/Message';
 import InfoItem from '../InfoItem';
 import ReduceLiquidity from '../ReduceLiquidity';
+
+function mapStateToProps(state) {
+  const { okexchainClient } = state.Common;
+  return { okexchainClient };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    commonAction: bindActionCreators(CommonAction, dispatch),
+  };
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
 export default class AddLiquidity extends React.Component {
   constructor(props) {
     super(props);

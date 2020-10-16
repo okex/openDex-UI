@@ -126,22 +126,6 @@ export default class SwapSetting extends React.Component {
             <div className="error-tip">
               *{toLocale('Your transaction may fail')}
             </div>
-            <div className="space-between deadline">
-              <div className="left">{toLocale('Transaction deadline')}</div>
-              <div className="right">
-                <i className="help" />
-              </div>
-            </div>
-            <div className="deadline-input">
-              <div className="input">
-                <InputNum
-                  type="text"
-                  value={setting.transactionDeadline}
-                  onChange={this.changeTransactionDeadline}
-                />
-              </div>
-              <i>{toLocale('Minutes')}</i>
-            </div>
             <div className="setting-btn" onClick={this.confirm}>
               {toLocale('Confirm')}
             </div>

@@ -10,17 +10,20 @@ import { withRouter, Link } from 'react-router-dom';
 import CoinItem from './CoinItem';
 import { getCoinIcon } from './util/coinIcon';
 import * as SwapAction from '_src/redux/actions/SwapAction';
+import * as CommonAction from '_src/redux/actions/CommonAction';
 import * as api from './util/api';
 import Message from '_src/component/Message';
 
 function mapStateToProps(state) {
   const { baseToken, targetToken, exchangeInfo, setting } = state.SwapStore;
-  return { baseToken, targetToken, exchangeInfo, setting };
+  const { okexchainClient } = state.Common;
+  return { okexchainClient,baseToken, targetToken, exchangeInfo, setting };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     swapAction: bindActionCreators(SwapAction, dispatch),
+    commonAction: bindActionCreators(CommonAction, dispatch),
   };
 }
 @withRouter
