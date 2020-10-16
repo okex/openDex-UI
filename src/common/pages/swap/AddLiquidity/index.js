@@ -117,7 +117,7 @@ export default class AddLiquidity extends React.Component {
   async _updateExchangePrice(data) {
     const { baseToken, targetToken, exchangeInfo } = data;
     if (baseToken.symbol && targetToken.symbol) {
-      const temp = await api.tokenPair({
+      const temp = data.liquidity || await api.tokenPair({
         base_token: baseToken.symbol,
         quote_token: targetToken.symbol,
       });
@@ -133,18 +133,24 @@ export default class AddLiquidity extends React.Component {
   async _updateExchange(data) {
     const { baseToken, targetToken, exchangeInfo } = data;
     if (baseToken.symbol && targetToken.symbol && data.targetTokenDisabled) {
-      const { base_token_amount, pool_share } = await api.addInfo({
-        base_token: baseToken.symbol,
-        quote_token_amount: baseToken.value + targetToken.symbol,
-      });
-      targetToken.value = baseToken.value ? base_token_amount : '';
-      exchangeInfo.pool_share = pool_share;
+      if(baseToken.value) {
+        const { base_token_amount, pool_share } = await api.addInfo({
+          base_token: baseToken.symbol,
+          quote_token_amount: baseToken.value + targetToken.symbol,
+        });
+        targetToken.value = baseToken.value ? base_token_amount : '';
+        exchangeInfo.pool_share = pool_share;
+      } else {
+        exchangeInfo.pool_share = 0;
+      }
     }
   }
 
   loadBaseCoinList = async () => {
     const { tokens = [] } = await api.tokens({ support_route: false });
-    return tokens;
+    const { targetToken } = this.state;
+    if(!targetToken.symbol) return tokens;
+    return tokens.filter(d => d.symbol !== targetToken.symbol);
   };
 
   loadTargetCoinList = async () => {
@@ -152,7 +158,7 @@ export default class AddLiquidity extends React.Component {
       baseToken: { symbol },
     } = this.state;
     const { tokens = [] } = await api.tokens({ symbol, support_route: false });
-    return tokens;
+    return tokens.filter(d => d.symbol !== symbol);
   };
 
   getExchangeInfo() {

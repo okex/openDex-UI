@@ -32,12 +32,13 @@ export default class PoolPanel extends React.Component {
   }
 
   add = async userLiquidity => {
-    if(!userLiquidity) this.goAddLiquidity();
+    if(!userLiquidity) return this.goAddLiquidity();
     const liquidity = await api.tokenPair({base_token:userLiquidity.base_pooled_coin.denom,quote_token:userLiquidity.quote_pooled_coin.denom})
     this.goAddLiquidity({liquidity,userLiquidity});
   };
 
-  goAddLiquidity({liquidity,userLiquidity}) {
+  goAddLiquidity(data={}) {
+    const {liquidity,userLiquidity} = data;
     this.props.push({
       component: AddLiquidity,
       props: {

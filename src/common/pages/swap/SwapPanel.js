@@ -53,7 +53,9 @@ export default class SwapPanel extends React.Component {
 
   loadBaseCoinList = async () => {
     const { tokens = [] } = await api.tokens({ support_route: true });
-    return tokens;
+    const {targetToken} = this.props;
+    if(!targetToken.symbol) return tokens;
+    return tokens.filter(d => d.symbol !== targetToken.symbol);
   };
 
   loadTargetCoinList = async () => {
@@ -61,7 +63,7 @@ export default class SwapPanel extends React.Component {
       baseToken: { symbol },
     } = this.props;
     const { tokens = [] } = await api.tokens({ symbol, support_route: true });
-    return tokens;
+    return tokens.filter(d => d.symbol !== symbol);
   };
 
   revert = () => {
