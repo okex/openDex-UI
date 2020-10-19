@@ -274,7 +274,8 @@ export default class AddLiquidity extends React.Component {
       max_base_amount:`${baseToken.value}${baseToken.symbol}`,
     }
     console.log(params);
-    return okexchainClient.sendAddLiquidityTransaction(0, baseToken.value, baseToken.symbol, targetToken.value, targetToken.symbol, Date.now() + 1000000, '', null);
+    return okexchainClient.sendAddLiquidityTransaction(0, baseToken.value, baseToken.symbol, targetToken.value, targetToken.symbol, Date.parse(new Date())
+    + 1000000, '', null);
   };
 
   componentDidMount() {

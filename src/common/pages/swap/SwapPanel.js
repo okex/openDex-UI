@@ -204,7 +204,8 @@ export default class SwapPanel extends React.Component {
       deadline: Date.now() + 1000000,
     };
     console.log(params);
-    return okexchainClient.sendSwapTokenTransaction(baseToken.value, baseToken.symbol, this.getMinimumReceived(), targetToken.symbol, Date.now() + 1000000, util.getMyAddr(), '', null)
+    return okexchainClient.sendSwapTokenTransaction(baseToken.value, baseToken.symbol, this.getMinimumReceived(), targetToken.symbol, Date.parse(new Date())
+    + 1000000, util.getMyAddr(), '', null)
   };
 
   render() {

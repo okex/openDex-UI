@@ -93,7 +93,7 @@ export default class ReduceLiquidity extends React.Component {
       min_quote_amount:`${targetToken.amount}${targetToken.denom}`,
     }
     console.log(params);
-    return sendRemoveLiquidityTransaction(this.state.value, baseToken.amount, baseToken.denom, targetToken.amount, targetToken.denom, Date.now() + 1000000, '', null);
+    return sendRemoveLiquidityTransaction(this.state.value, baseToken.amount, baseToken.denom, targetToken.amount, targetToken.denom, Date.parse(new Date()) + 1000000, '', null);
   };
 
   render() {
