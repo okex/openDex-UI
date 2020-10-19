@@ -1,7 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as CommonAction from '_src/redux/actions/CommonAction';
 import { toLocale } from '_src/locale/react-locale';
 import { getCoinIcon } from '../util/coinIcon';
 import * as api from '../util/api';
@@ -16,7 +14,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    commonAction: bindActionCreators(CommonAction, dispatch),
   };
 }
 
@@ -88,14 +85,15 @@ export default class ReduceLiquidity extends React.Component {
     return {baseToken,targetToken}
   }
 
-  confirm = async () => {
+  confirm = () => {
     const {baseToken,targetToken} = this._exchangeTokenData();
     const params = {
       liquidity:this.state.value,
       min_base_amount:`${baseToken.amount}${baseToken.denom}`,
       min_quote_amount:`${targetToken.amount}${targetToken.denom}`,
     }
-    console.log(params)
+    console.log(params);
+    return sendRemoveLiquidityTransaction(this.state.value, baseToken.amount, baseToken.denom, targetToken.amount, targetToken.denom, Date.now() + 1000000, '', null);
   };
 
   render() {

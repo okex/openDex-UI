@@ -1,7 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as CommonAction from '_src/redux/actions/CommonAction';
 import { toLocale } from '_src/locale/react-locale';
 import * as api from '../util/api';
 import CoinDropdown from './CoinDropdown';
@@ -15,7 +13,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    commonAction: bindActionCreators(CommonAction, dispatch),
   };
 }
 
@@ -81,10 +78,11 @@ export default class CreatLiquidity extends React.Component {
     this.setState(data);
   }
 
-  confirm = async () => {
+  confirm = () => {
     const {baseToken,targetToken} = this.state;
     const params = [baseToken.symbol,targetToken.symbol];
     console.log(params);
+    return okexchainClient.sendCreateExchangeTransaction(baseToken.symbol, targetToken.symbol, '', null);
   };
 
   addLiquidity = () => {

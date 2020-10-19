@@ -1,7 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as CommonAction from '_src/redux/actions/CommonAction';
 import { toLocale } from '_src/locale/react-locale';
 import CoinItem from '../CoinItem';
 import calc from '_src/utils/calc';
@@ -17,7 +15,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    commonAction: bindActionCreators(CommonAction, dispatch),
   };
 }
 
@@ -268,14 +265,16 @@ export default class AddLiquidity extends React.Component {
     return {baseToken,targetToken}
   }
 
-  confirm = async () => {
+  confirm = () => {
     let {baseToken,targetToken} = this._exchangeTokenData();
+    const {okexchainClient} = this.props;
     const params = {
       'min-liquidity':0,
       quote_amount:`${targetToken.value}${targetToken.symbol}`,
       max_base_amount:`${baseToken.value}${baseToken.symbol}`,
     }
     console.log(params);
+    return okexchainClient.sendAddLiquidityTransaction(0, baseToken.value, baseToken.symbol, targetToken.value, targetToken.symbol, Date.now() + 1000000, '', null);
   };
 
   componentDidMount() {

@@ -10,7 +10,6 @@ import { withRouter, Link } from 'react-router-dom';
 import CoinItem from './CoinItem';
 import { getCoinIcon } from './util/coinIcon';
 import * as SwapAction from '_src/redux/actions/SwapAction';
-import * as CommonAction from '_src/redux/actions/CommonAction';
 import * as api from './util/api';
 import Confirm from './Confirm';
 
@@ -22,8 +21,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    swapAction: bindActionCreators(SwapAction, dispatch),
-    commonAction: bindActionCreators(CommonAction, dispatch),
+    swapAction: bindActionCreators(SwapAction, dispatch)
   };
 }
 @withRouter
@@ -197,8 +195,8 @@ export default class SwapPanel extends React.Component {
     return <div className="btn-wrap">{btn}</div>;
   }
 
-  confirm = async () => {
-    const { baseToken,targetToken } = this.props;
+  confirm = () => {
+    const { baseToken,targetToken,okexchainClient } = this.props;
     const params = {
       sell_amount: `${baseToken.value}${baseToken.symbol}`,
       min_buy_amount: `${this.getMinimumReceived()}${targetToken.symbol}`,
@@ -206,6 +204,7 @@ export default class SwapPanel extends React.Component {
       deadline: Date.now() + 1000000,
     };
     console.log(params);
+    return okexchainClient.sendSwapTokenTransaction(baseToken.value, baseToken.symbol, this.getMinimumReceived(), targetToken.symbol, Date.now() + 1000000, util.getMyAddr(), '', null)
   };
 
   render() {
