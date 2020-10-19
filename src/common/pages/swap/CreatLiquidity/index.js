@@ -5,8 +5,8 @@ import * as CommonAction from '_src/redux/actions/CommonAction';
 import { toLocale } from '_src/locale/react-locale';
 import * as api from '../util/api';
 import CoinDropdown from './CoinDropdown';
-import Message from '_src/component/Message';
 import AddLiquidity from '../AddLiquidity';
+import Confirm from '../Confirm';
 
 function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
@@ -82,23 +82,9 @@ export default class CreatLiquidity extends React.Component {
   }
 
   confirm = async () => {
-    if (this.confirm.loading) return;
-    this.confirm.loading = true;
-    const toast = Message.loading({
-      content: toLocale('pending transactions'),
-      duration: 0,
-    });
     const {baseToken,targetToken} = this.state;
     const params = [baseToken.symbol,targetToken.symbol];
     console.log(params);
-    setTimeout(() => {
-      toast.destroy();
-      Message.success({
-        content: toLocale('transaction confirmed'),
-        duration: 3,
-      });
-      this.confirm.loading = false;
-    }, 3000);
   };
 
   addLiquidity = () => {
@@ -146,9 +132,11 @@ export default class CreatLiquidity extends React.Component {
             {disabled ? (
               <div className="btn disabled">{toLocale('Create Liquidity')}</div>
             ) : (
-              <div className="btn" onClick={this.confirm}>
-                {toLocale('Create Liquidity')}
-              </div>
+              <Confirm onClick={this.confirm} loadingTxt={toLocale('pending transactions')} successTxt={toLocale('transaction confirmed')}>
+                <div className="btn">
+                  {toLocale('Create Liquidity')}
+                </div>
+              </Confirm>
             )}
           </div>
         </div>

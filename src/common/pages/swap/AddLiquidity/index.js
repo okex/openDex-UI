@@ -5,11 +5,10 @@ import * as CommonAction from '_src/redux/actions/CommonAction';
 import { toLocale } from '_src/locale/react-locale';
 import CoinItem from '../CoinItem';
 import calc from '_src/utils/calc';
-import util from '_src/utils/util';
 import * as api from '../util/api';
-import Message from '_src/component/Message';
 import InfoItem from '../InfoItem';
 import ReduceLiquidity from '../ReduceLiquidity';
+import Confirm from '../Confirm';
 
 function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
@@ -247,9 +246,11 @@ export default class AddLiquidity extends React.Component {
       btn = <div className="btn disabled">{toLocale('Input an amount')}</div>;
     } else {
       btn = (
-        <div className="btn" onClick={util.debounce(this.confirm, 100)}>
-          {toLocale('Confirm')}
-        </div>
+        <Confirm onClick={this.confirm} loadingTxt={toLocale('pending transactions')} successTxt={toLocale('transaction confirmed')}>
+          <div className="btn">
+            {toLocale('Confirm')}
+          </div>
+        </Confirm>
       );
     }
     return btn;
@@ -268,27 +269,13 @@ export default class AddLiquidity extends React.Component {
   }
 
   confirm = async () => {
-    if (this.confirm.loading) return;
     let {baseToken,targetToken} = this._exchangeTokenData();
-    this.confirm.loading = true;
-    const toast = Message.loading({
-      content: toLocale('pending transactions'),
-      duration: 0,
-    });
     const params = {
       'min-liquidity':0,
       quote_amount:`${targetToken.value}${targetToken.symbol}`,
       max_base_amount:`${baseToken.value}${baseToken.symbol}`,
     }
     console.log(params);
-    setTimeout(() => {
-      toast.destroy();
-      Message.success({
-        content: toLocale('transaction confirmed'),
-        duration: 3,
-      });
-      this.confirm.loading = false;
-    }, 3000);
   };
 
   componentDidMount() {

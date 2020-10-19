@@ -6,9 +6,8 @@ import { toLocale } from '_src/locale/react-locale';
 import { getCoinIcon } from '../util/coinIcon';
 import * as api from '../util/api';
 import InputNum from '_component/InputNum';
-import Message from '_src/component/Message';
 import calc from '_src/utils/calc';
-import util from '_src/utils/util';
+import Confirm from '../Confirm';
 
 function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
@@ -90,27 +89,13 @@ export default class ReduceLiquidity extends React.Component {
   }
 
   confirm = async () => {
-    if (this.confirm.loading) return;
-    this.confirm.loading = true;
     const {baseToken,targetToken} = this._exchangeTokenData();
-    const toast = Message.loading({
-      content: toLocale('pending transactions'),
-      duration: 0,
-    });
     const params = {
       liquidity:this.state.value,
       min_base_amount:`${baseToken.amount}${baseToken.denom}`,
       min_quote_amount:`${targetToken.amount}${targetToken.denom}`,
     }
     console.log(params)
-    setTimeout(() => {
-      toast.destroy();
-      Message.success({
-        content: toLocale('transaction confirmed'),
-        duration: 3,
-      });
-      this.confirm.loading = false;
-    }, 3000);
   };
 
   render() {
@@ -166,9 +151,11 @@ export default class ReduceLiquidity extends React.Component {
           ))}
           <div className="btn-wrap">
             {value ? (
-              <div className="btn" onClick={util.debounce(this.confirm, 100)}>
-                {toLocale('Confirm')}
-              </div>
+              <Confirm onClick={this.confirm} loadingTxt={toLocale('pending transactions')} successTxt={toLocale('transaction confirmed')}>
+                <div className="btn">
+                  {toLocale('Confirm')}
+                </div>
+              </Confirm>
             ) : (
               <div className="btn disabled">{toLocale('Confirm')}</div>
             )}

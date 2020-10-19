@@ -12,7 +12,7 @@ import { getCoinIcon } from './util/coinIcon';
 import * as SwapAction from '_src/redux/actions/SwapAction';
 import * as CommonAction from '_src/redux/actions/CommonAction';
 import * as api from './util/api';
-import Message from '_src/component/Message';
+import Confirm from './Confirm';
 
 function mapStateToProps(state) {
   const { baseToken, targetToken, exchangeInfo, setting } = state.SwapStore;
@@ -187,21 +187,17 @@ export default class SwapPanel extends React.Component {
       btn = <div className="btn disabled">{toLocale('Input an amount')}</div>;
     } else {
       btn = (
-        <div className="btn" onClick={util.debounce(this.confirm, 100)}>
-          {toLocale('Confirm')}
-        </div>
+        <Confirm onClick={this.confirm} loadingTxt={toLocale('pending transactions')} successTxt={toLocale('transaction confirmed')}>
+          <div className="btn">
+            {toLocale('Confirm')}
+          </div>
+        </Confirm>
       );
     }
     return <div className="btn-wrap">{btn}</div>;
   }
 
   confirm = async () => {
-    if (this.confirm.loading) return;
-    this.confirm.loading = true;
-    const toast = Message.loading({
-      content: toLocale('pending transactions'),
-      duration: 0,
-    });
     const { baseToken,targetToken } = this.props;
     const params = {
       sell_amount: `${baseToken.value}${baseToken.symbol}`,
@@ -210,14 +206,6 @@ export default class SwapPanel extends React.Component {
       deadline: Date.now() + 1000000,
     };
     console.log(params);
-    setTimeout(() => {
-      toast.destroy();
-      Message.success({
-        content: toLocale('transaction confirmed'),
-        duration: 3,
-      });
-      this.confirm.loading = false;
-    }, 3000);
   };
 
   render() {
