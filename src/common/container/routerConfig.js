@@ -87,7 +87,7 @@ const routes = [
     component: Fees,
   },
   {
-    path: PageURL.SwapPage,
+    path: PageURL.swapPage,
     component: Swap,
   },
 ];

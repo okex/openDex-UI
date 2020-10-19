@@ -91,6 +91,8 @@ export default class Confirm extends React.Component {
         duration: 3,
       });
       this.loading = false;
+    } catch(e) {
+      console.log(e);
     } finally {
       if(loadingToast) loadingToast.destroy();
       this.loading = false;

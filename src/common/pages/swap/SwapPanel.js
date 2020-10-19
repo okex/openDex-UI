@@ -167,7 +167,7 @@ export default class SwapPanel extends React.Component {
       targetToken,
       setting: { slippageTolerance },
     } = this.props;
-    return calc.mul(targetToken.value, 1 - slippageTolerance * 0.01);
+    return util.precisionInput(calc.mul(targetToken.value, 1 - slippageTolerance * 0.01));
   }
 
   getBtn() {
