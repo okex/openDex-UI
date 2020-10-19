@@ -42,7 +42,7 @@ export default class Confirm extends React.Component {
       commonAction.validatePassword(pwd, (privateKey) => {
         this.onClose();
         okexchainClient.setAccountInfo(privateKey).then(() => {
-          this.onClick(false);
+          if(this.state.isShow) this.onClick(false);
         });
       },() => {
         this.setState({
@@ -51,7 +51,7 @@ export default class Confirm extends React.Component {
         });
         }
       );
-    },0)
+    },20)
   }
 
   checkPwd() {

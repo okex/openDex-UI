@@ -78,9 +78,9 @@ function updateSwapInfo4RealTime(dispatch,data,key,time=3000) {
     updateSwapInfo4RealTime.interval = null;
   }
   _updateSwapInfo(dispatch,data,key);
-  updateSwapInfo4RealTime.interval = setInterval(function() {
+  data[key].value && (updateSwapInfo4RealTime.interval = setInterval(function() {
     _updateSwapInfo(dispatch,data,key);
-  },time);
+  },time));
 }
 
 export function revertPrice() {

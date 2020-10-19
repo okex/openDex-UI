@@ -17,7 +17,7 @@ export default class PoolPanel extends React.Component {
 
   async getLiquidityInfo() {
     const userLiquidityInfo = await api.liquidityInfo();
-    this.setState({ userLiquidityInfo });
+    userLiquidityInfo && this.setState({ userLiquidityInfo });
   }
 
   liquidity(userLiquidityInfo = []) {
