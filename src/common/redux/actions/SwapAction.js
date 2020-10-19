@@ -53,23 +53,34 @@ async function updateSwapInfo(data, key) {
 export function setBaseToken(baseToken) {
   return async (dispatch, getState) => {
     const data = { ...getState().SwapStore, baseToken };
-    await updateSwapInfo(data, 'baseToken');
-    dispatch({
-      type: SwapActionType.ALL,
-      data,
-    });
+    updateSwapInfo4RealTime(dispatch,data,'baseToken');
   };
 }
 
 export function setTargetToken(targetToken) {
   return async (dispatch, getState) => {
     const data = { ...getState().SwapStore, targetToken };
-    await updateSwapInfo(data, 'baseToken');
-    dispatch({
-      type: SwapActionType.ALL,
-      data,
-    });
+    updateSwapInfo4RealTime(dispatch,data,'baseToken');
   };
+}
+
+async function _updateSwapInfo(dispatch,data,key) {
+  await updateSwapInfo(data, key);
+  dispatch({
+    type: SwapActionType.ALL,
+    data,
+  });
+}
+
+function updateSwapInfo4RealTime(dispatch,data,key,time=3000) {
+  if(updateSwapInfo4RealTime.interval) {
+    clearInterval(updateSwapInfo4RealTime.interval);
+    updateSwapInfo4RealTime.interval = null;
+  }
+  _updateSwapInfo(dispatch,data,key);
+  updateSwapInfo4RealTime.interval = setInterval(function() {
+    _updateSwapInfo(dispatch,data,key);
+  },time);
 }
 
 export function revertPrice() {
