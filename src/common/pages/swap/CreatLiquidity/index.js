@@ -44,7 +44,10 @@ export default class CreatLiquidity extends React.Component {
   }
 
   getTokens = async (token) => {
-    if (!this.tokens) this.tokens = await api.createLiquidityTokens();
+    if (!this.tokens) {
+      const data = await api.createLiquidityTokens();
+      this.tokens = data ? data.tokens : [];
+    }
     if(!token) return this.tokens;
     return this.tokens.filter(d => d.symbol !== token.symbol);
   };
