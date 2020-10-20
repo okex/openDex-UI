@@ -1,9 +1,6 @@
 
-import getApiUrl from './getApiUrl';
-import { storage } from '_component/okit';
-let url = getApiUrl();
-const currentNode = storage.get('currentNode');
-if(currentNode && currentNode.httpUrl) url = currentNode.httpUrl;
+import {getCurrentApiUrl} from './getApiUrl';
+const url = getCurrentApiUrl();
 
 const OKDEX_BASE_URL = `${url}/okexchain/v1`;
 const OKDEX_SUPPORT_ROOT = `${url}/okdex/v1`;

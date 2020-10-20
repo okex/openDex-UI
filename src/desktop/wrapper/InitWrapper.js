@@ -129,6 +129,7 @@ const InitWrapper = (Component) => {
           v3.sendChannel('ping');
         });
         v3.setPushDataResolver((pushData) => {
+          console.log(pushData);
           const { table, data, event, success, errorCode } = pushData;
           if (table && data) {
             const handler = this.wsHandler(table);

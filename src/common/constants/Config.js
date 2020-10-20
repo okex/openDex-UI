@@ -1,4 +1,4 @@
-import getApiUrl from './getApiUrl';
+import {getCurrentApiUrl} from './getApiUrl';
 import Cookies from 'js-cookie';
 const okbExplorePrefix = 'okexchain-test';
 const exploreUrl = 'https://www.oklink.com';
@@ -8,7 +8,7 @@ const Config = {
   okexchain: {
     browserUrl: `${exploreUrl}/${okbExplorePrefix}`,
     browserAddressUrl: `${exploreUrl}/${okbExplorePrefix}/address`,
-    clientUrl: getApiUrl(),
+    clientUrl: getCurrentApiUrl(),
     receiveCoinUrl: '/activities/pro/drawdex',
     docUrl: `https://okchain-docs.readthedocs.io/${
       lang.indexOf('zh') >= 0 ? 'en' : 'en'
