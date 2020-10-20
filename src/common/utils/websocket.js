@@ -55,13 +55,16 @@ const formatProduct = (product) => {
 };
 
 export const channelsV3 = {
+  getBalance: (token) => {
+    return `dex_spot/account:${token}`;
+  },
   getBaseBalance: (product) => {
     const base = product && product.split('_')[0];
-    return `dex_spot/account:${base}`;
+    return this.getBalance(base);
   },
   getQuoteBalance: (product) => {
     const quote = product && product.split('_')[1];
-    return `dex_spot/account:${quote}`;
+    return this.getBalance(quote);
   },
   getOpenOrder: () => {
     return 'dex_spot/order:*';

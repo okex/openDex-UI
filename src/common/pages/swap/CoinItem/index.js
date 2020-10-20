@@ -4,6 +4,7 @@ import InputNum from '_component/InputNum';
 import SelectCoin from '../SelectCoin';
 import { getCoinIcon } from '../util/coinIcon';
 import classNames from 'classnames';
+import { wsV3,channelsV3 } from '../../../utils/websocket';
 
 export default class CoinItem extends React.Component {
   constructor() {
@@ -11,6 +12,7 @@ export default class CoinItem extends React.Component {
     this.state = {
       show: false,
     };
+    this.currentSubscribe = null;
     this.hideCoinSelectList = this.hideCoinSelectList.bind(this);
   }
 
@@ -33,13 +35,33 @@ export default class CoinItem extends React.Component {
   hideCoinSelectList() {
     this.setState({ show: false });
   }
+  
+  subscribe() {
+    const {symbol} = this.props.token;
+    if(symbol && this.currentSubscribe !== symbol) {
+      wsV3.send(channelsV3.getBalance(symbol));
+      if(this.currentSubscribe) wsV3.stop(this.currentSubscribe);
+      console.log('subscribe',symbol,'unsubscribe',this.currentSubscribe);
+      this.currentSubscribe = symbol;
+    }
+  }
 
   componentDidMount() {
     this._bindEvent();
+    this.subscribe();
   }
 
   componentWillUnmount() {
     this._bindEvent(false);
+    if(this.currentSubscribe) {
+      wsV3.stop(channelsV3.getBalance(this.currentSubscribe));
+      console.log('unsubscribe',this.currentSubscribe);
+      this.currentSubscribe = null;
+    }
+  }
+
+  componentDidUpdate() {
+    this.subscribe();
   }
 
   _bindEvent(bind = true) {
