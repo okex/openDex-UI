@@ -86,9 +86,9 @@ export default class AddLiquidity extends React.Component {
 
   init = async () => {
     const { baseToken, targetToken } = this.state;
-    const data = await api.addLiquidityTokens();
-    if(!data) return;
-    const { native_token = '', tokens = [] } = data;
+    const dataTokens = await api.addLiquidityTokens();
+    if(!dataTokens) return;
+    const { native_token = '', tokens = [] } = dataTokens;
     const token = baseToken.symbol || native_token;
     const base = tokens.filter((d) => d.symbol === token)[0];
     const data = { ...this.state };
