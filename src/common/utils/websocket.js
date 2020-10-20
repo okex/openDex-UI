@@ -60,11 +60,11 @@ export const channelsV3 = {
   },
   getBaseBalance: (product) => {
     const base = product && product.split('_')[0];
-    return this.getBalance(base);
+    return channelsV3.getBalance(base);
   },
   getQuoteBalance: (product) => {
     const quote = product && product.split('_')[1];
-    return this.getBalance(quote);
+    return channelsV3.getBalance(quote);
   },
   getOpenOrder: () => {
     return 'dex_spot/order:*';

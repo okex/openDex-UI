@@ -46,7 +46,8 @@ export default class SwapPanel extends React.Component {
     const { baseToken } = this.props;
     const data = await api.swapTokens();
     if(!data) return;
-    const { native_token = '', tokens = [] } = data;
+    let { native_token = '', tokens = [] } = data;
+    tokens = tokens || [];
     const base = tokens.filter((d) => d.symbol === native_token)[0];
     if (!base) return;
     this.props.swapAction.setBaseToken({ ...baseToken, ...base });
@@ -55,7 +56,8 @@ export default class SwapPanel extends React.Component {
   loadBaseCoinList = async () => {
     const data = await api.swapTokens(); 
     if(!data) return [];
-    const { tokens = [] } = data;
+    let { tokens = [] } = data;
+    tokens = tokens || []
     const {targetToken} = this.props;
     if(!targetToken.symbol) return tokens;
     return tokens.filter(d => d.symbol !== targetToken.symbol);
@@ -67,7 +69,8 @@ export default class SwapPanel extends React.Component {
     } = this.props;
     const data = await api.swapTokens({ symbol });
     if(!data) return [];
-    const { tokens = [] } = data;
+    let { tokens = [] } = data;
+    tokens = tokens || [];
     return tokens.filter(d => d.symbol !== symbol);
   };
 
