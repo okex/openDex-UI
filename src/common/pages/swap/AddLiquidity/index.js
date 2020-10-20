@@ -7,6 +7,7 @@ import * as api from '../util/api';
 import InfoItem from '../InfoItem';
 import ReduceLiquidity from '../ReduceLiquidity';
 import Confirm from '../Confirm';
+import util from '_src/utils/util';
 
 function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
@@ -85,17 +86,14 @@ export default class AddLiquidity extends React.Component {
 
   init = async () => {
     const { baseToken, targetToken } = this.state;
-    const { native_token = '', tokens = [] } = await api.tokens({
-      support_route: false,
-    });
+    const { native_token = '', tokens = [] } = await api.addLiquidityTokens();
     const token = baseToken.symbol || native_token;
     const base = tokens.filter((d) => d.symbol === token)[0];
     const data = { ...this.state };
     if (base) data.baseToken = { ...baseToken, ...base };
     if (targetToken.symbol) {
-      const { tokens: targetTokens } = await api.tokens({
+      const { tokens: targetTokens } = await api.addLiquidityTokens({
         symbol: token,
-        support_route: false,
       });
       const target = targetTokens.filter(
         (d) => d.symbol === targetToken.symbol
@@ -159,7 +157,7 @@ export default class AddLiquidity extends React.Component {
   }
 
   loadBaseCoinList = async () => {
-    const { tokens = [] } = await api.tokens({ support_route: false });
+    const { tokens = [] } = await api.addLiquidityTokens();
     const { targetToken } = this.state;
     if(!targetToken.symbol) return tokens;
     return tokens.filter(d => d.symbol !== targetToken.symbol);
@@ -169,7 +167,7 @@ export default class AddLiquidity extends React.Component {
     const {
       baseToken: { symbol },
     } = this.state;
-    const { tokens = [] } = await api.tokens({ symbol, support_route: false });
+    const { tokens = [] } = await api.addLiquidityTokens({ symbol});
     return tokens.filter(d => d.symbol !== symbol);
   };
 
@@ -268,14 +266,10 @@ export default class AddLiquidity extends React.Component {
   confirm = () => {
     let {baseToken,targetToken} = this._exchangeTokenData();
     const {okexchainClient} = this.props;
-    const params = {
-      'min-liquidity':0,
-      quote_amount:`${targetToken.value}${targetToken.symbol}`,
-      max_base_amount:`${baseToken.value}${baseToken.symbol}`,
-    }
+    const params = [0, util.precisionInput(baseToken.value), baseToken.symbol, util.precisionInput(targetToken.value), targetToken.symbol, Date.parse(new Date())
+      + 1000000, '', null];
     console.log(params);
-    return okexchainClient.sendAddLiquidityTransaction(0, baseToken.value, baseToken.symbol, targetToken.value, targetToken.symbol, Date.parse(new Date())
-    + 1000000, '', null);
+    return okexchainClient.sendAddLiquidityTransaction(...params);
   };
 
   componentDidMount() {

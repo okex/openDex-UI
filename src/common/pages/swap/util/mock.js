@@ -110,48 +110,6 @@ module.exports = {
       data,
     });
   },
-  createLiquidityTokens(url) {
-    Mock.mock(url, {
-      code: 0,
-      msg: '',
-      detail_msg: '',
-      data: [
-        {
-          description: 'eos token',
-          symbol: 'eos-c9f',
-          original_symbol: 'eos',
-          whole_name: 'eos',
-          original_total_supply: '80000000000.00000000',
-          type: '0',
-          owner: 'okexchain10q0rk5qnyag7wfvvt7rtphlw589m7frsku8qc9',
-          mintable: true,
-          total_supply: '80000000000.00000000',
-        },
-        {
-          description: 'OK Group Global Utility Token',
-          symbol: 'okt',
-          original_symbol: 'okt',
-          whole_name: 'OKT',
-          original_total_supply: '1000000000.00000000',
-          type: '0',
-          owner: 'okexchain10q0rk5qnyag7wfvvt7rtphlw589m7frsku8qc9',
-          mintable: true,
-          total_supply: '9000197.25000000',
-        },
-        {
-          description: '上币描述',
-          symbol: 'rxb-276',
-          original_symbol: 'rxb',
-          whole_name: 'rxb',
-          original_total_supply: '80000000000.00000000',
-          type: '0',
-          owner: 'okexchain10q0rk5qnyag7wfvvt7rtphlw589m7frsku8qc9',
-          mintable: true,
-          total_supply: '80000000000.00000000',
-        },
-      ],
-    });
-  },
   watchlist(url) {
     Mock.mock(url, {
       code: 0,

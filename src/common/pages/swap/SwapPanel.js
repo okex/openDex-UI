@@ -44,16 +44,14 @@ export default class SwapPanel extends React.Component {
 
   initBaseToken = async () => {
     const { baseToken } = this.props;
-    const { native_token = '', tokens = [] } = await api.tokens({
-      support_route: true,
-    });
+    const { native_token = '', tokens = [] } = await api.swapTokens();
     const base = tokens.filter((d) => d.symbol === native_token)[0];
     if (!base) return;
     this.props.swapAction.setBaseToken({ ...baseToken, ...base });
   };
 
   loadBaseCoinList = async () => {
-    const { tokens = [] } = await api.tokens({ support_route: true });
+    const { tokens = [] } = await api.swapTokens();
     const {targetToken} = this.props;
     if(!targetToken.symbol) return tokens;
     return tokens.filter(d => d.symbol !== targetToken.symbol);
@@ -63,7 +61,7 @@ export default class SwapPanel extends React.Component {
     const {
       baseToken: { symbol },
     } = this.props;
-    const { tokens = [] } = await api.tokens({ symbol, support_route: true });
+    const { tokens = [] } = await api.swapTokens({ symbol });
     return tokens.filter(d => d.symbol !== symbol);
   };
 
@@ -197,15 +195,9 @@ export default class SwapPanel extends React.Component {
 
   confirm = () => {
     const { baseToken,targetToken,okexchainClient } = this.props;
-    const params = {
-      sell_amount: `${baseToken.value}${baseToken.symbol}`,
-      min_buy_amount: `${this.getMinimumReceived()}${targetToken.symbol}`,
-      quote_token: targetToken.symbol,
-      deadline: Date.now() + 1000000,
-    };
+    const params = [util.precisionInput(baseToken.value), baseToken.symbol, this.getMinimumReceived(), targetToken.symbol, Date.parse(new Date()) + 1000000, util.getMyAddr(), '', null];
     console.log(params);
-    return okexchainClient.sendSwapTokenTransaction(baseToken.value, baseToken.symbol, this.getMinimumReceived(), targetToken.symbol, Date.parse(new Date())
-    + 1000000, util.getMyAddr(), '', null)
+    return okexchainClient.sendSwapTokenTransaction(...params);
   };
 
   render() {

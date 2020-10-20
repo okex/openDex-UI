@@ -40,8 +40,8 @@ async function updateSwapInfo(data, key) {
   const target = key === 'baseToken' ? data.targetToken : data.baseToken;
   if (value && symbol && target.symbol) {
     const { buy_amount, price, price_impact, fee, route } = await api.buyInfo({
-      amount_to_sell: `${value}${symbol}`,
-      token_to_buy: target.symbol,
+      sell_token_amount: `${value}${symbol}`,
+      token: target.symbol,
     });
     data.exchangeInfo = { price, price_impact, fee, route };
     target.value = buy_amount;

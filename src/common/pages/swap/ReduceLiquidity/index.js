@@ -6,6 +6,7 @@ import * as api from '../util/api';
 import InputNum from '_component/InputNum';
 import calc from '_src/utils/calc';
 import Confirm from '../Confirm';
+import util from '_src/utils/util';
 
 function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
@@ -87,13 +88,9 @@ export default class ReduceLiquidity extends React.Component {
 
   confirm = () => {
     const {baseToken,targetToken} = this._exchangeTokenData();
-    const params = {
-      liquidity:this.state.value,
-      min_base_amount:`${baseToken.amount}${baseToken.denom}`,
-      min_quote_amount:`${targetToken.amount}${targetToken.denom}`,
-    }
+    const params = [util.precisionInput(this.state.value), baseToken.amount, baseToken.denom, targetToken.amount, targetToken.denom, Date.parse(new Date()) + 1000000, '', null];
     console.log(params);
-    return sendRemoveLiquidityTransaction(this.state.value, baseToken.amount, baseToken.denom, targetToken.amount, targetToken.denom, Date.parse(new Date()) + 1000000, '', null);
+    return sendRemoveLiquidityTransaction(...params);
   };
 
   render() {

@@ -28,12 +28,11 @@ const URL = {
   GET_LEGAL_LIST: `${OKDEX_SUPPORT_ROOT}/index/legalList`,
   GET_LEGAL_RATE: `${OKDEX_SUPPORT_ROOT}/index/currency2LegalRate?quoteCurrency={quote}&legalTender={base}`,
   GET_SWAP_TOKENS: `${SWAP}/tokens`,
-  GET_SWAP_BUY_INFO: `${SWAP}/buy_info`,
-  GET_SWAP_LIQUIDITY_INFO: `${SWAP}/liquidity_info`,
-  GET_SWAP_ADD_INFO: `${SWAP}/add_info`,
-  GET_SWAP_REDEEMABLE_ASSETS: `${SWAP}/redeemable_assets`,
-  GET_SWAP_TOKEN_PAIR: `${SWAP}/swap_token_pair`,
-  GET_SWAP_CREATE_LIQUIDITY_TOKENS: `${SWAP}/create_liquidity_tokens`,
+  GET_SWAP_BUY_INFO: `${SWAP}/quote`,
+  GET_SWAP_LIQUIDITY_INFO: `${SWAP}/liquidity/histories`,
+  GET_SWAP_ADD_INFO: `${SWAP}/liquidity/add_quote`,
+  GET_SWAP_REDEEMABLE_ASSETS: `${SWAP}/liquidity/remove_quote`,
+  GET_SWAP_TOKEN_PAIR: `${SWAP}/token_pair`,
   GET_SWAP_WATCHLIST: `${SWAP}/watchlist`,
 };
 export default URL;
