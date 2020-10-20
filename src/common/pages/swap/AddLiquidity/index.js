@@ -86,15 +86,19 @@ export default class AddLiquidity extends React.Component {
 
   init = async () => {
     const { baseToken, targetToken } = this.state;
-    const { native_token = '', tokens = [] } = await api.addLiquidityTokens();
+    const data = await api.addLiquidityTokens();
+    if(!data) return;
+    const { native_token = '', tokens = [] } = data;
     const token = baseToken.symbol || native_token;
     const base = tokens.filter((d) => d.symbol === token)[0];
     const data = { ...this.state };
     if (base) data.baseToken = { ...baseToken, ...base };
     if (targetToken.symbol) {
-      const { tokens: targetTokens } = await api.addLiquidityTokens({
+      const temp = await api.addLiquidityTokens({
         symbol: token,
       });
+      if(!temp) return;
+      const { tokens: targetTokens } = temp;
       const target = targetTokens.filter(
         (d) => d.symbol === targetToken.symbol
       )[0];
@@ -157,7 +161,9 @@ export default class AddLiquidity extends React.Component {
   }
 
   loadBaseCoinList = async () => {
-    const { tokens = [] } = await api.addLiquidityTokens();
+    const data = await api.addLiquidityTokens();
+    if(!data) return [];
+    const { tokens = [] } = data;
     const { targetToken } = this.state;
     if(!targetToken.symbol) return tokens;
     return tokens.filter(d => d.symbol !== targetToken.symbol);
@@ -167,7 +173,9 @@ export default class AddLiquidity extends React.Component {
     const {
       baseToken: { symbol },
     } = this.state;
-    const { tokens = [] } = await api.addLiquidityTokens({ symbol});
+    const data = await api.addLiquidityTokens({ symbol});
+    if(!data) return [];
+    const { tokens = [] } = data;
     return tokens.filter(d => d.symbol !== symbol);
   };
 
