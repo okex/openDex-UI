@@ -1,21 +1,23 @@
 import React from 'react';
 import { toLocale } from '_src/locale/react-locale';
 import { getCoinIcon } from '../util/coinIcon';
-import { wsV3, channelsV3 } from '../../../utils/websocket';
-
+import { channelsV3 } from '../../../utils/websocket';
+import SwapContext from '../SwapContext';
 export default class InfoItem extends React.Component {
+  static contextType = SwapContext;
+
   componentDidMount() {
     const {
       data: { pool_token_coin: denom },
     } = this.props;
-    wsV3.send(channelsV3.getBalance(denom));
+    this.context.send(channelsV3.getBalance(denom));
   }
 
   componentWillUnmount() {
     const {
       data: { pool_token_coin: denom },
     } = this.props;
-    wsV3.stop(channelsV3.getBalance(denom));
+    this.context.stop(channelsV3.getBalance(denom));
   }
 
   render() {

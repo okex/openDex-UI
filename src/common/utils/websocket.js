@@ -12,40 +12,47 @@ function canSend() {
   return false;
 }
 
-export const wsV3 = {
-  canSend,
-  login: (token) => {
-    if (!canSend()) return;
-    window.OK_GLOBAL.ws_v3.sendChannel(
-      JSON.stringify({
-        op: 'dex_jwt',
-        args: token,
-      })
-    );
-  },
-  send: (subChannelsArgs = []) => {
-    if (!canSend()) return;
-    if (subChannelsArgs.length) {
-      window.OK_GLOBAL.ws_v3.sendChannel(
+export function getWsV3(wsV3) {
+  return  {
+    canSend() {
+      if(!wsV3) return canSend();
+      return wsV3.isConnected();
+    },
+    login(token) {
+      if (!this.canSend()) return;
+      (wsV3 || window.OK_GLOBAL.ws_v3).sendChannel(
         JSON.stringify({
-          op: 'subscribe',
-          args: subChannelsArgs,
+          op: 'dex_jwt',
+          args: token,
         })
       );
-    }
-  },
-  stop: (subChannelsArgs = []) => {
-    if (!canSend()) return;
-    if (subChannelsArgs.length) {
-      window.OK_GLOBAL.ws_v3.sendChannel(
-        JSON.stringify({
-          op: 'unsubscribe',
-          args: subChannelsArgs,
-        })
-      );
-    }
-  },
-};
+    },
+    send(subChannelsArgs = []) {
+      if (!this.canSend()) return;
+      if (subChannelsArgs.length) {
+        (wsV3 || window.OK_GLOBAL.ws_v3).sendChannel(
+          JSON.stringify({
+            op: 'subscribe',
+            args: subChannelsArgs,
+          })
+        );
+      }
+    },
+    stop(subChannelsArgs = []) {
+      if (!this.canSend()) return;
+      if (subChannelsArgs.length) {
+        (wsV3 || window.OK_GLOBAL.ws_v3).sendChannel(
+          JSON.stringify({
+            op: 'unsubscribe',
+            args: subChannelsArgs,
+          })
+        );
+      }
+    },
+  }
+}
+
+export const wsV3 = getWsV3();
 
 const formatProduct = (product) => {
   if (!product) {

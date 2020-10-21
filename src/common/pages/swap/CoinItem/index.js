@@ -4,9 +4,13 @@ import InputNum from '_component/InputNum';
 import SelectCoin from '../SelectCoin';
 import { getCoinIcon } from '../util/coinIcon';
 import classNames from 'classnames';
-import { wsV3, channelsV3 } from '../../../utils/websocket';
+import { channelsV3 } from '../../../utils/websocket';
+import SwapContext from '../SwapContext';
 
 export default class CoinItem extends React.Component {
+
+  static contextType = SwapContext;
+
   static _cache = null;
 
   constructor() {
@@ -45,8 +49,8 @@ export default class CoinItem extends React.Component {
   subscribe() {
     const { symbol } = this.props.token;
     if (symbol && this.currentSubscribe !== symbol) {
-      wsV3.send(channelsV3.getBalance(symbol));
-      if (this.currentSubscribe) wsV3.stop(this.currentSubscribe);
+      this.context.send(channelsV3.getBalance(symbol));
+      if (this.currentSubscribe) this.context.stop(this.currentSubscribe);
       console.log('subscribe', symbol, 'unsubscribe', this.currentSubscribe);
       this.currentSubscribe = symbol;
     }
@@ -60,7 +64,7 @@ export default class CoinItem extends React.Component {
   componentWillUnmount() {
     this._bindEvent(false);
     if (this.currentSubscribe) {
-      wsV3.stop(channelsV3.getBalance(this.currentSubscribe));
+      this.context.stop(channelsV3.getBalance(this.currentSubscribe));
       console.log('unsubscribe', this.currentSubscribe);
       this.currentSubscribe = null;
     }

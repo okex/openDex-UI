@@ -7,8 +7,9 @@ import InputNum from '_component/InputNum';
 import calc from '_src/utils/calc';
 import Confirm from '../Confirm';
 import util from '_src/utils/util';
-import { wsV3, channelsV3 } from '../../../utils/websocket';
+import { channelsV3 } from '../../../utils/websocket';
 import {getDeadLine4sdk} from '../util';
+import SwapContext from '../SwapContext';
 
 function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
@@ -17,6 +18,9 @@ function mapStateToProps(state) {
 
 @connect(mapStateToProps)
 export default class ReduceLiquidity extends React.Component {
+
+  static contextType = SwapContext;
+
   constructor(props) {
     super(props);
     const coins = this._process(props.liquidity);
@@ -107,12 +111,12 @@ export default class ReduceLiquidity extends React.Component {
 
   componentDidMount() {
     const { pool_token_coin: denom } = this.props.liquidity;
-    wsV3.send(channelsV3.getBalance(denom));
+    this.context.send(channelsV3.getBalance(denom));
   }
 
   componentWillUnmount() {
     const { pool_token_coin: denom } = this.props.liquidity;
-    wsV3.stop(channelsV3.getBalance(denom));
+    this.context.stop(channelsV3.getBalance(denom));
   }
 
   render() {
