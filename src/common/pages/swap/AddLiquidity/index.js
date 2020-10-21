@@ -8,6 +8,7 @@ import InfoItem from '../InfoItem';
 import ReduceLiquidity from '../ReduceLiquidity';
 import Confirm from '../Confirm';
 import util from '_src/utils/util';
+import {getDeadLine4sdk} from '../util';
 
 function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
@@ -283,7 +284,7 @@ export default class AddLiquidity extends React.Component {
       baseToken.symbol,
       util.precisionInput(targetToken.value),
       targetToken.symbol,
-      parseInt(Date.now()/1000) + 1000000 + '',
+      getDeadLine4sdk(),
       '',
       null,
     ];

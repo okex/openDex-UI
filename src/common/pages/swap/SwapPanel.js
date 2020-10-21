@@ -10,6 +10,7 @@ import CoinItem from './CoinItem';
 import { getCoinIcon } from './util/coinIcon';
 import * as api from './util/api';
 import Confirm from './Confirm';
+import {getDeadLine4sdk} from '../util';
 
 function mapStateToProps(state) {
   const { setting } = state.SwapStore;
@@ -267,7 +268,7 @@ export default class SwapPanel extends React.Component {
       baseToken.symbol,
       this.getMinimumReceived(),
       targetToken.symbol,
-      parseInt(Date.now()/1000) + 1000000 + '',
+      getDeadLine4sdk(),
       util.getMyAddr(),
       '',
       null,

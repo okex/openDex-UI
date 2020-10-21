@@ -19,3 +19,7 @@ export function getSetting() {
 export function setting(data) {
   window.localStorage.setItem(SWAP_SITTING_STOREKEY, JSON.stringify(data));
 }
+
+export function getDeadLine4sdk() {
+  return parseInt(Date.now()/1000) + 1000000 + '';
+}

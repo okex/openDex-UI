@@ -8,6 +8,7 @@ import calc from '_src/utils/calc';
 import Confirm from '../Confirm';
 import util from '_src/utils/util';
 import { wsV3, channelsV3 } from '../../../utils/websocket';
+import {getDeadLine4sdk} from '../util';
 
 function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
@@ -92,7 +93,7 @@ export default class ReduceLiquidity extends React.Component {
       baseToken.denom,
       targetToken.amount,
       targetToken.denom,
-      parseInt(Date.now()/1000) + 1000000 + '',
+      getDeadLine4sdk(),
       '',
       null,
     ];
