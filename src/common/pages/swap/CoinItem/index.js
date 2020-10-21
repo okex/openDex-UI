@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { toLocale } from '_src/locale/react-locale';
 import InputNum from '_component/InputNum';
 import SelectCoin from '../SelectCoin';
@@ -7,6 +8,12 @@ import classNames from 'classnames';
 import { channelsV3 } from '../../../utils/websocket';
 import SwapContext from '../SwapContext';
 
+function mapStateToProps(state) {
+  const { account } = state.SwapStore;
+  return { account };
+}
+
+@connect(mapStateToProps)
 export default class CoinItem extends React.Component {
 
   static contextType = SwapContext;
@@ -89,13 +96,16 @@ export default class CoinItem extends React.Component {
   };
 
   render() {
-    const {
+    let {
       label,
       token: { available, symbol, value },
       loadCoinList,
       disabled,
       disabledChangeCoin,
+      account
     } = this.props;
+    const temp = account[symbol.toLowerCase()];
+    if(temp) available = temp.available;
     const { show } = this.state;
     return (
       <div className="coin-item">

@@ -1,8 +1,16 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { toLocale } from '_src/locale/react-locale';
 import { getCoinIcon } from '../util/coinIcon';
 import { channelsV3 } from '../../../utils/websocket';
 import SwapContext from '../SwapContext';
+
+function mapStateToProps(state) {
+  const { account } = state.SwapStore;
+  return { account };
+}
+
+@connect(mapStateToProps)
 export default class InfoItem extends React.Component {
   static contextType = SwapContext;
 
@@ -21,7 +29,10 @@ export default class InfoItem extends React.Component {
   }
 
   render() {
-    const { data, add, reduce } = this.props;
+    const { data, add, reduce,account } = this.props;
+    let available = data.pool_token_coin.amount;
+    const temp = account[data.pool_token_coin.denom.toLowerCase()];
+    if(temp) available = temp.available;
     return (
       <div className="poll-item">
         <div className="space-between poll-item-title">
@@ -57,7 +68,7 @@ export default class InfoItem extends React.Component {
             {data.base_pooled_coin.amount}/{data.quote_pooled_coin.amount}
           </div>
           <div className="right">
-            {data.pool_token_coin.amount}/{data.pool_token_ratio * 100}%
+            {available}/{data.pool_token_ratio * 100}%
           </div>
         </div>
       </div>

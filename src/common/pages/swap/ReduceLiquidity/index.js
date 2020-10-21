@@ -13,7 +13,8 @@ import SwapContext from '../SwapContext';
 
 function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
-  return { okexchainClient };
+  const { account } = state.SwapStore;
+  return { okexchainClient,account };
 }
 
 @connect(mapStateToProps)
@@ -120,8 +121,11 @@ export default class ReduceLiquidity extends React.Component {
   }
 
   render() {
-    const { back, liquidity } = this.props;
+    const { back, liquidity,account } = this.props;
     const { ratios, ratio, coins, value } = this.state;
+    let available = liquidity.pool_token_coin.amount;
+    const temp = account[data.pool_token_coin.denom.toLowerCase()];
+    if(temp) available = temp.available;
     return (
       <div className="panel">
         <div className="panel-header">
@@ -133,7 +137,7 @@ export default class ReduceLiquidity extends React.Component {
             <div className="coin-item-title">
               <div>{toLocale('Input')}</div>
               <div className="txt">
-                {toLocale('Balance')}: {liquidity.pool_token_coin.amount}
+                {toLocale('Balance')}: {available}
               </div>
             </div>
             <div className="coin-item-content">

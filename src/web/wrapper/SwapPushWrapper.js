@@ -3,13 +3,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as SwapAction from '_src/redux/actions/SwapAction';
 import util from '_src/utils/util';
-import { getWsV3 } from '_src/utils/websocket';
+import { getConnectCfg,getWsV3 } from '_src/utils/websocket';
 
-function mapStateToProps(state) {
-  const { currentNode } = state.NodeStore;
-  return {
-    currentNode,
-  };
+function mapStateToProps() {
+  return {};
 }
 
 function mapDispatchToProps(dispatch) {
@@ -24,8 +21,7 @@ const SwapPushWrapper = (Component) => {
 
     constructor(props) {
       super(props);
-      const { currentNode:{wsUrl} } = props;
-      if (wsUrl) this.startInitWebSocket(wsUrl);
+      this.startInitWebSocket(getConnectCfg());
     }
 
     componentWillUnmount() {
@@ -74,7 +70,7 @@ const SwapPushWrapper = (Component) => {
             Number(errorCode) === 30008 ||
             Number(errorCode) === 30006)
         ) {
-          //util.doLogout();
+          util.doLogout();
         }
       });
       wsV3.connect();

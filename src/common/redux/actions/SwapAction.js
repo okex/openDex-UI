@@ -17,3 +17,19 @@ export function hasSetting(data) {
     });
   };
 }
+
+export function updateAccount(data) {
+  return (dispatch, getState) => {
+    if(!Array.isArray(data) || !data.length) return;
+    const state = getState().SwapStore;
+    const account = { ...state.account };
+    data.forEach(d => {
+      const currency = d.currency.toLowerCase();
+      account[currency] = d;
+    });
+    dispatch({
+      type: SwapActionType.ALL,
+      data: { account },
+    });
+  };
+}

@@ -5,6 +5,7 @@ import * as util from '../../pages/swap/util';
 const initialState = {
   hasSetting: PageURL.getCurrent() === PageURL.swapPage,
   setting: util.getSetting(),
+  account: {},
 };
 
 export default function reducer(state = initialState, action) {
