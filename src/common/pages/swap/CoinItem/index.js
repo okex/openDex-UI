@@ -7,6 +7,9 @@ import classNames from 'classnames';
 import { wsV3,channelsV3 } from '../../../utils/websocket';
 
 export default class CoinItem extends React.Component {
+
+  static _cache = null;
+
   constructor() {
     super();
     this.state = {
@@ -14,6 +17,7 @@ export default class CoinItem extends React.Component {
     };
     this.currentSubscribe = null;
     this.hideCoinSelectList = this.hideCoinSelectList.bind(this);
+    CoinItem._cache = null;
   }
 
   onInputChange = (value) => {
@@ -29,10 +33,13 @@ export default class CoinItem extends React.Component {
   showCoinSelectList = async (e) => {
     e.nativeEvent.stopImmediatePropagation();
     if (this.state.show) return;
+    if(CoinItem._cache) CoinItem._cache.hideCoinSelectList();
+    CoinItem._cache = this;
     this.setState({ show: true });
   };
 
   hideCoinSelectList() {
+    CoinItem._cache = null;
     this.setState({ show: false });
   }
   

@@ -57,10 +57,10 @@ export function buyInfo(params = {}) {
 }
 
 export function liquidityInfo(params={}) {
-  //@mock mocker.liquidityInfo(URL.GET_SWAP_LIQUIDITY_INFO);
   const address = util.getMyAddr();
   params = {...params,address};
   exchange(params);
+  //@mock mocker.liquidityInfo(URL.GET_SWAP_LIQUIDITY_INFO);
   return get(URL.GET_SWAP_LIQUIDITY_INFO, params);
 }
 
@@ -70,16 +70,16 @@ export function addInfo(params = {}) {
 }
 
 export function redeemableAssets(params={}) {
-  //@mock mocker.redeemableAssets(`${URL.GET_SWAP_REDEEMABLE_ASSETS}/${params.base_token}_${params.quote_token}`);
   params = {...params};
   exchange(params);
+  //@mock mocker.redeemableAssets(`${URL.GET_SWAP_REDEEMABLE_ASSETS}/${params.base_token}_${params.quote_token}`);
   return get(`${URL.GET_SWAP_REDEEMABLE_ASSETS}/${params.base_token}_${params.quote_token}`, {liquidity:params.liquidity});
 }
 
 export function tokenPair(params={}) {
-  //@mock mocker.tokenPair(`${URL.GET_SWAP_TOKEN_PAIR}/${params.base_token}_${params.quote_token}`);
   params = {...params};
   exchange(params);
+  //@mock mocker.tokenPair(`${URL.GET_SWAP_TOKEN_PAIR}/${params.base_token}_${params.quote_token}`);
   return get(`${URL.GET_SWAP_TOKEN_PAIR}/${params.base_token}_${params.quote_token}`);
 }
 
