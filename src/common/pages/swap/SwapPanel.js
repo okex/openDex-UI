@@ -10,7 +10,7 @@ import CoinItem from './CoinItem';
 import { getCoinIcon } from './util/coinIcon';
 import * as api from './util/api';
 import Confirm from './Confirm';
-import {getDeadLine4sdk} from '../util';
+import {getDeadLine4sdk} from './util';
 
 function mapStateToProps(state) {
   const { setting } = state.SwapStore;
