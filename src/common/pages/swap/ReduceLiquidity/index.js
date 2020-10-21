@@ -96,7 +96,11 @@ export default class ReduceLiquidity extends React.Component {
       null,
     ];
     console.log(params);
-    return sendRemoveLiquidityTransaction(...params);
+    return new Promise((resolve, reject) => {
+      sendRemoveLiquidityTransaction(...params)
+        .then((res) => resolve(res))
+        .catch((err) => reject(err));
+    });
   };
 
   componentDidMount() {

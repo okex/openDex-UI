@@ -79,14 +79,14 @@ export default class CreatLiquidity extends React.Component {
   confirm = () => {
     const { baseToken, targetToken } = this.state;
     const { okexchainClient } = this.props;
-    const params = [baseToken.symbol, targetToken.symbol];
+    const params = [baseToken.symbol, targetToken.symbol, '', null];
     console.log(params);
-    return okexchainClient.sendCreateExchangeTransaction(
-      baseToken.symbol,
-      targetToken.symbol,
-      '',
-      null
-    );
+    return new Promise((resolve, reject) => {
+      okexchainClient
+        .sendCreateExchangeTransaction(...params)
+        .then((res) => resolve(res))
+        .catch((err) => reject(err));
+    });
   };
 
   addLiquidity = () => {

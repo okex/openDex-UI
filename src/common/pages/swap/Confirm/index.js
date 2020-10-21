@@ -6,6 +6,7 @@ import util from '_src/utils/util';
 import Message from '_src/component/Message';
 import PasswordDialog from '_component/PasswordDialog';
 import * as CommonAction from '_src/redux/actions/CommonAction';
+import { validateTxs } from '_src/utils/client';
 
 function mapStateToProps(state) {
   const { okexchainClient, privateKey } = state.Common;
@@ -70,7 +71,7 @@ export default class Confirm extends React.Component {
     const { children } = this.props;
     const child = React.Children.only(children);
     return React.cloneElement(child, {
-      onClick: () => this.onClick(),
+      onClick: () => util.debounce(this.onClick, 100)(),
     });
   }
 
@@ -87,8 +88,13 @@ export default class Confirm extends React.Component {
             duration: 0,
           })
         : null;
-      const fn = util.debounce(onClick, 100);
-      await fn();
+      const res = await onClick();
+      console.log(res);
+      if (!validateTxs(res)) {
+        let raw_log = res.result && res.result.raw_log;
+        if(typeof raw_log === 'string') raw_log = JSON.parse(raw_log);
+        throw new Error(raw_log.message);
+      }
       if (loadingToast) loadingToast.destroy();
       if (successTxt)
         Message.success({
@@ -97,7 +103,11 @@ export default class Confirm extends React.Component {
         });
       this.loading = false;
     } catch (e) {
-      console.log(e);
+      console.log(e.message);
+      Message.error({
+        content: e.message || '服务端异常，请稍后重试',
+        duration: 3
+      });
     } finally {
       if (loadingToast) loadingToast.destroy();
       this.loading = false;

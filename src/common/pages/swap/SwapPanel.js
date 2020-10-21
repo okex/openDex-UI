@@ -273,7 +273,12 @@ export default class SwapPanel extends React.Component {
       null,
     ];
     console.log(params);
-    return okexchainClient.sendSwapTokenTransaction(...params);
+    return new Promise((resolve, reject) => {
+      okexchainClient
+        .sendSwapTokenTransaction(...params)
+        .then((res) => resolve(res))
+        .catch((err) => reject(err));
+    });
   };
 
   render() {
