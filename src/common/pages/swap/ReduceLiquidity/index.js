@@ -7,6 +7,7 @@ import InputNum from '_component/InputNum';
 import calc from '_src/utils/calc';
 import Confirm from '../Confirm';
 import util from '_src/utils/util';
+import { wsV3,channelsV3 } from '../../../utils/websocket';
 
 function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
@@ -92,6 +93,16 @@ export default class ReduceLiquidity extends React.Component {
     console.log(params);
     return sendRemoveLiquidityTransaction(...params);
   };
+
+  componentDidMount() {
+    const { pool_token_coin:denom } = this.props.liquidity;
+    wsV3.send(channelsV3.getBalance(denom));
+  }
+
+  componentWillUnmount() {
+    const {pool_token_coin:denom} = this.props.liquidity;
+    wsV3.stop(channelsV3.getBalance(denom));
+  }
 
   render() {
     const { back, liquidity } = this.props;
