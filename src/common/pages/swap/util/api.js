@@ -58,10 +58,10 @@ export function buyInfo(params = {}) {
 
 export function liquidityInfo(params={}) {
   const address = util.getMyAddr();
-  params = {...params,address};
+  params = {...params};
   exchange(params);
   //@mock mocker.liquidityInfo(URL.GET_SWAP_LIQUIDITY_INFO);
-  return get(URL.GET_SWAP_LIQUIDITY_INFO, params);
+  return get(URL.GET_SWAP_LIQUIDITY_INFO, {address,token_pair_name:`${params.base_token}_${params.quote_token}`});
 }
 
 export function addInfo(params = {}) {
