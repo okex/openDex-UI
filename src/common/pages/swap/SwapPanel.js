@@ -267,7 +267,7 @@ export default class SwapPanel extends React.Component {
       baseToken.symbol,
       this.getMinimumReceived(),
       targetToken.symbol,
-      Date.parse(new Date()) + 1000000,
+      parseInt(Date.now()/1000) + 1000000 + '',
       util.getMyAddr(),
       '',
       null,

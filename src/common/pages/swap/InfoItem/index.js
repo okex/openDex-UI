@@ -55,7 +55,7 @@ export default class InfoItem extends React.Component {
             {data.base_pooled_coin.amount}/{data.quote_pooled_coin.amount}
           </div>
           <div className="right">
-            {data.pool_token_coin.amount}/{data.pool_token_ratio}%
+            {data.pool_token_coin.amount}/{data.pool_token_ratio * 100}%
           </div>
         </div>
       </div>

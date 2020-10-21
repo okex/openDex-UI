@@ -278,12 +278,12 @@ export default class AddLiquidity extends React.Component {
     let { baseToken, targetToken } = this._exchangeTokenData();
     const { okexchainClient } = this.props;
     const params = [
-      0,
+      util.precisionInput(0),
       util.precisionInput(baseToken.value),
       baseToken.symbol,
       util.precisionInput(targetToken.value),
       targetToken.symbol,
-      Date.parse(new Date()) + 1000000,
+      parseInt(Date.now()/1000) + 1000000 + '',
       '',
       null,
     ];

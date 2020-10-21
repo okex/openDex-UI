@@ -84,6 +84,7 @@ export default class ReduceLiquidity extends React.Component {
   }
 
   confirm = () => {
+    const {okexchainClient } = this.props;
     const { baseToken, targetToken } = this._exchangeTokenData();
     const params = [
       util.precisionInput(this.state.value),
@@ -91,13 +92,13 @@ export default class ReduceLiquidity extends React.Component {
       baseToken.denom,
       targetToken.amount,
       targetToken.denom,
-      Date.parse(new Date()) + 1000000,
+      parseInt(Date.now()/1000) + 1000000 + '',
       '',
       null,
     ];
     console.log(params);
     return new Promise((resolve, reject) => {
-      sendRemoveLiquidityTransaction(...params)
+      okexchainClient.sendRemoveLiquidityTransaction(...params)
         .then((res) => resolve(res))
         .catch((err) => reject(err));
     });
