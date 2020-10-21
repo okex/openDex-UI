@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { toLocale } from '_src/locale/react-locale';
 import util from '_src/utils/util';
 import calc from '_src/utils/calc';
@@ -9,48 +8,106 @@ import PageURL from '_constants/PageURL';
 import { withRouter, Link } from 'react-router-dom';
 import CoinItem from './CoinItem';
 import { getCoinIcon } from './util/coinIcon';
-import * as SwapAction from '_src/redux/actions/SwapAction';
 import * as api from './util/api';
 import Confirm from './Confirm';
 
 function mapStateToProps(state) {
-  const { baseToken, targetToken, exchangeInfo, setting } = state.SwapStore;
+  const { setting } = state.SwapStore;
   const { okexchainClient } = state.Common;
-  return { okexchainClient,baseToken, targetToken, exchangeInfo, setting };
+  return { okexchainClient, setting };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    swapAction: bindActionCreators(SwapAction, dispatch)
   };
 }
 @withRouter
 @connect(mapStateToProps, mapDispatchToProps)
 export default class SwapPanel extends React.Component {
-  exchange = () => {
-    const { baseToken, targetToken } = this.props;
-    this.props.swapAction.exchange(baseToken, targetToken);
-  };
+
+  constructor() {
+    super();
+    this.state = {
+      baseToken: {
+        available: '',
+        value: '',
+        symbol: '',
+      },
+      targetToken: {
+        available: '',
+        value: '',
+        symbol: '',
+      },
+      exchangeInfo: {
+        price: '',
+        price_impact: '',
+        fee: '',
+        route: '',
+        isReverse: false,
+      },
+    }
+  }
+  
+  exchange = async () => {
+    const { baseToken, targetToken } = this.state;
+    const data = {
+      ...this.state,
+      baseToken: targetToken,
+      targetToken: baseToken,
+    };
+    data.targetToken.value = '';
+    await this.updateSwapInfo(data, 'baseToken');
+    this.setState(data);
+  }
+
+  async updateSwapInfo(data, key) {
+    const { value, symbol } = data[key];
+    const target = key === 'baseToken' ? data.targetToken : data.baseToken;
+    if (value && symbol && target.symbol) {
+      const { buy_amount, price, price_impact, fee, route } = await api.buyInfo({
+        sell_token_amount: `${value}${symbol}`,
+        token: target.symbol,
+      });
+      data.exchangeInfo = { price, price_impact, fee, route };
+      target.value = buy_amount;
+    } else {
+      target.value = '';
+    }
+  }
 
   changeBase = (token) => {
-    const { baseToken } = this.props;
-    this.props.swapAction.setBaseToken({ ...baseToken, ...token });
+    let baseToken = {...this.state.baseToken,...token};
+    const data = { ...this.state, baseToken };
+    this.updateSwapInfo4RealTime(data,'baseToken');
   };
 
+  async updateSwapInfo4RealTime(data,key,time=3000) {
+    if(this.updateSwapInfo4RealTime.interval) {
+      clearInterval(this.updateSwapInfo4RealTime.interval);
+      this.updateSwapInfo4RealTime.interval = null;
+    }
+    await this.updateSwapInfo(data,key);
+    this.setState(data);
+    data[key].value && (this.updateSwapInfo4RealTime.interval = setInterval(async () => {
+      await this.updateSwapInfo(data,key);
+      this.setState(data);
+    },time));
+  }
+
   changeTarget = (token) => {
-    const { targetToken } = this.props;
-    this.props.swapAction.setTargetToken({ ...targetToken, ...token });
+    let targetToken = {...this.state.targetToken,...token};
+    const data = { ...this.state, targetToken };
+    this.updateSwapInfo4RealTime(data,'baseToken');
   };
 
   initBaseToken = async () => {
-    const { baseToken } = this.props;
     const data = await api.swapTokens();
     if(!data) return;
     let { native_token = '', tokens = [] } = data;
     tokens = tokens || [];
     const base = tokens.filter((d) => d.symbol === native_token)[0];
     if (!base) return;
-    this.props.swapAction.setBaseToken({ ...baseToken, ...base });
+    this.changeBase(base);
   };
 
   loadBaseCoinList = async () => {
@@ -58,7 +115,7 @@ export default class SwapPanel extends React.Component {
     if(!data) return [];
     let { tokens = [] } = data;
     tokens = tokens || []
-    const {targetToken} = this.props;
+    const {targetToken} = this.state;
     if(!targetToken.symbol) return tokens;
     return tokens.filter(d => d.symbol !== targetToken.symbol);
   };
@@ -66,7 +123,7 @@ export default class SwapPanel extends React.Component {
   loadTargetCoinList = async () => {
     const {
       baseToken: { symbol },
-    } = this.props;
+    } = this.state;
     const data = await api.swapTokens({ symbol });
     if(!data) return [];
     let { tokens = [] } = data;
@@ -75,11 +132,9 @@ export default class SwapPanel extends React.Component {
   };
 
   revert = () => {
-    this.props.swapAction.revertPrice();
-  };
-
-  revert = () => {
-    this.props.swapAction.revertPrice();
+    let exchangeInfo = {...this.state.exchangeInfo};
+    exchangeInfo.isReverse = !exchangeInfo.isReverse;
+    this.setState({exchangeInfo})
   };
 
   componentDidMount() {
@@ -87,7 +142,7 @@ export default class SwapPanel extends React.Component {
   }
 
   getExchangeInfo() {
-    const { baseToken, targetToken, exchangeInfo } = this.props;
+    const { baseToken, targetToken, exchangeInfo } = this.state;
     if (baseToken.symbol && targetToken.symbol) {
       if (!baseToken.value || !targetToken.value) {
         return (
@@ -170,15 +225,15 @@ export default class SwapPanel extends React.Component {
   }
 
   getMinimumReceived() {
+    const {targetToken} = this.state;
     const {
-      targetToken,
       setting: { slippageTolerance },
     } = this.props;
     return util.precisionInput(calc.mul(targetToken.value, 1 - slippageTolerance * 0.01));
   }
 
   getBtn() {
-    const { baseToken, targetToken } = this.props;
+    const { baseToken, targetToken } = this.state;
     let btn;
     if (!util.isLogined()) {
       btn = (
@@ -203,14 +258,15 @@ export default class SwapPanel extends React.Component {
   }
 
   confirm = () => {
-    const { baseToken,targetToken,okexchainClient } = this.props;
+    const { okexchainClient } = this.props;
+    const {baseToken,targetToken} = this.state;
     const params = [util.precisionInput(baseToken.value), baseToken.symbol, this.getMinimumReceived(), targetToken.symbol, Date.parse(new Date()) + 1000000, util.getMyAddr(), '', null];
     console.log(params);
     return okexchainClient.sendSwapTokenTransaction(...params);
   };
 
   render() {
-    const { baseToken, targetToken } = this.props;
+    const { baseToken, targetToken } = this.state;
     const exchangeInfo = this.getExchangeInfo();
     const btn = this.getBtn();
     return (
