@@ -761,5 +761,6 @@ const zhCN = {
     'A portion of each trade (0.3%) goes to liquidity providers as a protocol incentive.',
   'pending transactions': 'pending transactions',
   'transaction confirmed': 'transaction confirmed',
+  'based on 24hr volume annualized':'based on 24hr volume annualized'
 };
 export default zhCN;

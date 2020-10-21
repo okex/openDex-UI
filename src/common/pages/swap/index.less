@@ -637,22 +637,36 @@
         color: rgba(255, 255, 255, 0.65);
         .head-sort {
           display: flex;
+          align-items: center;
+          .help {
+            .help;
+            margin-right: 5px;
+          }
           &>div {
             display: flex;
             flex-direction: column;
-            padding: 0 10px;
             justify-content: center;
             cursor: pointer;
             .up {
-              .up;
+              padding: 4px 10px 0 10px;
+              &::before {
+                display: flex;
+                content:'';
+                .up;
+              }
               margin-bottom: 2px;
-              &.active {
+              &.active::before {
                 border-bottom-color: #2D60E0;
               }
             }
             .down {
-              .down;
-              &.active {
+              padding: 0 10px 4px 10px;
+              &::before {
+                display: flex;
+                content:'';
+                .down;
+              }
+              &.active::before {
                 border-top-color: #2D60E0;
               }
             }

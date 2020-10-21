@@ -12,10 +12,11 @@ export default class Watchlist extends React.Component {
   getHead() {
     const { columns } = this.props;
     return columns.map((d, index) => {
+      const name = typeof d.name === 'function' ? d.name() : d.name;
       return (
         <td width={d.width} key={index}>
           <div className={classNames({ 'head-sort': d.canSort })}>
-            {d.name}
+            {name}
             {d.canSort && (
               <div>
                 <i

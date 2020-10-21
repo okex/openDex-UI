@@ -61,7 +61,9 @@ export default class WatchlistPanel extends React.Component {
       },
       {
         field: 'fee_apy',
-        name: toLocale('Fee APY'),
+        name() {
+        return <React.Fragment><i className="help" title={toLocale('based on 24hr volume annualized')} />{toLocale('Fee APY')}</React.Fragment>
+        },
         canSort: true,
         width: '102',
         component(props) {
