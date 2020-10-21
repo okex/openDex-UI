@@ -174,7 +174,7 @@ export default class SwapPanel extends React.Component {
             <div className="info">
               <div className="info-name">
                 {toLocale('Minimum received')}
-                <i className="help" title={toLocale('Minimum received help')} />
+                <i className="help" data-title={toLocale('Minimum received help')} />
               </div>
               <div className="info-value">
                 {this.getMinimumReceived()} {targetToken.symbol}
