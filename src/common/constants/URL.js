@@ -1,5 +1,4 @@
-
-import {getCurrentApiUrl} from './getApiUrl';
+import { getCurrentApiUrl } from './getApiUrl';
 const url = getCurrentApiUrl();
 
 const OKDEX_BASE_URL = `${url}/okexchain/v1`;

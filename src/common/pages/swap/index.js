@@ -21,10 +21,7 @@ export default class Swap extends React.Component {
   render() {
     return (
       <div className="swap-container">
-        <Tabs
-          defaultActiveKey={SWAP}
-          prefixCls="swap"
-        >
+        <Tabs defaultActiveKey={SWAP} prefixCls="swap">
           <TabPane tab={toLocale('Swap')} key={SWAP}>
             <SwapPanel />
           </TabPane>
@@ -32,9 +29,7 @@ export default class Swap extends React.Component {
             <Router route={{ component: PoolPanel }} />
           </TabPane>
           <TabPane tab={toLocale('Watchlist')} key={WATCHLIST}>
-            <Router
-              route={{ component: WatchlistPanel }}
-            />
+            <Router route={{ component: WatchlistPanel }} />
           </TabPane>
         </Tabs>
       </div>

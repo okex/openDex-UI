@@ -14,12 +14,7 @@ function mapStateToProps(state) {
   return { okexchainClient };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-  };
-}
-
-@connect(mapStateToProps, mapDispatchToProps)
+@connect(mapStateToProps)
 export default class AddLiquidity extends React.Component {
   constructor(props) {
     super(props);
@@ -42,7 +37,7 @@ export default class AddLiquidity extends React.Component {
         pool_share: '',
         isReverse: false,
       },
-      liquidity:props.liquidity,
+      liquidity: props.liquidity,
       userLiquidity: props.userLiquidity,
       targetTokenDisabled,
     };
@@ -87,7 +82,7 @@ export default class AddLiquidity extends React.Component {
   init = async () => {
     const { baseToken, targetToken } = this.state;
     const dataTokens = await api.addLiquidityTokens();
-    if(!dataTokens) return;
+    if (!dataTokens) return;
     let { native_token = '', tokens = [] } = dataTokens;
     tokens = tokens || [];
     const token = baseToken.symbol || native_token;
@@ -98,7 +93,7 @@ export default class AddLiquidity extends React.Component {
       const temp = await api.addLiquidityTokens({
         symbol: token,
       });
-      if(!temp) return;
+      if (!temp) return;
       let { tokens: targetTokens } = temp;
       targetTokens = targetTokens || [];
       const target = targetTokens.filter(
@@ -133,10 +128,12 @@ export default class AddLiquidity extends React.Component {
   async _updateExchangePrice(data) {
     const { baseToken, targetToken, exchangeInfo } = data;
     if (baseToken.symbol && targetToken.symbol) {
-      const temp = data.liquidity || await api.tokenPair({
-        base_token: baseToken.symbol,
-        quote_token: targetToken.symbol,
-      });
+      const temp =
+        data.liquidity ||
+        (await api.tokenPair({
+          base_token: baseToken.symbol,
+          quote_token: targetToken.symbol,
+        }));
       if (!temp) return;
       const { base_pooled_coin, quote_pooled_coin } = temp;
       exchangeInfo.price = calc.div(
@@ -149,7 +146,7 @@ export default class AddLiquidity extends React.Component {
   async _updateExchange(data) {
     const { baseToken, targetToken, exchangeInfo } = data;
     if (baseToken.symbol && targetToken.symbol && data.targetTokenDisabled) {
-      if(baseToken.value) {
+      if (baseToken.value) {
         const { base_token_amount, pool_share } = await api.addInfo({
           base_token: baseToken.symbol,
           quote_token_amount: baseToken.value + targetToken.symbol,
@@ -164,23 +161,23 @@ export default class AddLiquidity extends React.Component {
 
   loadBaseCoinList = async () => {
     const data = await api.addLiquidityTokens();
-    if(!data) return [];
+    if (!data) return [];
     let { tokens = [] } = data;
     tokens = tokens || [];
     const { targetToken } = this.state;
-    if(!targetToken.symbol) return tokens;
-    return tokens.filter(d => d.symbol !== targetToken.symbol);
+    if (!targetToken.symbol) return tokens;
+    return tokens.filter((d) => d.symbol !== targetToken.symbol);
   };
 
   loadTargetCoinList = async () => {
     const {
       baseToken: { symbol },
     } = this.state;
-    const data = await api.addLiquidityTokens({ symbol});
-    if(!data) return [];
+    const data = await api.addLiquidityTokens({ symbol });
+    if (!data) return [];
     let { tokens = [] } = data;
     tokens = tokens || [];
-    return tokens.filter(d => d.symbol !== symbol);
+    return tokens.filter((d) => d.symbol !== symbol);
   };
 
   getExchangeInfo() {
@@ -253,10 +250,12 @@ export default class AddLiquidity extends React.Component {
       btn = <div className="btn disabled">{toLocale('Input an amount')}</div>;
     } else {
       btn = (
-        <Confirm onClick={this.confirm} loadingTxt={toLocale('pending transactions')} successTxt={toLocale('transaction confirmed')}>
-          <div className="btn">
-            {toLocale('Confirm')}
-          </div>
+        <Confirm
+          onClick={this.confirm}
+          loadingTxt={toLocale('pending transactions')}
+          successTxt={toLocale('transaction confirmed')}
+        >
+          <div className="btn">{toLocale('Confirm')}</div>
         </Confirm>
       );
     }
@@ -264,22 +263,30 @@ export default class AddLiquidity extends React.Component {
   }
 
   _exchangeTokenData() {
-    let {baseToken,targetToken} = this.state;
-    if(baseToken.symbol && targetToken.symbol) {
+    let { baseToken, targetToken } = this.state;
+    if (baseToken.symbol && targetToken.symbol) {
       const temp = baseToken;
-      if(baseToken.symbol > targetToken.symbol) {
+      if (baseToken.symbol > targetToken.symbol) {
         baseToken = targetToken;
         targetToken = temp;
       }
     }
-    return {baseToken,targetToken}
+    return { baseToken, targetToken };
   }
 
   confirm = () => {
-    let {baseToken,targetToken} = this._exchangeTokenData();
-    const {okexchainClient} = this.props;
-    const params = [0, util.precisionInput(baseToken.value), baseToken.symbol, util.precisionInput(targetToken.value), targetToken.symbol, Date.parse(new Date())
-      + 1000000, '', null];
+    let { baseToken, targetToken } = this._exchangeTokenData();
+    const { okexchainClient } = this.props;
+    const params = [
+      0,
+      util.precisionInput(baseToken.value),
+      baseToken.symbol,
+      util.precisionInput(targetToken.value),
+      targetToken.symbol,
+      Date.parse(new Date()) + 1000000,
+      '',
+      null,
+    ];
     console.log(params);
     return okexchainClient.sendAddLiquidityTransaction(...params);
   };
@@ -298,10 +305,7 @@ export default class AddLiquidity extends React.Component {
   };
 
   render() {
-    const {
-      back,
-      disabledChangeCoin = false,
-    } = this.props;
+    const { back, disabledChangeCoin = false } = this.props;
     const {
       baseToken,
       targetToken,

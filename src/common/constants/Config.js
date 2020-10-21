@@ -1,4 +1,4 @@
-import {getCurrentApiUrl} from './getApiUrl';
+import { getCurrentApiUrl } from './getApiUrl';
 import Cookies from 'js-cookie';
 const okbExplorePrefix = 'okexchain-test';
 const exploreUrl = 'https://www.oklink.com';

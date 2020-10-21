@@ -31,14 +31,17 @@ export default class PoolPanel extends React.Component {
     this.getLiquidityInfo();
   }
 
-  add = async userLiquidity => {
-    if(!userLiquidity) return this.goAddLiquidity();
-    const liquidity = await api.tokenPair({base_token:userLiquidity.base_pooled_coin.denom,quote_token:userLiquidity.quote_pooled_coin.denom})
-    this.goAddLiquidity({liquidity,userLiquidity});
+  add = async (userLiquidity) => {
+    if (!userLiquidity) return this.goAddLiquidity();
+    const liquidity = await api.tokenPair({
+      base_token: userLiquidity.base_pooled_coin.denom,
+      quote_token: userLiquidity.quote_pooled_coin.denom,
+    });
+    this.goAddLiquidity({ liquidity, userLiquidity });
   };
 
-  goAddLiquidity(data={}) {
-    const {liquidity,userLiquidity} = data;
+  goAddLiquidity(data = {}) {
+    const { liquidity, userLiquidity } = data;
     this.props.push({
       component: AddLiquidity,
       props: {
@@ -79,7 +82,9 @@ export default class PoolPanel extends React.Component {
         </div>
         {this.init && userLiquidityInfo.length ? (
           <div className="poll-items-wrap">
-            <div className="poll-items">{this.liquidity(userLiquidityInfo)}</div>
+            <div className="poll-items">
+              {this.liquidity(userLiquidityInfo)}
+            </div>
           </div>
         ) : (
           <div className="nodata">{toLocale('No Liquidity Found')}</div>

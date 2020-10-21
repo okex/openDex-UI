@@ -11,12 +11,7 @@ function mapStateToProps(state) {
   return { okexchainClient };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-  };
-}
-
-@connect(mapStateToProps, mapDispatchToProps)
+@connect(mapStateToProps)
 export default class CreatLiquidity extends React.Component {
   constructor() {
     super();
@@ -48,8 +43,8 @@ export default class CreatLiquidity extends React.Component {
       const data = await api.createLiquidityTokens();
       this.tokens = data ? data.tokens : [];
     }
-    if(!token) return this.tokens;
-    return this.tokens.filter(d => d.symbol !== token.symbol);
+    if (!token) return this.tokens;
+    return this.tokens.filter((d) => d.symbol !== token.symbol);
   };
 
   componentDidMount() {
@@ -82,11 +77,16 @@ export default class CreatLiquidity extends React.Component {
   }
 
   confirm = () => {
-    const {baseToken,targetToken} = this.state;
-    const {okexchainClient} = this.props;
-    const params = [baseToken.symbol,targetToken.symbol];
+    const { baseToken, targetToken } = this.state;
+    const { okexchainClient } = this.props;
+    const params = [baseToken.symbol, targetToken.symbol];
     console.log(params);
-    return okexchainClient.sendCreateExchangeTransaction(baseToken.symbol, targetToken.symbol, '', null);
+    return okexchainClient.sendCreateExchangeTransaction(
+      baseToken.symbol,
+      targetToken.symbol,
+      '',
+      null
+    );
   };
 
   addLiquidity = () => {
@@ -134,10 +134,12 @@ export default class CreatLiquidity extends React.Component {
             {disabled ? (
               <div className="btn disabled">{toLocale('Create Liquidity')}</div>
             ) : (
-              <Confirm onClick={this.confirm} loadingTxt={toLocale('pending transactions')} successTxt={toLocale('transaction confirmed')}>
-                <div className="btn">
-                  {toLocale('Create Liquidity')}
-                </div>
+              <Confirm
+                onClick={this.confirm}
+                loadingTxt={toLocale('pending transactions')}
+                successTxt={toLocale('transaction confirmed')}
+              >
+                <div className="btn">{toLocale('Create Liquidity')}</div>
               </Confirm>
             )}
           </div>

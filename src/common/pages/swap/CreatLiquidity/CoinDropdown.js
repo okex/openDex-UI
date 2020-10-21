@@ -4,7 +4,6 @@ import { getCoinIcon } from '../util/coinIcon';
 import { toLocale } from '_src/locale/react-locale';
 
 export default class CoinDropdown extends React.Component {
-
   static _cache = null;
 
   constructor() {
@@ -19,7 +18,7 @@ export default class CoinDropdown extends React.Component {
   showCoinSelectList = async (e) => {
     e.nativeEvent.stopImmediatePropagation();
     if (this.state.show) return;
-    if(CoinDropdown._cache) CoinDropdown._cache.hideCoinSelectList();
+    if (CoinDropdown._cache) CoinDropdown._cache.hideCoinSelectList();
     CoinDropdown._cache = this;
     this.setState({ show: true });
   };

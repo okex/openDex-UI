@@ -10,8 +10,6 @@ export function getApiUrl(apiUrl = 'https://www.okex.com') {
 export function getCurrentApiUrl() {
   let url = getApiUrl();
   const currentNode = storage.get('currentNode');
-  if(currentNode && currentNode.httpUrl) url = currentNode.httpUrl; 
+  if (currentNode && currentNode.httpUrl) url = currentNode.httpUrl;
   return url;
 }
-
-

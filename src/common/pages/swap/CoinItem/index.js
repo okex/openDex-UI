@@ -4,10 +4,9 @@ import InputNum from '_component/InputNum';
 import SelectCoin from '../SelectCoin';
 import { getCoinIcon } from '../util/coinIcon';
 import classNames from 'classnames';
-import { wsV3,channelsV3 } from '../../../utils/websocket';
+import { wsV3, channelsV3 } from '../../../utils/websocket';
 
 export default class CoinItem extends React.Component {
-
   static _cache = null;
 
   constructor() {
@@ -33,7 +32,7 @@ export default class CoinItem extends React.Component {
   showCoinSelectList = async (e) => {
     e.nativeEvent.stopImmediatePropagation();
     if (this.state.show) return;
-    if(CoinItem._cache) CoinItem._cache.hideCoinSelectList();
+    if (CoinItem._cache) CoinItem._cache.hideCoinSelectList();
     CoinItem._cache = this;
     this.setState({ show: true });
   };
@@ -42,13 +41,13 @@ export default class CoinItem extends React.Component {
     CoinItem._cache = null;
     this.setState({ show: false });
   }
-  
+
   subscribe() {
-    const {symbol} = this.props.token;
-    if(symbol && this.currentSubscribe !== symbol) {
+    const { symbol } = this.props.token;
+    if (symbol && this.currentSubscribe !== symbol) {
       wsV3.send(channelsV3.getBalance(symbol));
-      if(this.currentSubscribe) wsV3.stop(this.currentSubscribe);
-      console.log('subscribe',symbol,'unsubscribe',this.currentSubscribe);
+      if (this.currentSubscribe) wsV3.stop(this.currentSubscribe);
+      console.log('subscribe', symbol, 'unsubscribe', this.currentSubscribe);
       this.currentSubscribe = symbol;
     }
   }
@@ -60,9 +59,9 @@ export default class CoinItem extends React.Component {
 
   componentWillUnmount() {
     this._bindEvent(false);
-    if(this.currentSubscribe) {
+    if (this.currentSubscribe) {
       wsV3.stop(channelsV3.getBalance(this.currentSubscribe));
-      console.log('unsubscribe',this.currentSubscribe);
+      console.log('unsubscribe', this.currentSubscribe);
       this.currentSubscribe = null;
     }
   }

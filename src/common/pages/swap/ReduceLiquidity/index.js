@@ -7,19 +7,14 @@ import InputNum from '_component/InputNum';
 import calc from '_src/utils/calc';
 import Confirm from '../Confirm';
 import util from '_src/utils/util';
-import { wsV3,channelsV3 } from '../../../utils/websocket';
+import { wsV3, channelsV3 } from '../../../utils/websocket';
 
 function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
   return { okexchainClient };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-  };
-}
-
-@connect(mapStateToProps, mapDispatchToProps)
+@connect(mapStateToProps)
 export default class ReduceLiquidity extends React.Component {
   constructor(props) {
     super(props);
@@ -60,7 +55,7 @@ export default class ReduceLiquidity extends React.Component {
 
   onInputChange = async (value) => {
     const max = this.props.liquidity.pool_token_coin.amount;
-    if(calc.div(max,1)<=calc.div(value,1)) value = max;
+    if (calc.div(max, 1) <= calc.div(value, 1)) value = max;
     this.setState({ value, ratio: null });
     this.updateCoins(value);
   };
@@ -76,31 +71,41 @@ export default class ReduceLiquidity extends React.Component {
   };
 
   _exchangeTokenData() {
-    let baseToken = this.state.coins[0],targetToken = this.state.coins[1];
-    if(baseToken.denom && targetToken.denom) {
+    let baseToken = this.state.coins[0],
+      targetToken = this.state.coins[1];
+    if (baseToken.denom && targetToken.denom) {
       const temp = baseToken;
-      if(baseToken.denom > targetToken.denom) {
+      if (baseToken.denom > targetToken.denom) {
         baseToken = targetToken;
         targetToken = temp;
       }
     }
-    return {baseToken,targetToken}
+    return { baseToken, targetToken };
   }
 
   confirm = () => {
-    const {baseToken,targetToken} = this._exchangeTokenData();
-    const params = [util.precisionInput(this.state.value), baseToken.amount, baseToken.denom, targetToken.amount, targetToken.denom, Date.parse(new Date()) + 1000000, '', null];
+    const { baseToken, targetToken } = this._exchangeTokenData();
+    const params = [
+      util.precisionInput(this.state.value),
+      baseToken.amount,
+      baseToken.denom,
+      targetToken.amount,
+      targetToken.denom,
+      Date.parse(new Date()) + 1000000,
+      '',
+      null,
+    ];
     console.log(params);
     return sendRemoveLiquidityTransaction(...params);
   };
 
   componentDidMount() {
-    const { pool_token_coin:denom } = this.props.liquidity;
+    const { pool_token_coin: denom } = this.props.liquidity;
     wsV3.send(channelsV3.getBalance(denom));
   }
 
   componentWillUnmount() {
-    const {pool_token_coin:denom} = this.props.liquidity;
+    const { pool_token_coin: denom } = this.props.liquidity;
     wsV3.stop(channelsV3.getBalance(denom));
   }
 
@@ -157,10 +162,12 @@ export default class ReduceLiquidity extends React.Component {
           ))}
           <div className="btn-wrap">
             {value ? (
-              <Confirm onClick={this.confirm} loadingTxt={toLocale('pending transactions')} successTxt={toLocale('transaction confirmed')}>
-                <div className="btn">
-                  {toLocale('Confirm')}
-                </div>
+              <Confirm
+                onClick={this.confirm}
+                loadingTxt={toLocale('pending transactions')}
+                successTxt={toLocale('transaction confirmed')}
+              >
+                <div className="btn">{toLocale('Confirm')}</div>
               </Confirm>
             ) : (
               <div className="btn disabled">{toLocale('Confirm')}</div>

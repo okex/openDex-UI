@@ -8,8 +8,8 @@ import PasswordDialog from '_component/PasswordDialog';
 import * as CommonAction from '_src/redux/actions/CommonAction';
 
 function mapStateToProps(state) {
-  const { okexchainClient,privateKey } = state.Common;
-  return { okexchainClient,privateKey };
+  const { okexchainClient, privateKey } = state.Common;
+  return { okexchainClient, privateKey };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -19,88 +19,93 @@ function mapDispatchToProps(dispatch) {
 }
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Confirm extends React.Component {
-
   constructor() {
     super();
     this.state = {
-      isShow:false,
-      pwdErr:'',
-      processingPwd:false
-    }
+      isShow: false,
+      pwdErr: '',
+      processingPwd: false,
+    };
   }
 
   onClose = () => {
-    this.setState({isShow:false});
-  }
+    this.setState({ isShow: false });
+  };
 
   onEnter = (pwd) => {
     if (!util.isLogined()) window.location.reload();
     if (this.state.processingPwd) return;
-    this.setState({processingPwd: true});
-    const {commonAction,okexchainClient} = this.props;
+    this.setState({ processingPwd: true });
+    const { commonAction, okexchainClient } = this.props;
     setTimeout(() => {
-      commonAction.validatePassword(pwd, (privateKey) => {
-        this.onClose();
-        okexchainClient.setAccountInfo(privateKey).then(() => {
-          this.onClick(false);
-        });
-      },() => {
-        this.setState({
-          pwdErr: toLocale('trans_err_pwd'),
-          processingPwd: false,
-        });
+      commonAction.validatePassword(
+        pwd,
+        (privateKey) => {
+          this.onClose();
+          okexchainClient.setAccountInfo(privateKey).then(() => {
+            this.onClick(false);
+          });
+        },
+        () => {
+          this.setState({
+            pwdErr: toLocale('trans_err_pwd'),
+            processingPwd: false,
+          });
         }
       );
-    },20)
-  }
+    }, 20);
+  };
 
   checkPwd() {
     if (!util.isLogined()) window.location.reload();
     const expiredTime = window.localStorage.getItem('pExpiredTime') || 0;
     if (new Date().getTime() >= +expiredTime || !this.props.privateKey) {
-      this.setState({isShow:true});
+      this.setState({ isShow: true });
       return false;
     }
     return true;
   }
 
   confirmBtn() {
-    const {children} = this.props;
+    const { children } = this.props;
     const child = React.Children.only(children);
-    return React.cloneElement(child,{
-      onClick: () => this.onClick()
+    return React.cloneElement(child, {
+      onClick: () => this.onClick(),
     });
   }
 
-  onClick = async (checkPwd=true) => {
-    const {loadingTxt,successTxt,onClick} = this.props;
-    if(!onClick || this.loading) return;
-    if(checkPwd && !this.checkPwd()) return;
+  onClick = async (checkPwd = true) => {
+    const { loadingTxt, successTxt, onClick } = this.props;
+    if (!onClick || this.loading) return;
+    if (checkPwd && !this.checkPwd()) return;
     let loadingToast;
     try {
       this.loading = true;
-      loadingToast = loadingTxt ? Message.loading({
-        content: loadingTxt,
-        duration: 0,
-      }) : null;
+      loadingToast = loadingTxt
+        ? Message.loading({
+            content: loadingTxt,
+            duration: 0,
+          })
+        : null;
       const fn = util.debounce(onClick, 100);
       await fn();
-      if(loadingToast) loadingToast.destroy();
-      if(successTxt) Message.success({
-        content: successTxt,
-        duration: 3,
-      });
+      if (loadingToast) loadingToast.destroy();
+      if (successTxt)
+        Message.success({
+          content: successTxt,
+          duration: 3,
+        });
       this.loading = false;
-    } catch(e) {
+    } catch (e) {
       console.log(e);
     } finally {
-      if(loadingToast) loadingToast.destroy();
+      if (loadingToast) loadingToast.destroy();
       this.loading = false;
     }
-  }
+  };
 
   render() {
-    const {pwdErr,processingPwd,isShow} = this.state;
+    const { pwdErr, processingPwd, isShow } = this.state;
     return (
       <>
         {this.confirmBtn()}
@@ -115,6 +120,6 @@ export default class Confirm extends React.Component {
           warning={pwdErr}
         />
       </>
-    )
+    );
   }
 }
