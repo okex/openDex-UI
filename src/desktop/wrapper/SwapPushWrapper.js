@@ -74,7 +74,7 @@ const SwapPushWrapper = (Component) => {
             Number(errorCode) === 30008 ||
             Number(errorCode) === 30006)
         ) {
-          //util.doLogout();
+          util.doLogout();
         }
       });
       wsV3.connect();
