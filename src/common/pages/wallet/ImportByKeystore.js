@@ -10,8 +10,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as commonActions from '_src/redux/actions/CommonAction';
 import ValidateCheckbox from '_component/ValidateCheckbox';
-import PageURL from '_constants/PageURL';
 import walletUtil from './walletUtil';
+import util from '_src/utils/util';
 import './ImportByKeystore.less';
 
 const fileStatusEnum = {
@@ -116,7 +116,7 @@ class ImportByKeystore extends Component {
         buttonLoading: false,
       });
       this.props.commonAction.setPrivateKey(privateKey);
-      window.location.href = PageURL.spotFullPage;
+      util.go();
     } catch (e) {
       this.setState({
         pwdError: toLocale('wallet_import_passwordError'),

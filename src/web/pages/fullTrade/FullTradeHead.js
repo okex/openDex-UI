@@ -82,12 +82,7 @@ class FullTradeHead extends React.Component {
   }
 
   goHome = () => {
-    const url = window.location.href.split('#')[0];
-    if (/^file/i.test(url)) {
-      window.location.href = `${url}#${PageURL.spotFullPage}`;
-    } else {
-      window.location.href = PageURL.spotFullPage;
-    }
+    util.go();
   };
 
   render() {

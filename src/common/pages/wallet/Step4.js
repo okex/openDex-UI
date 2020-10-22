@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { toLocale } from '_src/locale/react-locale';
 import { Button } from '_component/Button';
@@ -9,12 +9,13 @@ import Icon from '_src/component/IconLite';
 import { Dialog } from '_component/Dialog';
 import WalletLeft from '_component/WalletLeft';
 import WalletRight from '_component/WalletRight';
-import PageURL from '_constants/PageURL';
 import * as commonActions from '_src/redux/actions/CommonAction';
 import questionGenerator from './questionGenerator';
 import walletUtil from './walletUtil';
+import util from '_src/utils/util';
 import './Step.less';
 import './Step4.less';
+import util from '../../utils/util';
 
 function mapStateToProps(state) {
   const { mnemonic, keyStore, privateKey } = state.WalletStore;
@@ -73,7 +74,7 @@ class Step4 extends Component {
     const { privateKey } = this.props;
     return () => {
       this.props.commonAction.setPrivateKey(privateKey);
-      window.location.href = PageURL.spotFullPage;
+      util.go();
     };
   };
   renderPrivateDialog = (copySuccess = false) => {

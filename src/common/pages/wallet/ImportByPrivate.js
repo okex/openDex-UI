@@ -6,10 +6,10 @@ import { crypto } from '@okexchain/javascript-sdk';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as commonActions from '_src/redux/actions/CommonAction';
-import PageURL from '_constants/PageURL';
 import WalletPassword from '_component/WalletPassword';
 import ValidateCheckbox from '_component/ValidateCheckbox';
 import walletUtil from './walletUtil';
+import util from '_src/utils/util';
 import './ImportByPrivateKey.less';
 
 function mapStateToProps() {
@@ -88,7 +88,7 @@ class ImportByprivateKey extends Component {
         isNone: false,
       });
       this.props.commonAction.setPrivateKey(privateKey);
-      window.location.href = PageURL.spotFullPage;
+      util.go();
     } catch (e) {
       this.setState({
         isValidatedPrivateKey: false,
