@@ -184,7 +184,7 @@ export default class SwapPanel extends React.Component {
             <div className="info">
               <div className="info-name">
                 {toLocale('Price Impact')}
-                <i className="help" title={toLocale('Price Impact help')} />
+                <i className="help" data-title={toLocale('Price Impact help')} />
               </div>
               <div className="info-value">{exchangeInfo.price_impact}%</div>
             </div>
@@ -193,7 +193,7 @@ export default class SwapPanel extends React.Component {
                 {toLocale('Liquidity Provider Fee')}
                 <i
                   className="help"
-                  title={toLocale('Liquidity Provider Fee help')}
+                  data-title={toLocale('Liquidity Provider Fee help')}
                 />
               </div>
               <div className="info-value">

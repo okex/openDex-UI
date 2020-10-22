@@ -49,7 +49,7 @@ const SwapPushWrapper = (Component) => {
       this.wsV3Instance = getWsV3(wsV3);
       wsV3.onSocketConnected(() => {
         if(util.isLogined()) {
-          this.wsV3Instance.login();
+          this.wsV3Instance.login(util.getMyAddr());
         }
       });
       wsV3.onSocketError(() => {
