@@ -8,7 +8,7 @@ import InfoItem from '../InfoItem';
 import ReduceLiquidity from '../ReduceLiquidity';
 import Confirm from '../Confirm';
 import util from '_src/utils/util';
-import {getDeadLine4sdk} from '../util';
+import { getDeadLine4sdk } from '../util';
 
 function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
@@ -288,7 +288,6 @@ export default class AddLiquidity extends React.Component {
       '',
       null,
     ];
-    console.log(params);
     return new Promise((resolve, reject) => {
       okexchainClient
         .sendAddLiquidityTransaction(...params)

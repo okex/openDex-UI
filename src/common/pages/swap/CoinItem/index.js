@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { toLocale } from '_src/locale/react-locale';
+import calc from '_src/utils/calc';
 import InputNum from '_component/InputNum';
 import SelectCoin from '../SelectCoin';
 import { getCoinIcon } from '../util/coinIcon';
@@ -15,7 +16,6 @@ function mapStateToProps(state) {
 
 @connect(mapStateToProps)
 export default class CoinItem extends React.Component {
-
   static contextType = SwapContext;
 
   static _cache = null;
@@ -32,12 +32,13 @@ export default class CoinItem extends React.Component {
 
   onInputChange = (value) => {
     const { token } = this.props;
+    const max = this.getAvailable();
+    if (calc.div(max, 1) <= calc.div(value, 1)) value = max;
     this.props.onChange({ ...token, value });
   };
 
   setMaxValue = () => {
-    const { token } = this.props;
-    this.onInputChange(token.available);
+    this.onInputChange(this.getAvailable());
   };
 
   showCoinSelectList = async (e) => {
@@ -54,6 +55,7 @@ export default class CoinItem extends React.Component {
   }
 
   subscribe() {
+    if (!this.context) return;
     const { symbol } = this.props.token;
     if (symbol && this.currentSubscribe !== symbol) {
       this.context.send(channelsV3.getBalance(symbol));
@@ -70,6 +72,7 @@ export default class CoinItem extends React.Component {
 
   componentWillUnmount() {
     this._bindEvent(false);
+    if (!this.context) return;
     if (this.currentSubscribe) {
       this.context.stop(channelsV3.getBalance(this.currentSubscribe));
       console.log('unsubscribe', this.currentSubscribe);
@@ -95,17 +98,25 @@ export default class CoinItem extends React.Component {
     this.props.onChange({ ...token, ...coin });
   };
 
+  getAvailable() {
+    let {
+      token: { available, symbol },
+      account,
+    } = this.props;
+    const temp = account[symbol.toLowerCase()];
+    if (temp) available = temp.available;
+    return available;
+  }
+
   render() {
     let {
       label,
-      token: { available, symbol, value },
+      token: { symbol, value },
       loadCoinList,
       disabled,
       disabledChangeCoin,
-      account
     } = this.props;
-    const temp = account[symbol.toLowerCase()];
-    if(temp) available = temp.available;
+    let available = this.getAvailable();
     const { show } = this.state;
     return (
       <div className="coin-item">

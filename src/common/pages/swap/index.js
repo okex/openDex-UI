@@ -13,27 +13,25 @@ const SWAP = '1';
 const POOL = '2';
 const WATCHLIST = '3';
 
-
 @SwapPushWrapper
 export default class Swap extends React.Component {
-  
   render() {
-    const {wsV3} = this.props;
+    const { wsV3 } = this.props;
     return (
       <SwapContext.Provider value={wsV3}>
         <div className="swap-container">
-        <Tabs defaultActiveKey={SWAP} prefixCls="swap">
-          <TabPane tab={toLocale('Swap')} key={SWAP}>
-            <SwapPanel />
-          </TabPane>
-          <TabPane tab={toLocale('Pool')} key={POOL}>
-            <Router route={{ component: PoolPanel }} />
-          </TabPane>
-          <TabPane tab={toLocale('Watchlist')} key={WATCHLIST}>
-            <Router route={{ component: WatchlistPanel }} />
-          </TabPane>
-        </Tabs>
-      </div>
+          <Tabs defaultActiveKey={SWAP} prefixCls="swap">
+            <TabPane tab={toLocale('Swap')} key={SWAP}>
+              <SwapPanel />
+            </TabPane>
+            <TabPane tab={toLocale('Pool')} key={POOL}>
+              <Router route={{ component: PoolPanel }} />
+            </TabPane>
+            <TabPane tab={toLocale('Watchlist')} key={WATCHLIST}>
+              <Router route={{ component: WatchlistPanel }} />
+            </TabPane>
+          </Tabs>
+        </div>
       </SwapContext.Provider>
     );
   }

@@ -89,10 +89,9 @@ export default class Confirm extends React.Component {
           })
         : null;
       const res = await onClick();
-      console.log(res);
       if (!validateTxs(res)) {
         let raw_log = res.result && res.result.raw_log;
-        if(typeof raw_log === 'string') raw_log = JSON.parse(raw_log);
+        if (typeof raw_log === 'string') raw_log = JSON.parse(raw_log);
         throw new Error(raw_log.message);
       }
       if (loadingToast) loadingToast.destroy();
@@ -103,10 +102,9 @@ export default class Confirm extends React.Component {
         });
       this.loading = false;
     } catch (e) {
-      console.log(e.message);
       Message.error({
         content: e.message || '服务端异常，请稍后重试',
-        duration: 3
+        duration: 3,
       });
     } finally {
       if (loadingToast) loadingToast.destroy();

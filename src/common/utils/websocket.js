@@ -13,9 +13,10 @@ function canSend() {
 }
 
 export function getWsV3(wsV3) {
-  return  {
+  const cache = [];
+  return {
     canSend() {
-      if(!wsV3) return canSend();
+      if (!wsV3) return canSend();
       return wsV3.isConnected();
     },
     login(token) {
@@ -28,8 +29,11 @@ export function getWsV3(wsV3) {
       );
     },
     send(subChannelsArgs = []) {
-      if (!this.canSend()) return;
-      if(!Array.isArray(subChannelsArgs)) subChannelsArgs = [subChannelsArgs];
+      if (!this.canSend()) {
+        cache.push({ method: 'send', params: subChannelsArgs });
+        return;
+      }
+      if (!Array.isArray(subChannelsArgs)) subChannelsArgs = [subChannelsArgs];
       if (subChannelsArgs.length) {
         (wsV3 || window.OK_GLOBAL.ws_v3).sendChannel(
           JSON.stringify({
@@ -40,8 +44,11 @@ export function getWsV3(wsV3) {
       }
     },
     stop(subChannelsArgs = []) {
-      if (!this.canSend()) return;
-      if(!Array.isArray(subChannelsArgs)) subChannelsArgs = [subChannelsArgs];
+      if (!this.canSend()) {
+        cache.push({ method: 'stop', params: subChannelsArgs });
+        return;
+      }
+      if (!Array.isArray(subChannelsArgs)) subChannelsArgs = [subChannelsArgs];
       if (subChannelsArgs.length) {
         (wsV3 || window.OK_GLOBAL.ws_v3).sendChannel(
           JSON.stringify({
@@ -51,7 +58,14 @@ export function getWsV3(wsV3) {
         );
       }
     },
-  }
+    process() {
+      if (!cache.length) return;
+      while (cache.length) {
+        const { method, params } = cache.shift();
+        this[method](params);
+      }
+    },
+  };
 }
 
 export const wsV3 = getWsV3();

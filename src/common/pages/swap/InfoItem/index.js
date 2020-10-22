@@ -16,23 +16,27 @@ export default class InfoItem extends React.Component {
 
   componentDidMount() {
     const {
-      data: { pool_token_coin: {denom} },
+      data: {
+        pool_token_coin: { denom },
+      },
     } = this.props;
-    this.context.send(channelsV3.getBalance(denom));
+    this.context && this.context.send(channelsV3.getBalance(denom));
   }
 
   componentWillUnmount() {
     const {
-      data: { pool_token_coin: {denom} },
+      data: {
+        pool_token_coin: { denom },
+      },
     } = this.props;
-    this.context.stop(channelsV3.getBalance(denom));
+    this.context && this.context.stop(channelsV3.getBalance(denom));
   }
 
   render() {
-    const { data, add, reduce,account } = this.props;
+    const { data, add, reduce, account } = this.props;
     let available = data.pool_token_coin.amount;
     const temp = account[data.pool_token_coin.denom.toLowerCase()];
-    if(temp) available = temp.available;
+    if (temp) available = temp.available;
     return (
       <div className="poll-item">
         <div className="space-between poll-item-title">

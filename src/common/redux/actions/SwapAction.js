@@ -20,10 +20,10 @@ export function hasSetting(data) {
 
 export function updateAccount(data) {
   return (dispatch, getState) => {
-    if(!Array.isArray(data) || !data.length) return;
+    if (!Array.isArray(data) || !data.length) return;
     const state = getState().SwapStore;
     const account = { ...state.account };
-    data.forEach(d => {
+    data.forEach((d) => {
       const symbol = d.symbol.toLowerCase();
       account[symbol] = d;
     });

@@ -8,18 +8,17 @@ import calc from '_src/utils/calc';
 import Confirm from '../Confirm';
 import util from '_src/utils/util';
 import { channelsV3 } from '../../../utils/websocket';
-import {getDeadLine4sdk} from '../util';
+import { getDeadLine4sdk } from '../util';
 import SwapContext from '../SwapContext';
 
 function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
   const { account } = state.SwapStore;
-  return { okexchainClient,account };
+  return { okexchainClient, account };
 }
 
 @connect(mapStateToProps)
 export default class ReduceLiquidity extends React.Component {
-
   static contextType = SwapContext;
 
   constructor(props) {
@@ -53,14 +52,13 @@ export default class ReduceLiquidity extends React.Component {
   }
 
   change = async (ratio) => {
-    const { liquidity } = this.props;
-    const value = calc.mul(liquidity.pool_token_coin.amount, ratio.value);
+    const value = calc.mul(this.getAvailable(), ratio.value);
     this.setState({ ratio, value });
     this.updateCoins(value);
   };
 
   onInputChange = async (value) => {
-    const max = this.props.liquidity.pool_token_coin.amount;
+    const max = this.getAvailable();
     if (calc.div(max, 1) <= calc.div(value, 1)) value = max;
     this.setState({ value, ratio: null });
     this.updateCoins(value);
@@ -90,7 +88,7 @@ export default class ReduceLiquidity extends React.Component {
   }
 
   confirm = () => {
-    const {okexchainClient } = this.props;
+    const { okexchainClient } = this.props;
     const { baseToken, targetToken } = this._exchangeTokenData();
     const params = [
       util.precisionInput(this.state.value),
@@ -102,30 +100,40 @@ export default class ReduceLiquidity extends React.Component {
       '',
       null,
     ];
-    console.log(params);
     return new Promise((resolve, reject) => {
-      okexchainClient.sendRemoveLiquidityTransaction(...params)
+      okexchainClient
+        .sendRemoveLiquidityTransaction(...params)
         .then((res) => resolve(res))
         .catch((err) => reject(err));
     });
   };
 
+  getAvailable() {
+    const { liquidity, account } = this.props;
+    let available = liquidity.pool_token_coin.amount;
+    const temp = account[liquidity.pool_token_coin.denom.toLowerCase()];
+    if (temp) available = temp.available;
+    return available;
+  }
+
   componentDidMount() {
-    const { pool_token_coin: {denom} } = this.props.liquidity;
-    this.context.send(channelsV3.getBalance(denom));
+    const {
+      pool_token_coin: { denom },
+    } = this.props.liquidity;
+    this.context && this.context.send(channelsV3.getBalance(denom));
   }
 
   componentWillUnmount() {
-    const { pool_token_coin: {denom} } = this.props.liquidity;
-    this.context.stop(channelsV3.getBalance(denom));
+    const {
+      pool_token_coin: { denom },
+    } = this.props.liquidity;
+    this.context && this.context.stop(channelsV3.getBalance(denom));
   }
 
   render() {
-    const { back, liquidity,account } = this.props;
+    const { back } = this.props;
     const { ratios, ratio, coins, value } = this.state;
-    let available = liquidity.pool_token_coin.amount;
-    const temp = account[liquidity.pool_token_coin.denom.toLowerCase()];
-    if(temp) available = temp.available;
+    let available = this.getAvailable();
     return (
       <div className="panel">
         <div className="panel-header">

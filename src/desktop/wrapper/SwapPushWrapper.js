@@ -21,23 +21,24 @@ function mapDispatchToProps(dispatch) {
 const SwapPushWrapper = (Component) => {
   @connect(mapStateToProps, mapDispatchToProps)
   class SwapPush extends React.Component {
-
     constructor(props) {
       super(props);
-      const { currentNode:{wsUrl} } = props;
+      const {
+        currentNode: { wsUrl },
+      } = props;
       if (wsUrl) this.startInitWebSocket(wsUrl);
     }
 
     componentWillUnmount() {
-      if(this.wsV3) {
+      if (this.wsV3) {
         this.wsV3.disconnect();
         this.wsV3 = null;
         this.wsV3Instance = null;
       }
     }
-    
+
     wsHandler = (table) => {
-      const { swapAction} = this.props;
+      const { swapAction } = this.props;
       const fns = {
         'dex_spot/account': (data) => {
           swapAction.updateAccount(data);
@@ -45,19 +46,19 @@ const SwapPushWrapper = (Component) => {
       };
       return fns[table.split(':')[0]];
     };
-    
+
     startInitWebSocket = (wsUrl) => {
       if (!window.WebSocketCore) return;
       const wsV3 = new window.WebSocketCore({ connectUrl: wsUrl });
       this.wsV3 = wsV3;
       this.wsV3Instance = getWsV3(wsV3);
       wsV3.onSocketConnected(() => {
-        if(util.isLogined()) {
+        if (util.isLogined()) {
           this.wsV3Instance.login(util.getMyAddr());
         }
+        this.wsV3Instance.process();
       });
-      wsV3.onSocketError(() => {
-      });
+      wsV3.onSocketError(() => {});
       wsV3.onPushDiscontinue(() => {
         wsV3.sendChannel('ping');
       });
@@ -80,7 +81,7 @@ const SwapPushWrapper = (Component) => {
       wsV3.connect();
     };
     render() {
-      return <Component {...this.props} wsV3={this.wsV3Instance}/>;
+      return <Component {...this.props} wsV3={this.wsV3Instance} />;
     }
   }
   return SwapPush;
