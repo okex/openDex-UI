@@ -15,7 +15,6 @@ import walletUtil from './walletUtil';
 import util from '_src/utils/util';
 import './Step.less';
 import './Step4.less';
-import util from '../../utils/util';
 
 function mapStateToProps(state) {
   const { mnemonic, keyStore, privateKey } = state.WalletStore;
