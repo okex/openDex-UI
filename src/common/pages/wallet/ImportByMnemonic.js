@@ -87,7 +87,7 @@ class ImportByMnemonic extends Component {
         isNone: false,
       });
       this.props.commonAction.setPrivateKey(privateKey);
-      this.props.history.push(PageURL.spotFullPage);
+      window.location.href = PageURL.spotFullPage;
     } catch (e) {
       this.setState({
         isValidatedMnemonic: false,

@@ -73,7 +73,7 @@ class Step4 extends Component {
     const { privateKey } = this.props;
     return () => {
       this.props.commonAction.setPrivateKey(privateKey);
-      this.props.history.push(PageURL.spotFullPage);
+      window.location.href = PageURL.spotFullPage;
     };
   };
   renderPrivateDialog = (copySuccess = false) => {
