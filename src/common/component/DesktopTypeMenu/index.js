@@ -53,14 +53,12 @@ class DesktopTypeMenu extends Component {
         type: '/dex-test/spot/trade',
         label: toLocale('spot.asset.dexTest'),
         monitor: 'full_header,nav_dex,nav_enter_dex',
-        isRoute: true,
       },
       {
         url: `${PageURL.homePage}/swap`,
         type: '/dex-test/swap',
         label: toLocale('spot.asset.swap'),
         monitor: 'full_header,nav_swap,nav_enter_swap',
-        isRoute: true,
       },
     ];
     if (props.isDexDesk) this.headTypeList = this.headTypeList.slice(4);
