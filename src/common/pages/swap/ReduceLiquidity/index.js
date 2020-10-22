@@ -111,12 +111,12 @@ export default class ReduceLiquidity extends React.Component {
   };
 
   componentDidMount() {
-    const { pool_token_coin: denom } = this.props.liquidity;
+    const { pool_token_coin: {denom} } = this.props.liquidity;
     this.context.send(channelsV3.getBalance(denom));
   }
 
   componentWillUnmount() {
-    const { pool_token_coin: denom } = this.props.liquidity;
+    const { pool_token_coin: {denom} } = this.props.liquidity;
     this.context.stop(channelsV3.getBalance(denom));
   }
 
@@ -124,7 +124,7 @@ export default class ReduceLiquidity extends React.Component {
     const { back, liquidity,account } = this.props;
     const { ratios, ratio, coins, value } = this.state;
     let available = liquidity.pool_token_coin.amount;
-    const temp = account[data.pool_token_coin.denom.toLowerCase()];
+    const temp = account[liquidity.pool_token_coin.denom.toLowerCase()];
     if(temp) available = temp.available;
     return (
       <div className="panel">

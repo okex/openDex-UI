@@ -16,14 +16,14 @@ export default class InfoItem extends React.Component {
 
   componentDidMount() {
     const {
-      data: { pool_token_coin: denom },
+      data: { pool_token_coin: {denom} },
     } = this.props;
     this.context.send(channelsV3.getBalance(denom));
   }
 
   componentWillUnmount() {
     const {
-      data: { pool_token_coin: denom },
+      data: { pool_token_coin: {denom} },
     } = this.props;
     this.context.stop(channelsV3.getBalance(denom));
   }
