@@ -23,12 +23,13 @@ export function getWsV3(wsV3) {
       (wsV3 || window.OK_GLOBAL.ws_v3).sendChannel(
         JSON.stringify({
           op: 'dex_jwt',
-          args: token,
+          args: [token],
         })
       );
     },
     send(subChannelsArgs = []) {
       if (!this.canSend()) return;
+      if(!Array.isArray(subChannelsArgs)) subChannelsArgs = [subChannelsArgs];
       if (subChannelsArgs.length) {
         (wsV3 || window.OK_GLOBAL.ws_v3).sendChannel(
           JSON.stringify({
@@ -40,6 +41,7 @@ export function getWsV3(wsV3) {
     },
     stop(subChannelsArgs = []) {
       if (!this.canSend()) return;
+      if(!Array.isArray(subChannelsArgs)) subChannelsArgs = [subChannelsArgs];
       if (subChannelsArgs.length) {
         (wsV3 || window.OK_GLOBAL.ws_v3).sendChannel(
           JSON.stringify({

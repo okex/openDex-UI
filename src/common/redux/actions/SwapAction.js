@@ -24,8 +24,8 @@ export function updateAccount(data) {
     const state = getState().SwapStore;
     const account = { ...state.account };
     data.forEach(d => {
-      const currency = d.currency.toLowerCase();
-      account[currency] = d;
+      const symbol = d.symbol.toLowerCase();
+      account[symbol] = d;
     });
     dispatch({
       type: SwapActionType.ALL,
