@@ -106,10 +106,13 @@ export default class AddLiquidity extends React.Component {
   };
 
   async updateInfo(data, check = false) {
-    if (check) await this._check(data);
-    await this._updateExchangePrice(data);
-    await this._updateExchange(data);
-    this.setState(data);
+    try {
+      if (check) await this._check(data);
+      await this._updateExchangePrice(data);
+      await this._updateExchange(data);
+    } finally {
+      this.setState(data);
+    }
   }
 
   async _check(data) {
