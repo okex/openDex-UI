@@ -137,8 +137,6 @@ export const getWsUrl = () => {
     }
   }
   return url || DEFAULT_NODE;
-  // const currentNode = storage.get('currentNode') || DEFAULT_NODE;
-  // return currentNode.wsUrl;
 };
 
 export const getConnectCfg = () => {
