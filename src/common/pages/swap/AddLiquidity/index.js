@@ -186,8 +186,8 @@ export default class AddLiquidity extends React.Component {
 
   getExchangeInfo() {
     const { baseToken, targetToken } = this.state;
-    if (!baseToken.symbol || !targetToken.symbol) return null;
     const { priceInfo, poolShare } = this._getExchangeData();
+    if (!baseToken.symbol || !targetToken.symbol || poolShare === '') return null;
     return (
       <div className="coin-exchange-detail">
         <div className="info">
