@@ -136,8 +136,9 @@ export const getWsUrl = () => {
       url = url.replace('{server}', svcServer);
     }
   }
-  const currentNode = storage.get('currentNode') || DEFAULT_NODE;
-  return currentNode.wsUrl;
+  return url || DEFAULT_NODE;
+  // const currentNode = storage.get('currentNode') || DEFAULT_NODE;
+  // return currentNode.wsUrl;
 };
 
 export const getConnectCfg = () => {

@@ -43,12 +43,13 @@ const SwapPushWrapper = (Component) => {
 
     startInitWebSocket = (wsUrl) => {
       if (!window.WebSocketCore) return;
-      const wsV3 = new window.WebSocketCore({ connectUrl: wsUrl });
+      const wsV3 = new window.WebSocketCore(wsUrl);
       this.wsV3 = wsV3;
       this.wsV3Instance = getWsV3(wsV3);
       wsV3.onSocketConnected(() => {
         if (util.isLogined()) {
           this.wsV3Instance.login(util.getMyAddr());
+          this.wsV3Instance.process();
         }
       });
       wsV3.onSocketError(() => {});
