@@ -52,8 +52,7 @@ export default class SwapPanel extends React.Component {
       targetToken: baseToken,
     };
     data.targetToken.value = '';
-    await this.updateSwapInfo(data, 'baseToken');
-    this.setState(data);
+    this.updateSwapInfo4RealTime(data, 'baseToken');
   };
 
   async updateSwapInfo(data, key) {
@@ -203,7 +202,7 @@ export default class SwapPanel extends React.Component {
                 />
               </div>
               <div className="info-value">
-                {exchangeInfo.fee} {baseToken.symbol}
+                {exchangeInfo.fee.replace(baseToken.symbol,` ${baseToken.symbol}`)}
               </div>
             </div>
             {exchangeInfo.route && (

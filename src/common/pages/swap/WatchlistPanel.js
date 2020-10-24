@@ -16,7 +16,7 @@ export default class WatchlistPanel extends React.Component {
       sort: null,
       data: [],
       current: 1,
-      pageSize: 10,
+      pageSize: 15,
       total: 0,
     };
     this.columns = [
@@ -200,6 +200,7 @@ export default class WatchlistPanel extends React.Component {
           columns={this.columns}
           onSort={this.onSort}
         />
+        {total > pageSize &&
         <div className="pagination-wrap">
           <Pagination
             className="watchlist-pagination"
@@ -210,6 +211,7 @@ export default class WatchlistPanel extends React.Component {
             hideOnSinglePage={false}
           />
         </div>
+        }
       </div>
     );
   }
