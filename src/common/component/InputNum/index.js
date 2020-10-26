@@ -3,6 +3,7 @@ import React from 'react';
 export default class InputNum extends React.Component {
   constructor(props) {
     super(props);
+    this.input = React.createRef();
   }
 
   onBlur = (e) => {
@@ -54,6 +55,7 @@ export default class InputNum extends React.Component {
   };
 
   onKeyDown = (e) => {
+    this.cusorStart = this.input.current.selectionStart;
     const { onKeyDown } = this.props;
     let inpNumber = this.checkInpNumber(e.target.value);
     if (typeof onKeyDown !== 'undefined') {
@@ -78,6 +80,7 @@ export default class InputNum extends React.Component {
   };
 
   onKeyPress = (e) => {
+    this.cusorStart = this.input.current.selectionStart;
     const { onKeyPress } = this.props;
     let inpNumber = this.checkInpNumber(e.target.value);
     if (typeof onKeyPress !== 'undefined') {
@@ -130,14 +133,36 @@ export default class InputNum extends React.Component {
     } else {
       return t.split('').reverse().join('');
     }
-    return newValue;
   };
 
-  render() {
-    const { value } = this.props;
+  shouldComponentUpdate(nextProps) {
+    if (!this.cusorStart) return true;
+    const oldValue = this.getNewValue();
+    const newValue = this.getNewValue(nextProps);
+    if (newValue.length > oldValue.length) this.cusorStep = 1;
+    else if (newValue.length < oldValue.length) this.cusorStep = -1;
+    else this.cusorStep = newValue.length;
+    return true;
+  }
+
+  componentDidUpdate() {
+    const input = this.input.current;
+    if (this.cusorStart) {
+      input.selectionStart = this.cusorStart + this.cusorStep;
+      input.selectionEnd = this.cusorStart + this.cusorStep;
+    }
+    this.cusorStart = null;
+    this.cusorStep = null;
+  }
+
+  getNewValue(props = this.props) {
+    const { value } = props;
     let newValue = this.removeDot(value);
     newValue = this.addDot(newValue);
+    return newValue;
+  }
 
+  render() {
     return (
       <input
         {...this.props}
@@ -152,7 +177,8 @@ export default class InputNum extends React.Component {
         onKeyUp={this.onKeyUp}
         onKeyDown={this.onKeyDown}
         onKeyPress={this.onKeyPress}
-        value={newValue}
+        value={this.getNewValue()}
+        ref={this.input}
       />
     );
   }
