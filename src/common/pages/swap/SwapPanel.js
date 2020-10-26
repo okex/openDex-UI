@@ -71,7 +71,7 @@ export default class SwapPanel extends React.Component {
         );
         data.exchangeInfo = { price, price_impact, fee, route };
         target.value = buy_amount;
-      } catch {
+      } catch(e) {
         data.exchange = {...SwapPanel.exchangeInfo};
         target.value = '';
       }
