@@ -5,10 +5,7 @@ import { toLocale } from '_src/locale/react-locale';
 import WatchList from './Watchlist';
 import * as api from './util/api';
 import calc from '_src/utils/calc';
-import { withRouter } from 'react-router-dom';
-import PageURL from '_src/constants/PageURL';
 import AddLiquidity from './AddLiquidity';
-@withRouter
 export default class WatchlistPanel extends React.Component {
   constructor() {
     super();
@@ -144,21 +141,22 @@ export default class WatchlistPanel extends React.Component {
     const liquidity = await api.tokenPair(params);
     const liquidityInfo = await api.liquidityInfo(params);
     const userLiquidity = liquidityInfo && liquidityInfo[0];
-    this.props.push({
+    this.props.onAddLiquidity({
       component: AddLiquidity,
       props: {
         liquidity,
         userLiquidity,
         disabledChangeCoin: false,
       },
-    });
+    })
   }
 
   goTrade(row) {
-    const url = `${
-      PageURL.spotFullPage
-    }#product=${row.swap_pair.toLowerCase()}`;
-    this.props.history.replace(url);
+    const tokens = row.swap_pair.split('_');
+    if (row.isRevert) tokens.reverse();
+    let baseSymbol = tokens[0];
+    let targetSymbol = tokens[1];
+    this.props.onTrade({baseSymbol,targetSymbol});
   }
 
   init = async ({ current, sort }) => {

@@ -15,20 +15,56 @@ const WATCHLIST = '3';
 
 @SwapPushWrapper
 export default class Swap extends React.Component {
+
+  constructor() {
+    super();
+    this.state = {
+      activekey:SWAP
+    }
+    this.router = React.createRef();
+    this.swap = null;
+  }
+
+  onTrade = ({baseSymbol,targetSymbol}) => {
+    this.onChange(SWAP);
+    this.swap && this.swap.init({
+      baseToken:{
+        available: '',
+        value: '',
+        symbol: baseSymbol,
+     },
+    targetToken:{
+      available: '',
+        value: '',
+        symbol: targetSymbol,
+    }});
+  }
+
+  onAddLiquidity = (route) => {
+    this.onChange(POOL);
+    const {current:router} = this.router;
+    router.push(route,true);
+  }
+
+  onChange = activekey => {
+    this.setState({activekey});
+  }
+
   render() {
     const { wsV3 } = this.props;
+    const {activekey} = this.state;
     return (
       <SwapContext.Provider value={wsV3}>
         <div className="swap-container">
-          <Tabs defaultActiveKey={SWAP} prefixCls="swap">
+          <Tabs activeKey={activekey} prefixCls="swap" onChange={this.onChange}>
             <TabPane tab={toLocale('Swap')} key={SWAP}>
-              <SwapPanel />
+              <SwapPanel init={(instance) => this.swap = instance}/>
             </TabPane>
             <TabPane tab={toLocale('Pool')} key={POOL}>
-              <Router route={{ component: PoolPanel }} />
+              <Router route={{ component: PoolPanel }} ref={this.router}/>
             </TabPane>
             <TabPane tab={toLocale('Watchlist')} key={WATCHLIST}>
-              <Router route={{ component: WatchlistPanel }} />
+              <WatchlistPanel onTrade={this.onTrade} onAddLiquidity={this.onAddLiquidity}/>
             </TabPane>
           </Tabs>
         </div>
