@@ -92,12 +92,13 @@ export default class SwapPanel extends React.Component {
       this.updateSwapInfo4RealTime.interval = null;
     }
     await this.updateSwapInfo(data, key);
-    this.setState(data);
-    data[key].value &&
+    this.setState(data,() => {
+      data[key].value &&
       (this.updateSwapInfo4RealTime.interval = setInterval(async () => {
-        await this.updateSwapInfo(data, key);
+        await this.updateSwapInfo(this.state, key);
         this.setState(data);
       }, time));
+    });
   }
 
   changeTarget = (token) => {
