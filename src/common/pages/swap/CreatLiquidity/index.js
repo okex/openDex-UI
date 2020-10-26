@@ -5,6 +5,7 @@ import * as api from '../util/api';
 import CoinDropdown from './CoinDropdown';
 import AddLiquidity from '../AddLiquidity';
 import Confirm from '../Confirm';
+import { validateTxs } from '_src/utils/client';
 
 function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
@@ -83,13 +84,27 @@ export default class CreatLiquidity extends React.Component {
     return new Promise((resolve, reject) => {
       okexchainClient
         .sendCreateExchangeTransaction(...params)
-        .then((res) => resolve(res))
+        .then((res) => {
+          resolve(res);
+          if (validateTxs(res)) {
+            this.addLiquidity({
+              base_pooled_coin: {
+                amount:'0.00000000',
+                denom:baseToken.symbol
+              },
+              quote_pooled_coin: {
+                amount:'0.00000000',
+                denom:targetToken.symbol
+              }
+            })
+          }
+        })
         .catch((err) => reject(err));
     });
   };
 
-  addLiquidity = () => {
-    const { error: liquidity } = this.state;
+  addLiquidity = (liquidity) => {
+    if(!liquidity) liquidity = this.state.error;
     this.props.push({
       component: AddLiquidity,
       props: {
@@ -124,7 +139,7 @@ export default class CreatLiquidity extends React.Component {
           {error && (
             <div
               className="error-tip error-tip-link"
-              onClick={this.addLiquidity}
+              onClick={() => this.addLiquidity()}
             >
               {toLocale('Error')}：{toLocale('Existed Pool')}
             </div>

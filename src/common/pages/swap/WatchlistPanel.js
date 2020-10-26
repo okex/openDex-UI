@@ -92,7 +92,7 @@ export default class WatchlistPanel extends React.Component {
           }
           let baseSymbol = tokens[0];
           let targetSymbol = tokens[1];
-          return `1 ${baseSymbol}≈${price} ${targetSymbol}`;
+          return <div style={{paddingRight:'5px'}}>1 {baseSymbol}≈{price} {targetSymbol}</div>;
         },
       },
       {
