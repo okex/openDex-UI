@@ -22,10 +22,14 @@ function mapStateToProps(state) {
 export default class AddLiquidity extends React.Component {
   constructor(props) {
     super(props);
+    this.state = this._getDefaultState(props);
+  }
+
+  _getDefaultState(props) {
     const { baseSymbol, targetSymbol, targetTokenDisabled } = this._process(
       props.liquidity
     );
-    this.state = {
+    return {
       baseToken: {
         available: '',
         value: '',
@@ -44,7 +48,7 @@ export default class AddLiquidity extends React.Component {
       liquidity: props.liquidity,
       userLiquidity: props.userLiquidity,
       targetTokenDisabled,
-    };
+    }
   }
 
   _process(liquidity) {
@@ -319,6 +323,13 @@ export default class AddLiquidity extends React.Component {
 
   componentDidMount() {
     this.init();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps !== this.props) {
+      const state = this._getDefaultState(nextProps);
+      this.setState(state);
+    }
   }
 
   reduce = (liquidity) => {
