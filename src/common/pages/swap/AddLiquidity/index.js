@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { toLocale } from '_src/locale/react-locale';
+import { getLangURL } from '_src/utils/navigation';
+import PageURL from '_constants/PageURL';
+import { withRouter, Link } from 'react-router-dom';
 import CoinItem from '../CoinItem';
 import calc from '_src/utils/calc';
 import * as api from '../util/api';
@@ -14,7 +17,7 @@ function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
   return { okexchainClient };
 }
-
+@withRouter
 @connect(mapStateToProps)
 export default class AddLiquidity extends React.Component {
   constructor(props) {
@@ -248,7 +251,13 @@ export default class AddLiquidity extends React.Component {
   getBtn() {
     const { baseToken, targetToken } = this.state;
     let btn;
-    if (!baseToken.symbol || !targetToken.symbol)
+    if (!util.isLogined()) {
+      btn = (
+        <Link to={getLangURL(PageURL.walletCreate)}>
+          <div className="btn">{toLocale('Connect Wallet')}</div>
+        </Link>
+      );
+    }else if (!baseToken.symbol || !targetToken.symbol)
       btn = <div className="btn disabled">{toLocale('Invalid Pair')}</div>;
     else if (!baseToken.value || !targetToken.value) {
       btn = <div className="btn disabled">{toLocale('Input an amount')}</div>;
