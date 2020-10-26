@@ -21,6 +21,15 @@ function mapStateToProps(state) {
 @withRouter
 @connect(mapStateToProps)
 export default class SwapPanel extends React.Component {
+
+  static exchangeInfo = {
+    price: '',
+    price_impact: '',
+    fee: '',
+    route: '',
+    isReverse: false,
+  }
+
   constructor() {
     super();
     this.state = {
@@ -34,13 +43,7 @@ export default class SwapPanel extends React.Component {
         value: '',
         symbol: '',
       },
-      exchangeInfo: {
-        price: '',
-        price_impact: '',
-        fee: '',
-        route: '',
-        isReverse: false,
-      },
+      exchangeInfo: {...SwapPanel.exchangeInfo},
     };
   }
 
@@ -59,14 +62,19 @@ export default class SwapPanel extends React.Component {
     const { value, symbol } = data[key];
     const target = key === 'baseToken' ? data.targetToken : data.baseToken;
     if (value && symbol && target.symbol) {
-      const { buy_amount, price, price_impact, fee, route } = await api.buyInfo(
-        {
-          sell_token_amount: `${value}${symbol}`,
-          token: target.symbol,
-        }
-      );
-      data.exchangeInfo = { price, price_impact, fee, route };
-      target.value = buy_amount;
+      try {
+        const { buy_amount, price, price_impact, fee, route } = await api.buyInfo(
+          {
+            sell_token_amount: `${value}${symbol}`,
+            token: target.symbol,
+          }
+        );
+        data.exchangeInfo = { price, price_impact, fee, route };
+        target.value = buy_amount;
+      } catch {
+        data.exchange = {...SwapPanel.exchangeInfo};
+        target.value = '';
+      }
     } else {
       target.value = '';
     }
