@@ -30,6 +30,11 @@ export default class SwapSetting extends React.Component {
 
   changeSlippageTolerance = (value) => {
     const setting = { ...this.props.setting };
+    const values = value.split('.');
+    if(values[1]) {
+      values[1] = values[1].substring(0,8);
+      value = values[0]+'.'+values[1];
+    }
     setting.slippageTolerance = value;
     this.props.swapAction.setting(setting);
   };
@@ -50,12 +55,6 @@ export default class SwapSetting extends React.Component {
       content: toLocale('transaction confirmed'),
       duration: 3,
     });
-  };
-
-  changeSlippageTolerance = (value) => {
-    const setting = { ...this.props.setting };
-    setting.slippageTolerance = value;
-    this.props.swapAction.setting(setting);
   };
 
   changeTransactionDeadline = (value) => {
