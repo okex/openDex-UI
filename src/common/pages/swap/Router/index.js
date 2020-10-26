@@ -1,7 +1,6 @@
 import React from 'react';
 
 export default class Router extends React.Component {
-
   constructor() {
     super();
     this.state = {
@@ -22,11 +21,11 @@ export default class Router extends React.Component {
     }
   }
 
-  push = (route,clear=false) => {
+  push = (route, clear = false) => {
     const { router } = this.state;
     this._processRoute(route);
     route = { ...route };
-    if(clear) router.splice(1);
+    if (clear) router.splice(1);
     router.push(route);
     this.renderRoute(route);
   };

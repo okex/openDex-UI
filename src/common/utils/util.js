@@ -3,7 +3,7 @@ import { calc } from '_component/okit';
 import ont from '../utils/dataProxy';
 import URL from '../constants/URL';
 import Enum from '../utils/Enum';
-import PageURL from '../constants/PageURL'; 
+import PageURL from '../constants/PageURL';
 
 const util = {
   getSupportLocale(lang) {
@@ -268,14 +268,14 @@ const util = {
   precisionInput(num) {
     return Number(num).toFixed(8);
   },
-  go(path=PageURL.spotFullPage) {
+  go(path = PageURL.spotFullPage) {
     const url = window.location.href.split('#')[0];
     if (/^file/i.test(url)) {
       window.location.href = `${url}#${path}`;
     } else {
       window.location.href = path;
     }
-  }
+  },
 };
 
 export default util;

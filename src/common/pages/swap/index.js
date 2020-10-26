@@ -15,56 +15,60 @@ const WATCHLIST = '3';
 
 @SwapPushWrapper
 export default class Swap extends React.Component {
-
   constructor() {
     super();
     this.state = {
-      activekey:SWAP
-    }
+      activekey: SWAP,
+    };
     this.router = React.createRef();
     this.swap = null;
   }
 
-  onTrade = ({baseSymbol,targetSymbol}) => {
+  onTrade = ({ baseSymbol, targetSymbol }) => {
     this.onChange(SWAP);
-    this.swap && this.swap.init({
-      baseToken:{
-        available: '',
-        value: '',
-        symbol: baseSymbol,
-     },
-    targetToken:{
-      available: '',
-        value: '',
-        symbol: targetSymbol,
-    }});
-  }
+    this.swap &&
+      this.swap.init({
+        baseToken: {
+          available: '',
+          value: '',
+          symbol: baseSymbol,
+        },
+        targetToken: {
+          available: '',
+          value: '',
+          symbol: targetSymbol,
+        },
+      });
+  };
 
   onAddLiquidity = (route) => {
     this.onChange(POOL);
-    const {current:router} = this.router;
-    router.push(route,true);
-  }
+    const { current: router } = this.router;
+    router.push(route, true);
+  };
 
-  onChange = activekey => {
-    this.setState({activekey});
-  }
+  onChange = (activekey) => {
+    this.setState({ activekey });
+  };
 
   render() {
     const { wsV3 } = this.props;
-    const {activekey} = this.state;
+    const { activekey } = this.state;
     return (
       <SwapContext.Provider value={wsV3}>
         <div className="swap-container">
           <Tabs activeKey={activekey} prefixCls="swap" onChange={this.onChange}>
             <TabPane tab={toLocale('Swap')} key={SWAP}>
-              <SwapPanel init={(instance) => this.swap = instance}/>
+              <SwapPanel init={(instance) => (this.swap = instance)} />
             </TabPane>
             <TabPane tab={toLocale('Pool')} key={POOL}>
-              <Router route={{ component: PoolPanel }} ref={this.router}/>
+              <Router route={{ component: PoolPanel }} ref={this.router} />
             </TabPane>
             <TabPane tab={toLocale('Watchlist')} key={WATCHLIST}>
-              <WatchlistPanel onTrade={this.onTrade} onAddLiquidity={this.onAddLiquidity}/>
+              <WatchlistPanel
+                onTrade={this.onTrade}
+                onAddLiquidity={this.onAddLiquidity}
+              />
             </TabPane>
           </Tabs>
         </div>

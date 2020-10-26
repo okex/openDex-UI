@@ -89,7 +89,11 @@ export default class WatchlistPanel extends React.Component {
           }
           let baseSymbol = tokens[0];
           let targetSymbol = tokens[1];
-          return <div style={{paddingRight:'5px'}}>1 {baseSymbol}≈{price} {targetSymbol}</div>;
+          return (
+            <div style={{ paddingRight: '5px' }}>
+              1 {baseSymbol}≈{price} {targetSymbol}
+            </div>
+          );
         },
       },
       {
@@ -148,7 +152,7 @@ export default class WatchlistPanel extends React.Component {
         userLiquidity,
         disabledChangeCoin: false,
       },
-    })
+    });
   }
 
   goTrade(row) {
@@ -156,7 +160,7 @@ export default class WatchlistPanel extends React.Component {
     if (row.isRevert) tokens.reverse();
     let baseSymbol = tokens[0];
     let targetSymbol = tokens[1];
-    this.props.onTrade({baseSymbol,targetSymbol});
+    this.props.onTrade({ baseSymbol, targetSymbol });
   }
 
   init = async ({ current, sort }) => {
@@ -198,18 +202,18 @@ export default class WatchlistPanel extends React.Component {
           columns={this.columns}
           onSort={this.onSort}
         />
-        {total > pageSize && 
-        <div className="pagination-wrap">
-          <Pagination
-            className="watchlist-pagination"
-            total={total}
-            pageSize={pageSize}
-            current={current}
-            onChange={this.onChange}
-            hideOnSinglePage={false}
-          />
-        </div>
-        }
+        {total > pageSize && (
+          <div className="pagination-wrap">
+            <Pagination
+              className="watchlist-pagination"
+              total={total}
+              pageSize={pageSize}
+              current={current}
+              onChange={this.onChange}
+              hideOnSinglePage={false}
+            />
+          </div>
+        )}
       </div>
     );
   }

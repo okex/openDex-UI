@@ -89,14 +89,14 @@ export default class CreatLiquidity extends React.Component {
           if (validateTxs(res)) {
             this.addLiquidity({
               base_pooled_coin: {
-                amount:'0.00000000',
-                denom:baseToken.symbol
+                amount: '0.00000000',
+                denom: baseToken.symbol,
               },
               quote_pooled_coin: {
-                amount:'0.00000000',
-                denom:targetToken.symbol
-              }
-            })
+                amount: '0.00000000',
+                denom: targetToken.symbol,
+              },
+            });
           }
         })
         .catch((err) => reject(err));
@@ -104,7 +104,7 @@ export default class CreatLiquidity extends React.Component {
   };
 
   addLiquidity = (liquidity) => {
-    if(!liquidity) liquidity = this.state.error;
+    if (!liquidity) liquidity = this.state.error;
     this.props.push({
       component: AddLiquidity,
       props: {

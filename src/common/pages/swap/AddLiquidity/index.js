@@ -67,7 +67,11 @@ export default class AddLiquidity extends React.Component {
 
   changeBase = (token) => {
     const { baseToken, targetToken } = this.state;
-    const data = { ...this.state, baseToken: { ...baseToken, ...token } };
+    const data = {
+      ...this.state,
+      baseToken: { ...baseToken, ...token },
+      targetToken: { ...targetToken },
+    };
     this.updateInfo(
       data,
       token.symbol !== baseToken.symbol && targetToken.symbol
@@ -76,7 +80,11 @@ export default class AddLiquidity extends React.Component {
 
   changeTarget = (token) => {
     const { baseToken, targetToken } = this.state;
-    const data = { ...this.state, targetToken: { ...targetToken, ...token } };
+    const data = {
+      ...this.state,
+      targetToken: { ...targetToken, ...token },
+      baseToken: { ...baseToken },
+    };
     this.updateInfo(
       data,
       token.symbol !== targetToken.symbol && baseToken.symbol
@@ -190,7 +198,8 @@ export default class AddLiquidity extends React.Component {
   getExchangeInfo() {
     const { baseToken, targetToken } = this.state;
     const { priceInfo, poolShare } = this._getExchangeData();
-    if (!baseToken.symbol || !targetToken.symbol || poolShare === '') return null;
+    if (!baseToken.symbol || !targetToken.symbol || poolShare === '')
+      return null;
     return (
       <div className="coin-exchange-detail">
         <div className="info">
@@ -257,7 +266,7 @@ export default class AddLiquidity extends React.Component {
           <div className="btn">{toLocale('Connect Wallet')}</div>
         </Link>
       );
-    }else if (!baseToken.symbol || !targetToken.symbol)
+    } else if (!baseToken.symbol || !targetToken.symbol)
       btn = <div className="btn disabled">{toLocale('Invalid Pair')}</div>;
     else if (!baseToken.value || !targetToken.value) {
       btn = <div className="btn disabled">{toLocale('Input an amount')}</div>;
