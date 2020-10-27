@@ -1,7 +1,6 @@
 const SWAP_SITTING_STOREKEY = 'swap_setting_config';
 const SWSWAP_SETTING_Default = {
   slippageTolerance: 0.5,
-  transactionDeadline: 1,
 };
 
 export function getSetting() {

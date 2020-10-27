@@ -48,7 +48,7 @@ export default class AddLiquidity extends React.Component {
       liquidity: props.liquidity,
       userLiquidity: props.userLiquidity,
       targetTokenDisabled,
-    }
+    };
   }
 
   _process(liquidity) {
@@ -326,7 +326,7 @@ export default class AddLiquidity extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps !== this.props) {
+    if (nextProps !== this.props) {
       const state = this._getDefaultState(nextProps);
       this.setState(state);
     }

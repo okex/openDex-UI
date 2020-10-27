@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import SelectCoin from '../SelectCoin';
 import { getCoinIcon } from '../util/coinIcon';
 import { toLocale } from '_src/locale/react-locale';
@@ -60,7 +61,7 @@ export default class CoinDropdown extends React.Component {
       <div className="coin-dropdown" onClick={this.showCoinSelectList}>
         <div className="coin-select">
           <img className="coin-icon" src={getCoinIcon(symbol)} />
-          <span className={'text' + (symbol ? ' active' : '')}>
+          <span className={classNames('text', { active: symbol })}>
             {symbol || toLocale('Select a token')}
           </span>
           <i className="iconfont" />

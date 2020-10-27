@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import classNames from 'classnames';
 import { toLocale } from '_src/locale/react-locale';
 import * as SwapAction from '_src/redux/actions/SwapAction';
 import InputNum from '_component/InputNum';
@@ -39,30 +40,6 @@ export default class SwapSetting extends React.Component {
     this.props.swapAction.setting(setting);
   };
 
-  changeTransactionDeadline = (value) => {
-    const setting = { ...this.props.setting };
-    setting.transactionDeadline = value;
-    this.props.swapAction.setting(setting);
-  };
-
-  change = (ratio) => {
-    this.changeSlippageTolerance(ratio.value);
-  };
-
-  confirm = () => {
-    util.setting(this.props.setting);
-    Message.success({
-      content: toLocale('transaction confirmed'),
-      duration: 3,
-    });
-  };
-
-  changeTransactionDeadline = (value) => {
-    const setting = { ...this.props.setting };
-    setting.transactionDeadline = value;
-    this.props.swapAction.setting(setting);
-  };
-
   change = (ratio) => {
     this.changeSlippageTolerance(ratio.value);
   };
@@ -98,10 +75,9 @@ export default class SwapSetting extends React.Component {
                   {ratios.map((d, index) => (
                     <div
                       key={index}
-                      className={
-                        'check-btn-item' +
-                        (d.value == setting.slippageTolerance ? ' active' : '')
-                      }
+                      className={classNames('check-btn-item', {
+                        active: d.value == setting.slippageTolerance,
+                      })}
                       onClick={() => this.change(d)}
                     >
                       {d.name}
