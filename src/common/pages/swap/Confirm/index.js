@@ -90,9 +90,7 @@ export default class Confirm extends React.Component {
         : null;
       const res = await onClick();
       if (!validateTxs(res)) {
-        let raw_log = res.result && res.result.raw_log;
-        if (typeof raw_log === 'string') raw_log = JSON.parse(raw_log);
-        throw new Error(raw_log.message);
+        throw new Error;
       }
       if (loadingToast) loadingToast.destroy();
       if (successTxt)
