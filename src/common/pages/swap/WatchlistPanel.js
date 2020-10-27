@@ -4,6 +4,7 @@ import { getCoinIcon } from './util/coinIcon';
 import { toLocale } from '_src/locale/react-locale';
 import WatchList from './Watchlist';
 import * as api from './util/api';
+import util from '_src/utils/util';
 import calc from '_src/utils/calc';
 import AddLiquidity from './AddLiquidity';
 export default class WatchlistPanel extends React.Component {
@@ -85,7 +86,7 @@ export default class WatchlistPanel extends React.Component {
           let price = data;
           if (row.isRevert) {
             tokens.reverse();
-            price = calc.div(1, data);
+            price = util.precisionInput(calc.div(1, data));
           }
           let baseSymbol = tokens[0];
           let targetSymbol = tokens[1];
