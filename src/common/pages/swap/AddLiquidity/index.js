@@ -76,7 +76,8 @@ export default class AddLiquidity extends React.Component {
       baseToken: { ...baseToken, ...token },
       targetToken: { ...targetToken },
     };
-    if(targetTokenDisabled && !data.baseToken.value) data.targetToken.value = '';
+    if (targetTokenDisabled && !data.baseToken.value)
+      data.targetToken.value = '';
     this.updateInfo(
       data,
       token.symbol !== baseToken.symbol && targetToken.symbol

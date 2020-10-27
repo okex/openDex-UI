@@ -5,7 +5,7 @@ const base = require('./webpack.config.base');
 const client = process.env.CLIENT || 'web';
 const baseSrc = path.resolve(__dirname, `../src/${client}`);
 const address = '127.0.0.1';
-const port = 5200;
+const port = process.env.CLIENT ? 5300 : 5200;
 base.output.publicPath = `http://${address}:${port}/`;
 base.plugins = [
   new webpack.DefinePlugin({
