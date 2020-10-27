@@ -45,7 +45,7 @@ export default class WatchlistPanel extends React.Component {
         canSort: true,
         width: '164',
         component(props) {
-          return props.data;
+          return '$' + props.data;
         },
       },
       {
@@ -54,7 +54,7 @@ export default class WatchlistPanel extends React.Component {
         canSort: true,
         width: '164',
         component(props) {
-          return props.data;
+          return '$' + props.data;
         },
       },
       {
