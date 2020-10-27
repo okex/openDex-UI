@@ -31,7 +31,7 @@ function getListenClient() {
   return getListenClient.instance;
 }
 
-function start(datadir, dispatch, getState, terminal = false) {
+function start(datadir, dispatch, getState, func, terminal = false) {
   const { shell, localNodeServerClient, localNodeDataStatus } = electronUtils;
   const directory = getOkexchaindDir();
   return new Promise((reslove, reject) => {
@@ -73,6 +73,7 @@ function start(datadir, dispatch, getState, terminal = false) {
         data: datadir,
       });
       localNodeServerClient.set(child);
+      if (typeof func === 'function') func();
       if (terminal) getListenClient().start();
       reslove(true);
     } catch (err) {
@@ -306,7 +307,7 @@ function startPoll(dispatch, getState) {
   }, pollInterval);
 }
 
-export function startOkexchaind(datadir, terminal = false) {
+export function startOkexchaind(datadir, func, terminal = false,) {
   return async (dispatch, getState) => {
     const { localNodeDataStatus } = electronUtils;
     const statusInstance = localNodeDataStatus.getInstance(datadir);
@@ -329,7 +330,7 @@ export function startOkexchaind(datadir, terminal = false) {
         await setSeeds(configDir);
         statusInstance.set({ hasSetSeeds: true });
       }
-      await start(datadir, dispatch, getState, terminal);
+      await start(datadir, dispatch, getState, func, terminal);
       switchIsStarted(true)(dispatch);
       startPoll(dispatch, getState);
     } catch (e) {

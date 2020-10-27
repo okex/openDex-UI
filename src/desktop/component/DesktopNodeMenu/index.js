@@ -106,9 +106,15 @@ class DesktopNodeMenu extends Component {
   };
 
   onSwitchChange = (checked) => {
-    const { localNodeAction, datadir } = this.props;
+    const { localNodeAction, datadir, currentNode } = this.props;
     if (checked) {
-      localNodeAction.startOkexchaind(datadir);
+      localNodeAction.startOkexchaind(datadir, () => {
+        if(currentNode === NODE_TYPE.NONE) {
+          this.props.nodeActions.updateCurrentNode({
+            type: NODE_TYPE.LOCAL
+          });
+        }
+      });
     } else {
       localNodeAction.stopOkexchaind();
     }

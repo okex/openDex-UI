@@ -2,16 +2,21 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as LocalNodeAction from '_app/redux/actions/LocalNodeAction';
+import * as NodeActions from '_app/redux/actions/NodeAction';
 import DexSwitch from '_component/DexSwitch';
 import Select from '_component/ReactSelect';
 import DexDesktopInput from '_component/DexDesktopInput';
 import DexUpload from '_app/component/DexUpload';
 import { formatEstimatedTime } from '_src/utils/node';
+import { NODE_TYPE } from '_constants/Node';
 import './TabLocal.less';
 
 const defaultOptions = [{ value: 0, label: 'TestNet' }];
 
 function mapStateToProps(state) {
+  const {
+    currentNode,
+  } = state.NodeStore;
   const {
     isStarted,
     p2p,
@@ -22,6 +27,7 @@ function mapStateToProps(state) {
     estimatedTime,
   } = state.LocalNodeStore;
   return {
+    currentNode,
     isStarted,
     p2p,
     rest,
@@ -35,6 +41,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     localNodeAction: bindActionCreators(LocalNodeAction, dispatch),
+    nodeActions: bindActionCreators(NodeActions, dispatch),
   };
 }
 
@@ -86,9 +93,15 @@ class TabLocal extends Component {
   };
 
   onSwitchChange = (checked) => {
-    const { localNodeAction, datadir } = this.props;
+    const { localNodeAction, datadir,currentNode } = this.props;
     if (checked) {
-      localNodeAction.startOkexchaind(datadir, true);
+      localNodeAction.startOkexchaind(datadir, () => {
+        if(currentNode === NODE_TYPE.NONE) {
+          this.props.nodeActions.updateCurrentNode({
+            type:NODE_TYPE.LOCAL
+          });
+        }
+      }, true);
     } else {
       localNodeAction.stopOkexchaind(true);
     }
