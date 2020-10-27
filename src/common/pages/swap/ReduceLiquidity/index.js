@@ -183,7 +183,7 @@ export default class ReduceLiquidity extends React.Component {
             </div>
           ))}
           <div className="btn-wrap">
-            {value ? (
+            {value && Number(value) ? (
               <Confirm
                 onClick={this.confirm}
                 loadingTxt={toLocale('pending transactions')}
