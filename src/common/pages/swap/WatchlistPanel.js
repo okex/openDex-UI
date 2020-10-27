@@ -73,7 +73,7 @@ export default class WatchlistPanel extends React.Component {
         canSort: true,
         width: '102',
         component(props) {
-          return props.data;
+          return Number(props.data) * 100 + '%';
         },
       },
       {
@@ -107,9 +107,9 @@ export default class WatchlistPanel extends React.Component {
         component({ row, data }) {
           let change = calc.add(data, 0);
           if (row.isRevert) change = calc.div(1, calc.add(data, 1)) - 1;
-          if (change > 0) return <span className="green">{change}</span>;
-          else if (change < 0) return <span className="red">{change}</span>;
-          return change;
+          if (change > 0) return <span className="green">{change * 100 + '%'}</span>;
+          else if (change < 0) return <span className="red">{change * 100 + '%'}</span>;
+          return change * 100 + '%';
         },
       },
       {

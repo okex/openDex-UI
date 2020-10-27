@@ -1,4 +1,3 @@
-import { storage } from '_src/component/okit';
 import { DEFAULT_NODE } from '_constants/apiConfig';
 import websocketURL from '../constants/websocketURL';
 
