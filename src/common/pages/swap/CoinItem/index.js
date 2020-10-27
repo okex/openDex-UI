@@ -33,7 +33,7 @@ export default class CoinItem extends React.Component {
   onInputChange = (value) => {
     const { token } = this.props;
     const max = this.getAvailable();
-    if (calc.div(max, 1) <= calc.div(value, 1)) value = max;
+    if (calc.div(max, 1) < calc.div(value, 1)) value = max;
     this.props.onChange({ ...token, value });
   };
 

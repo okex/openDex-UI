@@ -92,7 +92,7 @@ export default class WatchlistPanel extends React.Component {
           let targetSymbol = tokens[1];
           return (
             <div style={{ paddingRight: '5px' }}>
-              1 {baseSymbol}≈{price} {targetSymbol}
+              1 {baseSymbol}≈{Number(price) === 0 || Number(price) === Infinity ? '-':price} {targetSymbol}
             </div>
           );
         },
