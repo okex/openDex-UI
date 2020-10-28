@@ -73,7 +73,7 @@ export default class WatchlistPanel extends React.Component {
         canSort: true,
         width: '102',
         component(props) {
-          return Number(props.data) * 100 + '%';
+          return (Number(props.data) * 100).toFixed(2) + '%';
         },
       },
       {
