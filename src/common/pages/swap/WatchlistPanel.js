@@ -73,7 +73,7 @@ export default class WatchlistPanel extends React.Component {
         canSort: true,
         width: '102',
         component(props) {
-          return (Number(props.data) * 100).toFixed(2) + '%';
+          return calc.mul(props.data, 100).toFixed(2) + '%';
         },
       },
       {
@@ -108,10 +108,18 @@ export default class WatchlistPanel extends React.Component {
           let change = calc.add(data, 0);
           if (row.isRevert) change = calc.div(1, calc.add(data, 1)) - 1;
           if (change > 0)
-            return <span className="green">{Number(change * 100).toFixed(2) + '%'}</span>;
+            return (
+              <span className="green">
+                {calc.mul(change, 100).toFixed(2) + '%'}
+              </span>
+            );
           else if (change < 0)
-            return <span className="red">{Number(change * 100).toFixed(2) + '%'}</span>;
-          return Number(change * 100).toFixed(2) + '%';
+            return (
+              <span className="red">
+                {calc.mul(change, 100).toFixed(2) + '%'}
+              </span>
+            );
+          return calc.mul(change, 100).toFixed(2) + '%';
         },
       },
       {
@@ -147,12 +155,12 @@ export default class WatchlistPanel extends React.Component {
       base_token: tokens[0],
       quote_token: tokens[1],
     };
-    let liquidity,liquidityInfo,userLiquidity;
+    let liquidity, liquidityInfo, userLiquidity;
     try {
       liquidity = await api.tokenPair(params);
       liquidityInfo = await api.liquidityInfo(params);
       userLiquidity = liquidityInfo && liquidityInfo[0];
-    } catch(e) {
+    } catch (e) {
       console.log(e);
     }
     this.props.onAddLiquidity({
