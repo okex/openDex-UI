@@ -51,10 +51,6 @@ class NodeSetting extends Component {
     }
   }
 
-  componentWillUnmount() {
-    this.timer && clearInterval(this.timer);
-  }
-
   fetchNodesLatency = () => {
     const { remoteList, customList } = this.props;
     const hasVisited = {};
@@ -148,6 +144,8 @@ class NodeSetting extends Component {
   };
 
   componentWillUnmount() {
+    this.timer && clearInterval(this.timer);
+    this.timer = null;
     const { isStarted, localNodeAction } = this.props;
     if (isStarted) localNodeAction.stopTerminal();
   }
