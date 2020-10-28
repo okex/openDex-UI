@@ -86,7 +86,7 @@ const URL = {
     return `${BASEURL.SWAP}/token_pair`;
   },
   get GET_SWAP_WATCHLIST() {
-    retrun`${BASEURL.SWAP}/watchlist`;
+    return`${BASEURL.SWAP}/watchlist`;
   },
 };
 export default URL;
