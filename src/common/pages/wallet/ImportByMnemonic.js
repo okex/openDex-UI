@@ -5,6 +5,7 @@ import { Button } from '_component/Button';
 import { crypto } from '@okexchain/javascript-sdk';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import PageURL from '../../constants/PageURL';
 import * as commonActions from '_src/redux/actions/CommonAction';
 import WalletPassword from '_component/WalletPassword';
 import ValidateCheckbox from '_component/ValidateCheckbox';
@@ -87,7 +88,7 @@ class ImportByMnemonic extends Component {
         isNone: false,
       });
       this.props.commonAction.setPrivateKey(privateKey);
-      util.go();
+      util.go(PageURL.swapPage);
     } catch (e) {
       this.setState({
         isValidatedMnemonic: false,
