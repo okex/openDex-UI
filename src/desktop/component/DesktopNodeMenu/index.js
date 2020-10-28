@@ -109,9 +109,9 @@ class DesktopNodeMenu extends Component {
     const { localNodeAction, datadir, currentNode } = this.props;
     if (checked) {
       localNodeAction.startOkexchaind(datadir, () => {
-        if(currentNode === NODE_TYPE.NONE) {
+        if (currentNode === NODE_TYPE.NONE) {
           this.props.nodeActions.updateCurrentNode({
-            type: NODE_TYPE.LOCAL
+            type: NODE_TYPE.LOCAL,
           });
         }
       });

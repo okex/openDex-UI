@@ -14,9 +14,7 @@ import './TabLocal.less';
 const defaultOptions = [{ value: 0, label: 'TestNet' }];
 
 function mapStateToProps(state) {
-  const {
-    currentNode,
-  } = state.NodeStore;
+  const { currentNode } = state.NodeStore;
   const {
     isStarted,
     p2p,
@@ -93,15 +91,19 @@ class TabLocal extends Component {
   };
 
   onSwitchChange = (checked) => {
-    const { localNodeAction, datadir,currentNode } = this.props;
+    const { localNodeAction, datadir, currentNode } = this.props;
     if (checked) {
-      localNodeAction.startOkexchaind(datadir, () => {
-        if(currentNode === NODE_TYPE.NONE) {
-          this.props.nodeActions.updateCurrentNode({
-            type:NODE_TYPE.LOCAL
-          });
-        }
-      }, true);
+      localNodeAction.startOkexchaind(
+        datadir,
+        () => {
+          if (currentNode === NODE_TYPE.NONE) {
+            this.props.nodeActions.updateCurrentNode({
+              type: NODE_TYPE.LOCAL,
+            });
+          }
+        },
+        true
+      );
     } else {
       localNodeAction.stopOkexchaind(true);
     }

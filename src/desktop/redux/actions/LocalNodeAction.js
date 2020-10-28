@@ -307,7 +307,7 @@ function startPoll(dispatch, getState) {
   }, pollInterval);
 }
 
-export function startOkexchaind(datadir, func, terminal = false,) {
+export function startOkexchaind(datadir, func, terminal = false) {
   return async (dispatch, getState) => {
     const { localNodeDataStatus } = electronUtils;
     const statusInstance = localNodeDataStatus.getInstance(datadir);

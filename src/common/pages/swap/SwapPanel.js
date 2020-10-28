@@ -192,7 +192,7 @@ export default class SwapPanel extends React.Component {
 
   getExchangeInfo() {
     const { baseToken, targetToken, exchangeInfo } = this.state;
-    const fee = Number(exchangeInfo.fee.replace(baseToken.symbol,''));
+    const fee = Number(exchangeInfo.fee.replace(baseToken.symbol, ''));
     if (baseToken.symbol && targetToken.symbol) {
       if (!baseToken.value || !targetToken.value) {
         return (
@@ -254,7 +254,8 @@ export default class SwapPanel extends React.Component {
                 />
               </div>
               <div className="info-value">
-                {!fee && '≈'}{exchangeInfo.fee.replace(
+                {!fee && '≈'}
+                {exchangeInfo.fee.replace(
                   baseToken.symbol,
                   ` ${baseToken.symbol}`
                 )}
