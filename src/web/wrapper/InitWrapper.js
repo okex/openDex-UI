@@ -96,13 +96,13 @@ const InitWrapper = (Component) => {
             if (!util.isWsLogin()) {
               setTimeout(getJwtToken, 1000);
             } else {
-              wsV3.login(util.getMyToken());
+              wsV3.login(util.getMyAddr());
             }
           }
           if (!util.isWsLogin()) {
             getJwtToken();
           } else {
-            wsV3.login(util.getMyToken());
+            wsV3.login(util.getMyAddr());
           }
           spotActions.updateWsStatus(true);
         });
