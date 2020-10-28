@@ -108,10 +108,10 @@ export default class WatchlistPanel extends React.Component {
           let change = calc.add(data, 0);
           if (row.isRevert) change = calc.div(1, calc.add(data, 1)) - 1;
           if (change > 0)
-            return <span className="green">{change * 100 + '%'}</span>;
+            return <span className="green">{Number(change * 100).toFixed(2) + '%'}</span>;
           else if (change < 0)
-            return <span className="red">{change * 100 + '%'}</span>;
-          return change * 100 + '%';
+            return <span className="red">{Number(change * 100).toFixed(2) + '%'}</span>;
+          return Number(change * 100).toFixed(2) + '%';
         },
       },
       {
