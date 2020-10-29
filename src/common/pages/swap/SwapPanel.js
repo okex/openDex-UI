@@ -11,6 +11,7 @@ import { getCoinIcon } from './util/coinIcon';
 import * as api from './util/api';
 import Confirm from './Confirm';
 import { getDeadLine4sdk } from './util';
+import getRef from './getRef';
 
 function mapStateToProps(state) {
   const { setting } = state.SwapStore;
@@ -19,6 +20,7 @@ function mapStateToProps(state) {
 }
 
 @connect(mapStateToProps)
+@getRef
 export default class SwapPanel extends React.Component {
   static exchangeInfo = {
     price: '',
@@ -166,7 +168,6 @@ export default class SwapPanel extends React.Component {
 
   componentDidMount() {
     this.init();
-    if (typeof this.props.init === 'function') this.props.init(this);
   }
 
   async init(data) {

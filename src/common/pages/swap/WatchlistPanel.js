@@ -7,6 +7,9 @@ import * as api from './util/api';
 import util from '_src/utils/util';
 import calc from '_src/utils/calc';
 import AddLiquidity from './AddLiquidity';
+import getRef from './getRef';
+
+@getRef
 export default class WatchlistPanel extends React.Component {
   constructor() {
     super();
@@ -207,7 +210,6 @@ export default class WatchlistPanel extends React.Component {
   async componentDidMount() {
     const data = await this.init({ current: this.state.current });
     this.setState(data);
-    if (typeof this.props.init === 'function') this.props.init(this);
   }
 
   async reload() {

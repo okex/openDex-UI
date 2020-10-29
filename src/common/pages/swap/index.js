@@ -61,7 +61,7 @@ export default class Swap extends React.Component {
         <div className="swap-container">
           <Tabs activeKey={activekey} prefixCls="swap" onChange={this.onChange}>
             <TabPane tab={toLocale('Swap')} key={SWAP}>
-              <SwapPanel init={(instance) => (this.swap = instance)} />
+              <SwapPanel getRef={(instance) => (this.swap = instance)} />
             </TabPane>
             <TabPane tab={toLocale('Pool')} key={POOL}>
               <Router route={{ component: PoolPanel }} ref={this.router} />
@@ -70,7 +70,7 @@ export default class Swap extends React.Component {
               <WatchlistPanel
                 onTrade={this.onTrade}
                 onAddLiquidity={this.onAddLiquidity}
-                init={(instance) => (this.watchlist = instance)} 
+                getRef={(instance) => (this.watchlist = instance)} 
               />
             </TabPane>
           </Tabs>
