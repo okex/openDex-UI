@@ -207,6 +207,12 @@ export default class WatchlistPanel extends React.Component {
   async componentDidMount() {
     const data = await this.init({ current: this.state.current });
     this.setState(data);
+    if (typeof this.props.init === 'function') this.props.init(this);
+  }
+
+  async reload() {
+    const data = await this.init({ current: 1 });
+    this.setState({ ...data, current: 1 });
   }
 
   render() {

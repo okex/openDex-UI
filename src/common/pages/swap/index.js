@@ -22,6 +22,7 @@ export default class Swap extends React.Component {
     };
     this.router = React.createRef();
     this.swap = null;
+    this.watchlist = null;
   }
 
   onTrade = ({ baseSymbol, targetSymbol }) => {
@@ -49,6 +50,7 @@ export default class Swap extends React.Component {
 
   onChange = (activekey) => {
     this.setState({ activekey });
+    if(activekey === WATCHLIST && this.watchlist) this.watchlist.reload();
   };
 
   render() {
@@ -57,7 +59,7 @@ export default class Swap extends React.Component {
     return (
       <SwapContext.Provider value={wsV3}>
         <div className="swap-container">
-          <Tabs activeKey={activekey} prefixCls="swap" destroyInactiveTabPane={true} onChange={this.onChange}>
+          <Tabs activeKey={activekey} prefixCls="swap" onChange={this.onChange}>
             <TabPane tab={toLocale('Swap')} key={SWAP}>
               <SwapPanel init={(instance) => (this.swap = instance)} />
             </TabPane>
@@ -68,6 +70,7 @@ export default class Swap extends React.Component {
               <WatchlistPanel
                 onTrade={this.onTrade}
                 onAddLiquidity={this.onAddLiquidity}
+                init={(instance) => (this.watchlist = instance)} 
               />
             </TabPane>
           </Tabs>
