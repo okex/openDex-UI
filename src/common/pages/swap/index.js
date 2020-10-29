@@ -57,7 +57,7 @@ export default class Swap extends React.Component {
     return (
       <SwapContext.Provider value={wsV3}>
         <div className="swap-container">
-          <Tabs activeKey={activekey} prefixCls="swap" onChange={this.onChange}>
+          <Tabs activeKey={activekey} prefixCls="swap" destroyInactiveTabPane={true} onChange={this.onChange}>
             <TabPane tab={toLocale('Swap')} key={SWAP}>
               <SwapPanel init={(instance) => (this.swap = instance)} />
             </TabPane>
