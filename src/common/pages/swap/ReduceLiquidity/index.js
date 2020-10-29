@@ -67,7 +67,7 @@ export default class ReduceLiquidity extends React.Component {
   updateCoins = async (value) => {
     const { liquidity } = this.props;
     const coins = await api.redeemableAssets({
-      liquidity: value,
+      liquidity: util.precisionInput(value),
       base_token: liquidity.base_pooled_coin.denom,
       quote_token: liquidity.quote_pooled_coin.denom,
     });
