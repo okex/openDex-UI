@@ -32,11 +32,6 @@ export default class SwapSetting extends React.Component {
 
   changeSlippageTolerance = (value) => {
     const setting = { ...this.props.setting };
-    const values = ('' + value).split('.');
-    if (values[1]) {
-      values[1] = values[1].substring(0, 8);
-      value = values[0] + '.' + values[1];
-    }
     setting.slippageTolerance = value;
     this.props.swapAction.setting(setting);
   };
@@ -95,6 +90,7 @@ export default class SwapSetting extends React.Component {
                       type="text"
                       value={setting.slippageTolerance}
                       onChange={this.changeSlippageTolerance}
+                      precision={8}
                     />
                   </div>
                   <i>%</i>

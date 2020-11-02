@@ -354,6 +354,7 @@ export default class SwapPanel extends React.Component {
           token={baseToken}
           onChange={this.changeBase}
           loadCoinList={this.loadBaseCoinList}
+          max={true}
         />
         <div className="sep transformation-sep">
           <i onClick={this.exchange} />

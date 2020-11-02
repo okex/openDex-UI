@@ -90,19 +90,28 @@ export default class InputNum extends React.Component {
 
   checkInpNumber = (inputValue, num) => {
     let inps = inputValue.split('.');
+    let inpNumber = '';
     if (inps.length > 1) {
       if (typeof num != 'undefined' || num === -1) {
-        return inps[0].replace(/\D/g, '') + '.' + inps[1].replace(/\D/g, '');
+        inpNumber = inps[0].replace(/\D/g, '') + '.' + inps[1].replace(/\D/g, '');
       } else {
-        return (
+        inpNumber = (
           inps[0].replace(/\D/g, '') +
           '.' +
           inps[1].replace(/\D/g, '').slice(0, num)
         );
       }
     } else {
-      return inps[0].replace(/\D/g, '');
+      inpNumber = inps[0].replace(/\D/g, '');
     }
+    if(this.props.precision) {
+      const inpNumbers = ('' + inpNumber).split('.');
+      if (inpNumbers[1]) {
+        inpNumbers[1] = inpNumbers[1].substring(0, this.props.precision);
+        inpNumber = inpNumbers[0] + '.' + inpNumbers[1];
+      }
+    }
+    return inpNumber;
   };
 
   removeDot = (value) => {

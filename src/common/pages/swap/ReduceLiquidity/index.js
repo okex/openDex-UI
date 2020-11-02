@@ -155,6 +155,7 @@ export default class ReduceLiquidity extends React.Component {
                   value={value}
                   onChange={this.onInputChange}
                   placeholder="0.000000"
+                  precision={8}
                 />
               </div>
               <div className="coin-rate-select">
