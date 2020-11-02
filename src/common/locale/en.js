@@ -699,6 +699,7 @@ const enUS = {
   issue_column_original: 'Original totalsupply',
   issue_column_total: 'Totalsupply',
   dashboard_transaction_title: 'Transaction',
+  seoSwapTitle: 'Decentralized trading platform SWAP',
   'spot.asset.swap': 'SWAP Trade',
   Swap: 'Swap',
   Pool: 'Pool',

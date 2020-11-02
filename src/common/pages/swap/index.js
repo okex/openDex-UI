@@ -53,6 +53,15 @@ export default class Swap extends React.Component {
     if (activekey === WATCHLIST && this.watchlist) this.watchlist.reload();
   };
 
+  componentDidMount() {
+    this.preSeoTitle = document.title;
+    document.title = toLocale('seoSwapTitle');
+  }
+
+  componentWillUnmount() {
+    document.title = this.preSeoTitle;
+  }
+
   render() {
     const { wsV3 } = this.props;
     const { activekey } = this.state;

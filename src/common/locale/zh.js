@@ -704,6 +704,7 @@ const zhCN = {
   issue_column_original: 'Original totalsupply',
   issue_column_total: 'Totalsupply',
   dashboard_transaction_title: 'Transaction',
+  seoSwapTitle: '去中心化交易平台SWAP',
   'spot.asset.swap': 'SWAP Trade',
   Swap: 'Swap',
   Pool: 'Pool',
