@@ -370,6 +370,7 @@ export default class AddLiquidity extends React.Component {
               onChange={this.changeBase}
               loadCoinList={this.loadBaseCoinList}
               disabledChangeCoin={disabledChangeCoin}
+              max={true}
             />
             <div className="sep add-sep"></div>
             <CoinItem
@@ -379,6 +380,7 @@ export default class AddLiquidity extends React.Component {
               onChange={this.changeTarget}
               loadCoinList={this.loadTargetCoinList}
               disabledChangeCoin={disabledChangeCoin}
+              max={true}
             />
             {exchangeInfo}
             <div className="btn-wrap">{btn}</div>
