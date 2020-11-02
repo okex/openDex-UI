@@ -53,7 +53,7 @@ class App extends React.Component {
                 />
               );
             })}
-            <Redirect from="/" to={PageURL.spotFullPage} />
+            <Redirect from="/" to={PageURL.swapPage} />
           </Switch>
         </div>
       </Router>
