@@ -754,7 +754,7 @@ const zhCN = {
   'Transaction deadline': 'Transaction deadline',
   Minutes: 'Minutes',
   'Minimum received help':
-    'Your transaction will revert if there is a large, unfavorable price movement before it is confirmed',
+    'Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.',
   'Price Impact help':
     'The difference between the market price and estimated price due to trade size.',
   'Liquidity Provider Fee help':
