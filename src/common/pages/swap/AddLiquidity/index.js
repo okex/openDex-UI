@@ -12,6 +12,7 @@ import ReduceLiquidity from '../ReduceLiquidity';
 import Confirm from '../Confirm';
 import util from '_src/utils/util';
 import { getDeadLine4sdk } from '../util';
+import Tooltip from '../../../component/Tooltip';
 
 function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
@@ -219,7 +220,9 @@ export default class AddLiquidity extends React.Component {
         <div className="info">
           <div className="info-name">
             {toLocale('Pool share')}
-            <i className="help" />
+            <Tooltip placement="right" overlay={''}>
+              <i className="help"/>
+            </Tooltip>
           </div>
           <div className="info-value">{poolShare}%</div>
         </div>

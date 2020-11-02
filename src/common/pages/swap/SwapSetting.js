@@ -7,6 +7,7 @@ import * as SwapAction from '_src/redux/actions/SwapAction';
 import InputNum from '_component/InputNum';
 import * as util from './util';
 import Message from '_src/component/Message';
+import Tooltip from '../../component/Tooltip';
 
 function mapStateToProps(state) {
   const { setting } = state.SwapStore;
@@ -66,7 +67,9 @@ export default class SwapSetting extends React.Component {
             <div className="space-between">
               <div className="left">{toLocale('Set slippage tolerance')}</div>
               <div className="right">
-                <i className="help" />
+                <Tooltip placement="left" overlay={''}>
+                  <i className="help"/>
+                </Tooltip>
               </div>
             </div>
             <div className="space-between check-btns">

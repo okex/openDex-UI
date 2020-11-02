@@ -8,7 +8,7 @@ import util from '_src/utils/util';
 import calc from '_src/utils/calc';
 import AddLiquidity from './AddLiquidity';
 import getRef from './getRef';
-
+import Tooltip from '../../component/Tooltip';
 @getRef
 export default class WatchlistPanel extends React.Component {
   constructor() {
@@ -65,10 +65,9 @@ export default class WatchlistPanel extends React.Component {
         name() {
           return (
             <React.Fragment>
-              <i
-                className="help"
-                data-title={toLocale('based on 24hr volume annualized')}
-              />
+              <Tooltip placement="right" overlay={toLocale('based on 24hr volume annualized')}>
+                <i className="help"/>
+              </Tooltip>
               {toLocale('Fee APY')}
             </React.Fragment>
           );

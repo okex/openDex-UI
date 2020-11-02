@@ -5,7 +5,7 @@ import InfoItem from './InfoItem';
 import AddLiquidity from './AddLiquidity';
 import CreateLiquidity from './CreatLiquidity';
 import ReduceLiquidity from './ReduceLiquidity';
-
+import Tooltip from '../../component/Tooltip';
 export default class PoolPanel extends React.Component {
   constructor() {
     super();
@@ -75,7 +75,12 @@ export default class PoolPanel extends React.Component {
           {toLocale('Add Liquidity')}
         </div>
         <div className="liquidity">
-          <div className="left">{toLocale('Your Liquidity')}</div>
+          <div className="left">
+            {toLocale('Your Liquidity')}
+            <Tooltip placement="right" overlay={''}>
+              <i className="help"/>
+            </Tooltip>
+          </div>
           <div className="right" onClick={this.create}>
             {toLocale('Create Liquidity')}
           </div>

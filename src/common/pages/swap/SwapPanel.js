@@ -12,6 +12,7 @@ import * as api from './util/api';
 import Confirm from './Confirm';
 import { getDeadLine4sdk } from './util';
 import getRef from './getRef';
+import Tooltip from '../../component/Tooltip';
 
 function mapStateToProps(state) {
   const { setting } = state.SwapStore;
@@ -227,10 +228,9 @@ export default class SwapPanel extends React.Component {
             <div className="info">
               <div className="info-name">
                 {toLocale('Minimum received')}
-                <i
-                  className="help"
-                  data-title={toLocale('Minimum received help')}
-                />
+                <Tooltip placement="right" overlay={toLocale('Minimum received help')}>
+                  <i className="help"/>
+                </Tooltip>
               </div>
               <div className="info-value">
                 {this.getMinimumReceived()} {targetToken.symbol}
@@ -239,20 +239,18 @@ export default class SwapPanel extends React.Component {
             <div className="info">
               <div className="info-name">
                 {toLocale('Price Impact')}
-                <i
-                  className="help"
-                  data-title={toLocale('Price Impact help')}
-                />
+                <Tooltip placement="right" overlay={toLocale('Price Impact help')}>
+                  <i className="help"/>
+                </Tooltip>
               </div>
               <div className="info-value">{exchangeInfo.price_impact}%</div>
             </div>
             <div className="info">
               <div className="info-name">
                 {toLocale('Liquidity Provider Fee')}
-                <i
-                  className="help"
-                  data-title={toLocale('Liquidity Provider Fee help')}
-                />
+                <Tooltip placement="right" overlay={toLocale('Liquidity Provider Fee help')}>
+                  <i className="help"/>
+                </Tooltip>
               </div>
               <div className="info-value">
                 {!fee && '≈'}
@@ -266,7 +264,9 @@ export default class SwapPanel extends React.Component {
               <div className="info">
                 <div className="info-name">
                   {toLocale('Route')}
-                  <i className="help" />
+                  <Tooltip placement="right" overlay={''}>
+                    <i className="help"/>
+                  </Tooltip>
                 </div>
                 <div className="info-value">
                   <img className="coin" src={getCoinIcon(baseToken.symbol)} />
