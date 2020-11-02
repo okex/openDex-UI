@@ -77,8 +77,11 @@ export default class PoolPanel extends React.Component {
         <div className="liquidity">
           <div className="left">
             {toLocale('Your Liquidity')}
-            <Tooltip placement="right" overlay={''}>
-              <i className="help"/>
+            <Tooltip
+              placement="right"
+              overlay={toLocale("It's your current liquidity in the pool.")}
+            >
+              <i className="help" />
             </Tooltip>
           </div>
           <div className="right" onClick={this.create}>

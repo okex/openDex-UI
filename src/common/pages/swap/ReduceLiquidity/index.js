@@ -176,10 +176,10 @@ export default class ReduceLiquidity extends React.Component {
             <div className="space-between coin-withdraw" key={index}>
               <div className="left">
                 <img src={getCoinIcon(d.denom)} />
-                {d.denom}
+                {d.denom.toUpperCase()}
               </div>
               <div className="right">
-                {d.amount} {d.denom}
+                {d.amount} {d.denom.toUpperCase()}
               </div>
             </div>
           ))}

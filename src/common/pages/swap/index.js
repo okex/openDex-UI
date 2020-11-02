@@ -50,7 +50,7 @@ export default class Swap extends React.Component {
 
   onChange = (activekey) => {
     this.setState({ activekey });
-    if(activekey === WATCHLIST && this.watchlist) this.watchlist.reload();
+    if (activekey === WATCHLIST && this.watchlist) this.watchlist.reload();
   };
 
   render() {
@@ -70,7 +70,7 @@ export default class Swap extends React.Component {
               <WatchlistPanel
                 onTrade={this.onTrade}
                 onAddLiquidity={this.onAddLiquidity}
-                getRef={(instance) => (this.watchlist = instance)} 
+                getRef={(instance) => (this.watchlist = instance)}
               />
             </TabPane>
           </Tabs>

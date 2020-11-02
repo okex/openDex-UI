@@ -36,7 +36,7 @@ export default class WatchlistPanel extends React.Component {
               <img src={getCoinIcon(baseSymbol)} />
               <img src={getCoinIcon(targetSymbol)} />
               <span>
-                {baseSymbol}/{targetSymbol}
+                {baseSymbol.toUpperCase()}/{targetSymbol.toUpperCase()}
               </span>
             </div>
           );
@@ -48,7 +48,7 @@ export default class WatchlistPanel extends React.Component {
         canSort: true,
         width: '164',
         component(props) {
-          return '$' + props.data;
+          return Number(props.data) === 0 ? '--' : '$' + props.data;
         },
       },
       {
@@ -57,7 +57,7 @@ export default class WatchlistPanel extends React.Component {
         canSort: true,
         width: '164',
         component(props) {
-          return '$' + props.data;
+          return Number(props.data) === 0 ? '--' : '$' + props.data;
         },
       },
       {
@@ -65,8 +65,13 @@ export default class WatchlistPanel extends React.Component {
         name() {
           return (
             <React.Fragment>
-              <Tooltip placement="right" overlay={toLocale('based on 24hr volume annualized')}>
-                <i className="help"/>
+              <Tooltip
+                placement="right"
+                overlay={toLocale(
+                  "It's 1 year fees/liquidity based on 24 hr volume annualized."
+                )}
+              >
+                <i className="help" />
               </Tooltip>
               {toLocale('Fee APY')}
             </React.Fragment>
@@ -75,7 +80,9 @@ export default class WatchlistPanel extends React.Component {
         canSort: true,
         width: '102',
         component(props) {
-          return calc.mul(props.data, 100).toFixed(2) + '%';
+          return Number(props.data) === 0
+            ? '--'
+            : calc.mul(props.data, 100).toFixed(2) + '%';
         },
       },
       {
@@ -94,9 +101,9 @@ export default class WatchlistPanel extends React.Component {
           let targetSymbol = tokens[1];
           return (
             <div style={{ paddingRight: '5px' }}>
-              1 {baseSymbol}≈
+              1 {baseSymbol.toUpperCase()}≈
               {Number(price) === 0 || Number(price) === Infinity ? '-' : price}{' '}
-              {targetSymbol}
+              {targetSymbol.toUpperCase()}
             </div>
           );
         },

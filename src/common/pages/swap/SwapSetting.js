@@ -62,8 +62,13 @@ export default class SwapSetting extends React.Component {
             <div className="space-between">
               <div className="left">{toLocale('Set slippage tolerance')}</div>
               <div className="right">
-                <Tooltip placement="left" overlay={''}>
-                  <i className="help"/>
+                <Tooltip
+                  placement="left"
+                  overlay={toLocale(
+                    'Your transaction will revert if the price changes unfavorably by more than this percentage.'
+                  )}
+                >
+                  <i className="help" />
                 </Tooltip>
               </div>
             </div>

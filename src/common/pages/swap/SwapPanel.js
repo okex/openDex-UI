@@ -202,19 +202,21 @@ export default class SwapPanel extends React.Component {
             <div className="info">
               <div className="info-name">{toLocale('Price')}</div>
               <div className="info-value">
-                <i className="exchange" />1{baseToken.symbol} ≈ -
-                {targetToken.symbol}
+                <i className="exchange" />1{baseToken.symbol.toUpperCase()} ≈ -
+                {targetToken.symbol.toUpperCase()}
               </div>
             </div>
           </div>
         );
       } else {
-        let priceInfo = `1${baseToken.symbol} ≈ ${exchangeInfo.price}${targetToken.symbol}`;
+        let priceInfo = `1${baseToken.symbol.toUpperCase()} ≈ ${
+          exchangeInfo.price
+        }${targetToken.symbol.toUpperCase()}`;
         if (exchangeInfo.isReverse)
-          priceInfo = `1${targetToken.symbol} ≈ ${calc.div(
+          priceInfo = `1${targetToken.symbol.toUpperCase()} ≈ ${calc.div(
             1,
             exchangeInfo.price
-          )}${baseToken.symbol}`;
+          )}${baseToken.symbol.toUpperCase()}`;
         return (
           <div className="coin-exchange-detail">
             <div className="info">
@@ -228,8 +230,11 @@ export default class SwapPanel extends React.Component {
             <div className="info">
               <div className="info-name">
                 {toLocale('Minimum received')}
-                <Tooltip placement="right" overlay={toLocale('Minimum received help')}>
-                  <i className="help"/>
+                <Tooltip
+                  placement="right"
+                  overlay={toLocale('Minimum received help')}
+                >
+                  <i className="help" />
                 </Tooltip>
               </div>
               <div className="info-value">
@@ -239,8 +244,11 @@ export default class SwapPanel extends React.Component {
             <div className="info">
               <div className="info-name">
                 {toLocale('Price Impact')}
-                <Tooltip placement="right" overlay={toLocale('Price Impact help')}>
-                  <i className="help"/>
+                <Tooltip
+                  placement="right"
+                  overlay={toLocale('Price Impact help')}
+                >
+                  <i className="help" />
                 </Tooltip>
               </div>
               <div className="info-value">{exchangeInfo.price_impact}%</div>
@@ -248,15 +256,18 @@ export default class SwapPanel extends React.Component {
             <div className="info">
               <div className="info-name">
                 {toLocale('Liquidity Provider Fee')}
-                <Tooltip placement="right" overlay={toLocale('Liquidity Provider Fee help')}>
-                  <i className="help"/>
+                <Tooltip
+                  placement="right"
+                  overlay={toLocale('Liquidity Provider Fee help')}
+                >
+                  <i className="help" />
                 </Tooltip>
               </div>
               <div className="info-value">
                 {!fee && '≈'}
                 {exchangeInfo.fee.replace(
                   baseToken.symbol,
-                  ` ${baseToken.symbol}`
+                  ` ${baseToken.symbol.toUpperCase()}`
                 )}
               </div>
             </div>
@@ -264,17 +275,22 @@ export default class SwapPanel extends React.Component {
               <div className="info">
                 <div className="info-name">
                   {toLocale('Route')}
-                  <Tooltip placement="right" overlay={''}>
-                    <i className="help"/>
+                  <Tooltip
+                    placement="right"
+                    overlay={toLocale(
+                      "Current pair can only swap through OKT, there's no direct pair for the 2 tokens."
+                    )}
+                  >
+                    <i className="help" />
                   </Tooltip>
                 </div>
                 <div className="info-value">
                   <img className="coin" src={getCoinIcon(baseToken.symbol)} />
-                  {baseToken.symbol} &gt;{' '}
+                  {baseToken.symbol.toUpperCase()} &gt;{' '}
                   <img className="coin" src={getCoinIcon(exchangeInfo.route)} />
-                  {exchangeInfo.route} &gt;
+                  {exchangeInfo.route.toUpperCase()} &gt;
                   <img className="coin" src={getCoinIcon(targetToken.symbol)} />
-                  {targetToken.symbol}
+                  {targetToken.symbol.toUpperCase()}
                 </div>
               </div>
             )}

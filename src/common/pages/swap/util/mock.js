@@ -116,12 +116,12 @@ module.exports = {
       msg: '',
       detail_msg: '',
       data: {
-        'data|10': [
+        'data|15': [
           {
             swap_pair: 'eos-d07_okt',
-            liquidity: '2411223',
+            liquidity: /0|2411223/,
             volume24h: '23423234',
-            fee_apy: '102.12%',
+            fee_apy: '102.1',
             last_price: '10.123',
             change24h: '-0.1212',
           },

@@ -54,7 +54,7 @@ export default class SelectCoin extends React.Component {
                 >
                   <div className="name">
                     <img src={getCoinIcon(d.symbol)} />
-                    {d.symbol}
+                    {d.symbol.toUpperCase()}
                   </div>
                   <div className="value">{d.available}</div>
                 </div>

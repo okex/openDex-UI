@@ -93,18 +93,18 @@ export default class InputNum extends React.Component {
     let inpNumber = '';
     if (inps.length > 1) {
       if (typeof num != 'undefined' || num === -1) {
-        inpNumber = inps[0].replace(/\D/g, '') + '.' + inps[1].replace(/\D/g, '');
+        inpNumber =
+          inps[0].replace(/\D/g, '') + '.' + inps[1].replace(/\D/g, '');
       } else {
-        inpNumber = (
+        inpNumber =
           inps[0].replace(/\D/g, '') +
           '.' +
-          inps[1].replace(/\D/g, '').slice(0, num)
-        );
+          inps[1].replace(/\D/g, '').slice(0, num);
       }
     } else {
       inpNumber = inps[0].replace(/\D/g, '');
     }
-    if(this.props.precision) {
+    if (this.props.precision) {
       const inpNumbers = ('' + inpNumber).split('.');
       if (inpNumbers[1]) {
         inpNumbers[1] = inpNumbers[1].substring(0, this.props.precision);

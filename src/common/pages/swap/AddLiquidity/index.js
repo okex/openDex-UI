@@ -220,8 +220,13 @@ export default class AddLiquidity extends React.Component {
         <div className="info">
           <div className="info-name">
             {toLocale('Pool share')}
-            <Tooltip placement="right" overlay={''}>
-              <i className="help"/>
+            <Tooltip
+              placement="right"
+              overlay={toLocale(
+                'The share of the pool liquidity after you add.'
+              )}
+            >
+              <i className="help" />
             </Tooltip>
           </div>
           <div className="info-value">{poolShare}%</div>
@@ -247,16 +252,16 @@ export default class AddLiquidity extends React.Component {
     }
     if (!targetTokenDisabled) {
       if (!baseToken.value || !targetToken.value) {
-        priceInfo = `1${baseToken.symbol} ≈ -${targetToken.symbol}`;
+        priceInfo = `1${baseToken.symbol.toUpperCase()} ≈ -${targetToken.symbol.toUpperCase()}`;
       } else {
-        priceInfo = `1${baseToken.symbol} ≈ ${calc.div(
+        priceInfo = `1${baseToken.symbol.toUpperCase()} ≈ ${calc.div(
           targetToken.value,
           baseToken.value
-        )}${targetToken.symbol}`;
+        )}${targetToken.symbol.toUpperCase()}`;
       }
       return { priceInfo, poolShare: 100 };
     }
-    priceInfo = `1${baseToken.symbol} ≈ ${price}${targetToken.symbol}`;
+    priceInfo = `1${baseToken.symbol.toUpperCase()} ≈ ${price}${targetToken.symbol.toUpperCase()}`;
     return { priceInfo, poolShare: exchangeInfo.pool_share };
   }
 

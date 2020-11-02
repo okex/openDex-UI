@@ -62,7 +62,7 @@ export default class CoinDropdown extends React.Component {
         <div className="coin-select">
           <img className="coin-icon" src={getCoinIcon(symbol)} />
           <span className={classNames('text', { active: symbol })}>
-            {symbol || toLocale('Select a token')}
+            {symbol.toUpperCase() || toLocale('Select a token')}
           </span>
           <i className="iconfont" />
         </div>

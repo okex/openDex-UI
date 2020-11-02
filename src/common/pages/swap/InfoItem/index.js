@@ -44,7 +44,8 @@ export default class InfoItem extends React.Component {
             <img src={getCoinIcon(data.base_pooled_coin.denom)} />
             <img src={getCoinIcon(data.quote_pooled_coin.denom)} />
             <span className="title-name">
-              {data.base_pooled_coin.denom}/{data.quote_pooled_coin.denom}
+              {data.base_pooled_coin.denom.toUpperCase()}/
+              {data.quote_pooled_coin.denom.toUpperCase()}
             </span>
           </div>
           <div className="right title-opt">
@@ -62,14 +63,15 @@ export default class InfoItem extends React.Component {
         </div>
         <div className="space-between poll-item-txt">
           <div className="left">
-            {toLocale('Amount')} {data.base_pooled_coin.denom}/
-            {data.quote_pooled_coin.denom}
+            {toLocale('Amount')} {data.base_pooled_coin.denom.toUpperCase()}/
+            {data.quote_pooled_coin.denom.toUpperCase()}
           </div>
           <div className="right">{toLocale('LP token/ratio')}</div>
         </div>
         <div className="space-between poll-item-info">
           <div className="left">
-            {data.base_pooled_coin.amount}/{data.quote_pooled_coin.amount}
+            {data.base_pooled_coin.amount.toUpperCase()}/
+            {data.quote_pooled_coin.amount.toUpperCase()}
           </div>
           <div className="right">
             {available}/{data.pool_token_ratio * 100}%

@@ -32,7 +32,7 @@ export default class CoinItem extends React.Component {
 
   onInputChange = (value) => {
     const { token } = this.props;
-    if(this.props.max) {
+    if (this.props.max) {
       const max = this.getAvailable();
       if (calc.div(max, 1) < calc.div(value, 1)) value = max;
     }
@@ -152,7 +152,7 @@ export default class CoinItem extends React.Component {
           >
             <img className="coin-icon" src={getCoinIcon(symbol)} />
             {symbol ? (
-              <span className="text active">{symbol}</span>
+              <span className="text active">{symbol.toUpperCase()}</span>
             ) : (
               <span className="text">{toLocale('Select a token')}</span>
             )}
