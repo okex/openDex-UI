@@ -46,7 +46,7 @@ export default class WatchlistPanel extends React.Component {
         field: 'liquidity',
         name: toLocale('Liquidity'),
         canSort: true,
-        width: '164',
+        width: '154',
         component(props) {
           return Number(props.data) === 0 ? '--' : '$' + props.data;
         },
@@ -55,7 +55,7 @@ export default class WatchlistPanel extends React.Component {
         field: 'volume24h',
         name: toLocale('24H Volume'),
         canSort: true,
-        width: '164',
+        width: '154',
         component(props) {
           return Number(props.data) === 0 ? '--' : '$' + props.data;
         },
@@ -67,9 +67,7 @@ export default class WatchlistPanel extends React.Component {
             <React.Fragment>
               <Tooltip
                 placement="right"
-                overlay={toLocale(
-                  "It's 1 year fees/liquidity based on 24 hr volume annualized."
-                )}
+                overlay={toLocale('based on 24hr volume annualized')}
               >
                 <i className="help" />
               </Tooltip>
@@ -78,7 +76,7 @@ export default class WatchlistPanel extends React.Component {
           );
         },
         canSort: true,
-        width: '102',
+        width: '122',
         component(props) {
           return Number(props.data) === 0
             ? '--'

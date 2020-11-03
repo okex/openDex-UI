@@ -703,7 +703,7 @@ const enUS = {
   'spot.asset.swap': 'SWAP Trade',
   Swap: 'Swap',
   Pool: 'Pool',
-  Watchlist: 'Watchlist',
+  Watchlist: 'Markets',
   From: 'From',
   Balance: 'Balance',
   Price: 'Price',
@@ -729,7 +729,7 @@ const enUS = {
   Input: 'Input',
   'Pool share': 'Pool share',
   'Intial Price': 'Intial Price',
-  'Input Pool': 'Input Pool',
+  'Input Pool': 'Create Pool',
   Error: 'Error',
   'Existed Pool': 'Existed Pool, go add directly >',
   'Reduce Liquidity': 'Reduce Liquidity',
@@ -750,15 +750,14 @@ const enUS = {
   'Transaction deadline': 'Transaction deadline',
   Minutes: 'Minutes',
   'Minimum received help':
-    'Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.',
+    'Your transaction will revert if there is a large, unfavorable price movement before it is confirmed',
   'Price Impact help':
     'The difference between the market price and estimated price due to trade size.',
   'Liquidity Provider Fee help':
     'A portion of each trade (0.3%) goes to liquidity providers as a protocol incentive.',
   'pending transactions': 'pending transactions',
   'transaction confirmed': 'transaction confirmed',
-  "It's 1 year fees/liquidity based on 24 hr volume annualized.":
-    "It's 1 year fees/liquidity based on 24 hr volume annualized.",
+  'based on 24hr volume annualized': "It's 1 year fees/liquidity based on 24 hr volume annualized",
   "Current pair can only swap through OKT, there's no direct pair for the 2 tokens.":
     "Current pair can only swap through OKT, there's no direct pair for the 2 tokens.",
   'Your transaction will revert if the price changes unfavorably by more than this percentage.':
