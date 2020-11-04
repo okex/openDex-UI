@@ -27,6 +27,7 @@ export default class Confirm extends React.Component {
       pwdErr: '',
       processingPwd: false,
     };
+    this._onClick = util.debounce(this.onClick, 300);
   }
 
   onClose = () => {
@@ -71,7 +72,7 @@ export default class Confirm extends React.Component {
     const { children } = this.props;
     const child = React.Children.only(children);
     return React.cloneElement(child, {
-      onClick: () => util.debounce(this.onClick, 100)(),
+      onClick: () => this._onClick(),
     });
   }
 

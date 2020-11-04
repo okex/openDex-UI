@@ -9,6 +9,7 @@ import DexDesktopInput from '_component/DexDesktopInput';
 import DexUpload from '_app/component/DexUpload';
 import { formatEstimatedTime } from '_src/utils/node';
 import { NODE_TYPE } from '_constants/Node';
+import util from '_src/utils/util';
 import './TabLocal.less';
 
 const defaultOptions = [{ value: 0, label: 'TestNet' }];
@@ -51,6 +52,7 @@ class TabLocal extends Component {
       options: defaultOptions,
       selected: defaultOptions[0],
     };
+    this.onSwitchChange = util.debounce(this.onSwitchChange, 300);
   }
 
   onChange = () => {

@@ -21,6 +21,7 @@ import {
 } from '_src/utils/node';
 import { NODE_TYPE, NODE_LATENCY_TYPE } from '_constants/Node';
 import { DEFAULT_NODE, NONE_NODE } from '_constants/apiConfig';
+import util from '_src/utils/util';
 import './index.less';
 
 function mapStateToProps(state) {
@@ -74,6 +75,7 @@ class DesktopNodeMenu extends Component {
     this.state = {
       isMenuShow: false,
     };
+    this.onSwitchChange = util.debounce(this.onSwitchChange, 300);
   }
 
   componentDidMount() {
