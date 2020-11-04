@@ -1,8 +1,11 @@
-import { getCurrentApiUrl } from './getApiUrl';
+import { getCurrentApiUrl, DEFAULT } from './getApiUrl';
 
 const BASEURL = {
   get BASE_URL() {
     return getCurrentApiUrl();
+  },
+  get DEFAULT_BASE_URL() {
+    return `${DEFAULT}/okexchain/v1`;
   },
   get OKDEX_BASE_URL() {
     return `${this.BASE_URL}/okexchain/v1`;
@@ -50,7 +53,7 @@ const URL = {
     return `${BASEURL.OKDEX_BASE_URL}/transactions`;
   },
   get GET_LATEST_HEIGHT() {
-    return `${BASEURL.OKDEX_BASE_URL}/latestheight`;
+    return `${BASEURL.DEFAULT_BASE_URL}/latestheight`;
   },
   get GET_ACCOUNT_DEPOSIT() {
     return `${BASEURL.OKDEX_BASE_URL}/dex/deposits`;
@@ -59,7 +62,7 @@ const URL = {
     return `${BASEURL.OKDEX_BASE_URL}/dex/fees`;
   },
   get GET_LATEST_HEIGHT_MASTER() {
-    return `${BASEURL.OKDEX_BASE_URL}/latestheight`;
+    return `${BASEURL.DEFAULT_BASE_URL}/latestheight`;
   },
   get GET_LEGAL_LIST() {
     return `${BASEURL.OKDEX_SUPPORT_ROOT}/index/legalList`;

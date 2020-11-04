@@ -249,16 +249,13 @@ export default class AddLiquidity extends React.Component {
       baseToken = targetToken;
       targetToken = temp;
       price = calc.div(1, price);
-      if(Number.isNaN(price)) price = '-';
+      if (Number.isNaN(price)) price = '-';
     }
     if (!targetTokenDisabled) {
       if (!baseToken.value || !targetToken.value) {
         priceInfo = `1${baseToken.symbol.toUpperCase()} ≈ -${targetToken.symbol.toUpperCase()}`;
       } else {
-        let tempPrice = calc.div(
-          targetToken.value,
-          baseToken.value
-        );
+        let tempPrice = calc.div(targetToken.value, baseToken.value);
         Number.isNaN(tempPrice) && (tempPrice = '-');
         priceInfo = `1${baseToken.symbol.toUpperCase()} ≈ ${tempPrice}${targetToken.symbol.toUpperCase()}`;
       }

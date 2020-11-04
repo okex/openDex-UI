@@ -756,19 +756,18 @@ const zhCN = {
   Minutes: '分钟',
   'Minimum received help':
     '如果交易确认之前出现了不利的大幅价格变动，您的交易将退回。',
-  'Price Impact help':
-    '受交易规模影响，市价与预期价格之间的差值。',
+  'Price Impact help': '受交易规模影响，市价与预期价格之间的差值。',
   'Liquidity Provider Fee help':
     '流动性提供者将获得每笔交易的 0.3% 作为协议奖励。',
   'pending transactions': '待定交易',
   'transaction confirmed': '交易完成',
-  'based on 24hr volume annualized': '基于24小时交易量算出来的手续费收益年华利率',
+  'based on 24hr volume annualized':
+    '基于24小时交易量算出来的手续费收益年华利率',
   "Current pair can only swap through OKT, there's no direct pair for the 2 tokens.":
     '当前交易对只能通过OKT兑换，暂无可以直接兑换这两个币的资金池',
   'Your transaction will revert if the price changes unfavorably by more than this percentage.':
     '如果价格变动幅度超过此百分比，您的交易将退回。',
-  "It's your current liquidity in the pool.":
-    '这是你当前在资金池里的流动性',
+  "It's your current liquidity in the pool.": '这是你当前在资金池里的流动性',
   'The share of the pool liquidity after you add.':
     '你添加流动性之后的流动性占比',
 };

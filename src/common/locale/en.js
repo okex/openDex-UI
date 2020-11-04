@@ -757,7 +757,8 @@ const enUS = {
     'A portion of each trade (0.3%) goes to liquidity providers as a protocol incentive.',
   'pending transactions': 'pending transactions',
   'transaction confirmed': 'transaction confirmed',
-  'based on 24hr volume annualized': "It's 1 year fees/liquidity based on 24 hr volume annualized",
+  'based on 24hr volume annualized':
+    "It's 1 year fees/liquidity based on 24 hr volume annualized",
   "Current pair can only swap through OKT, there's no direct pair for the 2 tokens.":
     "Current pair can only swap through OKT, there's no direct pair for the 2 tokens.",
   'Your transaction will revert if the price changes unfavorably by more than this percentage.':
