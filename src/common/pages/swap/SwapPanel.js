@@ -322,7 +322,7 @@ export default class SwapPanel extends React.Component {
       );
     } else if (!baseToken.symbol || !targetToken.symbol) {
       btn = <div className="btn disabled">{toLocale('Invalid Pair')}</div>;
-    } else if (!baseToken.value || !targetToken.value) {
+    } else if (!Number(baseToken.value) || !Number(targetToken.value)) {
       btn = <div className="btn disabled">{toLocale('Input an amount')}</div>;
     } else {
       btn = (

@@ -102,7 +102,7 @@ export default class InputNum extends React.Component {
           inps[1].replace(/\D/g, '').slice(0, num);
       }
     } else {
-      inpNumber = inps[0].replace(/\D/g, '');
+      inpNumber = inps[0].replace(/\D/g, '').replace(/0*(\d+)/, '$1');
     }
     if (this.props.precision) {
       const inpNumbers = ('' + inpNumber).split('.');
