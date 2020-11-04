@@ -378,6 +378,7 @@ export function stopOkexchaind(terminal = false) {
       type: LocalNodeActionType.UPDATE_IS_SYNC,
       data: false,
     });
+    if(!terminal) return;
     const { currentNode } = getState().NodeStore;
     if (currentNode.type === NODE_TYPE.LOCAL) {
       dispatch({
