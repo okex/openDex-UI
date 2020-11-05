@@ -42,11 +42,11 @@ export default class ReduceLiquidity extends React.Component {
     const coins = [];
     coins.push({
       denom: liquidity.base_pooled_coin.denom,
-      amount: 0,
+      amount: 0.00000000,
     });
     coins.push({
       denom: liquidity.quote_pooled_coin.denom,
-      amount: 0,
+      amount: 0.00000000,
     });
     return coins;
   }
@@ -65,7 +65,10 @@ export default class ReduceLiquidity extends React.Component {
   };
 
   updateCoins = async (value) => {
-    if (!Number(value)) return;
+    if (!Number(value)) {
+      this.setState({coins:this._process(this.props.liquidity)})
+      return;
+    }
     const { liquidity } = this.props;
     const coins = await api.redeemableAssets({
       liquidity: util.precisionInput(value),
@@ -104,7 +107,10 @@ export default class ReduceLiquidity extends React.Component {
     return new Promise((resolve, reject) => {
       okexchainClient
         .sendRemoveLiquidityTransaction(...params)
-        .then((res) => resolve(res))
+        .then((res) => {
+          resolve(res);
+          this.onInputChange('');
+        })
         .catch((err) => reject(err));
     });
   };

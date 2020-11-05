@@ -92,7 +92,7 @@ export default class SwapPanel extends React.Component {
 
   changeBase = (token) => {
     let baseToken = { ...this.state.baseToken, ...token };
-    let targetToken = { ...this.state.targetToken };
+    let targetToken = { ...this.state.targetToken, value: '' };
     const data = { ...this.state, baseToken, targetToken };
     this.updateSwapInfo4RealTime(data, 'baseToken');
   };
@@ -354,7 +354,10 @@ export default class SwapPanel extends React.Component {
     return new Promise((resolve, reject) => {
       okexchainClient
         .sendSwapTokenTransaction(...params)
-        .then((res) => resolve(res))
+        .then((res) => {
+          resolve(res);
+          this.changeBase({...baseToken,value:''});
+        })
         .catch((err) => reject(err));
     });
   };
