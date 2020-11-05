@@ -159,10 +159,9 @@ export default class AddLiquidity extends React.Component {
         }));
       if (!temp) return;
       const { base_pooled_coin, quote_pooled_coin } = temp;
-      exchangeInfo.price = util.precisionInput(calc.div(
-        base_pooled_coin.amount,
-        quote_pooled_coin.amount
-      ));
+      exchangeInfo.price = util.precisionInput(
+        calc.div(base_pooled_coin.amount, quote_pooled_coin.amount)
+      );
     }
   }
 
@@ -258,7 +257,7 @@ export default class AddLiquidity extends React.Component {
         priceInfo = `1${baseToken.symbol.toUpperCase()} ≈ -${targetToken.symbol.toUpperCase()}`;
       } else {
         let tempPrice = calc.div(targetToken.value, baseToken.value);
-        if(Number.isNaN(tempPrice)) tempPrice = '-';
+        if (Number.isNaN(tempPrice)) tempPrice = '-';
         else tempPrice = util.precisionInput(tempPrice);
         priceInfo = `1${baseToken.symbol.toUpperCase()} ≈ ${tempPrice}${targetToken.symbol.toUpperCase()}`;
       }
@@ -331,8 +330,12 @@ export default class AddLiquidity extends React.Component {
         .sendAddLiquidityTransaction(...params)
         .then((res) => {
           resolve(res);
-          if(validateTxs(res)) {
-            this.updateInfo({...this.state,baseToken:{...baseToken,value: ''}, targetToken:{...targetToken,value: ''}});
+          if (validateTxs(res)) {
+            this.updateInfo({
+              ...this.state,
+              baseToken: { ...baseToken, value: '' },
+              targetToken: { ...targetToken, value: '' },
+            });
           }
         })
         .catch((err) => reject(err));

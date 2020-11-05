@@ -43,11 +43,11 @@ export default class ReduceLiquidity extends React.Component {
     const coins = [];
     coins.push({
       denom: liquidity.base_pooled_coin.denom,
-      amount: 0.00000000,
+      amount: 0.0,
     });
     coins.push({
       denom: liquidity.quote_pooled_coin.denom,
-      amount: 0.00000000,
+      amount: 0.0,
     });
     return coins;
   }
@@ -67,7 +67,7 @@ export default class ReduceLiquidity extends React.Component {
 
   updateCoins = async (value) => {
     if (!Number(value)) {
-      this.setState({coins:this._process(this.props.liquidity)})
+      this.setState({ coins: this._process(this.props.liquidity) });
       return;
     }
     const { liquidity } = this.props;
@@ -110,7 +110,7 @@ export default class ReduceLiquidity extends React.Component {
         .sendRemoveLiquidityTransaction(...params)
         .then((res) => {
           resolve(res);
-          if(validateTxs(res)) {
+          if (validateTxs(res)) {
             this.onInputChange('');
           }
         })

@@ -61,7 +61,8 @@ export default class CoinItem extends React.Component {
     const { symbol } = this.props.token;
     if (symbol && this.currentSubscribe !== symbol) {
       this.context.send(channelsV3.getBalance(symbol));
-      if (this.currentSubscribe) this.context.stop(channelsV3.getBalance(this.currentSubscribe));
+      if (this.currentSubscribe)
+        this.context.stop(channelsV3.getBalance(this.currentSubscribe));
       console.log('subscribe', symbol, 'unsubscribe', this.currentSubscribe);
       this.currentSubscribe = symbol;
     }

@@ -214,10 +214,9 @@ export default class SwapPanel extends React.Component {
           exchangeInfo.price
         }${targetToken.symbol.toUpperCase()}`;
         if (exchangeInfo.isReverse)
-          priceInfo = `1${targetToken.symbol.toUpperCase()} ≈ ${util.precisionInput(calc.div(
-            1,
-            exchangeInfo.price
-          ))}${baseToken.symbol.toUpperCase()}`;
+          priceInfo = `1${targetToken.symbol.toUpperCase()} ≈ ${util.precisionInput(
+            calc.div(1, exchangeInfo.price)
+          )}${baseToken.symbol.toUpperCase()}`;
         return (
           <div className="coin-exchange-detail">
             <div className="info">
@@ -357,8 +356,8 @@ export default class SwapPanel extends React.Component {
         .sendSwapTokenTransaction(...params)
         .then((res) => {
           resolve(res);
-          if(validateTxs(res)) {
-            this.changeBase({...baseToken,value:''});
+          if (validateTxs(res)) {
+            this.changeBase({ ...baseToken, value: '' });
           }
         })
         .catch((err) => reject(err));

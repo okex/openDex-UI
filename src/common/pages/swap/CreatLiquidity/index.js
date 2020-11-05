@@ -120,7 +120,7 @@ export default class CreatLiquidity extends React.Component {
   };
 
   getBtn() {
-    const {disabled} = this.state;
+    const { disabled } = this.state;
     let btn;
     if (!util.isLogined()) {
       btn = (
@@ -128,16 +128,18 @@ export default class CreatLiquidity extends React.Component {
           <div className="btn">{toLocale('Connect Wallet')}</div>
         </Link>
       );
-    } else if(disabled) {
-      btn = <div className="btn disabled">{toLocale('Create Liquidity')}</div>
+    } else if (disabled) {
+      btn = <div className="btn disabled">{toLocale('Create Liquidity')}</div>;
     } else {
-      btn = <Confirm
-        onClick={this.confirm}
-        loadingTxt={toLocale('pending transactions')}
-        successTxt={toLocale('transaction confirmed')}
-      >
-        <div className="btn">{toLocale('Create Liquidity')}</div>
-      </Confirm>
+      btn = (
+        <Confirm
+          onClick={this.confirm}
+          loadingTxt={toLocale('pending transactions')}
+          successTxt={toLocale('transaction confirmed')}
+        >
+          <div className="btn">{toLocale('Create Liquidity')}</div>
+        </Confirm>
+      );
     }
     return btn;
   }
