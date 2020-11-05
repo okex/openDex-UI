@@ -29,11 +29,13 @@ const paths = {
 export default {
   ...paths,
   getCurrent() {
-    const { pathname, hash } = window.location;
-    const match = hash ? hash.slice(1) : pathname;
+    let { pathname, hash } = window.location;
+    pathname = pathname.replace(/\/*$/,'');
+    hash = hash.replace(/\/*$/,'').replace(/^#/,'');
     for (name in paths) {
-      if (match === paths[name] || match === paths[name] + '/')
-        return paths[name];
+      const temp = paths[name];
+      if (pathname === temp || hash === temp) 
+        return temp;
     }
     return '';
   },
