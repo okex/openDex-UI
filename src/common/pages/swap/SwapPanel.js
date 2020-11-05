@@ -238,7 +238,7 @@ export default class SwapPanel extends React.Component {
                 </Tooltip>
               </div>
               <div className="info-value">
-                {this.getMinimumReceived()} {targetToken.symbol}
+                {this.getMinimumReceived()} {targetToken.symbol.toUpperCase()}
               </div>
             </div>
             <div className="info">

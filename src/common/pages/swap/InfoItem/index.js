@@ -4,6 +4,7 @@ import { toLocale } from '_src/locale/react-locale';
 import { getCoinIcon } from '../util/coinIcon';
 import { channelsV3 } from '../../../utils/websocket';
 import SwapContext from '../SwapContext';
+import calc from '_src/utils/calc';
 
 function mapStateToProps(state) {
   const { account } = state.SwapStore;
@@ -74,7 +75,7 @@ export default class InfoItem extends React.Component {
             {data.quote_pooled_coin.amount.toUpperCase()}
           </div>
           <div className="right">
-            {available}/{data.pool_token_ratio * 100}%
+            {available}/{calc.mul(data.pool_token_ratio, 100)}%
           </div>
         </div>
       </div>
