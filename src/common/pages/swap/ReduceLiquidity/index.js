@@ -10,6 +10,7 @@ import util from '_src/utils/util';
 import { channelsV3 } from '../../../utils/websocket';
 import { getDeadLine4sdk } from '../util';
 import SwapContext from '../SwapContext';
+import { validateTxs } from '_src/utils/client';
 
 function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
@@ -109,7 +110,9 @@ export default class ReduceLiquidity extends React.Component {
         .sendRemoveLiquidityTransaction(...params)
         .then((res) => {
           resolve(res);
-          this.onInputChange('');
+          if(validateTxs(res)) {
+            this.onInputChange('');
+          }
         })
         .catch((err) => reject(err));
     });

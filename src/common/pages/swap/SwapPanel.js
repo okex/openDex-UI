@@ -13,6 +13,7 @@ import Confirm from './Confirm';
 import { getDeadLine4sdk } from './util';
 import getRef from './getRef';
 import Tooltip from '../../component/Tooltip';
+import { validateTxs } from '_src/utils/client';
 
 function mapStateToProps(state) {
   const { setting } = state.SwapStore;
@@ -356,7 +357,9 @@ export default class SwapPanel extends React.Component {
         .sendSwapTokenTransaction(...params)
         .then((res) => {
           resolve(res);
-          this.changeBase({...baseToken,value:''});
+          if(validateTxs(res)) {
+            this.changeBase({...baseToken,value:''});
+          }
         })
         .catch((err) => reject(err));
     });

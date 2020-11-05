@@ -13,6 +13,7 @@ import Confirm from '../Confirm';
 import util from '_src/utils/util';
 import { getDeadLine4sdk } from '../util';
 import Tooltip from '../../../component/Tooltip';
+import { validateTxs } from '_src/utils/client';
 
 function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
@@ -330,7 +331,9 @@ export default class AddLiquidity extends React.Component {
         .sendAddLiquidityTransaction(...params)
         .then((res) => {
           resolve(res);
-          this.updateInfo({...this.state,baseToken:{...baseToken,value: ''}, targetToken:{...targetToken,value: ''}});
+          if(validateTxs(res)) {
+            this.updateInfo({...this.state,baseToken:{...baseToken,value: ''}, targetToken:{...targetToken,value: ''}});
+          }
         })
         .catch((err) => reject(err));
     });
