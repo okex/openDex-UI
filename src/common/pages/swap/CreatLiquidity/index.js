@@ -1,17 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { toLocale } from '_src/locale/react-locale';
+import { getLangURL } from '_src/utils/navigation';
+import PageURL from '_constants/PageURL';
+import { withRouter, Link } from 'react-router-dom';
 import * as api from '../util/api';
 import CoinDropdown from './CoinDropdown';
 import AddLiquidity from '../AddLiquidity';
 import Confirm from '../Confirm';
 import { validateTxs } from '_src/utils/client';
+import util from '_src/utils/util';
 
 function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
   return { okexchainClient };
 }
-
+@withRouter
 @connect(mapStateToProps)
 export default class CreatLiquidity extends React.Component {
   constructor() {
@@ -115,9 +119,33 @@ export default class CreatLiquidity extends React.Component {
     });
   };
 
+  getBtn() {
+    const {disabled} = this.state;
+    let btn;
+    if (!util.isLogined()) {
+      btn = (
+        <Link to={getLangURL(PageURL.walletCreate)}>
+          <div className="btn">{toLocale('Connect Wallet')}</div>
+        </Link>
+      );
+    } else if(disabled) {
+      btn = <div className="btn disabled">{toLocale('Create Liquidity')}</div>
+    } else {
+      btn = <Confirm
+        onClick={this.confirm}
+        loadingTxt={toLocale('pending transactions')}
+        successTxt={toLocale('transaction confirmed')}
+      >
+        <div className="btn">{toLocale('Create Liquidity')}</div>
+      </Confirm>
+    }
+    return btn;
+  }
+
   render() {
     const { back } = this.props;
-    const { baseToken, targetToken, disabled, error } = this.state;
+    const { baseToken, targetToken, error } = this.state;
+    const btn = this.getBtn();
     return (
       <div className="panel">
         <div className="panel-header">
@@ -144,19 +172,7 @@ export default class CreatLiquidity extends React.Component {
               {toLocale('Error')}：{toLocale('Existed Pool')}
             </div>
           )}
-          <div className="btn-wrap">
-            {disabled ? (
-              <div className="btn disabled">{toLocale('Create Liquidity')}</div>
-            ) : (
-              <Confirm
-                onClick={this.confirm}
-                loadingTxt={toLocale('pending transactions')}
-                successTxt={toLocale('transaction confirmed')}
-              >
-                <div className="btn">{toLocale('Create Liquidity')}</div>
-              </Confirm>
-            )}
-          </div>
+          <div className="btn-wrap">{btn}</div>
         </div>
       </div>
     );
