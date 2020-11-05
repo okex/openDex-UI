@@ -65,7 +65,7 @@ export default class ReduceLiquidity extends React.Component {
   };
 
   updateCoins = async (value) => {
-    if(!Number(value)) return;
+    if (!Number(value)) return;
     const { liquidity } = this.props;
     const coins = await api.redeemableAssets({
       liquidity: util.precisionInput(value),

@@ -7,6 +7,8 @@ import { bindActionCreators } from 'redux';
 import * as SwapAction from '_src/redux/actions/SwapAction';
 import './index.less';
 
+let activedMenu = '';
+
 function mapStateToProps(state) {
   const { hasSetting } = state.SwapStore;
   return {
@@ -69,13 +71,16 @@ class DesktopTypeMenu extends Component {
   change = (item) => {
     const { swapAction } = this.props;
     const hasSetting = item.url === PageURL.swapPage;
+    if (item.isRoute) activedMenu = item;
     swapAction.hasSetting(hasSetting);
   };
 
   render() {
     const current =
+      activedMenu ||
       this.headTypeList.filter((d) => d.url === this.props.current)[0] ||
       this.headTypeList[this.headTypeList.length - 1];
+    activedMenu = current;
     return (
       <div className="top-info-title">
         <div className="current-trade-title">
@@ -100,5 +105,11 @@ class DesktopTypeMenu extends Component {
     );
   }
 }
+
+Object.defineProperty(DesktopTypeMenu, 'current', {
+  get: function () {
+    return activedMenu;
+  },
+});
 
 export default DesktopTypeMenu;

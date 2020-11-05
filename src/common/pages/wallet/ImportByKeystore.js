@@ -6,13 +6,13 @@ import { crypto } from '@okexchain/javascript-sdk';
 import { Button } from '_component/Button';
 import Icon from '_src/component/IconLite';
 import Input from '_component/Input';
-import PageURL from '../../constants/PageURL';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as commonActions from '_src/redux/actions/CommonAction';
 import ValidateCheckbox from '_component/ValidateCheckbox';
 import walletUtil from './walletUtil';
 import util from '_src/utils/util';
+import DesktopTypeMenu from '_component/DesktopTypeMenu';
 import './ImportByKeystore.less';
 
 const fileStatusEnum = {
@@ -117,7 +117,7 @@ class ImportByKeystore extends Component {
         buttonLoading: false,
       });
       this.props.commonAction.setPrivateKey(privateKey);
-      util.go(PageURL.swapPage);
+      util.go(DesktopTypeMenu.current ? DesktopTypeMenu.current.url : void 0);
     } catch (e) {
       this.setState({
         pwdError: toLocale('wallet_import_passwordError'),

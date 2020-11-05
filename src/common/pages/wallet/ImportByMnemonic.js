@@ -5,12 +5,12 @@ import { Button } from '_component/Button';
 import { crypto } from '@okexchain/javascript-sdk';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import PageURL from '../../constants/PageURL';
 import * as commonActions from '_src/redux/actions/CommonAction';
 import WalletPassword from '_component/WalletPassword';
 import ValidateCheckbox from '_component/ValidateCheckbox';
 import walletUtil from './walletUtil';
 import util from '_src/utils/util';
+import DesktopTypeMenu from '_component/DesktopTypeMenu';
 import './ImportByMnemonic.less';
 
 function mapStateToProps() {
@@ -88,7 +88,7 @@ class ImportByMnemonic extends Component {
         isNone: false,
       });
       this.props.commonAction.setPrivateKey(privateKey);
-      util.go(PageURL.swapPage);
+      util.go(DesktopTypeMenu.current ? DesktopTypeMenu.current.url : void 0);
     } catch (e) {
       this.setState({
         isValidatedMnemonic: false,

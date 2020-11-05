@@ -13,6 +13,7 @@ import * as commonActions from '_src/redux/actions/CommonAction';
 import questionGenerator from './questionGenerator';
 import walletUtil from './walletUtil';
 import util from '_src/utils/util';
+import DesktopTypeMenu from '_component/DesktopTypeMenu';
 import './Step.less';
 import './Step4.less';
 
@@ -73,7 +74,7 @@ class Step4 extends Component {
     const { privateKey } = this.props;
     return () => {
       this.props.commonAction.setPrivateKey(privateKey);
-      util.go();
+      util.go(DesktopTypeMenu.current ? DesktopTypeMenu.current.url : void 0);
     };
   };
   renderPrivateDialog = (copySuccess = false) => {

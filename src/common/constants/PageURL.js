@@ -30,12 +30,11 @@ export default {
   ...paths,
   getCurrent() {
     let { pathname, hash } = window.location;
-    pathname = pathname.replace(/\/*$/,'');
-    hash = hash.replace(/\/*$/,'').replace(/^#/,'');
+    pathname = pathname.replace(/\/*$/, '');
+    hash = hash.replace(/\/*$/, '').replace(/^#/, '');
     for (name in paths) {
       const temp = paths[name];
-      if (pathname === temp || hash === temp) 
-        return temp;
+      if (pathname === temp || hash === temp) return temp;
     }
     return '';
   },

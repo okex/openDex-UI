@@ -44,7 +44,7 @@ export default class Confirm extends React.Component {
         pwd,
         (privateKey) => {
           this.onClose();
-          this.onClick(privateKey,false);
+          this.onClick(privateKey, false);
           // okexchainClient.setAccountInfo(privateKey).then(() => {
           //   this.onClick(false);
           // });
@@ -82,37 +82,39 @@ export default class Confirm extends React.Component {
     if (!onClick || this.loading) return;
     if (checkPwd && !this.checkPwd()) return;
     privateKey = privateKey || this.props.privateKey;
-    okexchainClient.setAccountInfo(privateKey || this.props.privateKey).then(async () => {
-      let loadingToast;
-      try {
-        this.loading = true;
-        loadingToast = loadingTxt
-          ? Message.loading({
-              content: loadingTxt,
-              duration: 0,
-            })
-          : null;
-        const res = await onClick();
-        if (!validateTxs(res)) {
-          throw new Error();
-        }
-        if (loadingToast) loadingToast.destroy();
-        if (successTxt)
-          Message.success({
-            content: successTxt,
+    okexchainClient
+      .setAccountInfo(privateKey || this.props.privateKey)
+      .then(async () => {
+        let loadingToast;
+        try {
+          this.loading = true;
+          loadingToast = loadingTxt
+            ? Message.loading({
+                content: loadingTxt,
+                duration: 0,
+              })
+            : null;
+          const res = await onClick();
+          if (!validateTxs(res)) {
+            throw new Error();
+          }
+          if (loadingToast) loadingToast.destroy();
+          if (successTxt)
+            Message.success({
+              content: successTxt,
+              duration: 3,
+            });
+          this.loading = false;
+        } catch (e) {
+          Message.error({
+            content: e.message || '服务端异常，请稍后重试',
             duration: 3,
           });
-        this.loading = false;
-      } catch (e) {
-        Message.error({
-          content: e.message || '服务端异常，请稍后重试',
-          duration: 3,
-        });
-      } finally {
-        if (loadingToast) loadingToast.destroy();
-        this.loading = false;
-      }
-    });
+        } finally {
+          if (loadingToast) loadingToast.destroy();
+          this.loading = false;
+        }
+      });
   };
 
   render() {
