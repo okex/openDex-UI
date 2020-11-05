@@ -213,10 +213,10 @@ export default class SwapPanel extends React.Component {
           exchangeInfo.price
         }${targetToken.symbol.toUpperCase()}`;
         if (exchangeInfo.isReverse)
-          priceInfo = `1${targetToken.symbol.toUpperCase()} ≈ ${calc.div(
+          priceInfo = `1${targetToken.symbol.toUpperCase()} ≈ ${util.precisionInput(calc.div(
             1,
             exchangeInfo.price
-          )}${baseToken.symbol.toUpperCase()}`;
+          ))}${baseToken.symbol.toUpperCase()}`;
         return (
           <div className="coin-exchange-detail">
             <div className="info">
