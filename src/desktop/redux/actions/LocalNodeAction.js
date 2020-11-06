@@ -55,7 +55,7 @@ function start(datadir, dispatch, getState, func, terminal = false) {
         shell.exec(
           `${startCommand}`,
           { async: true },
-          (code, stdout, stderr) => {
+          (code) => {
             console.log('start code:' + code);
             if (code !== 130 && code !== 0 && code !== 2) {
               Message.error({
@@ -379,6 +379,10 @@ export function stopOkexchaind(terminal = false) {
           data: null,
         });
         switchIsStarted(false)(dispatch);
+      } else {
+        Message.error({
+          content: 'okexchaind top error',
+        });
       }
     });
     dispatch({
