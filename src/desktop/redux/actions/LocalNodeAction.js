@@ -52,7 +52,8 @@ function start(datadir, dispatch, getState, func, terminal = false) {
       });
       const child =
         localNodeServerClient.get() ||
-        shell.exec(`${startCommand}`, { async: true }, (code) => {
+        shell.exec(`${startCommand}`, { async: true }, (code,stdout, stderr) => {
+          console.log('start code:'+code);
           if (code !== 130 && code !== 0 && code !== 2) {
             Message.error({
               content: 'okexchaind start error',
@@ -66,6 +67,8 @@ function start(datadir, dispatch, getState, func, terminal = false) {
               type: LocalNodeActionType.UPDATE_DATADIR_AT_START,
               data: '',
             });
+            localNodeServerClient.set(null);
+            if (terminal) getListenClient().stop();
           }
         });
       dispatch({
