@@ -52,25 +52,29 @@ function start(datadir, dispatch, getState, func, terminal = false) {
       });
       const child =
         localNodeServerClient.get() ||
-        shell.exec(`${startCommand}`, { async: true }, (code,stdout, stderr) => {
-          console.log('start code:'+code);
-          if (code !== 130 && code !== 0 && code !== 2) {
-            Message.error({
-              content: 'okexchaind start error',
-            });
-            stopPoll();
-            dispatch({
-              type: LocalNodeActionType.UPDATE_IS_STARTED,
-              data: false,
-            });
-            dispatch({
-              type: LocalNodeActionType.UPDATE_DATADIR_AT_START,
-              data: '',
-            });
-            localNodeServerClient.set(null);
-            if (terminal) getListenClient().stop();
+        shell.exec(
+          `${startCommand}`,
+          { async: true },
+          (code, stdout, stderr) => {
+            console.log('start code:' + code);
+            if (code !== 130 && code !== 0 && code !== 2) {
+              Message.error({
+                content: 'okexchaind start error',
+              });
+              stopPoll();
+              dispatch({
+                type: LocalNodeActionType.UPDATE_IS_STARTED,
+                data: false,
+              });
+              dispatch({
+                type: LocalNodeActionType.UPDATE_DATADIR_AT_START,
+                data: '',
+              });
+              localNodeServerClient.set(null);
+              if (terminal) getListenClient().stop();
+            }
           }
-        });
+        );
       dispatch({
         type: LocalNodeActionType.UPDATE_DATADIR_AT_START,
         data: datadir,
