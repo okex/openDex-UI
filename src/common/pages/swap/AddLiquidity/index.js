@@ -229,7 +229,7 @@ export default class AddLiquidity extends React.Component {
               <i className="help" />
             </Tooltip>
           </div>
-          <div className="info-value">{poolShare}%</div>
+          <div className="info-value">{calc.mul(poolShare, 100).toFixed(2)}%</div>
         </div>
       </div>
     );
