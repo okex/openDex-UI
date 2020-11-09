@@ -770,5 +770,6 @@ const zhCN = {
   "It's your current liquidity in the pool.": '这是你当前在资金池里的流动性',
   'The share of the pool liquidity after you add.':
     '你添加流动性之后的流动性占比',
+  'set confirmed': '设置成功',
 };
 export default zhCN;

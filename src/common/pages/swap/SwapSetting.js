@@ -43,7 +43,7 @@ export default class SwapSetting extends React.Component {
   confirm = () => {
     util.setting(this.props.setting);
     Message.success({
-      content: toLocale('transaction confirmed'),
+      content: toLocale('set confirmed'),
       duration: 3,
     });
   };

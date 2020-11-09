@@ -2,26 +2,10 @@ import React, { Component } from 'react';
 import { toLocale } from '_src/locale/react-locale';
 import PageURL from '_constants/PageURL';
 import ComboBox from '_src/component/ComboBox/ComboBox';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as SwapAction from '_src/redux/actions/SwapAction';
 import './index.less';
 
 let activedMenu = '';
 
-function mapStateToProps(state) {
-  const { hasSetting } = state.SwapStore;
-  return {
-    hasSetting,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    swapAction: bindActionCreators(SwapAction, dispatch),
-  };
-}
-@connect(mapStateToProps, mapDispatchToProps)
 class DesktopTypeMenu extends Component {
   constructor(props) {
     super(props);
@@ -69,10 +53,7 @@ class DesktopTypeMenu extends Component {
   }
 
   change = (item) => {
-    const { swapAction } = this.props;
-    const hasSetting = item.url === PageURL.swapPage;
     if (item.isRoute) activedMenu = item;
-    swapAction.hasSetting(hasSetting);
   };
 
   render() {

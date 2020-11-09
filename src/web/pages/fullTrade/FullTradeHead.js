@@ -19,7 +19,6 @@ import SwapSetting from '_src/pages/swap/SwapSetting';
 function mapStateToProps(state) {
   const { product, productObj, callMarketObj, spotOrMargin } = state.SpotTrade;
   const { legalList, legalId, legalObj } = state.Common;
-  const { hasSetting } = state.SwapStore;
   return {
     product,
     callMarketObj,
@@ -28,7 +27,6 @@ function mapStateToProps(state) {
     legalId,
     legalObj,
     spotOrMargin,
-    hasSetting,
   };
 }
 
@@ -86,7 +84,7 @@ class FullTradeHead extends React.Component {
   };
 
   render() {
-    const { productObj, product, callMarketObj, hasSetting } = this.props;
+    const { productObj, product, callMarketObj } = this.props;
     const current = PageURL.getCurrent();
     const tradingMode = productObj[product]
       ? Number(productObj[product].tradingMode)
@@ -113,7 +111,7 @@ class FullTradeHead extends React.Component {
         {this.isTradePage() ? <FullTradeTicker /> : null}
         <div className="okdex-header-right">
           {util.isLogined() ? <LoggedMenu /> : <LoginMenu />}
-          {hasSetting && <SwapSetting />}
+          <SwapSetting />
           <DocMenu />
           <DesktopLinkMenu hasVersion={false} />
         </div>

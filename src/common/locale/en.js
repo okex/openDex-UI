@@ -767,5 +767,6 @@ const enUS = {
     "It's your current liquidity in the pool.",
   'The share of the pool liquidity after you add.':
     'The share of the pool liquidity after you add.',
+  'set confirmed': 'success',
 };
 export default enUS;

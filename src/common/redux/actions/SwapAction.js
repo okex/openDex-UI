@@ -9,15 +9,6 @@ export function setting(data) {
   };
 }
 
-export function hasSetting(data) {
-  return (dispatch) => {
-    dispatch({
-      type: SwapActionType.SETTING_ICON,
-      data,
-    });
-  };
-}
-
 export function updateAccount(data) {
   return (dispatch, getState) => {
     if (!Array.isArray(data) || !data.length) return;
