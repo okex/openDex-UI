@@ -325,6 +325,7 @@ export default class AddLiquidity extends React.Component {
       '',
       null,
     ];
+    console.log(params);
     return new Promise((resolve, reject) => {
       okexchainClient
         .sendAddLiquidityTransaction(...params)
