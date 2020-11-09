@@ -746,7 +746,7 @@ const zhCN = {
   '24H Volume': '24H 交易量',
   'Fee APY': '手续费年化',
   'Last Price': '价格',
-  '24H Change': '24H Change',
+  '24H Change': '年化，24小时涨跌幅',
   Action: '操作',
   Trade: '交易',
   'Advanced setting': '高级设置',
@@ -759,7 +759,7 @@ const zhCN = {
   'Price Impact help': '受交易规模影响，市价与预期价格之间的差值。',
   'Liquidity Provider Fee help':
     '流动性提供者将获得每笔交易的 0.3% 作为协议奖励。',
-  'pending transactions': '待定交易',
+  'pending transactions': '交易打包中',
   'transaction confirmed': '交易完成',
   'based on 24hr volume annualized':
     '基于24小时交易量算出来的手续费收益年华利率',

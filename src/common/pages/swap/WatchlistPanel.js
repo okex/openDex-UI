@@ -4,7 +4,6 @@ import { getCoinIcon } from './util/coinIcon';
 import { toLocale } from '_src/locale/react-locale';
 import WatchList from './Watchlist';
 import * as api from './util/api';
-import util from '_src/utils/util';
 import calc from '_src/utils/calc';
 import AddLiquidity from './AddLiquidity';
 import getRef from './getRef';
@@ -48,7 +47,7 @@ export default class WatchlistPanel extends React.Component {
         canSort: true,
         width: '154',
         component(props) {
-          return Number(props.data) === 0 ? '--' : '$' + props.data;
+          return Number(props.data) === 0 ? '--' : '$' + calc.mul(props.data, 1).toFixed(2);
         },
       },
       {
@@ -57,7 +56,7 @@ export default class WatchlistPanel extends React.Component {
         canSort: true,
         width: '154',
         component(props) {
-          return Number(props.data) === 0 ? '--' : '$' + props.data;
+          return Number(props.data) === 0 ? '--' : '$' + calc.mul(props.data, 1).toFixed(2);
         },
       },
       {
@@ -93,14 +92,14 @@ export default class WatchlistPanel extends React.Component {
           let price = data;
           if (row.isRevert) {
             tokens.reverse();
-            price = util.precisionInput(calc.div(1, data));
+            price = calc.div(1, data);
           }
           let baseSymbol = tokens[0];
           let targetSymbol = tokens[1];
           return (
             <div style={{ paddingRight: '5px' }}>
               1 {baseSymbol.toUpperCase()}≈
-              {Number(price) === 0 || Number(price) === Infinity ? '-' : price}{' '}
+              {Number(price) === 0 || Number(price) === Infinity ? '-' : calc.mul(price, 1).toFixed(4)}{' '}
               {targetSymbol.toUpperCase()}
             </div>
           );

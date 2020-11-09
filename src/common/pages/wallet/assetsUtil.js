@@ -7,12 +7,22 @@ import { Button } from '_component/Button';
 import { toLocale } from '_src/locale/react-locale';
 import utils from '../../utils/util';
 import Config from '../../constants/Config';
+import DesktopTypeMenu from '_component/DesktopTypeMenu'; 
+import PageURL from '_constants/PageURL';
 
 const util = {
-  tabs: [
-    { id: 1, label: 'assets_tab_accounts' },
-    { id: 2, label: 'assets_tab_transactions' },
-  ],
+  get tabs() {
+    return [
+      { id: 1, label: 'assets_tab_accounts' },
+      ...(function() {
+        const current = DesktopTypeMenu.current ? DesktopTypeMenu.current.url:null;
+        if(current !== PageURL.swapPage) {
+          return [{ id: 2, label: 'assets_tab_transactions' }];
+        }
+        return [];
+      })(),
+    ]
+  },
   get transactionsTypes() {
     return [
       { value: 1, label: toLocale('trade_type_trans') },

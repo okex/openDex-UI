@@ -251,7 +251,7 @@ export default class SwapPanel extends React.Component {
                   <i className="help" />
                 </Tooltip>
               </div>
-              <div className="info-value">{exchangeInfo.price_impact}%</div>
+              <div className="info-value">{calc.mul(exchangeInfo.price_impact, 100).toFixed(2)}%</div>
             </div>
             <div className="info">
               <div className="info-name">
