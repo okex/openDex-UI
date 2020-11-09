@@ -8,12 +8,114 @@ import { toLocale } from '_src/locale/react-locale';
 import utils from '../../utils/util';
 import Config from '../../constants/Config';
 
-const util = {};
+const util = {
+  tabs: [
+    { id: 1, label: 'assets_tab_accounts' },
+    { id: 2, label: 'assets_tab_transactions' },
+  ],
+  get transactionsTypes() {
+    return [
+      { value: 1, label: toLocale('trade_type_trans') },
+      { value: 2, label: toLocale('trade_type_order') },
+      { value: 3, label: toLocale('trade_type_cancle') },
+    ];
+  },
+  get transactionsTypesMap() {
+    const transactionsTypesMap = {};
+    this.transactionsTypes.forEach(({ value, label }) => {
+      transactionsTypesMap[value] = label;
+    });
+    return transactionsTypesMap;
+  },
+  get transactionsCols() {
+    return [
+      {
+        title: toLocale('trade_column_hash'),
+        key: 'txhash',
+        render: (text) => {
+          return (
+            <a
+              href={`${Config.okexchain.browserUrl}/tx/${text}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {FormatNum.hashShort(text)}
+            </a>
+          );
+        },
+      },
+      {
+        title: toLocale('trade_column_time'),
+        key: 'timestamp',
+        alignRight: true,
+        render: (text) => {
+          return moment(Number(`${text}000`)).format('MM-DD HH:mm:ss');
+        },
+      },
+      {
+        title: toLocale('trade_column_assets'),
+        alignRight: true,
+        key: 'symbol',
+        render: (text) => {
+          const symbol =
+            text.indexOf('_') > 0
+              ? utils.getShortName(text)
+              : utils.getSymbolShortName(text);
+          return symbol.toUpperCase();
+        },
+      },
+      {
+        title: toLocale('trade_column_type'),
+        alignRight: true,
+        key: 'type',
+        render: (text) => {
+          return util.transactionsTypesMap[text] || '';
+        },
+      },
+      {
+        title: toLocale('trade_column_direction'),
+        alignRight: true,
+        key: 'side',
+        render: (text, data) => {
+          const { type } = data;
+          let sideText = '';
+          let color = 'primary-green';
+          if (type === 1) {
+            if (text === 3) {
+              color = 'primary-red';
+              sideText = toLocale('trade_type_pay');
+            }
+            if (text === 4) {
+              sideText = toLocale('trade_type_receive');
+            }
+          } else {
+            if (text === 1) {
+              sideText = toLocale('trade_type_buy');
+            }
+            if (text === 2) {
+              sideText = toLocale('trade_type_sell');
+              color = 'primary-red';
+            }
+          }
+          return <span className={color}>{sideText}</span>;
+        },
+      },
+      {
+        title: toLocale('trade_column_amount'),
+        alignRight: true,
+        key: 'quantity',
+      },
+      {
+        title: `${toLocale('trade_column_fee')}`,
+        key: 'fee',
+        render: (text) => {
+          return String(text.split('-')[0]).toUpperCase();
+        },
+      },
+    ]
+  }
+};
 
-util.tabs = [
-  { id: 1, label: 'assets_tab_accounts' },
-  { id: 2, label: 'assets_tab_transactions' },
-];
 util.accountsCols = ({ transfer }, { valuationUnit }) => {
   return [
     {
@@ -74,98 +176,4 @@ util.accountsCols = ({ transfer }, { valuationUnit }) => {
     },
   ];
 };
-util.transactionsTypes = [
-  { value: 1, label: toLocale('trade_type_trans') },
-  { value: 2, label: toLocale('trade_type_order') },
-  { value: 3, label: toLocale('trade_type_cancle') },
-];
-const transactionsTypesMap = {};
-util.transactionsTypes.forEach(({ value, label }) => {
-  transactionsTypesMap[value] = label;
-});
-util.transactionsCols = [
-  {
-    title: toLocale('trade_column_hash'),
-    key: 'txhash',
-    render: (text) => {
-      return (
-        <a
-          href={`${Config.okexchain.browserUrl}/tx/${text}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {FormatNum.hashShort(text)}
-        </a>
-      );
-    },
-  },
-  {
-    title: toLocale('trade_column_time'),
-    key: 'timestamp',
-    alignRight: true,
-    render: (text) => {
-      return moment(Number(`${text}000`)).format('MM-DD HH:mm:ss');
-    },
-  },
-  {
-    title: toLocale('trade_column_assets'),
-    alignRight: true,
-    key: 'symbol',
-    render: (text) => {
-      const symbol =
-        text.indexOf('_') > 0
-          ? utils.getShortName(text)
-          : utils.getSymbolShortName(text);
-      return symbol.toUpperCase();
-    },
-  },
-  {
-    title: toLocale('trade_column_type'),
-    alignRight: true,
-    key: 'type',
-    render: (text) => {
-      return transactionsTypesMap[text] || '';
-    },
-  },
-  {
-    title: toLocale('trade_column_direction'),
-    alignRight: true,
-    key: 'side',
-    render: (text, data) => {
-      const { type } = data;
-      let sideText = '';
-      let color = 'primary-green';
-      if (type === 1) {
-        if (text === 3) {
-          color = 'primary-red';
-          sideText = toLocale('trade_type_pay');
-        }
-        if (text === 4) {
-          sideText = toLocale('trade_type_receive');
-        }
-      } else {
-        if (text === 1) {
-          sideText = toLocale('trade_type_buy');
-        }
-        if (text === 2) {
-          sideText = toLocale('trade_type_sell');
-          color = 'primary-red';
-        }
-      }
-      return <span className={color}>{sideText}</span>;
-    },
-  },
-  {
-    title: toLocale('trade_column_amount'),
-    alignRight: true,
-    key: 'quantity',
-  },
-  {
-    title: `${toLocale('trade_column_fee')}`,
-    key: 'fee',
-    render: (text) => {
-      return String(text.split('-')[0]).toUpperCase();
-    },
-  },
-];
 export default util;
