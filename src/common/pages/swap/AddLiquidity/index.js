@@ -158,9 +158,14 @@ export default class AddLiquidity extends React.Component {
           quote_token: targetToken.symbol,
         }));
       if (!temp) return;
-      const { base_pooled_coin, quote_pooled_coin } = temp;
+      let { base_pooled_coin, quote_pooled_coin } = temp;
+      let tempSymbol = base_pooled_coin;
+      if(baseToken.symbol !== base_pooled_coin.denom) {
+        base_pooled_coin = quote_pooled_coin;
+        quote_pooled_coin = tempSymbol;
+      }
       exchangeInfo.price = util.precisionInput(
-        calc.div(base_pooled_coin.amount, quote_pooled_coin.amount)
+        calc.div(quote_pooled_coin.amount, base_pooled_coin.amount)
       );
     }
   }
