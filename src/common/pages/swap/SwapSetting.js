@@ -102,9 +102,6 @@ export default class SwapSetting extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="error-tip">
-              *{toLocale('Your transaction may fail')}
-            </div>
             <div className="setting-btn" onClick={this.confirm}>
               {toLocale('Confirm')}
             </div>

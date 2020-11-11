@@ -51,16 +51,19 @@ export default class Watchlist extends React.Component {
   }
 
   render() {
-    const { data, columns } = this.props;
+    const { data, columns, children } = this.props;
     return (
-      <table>
-        <tbody>
-          <tr className="table-head">{this.getHead()}</tr>
-          {data.map((d, index) => (
-            <DataRow key={index} data={d} columns={columns} />
-          ))}
-        </tbody>
-      </table>
+      <>
+        <table>
+          <tbody>
+            <tr className="table-head">{this.getHead()}</tr>
+            {data.map((d, index) => (
+              <DataRow key={index} data={d} columns={columns} />
+            ))}
+          </tbody>
+        </table>
+        {children}
+      </>
     );
   }
 }

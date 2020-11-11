@@ -14,6 +14,7 @@ import { getDeadLine4sdk } from './util';
 import getRef from './getRef';
 import Tooltip from '../../component/Tooltip';
 import { validateTxs } from '_src/utils/client';
+import Message from '_src/component/Message';
 
 function mapStateToProps(state) {
   const { setting } = state.SwapStore;
@@ -65,7 +66,7 @@ export default class SwapPanel extends React.Component {
     this.updateSwapInfo4RealTime(data, 'baseToken');
   };
 
-  async updateSwapInfo(data, key) {
+  async updateSwapInfo(data, key, errTip = false) {
     const { value, symbol } = data[key];
     const target = key === 'baseToken' ? data.targetToken : data.baseToken;
     if (value && symbol && target.symbol) {
@@ -83,6 +84,12 @@ export default class SwapPanel extends React.Component {
         data.exchangeInfo = { price, price_impact, fee, route };
         target.value = buy_amount;
       } catch (e) {
+        if (errTip && JSON.parse(e.msg).code === 6) {
+          Message.error({
+            content: toLocale('pool empty'),
+            duration: 3,
+          });
+        }
         data.exchange = { ...SwapPanel.exchangeInfo };
         target.value = '';
       }
@@ -103,7 +110,7 @@ export default class SwapPanel extends React.Component {
       clearInterval(this.updateSwapInfo4RealTime.interval);
       this.updateSwapInfo4RealTime.interval = null;
     }
-    await this.updateSwapInfo(data, key);
+    await this.updateSwapInfo(data, key, true);
     this.setState(data, () => {
       data[key].value &&
         (this.updateSwapInfo4RealTime.interval = setInterval(async () => {
@@ -251,7 +258,9 @@ export default class SwapPanel extends React.Component {
                   <i className="help" />
                 </Tooltip>
               </div>
-              <div className="info-value">{calc.mul(exchangeInfo.price_impact, 100).toFixed(2)}%</div>
+              <div className="info-value">
+                {calc.mul(exchangeInfo.price_impact, 100).toFixed(2)}%
+              </div>
             </div>
             <div className="info">
               <div className="info-name">

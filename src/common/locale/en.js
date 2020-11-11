@@ -768,5 +768,9 @@ const enUS = {
   'The share of the pool liquidity after you add.':
     'The share of the pool liquidity after you add.',
   'set confirmed': 'success',
+  'pool empty': "Pool is empty, can't swap",
+  'pool empty tip':
+    'This is an empty pool, go add the first liquidity and decide the price',
+  'watchlist noData': 'No Data',
 };
 export default enUS;

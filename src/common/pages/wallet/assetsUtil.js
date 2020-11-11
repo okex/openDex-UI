@@ -7,21 +7,23 @@ import { Button } from '_component/Button';
 import { toLocale } from '_src/locale/react-locale';
 import utils from '../../utils/util';
 import Config from '../../constants/Config';
-import DesktopTypeMenu from '_component/DesktopTypeMenu'; 
+import DesktopTypeMenu from '_component/DesktopTypeMenu';
 import PageURL from '_constants/PageURL';
 
 const util = {
   get tabs() {
     return [
       { id: 1, label: 'assets_tab_accounts' },
-      ...(function() {
-        const current = DesktopTypeMenu.current ? DesktopTypeMenu.current.url:null;
-        if(current !== PageURL.swapPage) {
+      ...(function () {
+        const current = DesktopTypeMenu.current
+          ? DesktopTypeMenu.current.url
+          : null;
+        if (current !== PageURL.swapPage) {
           return [{ id: 2, label: 'assets_tab_transactions' }];
         }
         return [];
       })(),
-    ]
+    ];
   },
   get transactionsTypes() {
     return [
@@ -122,8 +124,8 @@ const util = {
           return String(text.split('-')[0]).toUpperCase();
         },
       },
-    ]
-  }
+    ];
+  },
 };
 
 util.accountsCols = ({ transfer }, { valuationUnit }) => {

@@ -12,13 +12,6 @@ import Tooltip from '../../component/Tooltip';
 export default class WatchlistPanel extends React.Component {
   constructor() {
     super();
-    this.state = {
-      sort: null,
-      data: [],
-      current: 1,
-      pageSize: 15,
-      total: 0,
-    };
     this.columns = [
       {
         field: 'swap_pair',
@@ -47,7 +40,9 @@ export default class WatchlistPanel extends React.Component {
         canSort: true,
         width: '154',
         component(props) {
-          return Number(props.data) === 0 ? '--' : '$' + calc.mul(props.data, 1).toFixed(2);
+          return Number(props.data) === 0
+            ? '--'
+            : '$' + calc.mul(props.data, 1).toFixed(2);
         },
       },
       {
@@ -56,7 +51,9 @@ export default class WatchlistPanel extends React.Component {
         canSort: true,
         width: '154',
         component(props) {
-          return Number(props.data) === 0 ? '--' : '$' + calc.mul(props.data, 1).toFixed(2);
+          return Number(props.data) === 0
+            ? '--'
+            : '$' + calc.mul(props.data, 1).toFixed(2);
         },
       },
       {
@@ -99,7 +96,9 @@ export default class WatchlistPanel extends React.Component {
           return (
             <div style={{ paddingRight: '5px' }}>
               1 {baseSymbol.toUpperCase()}≈
-              {Number(price) === 0 || Number(price) === Infinity ? '-' : calc.mul(price, 1).toFixed(4)}{' '}
+              {Number(price) === 0 || Number(price) === Infinity
+                ? '-'
+                : calc.mul(price, 1).toFixed(4)}{' '}
               {targetSymbol.toUpperCase()}
             </div>
           );
@@ -129,7 +128,7 @@ export default class WatchlistPanel extends React.Component {
         },
       },
       {
-        name: toLocale('Action'),
+        name: '',
         component: ({ row }) => {
           return (
             <div className="action-opt-wrap">
@@ -148,6 +147,13 @@ export default class WatchlistPanel extends React.Component {
         },
       },
     ];
+    this.state = {
+      sort: { field: 'liquidity', sort: 'desc' },
+      data: [],
+      current: 1,
+      pageSize: 15,
+      total: 0,
+    };
   }
 
   exchange(row) {
@@ -222,7 +228,6 @@ export default class WatchlistPanel extends React.Component {
 
   render() {
     const { sort, data, current, pageSize, total } = this.state;
-    if (!total) return null;
     return (
       <div className="panel-watchlist">
         <WatchList
@@ -230,7 +235,11 @@ export default class WatchlistPanel extends React.Component {
           data={data}
           columns={this.columns}
           onSort={this.onSort}
-        />
+        >
+          {!total && (
+            <div className="nodata">{toLocale('watchlist noData')}</div>
+          )}
+        </WatchList>
         {total > pageSize && (
           <div className="pagination-wrap">
             <Pagination

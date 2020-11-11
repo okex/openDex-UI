@@ -45,9 +45,6 @@ export default class Confirm extends React.Component {
         (privateKey) => {
           this.onClose();
           this.onClick(privateKey, false);
-          // okexchainClient.setAccountInfo(privateKey).then(() => {
-          //   this.onClick(false);
-          // });
         },
         () => {
           this.setState({

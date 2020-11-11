@@ -80,10 +80,7 @@ export default class AddLiquidity extends React.Component {
     };
     if (targetTokenDisabled && !data.baseToken.value)
       data.targetToken.value = '';
-    this.updateInfo(
-      data,
-      token.symbol !== baseToken.symbol && targetToken.symbol
-    );
+    this.updateInfo(data);
   };
 
   changeTarget = (token) => {
@@ -93,10 +90,7 @@ export default class AddLiquidity extends React.Component {
       targetToken: { ...targetToken, ...token },
       baseToken: { ...baseToken },
     };
-    this.updateInfo(
-      data,
-      token.symbol !== targetToken.symbol && baseToken.symbol
-    );
+    this.updateInfo(data);
   };
 
   init = async (state) => {
@@ -124,9 +118,9 @@ export default class AddLiquidity extends React.Component {
     this.updateInfo(data);
   };
 
-  async updateInfo(data, check = false) {
+  async updateInfo(data) {
     try {
-      if (check) await this._check(data);
+      await this._check(data);
       await this._updateExchangePrice(data);
       await this._updateExchange(data);
     } finally {
@@ -160,7 +154,7 @@ export default class AddLiquidity extends React.Component {
       if (!temp) return;
       let { base_pooled_coin, quote_pooled_coin } = temp;
       let tempSymbol = base_pooled_coin;
-      if(baseToken.symbol !== base_pooled_coin.denom) {
+      if (baseToken.symbol !== base_pooled_coin.denom) {
         base_pooled_coin = quote_pooled_coin;
         quote_pooled_coin = tempSymbol;
       }
@@ -234,7 +228,9 @@ export default class AddLiquidity extends React.Component {
               <i className="help" />
             </Tooltip>
           </div>
-          <div className="info-value">{calc.mul(poolShare, 100).toFixed(2)}%</div>
+          <div className="info-value">
+            {calc.mul(poolShare, 100).toFixed(2)}%
+          </div>
         </div>
       </div>
     );
@@ -330,7 +326,6 @@ export default class AddLiquidity extends React.Component {
       '',
       null,
     ];
-    console.log(params);
     return new Promise((resolve, reject) => {
       okexchainClient
         .sendAddLiquidityTransaction(...params)
@@ -378,6 +373,8 @@ export default class AddLiquidity extends React.Component {
     } = this.state;
     const exchangeInfo = this.getExchangeInfo();
     const btn = this.getBtn();
+    const isEmpty =
+      baseToken.symbol && targetToken.symbol && !targetTokenDisabled;
     return (
       <>
         <div className="panel">
@@ -386,6 +383,11 @@ export default class AddLiquidity extends React.Component {
             {toLocale('Add Liquidity')}
           </div>
           <div className="add-liquidity-content">
+            {isEmpty && (
+              <div className="tip-liquidity-empty">
+                {toLocale('pool empty tip')}
+              </div>
+            )}
             <CoinItem
               label={toLocale('Input')}
               token={baseToken}

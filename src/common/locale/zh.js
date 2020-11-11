@@ -743,10 +743,10 @@ const zhCN = {
   Confirm: '确认',
   'Swap Pair': '交易对',
   Liquidity: '流动性',
-  '24H Volume': '24H 交易量',
+  '24H Volume': '24H交易量',
   'Fee APY': '手续费年化',
   'Last Price': '价格',
-  '24H Change': '年化，24小时涨跌幅',
+  '24H Change': '24H涨跌幅',
   Action: '操作',
   Trade: '交易',
   'Advanced setting': '高级设置',
@@ -761,8 +761,7 @@ const zhCN = {
     '流动性提供者将获得每笔交易的 0.3% 作为协议奖励。',
   'pending transactions': '交易打包中',
   'transaction confirmed': '交易完成',
-  'based on 24hr volume annualized':
-    '基于24小时交易量算出来的手续费收益年华利率',
+  'based on 24hr volume annualized': '手续费收益年化利率 (基于24小时交易量)',
   "Current pair can only swap through OKT, there's no direct pair for the 2 tokens.":
     '当前交易对只能通过OKT兑换，暂无可以直接兑换这两个币的资金池',
   'Your transaction will revert if the price changes unfavorably by more than this percentage.':
@@ -771,5 +770,8 @@ const zhCN = {
   'The share of the pool liquidity after you add.':
     '你添加流动性之后的流动性占比',
   'set confirmed': '设置成功',
+  'pool empty': '此池子无流动性，无法兑换',
+  'pool empty tip': '当前池中并无流动性，请添加第一笔流动性决定初始价格',
+  'watchlist noData': 'No Data',
 };
 export default zhCN;
