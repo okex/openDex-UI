@@ -772,6 +772,6 @@ const zhCN = {
   'set confirmed': '设置成功',
   'pool empty': '此池子无流动性，无法兑换',
   'pool empty tip': '当前池中并无流动性，请添加第一笔流动性决定初始价格',
-  'watchlist noData': 'No Data',
+  'watchlist noData': '暂无数据',
 };
 export default zhCN;
