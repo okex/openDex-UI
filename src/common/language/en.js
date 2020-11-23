@@ -550,14 +550,10 @@ const enUS = {
   home_steps_item3_content:
     'For each transaction and transfer, you can query the corresponding information in the blockchain browser through the transaction hash value and address.',
   home_steps_item3_button: 'Check block data',
-  home_steps_item0_img:
-    'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/7285906D63E20BD639AA7C8A3429755E.png',
-  home_steps_item1_img:
-    'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/9088F851DF59FD358F6EAA08BFDE08A4.png',
-  home_steps_item2_img:
-    'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/1CDBD8D16A98147F82E9E7703FE9DE61.png',
-  home_steps_item3_img:
-    'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/298BA40D0EF5D30907E47C018D8D1B7B.png',
+  home_steps_item0_img: 'https://static.bafang.com/cdn/assets/imgs/209/8AF5AC5D994DF7A6.png',
+  home_steps_item1_img: 'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/9088F851DF59FD358F6EAA08BFDE08A4.png',
+  home_steps_item2_img: 'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/1CDBD8D16A98147F82E9E7703FE9DE61.png',
+  home_steps_item3_img: 'https://static.bafang.com/cdn/assets/imgs/209/2B5BC821D378FCE7.png',
   home_exp_more: 'Learn more about "DEX, OKExChain detailed design rules',
   home_exp_img:
     'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/A4C4128B4E548183A3D05A8463ED45F6.png',
