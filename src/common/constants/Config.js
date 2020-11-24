@@ -10,9 +10,7 @@ const Config = {
     browserAddressUrl: `${exploreUrl}/${okbExplorePrefix}/address`,
     clientUrl: getApiUrl(),
     receiveCoinUrl: '/activities/pro/drawdex',
-    docUrl: `https://okexchain-docs.readthedocs.io/${
-      lang.indexOf('zh') >= 0 ? 'en' : 'en'
-    }/latest/`,
+    docUrl: `https://okexchain-docs.readthedocs.io/en/latest/`,
   },
   validatePwdDeferSecond: 100,
   operateResultDelaySecond: 500,
