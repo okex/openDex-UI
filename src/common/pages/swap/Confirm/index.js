@@ -38,7 +38,7 @@ export default class Confirm extends React.Component {
     if (!util.isLogined()) window.location.reload();
     if (this.state.processingPwd) return;
     this.setState({ processingPwd: true });
-    const { commonAction, okexchainClient } = this.props;
+    const { commonAction } = this.props;
     setTimeout(() => {
       commonAction.validatePassword(
         pwd,
