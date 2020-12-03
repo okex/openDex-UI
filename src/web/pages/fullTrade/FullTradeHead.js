@@ -50,7 +50,7 @@ class FullTradeHead extends React.Component {
 
   componentDidMount() {
     const { commonAction } = this.props;
-    commonAction.fetchLegalList();
+    // commonAction.fetchLegalList();
     commonAction.fetchChargeUnit();
     commonAction.initOKExChainClient();
   }
