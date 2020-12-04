@@ -141,7 +141,7 @@ const InitWrapper = (Component) => {
         OK_GLOBAL.ws_v3.isConnected() &&
         util.isWsLogin()
       ) {
-        wsV3.login(util.getMyToken());
+        wsV3.login(util.getMyAddr());
       }
     };
     render() {
