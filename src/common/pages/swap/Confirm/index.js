@@ -93,7 +93,7 @@ export default class Confirm extends React.Component {
             : null;
           const res = await onClick();
           if (!validateTxs(res)) {
-            throw new Error();
+            throw new Error(res.result.msg);
           }
           if (loadingToast) loadingToast.destroy();
           if (successTxt)
