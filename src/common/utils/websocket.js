@@ -19,7 +19,7 @@ export const wsV3 = {
     window.OK_GLOBAL.ws_v3.sendChannel(
       JSON.stringify({
         op: 'dex_jwt',
-        args: token,
+        args: [token],
       })
     );
   },
