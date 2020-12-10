@@ -93,13 +93,13 @@ const InitWrapper = (Component) => {
         const v3 = OK_GLOBAL.ws_v3;
         v3.onSocketConnected(() => {
           function getJwtToken() {
-            if (!util.isWsLogin()) {
+            if (!util.isLogined()) {
               setTimeout(getJwtToken, 1000);
             } else {
               wsV3.login(util.getMyAddr());
             }
           }
-          if (!util.isWsLogin()) {
+          if (!util.isLogined()) {
             getJwtToken();
           } else {
             wsV3.login(util.getMyAddr());
