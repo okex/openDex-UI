@@ -233,10 +233,10 @@ const enUS = {
   'spot.orders.priceVarianceExplain':
     'Set a fixed % from the best bid or offer price at which you want your orders to be created. ',
   'spot.orders.totalAmount': 'Total amount',
-  'spot.orders.totalAmountExplain': 'Set the total amount you wish to buy or sell',
+  'spot.orders.totalAmountExplain':
+    'Set the total amount you wish to buy or sell',
   'spot.orders.avgAmount': 'Average amount',
-  'spot.orders.avgAmountExplain':
-    'Set the average order size for each order.',
+  'spot.orders.avgAmountExplain': 'Set the average order size for each order.',
   'spot.orders.priceLimit': 'Price limit',
   'spot.orders.priceLimitExplain':
     'Set a price limit to stop your iceberg order from executing.',
@@ -417,8 +417,7 @@ const enUS = {
   'spot.orders.orderTypeShort.postOnly': 'Post only',
   'spot.orders.orderTypeShort.FOK': 'Fill or kill',
   'spot.orders.orderTypeShort.FAK': 'Immediate or cancel',
-  'spot.place.tips.orderType':
-    `Post Only never takes liquidity and ensures you will be a maker. 
+  'spot.place.tips.orderType': `Post Only never takes liquidity and ensures you will be a maker. 
 
 Fill or Kill makes sure the order is fully executed, or is canceled entirely without partial fills.
 
@@ -456,14 +455,12 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   wallet_importNow: 'import now',
   wallet_nextStep: 'Next',
   wallet_safeTip_title: '',
-  wallet_safeTip_beforeKeystore:
-    'Save your mnemonic phrase and download your ',
+  wallet_safeTip_beforeKeystore: 'Save your mnemonic phrase and download your ',
   wallet_safeTip_afterKeystore:
     'to a secure place. Don’t take pictures or save a copy that you could lose.',
   wallet_known: 'I understand',
   wallet_create_step2: 'Mnemonic phrase backup',
-  wallet_create_backupMnemonic:
-    'Please back up your mnemonic phrase',
+  wallet_create_backupMnemonic: 'Please back up your mnemonic phrase',
   wallet_create_backupMnemonic_error: 'Not verified. Please back up again',
   wallet_create_beginValidate: 'Continue',
   wallet_create_step3: 'Mnemonic phrase verification',

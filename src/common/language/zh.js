@@ -556,10 +556,14 @@ const zhCN = {
   home_steps_item3_content:
     '每一笔交易、转账都可以通过交易哈希值、地址等在区块链浏览器中查询相应信息。',
   home_steps_item3_button: '查看区块数据',
-  home_steps_item0_img: 'https://static.bafang.com/cdn/assets/imgs/209/8C303F4EB6749D70.png',
-  home_steps_item1_img: 'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/EA5B9697721EAAE780B6A0D18D5F6DE5.png',
-  home_steps_item2_img: 'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/0A848CAA0FA942D868854F6F469ADEC1.png',
-  home_steps_item3_img: 'https://static.bafang.com/cdn/assets/imgs/209/343B60DBDE22127D.png',
+  home_steps_item0_img:
+    'https://static.bafang.com/cdn/assets/imgs/209/8C303F4EB6749D70.png',
+  home_steps_item1_img:
+    'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/EA5B9697721EAAE780B6A0D18D5F6DE5.png',
+  home_steps_item2_img:
+    'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/0A848CAA0FA942D868854F6F469ADEC1.png',
+  home_steps_item3_img:
+    'https://static.bafang.com/cdn/assets/imgs/209/343B60DBDE22127D.png',
   home_exp_more: '想要进一步了解「DEX、OKExChain详细设计规则」',
   home_exp_img:
     'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/3AF196CA9B03F9FFAE8A519469FBB6AD.png',

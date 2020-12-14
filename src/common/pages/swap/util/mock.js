@@ -2,7 +2,7 @@ const Mock = require('mockjs');
 
 module.exports = {
   tokens(url) {
-    Mock.mock(url, {
+    Mock.mock(RegExp(`${url}.*`), {
       code: 0,
       msg: '',
       detail_msg: '',
@@ -11,32 +11,32 @@ module.exports = {
         tokens: [
           {
             symbol: 'eos-d87',
-            available: '79999990000.00000000',
+            available: '79999990000.0000000000000000',
           },
           {
             symbol: 'okt',
-            available: '8974999.99200000',
+            available: '8974999.9920000000000000',
           },
         ],
       },
     });
   },
   buyInfo(url) {
-    Mock.mock(url, {
+    Mock.mock(RegExp(`${url}.*`), {
       code: 0,
       msg: '',
       detail_msg: '',
       data: {
-        buy_amount: '19.88846512',
-        price: '0.96',
-        price_impact: '0.78',
-        fee: '0.03okt',
+        buy_amount: '19.8884651200000000',
+        price: '0.9600000000',
+        price_impact: '0.7800000000',
+        fee: '0.0300000000okt',
         route: 'okt',
       },
     });
   },
   liquidityInfo(url) {
-    Mock.mock(url, {
+    Mock.mock(RegExp(`${url}.*`), {
       code: 0,
       msg: '',
       detail_msg: '',
@@ -44,45 +44,45 @@ module.exports = {
         {
           base_pooled_coin: {
             denom: 'eos-c9f',
-            amount: /(0\.00000000)|(10\.00000000)/,
+            amount: /(0\.0000000000000000)|(10\.0000000000000000)/,
           },
           quote_pooled_coin: {
             denom: 'okt',
-            amount: /(0\.00000000)|(10\.00000000)/,
+            amount: /(0\.0000000000000000)|(10\.0000000000000000)/,
           },
           pool_token_coin: {
             denom: 'ammswap_eos-c9f_okt',
-            amount: '100.00000000',
+            amount: '100.0000000000000000',
           },
-          pool_token_ratio: '0.042',
+          pool_token_ratio: '0.04200000000',
         },
       ],
     });
   },
   addInfo(url) {
-    Mock.mock(url, {
+    Mock.mock(RegExp(`${url}.*`), {
       code: 0,
       msg: '',
       detail_msg: '',
       data: {
-        base_token_amount: '19.88846512',
-        pool_share: '0.58',
+        base_token_amount: '19.8884651200000000',
+        pool_share: '0.5800000000',
       },
     });
   },
   redeemableAssets(url) {
-    Mock.mock(url, {
+    Mock.mock(RegExp(`${url}.*`), {
       code: 0,
       msg: '',
       detail_msg: '',
       data: [
         {
           denom: 'okt',
-          amount: '20.00599400',
+          amount: '20.0059940000000000',
         },
         {
           denom: 'rxb-276',
-          amount: '19.99402576',
+          amount: '19.9940257600000000',
         },
       ],
     });
@@ -95,15 +95,15 @@ module.exports = {
         : {
             quote_pooled_coin: {
               denom: 'rxb-276',
-              amount: '9997.01288057',
+              amount: '9997.0128805700000000',
             },
             base_pooled_coin: {
               denom: 'okt',
-              amount: '10002.99700300',
+              amount: '10002.9970030000000000',
             },
             pool_token_name: 'ammswap_okt_rxb-276',
           };
-    Mock.mock(url, {
+    Mock.mock(RegExp(`${url}.*`), {
       code: 0,
       msg: '',
       detail_msg: '',
@@ -111,7 +111,7 @@ module.exports = {
     });
   },
   watchlist(url) {
-    Mock.mock(url, {
+    Mock.mock(RegExp(`${url}.*`), {
       code: 0,
       msg: '',
       detail_msg: '',
@@ -119,11 +119,11 @@ module.exports = {
         'data|15': [
           {
             swap_pair: 'eos-d07_okt',
-            liquidity: /0|2411223/,
+            liquidity: /0|2411223.0000000000000000/,
             volume24h: '23423234',
-            fee_apy: '102.1',
-            last_price: '10.123',
-            change24h: '-0.1212',
+            fee_apy: '102.10000000000000000',
+            last_price: '10.12300000000',
+            change24h: '-0.121200000000',
           },
         ],
         param_page: {
