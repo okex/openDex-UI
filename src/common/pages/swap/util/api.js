@@ -10,7 +10,7 @@ function ajax(method, url, params) {
 }
 
 function get(url, params = {}) {
-  let method = 'get';
+  const method = 'get';
   return ajax(method, url, { params });
 }
 
