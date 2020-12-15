@@ -11,7 +11,7 @@ const util = {
     if (locales.includes(lang)) {
       return lang;
     }
-    return 'zh_CN';
+    return 'en_US';
   },
   getChangePercentage(ticker) {
     if (!ticker) {

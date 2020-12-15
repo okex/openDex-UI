@@ -2,6 +2,7 @@ import React from 'react';
 import { toLocale } from '_src/locale/react-locale';
 import commonUtil from './commonUtil';
 import FormatNum from '../../utils/FormatNum';
+import util from '../../utils/util';
 
 export default {
   noDealColumns: (onCancelOrder, onClickProduct) => {
@@ -102,7 +103,11 @@ export default {
           if (text) {
             txt = text.split('-')[0];
           }
-          return FormatNum.formatFeeStr(txt.toUpperCase());
+          text = FormatNum.formatFeeStr(txt.toUpperCase());
+          text = text.replace(/(\d{1,}\.?\d*)/,function($1) {
+            return util.precisionInput($1)
+          });
+          return text;
         },
       },
     ];

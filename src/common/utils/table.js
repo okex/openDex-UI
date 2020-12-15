@@ -300,6 +300,9 @@ export const getTransactionsCols = () => {
       title: toLocale('trade_column_amount'),
       alignRight: true,
       key: 'quantity',
+      render: (text) => {
+        return util.precisionInput(text);
+      }
     },
   ];
 };
