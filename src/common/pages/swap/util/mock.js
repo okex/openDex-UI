@@ -119,7 +119,7 @@ module.exports = {
         'data|15': [
           {
             swap_pair: 'eos-d07_okt',
-            liquidity: /0|2411223.0000000000000000/,
+            liquidity: '2411223',
             volume24h: '23423234',
             fee_apy: '102.10000000000000000',
             last_price: '10.12300000000',

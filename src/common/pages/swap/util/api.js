@@ -86,7 +86,11 @@ export function liquidityInfo(params = {}) {
     token_pair_name,
   }).then((data) => {
     if (data) {
-      data.forEach((d) => (d.amount = util.precisionInput(d.amount)));
+      data.forEach((d) => {
+        d.base_pooled_coin.amount = util.precisionInput(d.base_pooled_coin.amount);
+        d.quote_pooled_coin.amount = util.precisionInput(d.quote_pooled_coin.amount);
+        d.pool_token_coin.amount = util.precisionInput(d.pool_token_coin.amount);
+      });
       data.pool_token_ratio = util.precisionInput(data.pool_token_ratio);
     }
     return data;
