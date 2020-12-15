@@ -30,6 +30,7 @@ const ruRU = {
   'spot.account.spot': '币币账户',
   'spot.asset.futureTrade': '交割合约交易',
   'spot.asset.futureswapTrade': '永续合约交易',
+  'spot.asset.optionsTrade': '期权合约交易',
   'spot.asset.ava': '可用',
   'spot.asset.borrow': '已借',
   'spot.asset.freeze': '冻结',

@@ -38,6 +38,7 @@ const enUS = {
   'spot.asset.spotTrade': 'Spot',
   'spot.asset.dexTest': 'DEX trade',
   'spot.asset.futureTrade': 'Futures',
+  'spot.asset.optionsTrade': 'Options',
   'spot.asset.deposit': 'Deposit {currency}',
   'spot.asset.transfer': 'Transfer',
   'spot.asset.transferSuccess': 'Transfer success',

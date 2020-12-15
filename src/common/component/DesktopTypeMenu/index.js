@@ -11,18 +11,6 @@ class DesktopTypeMenu extends Component {
     super(props);
     this.headTypeList = [
       {
-        url: '/derivatives/futures/full',
-        type: '/derivatives/futures/full',
-        label: toLocale('spot.asset.futureTrade'),
-        monitor: 'full_header,nav_future,nav_enter_future',
-      },
-      {
-        url: '/derivatives/swap/full',
-        type: '/derivatives/swap/full',
-        label: toLocale('spot.asset.futureswapTrade'),
-        monitor: 'full_header,nav_swap,nav_enter_swap',
-      },
-      {
         url: '/spot/full',
         type: '/spot/full',
         label: toLocale('spot.asset.spotTrade'),
@@ -33,6 +21,24 @@ class DesktopTypeMenu extends Component {
         type: '/spot/fullMargin',
         label: toLocale('spot.asset.newMarginTrade'),
         monitor: 'full_header,nav_margin,nav_enter_margin',
+      },
+      {
+        url: '/derivatives/swap/full',
+        type: '/derivatives/swap/full',
+        label: toLocale('spot.asset.futureswapTrade'),
+        monitor: 'full_header,nav_swap,nav_enter_swap',
+      },
+      {
+        url: '/derivatives/futures/full',
+        type: '/derivatives/futures/full',
+        label: toLocale('spot.asset.futureTrade'),
+        monitor: 'full_header,nav_future,nav_enter_future',
+      },
+      {
+        url: '/derivatives/options/instruments',
+        type: '/derivatives/options/instruments',
+        label: toLocale('spot.asset.optionsTrade'),
+        monitor: 'full_header,nav_options,nav_enter_options',
       },
       {
         url: `${PageURL.homePage}/spot/trade`,
