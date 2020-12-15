@@ -5,10 +5,11 @@ import URL from '../constants/URL';
 import Enum from '../utils/Enum';
 import PageURL from '../constants/PageURL';
 
+const locales = ['zh_CN','en_US','ru_RU'];
 const util = {
   getSupportLocale(lang) {
-    if (lang.toLowerCase().indexOf('cn') === -1) {
-      return 'en_US';
+    if (locales.includes(lang)) {
+      return lang;
     }
     return 'zh_CN';
   },

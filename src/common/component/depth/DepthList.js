@@ -2,12 +2,10 @@ import Icon from '_src/component/IconLite';
 import { toLocale } from '_src/locale/react-locale';
 import React from 'react';
 import PropTypes from 'prop-types';
-import Cookies from 'js-cookie';
 import DepthTooltip from './DepthTooltip';
 import './DepthList.less';
 import DepthBar from '../../utils/DepthBar';
 import EnumUtil from '../../utils/Enum';
-import util from '../../utils/util';
 
 const Enum = {
   dark: 'dark',
@@ -92,13 +90,6 @@ export default class DepthList extends React.Component {
       default:
         preStr = tempStr.length - (tempStr.indexOf('.') + 1);
         break;
-    }
-    const locale = util.getSupportLocale(Cookies.get('locale') || 'en_US');
-    if (locale && locale.indexOf('ko') > -1) {
-      if (Number(tempStr) < 10) {
-        preStr = tempStr;
-        intlId = 'spot.xDecimal';
-      }
     }
     return (
       <span className="spot-depth-desc">

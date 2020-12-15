@@ -74,29 +74,6 @@ export function updateLatestHeight(height) {
   };
 }
 
-export function fetchLegalList() {
-  return (dispatch) => {
-    ont
-      .get(
-        `${URL.GET_LEGAL_LIST}?locale=${util.getSupportLocale(
-          Cookies.get('locale') || 'en_US'
-        )}`
-      )
-      .then((res) => {
-        dispatch({
-          type: CommonActionType.UPDATE_CURRENCY_LIST,
-          data: res.data,
-        });
-      })
-      .catch(() => {
-        dispatch({
-          type: CommonActionType.UPDATE_CURRENCY_LIST,
-          data: [],
-        });
-      });
-  };
-}
-
 export function fetchChargeUnit() {
   return (dispatch, getState) => {
     let id = 0;
