@@ -78,6 +78,11 @@ class FullTradeHead extends React.Component {
     return this.props.location.pathname.indexOf(PageURL.spotFullPage) >= 0;
   }
 
+  isSwapMenu() {
+    const current = DesktopTypeMenu.current ? DesktopTypeMenu.current.url : null;
+    return current === PageURL.swapPage;
+  }
+
   goHome = () => {
     util.go();
   };
@@ -110,9 +115,9 @@ class FullTradeHead extends React.Component {
         {this.isTradePage() ? <FullTradeTicker /> : null}
         <div className="okdex-header-right">
           {util.isLogined() ? <LoggedMenu /> : <LoginMenu />}
-          <SwapSetting />
+          {this.isSwapMenu() && <SwapSetting />}
           <DocMenu />
-          <DesktopLinkMenu hasVersion={false} />
+          {!this.isSwapMenu() && <DesktopLinkMenu hasVersion={false} />}
         </div>
       </div>
     );

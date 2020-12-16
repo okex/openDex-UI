@@ -5,56 +5,60 @@ import ComboBox from '_src/component/ComboBox/ComboBox';
 import './index.less';
 
 let activedMenu = '';
+const headTypeList = [
+  {
+    url: '/spot/full',
+    type: '/spot/full',
+    get label() { return toLocale('spot.asset.spotTrade')} ,
+    monitor: 'full_header,nav_spot,nav_enter_spot',
+  },
+  {
+    url: '/spot/fullMargin',
+    type: '/spot/fullMargin',
+    get label() { return toLocale('spot.asset.newMarginTrade') },
+    monitor: 'full_header,nav_margin,nav_enter_margin',
+  },
+  {
+    url: '/derivatives/swap/full',
+    type: '/derivatives/swap/full',
+    get label() { return toLocale('spot.asset.futureswapTrade') },
+    monitor: 'full_header,nav_swap,nav_enter_swap',
+  },
+  {
+    url: '/derivatives/futures/full',
+    type: '/derivatives/futures/full',
+    get label() { return toLocale('spot.asset.futureTrade') },
+    monitor: 'full_header,nav_future,nav_enter_future',
+  },
+  {
+    url: '/derivatives/options/instruments',
+    type: '/derivatives/options/instruments',
+    get label() { return toLocale('spot.asset.optionsTrade') },
+    monitor: 'full_header,nav_options,nav_enter_options',
+  },
+  {
+    url: `${PageURL.homePage}/spot/trade`,
+    type: '/dex-test/spot/trade',
+    get label() { return toLocale('spot.asset.dexTest') },
+    monitor: 'full_header,nav_dex,nav_enter_dex',
+    isRoute: true,
+  },
+  {
+    url: `${PageURL.homePage}/swap`,
+    type: '/dex-test/swap',
+    get label() { return toLocale('spot.asset.swap') },
+    monitor: 'full_header,nav_swap,nav_enter_swap',
+    isRoute: true,
+  },
+];
 
+function getDefaultActivedMenu() {
+  return headTypeList[headTypeList.length - 1]
+}
 class DesktopTypeMenu extends Component {
   constructor(props) {
     super(props);
-    this.headTypeList = [
-      {
-        url: '/spot/full',
-        type: '/spot/full',
-        label: toLocale('spot.asset.spotTrade'),
-        monitor: 'full_header,nav_spot,nav_enter_spot',
-      },
-      {
-        url: '/spot/fullMargin',
-        type: '/spot/fullMargin',
-        label: toLocale('spot.asset.newMarginTrade'),
-        monitor: 'full_header,nav_margin,nav_enter_margin',
-      },
-      {
-        url: '/derivatives/swap/full',
-        type: '/derivatives/swap/full',
-        label: toLocale('spot.asset.futureswapTrade'),
-        monitor: 'full_header,nav_swap,nav_enter_swap',
-      },
-      {
-        url: '/derivatives/futures/full',
-        type: '/derivatives/futures/full',
-        label: toLocale('spot.asset.futureTrade'),
-        monitor: 'full_header,nav_future,nav_enter_future',
-      },
-      {
-        url: '/derivatives/options/instruments',
-        type: '/derivatives/options/instruments',
-        label: toLocale('spot.asset.optionsTrade'),
-        monitor: 'full_header,nav_options,nav_enter_options',
-      },
-      {
-        url: `${PageURL.homePage}/spot/trade`,
-        type: '/dex-test/spot/trade',
-        label: toLocale('spot.asset.dexTest'),
-        monitor: 'full_header,nav_dex,nav_enter_dex',
-        isRoute: true,
-      },
-      {
-        url: `${PageURL.homePage}/swap`,
-        type: '/dex-test/swap',
-        label: toLocale('spot.asset.swap'),
-        monitor: 'full_header,nav_swap,nav_enter_swap',
-        isRoute: true,
-      },
-    ];
+    this.headTypeList = headTypeList;
     if (props.isDexDesk) this.headTypeList = this.headTypeList.slice(5);
   }
 
@@ -66,7 +70,7 @@ class DesktopTypeMenu extends Component {
     const current =
       activedMenu ||
       this.headTypeList.filter((d) => d.url === this.props.current)[0] ||
-      this.headTypeList[this.headTypeList.length - 1];
+      getDefaultActivedMenu();
     activedMenu = current;
     return (
       <div className="top-info-title">
@@ -95,7 +99,7 @@ class DesktopTypeMenu extends Component {
 
 Object.defineProperty(DesktopTypeMenu, 'current', {
   get: function () {
-    return activedMenu;
+    return activedMenu || getDefaultActivedMenu();
   },
 });
 
