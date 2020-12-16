@@ -3,13 +3,14 @@ import Cookies from 'js-cookie';
 const okbExplorePrefix = 'okexchain-test';
 const exploreUrl = 'https://www.oklink.com';
 const lang = Cookies.get('locale') || '';
+const receiveCoinUrl = lang === 'en_US' ? 'https://www.okex.com' : 'https://www.okexcn.com'
 
 const Config = {
   okexchain: {
     browserUrl: `${exploreUrl}/${okbExplorePrefix}`,
     browserAddressUrl: `${exploreUrl}/${okbExplorePrefix}/address`,
     clientUrl: getCurrentApiUrl(),
-    receiveCoinUrl: '/activities/pro/drawdex',
+    receiveCoinUrl: `${receiveCoinUrl}/activities/pro/drawdex`,
     docUrl: `https://okexchain-docs.readthedocs.io/en/latest/`,
   },
   validatePwdDeferSecond: 100,

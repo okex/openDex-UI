@@ -52,8 +52,8 @@ const headTypeList = [
   },
 ];
 
-function getDefaultActivedMenu() {
-  return headTypeList[headTypeList.length - 1]
+function getDefaultActivedMenu(current) {
+  return headTypeList.filter((d) => d.url === current)[0] || headTypeList[headTypeList.length - 1];
 }
 class DesktopTypeMenu extends Component {
   constructor(props) {
@@ -67,10 +67,7 @@ class DesktopTypeMenu extends Component {
   };
 
   render() {
-    const current =
-      activedMenu ||
-      this.headTypeList.filter((d) => d.url === this.props.current)[0] ||
-      getDefaultActivedMenu();
+    const current = activedMenu || getDefaultActivedMenu(this.props.current);
     activedMenu = current;
     return (
       <div className="top-info-title">
@@ -99,7 +96,7 @@ class DesktopTypeMenu extends Component {
 
 Object.defineProperty(DesktopTypeMenu, 'current', {
   get: function () {
-    return activedMenu || getDefaultActivedMenu();
+    return activedMenu || getDefaultActivedMenu(PageURL.getCurrent());
   },
 });
 
