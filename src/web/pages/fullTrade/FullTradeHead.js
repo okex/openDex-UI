@@ -1,21 +1,20 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { toLocale } from '_src/locale/react-locale';
-import * as SpotActions from '_src/redux/actions/SpotAction';
-import * as CommonAction from '_src/redux/actions/CommonAction';
 import DesktopTypeMenu from '_component/DesktopTypeMenu';
 import DesktopLinkMenu from '_component/DesktopLinkMenu';
-import okexchainLogo from '_src/assets/images/OKExChainLogo.png';
 import okexLogo from '_src/assets/images/OKEx.png';
 import PageURL from '_src/constants/PageURL';
 import FullTradeTicker from '_src/pages/fullTrade/FullTradeTicker';
 import FullTradeProductList from './FullTradeProductList';
-import './FullTradeHead.less';
 import util from '_src/utils/util';
-import { LoggedMenu, LoginMenu, DocMenu } from '_src/component/DexMenu';
 import SwapSetting from '_src/pages/swap/SwapSetting';
+import * as SpotActions from '_src/redux/actions/SpotAction';
+import * as CommonAction from '_src/redux/actions/CommonAction';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { toLocale } from '_src/locale/react-locale';
+import { LoggedMenu, LoginMenu, DocMenu } from '_src/component/DexMenu';
+import './FullTradeHead.less';
 
 function mapStateToProps(state) {
   const { product, productObj, callMarketObj, spotOrMargin } = state.SpotTrade;
@@ -45,7 +44,7 @@ class FullTradeHead extends React.Component {
     super(props);
     this.iconStyle = {
       width: '100%',
-      marginTop: 15,
+      marginTop: -25,
     };
   }
 
@@ -86,11 +85,6 @@ class FullTradeHead extends React.Component {
     return current === PageURL.swapPage;
   }
 
-  goHome = () => {
-    if (this.isSwapMenu()) return util.go('/');
-    return util.go();
-  };
-
   render() {
     const { productObj, product, callMarketObj } = this.props;
     const current = PageURL.getCurrent();
@@ -111,12 +105,8 @@ class FullTradeHead extends React.Component {
     }
     return (
       <div className="full-top-info-box">
-        <a className="logo-wrap" onClick={this.goHome}>
-          {this.isSwapMenu() ? (
-            <img src={okexLogo} style={{ ...this.iconStyle, marginTop: -25 }} />
-          ) : (
-            <img src={okexchainLogo} style={this.iconStyle} />
-          )}
+        <a className="logo-wrap" href="/">
+          <img src={okexLogo} style={this.iconStyle} />
         </a>
         <DesktopTypeMenu current={current} />
         {this.isTradePage() ? <FullTradeProductList /> : null}

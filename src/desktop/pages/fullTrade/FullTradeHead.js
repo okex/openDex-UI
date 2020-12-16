@@ -1,19 +1,20 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import DesktopNodeMenu from '_app/component/DesktopNodeMenu';
 import DesktopLinkMenu from '_component/DesktopLinkMenu';
 import DesktopTypeMenu from '_component/DesktopTypeMenu';
-import okexchainLogo from '_src/assets/images/OKExChainLogo.png';
-import * as CommonAction from '_src/redux/actions/CommonAction';
+import okexLogo from '_src/assets/images/OKEx.png';
+import Config from '_src/constants/Config';
 import PageURL from '_src/constants/PageURL';
 import FullTradeTicker from '_src/pages/fullTrade/FullTradeTicker';
 import FullTradeProductList from './FullTradeProductList';
-import './FullTradeHead.less';
 import util from '_src/utils/util';
-import { LoggedMenu, LoginMenu, DocMenu } from '_src/component/DexMenu';
 import SwapSetting from '_src/pages/swap/SwapSetting';
+import * as CommonAction from '_src/redux/actions/CommonAction';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { LoggedMenu, LoginMenu, DocMenu } from '_src/component/DexMenu';
+import './FullTradeHead.less';
 
 function mapStateToProps(state) {
   const { product } = state.SpotTrade;
@@ -35,31 +36,35 @@ class FullTradeHead extends React.Component {
     super(props);
     this.iconStyle = {
       width: '100%',
-      marginTop: 15,
+      marginTop: -25,
     };
   }
+
   componentDidMount() {
     this.props.commonAction.initOKExChainClient();
   }
+
   isTradePage() {
     return this.props.location.pathname.indexOf(PageURL.spotFullPage) >= 0;
   }
+
   isSwapMenu() {
     const current = DesktopTypeMenu.current
       ? DesktopTypeMenu.current.url
       : null;
     return current === PageURL.swapPage;
   }
-  goHome = () => {
-    util.go();
-  };
 
   render() {
     const current = PageURL.getCurrent();
     return (
       <div className="full-top-info-box">
-        <a className="logo-wrap" onClick={this.goHome}>
-          <img src={okexchainLogo} style={this.iconStyle} />
+        <a
+          className="logo-wrap"
+          target="_blank"
+          href={Config.okexchain.homeUrl}
+        >
+          <img src={okexLogo} style={this.iconStyle} />
         </a>
         <DesktopTypeMenu isDexDesk={true} current={current} />
         <DesktopNodeMenu />

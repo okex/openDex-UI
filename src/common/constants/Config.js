@@ -11,6 +11,7 @@ const Config = {
     browserUrl: `${exploreUrl}/${okbExplorePrefix}`,
     browserAddressUrl: `${exploreUrl}/${okbExplorePrefix}/address`,
     clientUrl: getCurrentApiUrl(),
+    homeUrl: receiveCoinUrl,
     receiveCoinUrl: `${receiveCoinUrl}/activities/pro/drawdex`,
     docUrl: `https://okexchain-docs.readthedocs.io/en/latest/`,
   },
