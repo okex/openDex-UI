@@ -8,7 +8,7 @@ const base = {
   entry: path.resolve(__dirname, `../src/${client}/index.js`),
   output: {
     filename: '[name]/index.js',
-    chunkFilename: 'common/[name]/[name].js',
+    chunkFilename: 'common/[name]/[name].js?v=[contenthash:8]',
   },
   module: {
     rules: [

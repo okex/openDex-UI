@@ -8,6 +8,7 @@ import * as CommonAction from '_src/redux/actions/CommonAction';
 import DesktopTypeMenu from '_component/DesktopTypeMenu';
 import DesktopLinkMenu from '_component/DesktopLinkMenu';
 import okexchainLogo from '_src/assets/images/OKExChainLogo.png';
+import okexLogo from '_src/assets/images/OKEx.png';
 import PageURL from '_src/constants/PageURL';
 import FullTradeTicker from '_src/pages/fullTrade/FullTradeTicker';
 import FullTradeProductList from './FullTradeProductList';
@@ -84,7 +85,8 @@ class FullTradeHead extends React.Component {
   }
 
   goHome = () => {
-    util.go();
+    if(this.isSwapMenu()) return util.go('/');
+    return util.go();
   };
 
   render() {
@@ -108,7 +110,7 @@ class FullTradeHead extends React.Component {
     return (
       <div className="full-top-info-box">
         <a className="logo-wrap" onClick={this.goHome}>
-          <img src={okexchainLogo} style={this.iconStyle} />
+          {this.isSwapMenu() ? <img src={okexLogo} style={{...this.iconStyle,marginTop: -25}} /> : <img src={okexchainLogo} style={this.iconStyle} />}
         </a>
         <DesktopTypeMenu current={current} />
         {this.isTradePage() ? <FullTradeProductList /> : null}
