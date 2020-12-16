@@ -104,8 +104,8 @@ export default {
             txt = text.split('-')[0];
           }
           text = FormatNum.formatFeeStr(txt.toUpperCase());
-          text = text.replace(/(\d{1,}\.?\d*)/,function($1) {
-            return util.precisionInput($1)
+          text = text.replace(/(\d{1,}\.?\d*)/, function ($1) {
+            return util.precisionInput($1);
           });
           return text;
         },

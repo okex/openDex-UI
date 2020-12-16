@@ -302,7 +302,7 @@ export const getTransactionsCols = () => {
       key: 'quantity',
       render: (text) => {
         return util.precisionInput(text);
-      }
+      },
     },
   ];
 };

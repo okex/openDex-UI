@@ -65,8 +65,8 @@ export function buyInfo(params = {}) {
       data.buy_amount = util.precisionInput(data.buy_amount);
       data.price = util.precisionInput(data.price);
       data.price_impact = util.precisionInput(data.price_impact);
-      data.fee = data.fee.replace(/(\d{1,}\.?\d*)/,function($1) {
-        return util.precisionInput($1)
+      data.fee = data.fee.replace(/(\d{1,}\.?\d*)/, function ($1) {
+        return util.precisionInput($1);
       });
     }
     return data;
@@ -87,9 +87,15 @@ export function liquidityInfo(params = {}) {
   }).then((data) => {
     if (data) {
       data.forEach((d) => {
-        d.base_pooled_coin.amount = util.precisionInput(d.base_pooled_coin.amount);
-        d.quote_pooled_coin.amount = util.precisionInput(d.quote_pooled_coin.amount);
-        d.pool_token_coin.amount = util.precisionInput(d.pool_token_coin.amount);
+        d.base_pooled_coin.amount = util.precisionInput(
+          d.base_pooled_coin.amount
+        );
+        d.quote_pooled_coin.amount = util.precisionInput(
+          d.quote_pooled_coin.amount
+        );
+        d.pool_token_coin.amount = util.precisionInput(
+          d.pool_token_coin.amount
+        );
       });
       data.pool_token_ratio = util.precisionInput(data.pool_token_ratio);
     }

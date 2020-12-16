@@ -80,12 +80,14 @@ class FullTradeHead extends React.Component {
   }
 
   isSwapMenu() {
-    const current = DesktopTypeMenu.current ? DesktopTypeMenu.current.url : null;
+    const current = DesktopTypeMenu.current
+      ? DesktopTypeMenu.current.url
+      : null;
     return current === PageURL.swapPage;
   }
 
   goHome = () => {
-    if(this.isSwapMenu()) return util.go('/');
+    if (this.isSwapMenu()) return util.go('/');
     return util.go();
   };
 
@@ -110,7 +112,11 @@ class FullTradeHead extends React.Component {
     return (
       <div className="full-top-info-box">
         <a className="logo-wrap" onClick={this.goHome}>
-          {this.isSwapMenu() ? <img src={okexLogo} style={{...this.iconStyle,marginTop: -25}} /> : <img src={okexchainLogo} style={this.iconStyle} />}
+          {this.isSwapMenu() ? (
+            <img src={okexLogo} style={{ ...this.iconStyle, marginTop: -25 }} />
+          ) : (
+            <img src={okexchainLogo} style={this.iconStyle} />
+          )}
         </a>
         <DesktopTypeMenu current={current} />
         {this.isTradePage() ? <FullTradeProductList /> : null}

@@ -45,7 +45,9 @@ class FullTradeHead extends React.Component {
     return this.props.location.pathname.indexOf(PageURL.spotFullPage) >= 0;
   }
   isSwapMenu() {
-    const current = DesktopTypeMenu.current ? DesktopTypeMenu.current.url : null;
+    const current = DesktopTypeMenu.current
+      ? DesktopTypeMenu.current.url
+      : null;
     return current === PageURL.swapPage;
   }
   goHome = () => {

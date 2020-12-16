@@ -118,15 +118,15 @@ const util = {
         key: 'quantity',
         render: (text) => {
           return utils.precisionInput(text);
-        }
+        },
       },
       {
         title: `${toLocale('trade_column_fee')}`,
         key: 'fee',
         render: (text) => {
           text = String(text.split('-')[0]).toUpperCase();
-          text = text.replace(/(\d{1,}\.?\d*)/,function($1) {
-            return utils.precisionInput($1)
+          text = text.replace(/(\d{1,}\.?\d*)/, function ($1) {
+            return utils.precisionInput($1);
           });
           return text;
         },
