@@ -55,7 +55,7 @@ class DesktopTypeMenu extends Component {
         isRoute: true,
       },
     ];
-    if (props.isDexDesk) this.headTypeList = this.headTypeList.slice(4);
+    if (props.isDexDesk) this.headTypeList = this.headTypeList.slice(5);
   }
 
   change = (item) => {
