@@ -5,11 +5,12 @@ import showSuccessDialog from '_component/ActionDialog/successDialog';
 import ClientWrapper from '_src/wrapper/ClientWrapper';
 import util from '_src/utils/util';
 import { isNumberString, isFunction } from '_src/utils/type';
+import { toLocale } from '_src/locale/react-locale';
 import { validateTxs } from '_src/utils/client';
 
-const showError = () => {
+const showError = (content = toLocale('sysError')) => {
   Message.error({
-    content: '服务端异常，请稍后重试',
+    content,
   });
 };
 
@@ -46,7 +47,9 @@ class MintDialog extends Component {
         const { result } = res;
         const { txhash } = result;
         if (!validateTxs(res)) {
-          showError();
+          showError(
+            toLocale(`error.code.${res.result.code}`) || res.result.msg
+          );
         } else {
           showSuccessDialog('Mint success！', txhash);
         }

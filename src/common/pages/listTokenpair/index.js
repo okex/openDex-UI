@@ -13,9 +13,9 @@ import Config from '_constants/Config';
 import { validateTxs } from '_src/utils/client';
 import './index.less';
 
-const showError = () => {
+const showError = (content = toLocale('sysError')) => {
   Message.error({
-    content: '服务端异常，请稍后重试',
+    content,
   });
 };
 
@@ -58,7 +58,9 @@ class ListTokenpair extends Component {
         const { result } = res;
         const { txhash } = result;
         if (!validateTxs(res)) {
-          showError();
+          showError(
+            toLocale(`error.code.${res.result.code}`) || res.result.msg
+          );
         } else {
           const dialog = Dialog.success({
             className: 'desktop-success-dialog',

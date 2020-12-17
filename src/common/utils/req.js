@@ -3,6 +3,7 @@ import Message from '_src/component/Message';
 import util from './util';
 import PageURL from '../constants/PageURL';
 import history from './history';
+import { toLocale } from '../locale/react-locale';
 
 const MOCK = false;
 
@@ -29,7 +30,9 @@ function handleError(response, errorCallback) {
   if (errorCallback) {
     return errorCallback(response);
   } else if (response && response.msg) {
-    return Message.error({ content: response.msg });
+    return Message.error({
+      content: toLocale(`error.code.${response.code}`) || response.msg,
+    });
   }
   return false;
 }

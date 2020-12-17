@@ -156,7 +156,9 @@ class FullTradeProductList extends React.Component {
         .collectProduct(product)
         .catch((res) => {
           if (res && res.msg) {
-            Message.error({ content: res.msg });
+            Message.error({
+              content: toLocale(`error.code.${res.code}`) || res.msg,
+            });
           }
         })
         .then(() => {

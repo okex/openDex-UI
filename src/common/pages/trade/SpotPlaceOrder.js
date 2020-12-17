@@ -139,7 +139,7 @@ class SpotPlaceOrder extends React.Component {
       }
     );
   };
-  onSubmitErr = (err) => {
+  onSubmitErr = () => {
     this.onPwdClose();
     const { type } = this.state;
     const msg =

@@ -12,6 +12,7 @@ import util from '../utils/util';
 import * as SpotActions from '../redux/actions/SpotAction';
 import URL from '../constants/URL';
 import Enum from '../utils/Enum';
+import { toLocale } from '../locale/react-locale';
 
 function mapStateToProps(state) {
   const {
@@ -151,7 +152,9 @@ const ProductListWrapper = (Component) => {
           .catch((res) => {
             this.canStar = true;
             if (res && res.msg) {
-              Message.error({ content: res.msg });
+              Message.error({
+                content: toLocale(`error.code.${res.code}`) || res.msg,
+              });
             }
           });
       }

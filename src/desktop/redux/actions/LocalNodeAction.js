@@ -377,7 +377,7 @@ export function stopOkexchaind(terminal = false) {
         switchIsStarted(false)(dispatch);
       } else {
         Message.error({
-          content: 'okexchaind top error',
+          content: 'okexchaind stop error',
         });
       }
     });

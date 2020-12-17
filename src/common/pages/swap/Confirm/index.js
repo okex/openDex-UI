@@ -106,7 +106,7 @@ export default class Confirm extends React.Component {
           this.loading = false;
         } catch (e) {
           Message.error({
-            content: e.message || '服务端异常，请稍后重试',
+            content: e.message || toLocale('sysError'),
             duration: 3,
           });
         } finally {
