@@ -187,6 +187,7 @@ class TokenpairDetail extends Component {
             })}
             dataSource={tokenpairs}
             rowKey="product"
+            style={{ clear: 'both', zIndex: 0 }}
             isLoading={loading}
             empty={<div>{toLocale('tokenPair_emtpy')}</div>}
             pagination={pagination}

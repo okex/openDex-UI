@@ -25,6 +25,7 @@ const DashboardSection = ({
         dataSource={dataSource}
         rowKey={rowKey}
         isLoading={isLoading}
+        style={{ clear: 'both', zIndex: 0 }}
         empty={<div>{empty}</div>}
       />
     </section>

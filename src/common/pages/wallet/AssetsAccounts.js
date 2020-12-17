@@ -227,6 +227,7 @@ class AssetsAccounts extends Component {
           )}
           dataSource={currencies}
           rowKey="symbol"
+          style={{ clear: 'both', zIndex: 0 }}
           hidePage
           empty={<p>{toLocale('assets_empty')}</p>}
         />

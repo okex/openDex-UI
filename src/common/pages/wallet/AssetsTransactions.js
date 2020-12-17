@@ -174,6 +174,7 @@ class AssetsTransactions extends Component {
           columns={assetsUtil.transactionsCols}
           dataSource={transactions}
           rowKey="uniqueKey"
+          style={{ clear: 'both', zIndex: 0 }}
           pagination={param_page}
           onPageChange={this.fetchTransactions}
           isLoading={loading}

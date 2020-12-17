@@ -132,6 +132,7 @@ class FeesPage extends Component {
             columns={getFeesCols()}
             dataSource={fees}
             rowKey="order_id"
+            style={{ clear: 'both', zIndex: 0 }}
             isLoading={loading}
             empty={<div>暂无运营商币对手续费数据</div>}
             pagination={pagination}
