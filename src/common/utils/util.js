@@ -5,7 +5,7 @@ import URL from '../constants/URL';
 import Enum from '../utils/Enum';
 import PageURL from '../constants/PageURL';
 
-const locales = ['zh_CN', 'en_US', 'ru_RU'];
+const locales = ['zh_CN', 'en_US'];
 const util = {
   getSupportLocale(lang) {
     if (locales.includes(lang)) {
