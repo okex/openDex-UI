@@ -48,7 +48,7 @@ const headTypeList = [
   },
   {
     url: `${PageURL.homePage}/spot/trade`,
-    type: '/dex-test/spot/trade',
+    type: '/dex/spot/trade',
     get label() {
       return toLocale('spot.asset.dexTest');
     },
@@ -57,7 +57,7 @@ const headTypeList = [
   },
   {
     url: `${PageURL.homePage}/swap`,
-    type: '/dex-test/swap',
+    type: '/dex/swap',
     get label() {
       return toLocale('spot.asset.swap');
     },

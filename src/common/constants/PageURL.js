@@ -1,4 +1,4 @@
-const contentPath = '/dex-test';
+const contentPath = '/dex';
 
 const paths = {
   homePage: `${contentPath}`,
