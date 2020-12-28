@@ -262,7 +262,7 @@ export default class AddLiquidity extends React.Component {
         else tempPrice = util.precisionInput(tempPrice);
         priceInfo = `1${baseToken.symbol.toUpperCase()} ≈ ${tempPrice}${targetToken.symbol.toUpperCase()}`;
       }
-      return { priceInfo, poolShare: 100 };
+      return { priceInfo, poolShare: 1 };
     }
     priceInfo = `1${baseToken.symbol.toUpperCase()} ≈ ${price}${targetToken.symbol.toUpperCase()}`;
     return { priceInfo, poolShare: exchangeInfo.pool_share };
