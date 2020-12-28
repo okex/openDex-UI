@@ -14,8 +14,8 @@ import { validateTxs } from '_src/utils/client';
 
 function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
-  const { account } = state.SwapStore;
-  return { okexchainClient, account };
+  const { account4Swap } = state.SwapStore;
+  return { okexchainClient, account4Swap };
 }
 
 @connect(mapStateToProps)
@@ -119,9 +119,9 @@ export default class ReduceLiquidity extends React.Component {
   };
 
   getAvailable() {
-    const { liquidity, account } = this.props;
+    const { liquidity, account4Swap } = this.props;
     let available = liquidity.pool_token_coin.amount;
-    const temp = account[liquidity.pool_token_coin.denom.toLowerCase()];
+    const temp = account4Swap[liquidity.pool_token_coin.denom.toLowerCase()];
     if (temp) available = temp.available;
     return available;
   }

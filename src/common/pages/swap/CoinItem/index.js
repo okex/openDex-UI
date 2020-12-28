@@ -10,8 +10,8 @@ import { channelsV3 } from '../../../utils/websocket';
 import SwapContext from '../SwapContext';
 
 function mapStateToProps(state) {
-  const { account } = state.SwapStore;
-  return { account };
+  const { account4Swap } = state.SwapStore;
+  return { account4Swap };
 }
 
 @connect(mapStateToProps)
@@ -104,9 +104,9 @@ export default class CoinItem extends React.Component {
   getAvailable() {
     let {
       token: { available, symbol },
-      account,
+      account4Swap,
     } = this.props;
-    const temp = account[symbol.toLowerCase()];
+    const temp = account4Swap[symbol.toLowerCase()];
     if (temp) available = temp.available;
     return available;
   }

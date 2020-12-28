@@ -3,7 +3,7 @@ import * as util from '../../pages/swap/util';
 
 const initialState = {
   setting: util.getSetting(),
-  account: {},
+  account4Swap: {},
 };
 
 export default function reducer(state = initialState, action) {
