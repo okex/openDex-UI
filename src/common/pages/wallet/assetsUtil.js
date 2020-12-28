@@ -50,6 +50,7 @@ const util = {
               href={`${Config.okexchain.browserUrl}/tx/${text}`}
               target="_blank"
               rel="noopener noreferrer"
+              title={text}
             >
               {FormatNum.hashShort(text)}
             </a>
