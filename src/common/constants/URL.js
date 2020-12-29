@@ -1,14 +1,15 @@
 import { getCurrentApiUrl, DEFAULT } from './getApiUrl';
+import {envConfig} from './env';
 
 const BASEURL = {
   get BASE_URL() {
     return getCurrentApiUrl();
   },
   get DEFAULT_BASE_URL() {
-    return `${DEFAULT}/okexchain/v1`;
+    return `${DEFAULT}/${envConfig.apiPath}/v1`;
   },
   get OKDEX_BASE_URL() {
-    return `${this.BASE_URL}/okexchain/v1`;
+    return `${this.BASE_URL}/${envConfig.apiPath}/v1`;
   },
   get OKDEX_SUPPORT_ROOT() {
     return `${this.BASE_URL}/okdex/v1`;

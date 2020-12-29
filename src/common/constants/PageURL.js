@@ -1,4 +1,6 @@
-const contentPath = '/dex';
+import {getPathAndHash} from '../utils/util';
+import {envConfig} from './env';
+const contentPath = `/${envConfig.pagePath}`;
 
 const paths = {
   homePage: `${contentPath}`,
@@ -29,9 +31,7 @@ const paths = {
 export default {
   ...paths,
   getCurrent() {
-    let { pathname, hash } = window.location;
-    pathname = pathname.replace(/\/*$/, '');
-    hash = hash.replace(/\/*$/, '').replace(/^#/, '');
+    let { pathname, hash } = getPathAndHash();
     for (name in paths) {
       const temp = paths[name];
       if (pathname === temp || hash === temp) return temp;

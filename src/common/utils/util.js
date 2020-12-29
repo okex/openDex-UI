@@ -277,6 +277,12 @@ const util = {
       window.location.href = path;
     }
   },
+  getPathAndHash() {
+    let { pathname, hash } = window.location;
+    pathname = pathname.replace(/\/*$/, '');
+    hash = hash.replace(/\/*$/, '').replace(/^#/, '');
+    return {pathname,hash};
+  }
 };
 
 export default util;

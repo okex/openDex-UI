@@ -1,18 +1,17 @@
 import OKExChainClient, { crypto } from '@okexchain/javascript-sdk';
 import { toLocale } from '_src/locale/react-locale';
-import Cookies from 'js-cookie';
 import CommonActionType from '../actionTypes/CommonActionType';
 import Config from '../../constants/Config';
 import FormActionType from '../actionTypes/FormActionType';
 import ont from '../../utils/dataProxy';
 import URL from '../../constants/URL';
-import util from '../../utils/util';
+import {envConfig} from '../../constants/env'; 
 
 const legalCurrencyId = 'dex_legalCurrencyId';
 
 export function initOKExChainClient() {
   return (dispatch) => {
-    const client = new OKExChainClient(Config.okexchain.clientUrl);
+    const client = new OKExChainClient(Config.okexchain.clientUrl,envConfig.chainId);
     dispatch({
       type: CommonActionType.SET_OKEXCHAIN_CLIENT,
       data: client,
