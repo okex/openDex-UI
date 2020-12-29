@@ -1,5 +1,5 @@
 
-import {getPathAndHash} from '../utils/util';
+import util from '../utils/util';
 
 const testnet = {
   apiPath: 'okexchaintestnet',
@@ -15,10 +15,12 @@ const mainnet = {
   pushLogin: ''
 }
 
-export default {
+const env = {
   get envConfig() {
-    let { pathname, hash } = getPathAndHash();
-    if(pathname.test(/\/dex/) || hash.test(/\/dex/)) return mainnet; 
-    return testnet;
+    let { pathname, hash } = util.getPathAndHash();
+    if(/^\/dex\-test/.test(pathname) || /^\/dex\-test/.test(hash)) return testnet; 
+    return mainnet;
   }
 }
+
+export default env;

@@ -1,6 +1,6 @@
-import {getPathAndHash} from '../utils/util';
-import {envConfig} from './env';
-const contentPath = `/${envConfig.pagePath}`;
+import util from '../utils/util';
+import env from './env';
+const contentPath = `/${env.envConfig.pagePath}`;
 
 const paths = {
   homePage: `${contentPath}`,
@@ -31,7 +31,7 @@ const paths = {
 export default {
   ...paths,
   getCurrent() {
-    let { pathname, hash } = getPathAndHash();
+    let { pathname, hash } = util.getPathAndHash();
     for (name in paths) {
       const temp = paths[name];
       if (pathname === temp || hash === temp) return temp;
