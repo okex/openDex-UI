@@ -34,7 +34,7 @@ export function tokens(params = {}) {
     address,
     business_type: params.business_type,
   }).then((data) => {
-    data &&
+    data && data.tokens && 
       data.tokens.forEach(
         (d) => (d.available = util.precisionInput(d.available))
       );
