@@ -134,6 +134,7 @@ export function tokenPair(params = {}) {
   params = { ...params };
   exchange(params);
   //@mock mocker.tokenPair(`${URL.GET_SWAP_TOKEN_PAIR}/${params.base_token}_${params.quote_token}`);
+  if(!params.base_token || !params.quote_token) return null;
   return get(
     `${URL.GET_SWAP_TOKEN_PAIR}/${params.base_token}_${params.quote_token}`
   ).then((data) => {
