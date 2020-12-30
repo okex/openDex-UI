@@ -6,9 +6,9 @@ import Enum from '../../utils/Enum';
 const initialState = {
   groupList: [
     {
-      filterWord: ['tusdk'],
+      filterWord: ['usdk'],
       groupId: 1,
-      groupName: 'TUSDK',
+      groupName: 'USDK',
       type: 'normal',
     },
     {
@@ -29,9 +29,9 @@ const initialState = {
   productList: [],
   productObj: {},
   favorites: storage.get('favorites') || [
-    'tbtc_tusdk',
-    'tokb_tusdk',
-    'tokt_tusdk',
+    'btc_usdk',
+    'okb_usdk',
+    'okt_usdk',
   ],
 
   currencyList: [],

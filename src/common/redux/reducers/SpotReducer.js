@@ -6,9 +6,9 @@ try {
   activeMarket = JSON.parse(storage.get('activeMarket') || '{}');
   if (!activeMarket.groupId) {
     activeMarket = {
-      filterWord: ['tusdk'],
+      filterWord: ['usdk'],
       groupId: 1,
-      groupName: 'TUSDK',
+      groupName: 'USDK',
     };
   }
 } catch (e) {
