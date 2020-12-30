@@ -733,7 +733,7 @@ const zhCN = {
   Amount: '数量',
   'LP token/ratio': 'LP token/做市占比',
   Input: '输入',
-  'Pool share': '资产池占比',
+  'Pool share': '预估资产池占比',
   'Intial Price': '初始价格',
   'Input Pool': '创建流动性池',
   Error: '错误',

@@ -729,7 +729,7 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   Amount: 'Amount',
   'LP token/ratio': 'LP token/ratio',
   Input: 'Input',
-  'Pool share': 'Pool share',
+  'Pool share': 'Estimated pool ratio',
   'Intial Price': 'Intial Price',
   'Input Pool': 'Create Pool',
   Error: 'Error',
