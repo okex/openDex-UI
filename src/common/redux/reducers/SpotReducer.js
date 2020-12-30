@@ -19,7 +19,7 @@ const initialState = {
   wsIsOnlineV3: false,
   wsErrCounterV3: 0,
   wsIsDelayLogin: false,
-  valuationToken: 'tokt',
+  valuationToken: 'okt',
   activeMarket,
   searchText: '',
   billMenuActive: '',
