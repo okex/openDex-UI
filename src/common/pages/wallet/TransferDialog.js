@@ -244,7 +244,8 @@ class TransferDialog extends Component {
                           children: (
                             <div className="trans-msg">
                               <Icon className="icon-icon_fail" isColor />
-                              {toLocale(`error.code.${res.result.code}`) || toLocale('trans_fail')}
+                              {toLocale(`error.code.${res.result.code}`) ||
+                                toLocale('trans_fail')}
                             </div>
                           ),
                         });

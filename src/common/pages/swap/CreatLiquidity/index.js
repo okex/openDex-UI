@@ -7,7 +7,7 @@ import { withRouter, Link } from 'react-router-dom';
 import * as api from '../util/api';
 import CoinDropdown from './CoinDropdown';
 import AddLiquidity from '../AddLiquidity';
-import Confirm from '../Confirm';
+import Confirm from '../../../component/Confirm';
 import { validateTxs } from '_src/utils/client';
 import util from '_src/utils/util';
 

@@ -81,7 +81,9 @@ class ValuationUnit extends React.Component {
       );
       localStorage.setItem(env.envConfig.token.valuationUnitKey, valuationUnit);
       this.setState({
-        valuationUnit: localStorage.getItem(env.envConfig.token.valuationUnitKey),
+        valuationUnit: localStorage.getItem(
+          env.envConfig.token.valuationUnitKey
+        ),
       });
     }
   }

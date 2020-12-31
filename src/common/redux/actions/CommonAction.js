@@ -5,13 +5,16 @@ import Config from '../../constants/Config';
 import FormActionType from '../actionTypes/FormActionType';
 import ont from '../../utils/dataProxy';
 import URL from '../../constants/URL';
-import env from '../../constants/env'; 
+import env from '../../constants/env';
 
 const legalCurrencyId = 'dex_legalCurrencyId';
 
 export function initOKExChainClient() {
   return (dispatch) => {
-    const client = new OKExChainClient(Config.okexchain.clientUrl,env.envConfig.chainId);
+    const client = new OKExChainClient(
+      Config.okexchain.clientUrl,
+      env.envConfig.chainId
+    );
     dispatch({
       type: CommonActionType.SET_OKEXCHAIN_CLIENT,
       data: client,

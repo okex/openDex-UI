@@ -34,7 +34,8 @@ export function tokens(params = {}) {
     address,
     business_type: params.business_type,
   }).then((data) => {
-    data && data.tokens && 
+    data &&
+      data.tokens &&
       data.tokens.forEach(
         (d) => (d.available = util.precisionInput(d.available))
       );
@@ -134,7 +135,7 @@ export function tokenPair(params = {}) {
   params = { ...params };
   exchange(params);
   //@mock mocker.tokenPair(`${URL.GET_SWAP_TOKEN_PAIR}/${params.base_token}_${params.quote_token}`);
-  if(!params.base_token || !params.quote_token) return null;
+  if (!params.base_token || !params.quote_token) return null;
   return get(
     `${URL.GET_SWAP_TOKEN_PAIR}/${params.base_token}_${params.quote_token}`
   ).then((data) => {

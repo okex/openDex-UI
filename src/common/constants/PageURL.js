@@ -1,5 +1,5 @@
 import env from './env';
-import {getPathAndHash} from '../utils/pathUtil'
+import { getPathAndHash } from '../utils/pathUtil';
 const contentPath = `/${env.envConfig.pagePath}`;
 
 const paths = {

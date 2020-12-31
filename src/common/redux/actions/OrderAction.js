@@ -263,7 +263,8 @@ export function cancelOrder(params, successCallback, errCallback) {
         okexchainClient.sendCancelOrderTransaction(params.order_id).then(
           (r) => {
             if (r.result.code) {
-              errCallback && errCallback({ msg: toLocale(`error.code.${r.result.code}`) });
+              errCallback &&
+                errCallback({ msg: toLocale(`error.code.${r.result.code}`) });
             } else {
               successCallback && successCallback(r.result);
               const searchConditions = {

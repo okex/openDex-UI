@@ -9,7 +9,7 @@ import calc from '_src/utils/calc';
 import * as api from '../util/api';
 import InfoItem from '../InfoItem';
 import ReduceLiquidity from '../ReduceLiquidity';
-import Confirm from '../Confirm';
+import Confirm from '../../../component/Confirm';
 import util from '_src/utils/util';
 import { getDeadLine4sdk } from '../util';
 import Tooltip from '../../../component/Tooltip';

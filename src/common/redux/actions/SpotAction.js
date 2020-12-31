@@ -121,7 +121,10 @@ export function fetchCurrency() {
 
 export function updateActiveMarket(market) {
   return (dispatch) => {
-    storage.set(env.envConfig.token.activeMarketKey, JSON.stringify(market || {}));
+    storage.set(
+      env.envConfig.token.activeMarketKey,
+      JSON.stringify(market || {})
+    );
     dispatch({
       type: SpotActionType.UPDATE_ACTIVE_MARKET,
       data: market,
@@ -159,7 +162,10 @@ export function initProduct(productObj, productList, callback) {
     }
   }
   resetProductConfig(product, productList);
-  if (!storage.get(env.envConfig.token.productKey) || storage.get(env.envConfig.token.productKey) !== product) {
+  if (
+    !storage.get(env.envConfig.token.productKey) ||
+    storage.get(env.envConfig.token.productKey) !== product
+  ) {
     storage.set(env.envConfig.token.productKey, product);
   }
   return (dispatch, getState) => {

@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import CoinItem from './CoinItem';
 import { getCoinIcon } from './util/coinIcon';
 import * as api from './util/api';
-import Confirm from './Confirm';
+import Confirm from '../../component/Confirm';
 import { getDeadLine4sdk } from './util';
 import getRef from './getRef';
 import Tooltip from '../../component/Tooltip';

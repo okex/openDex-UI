@@ -1,6 +1,6 @@
 import React from 'react';
 import Tabs, { TabPane } from 'rc-tabs';
-import Router from './Router';
+import Router from '../../component/Router';
 import SwapContext from './SwapContext';
 import SwapPanel from './SwapPanel';
 import PoolPanel from './PoolPanel';

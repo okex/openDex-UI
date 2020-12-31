@@ -129,7 +129,10 @@ export function submitOrder(params, callback, errCallback) {
                 type: FormActionType.SUBMIT_ORDER_ERROR,
                 data: placeOrderRes.result.error,
               });
-              errCallback && errCallback({ msg: toLocale(`error.code.${placeOrderRes.result.code}`) });
+              errCallback &&
+                errCallback({
+                  msg: toLocale(`error.code.${placeOrderRes.result.code}`),
+                });
             } else {
               dispatch({
                 type: FormActionType.SUBMIT_ORDER_SUCCESS,

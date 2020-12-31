@@ -5,7 +5,7 @@ import { getCoinIcon } from '../util/coinIcon';
 import * as api from '../util/api';
 import InputNum from '_component/InputNum';
 import calc from '_src/utils/calc';
-import Confirm from '../Confirm';
+import Confirm from '../../../component/Confirm';
 import util from '_src/utils/util';
 import { channelsV3 } from '../../../utils/websocket';
 import { getDeadLine4sdk } from '../util';

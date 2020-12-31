@@ -29,7 +29,9 @@ const initialState = {
   product: '',
   productList: [],
   productObj: {},
-  favorites: storage.get(env.envConfig.token.favoritesKey) || env.envConfig.token.favorites,
+  favorites:
+    storage.get(env.envConfig.token.favoritesKey) ||
+    env.envConfig.token.favorites,
 
   currencyList: [],
   currencyObjByName: {},
@@ -66,8 +68,9 @@ const initialState = {
   },
   callMarketObj: {},
   spotOrMargin:
-    Number(window.localStorage.getItem(env.envConfig.token.spot_spotOrMarginKey)) ||
-    Enum.spotOrMargin.spot,
+    Number(
+      window.localStorage.getItem(env.envConfig.token.spot_spotOrMarginKey)
+    ) || Enum.spotOrMargin.spot,
 
   isMarginOpen: false,
 
