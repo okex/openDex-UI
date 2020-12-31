@@ -4,7 +4,7 @@ import env from '../../constants/env';
 
 let activeMarket = {};
 try {
-  activeMarket = JSON.parse(storage.get('activeMarket') || '{}');
+  activeMarket = JSON.parse(storage.get(env.envConfig.token.activeMarketKey) || '{}');
   if (!activeMarket.groupId) {
     activeMarket = {
       filterWord: [env.envConfig.token.quote],

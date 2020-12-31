@@ -11,7 +11,7 @@ class ValuationUnit extends React.Component {
     this.state = {
       valuationItems: [],
       isHide: true,
-      valuationUnit: env.envConfig.token.quoteName,
+      valuationUnit: env.envConfig.token.valuationUnit,
     };
   }
 
@@ -79,9 +79,9 @@ class ValuationUnit extends React.Component {
         valuationUnitSymbol,
         valuationDig
       );
-      localStorage.setItem('valuationUnit', valuationUnit);
+      localStorage.setItem(env.envConfig.token.valuationUnitKey, valuationUnit);
       this.setState({
-        valuationUnit: localStorage.getItem('valuationUnit'),
+        valuationUnit: localStorage.getItem(env.envConfig.token.valuationUnitKey),
       });
     }
   }

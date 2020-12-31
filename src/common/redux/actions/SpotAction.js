@@ -121,7 +121,7 @@ export function fetchCurrency() {
 
 export function updateActiveMarket(market) {
   return (dispatch) => {
-    storage.set('activeMarket', JSON.stringify(market || {}));
+    storage.set(env.envConfig.token.activeMarketKey, JSON.stringify(market || {}));
     dispatch({
       type: SpotActionType.UPDATE_ACTIVE_MARKET,
       data: market,
@@ -131,7 +131,7 @@ export function updateActiveMarket(market) {
 
 export function updateFavoriteList(list) {
   return (dispatch) => {
-    storage.set('favorites', list || []);
+    storage.set(env.envConfig.token.favoritesKey, list || []);
     dispatch({
       type: SpotTradeActionType.UPDATE_FAVORITES,
       data: list,
@@ -151,7 +151,7 @@ export function initProduct(productObj, productList, callback) {
     }
   }
   if (!product) {
-    const favorites = storage.get('favorites');
+    const favorites = storage.get(env.envConfig.token.favoritesKey);
     if (favorites) {
       product = favorites[0] || '';
     } else {
@@ -159,8 +159,8 @@ export function initProduct(productObj, productList, callback) {
     }
   }
   resetProductConfig(product, productList);
-  if (!storage.get('product') || storage.get('product') !== product) {
-    storage.set('product', product);
+  if (!storage.get(env.envConfig.token.productKey) || storage.get(env.envConfig.token.productKey) !== product) {
+    storage.set(env.envConfig.token.productKey, product);
   }
   return (dispatch, getState) => {
     const { tickers } = getState().Spot;
@@ -253,7 +253,7 @@ export function updateProduct(product) {
       type: SpotTradeActionType.UPDATE_TICKER,
       data: getState().Spot.tickers[product],
     });
-    storage.set('product', product);
+    storage.set(env.envConfig.token.productKey, product);
     return true;
   };
 }

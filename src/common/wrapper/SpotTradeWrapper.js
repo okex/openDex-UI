@@ -9,6 +9,7 @@ import * as OrderActions from '../redux/actions/OrderAction';
 import * as FormAction from '../redux/actions/FormAction';
 import Enum from '../utils/Enum';
 import util from '../utils/util';
+import env from '../constants/env';
 
 function mapStateToProps(state) {
   const { product, productList, productObj } = state.SpotTrade;
@@ -58,7 +59,7 @@ const SpotTradeWrapper = (Component) => {
       } else {
         spotActions.initProduct(productObj, productList, () => {
           if (wsIsOnlineV3) {
-            const product1 = storage.get('product');
+            const product1 = storage.get(env.envConfig.token.productKey);
             this.startWs(product1);
           }
         });
