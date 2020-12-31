@@ -11,7 +11,7 @@ class ValuationUnit extends React.Component {
     this.state = {
       valuationItems: [],
       isHide: true,
-      valuationUnit: env.envConfig.token.valuationUnit,
+      valuationUnit: env.envConfig.token.quoteName,
     };
   }
 

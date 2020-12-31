@@ -3,6 +3,7 @@ import {getPathAndHash} from '../utils/pathUtil';
 
 const testnet = {
   token: {
+    base: 'tokt',
     quote: 'tusdk',
     quoteName: 'TUSDK',
     defaultProduct: 'tbtc_tusdk',
@@ -14,7 +15,6 @@ const testnet = {
       'tokb_tusdk',
       'tokt_tusdk',
     ],
-    valuationUnit: 'tokt',
     valuationUnitKey: 'valuationUnit_test',
     spot_spotOrMarginKey:'spot_spotOrMargin_test'
   },
@@ -26,6 +26,7 @@ const testnet = {
 
 const mainnet = {
   token: {
+    base: 'okt',
     quote: 'usdk',
     quoteName: 'USDK',
     defaultProduct: 'btc_usdk',
@@ -37,7 +38,6 @@ const mainnet = {
       'okb_usdk',
       'okt_usdk',
     ],
-    valuationUnit: 'okt',
     valuationUnitKey: 'valuationUnit',
     spot_spotOrMarginKey:'spot_spotOrMargin'
   },
