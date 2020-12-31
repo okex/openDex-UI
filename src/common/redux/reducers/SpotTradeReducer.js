@@ -2,13 +2,14 @@ import { storage } from '_component/okit';
 import ActionTypes from '../actionTypes/SpotTradeActionType';
 import SpotActionTypes from '../actionTypes/SpotActionType';
 import Enum from '../../utils/Enum';
+import env from '../../constants/env';
 
 const initialState = {
   groupList: [
     {
-      filterWord: ['usdk'],
+      filterWord: [env.envConfig.token.quote],
       groupId: 1,
-      groupName: 'USDK',
+      groupName: env.envConfig.token.quoteName,
       type: 'normal',
     },
     {
@@ -28,11 +29,7 @@ const initialState = {
   product: '',
   productList: [],
   productObj: {},
-  favorites: storage.get('favorites') || [
-    'btc_usdk',
-    'okb_usdk',
-    'okt_usdk',
-  ],
+  favorites: storage.get('favorites') || env.envConfig.token.favorites,
 
   currencyList: [],
   currencyObjByName: {},

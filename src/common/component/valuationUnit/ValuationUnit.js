@@ -3,6 +3,7 @@ import { toLocale } from '_src/locale/react-locale';
 import ont from '../../utils/dataProxy';
 import URL from '../../constants/URL';
 import './ValuationUnit.less';
+import env from '../../constants/env';
 
 class ValuationUnit extends React.Component {
   constructor(props) {
@@ -10,7 +11,7 @@ class ValuationUnit extends React.Component {
     this.state = {
       valuationItems: [],
       isHide: true,
-      valuationUnit: 'USDK',
+      valuationUnit: env.envConfig.token.quoteName,
     };
   }
 

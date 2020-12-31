@@ -1,14 +1,15 @@
 import { storage } from '_component/okit';
 import ActionTypes from '../actionTypes/SpotActionType';
+import env from '../../constants/env';
 
 let activeMarket = {};
 try {
   activeMarket = JSON.parse(storage.get('activeMarket') || '{}');
   if (!activeMarket.groupId) {
     activeMarket = {
-      filterWord: ['usdk'],
+      filterWord: [env.envConfig.token.quote],
       groupId: 1,
-      groupName: 'USDK',
+      groupName: env.envConfig.token.quoteName,
     };
   }
 } catch (e) {
@@ -19,7 +20,7 @@ const initialState = {
   wsIsOnlineV3: false,
   wsErrCounterV3: 0,
   wsIsDelayLogin: false,
-  valuationToken: 'okt',
+  valuationToken: env.envConfig.token.base,
   activeMarket,
   searchText: '',
   billMenuActive: '',

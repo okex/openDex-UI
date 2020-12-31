@@ -115,7 +115,7 @@ export function fetchCurrency2LegalRate(legalObj) {
     const { activeMarket } = getState().Spot;
     const quote =
       (activeMarket.groupName && activeMarket.groupName.toLowerCase()) ||
-      'usdk';
+      env.envConfig.token.quote;
     ont
       .get(
         URL.GET_LEGAL_RATE.replace('{quote}', quote).replace(

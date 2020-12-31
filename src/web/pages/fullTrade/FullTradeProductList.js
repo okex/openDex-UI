@@ -13,6 +13,7 @@ import LeftMenu from '_src/component/leftMenu';
 import Introduce from '_src/component/kline/Introduce';
 import * as SpotActions from '_src/redux/actions/SpotAction';
 import PageURL from '_src/constants/PageURL';
+import env from '../../../common/constants/env';
 
 function mapStateToProps(state) {
   const { wsIsOnlineV3, wsErrCounterV3, tickers, activeMarket } = state.Spot;
@@ -101,7 +102,7 @@ class FullTradeProductList extends React.Component {
 
   getCurrListByArea = (productList, activeMarket) => {
     const { groupId, groupName } = activeMarket;
-    const quoteSymbol = groupName || 'USDK';
+    const quoteSymbol = groupName || env.envConfig.token.quoteName;
     let currList = [];
     if (groupId === -1) {
       currList = productList.filter((item) => {

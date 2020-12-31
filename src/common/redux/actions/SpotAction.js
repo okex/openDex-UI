@@ -7,6 +7,7 @@ import SpotActionType from '../actionTypes/SpotActionType';
 import util from '../../utils/util';
 import URL from '../../constants/URL';
 import SpotTradeActionType from '../actionTypes/SpotTradeActionType';
+import env from '../../constants/env';
 
 function resetProductConfig(product, productList) {
   if (!product) return;
@@ -154,7 +155,7 @@ export function initProduct(productObj, productList, callback) {
     if (favorites) {
       product = favorites[0] || '';
     } else {
-      product = 'btc_usdk';
+      product = env.envConfig.token.defaultProduct;
     }
   }
   resetProductConfig(product, productList);
