@@ -139,14 +139,14 @@ class SpotPlaceOrder extends React.Component {
       }
     );
   };
-  onSubmitErr = () => {
+  onSubmitErr = (err) => {
     this.onPwdClose();
     const { type } = this.state;
     const msg =
       type === Enum.placeOrder.type.buy
         ? toLocale('spot.orders.buyFail')
         : toLocale('spot.orders.sellFail');
-    Message.error({ content: msg, duration: 3 });
+    Message.error({ content: err.msg || msg, duration: 3 });
   };
   onTransfer = () => {
     const { spotAction } = this.props;

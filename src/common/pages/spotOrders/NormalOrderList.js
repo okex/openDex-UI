@@ -166,7 +166,7 @@ export default class NormalOrderList extends React.Component {
     this.errorCallback && this.errorCallback(err);
     this.setState({ cancelLoading: false });
     Message.error({
-      content: toLocale('spot.myOrder.cancelFailed'),
+      content: err.msg || toLocale('spot.myOrder.cancelFailed'),
       duration: 3,
     });
   };

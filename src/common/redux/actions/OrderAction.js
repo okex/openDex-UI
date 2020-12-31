@@ -5,6 +5,7 @@ import URL from '../../constants/URL';
 import Enum from '../../utils/Enum';
 import util from '../../utils/util';
 import { OrderStatus } from '../../constants/OrderStatus';
+import { toLocale } from '../../locale/react-locale';
 
 const defaultPage = {
   page: 1,
@@ -262,7 +263,7 @@ export function cancelOrder(params, successCallback, errCallback) {
         okexchainClient.sendCancelOrderTransaction(params.order_id).then(
           (r) => {
             if (r.result.code) {
-              errCallback && errCallback({ msg: r.result.error });
+              errCallback && errCallback({ msg: toLocale(`error.code.${r.result.code}`) });
             } else {
               successCallback && successCallback(r.result);
               const searchConditions = {

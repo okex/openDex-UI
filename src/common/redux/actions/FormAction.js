@@ -2,6 +2,7 @@ import FormActionType from '../actionTypes/FormActionType';
 import Enum from '../../utils/Enum';
 import FormatNum from '../../utils/FormatNum';
 import Message from '_src/component/Message';
+import { toLocale } from '../../locale/react-locale';
 
 export function clearForm() {
   return (dispatch) => {
@@ -128,7 +129,7 @@ export function submitOrder(params, callback, errCallback) {
                 type: FormActionType.SUBMIT_ORDER_ERROR,
                 data: placeOrderRes.result.error,
               });
-              errCallback && errCallback({ msg: placeOrderRes.result.error });
+              errCallback && errCallback({ msg: toLocale(`error.code.${placeOrderRes.result.code}`) });
             } else {
               dispatch({
                 type: FormActionType.SUBMIT_ORDER_SUCCESS,
