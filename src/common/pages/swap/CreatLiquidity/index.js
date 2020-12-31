@@ -73,7 +73,7 @@ export default class CreatLiquidity extends React.Component {
         base_token: baseToken.symbol,
         quote_token: targetToken.symbol,
       });
-      data.disabled = !!temp;
+      data.disabled = !!temp || !baseToken.symbol || !targetToken.symbol;
       data.error = temp;
     } catch (e) {
       data.disabled = true;
