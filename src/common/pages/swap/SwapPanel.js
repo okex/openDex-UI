@@ -84,9 +84,9 @@ export default class SwapPanel extends React.Component {
         data.exchangeInfo = { price, price_impact, fee, route };
         target.value = buy_amount;
       } catch (e) {
-        if (errTip && JSON.parse(e.msg).code === 6) {
+        if (errTip) {
           Message.error({
-            content: toLocale('pool empty'),
+            content: e.message || toLocale(`error.code.${e.code}`),
             duration: 3,
           });
         }
