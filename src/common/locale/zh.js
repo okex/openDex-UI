@@ -1047,7 +1047,7 @@ const zhCN = {
     '如果价格变动幅度超过此百分比，您的交易将退回。',
   "It's your current liquidity in the pool.": '这是你当前在资金池里的流动性',
   'The share of the pool liquidity after you add.':
-    '你添加流动性之后的流动性占比',
+    '你此次添加流动性的占比',
   'set confirmed': '设置成功',
   'pool empty': '此池子无流动性，无法兑换',
   'pool empty tip': '当前池中并无流动性，请添加第一笔流动性决定初始价格',
