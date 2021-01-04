@@ -50,7 +50,6 @@ export default class Swap extends React.Component {
 
   onChange = (activekey) => {
     this.setState({ activekey });
-    if (activekey === WATCHLIST && this.watchlist) this.watchlist.reload();
   };
 
   componentDidMount() {
@@ -68,7 +67,7 @@ export default class Swap extends React.Component {
     return (
       <SwapContext.Provider value={wsV3}>
         <div className="swap-container">
-          <Tabs activeKey={activekey} prefixCls="swap" onChange={this.onChange}>
+          <Tabs activeKey={activekey} prefixCls="swap" onChange={this.onChange} destroyInactiveTabPane>
             <TabPane tab={toLocale('Swap')} key={SWAP}>
               <SwapPanel getRef={(instance) => (this.swap = instance)} />
             </TabPane>
