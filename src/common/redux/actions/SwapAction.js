@@ -17,7 +17,6 @@ export function updateAccount(data) {
     const account4Swap = { ...state.account4Swap };
     data.forEach((d) => {
       const symbol = d.symbol.toLowerCase();
-      d.available = util.precisionInput(d.available);
       account4Swap[symbol] = d;
     });
     dispatch({

@@ -8,6 +8,7 @@ import { getCoinIcon } from '../util/coinIcon';
 import classNames from 'classnames';
 import { channelsV3 } from '../../../utils/websocket';
 import SwapContext from '../SwapContext';
+import util from '_src/utils/util';
 
 function mapStateToProps(state) {
   const { account4Swap } = state.SwapStore;
@@ -108,7 +109,7 @@ export default class CoinItem extends React.Component {
     } = this.props;
     const temp = account4Swap[symbol.toLowerCase()];
     if (temp) available = temp.available;
-    return available;
+    return util.precisionInput(available,8);
   }
 
   render() {
@@ -126,7 +127,7 @@ export default class CoinItem extends React.Component {
         <div className="coin-item-title">
           <div>{label}</div>
           <div className="txt">
-            {toLocale('Balance')}: {available || '0.000000'}
+            {toLocale('Balance')}: {available || '0.00000000'}
             {available && !disabled && (
               <span className="max" onClick={this.setMaxValue}>
                 MAX
@@ -140,7 +141,7 @@ export default class CoinItem extends React.Component {
               type="text"
               value={value}
               onChange={this.onInputChange}
-              placeholder="0.000000"
+              placeholder="0.00000000"
               disabled={disabled}
               precision={8}
             />

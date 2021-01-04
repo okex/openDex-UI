@@ -105,7 +105,7 @@ export default {
           }
           text = FormatNum.formatFeeStr(txt.toUpperCase());
           text = text.replace(/(\d{1,}\.?\d*)/, function ($1) {
-            return util.precisionInput($1);
+            return util.precisionInput($1,8);
           });
           return text;
         },

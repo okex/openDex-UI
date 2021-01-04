@@ -159,7 +159,7 @@ export default class AddLiquidity extends React.Component {
         quote_pooled_coin = tempSymbol;
       }
       exchangeInfo.price = util.precisionInput(
-        calc.div(quote_pooled_coin.amount, base_pooled_coin.amount)
+        calc.div(quote_pooled_coin.amount, base_pooled_coin.amount),8
       );
     }
   }
@@ -251,7 +251,7 @@ export default class AddLiquidity extends React.Component {
       targetToken = temp;
       price = calc.div(1, price);
       if (Number.isNaN(price)) price = '-';
-      else price = util.precisionInput(price);
+      else price = util.precisionInput(price,8);
     }
     if (!targetTokenDisabled) {
       if (!baseToken.value || !targetToken.value) {
@@ -259,7 +259,7 @@ export default class AddLiquidity extends React.Component {
       } else {
         let tempPrice = calc.div(targetToken.value, baseToken.value);
         if (Number.isNaN(tempPrice)) tempPrice = '-';
-        else tempPrice = util.precisionInput(tempPrice);
+        else tempPrice = util.precisionInput(tempPrice,8);
         priceInfo = `1${baseToken.symbol.toUpperCase()} ≈ ${tempPrice}${targetToken.symbol.toUpperCase()}`;
       }
       return { priceInfo, poolShare: 1 };

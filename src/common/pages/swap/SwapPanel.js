@@ -218,11 +218,11 @@ export default class SwapPanel extends React.Component {
         );
       } else {
         let priceInfo = `1${baseToken.symbol.toUpperCase()} ≈ ${
-          exchangeInfo.price
+          util.precisionInput(exchangeInfo.price,8)
         }${targetToken.symbol.toUpperCase()}`;
         if (exchangeInfo.isReverse)
           priceInfo = `1${targetToken.symbol.toUpperCase()} ≈ ${util.precisionInput(
-            calc.div(1, exchangeInfo.price)
+            calc.div(1, exchangeInfo.price),8
           )}${baseToken.symbol.toUpperCase()}`;
         return (
           <div className="coin-exchange-detail">
@@ -245,7 +245,7 @@ export default class SwapPanel extends React.Component {
                 </Tooltip>
               </div>
               <div className="info-value">
-                {this.getMinimumReceived()} {targetToken.symbol.toUpperCase()}
+                {this.getMinimumReceived(8)} {targetToken.symbol.toUpperCase()}
               </div>
             </div>
             <div className="info">
@@ -273,11 +273,7 @@ export default class SwapPanel extends React.Component {
                 </Tooltip>
               </div>
               <div className="info-value">
-                {!fee && '≈'}
-                {exchangeInfo.fee.replace(
-                  baseToken.symbol,
-                  ` ${baseToken.symbol.toUpperCase()}`
-                )}
+                {!fee && '≈'}{util.precisionInput(fee,8)} {baseToken.symbol.toUpperCase()}
               </div>
             </div>
             {exchangeInfo.route && (
@@ -310,13 +306,13 @@ export default class SwapPanel extends React.Component {
     return null;
   }
 
-  getMinimumReceived() {
+  getMinimumReceived(precision=16) {
     const { targetToken } = this.state;
     const {
       setting: { slippageTolerance },
     } = this.props;
     return util.precisionInput(
-      calc.mul(targetToken.value, 1 - slippageTolerance * 0.01)
+      calc.mul(targetToken.value, 1 - slippageTolerance * 0.01),precision
     );
   }
 

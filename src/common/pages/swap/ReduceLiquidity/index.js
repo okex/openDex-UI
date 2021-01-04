@@ -123,7 +123,7 @@ export default class ReduceLiquidity extends React.Component {
     let available = liquidity.pool_token_coin.amount;
     const temp = account4Swap[liquidity.pool_token_coin.denom.toLowerCase()];
     if (temp) available = temp.available;
-    return available;
+    return util.precisionInput(available,8);
   }
 
   componentDidMount() {
@@ -164,7 +164,7 @@ export default class ReduceLiquidity extends React.Component {
                   type="text"
                   value={value}
                   onChange={this.onInputChange}
-                  placeholder="0.000000"
+                  placeholder="0.00000000"
                   precision={8}
                 />
               </div>
@@ -189,7 +189,7 @@ export default class ReduceLiquidity extends React.Component {
                 {d.denom.toUpperCase()}
               </div>
               <div className="right">
-                {d.amount} {d.denom.toUpperCase()}
+                {util.precisionInput(d.amount,8)} {d.denom.toUpperCase()}
               </div>
             </div>
           ))}
