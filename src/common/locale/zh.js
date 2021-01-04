@@ -1051,5 +1051,8 @@ const zhCN = {
   'pool empty': '此池子无流动性，无法兑换',
   'pool empty tip': '当前池中并无流动性，请添加第一笔流动性决定初始价格',
   'watchlist noData': '暂无数据',
+  'seoFarmTitle':'Decentralized trading platform FARM',
+  'Farm': 'Farm',
+  'Dashboard': 'Dashboard'
 };
 export default zhCN;

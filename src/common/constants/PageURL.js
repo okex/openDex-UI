@@ -26,6 +26,7 @@ const paths = {
   tokenpairDetailPage: `${contentPath}/tokenpair`,
   feesPage: `${contentPath}/fees`,
   swapPage: `${contentPath}/swap`,
+  farmPage: `${contentPath}/farm`,
 };
 
 export default {

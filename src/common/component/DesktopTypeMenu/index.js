@@ -64,6 +64,15 @@ const headTypeList = [
     monitor: 'full_header,nav_swap,nav_enter_swap',
     isRoute: true,
   },
+  {
+    url: `${PageURL.homePage}/farm`,
+    type: '/dex/farm',
+    get label() {
+      return toLocale('spot.asset.farm');
+    },
+    monitor: 'full_header,nav_farm,nav_enter_farm',
+    isRoute: true,
+  },
 ];
 
 function getDefaultActivedMenu(current) {

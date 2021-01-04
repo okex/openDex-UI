@@ -15,6 +15,7 @@ import IssueDetail from '../pages/issueDetail';
 import TokenpairDetail from '../pages/tokenpairDetail';
 import Fees from '../pages/fees';
 import Swap from '../pages/swap';
+import Farm from '../pages/farm';
 
 const routes = [
   {
@@ -88,6 +89,10 @@ const routes = [
   {
     path: PageURL.swapPage,
     component: Swap,
+  },
+  {
+    path: PageURL.farmPage,
+    component: Farm,
   },
 ];
 
