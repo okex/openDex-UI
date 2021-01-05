@@ -56,8 +56,10 @@ export default class FarmPanel extends React.Component {
   };
 
   render() {
+    const isLogined = util.isLogined();
     return (
       <div className="panel-farm">
+          {!isLogined && 
           <div className="space-between connect-wallet">
             <div className="left">
               <div className="connect-wallet-tip">{toLocale('You haven’t connected a wallet.')}</div>
@@ -68,6 +70,7 @@ export default class FarmPanel extends React.Component {
               </Link>
             </div>
           </div>
+          }
           <div className="title-wrap">
             {toLocale('White listed')}
             <Tooltip

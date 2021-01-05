@@ -2,6 +2,10 @@ import React from 'react';
 import Pagination from '_component/Pagination';
 import { getCoinIcon } from './util/coinIcon';
 import { toLocale } from '_src/locale/react-locale';
+import util from '_src/utils/util';
+import { getLangURL } from '_src/utils/navigation';
+import PageURL from '_constants/PageURL';
+import { Link } from 'react-router-dom';
 import * as api from './util/api';
 import calc from '_src/utils/calc';
 
@@ -25,9 +29,28 @@ export default class DashboardPanel extends React.Component {
 
   }
 
+  getPanel = () => {
+    const isLogined = util.isLogined();
+    if(!isLogined) {
+      return <div className="panel panel-connect">
+        <div className="connect-wallet-tip">{toLocale('Connect wallet to check your farming')}</div>
+        <Link to={getLangURL(PageURL.walletCreate)}>
+          <div className="btn">{toLocale('Connect Wallet')}</div>
+        </Link>
+      </div>
+    } else {
+      return <div className="panel panel-connect">
+        <div className="connect-wallet-tip"><div>{toLocale('Haven’t farmed yet')}<span>128.23%</span>{toLocale('APY')}</div></div>
+        <div className="btn">{toLocale('Go stake')}</div>
+      </div>
+    }
+  }
+
   render() {
     const { sort, data, current, pageSize, total } = this.state;
     return (
+      <>
+      {this.getPanel()}
       <div className="panel-farm">
         <div className="info-items info-dashboard-items">
           <div className="info-item">
@@ -597,6 +620,7 @@ export default class DashboardPanel extends React.Component {
           </div>
         )}
       </div>
+      </>
     );
   }
 }
