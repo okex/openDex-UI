@@ -1,15 +1,12 @@
 import ont from '_src/utils/dataProxy';
 import URL from '_constants/URL';
 import util from '_src/utils/util';
+import { toLocale } from '_src/locale/react-locale';
 
 function ajax(method, url, params) {
-  return new Promise((resolve,reject) => {
-    ont[method](url, params || undefined).then((data) => {
-      if (data.code === 0) resolve(data.data);
-      else reject({ code: data.code, msg: data.msg });
-    });
-  }).catch(e => {
-    reject(e)
+  return ont[method](url, params || undefined).then((data) => {
+    if (data.code === 0) return data.data;
+    else throw new Error(toLocale(`error.code.${data.code}`) || data.msg);
   });
 }
 
@@ -56,6 +53,7 @@ export function createLiquidityTokens(params = {}) {
 
 export function buyInfo(params = {}) {
   //@mock mocker.buyInfo(`${URL.GET_SWAP_BUY_INFO}/${params.token}`);
+  if(!params.token || !/\d$/.test(params.value)) return {};
   return get(`${URL.GET_SWAP_BUY_INFO}/${params.token}`, {
     sell_token_amount: params.sell_token_amount,
   })
@@ -78,6 +76,7 @@ export function liquidityInfo(params = {}) {
 
 export function addInfo(params = {}) {
   //@mock mocker.addInfo(`${URL.GET_SWAP_ADD_INFO}/${params.base_token}`);
+  if(!params.base_token || !/\d$/.test(params.value)) return {};
   return get(`${URL.GET_SWAP_ADD_INFO}/${params.base_token}`, {
     quote_token_amount: params.quote_token_amount,
   })

@@ -72,12 +72,13 @@ export default class SwapPanel extends React.Component {
     if (value && symbol && target.symbol) {
       try {
         const {
-          buy_amount,
-          price,
-          price_impact,
-          fee,
-          route,
+          buy_amount='',
+          price='',
+          price_impact='',
+          fee='',
+          route='',
         } = await api.buyInfo({
+          value,
           sell_token_amount: `${value}${symbol}`,
           token: target.symbol,
         });
@@ -105,11 +106,15 @@ export default class SwapPanel extends React.Component {
     this.updateSwapInfo4RealTime(data, 'baseToken');
   };
 
-  async updateSwapInfo4RealTime(data, key, time = 3000) {
+  _clearTimer() {
     if (this.updateSwapInfo4RealTime.interval) {
       clearInterval(this.updateSwapInfo4RealTime.interval);
       this.updateSwapInfo4RealTime.interval = null;
     }
+  }
+
+  async updateSwapInfo4RealTime(data, key, time = 3000) {
+    this._clearTimer();
     await this.updateSwapInfo(data, key, true);
     this.setState(data, () => {
       data[key].value &&
@@ -174,6 +179,10 @@ export default class SwapPanel extends React.Component {
     exchangeInfo.isReverse = !exchangeInfo.isReverse;
     this.setState({ exchangeInfo });
   };
+
+  componentWillUnmount() {
+    this._clearTimer();
+  }
 
   componentDidMount() {
     this.init();
