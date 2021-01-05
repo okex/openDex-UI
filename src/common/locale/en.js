@@ -153,7 +153,7 @@ const enUS = {
   "error.code.65013": "missing address",
   "error.code.65014": "is zero value",
   "error.code.65015": "block time big than deadline",
-  "error.code.65016": "%s value less than %s value",
+  "error.code.65016": "input value exceed system upper limit",
   "error.code.65017": "mint pool token failed",
   "error.code.65018": "send coins from pool to account failed",
   "error.code.65019": "burn pool token failed",
