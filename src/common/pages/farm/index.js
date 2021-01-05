@@ -40,7 +40,7 @@ export default class Farm extends React.Component {
     return (
       <FarmContext.Provider value={wsV3}>
         <div className="farm-container">
-          <Tabs activeKey={activekey} prefixCls="farm" onChange={this.onChange}>
+          <Tabs activeKey={activekey} prefixCls="farm" onChange={this.onChange} destroyInactiveTabPane>
             <TabPane tab={toLocale('Farm')} key={FARM}>
               <FarmPanel/>
             </TabPane>

@@ -127,7 +127,7 @@ export default class WatchlistPanel extends React.Component {
       sort: { field: 'liquidity', sort: 'desc' },
       data: [],
       current: 1,
-      pageSize: 15,
+      pageSize: 1,
       total: 0,
     };
   }

@@ -17,7 +17,7 @@ export default class DashboardPanel extends React.Component {
       data: [],
       current: 1,
       pageSize: 15,
-      total: 0,
+      total: 100,
     };
   }
 
