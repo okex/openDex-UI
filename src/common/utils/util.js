@@ -266,8 +266,8 @@ const util = {
   getTheme() {
     return localStorage.getItem('theme') === Enum.themes.theme2 ? 'dark' : '';
   },
-  precisionInput(num) {
-    return Number(num).toFixed(8);
+  precisionInput(num,precision=16) {
+    return Number(num).toFixed(precision);
   },
   go(path = PageURL.spotFullPage) {
     const url = window.location.href.split('#')[0];

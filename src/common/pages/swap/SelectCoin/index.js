@@ -1,6 +1,7 @@
 import React from 'react';
 import { toLocale } from '_src/locale/react-locale';
 import { getCoinIcon } from '../util/coinIcon';
+import util from '_src/utils/util';
 
 export default class SelectCoin extends React.Component {
   constructor() {
@@ -56,7 +57,7 @@ export default class SelectCoin extends React.Component {
                     <img src={getCoinIcon(d.symbol)} />
                     {d.symbol.toUpperCase()}
                   </div>
-                  <div className="value">{d.available}</div>
+                  <div className="value">{util.precisionInput(d.available,8)}</div>
                 </div>
               ))
             ) : (

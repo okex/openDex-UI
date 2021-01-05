@@ -5,6 +5,7 @@ import { getCoinIcon } from '../util/coinIcon';
 import { channelsV3 } from '../../../utils/websocket';
 import SwapContext from '../SwapContext';
 import calc from '_src/utils/calc';
+import util from '_src/utils/util';
 
 function mapStateToProps(state) {
   const { account4Swap } = state.SwapStore;
@@ -71,11 +72,11 @@ export default class InfoItem extends React.Component {
         </div>
         <div className="space-between poll-item-info">
           <div className="left">
-            {data.base_pooled_coin.amount.toUpperCase()}/
-            {data.quote_pooled_coin.amount.toUpperCase()}
+            {util.precisionInput(data.base_pooled_coin.amount,8)}/
+            {util.precisionInput(data.quote_pooled_coin.amount,8)}
           </div>
           <div className="right">
-            {available}/{calc.mul(data.pool_token_ratio, 100)}%
+            {util.precisionInput(available,8)}/{calc.mul(util.precisionInput(data.pool_token_ratio,8), 100)}%
           </div>
         </div>
       </div>

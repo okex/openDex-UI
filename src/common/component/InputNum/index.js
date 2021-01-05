@@ -104,6 +104,10 @@ export default class InputNum extends React.Component {
     } else {
       inpNumber = inps[0].replace(/\D/g, '').replace(/0*(\d+)/, '$1');
     }
+    return this._precision(inpNumber);
+  };
+
+  _precision(inpNumber) {
     if (this.props.precision) {
       const inpNumbers = ('' + inpNumber).split('.');
       if (inpNumbers[1]) {
@@ -112,7 +116,7 @@ export default class InputNum extends React.Component {
       }
     }
     return inpNumber;
-  };
+  }
 
   removeDot = (value) => {
     if (typeof value != 'number' && typeof value != 'string') {
@@ -168,7 +172,7 @@ export default class InputNum extends React.Component {
     const { value } = props;
     let newValue = this.removeDot(value);
     newValue = this.addDot(newValue);
-    return newValue;
+    return this._precision(newValue);
   }
 
   render() {
