@@ -60,8 +60,8 @@ export function buyInfo(params = {}) {
 }
 
 export function liquidityInfo(params = {}) {
-  if(!params.base_token || !params.quote_token) return null;
   const address = util.getMyAddr();
+  if(!address || (params.base_token && !params.quote_token)) return null;
   params = { ...params };
   exchange(params);
   const token_pair_name = params.base_token
