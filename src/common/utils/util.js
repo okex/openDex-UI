@@ -267,7 +267,8 @@ const util = {
     return localStorage.getItem('theme') === Enum.themes.theme2 ? 'dark' : '';
   },
   precisionInput(num,precision=16) {
-    return Number(num).toFixed(precision);
+    let result = Number(num).toFixed(precision + 1);
+    return result.slice(0,result.length - 1);
   },
   compareNumber(a,b) {
     return calc.div(a, 1) < calc.div(b, 1);
