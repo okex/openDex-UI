@@ -269,6 +269,9 @@ const util = {
   precisionInput(num,precision=16) {
     return Number(num).toFixed(precision);
   },
+  compareNumber(a,b) {
+    return calc.div(a, 1) < calc.div(b, 1);
+  },
   go(path = PageURL.spotFullPage) {
     const url = window.location.href.split('#')[0];
     if (/^file/i.test(url)) {

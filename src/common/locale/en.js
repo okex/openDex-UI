@@ -72,6 +72,8 @@ const enUS = {
   "error.code.62014": "incorrect parameters",
   "error.code.62015": "construct klines failed",
   "error.code.62016": "market keeper is not initialized properly",
+  "error.code.62017": "failed to grasp kline time granularity correctly",
+  "error.code.62018": "Get invalid market data",
   "error.code.63000": "invalid address",
   "error.code.63001": "invalid param",
   "error.code.63002": "tokenpair doesn't exist",
@@ -1054,5 +1056,7 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   'pool empty tip':
     'This is an empty pool, go add the first liquidity and decide the price',
   'watchlist noData': 'No Data',
+  'insufficient': 'Insufficient {coin} balance',
+  'insufficient lp token': 'Insufficient LP Token balance'
 };
 export default enUS;

@@ -72,6 +72,8 @@ const zhCN = {
   "error.code.62014": "参数不正确",
   "error.code.62015": "构建k线失败",
   "error.code.62016": "行情模块未被正确初始化",
+  "error.code.62017": "获取K线时时间粒度参数不正确",
+  "error.code.62018": "获取无效的行情数据",
   "error.code.63000": "该地址为无效地址",
   "error.code.63001": "参数无效",
   "error.code.63002": "币对不存在",
@@ -1053,5 +1055,7 @@ const zhCN = {
   'pool empty': '此池子无流动性，无法兑换',
   'pool empty tip': '当前池中并无流动性，请添加第一笔流动性决定初始价格',
   'watchlist noData': '暂无数据',
+  'insufficient': '{coin}余额不足',
+  'insufficient lp token': 'LP Token余额不足'
 };
 export default zhCN;

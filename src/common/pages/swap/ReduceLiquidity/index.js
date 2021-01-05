@@ -53,20 +53,21 @@ export default class ReduceLiquidity extends React.Component {
   }
 
   change = async (ratio) => {
-    const value = calc.mul(this.getAvailable(), ratio.value);
-    this.setState({ ratio, value });
-    this.updateCoins(value);
+    const max = this.getAvailable();
+    const value = calc.mul(max, ratio.value);
+    this.setState({ ratio, value, error: false });
+    this.updateCoins(value, false);
   };
 
   onInputChange = async (value) => {
     const max = this.getAvailable();
-    if (calc.div(max, 1) < calc.div(value, 1)) value = max;
-    this.setState({ value, ratio: null });
-    this.updateCoins(value);
+    const error = util.compareNumber(max,value);
+    this.setState({ value, ratio: null,error });
+    this.updateCoins(value, error);
   };
 
-  updateCoins = async (value) => {
-    if (!Number(value)) {
+  updateCoins = async (value, error) => {
+    if (!Number(value) || error) {
       this.setState({ coins: this._process(this.props.liquidity) });
       return;
     }
@@ -133,6 +134,18 @@ export default class ReduceLiquidity extends React.Component {
     this.context && this.context.send(channelsV3.getBalance(denom));
   }
 
+  getBtn = (value,available) => {
+    if(!Number(value)) return <div className="btn disabled">{toLocale('Confirm')}</div>;
+    if(util.compareNumber(available,value)) return <div className="btn disabled">{toLocale('insufficient lp token')}</div>;
+    return (<Confirm
+    onClick={this.confirm}
+    loadingTxt={toLocale('pending transactions')}
+    successTxt={toLocale('transaction confirmed')}
+  >
+    <div className="btn">{toLocale('Confirm')}</div>
+  </Confirm>)
+  }
+
   componentWillUnmount() {
     const {
       pool_token_coin: { denom },
@@ -144,6 +157,7 @@ export default class ReduceLiquidity extends React.Component {
     const { back } = this.props;
     const { ratios, ratio, coins, value } = this.state;
     let available = this.getAvailable();
+    const btn = this.getBtn(value,available,coins);
     return (
       <div className="panel">
         <div className="panel-header">
@@ -194,17 +208,7 @@ export default class ReduceLiquidity extends React.Component {
             </div>
           ))}
           <div className="btn-wrap">
-            {Number(value) ? (
-              <Confirm
-                onClick={this.confirm}
-                loadingTxt={toLocale('pending transactions')}
-                successTxt={toLocale('transaction confirmed')}
-              >
-                <div className="btn">{toLocale('Confirm')}</div>
-              </Confirm>
-            ) : (
-              <div className="btn disabled">{toLocale('Confirm')}</div>
-            )}
+            {btn}
           </div>
         </div>
       </div>

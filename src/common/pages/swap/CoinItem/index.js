@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { toLocale } from '_src/locale/react-locale';
-import calc from '_src/utils/calc';
 import InputNum from '_component/InputNum';
 import SelectCoin from '../SelectCoin';
 import { getCoinIcon } from '../util/coinIcon';
@@ -33,11 +32,12 @@ export default class CoinItem extends React.Component {
 
   onInputChange = (value) => {
     const { token } = this.props;
+    let error = false;
     if (this.props.max) {
       const max = this.getAvailable();
-      if (calc.div(max, 1) < calc.div(value, 1)) value = max;
+      if(util.compareNumber(max,value)) error = true;
     }
-    this.props.onChange({ ...token, value });
+    this.props.onChange({ ...token, value, error });
   };
 
   setMaxValue = () => {
@@ -119,8 +119,11 @@ export default class CoinItem extends React.Component {
       loadCoinList,
       disabled,
       disabledChangeCoin,
+      max
     } = this.props;
     let available = this.getAvailable();
+    this.props.token.error = false;
+    if(max && util.compareNumber(available,value)) this.props.token.error = true;
     const { show } = this.state;
     return (
       <div className="coin-item">

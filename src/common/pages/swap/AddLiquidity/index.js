@@ -36,11 +36,13 @@ export default class AddLiquidity extends React.Component {
         available: '',
         value: '',
         symbol: baseSymbol,
+        error: false,
       },
       targetToken: {
         available: '',
         value: '',
         symbol: targetSymbol,
+        error: false,
       },
       exchangeInfo: {
         price: '',
@@ -288,6 +290,10 @@ export default class AddLiquidity extends React.Component {
       btn = <div className="btn disabled">{toLocale('Invalid Pair')}</div>;
     else if (!Number(baseToken.value) || !Number(targetToken.value)) {
       btn = <div className="btn disabled">{toLocale('Input an amount')}</div>;
+    } else if(baseToken.error) {
+      btn = <div className="btn disabled">{toLocale('insufficient',{coin:baseToken.symbol.toUpperCase()})}</div>;
+    } else if(targetToken.error) {
+      btn = <div className="btn disabled">{toLocale('insufficient',{coin:targetToken.symbol.toUpperCase()})}</div>;
     } else {
       btn = (
         <Confirm

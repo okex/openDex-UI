@@ -3,7 +3,7 @@ export default {
     PROD: 'wss://dexcomreal.bafang.com:8443/ws/v3',
     QA: 'ws://real.okex.com:10442/ws/v3?_compress=false',
     SVC:
-      'ws://okcoin-push-decentralization.test-b-okex.svc.test.local:10442/ws/v3?compress=true',
+      'ws://okcoin-push-decentralization.test-b-okex.svc.test.local:10442/ws/v3',
     DEV:
       'ws://okcoin-push-decentralization.dev-okex.svc.cluster.local:10442/ws/v3?_compress=false',
   },
