@@ -125,6 +125,11 @@ export default class AddLiquidity extends React.Component {
       await this._check(data);
       await this._updateExchangePrice(data);
       await this._updateExchange(data);
+    } catch(e) {
+      Message.error({
+        content: e.message || toLocale(`error.code.${e.code}`),
+        duration: 3,
+      });
     } finally {
       this.setState(data);
     }

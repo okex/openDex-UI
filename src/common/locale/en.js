@@ -1052,7 +1052,7 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   'The share of the pool liquidity after you add.':
     'Your ratio of liquidity added this time',
   'set confirmed': 'success',
-  'pool empty': "Pool is empty, can't swap",
+  'pool empty': "Empty pool, can’t swap",
   'pool empty tip':
     'This is an empty pool, go add the first liquidity and decide the price',
   'watchlist noData': 'No Data',

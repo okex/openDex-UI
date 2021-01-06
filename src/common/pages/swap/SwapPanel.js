@@ -88,8 +88,10 @@ export default class SwapPanel extends React.Component {
         target.value = buy_amount;
       } catch (e) {
         if (errTip) {
+          let content = e.message || toLocale(`error.code.${e.code}`)
+          if(e.code === 65014) content = toLocale('pool empty');
           Message.error({
-            content: e.message || toLocale(`error.code.${e.code}`),
+            content,
             duration: 3,
           });
         }

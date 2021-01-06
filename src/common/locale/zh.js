@@ -1052,7 +1052,7 @@ const zhCN = {
   "It's your current liquidity in the pool.": '这是你当前在资金池里的流动性',
   'The share of the pool liquidity after you add.': '你此次添加流动性的占比',
   'set confirmed': '设置成功',
-  'pool empty': '此池子无流动性，无法兑换',
+  'pool empty': '当前池子为空，不能交易',
   'pool empty tip': '当前池中并无流动性，请添加第一笔流动性决定初始价格',
   'watchlist noData': '暂无数据',
   'insufficient': '{coin}余额不足',
