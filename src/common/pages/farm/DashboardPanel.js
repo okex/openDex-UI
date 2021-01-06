@@ -92,10 +92,10 @@ export default class DashboardPanel extends React.Component {
                 </div>
                 <div className="space-between pool-detail">
                 <div className="left">
-                  {d.total_staked} ({d.pool_ratio_dis})
+                  {d.total_staked_dis} ({d.pool_ratio_dis})
                 </div>
                 <div className="right">
-                  {d.total_apy} (10.2512%)
+                  {d.total_farmed} ({d.total_apy})
                 </div>
               </div>
               </div>

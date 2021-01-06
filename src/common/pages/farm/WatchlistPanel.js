@@ -5,6 +5,7 @@ import { toLocale } from '_src/locale/react-locale';
 import WatchList from './Watchlist';
 import * as api from './util/api';
 import calc from '_src/utils/calc';
+import {dateFns} from '_component/okit';
 
 export default class WatchlistPanel extends React.Component {
   constructor() {
@@ -63,15 +64,21 @@ export default class WatchlistPanel extends React.Component {
         name: toLocale('Start at'),
         canSort: true,
         width: '194',
+        component: ({ data }) => {
+          return dateFns.format(data);
+        },
       },
       {
         field: 'finish_at',
         name: toLocale('Finish at'),
         canSort: true,
-        width: '128',
+        component: ({ data }) => {
+          return dateFns.format(data);
+        },
       },
       {
         name: toLocale('Action'),
+        width: '128',
         component: ({ row }) => {
           return (
             <div className="action-opt-wrap">
