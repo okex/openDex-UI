@@ -7,8 +7,11 @@ import { getLangURL } from '_src/utils/navigation';
 import Tooltip from '../../component/Tooltip';
 import PageURL from '_constants/PageURL';
 import { Link } from 'react-router-dom';
+import { Dialog } from '../../component/Dialog';
 import WatchlistPanel from './WatchlistPanel';
 import Confirm from '../../component/Confirm';
+import calc from '_src/utils/calc';
+import * as api from './util/api'; 
 
 function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
@@ -18,11 +21,20 @@ function mapStateToProps(state) {
 @connect(mapStateToProps)
 export default class FarmPanel extends React.Component {
 
+  constructor() {
+    super();
+    this.state = {
+      data:[],
+    }
+  }
+
   componentDidMount() {
     this.init();
   }
 
   async init() {
+    const {data=[]} = await api.whitelist();
+    this.setState({data});
   }
 
   getBtn() {
@@ -55,8 +67,12 @@ export default class FarmPanel extends React.Component {
   confirm = () => {
   };
 
+  stake = () => {
+  }
+
   render() {
     const isLogined = util.isLogined();
+    const {data} = this.state;
     return (
       <div className="panel-farm">
           {!isLogined && 
@@ -81,142 +97,29 @@ export default class FarmPanel extends React.Component {
             </Tooltip>
           </div>
           <div className="info-items">
-            <div className="info-item">
-              <div className="tag"></div>
-              <div className="coin2coin">
-                <img src={getCoinIcon()} />
-                <img src={getCoinIcon()} />
-                <span>
-                  FAN/USDK
-                </span>
+            {data.map((d,index) => (
+              <div className="info-item" key={index}>
+                <div className="tag active"></div>
+                <div className="coin2coin">
+                  <img src={getCoinIcon(d.lock_symbol)} />
+                  <img src={getCoinIcon(d.yield_symbol)} />
+                  <Tooltip
+                  placement="right"
+                  overlay={d.pool_name_dis}
+                >
+                  <span>
+                    {d.lock_symbol_dis}/{d.yield_symbol_dis}
+                  </span>
+                </Tooltip>
+                </div>
+                <div className="rate">{d.total_apy}</div>
+                <div className="rate-tip">{d.farm_apy_dis}</div>
+                <div className="info-detail">{toLocale('Total staked：')}{d.total_staked_dis}</div>
+                <div className="info-detail">{toLocale('Pool rate：')}{d.pool_rate_dis}/1Day</div>
+                <div className="btn" onClick={this.stake}>{toLocale('STAKE')}&nbsp;<span className="timer">01{toLocale('d')} 08{toLocale('h')} 36{toLocale('m')} 52{toLocale('s')}</span></div>
               </div>
-              <div className="rate">128.23%</div>
-              <div className="rate-tip">10.20%FAN+118.13%OKT</div>
-              <div className="info-detail">{toLocale('Total staked：')}$12,666</div>
-              <div className="info-detail">{toLocale('Total staked：')}$12,666</div>
-              <div className="btn">{toLocale('STAKE')}&nbsp;<span className="timer">01{toLocale('d')} 08{toLocale('h')} 36{toLocale('m')} 52{toLocale('s')}</span></div>
+            ))}
             </div>
-            <div className="info-item">
-              <div className="tag"></div>
-              <div className="coin2coin">
-                <img src={getCoinIcon()} />
-                <img src={getCoinIcon()} />
-                <span>
-                  FAN/USDK
-                </span>
-              </div>
-              <div className="rate">128.23%</div>
-              <div className="rate-tip">10.20%FAN+118.13%OKT</div>
-              <div className="info-detail">{toLocale('Total staked：')}$12,666</div>
-              <div className="info-detail">{toLocale('Total staked：')}$12,666</div>
-              <div className="btn disabled"><span className="timer">01{toLocale('d')} 08{toLocale('h')} 36{toLocale('m')} 52{toLocale('s')}</span></div>
-            </div>
-            <div className="info-item">
-              <div className="tag active"></div>
-              <div className="coin2coin">
-                <img src={getCoinIcon()} />
-                <img src={getCoinIcon()} />
-                <span>
-                  FAN/USDK
-                </span>
-              </div>
-              <div className="rate">128.23%</div>
-              <div className="rate-tip">10.20%FAN+118.13%OKT</div>
-              <div className="info-detail">{toLocale('Total staked：')}$12,666</div>
-              <div className="info-detail">{toLocale('Total staked：')}$12,666</div>
-              <div className="btn disabled">{toLocale('STAKE')}</div>
-            </div>
-            <div className="info-item">
-              <div className="tag"></div>
-              <div className="coin2coin">
-                <img src={getCoinIcon()} />
-                <img src={getCoinIcon()} />
-                <span>
-                  FAN/USDK
-                </span>
-              </div>
-              <div className="rate">128.23%</div>
-              <div className="rate-tip">10.20%FAN+118.13%OKT</div>
-              <div className="info-detail">{toLocale('Total staked：')}$12,666</div>
-              <div className="info-detail">{toLocale('Total staked：')}$12,666</div>
-              <div className="btn">{toLocale('STAKE')}</div>
-            </div>
-            <div className="info-item">
-              <div className="tag"></div>
-              <div className="coin2coin">
-                <img src={getCoinIcon()} />
-                <img src={getCoinIcon()} />
-                <span>
-                  FAN/USDK
-                </span>
-              </div>
-              <div className="rate">128.23%</div>
-              <div className="rate-tip">10.20%FAN+118.13%OKT</div>
-              <div className="info-detail">{toLocale('Total staked：')}$12,666</div>
-              <div className="info-detail">{toLocale('Total staked：')}$12,666</div>
-              <div className="btn">{toLocale('STAKE')}</div>
-            </div>
-            <div className="info-item">
-              <div className="tag"></div>
-              <div className="coin2coin">
-                <img src={getCoinIcon()} />
-                <img src={getCoinIcon()} />
-                <span>
-                  FAN/USDK
-                </span>
-              </div>
-              <div className="rate">128.23%</div>
-              <div className="rate-tip">10.20%FAN+118.13%OKT</div>
-              <div className="info-detail">{toLocale('Total staked：')}$12,666</div>
-              <div className="info-detail">{toLocale('Total staked：')}$12,666</div>
-              <div className="btn">{toLocale('STAKE')}</div>
-            </div>
-            <div className="info-item">
-              <div className="tag"></div>
-              <div className="coin2coin">
-                <img src={getCoinIcon()} />
-                <img src={getCoinIcon()} />
-                <span>
-                  FAN/USDK
-                </span>
-              </div>
-              <div className="rate">128.23%</div>
-              <div className="rate-tip">10.20%FAN+118.13%OKT</div>
-              <div className="info-detail">{toLocale('Total staked：')}$12,666</div>
-              <div className="info-detail">{toLocale('Total staked：')}$12,666</div>
-              <div className="btn">{toLocale('STAKE')}</div>
-            </div>
-            <div className="info-item">
-              <div className="tag"></div>
-              <div className="coin2coin">
-                <img src={getCoinIcon()} />
-                <img src={getCoinIcon()} />
-                <span>
-                  FAN/USDK
-                </span>
-              </div>
-              <div className="rate">128.23%</div>
-              <div className="rate-tip">10.20%FAN+118.13%OKT</div>
-              <div className="info-detail">{toLocale('Total staked：')}$12,666</div>
-              <div className="info-detail">{toLocale('Total staked：')}$12,666</div>
-              <div className="btn">{toLocale('STAKE')}</div>
-            </div>
-            <div className="info-item">
-              <div className="tag"></div>
-              <div className="coin2coin">
-                <img src={getCoinIcon()} />
-                <img src={getCoinIcon()} />
-                <span>
-                  FAN/USDK
-                </span>
-              </div>
-              <div className="rate">128.23%</div>
-              <div className="rate-tip">10.20%FAN+118.13%OKT</div>
-              <div className="info-detail">{toLocale('Total staked：')}$12,666</div>
-              <div className="info-detail">{toLocale('Total staked：')}$12,666</div>
-              <div className="btn">{toLocale('STAKE')}</div>
-            </div>
-          </div>
           <div className="title-wrap">
             <div className="space-between">
               <div className="left">

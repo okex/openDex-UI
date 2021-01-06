@@ -17,6 +17,9 @@ const BASEURL = {
   get SWAP() {
     return `${this.OKDEX_BASE_URL}/swap`;
   },
+  get FARM() {
+    return `${this.OKDEX_BASE_URL}/farm`;
+  }
 };
 
 const URL = {
@@ -92,5 +95,17 @@ const URL = {
   get GET_SWAP_WATCHLIST() {
     return `${BASEURL.SWAP}/watchlist`;
   },
+  get GET_SWAP_WATCHLIST() {
+    return `${BASEURL.SWAP}/watchlist`;
+  },
+  get GET_FARM_POOLS_WHITELIST() {
+    return `${BASEURL.FARM}/pools/whitelist`;
+  },
+  get GET_FARM_POOLS_NORMAL() {
+    return `${BASEURL.FARM}/pools/normal`;
+  },
+  get GET_FARM_DASHBOARD() {
+    return `${BASEURL.FARM}/dashboard`;
+  }
 };
 export default URL;
