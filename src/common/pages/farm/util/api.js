@@ -37,6 +37,11 @@ function _proccessData(data) {
       d.pool_rate_dis = pool_rate.join('+');
       d.total_staked_dis = Number(d.total_staked) === 0 ? '--' : '$'+calc.mul(d.total_staked,1).toFixed(2);
       d.pool_ratio_dis = calc.mul(d.pool_ratio, 100).toFixed(2) + '%';
+      d.farmed_details.forEach(d => {
+        d.symbol_dis = d.symbol.toUpperCase();
+        d.claimed_dis = calc.mul(d.claimed, 1).toFixed(8);
+        d.unclaimed_dis = calc.mul(d.unclaimed, 1).toFixed(8);
+      })
     });
   }
 }

@@ -34,6 +34,13 @@ const data = {
   ],
   "unclaimed":[
 
+  ],
+  "farmed_details":[
+    {
+        "symbol":"aaa-882",
+        "claimed":"0",
+        "unclaimed":"1.000000000000000000"
+    }
   ]
 }
 const param_page = {

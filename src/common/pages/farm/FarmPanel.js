@@ -67,7 +67,7 @@ export default class FarmPanel extends React.Component {
   confirm = () => {
   };
 
-  stake = () => {
+  stake = (d) => {
   }
 
   render() {
@@ -116,7 +116,7 @@ export default class FarmPanel extends React.Component {
                 <div className="rate-tip">{d.farm_apy_dis}</div>
                 <div className="info-detail">{toLocale('Total staked：')}{d.total_staked_dis}</div>
                 <div className="info-detail">{toLocale('Pool rate：')}{d.pool_rate_dis}/1Day</div>
-                <div className="btn" onClick={this.stake}>{toLocale('STAKE')}&nbsp;<span className="timer">01{toLocale('d')} 08{toLocale('h')} 36{toLocale('m')} 52{toLocale('s')}</span></div>
+                <div className="btn" onClick={() => this.stake(d)}>{toLocale('STAKE')}&nbsp;<span className="timer">01{toLocale('d')} 08{toLocale('h')} 36{toLocale('m')} 52{toLocale('s')}</span></div>
               </div>
             ))}
             </div>
