@@ -108,6 +108,15 @@
 .farm-container {
   width: @farm-container-width;
   margin: 60px auto 100px auto;
+  .ok-dialog .dialog-window .dialog-top {
+    display: none;
+  }
+  .ok-dialog .dialog-window .dialog-box {
+    min-height: auto;
+  }
+  .ok-dialog .dialog-window .dialog-box.no-title {
+    padding: 0;
+  }
   .has-tooltip {
     border: none;
   }
@@ -431,6 +440,101 @@
         background: url(../../assets/images/nav_back1.png) 0 0 no-repeat;
         background-size: 48px auto;
         margin-bottom: 12px;
+      }
+    }
+  }
+
+  .stake-panel {
+    box-sizing: border-box;
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    .stake-panel-title {
+      display: flex;
+      justify-content: space-between;
+      height: 64px;
+      align-items: center;
+      padding-left: 24px;
+      font-size: 18px;
+      font-weight: 500;
+      color: #FFFFFF;
+      line-height: 24px;
+      box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.15);
+      .close {
+        display: flex;
+        cursor: pointer;
+        font-size:22px;
+        width: 32px;
+        height: 32px;
+        justify-content: center;
+        align-items: center;
+        margin-right: 8px;
+        color:#9AA1B1
+        
+      }
+    }
+    .space-between {
+      margin: 0 24px;
+      line-height: 20px;
+      font-size: 14px;
+      font-weight: 400;
+    }
+    .stake-panel-label {
+      margin-top: 24px;
+      margin-bottom: 4px;
+      > .left {
+        color: rgba(255,255,255,0.65);
+        font-weight: 500;
+      }
+      > .right {
+        color: #2D60E0;
+      }
+    }
+    .stake-panel-input {
+      box-sizing: border-box;
+      margin-bottom: 24px;
+      background: #112F62;
+      border-radius: 2px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 0 12px 0 9px;
+      > .left {
+        flex: 1;
+        height: 38px;
+        input {
+          width: 100%;
+          line-height: normal;
+          height: 26px;
+          color: #FFFFFF;
+          &::-webkit-input-placeholder {
+            color:rgba(255,255,255,0.65);
+          }
+        }
+      }
+      .coin2coin {
+        .coin2coin-img(16px,-3px,8px);
+      }
+    }
+    .stake-panel-detail {
+      margin-bottom: 20px;
+      > .left {
+        color: rgba(255, 255, 255, 0.65);
+      }
+    }
+    .opts {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-top: 12px;
+      height: 76px;
+      box-shadow: 0px -1px 0px 0px rgba(0, 0, 0, 0.15);
+      .btn {
+        margin-left: 16px;
+        width: 128px;
+        height: 36px;
+        &.cancel {
+          border: 1px solid rgba(255, 255, 255, 0.15);
+          background-color: transparent;
+        }
       }
     }
   }

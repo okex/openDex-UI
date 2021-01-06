@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import { Dialog } from '../../component/Dialog';
 import WatchlistPanel from './WatchlistPanel';
 import Confirm from '../../component/Confirm';
+import Stake from './Stake';
 import calc from '_src/utils/calc';
 import * as api from './util/api'; 
 
@@ -25,6 +26,7 @@ export default class FarmPanel extends React.Component {
     super();
     this.state = {
       data:[],
+      current:null
     }
   }
 
@@ -67,12 +69,17 @@ export default class FarmPanel extends React.Component {
   confirm = () => {
   };
 
-  stake = (d) => {
+  stake = (current) => {
+    this.setState({current});
+  }
+
+  onClose = () => {
+    this.setState({current:null});
   }
 
   render() {
     const isLogined = util.isLogined();
-    const {data} = this.state;
+    const {data,current} = this.state;
     return (
       <div className="panel-farm">
           {!isLogined && 
@@ -141,6 +148,11 @@ export default class FarmPanel extends React.Component {
             </div>
           </div>
           <WatchlistPanel />
+          {current && 
+            <Dialog visible onClose={this.onClose}>
+              <Stake data={current} onClose={this.onClose}/>
+            </Dialog>
+          }
         </div>
     );
   }
