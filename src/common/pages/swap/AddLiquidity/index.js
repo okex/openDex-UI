@@ -190,7 +190,10 @@ export default class AddLiquidity extends React.Component {
   }
 
   loadBaseCoinList = async () => {
-    const data = await api.addLiquidityTokens();
+    const {
+      targetToken: { symbol },
+    } = this.state;
+    const data = await api.addLiquidityTokens({ symbol });
     if (!data) return [];
     let { tokens = [] } = data;
     tokens = tokens || [];
