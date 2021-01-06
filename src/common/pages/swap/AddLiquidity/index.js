@@ -12,6 +12,7 @@ import ReduceLiquidity from '../ReduceLiquidity';
 import Confirm from '../../../component/Confirm';
 import util from '_src/utils/util';
 import { getDeadLine4sdk } from '../util';
+import Message from '_src/component/Message';
 import Tooltip from '../../../component/Tooltip';
 import { validateTxs } from '_src/utils/client';
 
