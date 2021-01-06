@@ -130,6 +130,7 @@ export default class WatchlistPanel extends React.Component {
       {
         name: '',
         component: ({ row }) => {
+          let price = row.last_price;
           return (
             <div className="action-opt-wrap">
               <div
@@ -139,9 +140,12 @@ export default class WatchlistPanel extends React.Component {
                 + {toLocale('Add Liquidity')}
               </div>
               <div className="action-sep"></div>
-              <div className="action-opt" onClick={() => this.goTrade(row)}>
+              {Number(price) === 0 || Number(price) === Infinity ? 
+                <div className="action-opt disabled">{toLocale('Trade')}</div> : 
+                <div className="action-opt" onClick={() => this.goTrade(row)}>
                 {toLocale('Trade')}
               </div>
+              }
             </div>
           );
         },
