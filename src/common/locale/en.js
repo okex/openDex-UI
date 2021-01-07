@@ -1104,6 +1104,5 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   'FARM APY':'FARM APY',
   'You didn’t have any LP tokens':'You didn’t have any LP tokens of {base}-{quote}, please go add liquidity first.',
   'Claim details':'Claim details',
-  'Connect':'Connect'
 };
 export default enUS;
