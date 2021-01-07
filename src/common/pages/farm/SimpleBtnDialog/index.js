@@ -16,20 +16,18 @@ export default class SimpleBtnDialog extends React.Component {
   }
 
   createBtn() {
-    const { children } = this.props;
+    const { children,disabled } = this.props;
     const child = React.Children.only(children);
     const {onClick} = child.props;
     return React.cloneElement(child, {
       onClick: async () => {
-        if(onClick && await onClick() === false) return;
+        if(disabled || (onClick && await onClick() === false)) return;
         this.onClick()
       },
     });
   }
 
   onClick = () => {
-    const {disabled} = this.props;
-    if(disabled) return;
     this.setState({show:true});
   }
 

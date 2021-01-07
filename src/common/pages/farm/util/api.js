@@ -35,13 +35,14 @@ function _proccessData(data) {
         pool_rate.push(`${util.precisionInput(calc.mul(dd.amount,1),2)} ${dd.denom_dis}`);
       });
       d.pool_rate_dis = pool_rate.join('+');
+      d.poolEmpty = false;
       d.total_staked_dis = Number(d.total_staked) === 0 ? '--' : '$'+util.precisionInput(calc.mul(d.total_staked,1),2);
       d.pool_ratio_dis = util.precisionInput(calc.mul(d.pool_ratio, 100),2) + '%';
       d.farmed_details.forEach(d => {
         d.symbol_dis = d.symbol.toUpperCase();
         d.claimed_dis = util.precisionInput(calc.mul(d.claimed, 1),8);
         d.unclaimed_dis = util.precisionInput(calc.mul(d.unclaimed, 1),8);
-      })
+      });
     });
   }
 }
