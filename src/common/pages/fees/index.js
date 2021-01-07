@@ -31,7 +31,7 @@ class FeesPage extends Component {
   }
 
   componentDidMount() {
-    if(util.isLogined()) return;
+    if(!util.isLogined()) return;
     this.fetchFeesByState();
   }
 
