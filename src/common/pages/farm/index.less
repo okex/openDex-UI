@@ -339,6 +339,7 @@
           box-shadow: 0px -1px 0px 0px #1E2F4F;
           .linkbtn {
             display: flex;
+            font-size: 12px;
             margin-left: 24px;
             color: #2D60E0;
             cursor: pointer;
@@ -551,8 +552,11 @@
       }
       .farm-btn {
         margin-left: 16px;
+        margin-top: 0 !important;
         width: 128px;
-        height: 36px;
+        height: 36px !important;
+        font-size: 14px !important;
+        font-weight: 500 !important;
         &.cancel {
           border: 1px solid rgba(255, 255, 255, 0.15);
           background-color: transparent;
@@ -606,7 +610,7 @@
     table {
       width: 100%;
       border-radius: 2px 4px 2px 4px;
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 400;
       line-height: 22px;
       tr {
@@ -616,11 +620,15 @@
         td {
           box-sizing: border-box;
           .coin2coin {
+            span {
+              margin-right: 4px;
+              font-size: 12px;
+              font-weight: 400;
+            }
             min-height: 48px;
             .coin2coin-img(16px,-3px,4px);
           }
           .blod {
-            font-family: PingFangSC-Medium, PingFang SC;
             font-weight: 500;
           }
           &.red,.red {
@@ -709,7 +717,6 @@
     .coin2coin-img();
     span {
       font-size: 16px;
-      font-family: PingFangSC-Medium, PingFang SC;
       font-weight: 500;
       color: #FFFFFF;
       line-height: 20px;

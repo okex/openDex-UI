@@ -92,13 +92,6 @@ export default class FarmPanel extends React.Component {
                 <i className="help" />
               </Tooltip>
             </div>
-            <div className="right">
-              <div className="search-wrap iconfont">
-                <input
-                  placeholder={toLocale('Search name')}
-                />
-              </div>
-            </div>
           </div>
         </div>
         <WatchlistPanel />

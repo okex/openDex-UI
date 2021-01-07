@@ -1089,7 +1089,7 @@ const zhCN = {
   'Connect wallet to check your farming':'Connect wallet to check your farming',
   'Total staked LP / Pool ratio':'Total staked LP / Pool ratio',
   'Will start in':'Will start in',
-  'Total farmed / Farm APY':'Total farmed(USDT) / Farm APY',
+  'Total farmed / Farm APY':'Total farmed(USD) / Farm APY',
   'Token':'Token',
   'Claimed':'Claimed',
   'Unclaimed':'Unclaimed',

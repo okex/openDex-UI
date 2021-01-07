@@ -7,6 +7,7 @@ import * as api from './util/api';
 import calc from '_src/utils/calc';
 import util from '_src/utils/util';
 import {dateFns} from '_component/okit';
+import Tooltip from '../../component/Tooltip';
 import SimpleBtnDialog from './SimpleBtnDialog';
 import Stake from './Stake';
 
@@ -53,9 +54,14 @@ export default class WatchlistPanel extends React.Component {
         component({row,data}) {
           return (
             <div className="coin2coin">
+              <Tooltip
+                placement="right"
+                overlay={row.farm_apy_dis}
+              >
               <span>
                 {data}
               </span>
+              </Tooltip>
               <img src={getCoinIcon(row.lock_symbol)} />
               <img src={getCoinIcon(row.yield_symbol)} />
             </div>
