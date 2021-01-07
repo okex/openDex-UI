@@ -106,6 +106,12 @@ const URL = {
   },
   get GET_FARM_DASHBOARD() {
     return `${BASEURL.FARM}/dashboard`;
-  }
+  },
+  get GET_FARM_MAX_APY() {
+    return `${BASEURL.FARM}/whitelist/max_apy`;
+  },
+  get GET_FARM_STAKED_INFO() {
+    return `${BASEURL.FARM}/pools/{poolName}/staked_info`;
+  },
 };
 export default URL;

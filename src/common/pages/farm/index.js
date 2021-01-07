@@ -25,6 +25,10 @@ export default class Farm extends React.Component {
     this.setState({ activekey });
   };
 
+  onFarm = () => {
+    this.setState({ activekey: FARM });
+  }
+
   componentDidMount() {
     this.preSeoTitle = document.title;
     document.title = toLocale('seoFarmTitle');
@@ -45,7 +49,7 @@ export default class Farm extends React.Component {
               <FarmPanel/>
             </TabPane>
             <TabPane tab={toLocale('Dashboard')} key={DASHBOARD}>
-              <DashboardPanel/>
+              <DashboardPanel onFarm={this.onFarm}/>
             </TabPane>
           </Tabs>
         </div>

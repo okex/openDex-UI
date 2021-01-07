@@ -26,21 +26,21 @@ function _proccessData(data) {
       d.farm_apy.forEach(dd => {
         total_apy = calc.add(total_apy,dd.amount);
         dd.denom_dis = dd.denom.toUpperCase();
-        farm_apy.push(`${calc.mul(dd.amount, 100).toFixed(2)}%${dd.denom_dis}`);
+        farm_apy.push(`${util.precisionInput(calc.mul(dd.amount, 100),2)}%${dd.denom_dis}`);
       })
-      d.total_apy = calc.mul(total_apy, 100).toFixed(2) + '%';
+      d.total_apy = util.precisionInput(calc.mul(total_apy, 100),2) + '%';
       d.farm_apy_dis = farm_apy.join('+');
       d.pool_rate.forEach(dd => {
         dd.denom_dis = dd.denom.toUpperCase();
-        pool_rate.push(`${calc.mul(dd.amount,1).toFixed(2)} ${dd.denom_dis}`);
+        pool_rate.push(`${util.precisionInput(calc.mul(dd.amount,1),2)} ${dd.denom_dis}`);
       });
       d.pool_rate_dis = pool_rate.join('+');
-      d.total_staked_dis = Number(d.total_staked) === 0 ? '--' : '$'+calc.mul(d.total_staked,1).toFixed(2);
-      d.pool_ratio_dis = calc.mul(d.pool_ratio, 100).toFixed(2) + '%';
+      d.total_staked_dis = Number(d.total_staked) === 0 ? '--' : '$'+util.precisionInput(calc.mul(d.total_staked,1),2);
+      d.pool_ratio_dis = util.precisionInput(calc.mul(d.pool_ratio, 100),2) + '%';
       d.farmed_details.forEach(d => {
         d.symbol_dis = d.symbol.toUpperCase();
-        d.claimed_dis = calc.mul(d.claimed, 1).toFixed(8);
-        d.unclaimed_dis = calc.mul(d.unclaimed, 1).toFixed(8);
+        d.claimed_dis = util.precisionInput(calc.mul(d.claimed, 1),8);
+        d.unclaimed_dis = util.precisionInput(calc.mul(d.unclaimed, 1),8);
       })
     });
   }
@@ -70,4 +70,19 @@ export function dashboard(param={}) {
     _proccessData(data.data);
     return data;
   });;
+}
+
+export function maxApy() {
+  //@mock mocker.maxAPY(`${URL.GET_FARM_MAX_APY}`);
+  return get(`${URL.GET_FARM_MAX_APY}`).then(data => {
+    return {
+      data_dis: util.precisionInput(calc.mul(data, 100),2) + '%',
+      data
+    }
+  });
+}
+
+export function stakedInfo({poolName}) {
+  //@mock mocker.stakedInfo(`${URL.GET_FARM_STAKED_INFO.replace('{poolName}',poolName)}`);
+  return get(`${URL.GET_FARM_STAKED_INFO.replace('{poolName}',poolName)}`);
 }

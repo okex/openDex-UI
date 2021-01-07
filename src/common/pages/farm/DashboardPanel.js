@@ -6,6 +6,7 @@ import util from '_src/utils/util';
 import { getLangURL } from '_src/utils/navigation';
 import PageURL from '_constants/PageURL';
 import { Link } from 'react-router-dom';
+import Tooltip from '../../component/Tooltip';
 import * as api from './util/api';
 import calc from '_src/utils/calc';
 
@@ -19,13 +20,20 @@ export default class DashboardPanel extends React.Component {
       current: 1,
       pageSize: 15,
       total: 0,
+      maxApy: null
     };
   }
 
   async componentDidMount() {
     const data = await this.init({ current: this.state.current });
+    let maxApy = {
+      data_dis: '0.00%'
+    };
+    if(!data.length) {
+      maxApy = await api.maxApy();
+    }
     this.initial = true;
-    this.setState(data);
+    this.setState({...data,maxApy});
   }
 
   async init({current}) {
@@ -37,11 +45,12 @@ export default class DashboardPanel extends React.Component {
   }
 
   getPanel = () => {
+    const {maxApy} = this.state;
     if(this.initial && !this.state.total) {
       return (
         <div className="panel panel-connect">
-          <div className="connect-wallet-tip"><div>{toLocale('Haven’t farmed yet')}<span>128.23%</span>{toLocale('APY')}</div></div>
-          <div className="btn">{toLocale('Go stake')}</div>
+          <div className="connect-wallet-tip"><div>{toLocale('Haven’t farmed yet')}<span>{maxApy.data_dis}</span>{toLocale('APY')}</div></div>
+          <div className="btn" onClick={this.props.onFarm}>{toLocale('Go stake')}</div>
         </div>
       );
     }
@@ -87,15 +96,21 @@ export default class DashboardPanel extends React.Component {
           <div className="info-items info-dashboard-items">
             {data.map((d,index) => (
               <div className="info-item" key={index}>
+                <div className="tag active"></div>
                 <div className="info-item-title">
                   <div className="space-between">
                   <div className="left">
                     <div className="coin2coin">
                       <img src={getCoinIcon(d.lock_symbol)} />
                       <img src={getCoinIcon(d.yield_symbol)} />
-                      <span>
-                        {d.lock_symbol_dis}/{d.yield_symbol_dis}
-                      </span>
+                      <Tooltip
+                        placement="right"
+                        overlay={d.pool_name_dis}
+                      >
+                        <span>
+                          {d.lock_symbol_dis}/{d.yield_symbol_dis}
+                        </span>
+                      </Tooltip>
                     </div>
                   </div>
                   <div className="right">

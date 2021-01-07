@@ -41,7 +41,8 @@ const data = {
         "claimed":"0",
         "unclaimed":"1.000000000000000000"
     }
-  ]
+  ],
+  "in_whitelist":false,
 }
 const param_page = {
   "page":1,
@@ -79,6 +80,28 @@ module.exports = {
       data: {
         'data|10':[data],
         param_page
+      },
+    });
+  },
+  maxAPY(url) {
+    Mock.mock(RegExp(`${url}.*`), {
+      code: 0,
+      msg: '',
+      detail_msg: '',
+      data: /\d/,
+    });
+  },
+  stakedInfo(url) {
+    Mock.mock(RegExp(`${url}.*`), {
+      code: 0,
+      msg: '',
+      detail_msg: '',
+      data: {
+        "pool_name":"aaa-882_okt",
+        "balance":"99999999999999989989.980000000000000000",
+        "account_staked":"10.000000000000000000",
+        "pool_total_staked":"10.000000000000000000",
+        "pool_ratio":"1.000000000000000000"
       },
     });
   },
