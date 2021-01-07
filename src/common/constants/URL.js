@@ -6,10 +6,10 @@ const BASEURL = {
     return getCurrentApiUrl();
   },
   get DEFAULT_BASE_URL() {
-    return `${DEFAULT}/${env.envConfig.apiPath}/v1`;
+    return `${DEFAULT}/${env.envConfig.apiPath}`;
   },
   get OKDEX_BASE_URL() {
-    return `${this.BASE_URL}/${env.envConfig.apiPath}/v1`;
+    return `${this.BASE_URL}/${env.envConfig.apiPath}`;
   },
   get OKDEX_SUPPORT_ROOT() {
     return `${this.BASE_URL}/okdex/v1`;

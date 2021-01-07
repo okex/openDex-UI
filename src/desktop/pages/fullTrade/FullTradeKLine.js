@@ -4,6 +4,7 @@ import { getWsUrl } from '_src/utils/websocket';
 import Cookies from 'js-cookie';
 import './FullTradeKLine.less';
 import util from '_src/utils/util';
+import env from '_src/constants/env';
 
 function mapStateToProps(state) {
   const { product, depth200, currencyTicker } = state.SpotTrade;
@@ -74,11 +75,11 @@ export default class FullTradeKLine extends React.Component {
     let wsUrl = getWsUrl();
     let logo;
     let screenshotIcon =
-      'https://img.bafang.com/cdn/assets/imgs/MjAxOTM/05D71CB3408AD30681388F4D774BABBA.png';
+      'https://static.bafang.com/cdn/assets/imgs/MjAxOTM/05D71CB3408AD30681388F4D774BABBA.png';
     const Kline = window.okui.CombKline || window.okui.Kline;
     this.kline = new Kline({
       element: '#dex-full-kline-container',
-      klineUrl: httpUrl + '/okexchain/v1/candles/<symbol>',
+      klineUrl: httpUrl + env.envConfig.apiPath + '/candles/<symbol>',
       klineType: 'TradingView',
       showToggle: false,
       wsUrl,
