@@ -1,6 +1,6 @@
 import getApiUrl from './getApiUrl';
 const url = getApiUrl();
-const OKDEX_BASE_URL = `${url}/okexchain/v1`;
+const OKDEX_BASE_URL = `${url}/okexchain-test/v1`;
 const OKDEX_SUPPORT_ROOT = `${url}/okdex/v1`;
 
 const URL = {
