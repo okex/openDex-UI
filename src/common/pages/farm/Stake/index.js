@@ -4,6 +4,19 @@ import { toLocale } from '_src/locale/react-locale'
 import { getCoinIcon } from '../util/coinIcon';
 import classNames from 'classnames';
 import InputNum from '_component/InputNum';
+import LiquidityInfoTip from '../LiquidityInfoTip';
+import ConnectInfoTip from '../ConnectInfoTip'
+import util from '_src/utils/util';
+import { connect } from 'react-redux';
+import Confirm  from '../../../component/Confirm';
+import * as api from '../util/api';
+
+function mapStateToProps(state) {
+  const { okexchainClient } = state.Common;
+  return { okexchainClient };
+}
+
+@connect(mapStateToProps)
 export default class Stake extends React.Component {
 
   constructor() {
@@ -18,7 +31,17 @@ export default class Stake extends React.Component {
   }
 
   confirm = () => {
-
+    const {value} = this.state;
+    const { okexchainClient,data,isStake } = this.props;
+    const params = [
+      data.pool_name,
+      data.lock_symbol,
+      util.precisionInput(value),
+      '',
+      null,
+    ];
+    if(isStake) okexchainClient.sendFarmLockTransaction(...params);
+    return okexchainClient.sendFarmUnLockTransaction(...params);
   }
 
   render() {
@@ -32,7 +55,7 @@ export default class Stake extends React.Component {
         <div className="stake-panel-content">
           <div className="space-between stake-panel-label">
             <div className="left">{toLocale('Number')}</div>
-            <div className="right">{toLocale(avaliableLocale)}{data.avaliable}</div>
+            <div className="right">{toLocale(avaliableLocale)}{data.balance_dis}</div>
           </div>
           <div className="stake-panel-input-wrap">
             <div className="space-between stake-panel-input">
@@ -71,11 +94,24 @@ export default class Stake extends React.Component {
           }
         </div>
         <div className={classNames('stake-panel-footer',{nomargin: isStake})}>
-          <div className="btn cancel" onClick={onClose}>{toLocale('cancel')}</div>
-          <div className="btn" onClick={this.confirm}>{toLocale(locale)}</div>
+          <div className="farm-btn cancel" onClick={onClose}>{toLocale('cancel')}</div>
+          <Confirm
+            onClick={this.confirm}
+            loadingTxt={toLocale('pending transactions')}
+            successTxt={toLocale('transaction confirmed')}
+          >
+          <div className="farm-btn">{toLocale(locale)}</div>
+        </Confirm>
         </div>
       </div>
       );
   }
+}
+
+Stake.getStake = async (data,isStake=true) => {
+  if(!util.isLogined()) return <ConnectInfoTip />
+  const stakeInfo = await api.stakedInfo({poolName: data.pool_name});
+  if(!Number(stakeInfo.balance)) return <LiquidityInfoTip />
+  return <Stake data={{...data,...stakeInfo}} isStake={isStake}/>
 }
 

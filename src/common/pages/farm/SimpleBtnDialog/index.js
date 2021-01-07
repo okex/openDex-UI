@@ -7,7 +7,8 @@ export default class SimpleBtnDialog extends React.Component {
   constructor() {
     super();
     this.state = {
-      show: false
+      show: false,
+      component: null
     };
   }
 
@@ -27,16 +28,18 @@ export default class SimpleBtnDialog extends React.Component {
     });
   }
 
-  onClick = () => {
-    this.setState({show:true});
+  onClick = async () => {
+    let component = this.props.component;
+    if(typeof component === 'function') component = await component();
+    component = React.cloneElement(component,{onClose:this.onClose});
+    this.setState({show:true, component});
   }
 
   render() {
-    const {show} = this.state;
-    const Component = React.cloneElement(this.props.component,{onClose:this.onClose});
+    const {show,component} = this.state;
     return (
       <>
-      {show && <Dialog visible>{Component}</Dialog>}
+      {show && <Dialog visible hideCloseBtn>{component}</Dialog>}
       {this.createBtn()}
       </>
       );

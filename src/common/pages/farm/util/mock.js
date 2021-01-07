@@ -98,7 +98,7 @@ module.exports = {
       detail_msg: '',
       data: {
         "pool_name":"aaa-882_okt",
-        "balance":"99999999999999989989.980000000000000000",
+        "balance":"100.980000000000000000",
         "account_staked":"10.000000000000000000",
         "pool_total_staked":"10.000000000000000000",
         "pool_ratio":"1.000000000000000000"

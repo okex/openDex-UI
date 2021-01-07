@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { toLocale } from '_src/locale/react-locale';
 import util from '_src/utils/util';
 import { getCoinIcon } from './util/coinIcon';
@@ -7,29 +6,17 @@ import { getLangURL } from '_src/utils/navigation';
 import Tooltip from '../../component/Tooltip';
 import PageURL from '_constants/PageURL';
 import { Link } from 'react-router-dom';
-import { Dialog } from '../../component/Dialog';
 import WatchlistPanel from './WatchlistPanel';
-import Confirm from '../../component/Confirm';
 import SimpleBtnDialog from './SimpleBtnDialog';
 import Stake from './Stake';
-import LiquidityInfoTip from './LiquidityInfoTip';
-import ConnectInfoTip from './ConnectInfoTip';
 import * as api from './util/api'; 
 
-function mapStateToProps(state) {
-  const { okexchainClient } = state.Common;
-  return { okexchainClient };
-}
-
-@connect(mapStateToProps)
 export default class FarmPanel extends React.Component {
 
   constructor() {
     super();
     this.state = {
       data:[],
-      showConnectTip: false,
-      showLiquidityTip: false
     }
   }
 
@@ -42,50 +29,9 @@ export default class FarmPanel extends React.Component {
     this.setState({data});
   }
 
-  getBtn() {
-    const { baseToken, targetToken } = this.state;
-    let btn;
-    if (!util.isLogined()) {
-      btn = (
-        <Link to={getLangURL(PageURL.walletCreate)}>
-          <div className="btn">{toLocale('Connect Wallet')}</div>
-        </Link>
-      );
-    } else if (!baseToken.symbol || !targetToken.symbol) {
-      btn = <div className="btn disabled">{toLocale('Invalid Pair')}</div>;
-    } else if (!Number(baseToken.value) || !Number(targetToken.value)) {
-      btn = <div className="btn disabled">{toLocale('Input an amount')}</div>;
-    } else {
-      btn = (
-        <Confirm
-          onClick={this.confirm}
-          loadingTxt={toLocale('pending transactions')}
-          successTxt={toLocale('transaction confirmed')}
-        >
-          <div className="btn">{toLocale('Confirm')}</div>
-        </Confirm>
-      );
-    }
-    return <div className="btn-wrap">{btn}</div>;
-  }
-
-  confirm = () => {
-  };
-
-  check = (data) => {
-    if(!util.isLogined()) {
-      this.setState({showConnectTip: true});
-      return false;
-    }
-    if(data.poolEmpty) {
-      this.setState({showLiquidityTip: true});
-      return false;
-    }
-  }
-
   render() {
     const isLogined = util.isLogined();
-    const {data,showConnectTip,showLiquidityTip} = this.state;
+    const {data} = this.state;
     return (
       <div className="panel-farm">
         {!isLogined && 
@@ -95,7 +41,7 @@ export default class FarmPanel extends React.Component {
           </div>
           <div className="right">
             <Link to={getLangURL(PageURL.walletCreate)}>
-              <div className="btn">{toLocale('Connect Wallet')}</div>
+              <div className="farm-btn">{toLocale('Connect Wallet')}</div>
             </Link>
           </div>
         </div>
@@ -129,8 +75,8 @@ export default class FarmPanel extends React.Component {
               <div className="rate-tip">{d.farm_apy_dis}</div>
               <div className="info-detail">{toLocale('Total staked：')}{d.total_staked_dis}</div>
               <div className="info-detail">{toLocale('Pool rate：')}{d.pool_rate_dis}/1Day</div>
-              <SimpleBtnDialog component={<Stake data={d} />}>
-                <div className="btn" onClick={() => this.check(d)}>{toLocale('STAKE')}&nbsp;<span className="timer">01{toLocale('d')} 08{toLocale('h')} 36{toLocale('m')} 52{toLocale('s')}</span></div>
+              <SimpleBtnDialog component={() => Stake.getStake(d)}>
+                <div className="farm-btn">{toLocale('STAKE')}&nbsp;<span className="timer">01{toLocale('d')} 08{toLocale('h')} 36{toLocale('m')} 52{toLocale('s')}</span></div>
               </SimpleBtnDialog>
             </div>
           ))}
@@ -156,8 +102,6 @@ export default class FarmPanel extends React.Component {
           </div>
         </div>
         <WatchlistPanel />
-        {showConnectTip && <Dialog visible><ConnectInfoTip onClose={() => {this.setState({showConnectTip:false})}}/></Dialog>}
-        {showLiquidityTip && <Dialog visible><LiquidityInfoTip onClose={() => {this.setState({showLiquidityTip:false})}}/></Dialog>}
       </div>
     );
   }

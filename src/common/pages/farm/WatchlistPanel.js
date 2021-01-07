@@ -5,7 +5,10 @@ import { toLocale } from '_src/locale/react-locale';
 import WatchList from './Watchlist';
 import * as api from './util/api';
 import calc from '_src/utils/calc';
+import util from '_src/utils/util';
 import {dateFns} from '_component/okit';
+import SimpleBtnDialog from './SimpleBtnDialog';
+import Stake from './Stake';
 
 export default class WatchlistPanel extends React.Component {
   constructor() {
@@ -34,7 +37,7 @@ export default class WatchlistPanel extends React.Component {
         component(props) {
           return Number(props.data) === 0
             ? '--'
-            : '$' + calc.mul(props.data, 1).toFixed(2);
+            : '$' + util.precisionInput(calc.mul(props.data, 1),2);
         },
       },
       {
@@ -81,11 +84,13 @@ export default class WatchlistPanel extends React.Component {
         width: '128',
         component: ({ row }) => {
           return (
-            <div className="action-opt-wrap">
-              <div className="action-opt" onClick={() => this.goTrade(row)}>
-                {toLocale('Stake')}
+            <SimpleBtnDialog component={() => Stake.getStake(row)}>
+              <div className="action-opt-wrap">
+                <div className="action-opt">
+                  {toLocale('Stake')}
+                </div>
               </div>
-            </div>
+            </SimpleBtnDialog>
           );
         },
       },

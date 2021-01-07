@@ -38,7 +38,7 @@ function _proccessData(data) {
       d.poolEmpty = false;
       d.total_staked_dis = Number(d.total_staked) === 0 ? '--' : '$'+util.precisionInput(calc.mul(d.total_staked,1),2);
       d.pool_ratio_dis = util.precisionInput(calc.mul(d.pool_ratio, 100),2) + '%';
-      d.farmed_details.forEach(d => {
+      d.farmed_details && d.farmed_details.forEach(d => {
         d.symbol_dis = d.symbol.toUpperCase();
         d.claimed_dis = util.precisionInput(calc.mul(d.claimed, 1),8);
         d.unclaimed_dis = util.precisionInput(calc.mul(d.unclaimed, 1),8);
@@ -85,5 +85,12 @@ export function maxApy() {
 
 export function stakedInfo({poolName}) {
   //@mock mocker.stakedInfo(`${URL.GET_FARM_STAKED_INFO.replace('{poolName}',poolName)}`);
-  return get(`${URL.GET_FARM_STAKED_INFO.replace('{poolName}',poolName)}`);
+  return get(`${URL.GET_FARM_STAKED_INFO.replace('{poolName}',poolName)}`).then(data => {
+    data.pool_name_dis = data.pool_name.toUpperCase();
+    data.balance_dis = util.precisionInput(data.balance,8);
+    data.account_staked = util.precisionInput(data.account_staked,8);
+    data.pool_total_staked_dis = util.precisionInput(data.pool_total_staked,8);
+    data.pool_ratio_dis = util.precisionInput(data.pool_ratio,2);
+    return data;
+  });
 }

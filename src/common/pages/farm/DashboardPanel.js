@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import Tooltip from '../../component/Tooltip';
 import * as api from './util/api';
 import SimpleBtnDialog from './SimpleBtnDialog';
+import classNames from 'classnames';
 import Stake from './Stake';
 import Claim from './Claim';
 
@@ -52,7 +53,7 @@ export default class DashboardPanel extends React.Component {
       return (
         <div className="panel panel-connect">
           <div className="connect-wallet-tip"><div>{toLocale('Haven’t farmed yet')}<span>{maxApy.data_dis}</span>{toLocale('APY')}</div></div>
-          <div className="btn" onClick={this.props.onFarm}>{toLocale('Go stake')}</div>
+          <div className="farm-btn" onClick={this.props.onFarm}>{toLocale('Go stake')}</div>
         </div>
       );
     }
@@ -64,7 +65,7 @@ export default class DashboardPanel extends React.Component {
       <div className="panel panel-connect">
         <div className="connect-wallet-tip">{toLocale('Connect wallet to check your farming')}</div>
         <Link to={getLangURL(PageURL.walletCreate)}>
-          <div className="btn">{toLocale('Connect Wallet')}</div>
+          <div className="farm-btn">{toLocale('Connect Wallet')}</div>
         </Link>
       </div>
     )
@@ -86,7 +87,7 @@ export default class DashboardPanel extends React.Component {
           <div className="info-items info-dashboard-items">
             {data.map((d,index) => (
               <div className="info-item" key={index}>
-                <div className="tag active"></div>
+                {d.in_whitelist && <div className={classNames('tag',{active:d.active})}></div>}
                 <div className="info-item-title">
                   <div className="space-between">
                   <div className="left">
@@ -147,14 +148,14 @@ export default class DashboardPanel extends React.Component {
                 </div>
                 }
                 <div className="opt-footer">
-                  <SimpleBtnDialog component={<Stake data={d} />}>
+                  <SimpleBtnDialog component={() => Stake.getStake(d)}>
                     <div className="linkbtn">{toLocale('STAKE')}</div>
                   </SimpleBtnDialog>
-                  <SimpleBtnDialog component={<Stake data={d} isStake={false}/>}>
+                  <SimpleBtnDialog component={() => Stake.getStake(d,false)}>
                     <div className="linkbtn">{toLocale('UNSTAKE')}</div>
                   </SimpleBtnDialog>
                   <SimpleBtnDialog component={<Claim data={d}/>}>
-                    <div className="btn">{toLocale('Claim all')}</div>
+                    <div className="farm-btn">{toLocale('Claim all')}</div>
                   </SimpleBtnDialog>
                 </div>
               </div>

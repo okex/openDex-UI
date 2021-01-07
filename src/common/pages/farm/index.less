@@ -106,17 +106,10 @@
 }
 
 .farm-container {
+  position: relative;
+  z-index: 1;
   width: @farm-container-width;
   margin: 60px auto 100px auto;
-  .ok-dialog .dialog-window .dialog-top {
-    display: none;
-  }
-  .ok-dialog .dialog-window .dialog-box {
-    min-height: auto;
-  }
-  .ok-dialog .dialog-window .dialog-box.no-title {
-    padding: 0;
-  }
   .has-tooltip {
     border: none;
   }
@@ -198,7 +191,7 @@
           margin-right: 12px;
         }
       }
-      .btn {
+      .farm-btn {
         height: 36px;
         padding: 0 24px;
         font-size: 14px;
@@ -265,7 +258,7 @@
           line-height: 20px;
           margin-bottom: 8px;
         }
-        .btn {
+        .farm-btn {
           margin-top: 22px;
           height: 40px;
           font-size: 14px;
@@ -351,7 +344,7 @@
             cursor: pointer;
             margin-top: 0;
           }
-          .btn {
+          .farm-btn {
             height: 28px;
             border-radius: 2px;
             font-size: 12px;
@@ -449,6 +442,8 @@
     width: 600px;
     display: flex;
     flex-direction: column;
+    margin-top: -45px;
+    margin-bottom: -24px;
     .stake-panel-title {
       display: flex;
       justify-content: space-between;
@@ -554,7 +549,7 @@
       &.isStake {
         margin-top: 12px;
       }
-      .btn {
+      .farm-btn {
         margin-left: 16px;
         width: 128px;
         height: 36px;
@@ -578,7 +573,7 @@
     }
   }
   
-  .btn {
+  .farm-btn {
     display: flex;
     height: 48px;
     justify-content: center;
