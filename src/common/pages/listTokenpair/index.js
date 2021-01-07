@@ -80,7 +80,7 @@ class ListTokenpair extends Component {
       .catch((err) => {
         console.log(err);
         this.setState({ isActionLoading: false });
-        showError();
+        showError(err.message || toLocale('sysError'));
       });
   };
 
