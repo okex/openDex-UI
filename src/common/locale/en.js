@@ -152,8 +152,8 @@ const enUS = {
   "error.code.65012": "invalid token pair",
   "error.code.65013": "missing address",
   "error.code.65014": "is zero value",
-  "error.code.65015": "block time big than deadline",
-  "error.code.65016": "input value exceed system upper limit",
+  "error.code.65015": "input value exceed system upper limit",
+  "error.code.65016": "%s value less than %s value",
   "error.code.65017": "mint pool token failed",
   "error.code.65018": "send coins from pool to account failed",
   "error.code.65019": "burn pool token failed",
@@ -203,6 +203,8 @@ const enUS = {
   "error.code.66017": "invalid height",
   "error.code.66018": "invalid pool name length",
   "error.code.66019": "locked amount too low",
+  "error.code.66020": "send coins from module to account failed",
+  "error.code.66021": "swap token pair not exist",
   "error.code.67000": "validator does not existinvalid validator address",
   "error.code.67001": "invalid delegation",
   "error.code.67002": "empty validator address",
@@ -1052,7 +1054,7 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   'The share of the pool liquidity after you add.':
     'Your ratio of liquidity added this time',
   'set confirmed': 'success',
-  'pool empty': "Pool is empty, can't swap",
+  'pool empty': "Empty pool, can’t swap",
   'pool empty tip':
     'This is an empty pool, go add the first liquidity and decide the price',
   'watchlist noData': 'No Data',

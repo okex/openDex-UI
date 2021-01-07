@@ -54,6 +54,7 @@ export default class SwapPanel extends React.Component {
       baseToken: props.baseToken,
       targetToken: props.targetToken,
       exchangeInfo: { ...SwapPanel.exchangeInfo },
+      isPoolEmpty: false,
     };
   }
 
@@ -88,8 +89,13 @@ export default class SwapPanel extends React.Component {
         target.value = buy_amount;
       } catch (e) {
         if (errTip) {
+          let content = e.message || toLocale(`error.code.${e.code}`)
+          if(e.code === 65014) {
+            content = toLocale('pool empty');
+            data.isPoolEmpty = true;
+          }
           Message.error({
-            content: e.message || toLocale(`error.code.${e.code}`),
+            content,
             duration: 3,
           });
         }
@@ -104,7 +110,7 @@ export default class SwapPanel extends React.Component {
   changeBase = (token) => {
     let baseToken = { ...this.state.baseToken, ...token };
     let targetToken = { ...this.state.targetToken, value: '' };
-    const data = { ...this.state, baseToken, targetToken };
+    const data = { ...this.state, baseToken, targetToken,isPoolEmpty: false };
     this.updateSwapInfo4RealTime(data, 'baseToken');
   };
 
@@ -136,7 +142,7 @@ export default class SwapPanel extends React.Component {
   changeTarget = (token) => {
     let baseToken = { ...this.state.baseToken };
     let targetToken = { ...this.state.targetToken, ...token };
-    const data = { ...this.state, targetToken, baseToken };
+    const data = { ...this.state, targetToken, baseToken,isPoolEmpty: false };
     this.updateSwapInfo4RealTime(data, 'baseToken');
   };
 
@@ -329,7 +335,7 @@ export default class SwapPanel extends React.Component {
   }
 
   getBtn() {
-    const { baseToken, targetToken } = this.state;
+    const { baseToken, targetToken,isPoolEmpty } = this.state;
     let btn;
     if (!util.isLogined()) {
       btn = (
@@ -339,6 +345,8 @@ export default class SwapPanel extends React.Component {
       );
     } else if (!baseToken.symbol || !targetToken.symbol) {
       btn = <div className="btn disabled">{toLocale('Invalid Pair')}</div>;
+    } else if (isPoolEmpty) {
+      btn = <div className="btn disabled">{toLocale('pool empty')}</div>;
     } else if (!Number(baseToken.value) || !Number(targetToken.value)) {
       btn = <div className="btn disabled">{toLocale('Input an amount')}</div>;
     } else if(baseToken.error) {

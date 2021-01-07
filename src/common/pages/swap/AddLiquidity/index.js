@@ -12,6 +12,7 @@ import ReduceLiquidity from '../ReduceLiquidity';
 import Confirm from '../../../component/Confirm';
 import util from '_src/utils/util';
 import { getDeadLine4sdk } from '../util';
+import Message from '_src/component/Message';
 import Tooltip from '../../../component/Tooltip';
 import { validateTxs } from '_src/utils/client';
 
@@ -125,6 +126,11 @@ export default class AddLiquidity extends React.Component {
       await this._check(data);
       await this._updateExchangePrice(data);
       await this._updateExchange(data);
+    } catch(e) {
+      Message.error({
+        content: e.message || toLocale(`error.code.${e.code}`),
+        duration: 3,
+      });
     } finally {
       this.setState(data);
     }
@@ -184,7 +190,10 @@ export default class AddLiquidity extends React.Component {
   }
 
   loadBaseCoinList = async () => {
-    const data = await api.addLiquidityTokens();
+    const {
+      targetToken: { symbol },
+    } = this.state;
+    const data = await api.addLiquidityTokens({ symbol });
     if (!data) return [];
     let { tokens = [] } = data;
     tokens = tokens || [];
