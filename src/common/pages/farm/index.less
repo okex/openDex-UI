@@ -522,12 +522,35 @@
         color: rgba(255, 255, 255, 0.65);
       }
     }
+    .stake-panel-table {
+      margin: 24px 0;
+      table {
+        width: 100%;
+        color: #ffffff;
+        tr {
+          td {
+            min-height: 36px;
+            height: 36px;
+            &:last-child {
+              text-align: right;
+            }
+          }
+          &.thead td{
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.45);
+            height: 32px;
+            vertical-align: top;
+          }
+        }
+      }
+    }
     .stake-panel-footer {
       display: flex;
       align-items: center;
       justify-content: flex-end;
       height: 76px;
       box-shadow: 0px -1px 0px 0px rgba(0, 0, 0, 0.15);
+      padding-right: 24px;
       &.isStake {
         margin-top: 12px;
       }

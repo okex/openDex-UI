@@ -8,7 +8,9 @@ import PageURL from '_constants/PageURL';
 import { Link } from 'react-router-dom';
 import Tooltip from '../../component/Tooltip';
 import * as api from './util/api';
-import calc from '_src/utils/calc';
+import SimpleBtnDialog from './SimpleBtnDialog';
+import Stake from './Stake';
+import Claim from './Claim';
 
 export default class DashboardPanel extends React.Component {
 
@@ -20,7 +22,7 @@ export default class DashboardPanel extends React.Component {
       current: 1,
       pageSize: 15,
       total: 0,
-      maxApy: null
+      maxApy: null,
     };
   }
 
@@ -72,18 +74,6 @@ export default class DashboardPanel extends React.Component {
     const data = await this.init({ current });
     this.setState({ ...data, current });
   };
-
-  stake = (d) => {
-
-  }
-
-  unstake = (d) => {
-    
-  }
-
-  claim = (d) => {
-    
-  }
 
   render() {
     const { data, current, pageSize, total } = this.state;
@@ -157,9 +147,15 @@ export default class DashboardPanel extends React.Component {
                 </div>
                 }
                 <div className="opt-footer">
-                  <div className="linkbtn" onClick={() => this.stake(d)}>{toLocale('STAKE')}</div>
-                  <div className="linkbtn" onClick={() => this.unstake(d)}>{toLocale('UNSTAKE')}</div>
-                  <div className="btn" onClick={() => this.claim(d)}>{toLocale('Claim all')}</div>
+                  <SimpleBtnDialog component={<Stake data={d} />}>
+                    <div className="linkbtn">{toLocale('STAKE')}</div>
+                  </SimpleBtnDialog>
+                  <SimpleBtnDialog component={<Stake data={d} isStake={false}/>}>
+                    <div className="linkbtn">{toLocale('UNSTAKE')}</div>
+                  </SimpleBtnDialog>
+                  <SimpleBtnDialog component={<Claim data={d}/>}>
+                    <div className="btn">{toLocale('Claim all')}</div>
+                  </SimpleBtnDialog>
                 </div>
               </div>
             ))}

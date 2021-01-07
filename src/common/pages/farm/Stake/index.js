@@ -4,7 +4,6 @@ import { toLocale } from '_src/locale/react-locale'
 import { getCoinIcon } from '../util/coinIcon';
 import classNames from 'classnames';
 import InputNum from '_component/InputNum';
-
 export default class Stake extends React.Component {
 
   constructor() {
@@ -24,7 +23,7 @@ export default class Stake extends React.Component {
 
   render() {
     const {value} = this.state;
-    const {data,isStake=true,onClose} = this.props;
+    const {data,isStake=true, onClose} = this.props;
     const locale = isStake ? 'Stake' : 'Unstake';
     const avaliableLocale = isStake ? 'Avaliable to stake':'Avaliable to unstake'
     return (
@@ -71,11 +70,12 @@ export default class Stake extends React.Component {
             </>
           }
         </div>
-        <div className={classNames('stake-panel-footer',{nomargin:!isStake})}>
+        <div className={classNames('stake-panel-footer',{nomargin: isStake})}>
           <div className="btn cancel" onClick={onClose}>{toLocale('cancel')}</div>
-          <div className="btn disabled" onClick={this.confirm}>{toLocale(locale)}</div>
+          <div className="btn" onClick={this.confirm}>{toLocale(locale)}</div>
         </div>
       </div>
-    );
+      );
   }
 }
+
