@@ -10,7 +10,7 @@ class ValuationUnit extends React.Component {
     this.state = {
       valuationItems: [],
       isHide: true,
-      valuationUnit: 'TUSDK',
+      valuationUnit: 'USDK',
     };
   }
 

@@ -154,7 +154,7 @@ export function initProduct(productObj, productList, callback) {
     if (favorites) {
       product = favorites[0] || '';
     } else {
-      product = 'tbtc_tusdk';
+      product = 'btc_usdk';
     }
   }
   resetProductConfig(product, productList);

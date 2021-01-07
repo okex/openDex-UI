@@ -101,7 +101,7 @@ class FullTradeProductList extends React.Component {
 
   getCurrListByArea = (productList, activeMarket) => {
     const { groupId, groupName } = activeMarket;
-    const quoteSymbol = groupName || 'TUSDK';
+    const quoteSymbol = groupName || 'USDK';
     let currList = [];
     if (groupId === -1) {
       currList = productList.filter((item) => {
