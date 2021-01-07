@@ -8,6 +8,7 @@ import ont from '_src/utils/dataProxy';
 import URL from '_constants/URL';
 import { toLocale } from '_src/locale/react-locale';
 import { getFeesCols } from '_src/utils/table';
+import util from '../../utils/util';
 import './index.less';
 
 const DEFAULT_PAGINATION = {
@@ -30,6 +31,7 @@ class FeesPage extends Component {
   }
 
   componentDidMount() {
+    if(util.isLogined()) return;
     this.fetchFeesByState();
   }
 
