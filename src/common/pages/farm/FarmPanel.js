@@ -111,7 +111,7 @@ export default class FarmPanel extends React.Component {
               </div>
               <div className="info-detail">
                 {toLocale('Pool rate：')}
-                {d.pool_rate_dis}/1Day
+                {d.pool_rate_dis}/{toLocale('1Day')}
               </div>
               <SimpleBtnDialog
                 component={() => Stake.getStake(d)}

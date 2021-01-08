@@ -12,11 +12,13 @@ import * as api from '../util/api';
 
 function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
-  return { okexchainClient };
+  const { account4Swap } = state.SwapStore;
+  return { okexchainClient, account4Swap };
 }
 
 @connect(mapStateToProps)
 export default class Stake extends React.Component {
+
   constructor() {
     super();
     this.state = {
@@ -42,6 +44,14 @@ export default class Stake extends React.Component {
     return okexchainClient.sendFarmUnLockTransaction(...params);
   };
 
+  getAvailable(data) {
+    let { balance_dis, pool_name } = data;
+    let { account4Swap } = this.props;
+    const temp = account4Swap[pool_name];
+    if (temp) balance_dis = util.precisionInput(temp.available, 8);
+    return balance_dis;
+  }
+
   render() {
     const { value } = this.state;
     const { data, isStake = true, onClose } = this.props;
@@ -62,7 +72,7 @@ export default class Stake extends React.Component {
             <div className="left">{toLocale('Number')}</div>
             <div className="right">
               {toLocale(avaliableLocale)}
-              {data.balance_dis}
+              {this.getAvailable(data)}
             </div>
           </div>
           <div className="stake-panel-input-wrap">

@@ -1106,5 +1106,6 @@ const zhCN = {
   'You didn’t have any LP tokens':
     'You didn’t have any LP tokens of {pool_name}, please go add liquidity first.',
   'Claim details': 'Claim details',
+  '1Day':'1Day',
 };
 export default zhCN;

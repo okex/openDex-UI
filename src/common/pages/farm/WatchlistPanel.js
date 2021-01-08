@@ -18,7 +18,7 @@ export default class WatchlistPanel extends React.Component {
     this.columns = [
       {
         name: toLocale('Farm pool'),
-        width: '269',
+        width: '180',
         component: ({ row }) => {
           return (
             <div className="coin2coin">
@@ -35,7 +35,7 @@ export default class WatchlistPanel extends React.Component {
         field: 'total_staked',
         name: toLocale('Total staked'),
         canSort: true,
-        width: '154',
+        width: '178',
         component(props) {
           return Number(props.data) === 0
             ? '--'
@@ -45,7 +45,7 @@ export default class WatchlistPanel extends React.Component {
       {
         field: 'pool_rate_dis',
         name: toLocale('Pool rate(1Day)'),
-        width: '154',
+        width: '260',
       },
       {
         field: 'total_apy',
@@ -83,7 +83,7 @@ export default class WatchlistPanel extends React.Component {
       },
       {
         name: toLocale('Action'),
-        width: '128',
+        width: '100',
         component: ({ row }) => {
           return (
             <SimpleBtnDialog component={() => Stake.getStake(row)} disabled={!row.active}>
