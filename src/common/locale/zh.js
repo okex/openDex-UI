@@ -1101,7 +1101,7 @@ const zhCN = {
   'Avaliable to unstake':'Avaliable to unstake: ',
   'Pool ratio':'Pool ratio',
   'FARM APY':'FARM APY',
-  'You didn’t have any LP tokens':'You didn’t have any LP tokens of {base}-{quote}, please go add liquidity first.',
+  'You didn’t have any LP tokens':'You didn’t have any LP tokens of {pool_name}, please go add liquidity first.',
   'Claim details':'Claim details',
 };
 export default zhCN;

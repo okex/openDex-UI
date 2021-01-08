@@ -472,6 +472,10 @@
         color:#9AA1B1
         
       }
+      &.no-title {
+        justify-content:flex-end;
+        box-shadow:none;
+      }
     }
     .stake-panel-content {
       margin: 0 24px;
@@ -565,6 +569,32 @@
           border: 1px solid rgba(255, 255, 255, 0.15);
           background-color: transparent;
         }
+      }
+      &.noshadow {
+        box-shadow:none;
+        height: 84px;
+        a,.farm-btn {
+          display: flex;
+          flex: 1;
+        }
+      }
+    }
+    .infotip {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      &::before {
+        content: '';
+        display: flex;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: url(../../assets/images/warn.png) 0 0 no-repeat;
+        background-size: 48px auto;
+        margin-top: -40px;
+        margin-bottom: 16px;
       }
     }
   }

@@ -9,16 +9,16 @@ export default class ConnectInfoTip extends React.Component {
   render() {
     const {onClose} = this.props;
     return (
-      <div className="stake-panel">
-        <div className="stake-panel-title">&nbsp;<span className="close" onClick={onClose}>×</span></div>
+      <div className="stake-panel" style={{width:'392px'}}>
+        <div className="stake-panel-title no-title"><span className="close" onClick={onClose}>×</span></div>
         <div className="stake-panel-content">
           <div className="infotip">
             {toLocale('You haven’t connected a wallet.')}
           </div>
         </div>
-        <div className="stake-panel-footer nomargin">
+        <div className="stake-panel-footer nomargin noshadow">
           <Link to={getLangURL(PageURL.walletCreate)}>
-            <div className="btn">{toLocale('Connect Wallet')}</div>
+            <div className="farm-btn">{toLocale('Connect Wallet')}</div>
           </Link>
         </div>
       </div>
