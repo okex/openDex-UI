@@ -1090,6 +1090,7 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   'Connect wallet to check your farming':'Connect wallet to check your farming',
   'Total staked LP / Pool ratio':'Total staked LP / Pool ratio',
   'Will start in':'Will start in',
+  'Will finish in':'Will finish in',
   'Total farmed / Farm APY':'Total farmed(USD) / Farm APY',
   'Token':'Token',
   'Claimed':'Claimed',
@@ -1102,7 +1103,7 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   'Avaliable to unstake':'Avaliable to unstake: ',
   'Pool ratio':'Pool ratio',
   'FARM APY':'FARM APY',
-  'You didn’t have any LP tokens':'You didn’t have any LP tokens of {base}-{quote}, please go add liquidity first.',
+  'You didn’t have any LP tokens':'You didn’t have any LP tokens of {pool_name}, please go add liquidity first.',
   'Claim details':'Claim details',
 };
 export default enUS;
