@@ -1118,5 +1118,6 @@ Immediate or Cancel requires all or part of the order to be executed immediately
     'You didn’t have any LP tokens of {pool_name}, please go add liquidity first.',
   'Claim details': 'Claim details',
   '1Day':'1Day',
+  'balance not enough':'balance not enough'
 };
 export default enUS;

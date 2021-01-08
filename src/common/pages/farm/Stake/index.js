@@ -6,8 +6,11 @@ import InputNum from '_component/InputNum';
 import LiquidityInfoTip from '../LiquidityInfoTip';
 import ConnectInfoTip from '../ConnectInfoTip';
 import util from '_src/utils/util';
+import calc from '_src/utils/calc';
 import { connect } from 'react-redux';
 import Confirm from '../../../component/Confirm';
+import { channelsV3 } from '../../../utils/websocket';
+import FarmContext from '../FarmContext';
 import * as api from '../util/api';
 
 function mapStateToProps(state) {
@@ -19,20 +22,35 @@ function mapStateToProps(state) {
 @connect(mapStateToProps)
 export default class Stake extends React.Component {
 
+  static contextType = FarmContext;
+
   constructor() {
     super();
     this.state = {
       value: '',
+      poolRatio:'-',
+      error: false
     };
   }
 
   onInputChange = (value) => {
-    this.setState({ value });
+    let poolRatio = '-';
+    let error = false;
+    const { data, isStake = true } = this.props;
+    if(value) {
+      const max = this.getAvailable();
+      if (util.compareNumber(max, value)) error = true;
+      else if(isStake){
+        poolRatio = util.precisionInput(calc.mul(calc.div(value, data.pool_total_staked),100),2) + '%';
+      }
+    }
+    this.setState({ value, poolRatio, error });
   };
 
   confirm = () => {
-    const { value } = this.state;
+    const { value,error } = this.state;
     const { okexchainClient, data, isStake } = this.props;
+    if(!value || error) return;
     const params = [
       data.pool_name,
       data.lock_symbol,
@@ -44,7 +62,8 @@ export default class Stake extends React.Component {
     return okexchainClient.sendFarmUnLockTransaction(...params);
   };
 
-  getAvailable(data) {
+  getAvailable() {
+    const { data } = this.props;
     let { balance_dis, pool_name } = data;
     let { account4Swap } = this.props;
     const temp = account4Swap[pool_name];
@@ -52,8 +71,26 @@ export default class Stake extends React.Component {
     return balance_dis;
   }
 
+  subscribe(enable=true) {
+    let { pool_name } = this.props.data;
+    if (!this.context || !pool_name) return;
+    if(enable) {
+      this.context.send(channelsV3.getBalance(pool_name));
+    } else {
+      this.context.stop(channelsV3.getBalance(pool_name));
+    }
+  }
+
+  componentDidMount() {
+    this.subscribe();
+  }
+
+  componentWillUnmount() {
+    this.subscribe(false);
+  }
+
   render() {
-    const { value } = this.state;
+    const { value,poolRatio, error } = this.state;
     const { data, isStake = true, onClose } = this.props;
     const locale = isStake ? 'Stake' : 'Unstake';
     const avaliableLocale = isStake
@@ -72,7 +109,7 @@ export default class Stake extends React.Component {
             <div className="left">{toLocale('Number')}</div>
             <div className="right">
               {toLocale(avaliableLocale)}
-              {this.getAvailable(data)}
+              {this.getAvailable()}
             </div>
           </div>
           <div className="stake-panel-input-wrap">
@@ -96,13 +133,13 @@ export default class Stake extends React.Component {
                 </div>
               </div>
             </div>
-            {/* <div className="error-tip">*12121212</div> */}
+            {error && <div className="error-tip">*{toLocale('balance not enough')}</div>}
           </div>
           {isStake && (
             <>
               <div className="space-between stake-panel-detail">
                 <div className="left">{toLocale('Pool ratio')}</div>
-                <div className="right">{data.pool_ratio_dis}</div>
+                <div className="right">{poolRatio}</div>
               </div>
               <div className="space-between stake-panel-detail">
                 <div className="left">{toLocale('FARM APY')}</div>

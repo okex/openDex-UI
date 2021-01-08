@@ -97,7 +97,6 @@ module.exports = {
         balance: '100.980000000000000000',
         account_staked: '10.000000000000000000',
         pool_total_staked: '10.000000000000000000',
-        pool_ratio: '1.000000000000000000',
       },
     });
   },
