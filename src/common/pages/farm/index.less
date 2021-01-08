@@ -344,6 +344,10 @@
             color: #2D60E0;
             cursor: pointer;
             margin-top: 0;
+            &.disabled {
+              cursor:default;
+              color:rgba(255,255,255,0.35);
+            }
           }
           .farm-btn {
             height: 28px;
@@ -731,6 +735,10 @@
       color:#3075EE;
       cursor: pointer;
       text-align: right;
+      &.disabled {
+        cursor:default;
+        color:rgba(255, 255, 255, 0.35);
+      }
     }
     .action-sep {
       width: 1px;

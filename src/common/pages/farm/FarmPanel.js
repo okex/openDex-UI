@@ -8,6 +8,7 @@ import PageURL from '_constants/PageURL';
 import { Link } from 'react-router-dom';
 import WatchlistPanel from './WatchlistPanel';
 import SimpleBtnDialog from './SimpleBtnDialog';
+import classNames from 'classnames';
 import Stake from './Stake';
 import * as api from './util/api'; 
 
@@ -18,10 +19,36 @@ export default class FarmPanel extends React.Component {
     this.state = {
       data:[],
     }
+    this.normal = React.createRef();
   }
 
   componentDidMount() {
     this.init();
+    this.startTimer();
+  }
+
+  componentWillUnmount() {
+    this.stopTimer();
+  }
+
+  startTimer() {
+    this.stopTimer();
+    const {current:normal} = this.normal;
+    this.interval = setInterval(() => {
+      console.log('start farm')
+      const {data} = this.state;
+      api.process(data);
+      normal.update();
+      this.setState({});
+    },1000);
+  }
+
+  stopTimer() {
+    if(this.interval) {
+      clearInterval(this.interval);
+      this.interval = null;
+      console.log('stop farm')
+    }
   }
 
   async init() {
@@ -58,7 +85,7 @@ export default class FarmPanel extends React.Component {
         <div className="info-items">
           {data.map((d,index) => (
             <div className="info-item" key={index}>
-              <div className="tag active"></div>
+              <div className={classNames('tag',{active:d.active})}></div>
               <div className="coin2coin">
                 <img src={getCoinIcon(d.lock_symbol)} />
                 <img src={getCoinIcon(d.yield_symbol)} />
@@ -75,8 +102,8 @@ export default class FarmPanel extends React.Component {
               <div className="rate-tip">{d.farm_apy_dis}</div>
               <div className="info-detail">{toLocale('Total staked：')}{d.total_staked_dis}</div>
               <div className="info-detail">{toLocale('Pool rate：')}{d.pool_rate_dis}/1Day</div>
-              <SimpleBtnDialog component={() => Stake.getStake(d)}>
-                <div className="farm-btn">{toLocale('STAKE')}&nbsp;<span className="timer">01{toLocale('d')} 08{toLocale('h')} 36{toLocale('m')} 52{toLocale('s')}</span></div>
+              <SimpleBtnDialog component={() => Stake.getStake(d)} disabled={!d.active}>
+                <div className={classNames('farm-btn',{disabled:!d.active})}>{toLocale('STAKE')}&nbsp;<span className="timer">01{toLocale('d')} 08{toLocale('h')} 36{toLocale('m')} 52{toLocale('s')}</span></div>
               </SimpleBtnDialog>
             </div>
           ))}
@@ -94,7 +121,7 @@ export default class FarmPanel extends React.Component {
             </div>
           </div>
         </div>
-        <WatchlistPanel />
+        <WatchlistPanel ref={this.normal}/>
       </div>
     );
   }

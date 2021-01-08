@@ -38,13 +38,23 @@ function _proccessData(data) {
       d.poolEmpty = false;
       d.total_staked_dis = Number(d.total_staked) === 0 ? '--' : '$'+util.precisionInput(calc.mul(d.total_staked,1),2);
       d.pool_ratio_dis = util.precisionInput(calc.mul(d.pool_ratio, 100),2) + '%';
+      d.start_at_dis = calc.mul(d.start_at, 1000);
+      d.finish_at_dis = calc.mul(d.finish_at, 1000);
       d.farmed_details && d.farmed_details.forEach(d => {
         d.symbol_dis = d.symbol.toUpperCase();
         d.claimed_dis = util.precisionInput(calc.mul(d.claimed, 1),8);
         d.unclaimed_dis = util.precisionInput(calc.mul(d.unclaimed, 1),8);
       });
+      _proccessTimer(d);
     });
   }
+}
+
+function _proccessTimer(data) {
+  const now = (Date.now() / 1000).toFixed();
+  const start = calc.sub(data.start_at, now);
+  const end = calc.sub(data.finish_at, now);
+  data.active = start <=0 && end >= 0;
 }
 
 //@mock let mocker = require('./mock');
@@ -93,4 +103,10 @@ export function stakedInfo({poolName}) {
     data.pool_ratio_dis = util.precisionInput(data.pool_ratio,2);
     return data;
   });
+}
+
+export function process(data) {
+  if(Array.isArray(data)) {
+    data.forEach(d => _proccessTimer(d));
+  }
 }

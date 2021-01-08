@@ -5,8 +5,8 @@ const data = {
   "lock_symbol":"okt",
   "yield_symbol":"aaa-882",
   "total_staked":"0.000000000000000000",
-  "start_at":1609899987,
-  "finish_at":1609999987,
+  "start_at":parseInt(Date.now()/1000) + 4,
+  "finish_at":parseInt(Date.now()/1000) + 10,
   "pool_rate":[
       {
           "denom":"aaa-882",

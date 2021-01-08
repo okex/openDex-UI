@@ -9,6 +9,7 @@ import util from '_src/utils/util';
 import {dateFns} from '_component/okit';
 import Tooltip from '../../component/Tooltip';
 import SimpleBtnDialog from './SimpleBtnDialog';
+import classNames from 'classnames';
 import Stake from './Stake';
 
 export default class WatchlistPanel extends React.Component {
@@ -73,16 +74,16 @@ export default class WatchlistPanel extends React.Component {
         name: toLocale('Start at'),
         canSort: true,
         width: '194',
-        component: ({ data }) => {
-          return dateFns.format(data);
+        component: ({ row }) => {
+          return dateFns.format(row.start_at_dis);
         },
       },
       {
         field: 'finish_at',
         name: toLocale('Finish at'),
         canSort: true,
-        component: ({ data }) => {
-          return dateFns.format(data);
+        component: ({ row }) => {
+          return dateFns.format(row.finish_at_dis);
         },
       },
       {
@@ -92,7 +93,7 @@ export default class WatchlistPanel extends React.Component {
           return (
             <SimpleBtnDialog component={() => Stake.getStake(row)}>
               <div className="action-opt-wrap">
-                <div className="action-opt">
+                <div className={classNames('action-opt',{disabled:!row.active})}>
                   {toLocale('Stake')}
                 </div>
               </div>
@@ -141,6 +142,11 @@ export default class WatchlistPanel extends React.Component {
   async reload() {
     const data = await this.init({ current: 1 });
     this.setState({ ...data, current: 1 });
+  }
+
+  update() {
+    api.process(this.state.data);
+    this.setState({});
   }
 
   render() {

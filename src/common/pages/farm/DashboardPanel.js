@@ -37,6 +37,29 @@ export default class DashboardPanel extends React.Component {
     }
     this.initial = true;
     this.setState({...data,maxApy});
+    this.startTimer();
+  }
+
+  componentWillUnmount() {
+    this.stopTimer();
+  }
+
+  startTimer() {
+    this.stopTimer();
+    const {data} = this.state;
+    this.interval = setInterval(() => {
+      console.log('start dashboard')
+      api.process(data);
+      this.setState({});
+    },1000);
+  }
+
+  stopTimer() {
+    if(this.interval) {
+      clearInterval(this.interval);
+      this.interval = null;
+      console.log('stop dashboard')
+    }
   }
 
   async init({current}) {
@@ -149,7 +172,7 @@ export default class DashboardPanel extends React.Component {
                 }
                 <div className="opt-footer">
                   <SimpleBtnDialog component={() => Stake.getStake(d)}>
-                    <div className="linkbtn">{toLocale('STAKE')}</div>
+                    <div className={classNames('linkbtn',{disabled:!d.active})}>{toLocale('STAKE')}</div>
                   </SimpleBtnDialog>
                   <SimpleBtnDialog component={() => Stake.getStake(d,false)}>
                     <div className="linkbtn">{toLocale('UNSTAKE')}</div>
