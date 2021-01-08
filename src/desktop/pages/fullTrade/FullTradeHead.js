@@ -67,9 +67,9 @@ class FullTradeHead extends React.Component {
           <img src={okexLogo} style={this.iconStyle} />
         </a>
         <DesktopTypeMenu isDexDesk={true} current={current} />
-        <DesktopNodeMenu />
-        {this.isTradePage() ? <FullTradeProductList /> : null}
-        {this.isTradePage() ? <FullTradeTicker /> : null}
+        {this.isTradePage() && <DesktopNodeMenu />}
+        {this.isTradePage() && <FullTradeProductList />}
+        {this.isTradePage() && <FullTradeTicker />}
         <div className="okdex-header-right">
           {util.isLogined() ? <LoggedMenu /> : <LoginMenu />}
           {this.isSwapMenu() && <SwapSetting />}
