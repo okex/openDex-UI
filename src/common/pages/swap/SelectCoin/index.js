@@ -57,7 +57,9 @@ export default class SelectCoin extends React.Component {
                     <img src={getCoinIcon(d.symbol)} />
                     {d.symbol.toUpperCase()}
                   </div>
-                  <div className="value">{util.precisionInput(d.available,8)}</div>
+                  <div className="value">
+                    {util.precisionInput(d.available, 8)}
+                  </div>
                 </div>
               ))
             ) : (

@@ -126,7 +126,7 @@ export default class AddLiquidity extends React.Component {
       await this._check(data);
       await this._updateExchangePrice(data);
       await this._updateExchange(data);
-    } catch(e) {
+    } catch (e) {
       Message.error({
         content: e.message || toLocale(`error.code.${e.code}`),
         duration: 3,
@@ -167,7 +167,8 @@ export default class AddLiquidity extends React.Component {
         quote_pooled_coin = tempSymbol;
       }
       exchangeInfo.price = util.precisionInput(
-        calc.div(quote_pooled_coin.amount, base_pooled_coin.amount),8
+        calc.div(quote_pooled_coin.amount, base_pooled_coin.amount),
+        8
       );
     }
   }
@@ -176,10 +177,10 @@ export default class AddLiquidity extends React.Component {
     const { baseToken, targetToken, exchangeInfo } = data;
     if (baseToken.symbol && targetToken.symbol && data.targetTokenDisabled) {
       if (baseToken.value) {
-        const { base_token_amount='', pool_share='' } = await api.addInfo({
+        const { base_token_amount = '', pool_share = '' } = await api.addInfo({
           base_token: targetToken.symbol,
           quote_token_amount: baseToken.value + baseToken.symbol,
-          value:baseToken.value,
+          value: baseToken.value,
         });
         targetToken.value = baseToken.value ? base_token_amount : '';
         exchangeInfo.pool_share = pool_share;
@@ -263,7 +264,7 @@ export default class AddLiquidity extends React.Component {
       targetToken = temp;
       price = calc.div(1, price);
       if (Number.isNaN(price)) price = '-';
-      else price = util.precisionInput(price,8);
+      else price = util.precisionInput(price, 8);
     }
     if (!targetTokenDisabled) {
       if (!baseToken.value || !targetToken.value) {
@@ -271,7 +272,7 @@ export default class AddLiquidity extends React.Component {
       } else {
         let tempPrice = calc.div(targetToken.value, baseToken.value);
         if (Number.isNaN(tempPrice)) tempPrice = '-';
-        else tempPrice = util.precisionInput(tempPrice,8);
+        else tempPrice = util.precisionInput(tempPrice, 8);
         priceInfo = `1${baseToken.symbol.toUpperCase()} ≈ ${tempPrice}${targetToken.symbol.toUpperCase()}`;
       }
       return { priceInfo, poolShare: 1 };
@@ -299,10 +300,18 @@ export default class AddLiquidity extends React.Component {
       btn = <div className="btn disabled">{toLocale('Invalid Pair')}</div>;
     else if (!Number(baseToken.value) || !Number(targetToken.value)) {
       btn = <div className="btn disabled">{toLocale('Input an amount')}</div>;
-    } else if(baseToken.error) {
-      btn = <div className="btn disabled">{toLocale('insufficient',{coin:baseToken.symbol.toUpperCase()})}</div>;
-    } else if(targetToken.error) {
-      btn = <div className="btn disabled">{toLocale('insufficient',{coin:targetToken.symbol.toUpperCase()})}</div>;
+    } else if (baseToken.error) {
+      btn = (
+        <div className="btn disabled">
+          {toLocale('insufficient', { coin: baseToken.symbol.toUpperCase() })}
+        </div>
+      );
+    } else if (targetToken.error) {
+      btn = (
+        <div className="btn disabled">
+          {toLocale('insufficient', { coin: targetToken.symbol.toUpperCase() })}
+        </div>
+      );
     } else {
       btn = (
         <Confirm

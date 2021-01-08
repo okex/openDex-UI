@@ -3,8 +3,8 @@ import Tabs, { TabPane } from 'rc-tabs';
 import FarmContext from './FarmContext';
 import FarmPanel from './FarmPanel';
 import DashboardPanel from './DashboardPanel';
-import { toLocale } from '_src/locale/react-locale'
-import SwapPushWrapper from '_app/wrapper/SwapPushWrapper';;
+import { toLocale } from '_src/locale/react-locale';
+import SwapPushWrapper from '_app/wrapper/SwapPushWrapper';
 import './index.less';
 
 const FARM = '1';
@@ -27,7 +27,7 @@ export default class Farm extends React.Component {
 
   onFarm = () => {
     this.setState({ activekey: FARM });
-  }
+  };
 
   componentDidMount() {
     this.preSeoTitle = document.title;
@@ -44,12 +44,17 @@ export default class Farm extends React.Component {
     return (
       <FarmContext.Provider value={wsV3}>
         <div className="farm-container">
-          <Tabs activeKey={activekey} prefixCls="farm" onChange={this.onChange} destroyInactiveTabPane>
+          <Tabs
+            activeKey={activekey}
+            prefixCls="farm"
+            onChange={this.onChange}
+            destroyInactiveTabPane
+          >
             <TabPane tab={toLocale('Farm')} key={FARM}>
-              <FarmPanel/>
+              <FarmPanel />
             </TabPane>
             <TabPane tab={toLocale('Dashboard')} key={DASHBOARD}>
-              <DashboardPanel onFarm={this.onFarm}/>
+              <DashboardPanel onFarm={this.onFarm} />
             </TabPane>
           </Tabs>
         </div>

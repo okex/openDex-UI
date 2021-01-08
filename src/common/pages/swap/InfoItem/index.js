@@ -72,11 +72,12 @@ export default class InfoItem extends React.Component {
         </div>
         <div className="space-between poll-item-info">
           <div className="left">
-            {util.precisionInput(data.base_pooled_coin.amount,8)}/
-            {util.precisionInput(data.quote_pooled_coin.amount,8)}
+            {util.precisionInput(data.base_pooled_coin.amount, 8)}/
+            {util.precisionInput(data.quote_pooled_coin.amount, 8)}
           </div>
           <div className="right">
-            {util.precisionInput(available,8)}/{calc.mul(util.precisionInput(data.pool_token_ratio,8), 100)}%
+            {util.precisionInput(available, 8)}/
+            {calc.mul(util.precisionInput(data.pool_token_ratio, 8), 100)}%
           </div>
         </div>
       </div>

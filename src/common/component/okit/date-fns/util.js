@@ -37,7 +37,7 @@ export const getDateDetail = (value) => {
     hour: padNum(hour),
     minute: padNum(minute),
     second: padNum(second),
-    millisecond: padNum(millisecond)
+    millisecond: padNum(millisecond),
   };
 };
 
@@ -48,17 +48,31 @@ export const calculateDate = (value, unit, now) => {
   if (now) {
     date = now;
   }
-  const {
-    year, month, day, hour, minute, second, millisecond
-  } = getDateDetail(date);
+  const { year, month, day, hour, minute, second, millisecond } = getDateDetail(
+    date
+  );
   const dateMap = {
-    'y+': () => { return date.setFullYear(Number(year) + amount); },
-    'M+': () => { return date.setMonth((Number(month) - 1) + amount); },
-    'd+': () => { return date.setDate(Number(day) + amount); },
-    'h+': () => { return date.setHours(Number(hour) + amount); },
-    'm+': () => { return date.setMinutes(Number(minute) + amount); },
-    's+': () => { return date.setSeconds(Number(second) + amount); },
-    ms: () => { return date.setMilliseconds(Number(millisecond) + amount); }
+    'y+': () => {
+      return date.setFullYear(Number(year) + amount);
+    },
+    'M+': () => {
+      return date.setMonth(Number(month) - 1 + amount);
+    },
+    'd+': () => {
+      return date.setDate(Number(day) + amount);
+    },
+    'h+': () => {
+      return date.setHours(Number(hour) + amount);
+    },
+    'm+': () => {
+      return date.setMinutes(Number(minute) + amount);
+    },
+    's+': () => {
+      return date.setSeconds(Number(second) + amount);
+    },
+    ms: () => {
+      return date.setMilliseconds(Number(millisecond) + amount);
+    },
   };
   const keys = Object.keys(dateMap);
   const dateKey = keys.find((key) => {
@@ -88,4 +102,3 @@ export const isSafari = () => {
   const { userAgent } = window.navigator;
   return /Safari/.test(userAgent);
 };
-

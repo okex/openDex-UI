@@ -6,7 +6,7 @@ import WatchList from './Watchlist';
 import * as api from './util/api';
 import calc from '_src/utils/calc';
 import util from '_src/utils/util';
-import {dateFns} from '_component/okit';
+import { dateFns } from '_component/okit';
 import Tooltip from '../../component/Tooltip';
 import SimpleBtnDialog from './SimpleBtnDialog';
 import classNames from 'classnames';
@@ -39,7 +39,7 @@ export default class WatchlistPanel extends React.Component {
         component(props) {
           return Number(props.data) === 0
             ? '--'
-            : '$' + util.precisionInput(calc.mul(props.data, 1),2);
+            : '$' + util.precisionInput(calc.mul(props.data, 1), 2);
         },
       },
       {
@@ -52,21 +52,16 @@ export default class WatchlistPanel extends React.Component {
         name: toLocale('Farm APY'),
         canSort: true,
         width: '122',
-        component({row,data}) {
+        component({ row, data }) {
           return (
             <div className="coin2coin">
-              <Tooltip
-                placement="right"
-                overlay={row.farm_apy_dis}
-              >
-              <span>
-                {data}
-              </span>
+              <Tooltip placement="right" overlay={row.farm_apy_dis}>
+                <span>{data}</span>
               </Tooltip>
               <img src={getCoinIcon(row.lock_symbol)} />
               <img src={getCoinIcon(row.yield_symbol)} />
             </div>
-          )
+          );
         },
       },
       {
@@ -93,7 +88,11 @@ export default class WatchlistPanel extends React.Component {
           return (
             <SimpleBtnDialog component={() => Stake.getStake(row)}>
               <div className="action-opt-wrap">
-                <div className={classNames('action-opt',{disabled:!row.active})}>
+                <div
+                  className={classNames('action-opt', {
+                    disabled: !row.active,
+                  })}
+                >
                   {toLocale('Stake')}
                 </div>
               </div>

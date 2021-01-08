@@ -19,7 +19,7 @@ const BASEURL = {
   },
   get FARM() {
     return `${this.OKDEX_BASE_URL}/farm`;
-  }
+  },
 };
 
 const URL = {

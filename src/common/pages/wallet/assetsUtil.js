@@ -118,7 +118,7 @@ const util = {
         alignRight: true,
         key: 'quantity',
         render: (text) => {
-          return utils.precisionInput(text,8);
+          return utils.precisionInput(text, 8);
         },
       },
       {
@@ -127,7 +127,7 @@ const util = {
         render: (text) => {
           text = String(text.split('-')[0]).toUpperCase();
           text = text.replace(/(\d{1,}\.?\d*)/, function ($1) {
-            return utils.precisionInput($1,8);
+            return utils.precisionInput($1, 8);
           });
           return text;
         },

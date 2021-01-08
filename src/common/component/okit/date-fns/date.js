@@ -1,13 +1,17 @@
-import { getDateDetail, calculateDate, convertToNumber, lastDay, isSafari } from './util';
+import {
+  getDateDetail,
+  calculateDate,
+  convertToNumber,
+  lastDay,
+  isSafari,
+} from './util';
 /**
  *
  * @param {*} value
  * @param {*} formater
  */
 const format = (value, formater = 'yyyy-MM-dd hh:mm:ss') => {
-  const {
-    year, month, day, hour, minute, second
-  } = getDateDetail(value);
+  const { year, month, day, hour, minute, second } = getDateDetail(value);
 
   // 格式化逻辑
   const formatFns = {
@@ -40,7 +44,7 @@ const format = (value, formater = 'yyyy-MM-dd hh:mm:ss') => {
     },
   };
 
-  return formater.replace(/([a-z])(\1)*/ig, (match) => {
+  return formater.replace(/([a-z])(\1)*/gi, (match) => {
     const fn = formatFns[match];
     return fn ? fn() : '';
   });
@@ -56,7 +60,6 @@ const formatToISOString = (value) => {
   return date.toISOString();
 };
 
-
 /**
  * 增加日期
  * @param {*} amount
@@ -68,7 +71,6 @@ const add = (amount, unit, now) => {
   const result = calculateDate(amount, unit, now);
   return new Date(result);
 };
-
 
 /**
  * 减少日期
@@ -89,7 +91,13 @@ const subtract = (amount, unit) => {
  */
 const get = (unit) => {
   const {
-    year, month, day, hour, minute, second, millisecond
+    year,
+    month,
+    day,
+    hour,
+    minute,
+    second,
+    millisecond,
   } = getDateDetail();
   const dateMap = {
     'y+': year,
@@ -103,7 +111,10 @@ const get = (unit) => {
 
   const keys = Object.keys(dateMap);
   const dateKey = keys.find((key) => {
-    return (/y\+|d\+|h\+/.test(key) && new RegExp(`${key}`, 'i').test(unit)) || new RegExp(`${key}`).test(unit);
+    return (
+      (/y\+|d\+|h\+/.test(key) && new RegExp(`${key}`, 'i').test(unit)) ||
+      new RegExp(`${key}`).test(unit)
+    );
   });
 
   return dateMap[dateKey] || '';
@@ -123,7 +134,7 @@ const set = (options) => {
     'h+': 'setHours',
     'm+': 'setMinutes',
     's+': 'setSeconds',
-    ms: 'setMilliseconds'
+    ms: 'setMilliseconds',
   };
 
   const keys = Object.keys(dateMap);
@@ -150,7 +161,6 @@ const set = (options) => {
 const toObject = () => {
   return getDateDetail();
 };
-
 
 const toDate = (value) => {
   const realValue = convertToNumber(value);
@@ -229,5 +239,5 @@ export default {
   toDate,
   startOf,
   endOf,
-  valueOf
+  valueOf,
 };

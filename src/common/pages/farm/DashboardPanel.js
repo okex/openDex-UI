@@ -14,7 +14,6 @@ import Stake from './Stake';
 import Claim from './Claim';
 
 export default class DashboardPanel extends React.Component {
-
   constructor() {
     super();
     this.initial = false;
@@ -30,13 +29,13 @@ export default class DashboardPanel extends React.Component {
   async componentDidMount() {
     const data = await this.init({ current: this.state.current });
     let maxApy = {
-      data_dis: '0.00%'
+      data_dis: '0.00%',
     };
-    if(!data.length) {
+    if (!data.length) {
       maxApy = await api.maxApy();
     }
     this.initial = true;
-    this.setState({...data,maxApy});
+    this.setState({ ...data, maxApy });
     this.startTimer();
   }
 
@@ -46,23 +45,23 @@ export default class DashboardPanel extends React.Component {
 
   startTimer() {
     this.stopTimer();
-    const {data} = this.state;
+    const { data } = this.state;
     this.interval = setInterval(() => {
-      console.log('start dashboard')
+      console.log('start dashboard');
       api.process(data);
       this.setState({});
-    },1000);
+    }, 1000);
   }
 
   stopTimer() {
-    if(this.interval) {
+    if (this.interval) {
       clearInterval(this.interval);
       this.interval = null;
-      console.log('stop dashboard')
+      console.log('stop dashboard');
     }
   }
 
-  async init({current}) {
+  async init({ current }) {
     const { pageSize } = this.state;
     if (!current) current = this.state.current;
     let params = { page: current, per_page: pageSize };
@@ -71,33 +70,54 @@ export default class DashboardPanel extends React.Component {
   }
 
   getTimerDis = (data) => {
-    if(data.active === 1) return <>{toLocale('Will start in')}&nbsp;<span className="timer">{data.timeInfo}</span></>;
-    return <>{toLocale('Will finish in')}&nbsp;<span className="timer">{data.timeInfo}</span></>;
-  }
+    if (data.active === 1)
+      return (
+        <>
+          {toLocale('Will start in')}&nbsp;
+          <span className="timer">{data.timeInfo}</span>
+        </>
+      );
+    return (
+      <>
+        {toLocale('Will finish in')}&nbsp;
+        <span className="timer">{data.timeInfo}</span>
+      </>
+    );
+  };
 
   getPanel = () => {
-    const {maxApy} = this.state;
-    if(this.initial && !this.state.total) {
+    const { maxApy } = this.state;
+    if (this.initial && !this.state.total) {
       return (
         <div className="panel panel-connect">
-          <div className="connect-wallet-tip"><div>{toLocale('Haven’t farmed yet')}<span>{maxApy.data_dis}</span>{toLocale('APY')}</div></div>
-          <div className="farm-btn" onClick={this.props.onFarm}>{toLocale('Go stake')}</div>
+          <div className="connect-wallet-tip">
+            <div>
+              {toLocale('Haven’t farmed yet')}
+              <span>{maxApy.data_dis}</span>
+              {toLocale('APY')}
+            </div>
+          </div>
+          <div className="farm-btn" onClick={this.props.onFarm}>
+            {toLocale('Go stake')}
+          </div>
         </div>
       );
     }
     return null;
-  }
+  };
 
   getConnectPanel = () => {
     return (
       <div className="panel panel-connect">
-        <div className="connect-wallet-tip">{toLocale('Connect wallet to check your farming')}</div>
+        <div className="connect-wallet-tip">
+          {toLocale('Connect wallet to check your farming')}
+        </div>
         <Link to={getLangURL(PageURL.walletCreate)}>
           <div className="farm-btn">{toLocale('Connect Wallet')}</div>
         </Link>
       </div>
-    )
-  }
+    );
+  };
 
   onChange = async (current) => {
     const data = await this.init({ current });
@@ -107,104 +127,112 @@ export default class DashboardPanel extends React.Component {
   render() {
     const { data, current, pageSize, total } = this.state;
     const isLogined = util.isLogined();
-    if(!isLogined) return this.getConnectPanel();
+    if (!isLogined) return this.getConnectPanel();
     return (
       <>
-      {!!total ? 
-        <div className="panel-farm">
-          <div className="info-items info-dashboard-items">
-            {data.map((d,index) => (
-              <div className="info-item" key={index}>
-                {d.in_whitelist && <div className={classNames('tag',{active:d.active})}></div>}
-                <div className="info-item-title">
-                  <div className="space-between">
-                  <div className="left">
-                    <div className="coin2coin">
-                      <img src={getCoinIcon(d.lock_symbol)} />
-                      <img src={getCoinIcon(d.yield_symbol)} />
-                      <Tooltip
-                        placement="right"
-                        overlay={d.pool_name_dis}
+        {!!total ? (
+          <div className="panel-farm">
+            <div className="info-items info-dashboard-items">
+              {data.map((d, index) => (
+                <div className="info-item" key={index}>
+                  {d.in_whitelist && (
+                    <div
+                      className={classNames('tag', { active: d.active })}
+                    ></div>
+                  )}
+                  <div className="info-item-title">
+                    <div className="space-between">
+                      <div className="left">
+                        <div className="coin2coin">
+                          <img src={getCoinIcon(d.lock_symbol)} />
+                          <img src={getCoinIcon(d.yield_symbol)} />
+                          <Tooltip placement="right" overlay={d.pool_name_dis}>
+                            <span>
+                              {d.lock_symbol_dis}/{d.yield_symbol_dis}
+                            </span>
+                          </Tooltip>
+                        </div>
+                      </div>
+                      <div className="right">{this.getTimerDis(d)}</div>
+                    </div>
+                  </div>
+                  <div className="pool-detail-wrap">
+                    <div className="space-between pool-detail-label">
+                      <div className="left">
+                        {toLocale('Total staked LP / Pool ratio')}
+                      </div>
+                      <div className="right">
+                        {toLocale('Total farmed / Farm APY')}
+                      </div>
+                    </div>
+                    <div className="space-between pool-detail">
+                      <div className="left">
+                        {d.total_staked_dis} ({d.pool_ratio_dis})
+                      </div>
+                      <div className="right">
+                        {d.total_farmed} ({d.total_apy})
+                      </div>
+                    </div>
+                  </div>
+                  {d.farmed_details.length && (
+                    <div className="pool-claim">
+                      <table>
+                        <tbody>
+                          <tr className="table-head">
+                            <td>{toLocale('Token')}</td>
+                            <td>{toLocale('Claimed')}</td>
+                            <td>{toLocale('Unclaimed')}</td>
+                          </tr>
+                          {d.farmed_details.map((detail, index) => (
+                            <tr key={index}>
+                              <td>{detail.symbol_dis}</td>
+                              <td>{detail.claimed_dis}</td>
+                              <td>{detail.unclaimed_dis}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                  <div className="opt-footer">
+                    <SimpleBtnDialog
+                      component={() => Stake.getStake(d)}
+                      disabled={!d.active}
+                    >
+                      <div
+                        className={classNames('linkbtn', {
+                          disabled: !d.active,
+                        })}
                       >
-                        <span>
-                          {d.lock_symbol_dis}/{d.yield_symbol_dis}
-                        </span>
-                      </Tooltip>
-                    </div>
-                  </div>
-                  <div className="right">
-                  {this.getTimerDis(d)}
-                  </div>
-                </div>
-                </div>
-                <div className="pool-detail-wrap">
-                  <div className="space-between pool-detail-label">
-                    <div className="left">
-                      {toLocale('Total staked LP / Pool ratio')}
-                    </div>
-                    <div className="right">
-                      {toLocale('Total farmed / Farm APY')}
-                    </div>
-                  </div>
-                  <div className="space-between pool-detail">
-                  <div className="left">
-                    {d.total_staked_dis} ({d.pool_ratio_dis})
-                  </div>
-                  <div className="right">
-                    {d.total_farmed} ({d.total_apy})
+                        {toLocale('STAKE')}
+                      </div>
+                    </SimpleBtnDialog>
+                    <SimpleBtnDialog component={() => Stake.getStake(d, false)}>
+                      <div className="linkbtn">{toLocale('UNSTAKE')}</div>
+                    </SimpleBtnDialog>
+                    <SimpleBtnDialog component={<Claim data={d} />}>
+                      <div className="farm-btn">{toLocale('Claim all')}</div>
+                    </SimpleBtnDialog>
                   </div>
                 </div>
-                </div>
-                {d.farmed_details.length && 
-                <div className="pool-claim">
-                  <table>
-                    <tbody>
-                      <tr className="table-head">
-                        <td>{toLocale('Token')}</td>
-                        <td>{toLocale('Claimed')}</td>
-                        <td>{toLocale('Unclaimed')}</td>
-                      </tr>
-                      {d.farmed_details.map((detail,index) => (
-                        <tr key={index}>
-                          <td>{detail.symbol_dis}</td>
-                          <td>{detail.claimed_dis}</td>
-                          <td>{detail.unclaimed_dis}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-                }
-                <div className="opt-footer">
-                  <SimpleBtnDialog component={() => Stake.getStake(d)} disabled={!d.active}>
-                    <div className={classNames('linkbtn',{disabled:!d.active})}>{toLocale('STAKE')}</div>
-                  </SimpleBtnDialog>
-                  <SimpleBtnDialog component={() => Stake.getStake(d,false)}>
-                    <div className="linkbtn">{toLocale('UNSTAKE')}</div>
-                  </SimpleBtnDialog>
-                  <SimpleBtnDialog component={<Claim data={d}/>}>
-                    <div className="farm-btn">{toLocale('Claim all')}</div>
-                  </SimpleBtnDialog>
-                </div>
-              </div>
-            ))}
-          </div>
-          {total > pageSize && (
-            <div className="pagination-wrap">
-              <Pagination
-                className="watchlist-pagination"
-                total={total}
-                pageSize={pageSize}
-                current={current}
-                onChange={this.onChange}
-                hideOnSinglePage={false}
-              />
+              ))}
             </div>
-          )}
-        </div>
-        :
-        this.getPanel()
-      }
+            {total > pageSize && (
+              <div className="pagination-wrap">
+                <Pagination
+                  className="watchlist-pagination"
+                  total={total}
+                  pageSize={pageSize}
+                  current={current}
+                  onChange={this.onChange}
+                  hideOnSinglePage={false}
+                />
+              </div>
+            )}
+          </div>
+        ) : (
+          this.getPanel()
+        )}
       </>
     );
   }

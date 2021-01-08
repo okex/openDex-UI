@@ -39,7 +39,7 @@ class TokenpairDetail extends Component {
   }
 
   componentDidMount() {
-    if(!util.isLogined()) return;
+    if (!util.isLogined()) return;
     this.fetchTokenpairsByState();
   }
 
