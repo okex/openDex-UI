@@ -86,7 +86,7 @@ export default class WatchlistPanel extends React.Component {
         width: '128',
         component: ({ row }) => {
           return (
-            <SimpleBtnDialog component={() => Stake.getStake(row)}>
+            <SimpleBtnDialog component={() => Stake.getStake(row)} disabled={!row.active}>
               <div className="action-opt-wrap">
                 <div
                   className={classNames('action-opt', {

@@ -33,6 +33,7 @@ function _proccessData(data) {
         );
       });
       d.total_apy = util.precisionInput(calc.mul(total_apy, 100), 2) + '%';
+      d.total_apy_4 = util.precisionInput(calc.mul(total_apy, 100), 4) + '%';
       d.farm_apy_dis = farm_apy.join('+');
       d.pool_rate.forEach((dd) => {
         dd.denom_dis = dd.denom.toUpperCase();
@@ -48,6 +49,8 @@ function _proccessData(data) {
           : '$' + util.precisionInput(calc.mul(d.total_staked, 1), 2);
       d.pool_ratio_dis =
         util.precisionInput(calc.mul(d.pool_ratio, 100), 2) + '%';
+      d.pool_ratio_dis_4 =
+        util.precisionInput(calc.mul(d.pool_ratio, 100), 4) + '%';
       d.start_at_dis = calc.mul(d.start_at, 1000);
       d.finish_at_dis = calc.mul(d.finish_at, 1000);
       d.farmed_details &&
@@ -143,6 +146,7 @@ export function stakedInfo({ poolName }) {
     data.account_staked = util.precisionInput(data.account_staked, 8);
     data.pool_total_staked_dis = util.precisionInput(data.pool_total_staked, 8);
     data.pool_ratio_dis = util.precisionInput(data.pool_ratio, 2);
+    data.pool_ratio_dis_4 = util.precisionInput(data.pool_ratio, 4);
     return data;
   });
 }
