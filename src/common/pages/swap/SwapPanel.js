@@ -44,7 +44,7 @@ export default class SwapPanel extends React.Component {
       available: '',
       value: '',
       symbol: '',
-      error: false
+      error: false,
     },
   };
 
@@ -75,11 +75,11 @@ export default class SwapPanel extends React.Component {
     if (value && symbol && target.symbol) {
       try {
         const {
-          buy_amount='',
-          price='',
-          price_impact='',
-          fee='',
-          route='',
+          buy_amount = '',
+          price = '',
+          price_impact = '',
+          fee = '',
+          route = '',
         } = await api.buyInfo({
           value,
           sell_token_amount: `${value}${symbol}`,
@@ -89,8 +89,8 @@ export default class SwapPanel extends React.Component {
         target.value = buy_amount;
       } catch (e) {
         if (errTip) {
-          let content = e.message || toLocale(`error.code.${e.code}`)
-          if(e.code === 65014) {
+          let content = e.message || toLocale(`error.code.${e.code}`);
+          if (e.code === 65014) {
             content = toLocale('pool empty');
             data.isPoolEmpty = true;
           }
@@ -110,7 +110,7 @@ export default class SwapPanel extends React.Component {
   changeBase = (token) => {
     let baseToken = { ...this.state.baseToken, ...token };
     let targetToken = { ...this.state.targetToken, value: '' };
-    const data = { ...this.state, baseToken, targetToken,isPoolEmpty: false };
+    const data = { ...this.state, baseToken, targetToken, isPoolEmpty: false };
     this.updateSwapInfo4RealTime(data, 'baseToken');
   };
 
@@ -142,7 +142,7 @@ export default class SwapPanel extends React.Component {
   changeTarget = (token) => {
     let baseToken = { ...this.state.baseToken };
     let targetToken = { ...this.state.targetToken, ...token };
-    const data = { ...this.state, targetToken, baseToken,isPoolEmpty: false };
+    const data = { ...this.state, targetToken, baseToken, isPoolEmpty: false };
     this.updateSwapInfo4RealTime(data, 'baseToken');
   };
 
@@ -235,12 +235,14 @@ export default class SwapPanel extends React.Component {
           </div>
         );
       } else {
-        let priceInfo = `1${baseToken.symbol.toUpperCase()} ≈ ${
-          util.precisionInput(exchangeInfo.price,8)
-        }${targetToken.symbol.toUpperCase()}`;
+        let priceInfo = `1${baseToken.symbol.toUpperCase()} ≈ ${util.precisionInput(
+          exchangeInfo.price,
+          8
+        )}${targetToken.symbol.toUpperCase()}`;
         if (exchangeInfo.isReverse)
           priceInfo = `1${targetToken.symbol.toUpperCase()} ≈ ${util.precisionInput(
-            calc.div(1, exchangeInfo.price),8
+            calc.div(1, exchangeInfo.price),
+            8
           )}${baseToken.symbol.toUpperCase()}`;
         return (
           <div className="coin-exchange-detail">
@@ -291,7 +293,8 @@ export default class SwapPanel extends React.Component {
                 </Tooltip>
               </div>
               <div className="info-value">
-                {!fee && '≈'}{util.precisionInput(fee,8)} {baseToken.symbol.toUpperCase()}
+                {!fee && '≈'}
+                {util.precisionInput(fee, 8)} {baseToken.symbol.toUpperCase()}
               </div>
             </div>
             {exchangeInfo.route && (
@@ -324,18 +327,19 @@ export default class SwapPanel extends React.Component {
     return null;
   }
 
-  getMinimumReceived(precision=16) {
+  getMinimumReceived(precision = 16) {
     const { targetToken } = this.state;
     const {
       setting: { slippageTolerance },
     } = this.props;
     return util.precisionInput(
-      calc.mul(targetToken.value, 1 - slippageTolerance * 0.01),precision
+      calc.mul(targetToken.value, 1 - slippageTolerance * 0.01),
+      precision
     );
   }
 
   getBtn() {
-    const { baseToken, targetToken,isPoolEmpty } = this.state;
+    const { baseToken, targetToken, isPoolEmpty } = this.state;
     let btn;
     if (!util.isLogined()) {
       btn = (
@@ -349,8 +353,12 @@ export default class SwapPanel extends React.Component {
       btn = <div className="btn disabled">{toLocale('pool empty')}</div>;
     } else if (!Number(baseToken.value) || !Number(targetToken.value)) {
       btn = <div className="btn disabled">{toLocale('Input an amount')}</div>;
-    } else if(baseToken.error) {
-      btn = <div className="btn disabled">{toLocale('insufficient',{coin:baseToken.symbol.toUpperCase()})}</div>;
+    } else if (baseToken.error) {
+      btn = (
+        <div className="btn disabled">
+          {toLocale('insufficient', { coin: baseToken.symbol.toUpperCase() })}
+        </div>
+      );
     } else {
       btn = (
         <Confirm

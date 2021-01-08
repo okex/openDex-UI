@@ -33,7 +33,7 @@ export function tokens(params = {}) {
     base_token: params.symbol || '',
     address,
     business_type: params.business_type,
-  })
+  });
 }
 
 export function swapTokens(params = {}) {
@@ -53,15 +53,15 @@ export function createLiquidityTokens(params = {}) {
 
 export function buyInfo(params = {}) {
   //@mock mocker.buyInfo(`${URL.GET_SWAP_BUY_INFO}/${params.token}`);
-  if(!params.token || !/\d$/.test(params.value)) return {};
+  if (!params.token || !/\d$/.test(params.value)) return {};
   return get(`${URL.GET_SWAP_BUY_INFO}/${params.token}`, {
     sell_token_amount: params.sell_token_amount,
-  })
+  });
 }
 
 export function liquidityInfo(params = {}) {
   const address = util.getMyAddr();
-  if(!address || (params.base_token && !params.quote_token)) return null;
+  if (!address || (params.base_token && !params.quote_token)) return null;
   params = { ...params };
   exchange(params);
   const token_pair_name = params.base_token
@@ -71,15 +71,15 @@ export function liquidityInfo(params = {}) {
   return get(URL.GET_SWAP_LIQUIDITY_INFO, {
     address,
     token_pair_name,
-  })
+  });
 }
 
 export function addInfo(params = {}) {
   //@mock mocker.addInfo(`${URL.GET_SWAP_ADD_INFO}/${params.base_token}`);
-  if(!params.base_token || !/\d$/.test(params.value)) return {};
+  if (!params.base_token || !/\d$/.test(params.value)) return {};
   return get(`${URL.GET_SWAP_ADD_INFO}/${params.base_token}`, {
     quote_token_amount: params.quote_token_amount,
-  })
+  });
 }
 
 export function redeemableAssets(params = {}) {
@@ -89,7 +89,7 @@ export function redeemableAssets(params = {}) {
   return get(
     `${URL.GET_SWAP_REDEEMABLE_ASSETS}/${params.base_token}_${params.quote_token}`,
     { liquidity: params.liquidity }
-  )
+  );
 }
 
 export function tokenPair(params = {}) {
@@ -99,7 +99,7 @@ export function tokenPair(params = {}) {
   if (!params.base_token || !params.quote_token) return null;
   return get(
     `${URL.GET_SWAP_TOKEN_PAIR}/${params.base_token}_${params.quote_token}`
-  )
+  );
 }
 
 export function watchlist(params) {

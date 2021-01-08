@@ -61,8 +61,8 @@ export default class ReduceLiquidity extends React.Component {
 
   onInputChange = async (value) => {
     const max = this.getAvailable();
-    const error = util.compareNumber(max,value);
-    this.setState({ value, ratio: null,error });
+    const error = util.compareNumber(max, value);
+    this.setState({ value, ratio: null, error });
     this.updateCoins(value, error);
   };
 
@@ -124,7 +124,7 @@ export default class ReduceLiquidity extends React.Component {
     let available = liquidity.pool_token_coin.amount;
     const temp = account4Swap[liquidity.pool_token_coin.denom.toLowerCase()];
     if (temp) available = temp.available;
-    return util.precisionInput(available,8);
+    return util.precisionInput(available, 8);
   }
 
   componentDidMount() {
@@ -134,17 +134,23 @@ export default class ReduceLiquidity extends React.Component {
     this.context && this.context.send(channelsV3.getBalance(denom));
   }
 
-  getBtn = (value,available) => {
-    if(!Number(value)) return <div className="btn disabled">{toLocale('Confirm')}</div>;
-    if(util.compareNumber(available,value)) return <div className="btn disabled">{toLocale('insufficient lp token')}</div>;
-    return (<Confirm
-    onClick={this.confirm}
-    loadingTxt={toLocale('pending transactions')}
-    successTxt={toLocale('transaction confirmed')}
-  >
-    <div className="btn">{toLocale('Confirm')}</div>
-  </Confirm>)
-  }
+  getBtn = (value, available) => {
+    if (!Number(value))
+      return <div className="btn disabled">{toLocale('Confirm')}</div>;
+    if (util.compareNumber(available, value))
+      return (
+        <div className="btn disabled">{toLocale('insufficient lp token')}</div>
+      );
+    return (
+      <Confirm
+        onClick={this.confirm}
+        loadingTxt={toLocale('pending transactions')}
+        successTxt={toLocale('transaction confirmed')}
+      >
+        <div className="btn">{toLocale('Confirm')}</div>
+      </Confirm>
+    );
+  };
 
   componentWillUnmount() {
     const {
@@ -157,7 +163,7 @@ export default class ReduceLiquidity extends React.Component {
     const { back } = this.props;
     const { ratios, ratio, coins, value } = this.state;
     let available = this.getAvailable();
-    const btn = this.getBtn(value,available,coins);
+    const btn = this.getBtn(value, available, coins);
     return (
       <div className="panel">
         <div className="panel-header">
@@ -203,13 +209,11 @@ export default class ReduceLiquidity extends React.Component {
                 {d.denom.toUpperCase()}
               </div>
               <div className="right">
-                {util.precisionInput(d.amount,8)} {d.denom.toUpperCase()}
+                {util.precisionInput(d.amount, 8)} {d.denom.toUpperCase()}
               </div>
             </div>
           ))}
-          <div className="btn-wrap">
-            {btn}
-          </div>
+          <div className="btn-wrap">{btn}</div>
         </div>
       </div>
     );

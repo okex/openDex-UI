@@ -35,7 +35,7 @@ export default class CoinItem extends React.Component {
     let error = false;
     if (this.props.max) {
       const max = this.getAvailable();
-      if(util.compareNumber(max,value)) error = true;
+      if (util.compareNumber(max, value)) error = true;
     }
     this.props.onChange({ ...token, value, error });
   };
@@ -109,7 +109,7 @@ export default class CoinItem extends React.Component {
     } = this.props;
     const temp = account4Swap[symbol.toLowerCase()];
     if (temp) available = temp.available;
-    return util.precisionInput(available,8);
+    return util.precisionInput(available, 8);
   }
 
   render() {
@@ -119,11 +119,12 @@ export default class CoinItem extends React.Component {
       loadCoinList,
       disabled,
       disabledChangeCoin,
-      max
+      max,
     } = this.props;
     let available = this.getAvailable();
     this.props.token.error = false;
-    if(max && util.compareNumber(available,value)) this.props.token.error = true;
+    if (max && util.compareNumber(available, value))
+      this.props.token.error = true;
     const { show } = this.state;
     return (
       <div className="coin-item">

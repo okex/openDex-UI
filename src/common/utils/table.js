@@ -301,7 +301,7 @@ export const getTransactionsCols = () => {
       alignRight: true,
       key: 'quantity',
       render: (text) => {
-        return util.precisionInput(text,8);
+        return util.precisionInput(text, 8);
       },
     },
   ];
