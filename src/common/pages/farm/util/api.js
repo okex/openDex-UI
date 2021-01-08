@@ -54,7 +54,31 @@ function _proccessTimer(data) {
   const now = (Date.now() / 1000).toFixed();
   const start = calc.sub(data.start_at, now);
   const end = calc.sub(data.finish_at, now);
-  data.active = start <=0 && end >= 0;
+  if(start <=0 && end >= 0) {
+    data.active = 1;
+    data.timeInfo = _getTimerByCount(end);
+  } else if(start > 0) {
+    data.active = 2;
+    data.timeInfo = _getTimerByCount(start);
+  } else {
+    data.active = 0;
+    data.timeInfo = _getTimerByCount();
+  }
+}
+
+function _getTimerByCount(count=0) {
+  let d = 0,h=0,m=0,s=0;
+  if(count > 0) {
+    d = parseInt(count / (24*3600), 10);
+    h = parseInt(count / 3600, 10);
+    m = parseInt((count % 3600) / 60, 10);
+    s = count % 60;
+  }
+  const d_dis = d > 0 ? (d >= 10 ? d + '' : '0' + d) : '00';
+  const h_dis = h > 0 ? (h >= 10 ? h + '' : '0' + h) : '00';
+  const m_dis = m > 0 ? (m >= 10 ? m + '' : '0' + m) : '00';
+  const s_dis = s > 0 ? (s >= 10 ? s + '' : '0' + s) : '00';
+  return `${d_dis}${toLocale('d')} ${h_dis}${toLocale('h')} ${m_dis}${toLocale('m')} ${s_dis}${toLocale('s')}`
 }
 
 //@mock let mocker = require('./mock');

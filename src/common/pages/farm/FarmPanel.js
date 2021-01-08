@@ -56,6 +56,13 @@ export default class FarmPanel extends React.Component {
     this.setState({data});
   }
 
+  getTimerDis = (data) => {
+    if(data.active === 0) return data.timeInfo;
+    if(data.active === 1) return `${toLocale('Start in')} ${data.timeInfo}`;
+    if(data.active === 2) return `${toLocale('Finish in')} ${data.timeInfo}`;
+    return null;
+  }
+
   render() {
     const isLogined = util.isLogined();
     const {data} = this.state;
@@ -103,7 +110,7 @@ export default class FarmPanel extends React.Component {
               <div className="info-detail">{toLocale('Total staked：')}{d.total_staked_dis}</div>
               <div className="info-detail">{toLocale('Pool rate：')}{d.pool_rate_dis}/1Day</div>
               <SimpleBtnDialog component={() => Stake.getStake(d)} disabled={!d.active}>
-                <div className={classNames('farm-btn',{disabled:!d.active})}>{toLocale('STAKE')}&nbsp;<span className="timer">01{toLocale('d')} 08{toLocale('h')} 36{toLocale('m')} 52{toLocale('s')}</span></div>
+                <div className={classNames('farm-btn',{disabled:!d.active})}>{toLocale('STAKE')}&nbsp;<span className="timer">{this.getTimerDis(d)}</span></div>
               </SimpleBtnDialog>
             </div>
           ))}

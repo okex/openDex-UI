@@ -70,6 +70,11 @@ export default class DashboardPanel extends React.Component {
     return { data, total: param_page.total };
   }
 
+  getTimerDis = (data) => {
+    if(data.active === 1) return <>{toLocale('Will start in')}&nbsp;<span className="timer">{data.timeInfo}</span></>;
+    return <>{toLocale('Will finish in')}&nbsp;<span className="timer">{data.timeInfo}</span></>;
+  }
+
   getPanel = () => {
     const {maxApy} = this.state;
     if(this.initial && !this.state.total) {
@@ -128,7 +133,7 @@ export default class DashboardPanel extends React.Component {
                     </div>
                   </div>
                   <div className="right">
-                  {toLocale('Will start in')}&nbsp;<span className="timer">01{toLocale('d')} 08{toLocale('h')} 36{toLocale('m')} 52{toLocale('s')}</span>
+                  {this.getTimerDis(d)}
                   </div>
                 </div>
                 </div>
@@ -171,7 +176,7 @@ export default class DashboardPanel extends React.Component {
                 </div>
                 }
                 <div className="opt-footer">
-                  <SimpleBtnDialog component={() => Stake.getStake(d)}>
+                  <SimpleBtnDialog component={() => Stake.getStake(d)} disabled={!d.active}>
                     <div className={classNames('linkbtn',{disabled:!d.active})}>{toLocale('STAKE')}</div>
                   </SimpleBtnDialog>
                   <SimpleBtnDialog component={() => Stake.getStake(d,false)}>
