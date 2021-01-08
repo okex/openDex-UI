@@ -21,15 +21,14 @@ function mapStateToProps(state) {
 
 @connect(mapStateToProps)
 export default class Stake extends React.Component {
-
   static contextType = FarmContext;
 
   constructor() {
     super();
     this.state = {
       value: '',
-      poolRatio:'-',
-      error: false
+      poolRatio: '-',
+      error: false,
     };
   }
 
@@ -37,20 +36,24 @@ export default class Stake extends React.Component {
     let poolRatio = '-';
     let error = false;
     const { data, isStake = true } = this.props;
-    if(value) {
+    if (value) {
       const max = this.getAvailable();
       if (util.compareNumber(max, value)) error = true;
-      else if(isStake){
-        poolRatio = util.precisionInput(calc.mul(calc.div(value, data.pool_total_staked),100),2) + '%';
+      else if (isStake) {
+        poolRatio =
+          util.precisionInput(
+            calc.mul(calc.div(value, data.pool_total_staked), 100),
+            2
+          ) + '%';
       }
     }
     this.setState({ value, poolRatio, error });
   };
 
   confirm = () => {
-    const { value,error } = this.state;
+    const { value, error } = this.state;
     const { okexchainClient, data, isStake } = this.props;
-    if(!value || error) return;
+    if (!value || error) return;
     const params = [
       data.pool_name,
       data.lock_symbol,
@@ -71,10 +74,10 @@ export default class Stake extends React.Component {
     return balance_dis;
   }
 
-  subscribe(enable=true) {
+  subscribe(enable = true) {
     let { pool_name } = this.props.data;
     if (!this.context || !pool_name) return;
-    if(enable) {
+    if (enable) {
       this.context.send(channelsV3.getBalance(pool_name));
     } else {
       this.context.stop(channelsV3.getBalance(pool_name));
@@ -90,7 +93,7 @@ export default class Stake extends React.Component {
   }
 
   render() {
-    const { value,poolRatio, error } = this.state;
+    const { value, poolRatio, error } = this.state;
     const { data, isStake = true, onClose } = this.props;
     const locale = isStake ? 'Stake' : 'Unstake';
     const avaliableLocale = isStake
@@ -133,7 +136,9 @@ export default class Stake extends React.Component {
                 </div>
               </div>
             </div>
-            {error && <div className="error-tip">*{toLocale('balance not enough')}</div>}
+            {error && (
+              <div className="error-tip">*{toLocale('balance not enough')}</div>
+            )}
           </div>
           {isStake && (
             <>

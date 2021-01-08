@@ -46,7 +46,10 @@ function _proccessData(data) {
       d.total_staked_dis =
         Number(d.total_staked) === 0
           ? '--'
-          : '$' + calc.thousandFormat(util.precisionInput(calc.mul(d.total_staked, 1), 2));
+          : '$' +
+            calc.thousandFormat(
+              util.precisionInput(calc.mul(d.total_staked, 1), 2)
+            );
       d.pool_ratio_dis =
         util.precisionInput(calc.mul(d.pool_ratio, 100), 2) + '%';
       d.pool_ratio_dis_4 =

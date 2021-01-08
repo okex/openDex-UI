@@ -93,7 +93,9 @@ export default class FarmPanel extends React.Component {
         <div className="info-items">
           {data.map((d, index) => (
             <div className="info-item" key={index}>
-              <div className={classNames('tag', { active: d.active === 1 })}></div>
+              <div
+                className={classNames('tag', { active: d.active === 1 })}
+              ></div>
               <div className="coin2coin">
                 <img src={getCoinIcon(d.lock_symbol)} />
                 <img src={getCoinIcon(d.yield_symbol)} />
@@ -118,7 +120,9 @@ export default class FarmPanel extends React.Component {
                 disabled={d.active !== 1}
               >
                 <div
-                  className={classNames('farm-btn', { disabled: d.active !== 1 })}
+                  className={classNames('farm-btn', {
+                    disabled: d.active !== 1,
+                  })}
                 >
                   {toLocale('STAKE')}&nbsp;
                   <span className="timer">{this.getTimerDis(d)}</span>
