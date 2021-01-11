@@ -97,11 +97,10 @@ export default class FarmPanel extends React.Component {
                 className={classNames('tag', { active: d.active === 1 })}
               ></div>
               <div className="coin2coin">
-                <img src={getCoinIcon(d.lock_symbol)} />
-                <img src={getCoinIcon(d.yield_symbol)} />
+                {d.lock_symbol_info.symbols.map((symbol,symbolIndex) => <img src={getCoinIcon(symbol)} key={symbolIndex}/>)}
                 <Tooltip placement="right" overlay={d.pool_name_dis}>
                   <span>
-                    {d.lock_symbol_dis}/{d.yield_symbol_dis}
+                    {d.lock_symbol_info.name}
                   </span>
                 </Tooltip>
               </div>

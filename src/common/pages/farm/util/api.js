@@ -2,6 +2,7 @@ import ont from '_src/utils/dataProxy';
 import URL from '_constants/URL';
 import util from '_src/utils/util';
 import calc from '_src/utils/calc';
+import { getLpTokenInfo } from '_src/utils/lpTokenUtil';
 import { toLocale } from '_src/locale/react-locale';
 
 function ajax(method, url, params) {
@@ -25,6 +26,7 @@ function _proccessData(data) {
       d.pool_name_dis = d.pool_name.toUpperCase();
       d.lock_symbol_dis = d.lock_symbol.toUpperCase();
       d.yield_symbol_dis = d.yield_symbol.toUpperCase();
+      d.lock_symbol_info = _getLockSymbolInfos(d.lock_symbol);
       d.farm_apy.forEach((dd) => {
         total_apy = calc.add(total_apy, dd.amount);
         dd.denom_dis = dd.denom.toUpperCase();
@@ -101,6 +103,20 @@ function _getTimerByCount(count = 0) {
   return `${d_dis}${toLocale('d')} ${h_dis}${toLocale('h')} ${m_dis}${toLocale(
     'm'
   )} ${s_dis}${toLocale('s')}`;
+}
+
+function _getLockSymbolInfos(lock_symbol) {
+  const lpToken = getLpTokenInfo(lock_symbol);
+  const result = {symbols: [], name:''}
+  if(lpToken) {
+    result.symbols.push(lpToken.base);
+    result.symbols.push(lpToken.quote);
+    result.name = lpToken.name;
+  } else {
+    symbols.push(lock_symbol);
+    result.name = lock_symbol.toUpperCase();
+  }
+  return result;
 }
 
 //@mock let mocker = require('./mock');

@@ -22,11 +22,10 @@ export default class WatchlistPanel extends React.Component {
         component: ({ row }) => {
           return (
             <div className="coin2coin">
-              <img src={getCoinIcon(row.lock_symbol)} />
-              <img src={getCoinIcon(row.yield_symbol)} />
+              {row.lock_symbol_info.symbols.map((symbol,symbolIndex) => <img src={getCoinIcon(symbol)} key={symbolIndex}/>)}
               <Tooltip placement="right" overlay={row.pool_name_dis}>
                 <span>
-                  {row.lock_symbol_dis}/{row.yield_symbol_dis}
+                  {row.lock_symbol_info.name}
                 </span>
               </Tooltip>
             </div>

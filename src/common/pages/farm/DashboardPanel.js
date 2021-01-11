@@ -144,13 +144,12 @@ export default class DashboardPanel extends React.Component {
                     <div className="space-between">
                       <div className="left">
                         <div className="coin2coin">
-                          <img src={getCoinIcon(d.lock_symbol)} />
-                          <img src={getCoinIcon(d.yield_symbol)} />
-                          <Tooltip placement="right" overlay={d.pool_name_dis}>
-                            <span>
-                              {d.lock_symbol_dis}/{d.yield_symbol_dis}
-                            </span>
-                          </Tooltip>
+                        {d.lock_symbol_info.symbols.map((symbol,symbolIndex) => <img src={getCoinIcon(symbol)} key={symbolIndex}/>)}
+                        <Tooltip placement="right" overlay={d.pool_name_dis}>
+                          <span>
+                            {d.lock_symbol_info.name}
+                          </span>
+                        </Tooltip>
                         </div>
                       </div>
                       <div className="right">{this.getTimerDis(d)}</div>
