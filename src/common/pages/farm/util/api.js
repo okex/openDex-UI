@@ -113,7 +113,7 @@ function _getLockSymbolInfos(lock_symbol) {
     result.symbols.push(lpToken.quote);
     result.name = lpToken.name;
   } else {
-    symbols.push(lock_symbol);
+    result.symbols.push(lock_symbol);
     result.name = lock_symbol.toUpperCase();
   }
   return result;
