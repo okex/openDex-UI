@@ -130,6 +130,9 @@ export default class FarmPanel extends React.Component {
               </SimpleBtnDialog>
             </div>
           ))}
+          {!data.length && (
+            <div className="nodata">{toLocale('watchlist noData')}</div>
+          )}
         </div>
         <div className="title-wrap">
           <div className="space-between">
