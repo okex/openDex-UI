@@ -152,8 +152,8 @@ export default class InputNum extends React.Component {
     if (!this.cusorStart) return true;
     const oldValue = this.getNewValue();
     const newValue = this.getNewValue(nextProps);
-    if (newValue.length > oldValue.length) this.cusorStep = 1;
-    else if (newValue.length < oldValue.length) this.cusorStep = -1;
+    const cusorStep = newValue.length - oldValue.length;
+    if (cusorStep) this.cusorStep = cusorStep;
     else this.cusorStep = newValue.length;
     return true;
   }
