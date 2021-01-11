@@ -108,7 +108,7 @@ export default class WatchlistPanel extends React.Component {
       sort: { field: 'total_staked', sort: 'desc' },
       data: [],
       current: 1,
-      pageSize: 1,
+      pageSize: 10,
       total: 0,
     };
   }
