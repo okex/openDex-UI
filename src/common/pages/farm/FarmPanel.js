@@ -1,7 +1,7 @@
 import React from 'react';
 import { toLocale } from '_src/locale/react-locale';
 import util from '_src/utils/util';
-import { getCoinIcon } from './util/coinIcon';
+import { getCoinIcon } from '../../utils/coinIcon';
 import { getLangURL } from '_src/utils/navigation';
 import Tooltip from '../../component/Tooltip';
 import PageURL from '_constants/PageURL';

@@ -1,6 +1,6 @@
 import React from 'react';
 import Pagination from '_component/Pagination';
-import { getCoinIcon } from './util/coinIcon';
+import { getCoinIcon } from '../../utils/coinIcon';
 import { toLocale } from '_src/locale/react-locale';
 import util from '_src/utils/util';
 import { getLangURL } from '_src/utils/navigation';

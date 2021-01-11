@@ -1,6 +1,6 @@
 import React from 'react';
 import { toLocale } from '_src/locale/react-locale';
-import { getCoinIcon } from '../util/coinIcon';
+import { getCoinIcon } from '../../../utils/coinIcon';
 import classNames from 'classnames';
 import InputNum from '_component/InputNum';
 import LiquidityInfoTip from '../LiquidityInfoTip';
