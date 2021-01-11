@@ -128,9 +128,9 @@ export function whitelist() {
   });
 }
 
-export function normal() {
+export function normal(param = {}) {
   //@mock mocker.normal(URL.GET_FARM_POOLS_NORMAL);
-  return get(URL.GET_FARM_POOLS_NORMAL).then((data) => {
+  return get(URL.GET_FARM_POOLS_NORMAL, param).then((data) => {
     _proccessData(data.data);
     return data;
   });
