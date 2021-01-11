@@ -1,6 +1,6 @@
 import React from 'react';
 import { toLocale } from '_src/locale/react-locale';
-import { getCoinIcon } from '../util/coinIcon';
+import { getCoinIcon } from '../../../utils/coinIcon';
 import util from '_src/utils/util';
 
 export default class SelectCoin extends React.Component {

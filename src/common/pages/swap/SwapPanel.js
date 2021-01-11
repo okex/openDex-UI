@@ -7,7 +7,7 @@ import { getLangURL } from '_src/utils/navigation';
 import PageURL from '_constants/PageURL';
 import { Link } from 'react-router-dom';
 import CoinItem from './CoinItem';
-import { getCoinIcon } from './util/coinIcon';
+import { getCoinIcon } from '../../utils/coinIcon';
 import * as api from './util/api';
 import Confirm from '../../component/Confirm';
 import { getDeadLine4sdk } from './util';
