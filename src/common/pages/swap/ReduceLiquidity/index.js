@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { toLocale } from '_src/locale/react-locale';
-import { getCoinIcon } from '../util/coinIcon';
+import { getCoinIcon } from '../../../utils/coinIcon';
 import * as api from '../util/api';
 import InputNum from '_component/InputNum';
 import calc from '_src/utils/calc';

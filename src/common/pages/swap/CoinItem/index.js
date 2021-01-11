@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { toLocale } from '_src/locale/react-locale';
 import InputNum from '_component/InputNum';
 import SelectCoin from '../SelectCoin';
-import { getCoinIcon } from '../util/coinIcon';
+import { getCoinIcon } from '../../../utils/coinIcon';
 import classNames from 'classnames';
 import { channelsV3 } from '../../../utils/websocket';
 import SwapContext from '../SwapContext';

@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import SelectCoin from '../SelectCoin';
-import { getCoinIcon } from '../util/coinIcon';
+import { getCoinIcon } from '../../../utils/coinIcon';
 import { toLocale } from '_src/locale/react-locale';
 
 export default class CoinDropdown extends React.Component {

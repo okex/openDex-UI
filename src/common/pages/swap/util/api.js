@@ -1,19 +1,6 @@
-import ont from '_src/utils/dataProxy';
+import { get } from '_src/utils/apiUtil';
 import URL from '_constants/URL';
 import util from '_src/utils/util';
-import { toLocale } from '_src/locale/react-locale';
-
-function ajax(method, url, params) {
-  return ont[method](url, params || undefined).then((data) => {
-    if (data.code === 0) return data.data;
-    else throw new Error(toLocale(`error.code.${data.code}`) || data.msg);
-  });
-}
-
-function get(url, params = {}) {
-  const method = 'get';
-  return ajax(method, url, { params });
-}
 
 function exchange(params) {
   if (params.base_token && params.quote_token) {
