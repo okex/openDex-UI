@@ -2,14 +2,14 @@ import { getPathAndHash } from '../utils/pathUtil';
 
 const testnet = {
   token: {
-    base: 'tokt',
-    quote: 'tusdk',
-    quoteName: 'TUSDK',
-    defaultProduct: 'tbtc_tusdk',
+    base: 'okt',
+    quote: 'usdk',
+    quoteName: 'USDK',
+    defaultProduct: 'btc_usdk',
     productKey: 'product_test',
     activeMarketKey: 'activeMarket_test',
     favoritesKey: 'favorites_test',
-    favorites: ['tbtc_tusdk', 'tokb_tusdk', 'tokt_tusdk'],
+    favorites: ['btc_usdk', 'okb_usdk', 'okt_usdk'],
     valuationUnitKey: 'valuationUnit_test',
     spot_spotOrMarginKey: 'spot_spotOrMargin_test',
   },
