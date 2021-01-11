@@ -82,7 +82,7 @@ export default class FullTradeKLine extends React.Component {
       'https://static.bafang.com/cdn/assets/imgs/MjAxOTM/05D71CB3408AD30681388F4D774BABBA.png';
     const Kline = window.okui.CombKline || window.okui.Kline;
     this.kline = new Kline({
-      kId: 'okex-dex-20200828',
+      kId: env.envConfig.kId,
       element: '#full-kline-container',
       klineUrl:
         Config.okexchain.clientUrl +

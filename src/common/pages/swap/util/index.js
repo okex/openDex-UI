@@ -1,4 +1,5 @@
-const SWAP_SITTING_STOREKEY = 'swap_setting_config';
+import env from '../../../constants/env';
+const SWAP_SITTING_STOREKEY = env.envConfig.swapSetting;
 const SWSWAP_SETTING_Default = {
   slippageTolerance: 0.5,
 };
