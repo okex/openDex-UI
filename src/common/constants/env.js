@@ -16,6 +16,8 @@ const testnet = {
   apiPath: 'okexchain-test/v1',
   pagePath: 'dex-test',
   chainId: 'okexchaintestnet-1',
+  kId: 'okex-dex-test',
+  swapSetting: 'swap_setting_config_test',
   pushLogin: '',
 };
 
@@ -35,6 +37,8 @@ const mainnet = {
   apiPath: 'okexchain/v1',
   pagePath: 'dex',
   chainId: 'okexchain-1',
+  kId: 'okex-dex',
+  swapSetting: 'swap_setting_config',
   pushLogin: '',
 };
 
