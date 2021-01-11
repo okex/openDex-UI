@@ -85,7 +85,7 @@ export default class FarmPanel extends React.Component {
           {toLocale('White listed')}
           <Tooltip
             placement="right"
-            overlay={toLocale('Minimum received help')}
+            overlay={toLocale('White listed help')}
           >
             <i className="help" />
           </Tooltip>
@@ -140,7 +140,7 @@ export default class FarmPanel extends React.Component {
               {toLocale('Other pools')}
               <Tooltip
                 placement="right"
-                overlay={toLocale('Minimum received help')}
+                overlay={toLocale('Other pools help')}
               >
                 <i className="help" />
               </Tooltip>

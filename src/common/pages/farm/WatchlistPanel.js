@@ -24,9 +24,11 @@ export default class WatchlistPanel extends React.Component {
             <div className="coin2coin">
               <img src={getCoinIcon(row.lock_symbol)} />
               <img src={getCoinIcon(row.yield_symbol)} />
-              <span>
-                {row.lock_symbol_dis}/{row.yield_symbol_dis}
-              </span>
+              <Tooltip placement="right" overlay={row.pool_name_dis}>
+                <span>
+                  {row.lock_symbol_dis}/{row.yield_symbol_dis}
+                </span>
+              </Tooltip>
             </div>
           );
         },
@@ -58,8 +60,7 @@ export default class WatchlistPanel extends React.Component {
               <Tooltip placement="right" overlay={row.farm_apy_dis}>
                 <span>{data}</span>
               </Tooltip>
-              <img src={getCoinIcon(row.lock_symbol)} />
-              <img src={getCoinIcon(row.yield_symbol)} />
+              {row.farm_apy.map((d,index) => <img src={getCoinIcon(d.denom)} key={index}/>)}
             </div>
           );
         },
