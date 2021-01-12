@@ -1,0 +1,830 @@
+
+
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" contents="IE=edge,chrome=1">
+    <meta name="Author" content="OKDEX" />
+    <meta name="Copyright" content="OKEx.com" />
+    
+    <title>比特币交易平台OKEx-全球领先的比特币/莱特币/以太坊交易平台 | OKEx</title>
+    <meta name="description" content="OKEx是全球领先的比特币交易平台，使用银行级别的SSL加密和冷存储等技术，为用户提供安全稳定的比特币、莱特币、以太坊、BCH、量子链、Ripple、NEO、EOS、HSR等数字资产交易服务。"/>
+    <meta name="keywords" content="比特币,比特币交易平台,以太坊,EOS,量子链,QTUM,HSR,NEO,ripple,比特币价格,莱特币,ETH,BCH,以太经典,区块链,ETC"/>
+
+    
+    
+
+    
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="比特币交易平台OKEx-全球领先的比特币/莱特币/以太坊交易平台" />
+    <meta property="og:site_name" content="OKEx" />
+    <meta property="og:image" content="//daily-test.okcoin-inc.com/cdn/assets/imgs/207/95EDC6DD5D3CBDF8.png" />
+    <meta property="og:description" content="OKEx是全球领先的比特币交易平台，使用银行级别的SSL加密和冷存储等技术，为用户提供安全稳定的比特币、莱特币、以太坊、BCH、量子链、Ripple、NEO、EOS、HSR等数字资产交易服务。" />
+
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:site" content="OKEx" />
+
+    
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="shortcut icon" href="//daily-test.okcoin-inc.com/cdn/assets/imgs/MjAxODg/D91A7323087D31A588E0D2A379DD7747.png" type="image/png"/>
+    
+    
+    <link rel="alternate" href="https://kong-proxy.test-b-okex.svc.test.local/cn/dex/spot/trade" hreflang="zh-Hans"/>
+    <link rel="alternate" href="https://kong-proxy.test-b-okex.svc.test.local/hk/dex/spot/trade" hreflang="zh-Hant"/>
+    <link rel="alternate" href="https://kong-proxy.test-b-okex.svc.test.local/dex/spot/trade" hreflang="en-au"/>
+    <link rel="alternate" href="https://kong-proxy.test-b-okex.svc.test.local/dex/spot/trade" hreflang="en-gb"/>
+    <link rel="alternate" href="https://kong-proxy.test-b-okex.svc.test.local/dex/spot/trade" hreflang="en-us"/>
+    <link rel="alternate" href="https://kong-proxy.test-b-okex.svc.test.local/dex/spot/trade" hreflang="en"/>
+    <link rel="alternate" href="https://kong-proxy.test-b-okex.svc.test.local/es/dex/spot/trade" hreflang="es"/>
+    <link rel="alternate" href="https://kong-proxy.test-b-okex.svc.test.local/fr/dex/spot/trade" hreflang="fr"/>
+    <link rel="alternate" href="https://kong-proxy.test-b-okex.svc.test.local/in/dex/spot/trade" hreflang="id"/>
+    <link rel="alternate" href="https://kong-proxy.test-b-okex.svc.test.local/ko/dex/spot/trade" hreflang="ko"/>
+    <link rel="alternate" href="https://kong-proxy.test-b-okex.svc.test.local/ru/dex/spot/trade" hreflang="ru"/>
+    <link rel="alternate" href="https://kong-proxy.test-b-okex.svc.test.local/th/dex/spot/trade" hreflang="th"/>
+    <link rel="alternate" href="https://kong-proxy.test-b-okex.svc.test.local/tr/dex/spot/trade" hreflang="tr"/>
+    <link rel="alternate" href="https://kong-proxy.test-b-okex.svc.test.local/vi/dex/spot/trade" hreflang="vi"/>
+    <link rel="alternate" href="https://kong-proxy.test-b-okex.svc.test.local/dex/spot/trade" hreflang="x-default" />
+
+    <link rel="stylesheet" type="text/css" href="//daily-test.okcoin-inc.com/cdn/assets/okfe/seo-ex/6.2.5/font/commonFont/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="//daily-test.okcoin-inc.com/cdn/assets/okfe/seo-ex/6.2.5/main/modules/nav/index.css"/>
+    <link rel="stylesheet" type="text/css" href="//daily-test.okcoin-inc.com/cdn/assets/okfe/seo-ex/6.2.5/main/modules/global/index.css"/>
+    
+
+    
+    
+
+    <link rel="stylesheet" href="//daily-test.okcoin-inc.com/cdn/assets/okfe/okui/okline/0.3.22/okui-combkline.css">
+
+
+    
+    <script>
+        function fz(obj, prop, value) {Object.defineProperty(obj, prop, {value: value, writable: false})}
+        fz(window, 'okGlobal', {});fz(window, 'okui', {});
+        var broker = {is: false, id: null, name: "", legal: null, download:{url:{android:null, ios:null}, qrCodeUrl:{android:null, ios:null}}, logo:"\/\/daily-test.okcoin-inc.com", icon:"\/\/daily-test.okcoin-inc.com", relief: null, sec: null};
+        var site = {sign: 'okex', siteName:  broker.is? broker.name : 'OKEx', is: {okex: true},seoTitle: false ? "-null" : "\u5168\u7403\u9886\u5148\u7684\u6BD4\u7279\u5E01\u4EA4\u6613\u5E73\u53F0|OKEx.com"};
+        var download={win:"https:\/\/ok-public-hk.oss-cn-hongkong.aliyuncs.com\/upgradeapp\/OKEx_Setup.exe",mac:"https:\/\/ok-public-hk.oss-cn-hongkong.aliyuncs.com\/upgradeapp\/OKEx.dmg"};
+        fz(window.okGlobal, 'site', site);fz(window.okGlobal, 'broker', broker);fz(window.okGlobal, 'locale', "zh_CN");fz(window.okGlobal, 'timestamp', 1609297714611);fz(window.okGlobal, 'ipRegion', "");
+        fz(window.okGlobal, 'langPath', "");fz(window.okGlobal, 'linkToLangUrl', function(url,isNewTab){var l=""+url;isNewTab?window.open(l):window.location.href=l;});fz(window.okGlobal, 'download',download);
+        fz(window.okGlobal, 'cdnBaseUrl', "\/\/daily-test.okcoin-inc.com");fz(window.okGlobal, 'withoutStatistics', false);fz(window.okGlobal, 'envSign', "daily");fz(window.okGlobal, 'innerDomain', "https:\/\/www.okexcn.com");
+        window.okGlobal.isResponsive=false;window.okGlobal.navShowStatus=true;window.okGlobal.isApp=false;window.okGlobal.simulatedStatus="1";
+        fz(window.okGlobal, 'versionUrls',{expressway:"\/\/daily-test.okcoin-inc.com\/cdn\/assets\/okfe\/expressway\/0.4.5",seoEx:"\/\/daily-test.okcoin-inc.com\/cdn\/assets\/okfe\/seo-ex\/6.2.5"});
+    </script>
+    
+    <script>
+        var win = window, doc = document, re = /_PF_/, cdnUrl = "\/\/daily-test.okcoin-inc.com",
+            script = '<script type="text/javascript" src="' + cdnUrl + '/cdn/assets/okfe/libs/polyfills/_PF_"><\/script>';
+        win.fetch || doc.write(script.replace(re, 'fetch-polyfill.min.js'));
+        win.Promise && Object.assign && ''.includes && [].includes || doc.write(script.replace(re, 'es6-polyfill.min.js'));
+    </script>
+
+    <script src="//daily-test.okcoin-inc.com/cdn/assets/okfe/util/ont/0.4.39/ont.js"></script>
+    <script src="//daily-test.okcoin-inc.com/cdn/assets/okfe/util/monitor/2.3.11/index.js"></script>
+    <script src="//daily-test.okcoin-inc.com/cdn/assets/okfe/seo-ex/6.2.5/main/modules/commonImportTop/index.js"></script>
+    <script src="//static.bafang.com/cdn/language/okex/seo_ex/zh_cn/okex_seo_ex_zh_cn.js?v=6.2.5"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+    <script>
+        window.javaweb_locale = "{}";
+    </script>
+
+    
+    
+    
+  <script src="//daily-test.okcoin-inc.com/cdn/assets/okfe/okui/okline/0.3.22/okui-combkline.js"></script>
+  </head>
+  <body id="body" data-responsive="false" data-nav="true">
+  
+    
+        
+    <header id="headerContainer" class="header header-container" data-transparent="false">
+        <div class="header-wrap">
+            <div class="header-main">
+                <a class="logo-wrap" href="/">
+                    <img class="logo-img"
+                         src="//daily-test.okcoin-inc.com/cdn/assets/imgs/MjAxOTQ/5CAB3C0086E2F1135A3428116E435B8A.png"
+                         alt="OKEx - 世界领先的区块链数字资产交易平台" title="OKEx">
+                    <span class="simulated-sign" data-lang-key="view.nav.logo.simulated">Simulation</span>
+                </a>
+                <div class="nav-container" id="navContainer">
+                    <ul class="nav-scroll-box">
+                        <li class="user-no-login">
+                            <a class="passport-btn user-login-btn" data-monitor-tab="user_login"
+                               href="/account/login" data-lang-key="view.home.nav.login">登录</a>
+                            <a class="passport-btn user-register-btn" data-monitor-tab="user_register"
+                               href="/account/register?action=header_register_btn"
+                               data-lang-key="view.home.nav.signUp">注册</a>
+                        </li>
+                        <li class="profile-wrap">
+                            <div class="photo">
+                                <i class="icon iconfont icon-icon_user"></i>
+                            </div>
+                            <div class="person-info">
+                                <div class="info-text user-account"></div>
+                                <div class="info-text user-uuid"></div>
+                            </div>
+                            <div class="logout">
+                                <i class="icon iconfont icon-icon_sign_out"></i>
+                            </div>
+                        </li>
+                        <li class="nav-item nav-user">
+                            <div class="user-info">
+                                <i class="icon iconfont icon-home_user"></i>
+                            </div>
+                            <span class="user-arrow"><i class="icon iconfont icon-ic_arrow"></i></span>
+                            <span class="nav-text user-account-text" data-lang-key="view.home.account">个人中心</span>
+                            <ul class="user-info-extend drop-c-left-align" id="userWrapList">
+                                <li class="user-info-item">
+                                    <span id="userAccount" class="user-account"></span>
+                                    <span class="user-level">
+                            <span class="sub-tag-wrap">
+                                <span class="sub-tag" data-lang-key="view.open.login.type.sub">子账户</span>
+                            </span>
+                        </span>
+                                </li>
+                                <li><a class="extend-link" data-monitor-account="userInfo"
+                                       href="/account/users"
+                                       data-lang-key="view.home.nav.user.overview">用户中心</a></li>
+                                <li><a class="extend-link" data-monitor-account="userSecurity"
+                                       href="/account/security"
+                                       data-lang-key="view.home.nav.user.security">个人信息</a></li>
+                                <li><a class="extend-link isSub" data-monitor-account="idIdentity"
+                                       href="/account/kyc" data-lang-key="view.home.nav.identity">身份认证</a></li>
+                                <li><a class="extend-link" data-monitor-account="preferences"
+                                       href="/account/setting"
+                                       data-lang-key="view.home.nav.preferences">偏好设置</a></li>
+                                <li><a class="extend-link isSub" data-monitor-account="subAccount"
+                                       href="/account/sub-account"
+                                       data-lang-key="view.home.nav.subAccount">子账户</a></li>
+                                <li><a id='userApi' class="extend-link" data-monitor-account="apiSetting"
+                                       href="/account/my-api" data-lang-key="view.home.nav.API">API</a></li>
+                                <p class="line"></p>
+                                <li><span class="extend-link logout" data-lang-key="view.home.nav.logout">退出登录</span></li>
+                            </ul>
+                        </li>
+                        
+                        <li class="nav-item nav-balance">
+                            <span class="user-arrow"><i class="icon iconfont icon-ic_arrow"></i></span>
+                            <a id="userBalance" class="nav-text user-balance-href nav-balance-text"
+                               href="/balance/overview" data-lang-key="view.home.nav.balance">资金管理</a>
+                            <span class="nav-text user-balance-text nav-balance-text" data-lang-key="view.home.nav.balance">资金管理</span>
+                            <ul class="user-info-extend drop-c-left-align">
+                                <li><a class="extend-link item-asset" data-monitor-balance="myBalance"
+                                       href="/balance/overview"
+                                       data-lang-key="view.home.nav.my.balance">我的资产</a></li>
+                                <li><a class="extend-link item-recharge isSub" data-monitor-balance="rechargeCoin"
+                                       href="/balance/recharge" data-lang-key="view.home.nav.deposit">充币</a></li>
+                                <li><a class="extend-link item-withdrawal isSub" data-monitor-balance="withdrawCoin"
+                                       href="/balance/withdrawal"
+                                       data-lang-key="view.home.nav.withdraw">提币</a>
+                                </li>
+                                <li><a class="extend-link item-transfer" data-monitor-balance="transfer"
+                                       href="/balance/transfer" data-lang-key="view.act.ett31">资金划转</a></li>
+                                <li><a class="extend-link item-report" data-monitor-balance="report"
+                                       href="/balance/report-center/classic/account" data-lang-key="view.home.nav.balance.report">订单中心</a></li>
+                                <li><a class="extend-link item-fee isSub" data-monitor-account="poundage"
+                                       href="/balance/fee" data-lang-key="view.home.nav.fee.mine">我的手续费</a></li>
+                                <li><span class="extend-link item-simulated" id="toSimulated"
+                                          data-monitor-balance="simulated" data-lang-key="view.home.nav.simulated">Start Paper Trading</span></li>
+                                <li><span class="extend-link item-real" id="toRealTrade"
+                                          data-monitor-balance="realTrade" data-lang-key="view.home.nav.realTrade">Trade in Real Market</span></li>
+                            </ul>
+                        </li>
+                        <li class="header-line"></li>
+                        <li class="nav-item nav-buy isSub">
+                            <a class="nav-link" data-key="/buy-crypto/cny" data-monitor-tab="otc"
+                               href="/buy-crypto/cny" data-lang-key="view.home.nav.buy.crypto">Buy Crypto</a>
+                            
+                        </li>
+                        <li class="nav-item nav-market">
+                            <a id="marketList" class="nav-link" data-key="/markets" data-monitor-tab="market"
+                               href="/markets" data-lang-key="view.home.nav.chart">行情图表</a>
+                        </li>
+                        <li class="nav-item nav-trade nav-has-next" id="trade">
+                            <span class="tab nav-text" id="tradeLabel" data-lang-key="view.home.nav.all.trade">Trade</span>
+                            <span id="spotArrow" class="user-arrow"><i class="icon iconfont icon-ic_arrow"></i></span>
+                            <div class="user-info-extend drop-c-left-align">
+                                <div id="systemTab" class="systemTab">
+                                    <div id="oldTab" date-id="1" class="item-tab active">
+                                        <span data-lang-key="view.home.nav.trade.classic">Classic Trading</span>
+                                    </div>
+                                    <div id="newTab" date-id="2" class="item-tab">
+                                        <span data-lang-key="view.home.nav.trade.unified">Unified Trading</span>
+                                    </div>
+                                    <span class="tab-new" data-lang-key="view.home.nav.trade.unified.new">new</span>
+                                </div>
+                                <div id="oldSystemTrade" class="info-extend-box old-system-box">
+                                    <div class="tab-ms" data-lang-key="view.home.nav.trade.classic">Classic Trading</div>
+                                    <dl class="extend-box">
+                                        <h2 class="box-title" data-lang-key="view.home.nav.trade.title1">Spot</h2>
+                                        <div id="loginSimpleSpot" data-monitor-tab="loginSimpleSpot"
+                                             class="box-item item-spot" data-href="/spot/trade">
+                                            <span class="icon-img icon_spot"></span>
+                                            <div class="item-box">
+                                                <a id="titleSpot" class="item-title title-ms" href="/spot/trade"
+                                                   data-link="/spot/trade" data-lang-key="view.home.nav.trade.spot">Spot Trading</a>
+                                                <dt class="item-title title-pc" data-link="/spot/trade"
+                                                    data-lang-key="view.home.nav.trade.spot">Spot Trading</dt>
+                                                <dd class="desc-box header-trade-desc-box">
+                                                    <p class="desc" data-lang-key="view.home.nav.trade.spot.desc">Trading from crypto to crypto</p>
+                                                    <div class="item-link">
+                                                        <a class="link" id="spBasic" data-monitor-link="spot_trade"
+                                                           href="/spot/trade"
+                                                           data-lang-key="view.home.nav.trade.basic">简约交易</a>
+                                                        <span class="split-line"></span>
+                                                        <a class="link" id="spPro" data-monitor-link="spot_full"
+                                                           href="/spot/full" target="_blank"
+                                                           data-lang-key="view.home.nav.trade.advanced">全屏交易</a>
+                                                    </div>
+                                                </dd>
+                                            </div>
+                                        </div>
+
+                                        <div id="loginComplexSpot" data-monitor-tab="loginComplexSpot"
+                                             class="box-item item-margin" data-href="/spot/margin-trade">
+                                            <span class="icon-img icon_margin"></span>
+                                            <div class="item-box">
+                                                <a id="titleMargin"
+                                                   class="item-title title-ms"
+                                                   href="/spot/margin-trade"
+                                                   data-link="/spot/margin-trade"
+                                                   data-lang-key="view.home.nav.trade.margin">Margin Trading</a>
+                                                <dt class="item-title title-pc" data-link="/spot/margin-trade"
+                                                    data-lang-key="view.home.nav.trade.margin">Margin Trading</dt>
+                                                <dd class="desc-box header-trade-desc-box">
+                                                    <span class="desc" data-lang-key="view.home.nav.trade.margin.desc">Increasing profit and risk by leverage</span>
+                                                    <div class="item-link">
+                                                        <a class="link" id="mgBasic" data-monitor-link="margin_trade"
+                                                           href="/spot/margin-trade"
+                                                           data-lang-key="view.home.nav.trade.basic">简约交易</a>
+                                                        <span class="split-line"></span>
+                                                        <a class="link" id="mgPro" data-monitor-link="margin_full"
+                                                           href="/spot/full-margin" target="_blank"
+                                                           data-lang-key="view.home.nav.trade.advanced">全屏交易</a>
+                                                    </div>
+                                                </dd>
+                                            </div>
+                                        </div>
+                                        <div id="loginComplexDex" data-monitor-tab="okDex" class="box-item item-dex">
+                                            <span class="icon-img icon_dex"></span>
+                                            <div class="item-box">
+                                                <a class="item-title title-ms" href="/dex/spot/trade" data-link="/dex/spot/trade" data-lang-key="view.home.nav.trade.dex">DEX交易</a>
+                                                <dt class="item-title title-pc" data-link="/dex/spot/trade" data-lang-key="view.home.nav.trade.dex">DEX交易</dt>
+                                                <dd class="desc-box">
+                                                    <span class="desc" data-lang-key="view.home.nav.trade.dex.desc">基于OKChain的去中心化交易</span>
+                                                    <div class="item-link">
+                                                        <a class="link" id="dexOrder" data-monitor-link="dex_order_book" href="/dex/spot/trade" data-lang-key="view.home.nav.trade.dex.order">Order book</a>
+                                                        <span class="split-line"></span>
+                                                        <a class="link" id="dexSwap" data-monitor-link="dex_swap" href="/dex/swap" target="_blank" data-lang-key="view.home.nav.trade.dex.swap">Swap</a>
+                                                    </div>
+                                                </dd>
+                                            </div>
+                                        </div>
+                                    </dl>
+                                    <dl class="extend-box">
+                                        <h2 class="box-title" data-lang-key="view.home.nav.trade.title2">Derivatives</h2>
+                                        <div id="loginComplexFuture" data-monitor-tab="loginComplexFuture"
+                                             class="box-item item-swap" data-href="/derivatives/swap">
+                                            <span class="icon-img icon_swap"></span>
+                                            <div class="item-box">
+                                                <a id="titleSwap" class="item-title title-ms"
+                                                   href="/derivatives/swap"
+                                                   data-link="/derivatives/swap" data-lang-key="view.home.nav.trade.swap">Perpetual Swap</a>
+                                                <dt class="item-title title-pc" data-link="/derivatives/swap"
+                                                    data-lang-key="view.home.nav.trade.swap">Perpetual Swap</dt>
+                                                <dd class="desc-box header-trade-desc-box">
+                                                    <span class="desc" data-lang-key="view.home.nav.trade.swap.desc">Contracts without settlement</span>
+                                                    <div class="item-link">
+                                                        <a class="link" id="ppBasic" data-monitor-link="swap_trade"
+                                                           href="/derivatives/swap"
+                                                           data-lang-key="view.home.nav.trade.basic">简约交易</a>
+                                                        <span class="split-line"></span>
+                                                        <a class="link" id="ppPro" data-monitor-link="swap_full"
+                                                           href="/derivatives/swap/full"
+                                                           target="_blank" data-lang-key="view.home.nav.trade.advanced">全屏交易</a>
+                                                    </div>
+                                                </dd>
+                                            </div>
+                                        </div>
+                                        <div id="loginSimpleFuture" data-monitor-tab="loginSimpleFuture"
+                                             class="box-item item-futures" data-href="/derivatives/futures">
+                                            <span class="icon-img icon_futures"></span>
+                                            <div class="item-box">
+                                                <a id="titleFutures" class="item-title title-ms"
+                                                   href="/derivatives/futures"
+                                                   data-link="/derivatives/futures"
+                                                   data-lang-key="view.home.nav.trade.futures">Futures</a>
+                                                <dt class="item-title title-pc" data-link="/derivatives/futures"
+                                                    data-lang-key="view.home.nav.trade.futures">Futures</dt>
+                                                <dd class="desc-box header-trade-desc-box">
+                                                    <span class="desc" data-lang-key="view.home.nav.trade.futures.desc">Futures arbitrage and risk hedging</span>
+                                                    <div class="item-link">
+                                                        <a class="link" id="jgBasic" data-monitor-link="futures_trade"
+                                                           href="/derivatives/futures"
+                                                           data-lang-key="view.home.nav.trade.basic">简约交易</a>
+                                                        <span class="split-line"></span>
+                                                        <a class="link" id="jgPro" data-monitor-link="futures_full"
+                                                           href="/derivatives/futures/full"
+                                                           target="_blank" data-lang-key="view.home.nav.trade.advanced">全屏交易</a>
+                                                    </div>
+                                                </dd>
+                                            </div>
+                                        </div>
+
+                                        <div id="loginOptionFuture" data-monitor-tab="loginOptionFuture"
+                                             class="box-item item-options" data-href="/derivatives/options">
+                                            <span class="icon-img icon_option"></span>
+                                            <div class="item-box">
+                                                <a id="titleOptions" class="item-title title-ms"
+                                                   href="/derivatives/options"
+                                                   data-link="/derivatives/options"
+                                                   data-lang-key="view.home.nav.trade.options">Options</a>
+                                                <dt class="item-title title-pc" data-link="/derivatives/options"
+                                                    data-lang-key="view.home.nav.trade.options">Options</dt>
+                                                <dd class="desc-box header-trade-desc-box">
+                                                    <span class="desc" data-lang-key="view.home.nav.trade.options.desc">Unlimited Profit V.S. Limited Risk</span>
+                                                    <div class="item-link">
+                                                        <a class="link" id="opBasic" data-monitor-link="options_trade"
+                                                           href="/derivatives/options"
+                                                           data-lang-key="view.home.nav.trade.basic">简约交易</a>
+                                                        <span class="split-line"></span>
+                                                        <a class="link" id="opPro" data-monitor-link="options_full"
+                                                           href="/derivatives/options/instruments"
+                                                           target="_blank" data-lang-key="view.home.nav.option.advanced">专业交易</a>
+                                                    </div>
+                                                </dd>
+                                            </div>
+                                        </div>
+                                    </dl>
+                                </div>
+                                <div class="trade-line"></div>
+                                <div id="newSystem" class="info-extend-box new-system-box">
+                                    <a class="item-title title-ms" href="/trade-spot"
+                                       data-lang-key="view.home.nav.trade.unified">Unified Trading</a>
+                                    <div class="new-desc-pc">
+                                        <span class="icon-img icon_unified"></span>
+                                        <div class="item-title title-pc" data-lang-key="view.home.nav.trade.unified">Unified Trading</div>
+                                        <div class="item-desc">
+                                                <span class="desc" data-lang-key="view.home.nav.trade.unified.desc">Easy to trade all instrument in one account</span>
+                                        </div>
+                                        <div id="openNewTrade" class="item-button" data-href="/trade-spot">
+                                                <span data-lang-key="view.home.nav.trade.unified.button">Go to Trade</span>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="nav-item nav-earn nav-has-next">
+                            <span class="tab nav-text" id="financeNav" data-lang-key="view.home.nav.finance.title">Finance</span>
+                            <span id="financeArrow" class="user-arrow"><i
+                                    class="icon iconfont icon-ic_arrow"></i></span>
+                            <div class="user-info-extend drop-c-left-align">
+                                <div class="info-extend-box">
+                                    <dl class="extend-box extend-small-box">
+                                        <a class="box-item" data-monitor-more="earn" href="/earn">
+                                            <span class="icon-img icon_earn"></span>
+                                            <div class="item-box">
+                                                <dt class="item-info" data-lang-key="view.home.nav.earn.title">Earn</dt>
+                                            </div>
+                                        </a>
+                                        <a class="box-item" data-monitor-more="financeLoan"
+                                           href="/loan">
+                                            <span class="icon-img icon_loan"></span>
+                                            <div class="item-box">
+                                                <dt class="item-info" data-lang-key="view.home.nav.finance.loan">C2C Loan</dt>
+                                            </div>
+                                        </a>
+                                        <a class="box-item" data-monitor-more="moreJumpstart"
+                                           href="/jumpstart">
+                                            <span class="icon-img icon_jumpstart"></span>
+                                            <div class="item-box">
+                                                <dt class="item-info" data-lang-key="view.home.nav.jumpstart">Jumpstart</dt>
+                                            </div>
+                                        </a>
+                                    </dl>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item nav-academy">
+                            <a class="nav-link" data-key="/academy/zh" data-monitor-tab="moreAcademy"
+                               href="/academy/zh"
+                               data-lang-key="view.home.nav.academy.title">学院</a>
+                            
+                        </li>
+                        <li class="nav-item nav-more nav-has-next">
+                            <span class="tab nav-text" id="futureNav" data-lang-key="view.home.nav.activity.more">More</span>
+                            <span id="futureArrow" class="user-arrow"><i class="icon iconfont icon-ic_arrow"></i></span>
+                            <div class="user-info-extend drop-c-left-align">
+                                <div class="info-extend-box">
+                                    <dl class="extend-box extend-small-box">
+                                        <h2 class="box-title" data-lang-key="view.home.nav.more.title1">Products</h2>
+                                        <a class="box-item" data-monitor-more="dropPool"
+                                           href="/pool">
+                                            <span class="icon-img icon_pool"></span>
+                                            <div class="item-box">
+                                                <dt class="item-info" data-lang-key="view.pool.navTitle">OK矿池</dt>
+                                            </div>
+                                        </a>
+                                        <a class="box-item" data-monitor-more="crossChainGateway"
+                                           href="/cross-chain-gateway">
+                                            <span class="icon-img icon_cross_chain"></span>
+                                            <div class="item-box">
+                                                <dt class="item-info" data-lang-key="view.home.nav.crossChain">跨链网关</dt>
+                                            </div>
+                                        </a>
+                                        <a class="box-item" data-monitor-more="moreSafeBox"
+                                           href="/wallet">
+                                            <span class="icon-img icon_wallet"></span>
+                                            <div class="item-box">
+                                                <dt class="item-info" data-lang-key="view.safeBox.actTitle">保险柜</dt>
+                                            </div>
+                                        </a>
+                                        <a class="box-item" data-monitor-more="moreOkb" href="/okb">
+                                            <span class="icon-img icon_okb"></span>
+                                            <div class="item-box">
+                                                <dt class="item-info">OKB</dt>
+                                            </div>
+                                        </a>
+                                        <a class="box-item" data-monitor-more="moreOpenExchange"
+                                           href="/cloud">
+                                            <span class="icon-img icon_okcloud"></span>
+                                            <div class="item-box">
+                                                <dt class="item-info" data-lang-key="view.home.nav.open">OK开放平台</dt>
+                                            </div>
+                                        </a>
+                                        <a class="box-item" data-monitor-more="morewalletSecurity"
+                                           href="/wallet-security">
+                                            <span class="icon-img icon_wallet_security"></span>
+                                            <div class="item-box">
+                                                <dt class="item-info" data-lang-key="view.home.nav.wallet.security">钱包安全</dt>
+                                            </div>
+                                        </a>
+                                        <a class="box-item" id="moreOKChain" data-monitor-more="moreOKChain"
+                                           href="/okexchain">
+                                            <span class="icon-img icon_okchain"></span>
+                                            <div class="item-box">
+                                                <dt class="item-info" data-lang-key="view.home.nav.okchain">OKChain</dt>
+                                            </div>
+                                        </a>
+                                        <a class="box-item" id="moreStatus" data-monitor-more="moreStatus"
+                                           href="/status">
+                                            <span class="icon-img icon_status"></span>
+                                            <div class="item-box">
+                                                <dt class="item-info" data-lang-key="view.resources.status">status</dt>
+                                            </div>
+                                        </a>
+                                    </dl>
+
+                                    <dl class="extend-box extend-small-box">
+                                        <h2 class="box-title" data-lang-key="view.home.nav.more.title3">Activity</h2>
+                                        <a class="box-item" data-monitor-more="moreRewards"
+                                           href="/rewards">
+                                            <span class="icon-img icon_more_gift"></span>
+                                            <div class="item-box">
+                                                <dt class="item-info" data-lang-key="view.home.nav.rewards">新手福利</dt>
+                                            </div>
+                                        </a>
+                                        <a class="box-item" data-monitor-more="moreInvite"
+                                           href="/referral">
+                                            <span class="icon-img icon_referral"></span>
+                                            <div class="item-box">
+                                                <dt class="item-info" data-lang-key="view.home.nav.inviteFriends">邀请好友</dt>
+                                            </div>
+                                        </a>
+                                        <a class="box-item" data-monitor-more="moreAffiliates"
+                                           href="/affiliates">
+                                            <span class="icon-img icon_affiliate"></span>
+                                            <div class="item-box">
+                                                <dt class="item-info" data-lang-key="view.home.nav.affiliates">合伙人</dt>
+                                            </div>
+                                        </a>
+                                        <a class="box-item" data-monitor-more="moreFreebitcoin"
+                                           href="/freebitcoin">
+                                            <span class="icon-img icon_freebitcoin"></span>
+                                            <div class="item-box">
+                                                <dt class="item-info" data-lang-key="view.resources.freebitcoin">Free Bitcoin</dt>
+                                            </div>
+                                        </a>
+                                        <a class="box-item" data-monitor-more="happyFriday"
+                                           href="/happyfriday">
+                                            <span class="icon-img icon_happyfriday"></span>
+                                            <div class="item-box">
+                                                <dt class="item-info" data-lang-key="view.home.nav.happyFriday">Happy Friday</dt>
+                                            </div>
+                                        </a>
+                                        <a class="box-item" data-monitor-more="MoreBroker"
+                                           href="/broker">
+                                            <span class="icon-img icon_project"></span>
+                                            <div class="item-box">
+                                                <dt class="item-info" data-lang-key="view.broker.navTitle">??view.broker.navTitle_zh_CN??</dt>
+                                            </div>
+                                        </a>
+                                    </dl>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-null"></li>
+                        
+                        <li class="header-search-box" id="headerSearchBox"></li>
+
+                        <li class="nav-download other-wrap ">
+                            <div class="download-app">
+                                <i class="icon iconfont icon-home_download"></i>
+                            </div>
+                            <div class="drop-down-list drop-c-right-align">
+                                <div class="download-box">
+                                    <div class="qr-box">
+                                        <div class="img-box">
+                                            <img class="qr-code-img" src="" alt=""/>
+                                        </div>
+                                    </div>
+                                    <div class="pc-box">
+                                        <div class="text" data-lang-key="view.home.nav.scancode">扫码下载APP</div>
+                                        <a class="download-btn" href="/download"
+                                           data-lang-key="view.header.ownload.all">查看全部</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-notice other-wrap ">
+                            <div class="notice-icon">
+                                <span class="notice-new hide"></span>
+                                <i class="icon iconfont icon-home_notice"></i>
+                            </div>
+                            <div class="drop-down-list drop-c-right-align">
+                                <div class="notice-box">
+                                    <div class="notice-title" data-lang-key="view.home.nav.Announcements">平台公告</div>
+                                    <div class="notice-list"></div>
+                                    <a id="moreNews" class="notice-more" target="_blank">
+                                        <span data-lang-key="view.home.nav.morenotice">查看更多</span>
+                                        <i class="icon iconfont icon-arrowhead_right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item nav-custom other-wrap">
+                            <div class="custom-logo">
+                                <i class="icon iconfont icon-home_support1"></i>
+                            </div>
+                            <span class="user-arrow"><i class="icon iconfont icon-ic_arrow"></i></span>
+                            <span class="nav-text user-support-text" data-lang-key="view.resources.title">支持</span>
+                            <ul class="drop-down-list drop-c-right-align">
+                                <li><a class="extend-link" href="/support-center.html"
+                                       data-lang-key="view.home.nav.support.center">帮助中心</a></li>
+                                <li id="navOnLine" class="extend-link hide-link link-contact-service click-disable"
+                                    data-lang-key="view.home.nav.contact.online">联系客服</li>
+                                <li><a id="navSupport" class="extend-link hide-link link-problem-feedback"
+                                       href="/account/users/support"
+                                       data-lang-key="view.home.nav.support">问题反馈</a>
+                                </li>
+                                <li><a id="feedbackCenterLink" class="extend-link feedback-center"
+                                       href="/feedback/" data-lang-key="view.security.navTitle">安全</a></li>
+                                <li class="community-link">
+                                    <a class="extend-link" href="/community">
+                                        <span data-lang-key="view.home.nav.community">Community</span>
+                                        <i class="icon iconfont icon-wechat2"></i>
+                                        <div class="wechat-box" id="headChatBox">
+                                            <img id="headChatImg" src=""/>
+                                        </div>
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                        </li>
+                        <li class="nav-item nav-mobile-download" id="mobileDownloadNav"></li>
+                    </ul>
+                </div>
+                
+                <div class="user-no-login-container">
+                    <a class="passport-btn user-register-btn" data-monitor-tab="user_register"
+                       href="/account/register?action=header_register_btn"
+                       data-lang-key="view.home.nav.signUp">注册</a>
+                    <a class="passport-btn user-login-btn" data-monitor-tab="user_login"
+                       href="/account/login" data-lang-key="view.home.nav.login">登录</a>
+                </div>
+                <div class="action-container">
+                    <div class="header-menu-btn" id="headerMenuBtn">
+                        <i class="icon iconfont icon-icon_hambergur"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    
+    
+
+    <div class="home-container">
+    <div id="app"></div>
+    <script src="//daily-test.okcoin-inc.com/cdn/assets/okfe/socket/1.4.23/main.js"></script>
+    <script type="text/javascript" src="http://127.0.0.1:5200/main/index.js"></script>
+    <!-- <script type="text/javascript" src="/assss.js"></script> -->
+    <!-- <script>
+        var okexchainclient = new OKExChainClient("http://kong-proxy.test-b-okex.svc.test.local:8443","okexchain-1");
+        console.log(okexchainclient);
+        const user = JSON.parse(window.localStorage.getItem('dex_user') || '{}');
+        console.log(1111,user);
+        const pk = OKExChainClient.crypto.getPrivateKeyFromKeyStore(user.info, '12345Qwert');
+        console.log(22222,pk);
+        okexchainclient.setAccountInfo(pk).then(() => {
+        });
+    </script> -->
+</div>
+    
+    
+        
+    <footer id="footerContainer" class="footer-container">
+        <div class="footer-wrap">
+            <div class="footer-main">
+                <div class="footer-left">
+                    <div class="icon iconfont icon-logo_okex_footer footer-logo-icon"></div>
+                    <div class="list">
+                        <div>
+                            
+                            <p class="icon-down-text" data-lang-key="view.resources.risk">24x7 English Service</p>
+                            <p class="copy-info" data-lang-key="view.resources.copyright">©2019 OKEX.COM</p>
+                        </div>
+                    </div>
+                    <div class="all-language-box">
+                        <div id="language" class="now-language">
+                            <i class="icon iconfont icon-home_language lang-box-icon"></i>
+                            <span class="text"></span>
+                            <i class="icon iconfont icon-ic_arrow arrow-icon"></i>
+                        </div>
+                        <div class="language-list">
+                            <div class="ul-box" id="languageList"></div>
+                            <div class="ul-box" id="footerCurrencyList"></div>
+                        </div>
+                    </div>
+                    <div class="icon-list" id="footerMediaH5"></div>
+                </div>
+                <div class="footer-right">
+                    <div class="footer-ul">
+                        <div class="list">
+                            <div class="title-box">
+                                <div class="title" data-lang-key="view.company.title">关于</div>
+                                <span class="user-arrow"><i class="icon iconfont icon-ic_arrow"></i></span>
+                            </div>
+                            <div class="item-box">
+                                <div class="list-item">
+                                    <a class="link" data-monitor="companyAbout" href="/about.html" data-lang-key="view.company.about">关于我们</a>
+                                </div>
+                                <div class="list-item">
+                                    
+                                    <a class="link" data-monitor="companyZhHr" target="_self" href="/join-us" data-lang-key="view.company.hr">职业机会</a>
+                                </div>
+                                <div class="list-item" id="productPress">
+                                    <a class="link" data-monitor="press" href="/academy/zh/category/press" data-lang-key="view.product.link.press">媒体报道</a>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list">
+                            <div class="title-box">
+                                <div class="title" data-lang-key="view.legal.link.title">Legal &amp; Privacy</div>
+                                <span class="user-arrow"><i class="icon iconfont icon-ic_arrow"></i></span>
+                            </div>
+                            <div class="item-box">
+                                <div class="list-item">
+                                    <a class="link" data-monitor="privacyTerms" id="termsService" target="_blank" data-lang-key="view.resources.privacyTerms">服务条款</a>
+                                </div>
+                                <div class="list-item">
+                                    <a class="link" data-monitor="privacyStatement" id="privacyService" target="_blank" data-lang-key="view.resources.privacyStatement">隐私保护</a>
+                                </div>
+                                <div class="list-item">
+                                    <a class="link" data-monitor="riskDisclosures" id="riskDisclosures" target="_blank" data-lang-key="view.resources.riskDisclosures">免责声明</a>
+                                </div>
+                                <div class="list-item">
+                                    <a class="link" data-monitor="whistleblowerNotice" href="/support/hc/zh-cn/articles/360044374692" data-lang-key="view.resources.whistleblowerNotice">廉正举报</a>
+                                    
+                                </div>
+                                <div class="list-item">
+                                    <a class="link" data-monitor="lawEnforcement" id="lawEnforcement" target="_blank" data-lang-key="view.company.lawEnforcement">执法请求</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list">
+                            <div class="title-box">
+                                <div class="title" data-lang-key="view.server.title">服务</div>
+                                <span class="user-arrow"><i class="icon iconfont icon-ic_arrow"></i></span>
+                            </div>
+                            <div class="item-box">
+                                <div class="list-item">
+                                    <a class="link" id="footerApi" data-monitor="api" data-lang-key="view.home.nav.api">API接入</a>
+                                </div>
+                                <div class="list-item">
+                                    <a class="link simulated-hide" id="footerFee" data-monitor="fee" href="/fees.html" data-lang-key="view.home.nav.fee">费率标准</a>
+                                </div>
+                                <div class="list-item">
+                                    <a class="link" id="companyToken" data-monitor="companyToken" target="_blank" data-lang-key="view.company.token">上币申请</a>
+                                </div>
+                                <div class="list-item">
+                                    <a class="link" data-monitor="announcements" href="/support/hc/zh-cn/categories/115000275131-Announcement" target="_blank" data-lang-key="view.server.Announcements">公告</a>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list">
+                            <div class="title-box">
+                                <div class="title" data-lang-key="view.resources.title">支持</div>
+                                <span class="user-arrow"><i class="icon iconfont icon-ic_arrow"></i></span>
+                            </div>
+                            <div class="item-box">
+                                <div class="list-item">
+                                    <a class="link" id="supportCenter" data-monitor="SupportCenter" href="/support-center.html" data-lang-key="view.resources.support.center">帮助中心</a>
+                                </div>
+                                <div class="list-item">
+                                    <a class="link hide-link link-contact-service click-disable" id="navOnLineFooter" data-lang-key="view.home.nav.contact.online">联系客服</a>
+                                </div>
+                                <div class="list-item">
+                                    <a class="link hide-link link-problem-feedback" data-monitor="Support" href="/account/users/support" data-lang-key="view.resources.support">意见反馈</a>
+                                </div>
+                                <div class="list-item">
+                                    <a class="link" data-monitor="official" href="/support-center.html#verify" data-lang-key="view.resources.official">官方验证</a>
+                                </div>
+                            </div>
+                            <div class="icon-list" id="footerMedia"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+    <div class="footer-link">
+        <div class="footer-line"></div>
+        <div class="link-line">
+            
+            <span class="title" data-lang-key="view.link.friendlylink">友情链接：</span>
+            
+                
+                
+                    <a class="text" href="https://www.ok.cn" target="_blank">欧科集团</a>
+                    <a class="text" href="https://www.aicoin.cn" target="_blank">AICoin</a>
+                    <a class="text" href="https://www.coinall.com" target="_blank" data-lang-key="view.link.biquan">币全</a>
+                    
+                    <a class="text" href="https://www.chainfor.com" target="_blank" data-lang-key="view.link.linkfanacial">链向财经</a>
+                    <a class="text" href="http://www.btc126.com" target="_blank" data-lang-key="view.link.bitfamily">比特币家园</a>
+                    <a class="text" href="https://www.chainwhy.com" target="_blank" data-lang-key="view.link.lianwai">链外</a>
+                    <a class="text" href="https://www.f2pool.com" target="_blank" data-lang-key="view.link.f2pool">F2Pool鱼池</a>
+                    <a class="text" href="http://www.coinvoice.cn" target="_blank">CoinVoice</a>
+                    <a class="text" href="https://www.99ex.com" target="_blank" data-lang-key="view.link.99ex">99EX</a>
+                    <a class="text" href="https://bbx.vip" target="_blank">BBX</a>
+                    <a class="text" href="https://tiger.cloud" target="_blank" data-lang-key="view.link.tiger.cloud">老虎云</a>
+                    <a class="text" href="https://www.coinfarm.online" target="_blank" data-lang-key="view.link.coinFarm">CoinFarm</a>
+
+                    <a class="text" href="/btchalving" data-lang-key="view.link.btchalving">比特币减半</a>
+                    
+                    
+                
+            
+        </div>
+    </div>
+
+        </div>
+    </footer>
+
+    
+    
+
+    
+    <div id="okFloatLayer" class="entrance ok-float-layer" style="display: block;">
+        <div class="wrapper ok-float-layer-box" id="backTopBox" style="display: none;">
+            <i class="iconfont icon-backtothetop"></i>
+        </div>
+        <div class="wrapper ok-float-layer-box" id="checkOtcGuide" style="display: none;">
+            <i class="iconfont icon-watchvideo"></i>
+        </div>
+        <div class="wrapper im-chat ok-float-layer-box" id="otcImChat" style="display: none;">
+            <i class="iconfont icon-dialogue"></i>
+            <span class="red-dot" id="otcImRedDot" style="display: none;"></span>
+        </div>
+    </div>
+    
+
+    <script src="//daily-test.okcoin-inc.com/cdn/assets/okfe/seo-ex/6.2.5/main/modules/nav/index.js"></script>
+    <script src="//daily-test.okcoin-inc.com/cdn/assets/okfe/seo-ex/6.2.5/main/modules/global/index.js"></script>
+    
+    
+
+    
+    <div class="home-template">
+        <div></div>
+    </div>
+    
+    
+    
+
+  </body>
+</html>

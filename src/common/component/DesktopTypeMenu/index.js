@@ -69,7 +69,7 @@ const headTypeList = [
 function getDefaultActivedMenu(current) {
   return (
     headTypeList.filter((d) => d.url === current)[0] ||
-    headTypeList[headTypeList.length - 2]
+    headTypeList[5]
   );
 }
 class DesktopTypeMenu extends Component {
