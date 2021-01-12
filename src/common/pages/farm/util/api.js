@@ -44,7 +44,7 @@ function _proccessData(data) {
         );
       });
       d.pool_rate_dis = pool_rate.join('+');
-      d.poolEmpty = false;
+      d.poolEmpty = d.status === 1;
       d.total_staked_dis =
         Number(d.total_staked) === 0
           ? '--'

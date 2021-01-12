@@ -123,8 +123,8 @@ export default class FarmPanel extends React.Component {
                     disabled: d.active !== 1,
                   })}
                 >
-                  {toLocale('STAKE')}&nbsp;
-                  <span className="timer">{this.getTimerDis(d)}</span>
+                  {toLocale('STAKE')}
+                  {!d.poolEmpty && <span className="timer">&nbsp;{this.getTimerDis(d)}</span>}
                 </div>
               </SimpleBtnDialog>
             </div>

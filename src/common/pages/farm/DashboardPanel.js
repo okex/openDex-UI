@@ -73,14 +73,14 @@ export default class DashboardPanel extends React.Component {
     if (data.active === 1)
       return (
         <>
-          {toLocale('Will start in')}&nbsp;
-          <span className="timer">{data.timeInfo}</span>
+          {toLocale('Will start in')}
+          <span className="timer">&nbsp;{data.timeInfo}</span>
         </>
       );
     return (
       <>
-        {toLocale('Will finish in')}&nbsp;
-        <span className="timer">{data.timeInfo}</span>
+        {toLocale('Will finish in')}
+        <span className="timer">&nbsp;{data.timeInfo}</span>
       </>
     );
   };
