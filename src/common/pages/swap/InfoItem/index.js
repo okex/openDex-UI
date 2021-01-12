@@ -1,44 +1,14 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { toLocale } from '_src/locale/react-locale';
 import { getCoinIcon } from '../../../utils/coinIcon';
-import { channelsV3 } from '../../../utils/websocket';
-import SwapContext from '../SwapContext';
 import calc from '_src/utils/calc';
 import util from '_src/utils/util';
 
-function mapStateToProps(state) {
-  const { account4Swap } = state.SwapStore;
-  return { account4Swap };
-}
-
-@connect(mapStateToProps)
 export default class InfoItem extends React.Component {
-  static contextType = SwapContext;
-
-  componentDidMount() {
-    const {
-      data: {
-        pool_token_coin: { denom },
-      },
-    } = this.props;
-    this.context && this.context.send(channelsV3.getBalance(denom));
-  }
-
-  componentWillUnmount() {
-    const {
-      data: {
-        pool_token_coin: { denom },
-      },
-    } = this.props;
-    this.context && this.context.stop(channelsV3.getBalance(denom));
-  }
 
   render() {
-    const { data, add, reduce, account4Swap } = this.props;
+    const { data, add, reduce } = this.props;
     let available = data.pool_token_coin.amount;
-    const temp = account4Swap[data.pool_token_coin.denom.toLowerCase()];
-    if (temp) available = temp.available;
     return (
       <div className="poll-item">
         <div className="space-between poll-item-title">
