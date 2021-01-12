@@ -13,7 +13,10 @@ export function initOKExChainClient() {
   return (dispatch) => {
     const client = new OKExChainClient(
       Config.okexchain.clientUrl,
-      env.envConfig.chainId
+      {
+        chainId: env.envConfig.chainId,
+        relativePath: `/${env.envConfig.apiPath}`
+      }
     );
     dispatch({
       type: CommonActionType.SET_OKEXCHAIN_CLIENT,

@@ -106,11 +106,11 @@ class FullTradeProductList extends React.Component {
     let currList = [];
     if (groupId === -1) {
       currList = productList.filter((item) => {
-        return item.quote_asset_symbol.toUpperCase() === quoteSymbol;
+        return item.quote_asset_symbol.toUpperCase() === quoteSymbol || item.quote_asset_symbol.toUpperCase() === 'OKT';
       });
     } else {
       currList = productList.filter((item) => {
-        return item.quote_asset_symbol.toUpperCase() === quoteSymbol;
+        return item.quote_asset_symbol.toUpperCase() === quoteSymbol || item.quote_asset_symbol.toUpperCase() === 'OKT';
       });
     }
     return currList;

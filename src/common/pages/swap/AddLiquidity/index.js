@@ -339,6 +339,7 @@ export default class AddLiquidity extends React.Component {
   }
 
   confirm = () => {
+    const { _baseToken, _targetToken } = this.state;
     let { baseToken, targetToken } = this._exchangeTokenData();
     const { okexchainClient } = this.props;
     const params = [
@@ -359,8 +360,8 @@ export default class AddLiquidity extends React.Component {
           if (validateTxs(res)) {
             this.updateInfo({
               ...this.state,
-              baseToken: { ...baseToken, value: '' },
-              targetToken: { ...targetToken, value: '' },
+              baseToken: { ..._baseToken, value: '' },
+              targetToken: { ..._targetToken, value: '' },
             });
           }
         })
