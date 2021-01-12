@@ -152,13 +152,6 @@ export default class ReduceLiquidity extends React.Component {
     );
   };
 
-  componentWillUnmount() {
-    const {
-      pool_token_coin: { denom },
-    } = this.props.liquidity;
-    this.context && this.context.stop(channelsV3.getBalance(denom));
-  }
-
   render() {
     const { back } = this.props;
     const { ratios, ratio, coins, value } = this.state;
