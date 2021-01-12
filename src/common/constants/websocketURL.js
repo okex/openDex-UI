@@ -1,6 +1,8 @@
+import env from './env';
 export default {
   DEX: {
     get PROD() {
+      if(env.envConfig.isTest) return 'wss://dexcomreal.bafang.com:8443/ws/v3';
       if(window.okGlobal.ipRegion === 'CN') return 'wss://wsdex.coinall.ltd:8443/ws/v3';
       return 'wss://wsdex.okex.com:8443/ws/v3';
     } ,
