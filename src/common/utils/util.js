@@ -269,7 +269,7 @@ const util = {
   getTheme() {
     return localStorage.getItem('theme') === Enum.themes.theme2 ? 'dark' : '';
   },
-  precisionInput(num, precision = 16) {
+  precisionInput(num, precision = 18) {
     let result = Number(num).toFixed(precision + 1);
     return result.slice(0, result.length - 1);
   },
