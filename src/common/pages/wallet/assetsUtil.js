@@ -6,6 +6,7 @@ import { calc } from '_component/okit';
 import { Button } from '_component/Button';
 import { toLocale } from '_src/locale/react-locale';
 import utils from '../../utils/util';
+import { getLpTokenInfo } from '../../utils/lpTokenUtil';
 import Config from '../../constants/Config';
 import DesktopTypeMenu from '_component/DesktopTypeMenu';
 import PageURL from '_constants/PageURL';
@@ -143,7 +144,8 @@ util.accountsCols = ({ transfer }, { valuationUnit }) => {
       key: 'assetToken',
       render: (text, data) => {
         const { whole_name, symbol } = data;
-        const whole_nameString = whole_name ? ` (${whole_name})` : '';
+        const lpTokenInfo = getLpTokenInfo(whole_name);
+        const whole_nameString = whole_name ? ` (${lpTokenInfo ? lpTokenInfo.name : whole_name})` : '';
         return (
           <div className="symbol-line">
             <Tooltip
