@@ -1,6 +1,7 @@
 import { getPathAndHash } from '../utils/pathUtil';
 
 const testnet = {
+  isTest: true,
   token: {
     base: 'okt',
     quote: 'usdk',
@@ -22,6 +23,7 @@ const testnet = {
 };
 
 const mainnet = {
+  isTest: false,
   token: {
     base: 'okt',
     quote: 'usdk',
