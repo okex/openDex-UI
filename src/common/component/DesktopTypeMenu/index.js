@@ -78,7 +78,7 @@ const headTypeList = [
 function getDefaultActivedMenu(current) {
   return (
     headTypeList.filter((d) => d.url === current)[0] ||
-    headTypeList[headTypeList.length - 2]
+    headTypeList[5]
   );
 }
 class DesktopTypeMenu extends Component {
@@ -86,6 +86,7 @@ class DesktopTypeMenu extends Component {
     super(props);
     this.headTypeList = headTypeList;
     if (props.isDexDesk) this.headTypeList = this.headTypeList.slice(5);
+    else this.headTypeList = this.headTypeList.slice(0,7);
   }
 
   change = (item) => {
