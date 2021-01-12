@@ -26,8 +26,8 @@ export default class Swap extends React.Component {
   }
 
   onTrade = ({ baseSymbol, targetSymbol }) => {
-    this.onChange(SWAP);
-    this.swap &&
+    this.onChange(SWAP,() => {
+      this.swap &&
       this.swap.init({
         baseToken: {
           available: '',
@@ -40,6 +40,7 @@ export default class Swap extends React.Component {
           symbol: targetSymbol,
         },
       });
+    });
   };
 
   onAddLiquidity = (route) => {
@@ -48,8 +49,10 @@ export default class Swap extends React.Component {
     router.push(route, true);
   };
 
-  onChange = (activekey) => {
-    this.setState({ activekey });
+  onChange = (activekey, callback) => {
+    this.setState({ activekey },() => {
+      callback && callback();
+    });
   };
 
   componentDidMount() {
