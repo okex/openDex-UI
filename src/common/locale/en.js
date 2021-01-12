@@ -1121,5 +1121,6 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   'Claim details': 'Claim details',
   '1Day': '1Day',
   'balance not enough': 'balance not enough',
+  'finished': 'finished',
 };
 export default enUS;

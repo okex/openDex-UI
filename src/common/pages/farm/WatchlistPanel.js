@@ -70,6 +70,7 @@ export default class WatchlistPanel extends React.Component {
         canSort: true,
         width: '194',
         component: ({ row }) => {
+          if(!row.start_at) return '--';
           return dateFns.format(row.start_at_dis);
         },
       },
@@ -78,6 +79,8 @@ export default class WatchlistPanel extends React.Component {
         name: toLocale('Finish at'),
         canSort: true,
         component: ({ row }) => {
+          if(!row.start_at) return '--';
+          if(!row.finish_at) return toLocale('finished');
           return dateFns.format(row.finish_at_dis);
         },
       },
