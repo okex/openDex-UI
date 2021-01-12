@@ -1077,7 +1077,6 @@ const zhCN = {
   m: 'm',
   s: 's',
   'Other pools': 'Other pools',
-  'Other pools help': 'Other pools help',
   'Farm pool': 'Farm pool',
   'Total staked': 'Total staked',
   'Pool rate(1Day)': 'Pool rate(1Day)',

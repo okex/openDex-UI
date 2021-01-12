@@ -137,12 +137,6 @@ export default class FarmPanel extends React.Component {
           <div className="space-between">
             <div className="left">
               {toLocale('Other pools')}
-              <Tooltip
-                placement="right"
-                overlay={toLocale('Other pools help')}
-              >
-                <i className="help" />
-              </Tooltip>
             </div>
           </div>
         </div>

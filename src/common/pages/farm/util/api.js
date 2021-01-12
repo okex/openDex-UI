@@ -149,7 +149,7 @@ export function maxApy() {
   //@mock mocker.maxAPY(`${URL.GET_FARM_MAX_APY}`);
   return get(`${URL.GET_FARM_MAX_APY}`).then((data) => {
     return {
-      data_dis: util.precisionInput(calc.mul(data, 100), 2) + '%',
+      data_dis: Number(data) ? util.precisionInput(calc.mul(data, 100), 2) + '%' : '300.00%',
       data,
     };
   });
