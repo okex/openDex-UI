@@ -74,22 +74,14 @@ export default class Stake extends React.Component {
     return balance_dis;
   }
 
-  subscribe(enable = true) {
+  subscribe() {
     let { pool_name } = this.props.data;
     if (!this.context || !pool_name) return;
-    if (enable) {
-      this.context.send(channelsV3.getBalance(pool_name));
-    } else {
-      this.context.stop(channelsV3.getBalance(pool_name));
-    }
+    this.context.send(channelsV3.getBalance(pool_name));
   }
 
   componentDidMount() {
     this.subscribe();
-  }
-
-  componentWillUnmount() {
-    this.subscribe(false);
   }
 
   render() {
