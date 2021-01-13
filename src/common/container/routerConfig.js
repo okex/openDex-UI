@@ -16,12 +16,13 @@ import TokenpairDetail from '../pages/tokenpairDetail';
 import Fees from '../pages/fees';
 import Swap from '../pages/swap';
 import Farm from '../pages/farm';
+import env from '../constants/env';
 
 const routes = [
-  {
+  ...(env.envConfig.isTest ? [{
     path: PageURL.homePage,
     component: Home,
-  },
+  }]:[]),
   {
     path: PageURL.spotFullPage,
     component: FullTrade,
