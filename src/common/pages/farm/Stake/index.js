@@ -39,12 +39,14 @@ export default class Stake extends React.Component {
     if (value) {
       const max = this.getAvailable();
       if (util.compareNumber(max, value)) error = true;
-      else if (isStake) {
+      else if (isStake && Number(data.pool_total_staked)) {
         poolRatio =
           util.precisionInput(
             calc.mul(calc.div(value, data.pool_total_staked), 100),
             2
           ) + '%';
+      } else {
+        poolRatio = '100%';
       }
     }
     this.setState({ value, poolRatio, error });
