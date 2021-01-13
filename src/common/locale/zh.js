@@ -1059,6 +1059,8 @@ const zhCN = {
   'watchlist noData': '暂无数据',
   insufficient: '{coin}余额不足',
   'insufficient lp token': 'LP Token余额不足',
+  'mainnet': '主网',
+  'testnet': '测试网',
   'spot.asset.farm': 'Farm',
   seoFarmTitle: 'Decentralized trading platform FARM',
   Farm: 'Farm',
