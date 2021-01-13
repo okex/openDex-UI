@@ -4,7 +4,6 @@ import PageURL from '_constants/PageURL';
 import ComboBox from '_src/component/ComboBox/ComboBox';
 import './index.less';
 
-let activedMenu = '';
 const headTypeList = [
   {
     url: '/spot/full',
@@ -74,6 +73,8 @@ const headTypeList = [
     isRoute: true,
   },
 ];
+
+let activedMenu = getDefaultActivedMenu(PageURL.getCurrent());
 
 function getDefaultActivedMenu(current) {
   return (
