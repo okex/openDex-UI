@@ -1,0 +1,66 @@
+@import "~_src/assets/css/theme";
+.net-info-title {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  margin-left: 12px;
+  >.current-net-title {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    box-sizing: border-box;
+    min-width: 97px;
+    height: 26px;
+    padding: 0 10px 0 12px;
+    background-color: rgba(45, 96, 224, .15);
+    color:#2D60E0;
+    > .down-arrow {
+      position: absolute;
+      right: 8px;
+      width: 14px;
+      height: 14px;
+      background: url(../../assets/images/arrowup.png) 0 0 no-repeat;
+      background-size: 14px auto;
+      transition: transform 0.3s, -webkit-transform 0.3s;
+    }
+    > div.combo-box {
+      position: absolute;
+      box-sizing: border-box;
+      display: none;
+      z-index: 10;
+      line-height: 32px;
+      top: 30px;
+      margin-left: -12px;
+      padding-top: 4px;
+      padding-bottom: 9px;
+      width: 120px;
+      background: #1B283E;
+      box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.05);
+      border-radius: 4px;
+      .ok-combo-box > ul > li {
+        padding: 0 8px;
+        text-align: left;
+        a {
+          text-align: left;
+        }
+        &:hover {
+          background: #1E314F;
+          a {
+            color:#2D60E0;
+          }
+        }
+      }
+    }
+    &:hover {
+      > div.combo-box {
+        display: block;
+      }
+      > .down-arrow.has-more {
+        transform: rotate(180deg);
+        transform-origin: center;
+      }
+    }
+  }
+
+}

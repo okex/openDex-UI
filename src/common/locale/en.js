@@ -1070,5 +1070,7 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   'watchlist noData': 'No Data',
   insufficient: 'Insufficient {coin} balance',
   'insufficient lp token': 'Insufficient LP Token balance',
+  'mainnet': 'Mainnet',
+  'testnet': 'Testnet'
 };
 export default enUS;

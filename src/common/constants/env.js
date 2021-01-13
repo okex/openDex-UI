@@ -57,6 +57,8 @@ function envConfig() {
 
 const env = {
   envConfig: envConfig(),
+  testnet,
+  mainnet
 };
 
 export default env;

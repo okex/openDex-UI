@@ -1,6 +1,7 @@
 import React from 'react';
 import DesktopTypeMenu from '_component/DesktopTypeMenu';
 import DesktopLinkMenu from '_component/DesktopLinkMenu';
+import DesktopNetMenu from '_component/DesktopNetMenu';
 import okexLogo from '_src/assets/images/OKEx.png';
 import PageURL from '_src/constants/PageURL';
 import FullTradeTicker from '_src/pages/fullTrade/FullTradeTicker';
@@ -108,6 +109,7 @@ class FullTradeHead extends React.Component {
         <a className="logo-wrap" href="/">
           <img src={okexLogo} style={this.iconStyle} />
         </a>
+        <DesktopNetMenu />
         <DesktopTypeMenu current={current} />
         {this.isTradePage() ? <FullTradeProductList /> : null}
         {this.isTradePage() ? <FullTradeTicker /> : null}
