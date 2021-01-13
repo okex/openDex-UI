@@ -52,6 +52,10 @@ export default class Stake extends React.Component {
     this.setState({ value, poolRatio, error });
   };
 
+  setMaxValue = () => {
+    this.onInputChange(this.getAvailable());
+  };
+
   confirm = () => {
     const { value, error } = this.state;
     const { okexchainClient, data, isStake } = this.props;
@@ -104,7 +108,7 @@ export default class Stake extends React.Component {
         <div className="stake-panel-content">
           <div className="space-between stake-panel-label">
             <div className="left">{toLocale('Number')}</div>
-            <div className="right">
+            <div className="right" onClick={this.setMaxValue}>
               {toLocale(avaliableLocale)}
               {this.getAvailable()}
             </div>
