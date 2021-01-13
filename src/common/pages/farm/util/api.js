@@ -157,8 +157,9 @@ export function maxApy() {
 
 export function stakedInfo({ poolName }) {
   //@mock mocker.stakedInfo(`${URL.GET_FARM_STAKED_INFO.replace('{poolName}',poolName)}`);
+  const address = util.getMyAddr();
   return get(
-    `${URL.GET_FARM_STAKED_INFO.replace('{poolName}', poolName)}`
+    `${URL.GET_FARM_STAKED_INFO.replace('{poolName}', poolName)}`,{address}
   ).then((data) => {
     data.pool_name_dis = data.pool_name.toUpperCase();
     data.balance_dis = util.precisionInput(data.balance, 8);
