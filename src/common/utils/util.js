@@ -6,6 +6,7 @@ import Enum from '../utils/Enum';
 import PageURL from '../constants/PageURL';
 import { getLpTokenInfo } from './lpTokenUtil';
 import env from '../constants/env';
+import BigNumber from 'bignumber.js';
 
 const locales = ['zh_CN', 'en_US'];
 const util = {
@@ -271,7 +272,7 @@ const util = {
     return localStorage.getItem('theme') === Enum.themes.theme2 ? 'dark' : '';
   },
   precisionInput(num, precision = 18) {
-    let result = Number(num).toFixed(precision + 1);
+    let result = BigNumber(num).toFixed(precision + 1);
     return result.slice(0, result.length - 1);
   },
   compareNumber(a, b) {
