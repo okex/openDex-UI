@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import util from './utils/util';
+import env from '../common/constants/env';
 
 export default class RouterCredential extends Component {
   requireCredential() {
@@ -8,7 +9,7 @@ export default class RouterCredential extends Component {
     if (util.lessThanIE11()) {
       location.href = '/pages/products/browserUpdate.html';
     }
-    const token = localStorage.getItem('dex_token');
+    const token = localStorage.getItem(env.envConfig.dexToken);
     if (token) {
       util.logRecord();
     }

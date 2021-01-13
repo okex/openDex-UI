@@ -14,6 +14,7 @@ import PassWordDialog from '_component/PasswordDialog';
 import * as CommonAction from '../../redux/actions/CommonAction';
 import WalletMenuTool from './WalletMenuTool';
 import DocMenu from './DocMenu';
+import env from '../../constants/env';
 
 import './index.less';
 
@@ -51,7 +52,7 @@ class DexLoggedMenu extends React.Component {
     }
 
     const keyStoreName = `keystore_${moment().format('YYYY-MM-DD HH:mm:ss')}`;
-    const User = window.localStorage.getItem('dex_user');
+    const User = window.localStorage.getItem(env.envConfig.dexUser);
     if (User) {
       try {
         const UserObj = JSON.parse(User);

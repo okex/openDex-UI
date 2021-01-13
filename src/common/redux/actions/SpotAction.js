@@ -288,7 +288,7 @@ export function fetchCnyRate() {
   return (dispatch) => {
     const fetchParam = {
       headers: {
-        Authorization: localStorage.getItem('dex_token') || '',
+        Authorization: localStorage.getItem(env.envConfig.dexToken) || '',
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },

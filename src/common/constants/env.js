@@ -2,6 +2,8 @@ import { getPathAndHash } from '../utils/pathUtil';
 
 const testnet = {
   isTest: true,
+  dexUser: 'dex_user_test',
+  dexToken: 'dex_token_test',
   token: {
     base: 'okt',
     quote: 'usdk',
@@ -19,11 +21,13 @@ const testnet = {
   chainId: 'okexchain-65',
   kId: 'okex-dex-test',
   swapSetting: 'swap_setting_config_test',
-  pushLogin: '',
+  oklinkPagePath: 'okexchain-test',
 };
 
 const mainnet = {
   isTest: false,
+  dexUser: 'dex_user',
+  dexToken: 'dex_token',
   token: {
     base: 'okt',
     quote: 'usdk',
@@ -41,7 +45,7 @@ const mainnet = {
   chainId: 'okexchain-66',
   kId: 'okex-dex',
   swapSetting: 'swap_setting_config',
-  pushLogin: '',
+  oklinkPagePath: 'okexchain',
 };
 
 function envConfig() {

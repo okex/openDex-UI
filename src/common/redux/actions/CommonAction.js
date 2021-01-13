@@ -28,7 +28,7 @@ export function initOKExChainClient() {
 export function validatePassword(pwd, successCallback, errorCallback) {
   return (dispatch) => {
     try {
-      const user = JSON.parse(window.localStorage.getItem('dex_user') || '{}');
+      const user = JSON.parse(window.localStorage.getItem(env.envConfig.dexUser) || '{}');
       const pk = crypto.getPrivateKeyFromKeyStore(user.info, pwd);
       this.setPrivateKey(pk);
       successCallback && successCallback(pk);
