@@ -339,7 +339,7 @@ export default class AddLiquidity extends React.Component {
   }
 
   confirm = () => {
-    const { _baseToken, _targetToken } = this.state;
+    const { baseToken: _baseToken, targetToken: _targetToken } = this.state;
     let { baseToken, targetToken } = this._exchangeTokenData();
     const { okexchainClient } = this.props;
     const params = [
