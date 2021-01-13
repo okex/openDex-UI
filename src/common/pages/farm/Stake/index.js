@@ -61,7 +61,7 @@ export default class Stake extends React.Component {
       '',
       null,
     ];
-    if (isStake) okexchainClient.sendFarmLockTransaction(...params);
+    if (isStake) return okexchainClient.sendFarmLockTransaction(...params);
     return okexchainClient.sendFarmUnLockTransaction(...params);
   };
 
