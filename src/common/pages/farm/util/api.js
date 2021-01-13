@@ -27,6 +27,7 @@ function _proccessData(data) {
       d.lock_symbol_dis = d.lock_symbol.toUpperCase();
       d.yield_symbol_dis = d.yield_symbol.toUpperCase();
       d.lock_symbol_info = _getLockSymbolInfos(d.lock_symbol);
+      d.isLpToken = d.lock_symbol_info.symbols.length > 1;
       d.farm_apy.forEach((dd) => {
         total_apy = calc.add(total_apy, dd.amount);
         dd.denom_dis = dd.denom.toUpperCase();
