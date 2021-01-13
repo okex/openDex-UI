@@ -1,4 +1,5 @@
 import { crypto } from '@okexchain/javascript-sdk';
+import env from '../../constants/env';
 
 const walletUtil = {
   setUserInSessionStroage(privateKey, keyStore) {
@@ -7,7 +8,7 @@ const walletUtil = {
       addr,
       info: keyStore,
     };
-    window.localStorage.setItem('dex_user', JSON.stringify(user));
+    window.localStorage.setItem(env.envConfig.dexUser, JSON.stringify(user));
     window.OK_GLOBAL.senderAddr = addr;
     window.OK_GLOBAL.isLogin = true;
   },

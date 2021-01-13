@@ -1,6 +1,7 @@
 import { getCurrentApiUrl } from './getApiUrl';
 import Cookies from 'js-cookie';
-const okbExplorePrefix = 'okexchain-test';
+import env from './env';
+const okbExplorePrefix = env.envConfig.oklinkPagePath;
 const exploreUrl = 'https://www.oklink.com';
 const lang = Cookies.get('locale') || '';
 const receiveCoinUrl =

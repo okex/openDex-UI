@@ -5,6 +5,7 @@ import URL from '../constants/URL';
 import Enum from '../utils/Enum';
 import PageURL from '../constants/PageURL';
 import { getLpTokenInfo } from './lpTokenUtil';
+import env from '../constants/env';
 
 const locales = ['zh_CN', 'en_US'];
 const util = {
@@ -58,7 +59,7 @@ const util = {
     return symbol;
   },
   getMyToken() {
-    const tok = window.localStorage.getItem('dex_token');
+    const tok = window.localStorage.getItem(env.envConfig.dexToken);
     if (tok) {
       return tok;
     }
@@ -79,7 +80,7 @@ const util = {
   getMyAddr() {
     let addr = '';
     try {
-      const user = JSON.parse(window.localStorage.getItem('dex_user') || '{}');
+      const user = JSON.parse(window.localStorage.getItem(env.envConfig.dexUser) || '{}');
       addr = user && user.addr ? user.addr : '';
     } catch (e) {
       console.warn(e.message);
@@ -87,19 +88,19 @@ const util = {
     return addr;
   },
   doLogout() {
-    window.localStorage.removeItem('dex_user');
-    window.localStorage.removeItem('dex_token');
+    window.localStorage.removeItem(env.envConfig.dexUser);
+    window.localStorage.removeItem(env.envConfig.dexToken);
     window.localStorage.removeItem('dex_legalCurrencyId');
   },
   isWsLogin() {
-    const tok = window.localStorage.getItem('dex_token');
+    const tok = window.localStorage.getItem(env.envConfig.dexToken);
     if (tok && util.isLogined()) {
       return true;
     }
     return false;
   },
   isLogined() {
-    const user = window.localStorage.getItem('dex_user');
+    const user = window.localStorage.getItem(env.envConfig.dexUser);
     if (user) {
       try {
         const userObj = JSON.parse(user) || {};

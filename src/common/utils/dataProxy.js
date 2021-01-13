@@ -3,6 +3,7 @@ import { DEFAULT_NODE } from '_constants/apiConfig';
 import { storage } from '_component/okit';
 import PageURL from '../constants/PageURL';
 import history from './history';
+import env from '../constants/env';
 const reqTimeout = 10000;
 
 axios.defaults.headers.common.timeout = reqTimeout;
@@ -24,7 +25,7 @@ axios.interceptors.request.use(
     request.url = request.url.replace('{domain}', httpUrl);
 
     const { headers } = request;
-    const token = localStorage.getItem('dex_token');
+    const token = localStorage.getItem(env.envConfig.dexToken);
 
     if (!headers.Authorization && token) {
       headers.Authorization = token;
@@ -37,7 +38,7 @@ axios.interceptors.request.use(
 );
 
 function toLogin() {
-  localStorage.removeItem('dex_token');
+  localStorage.removeItem(env.envConfig.dexToken);
 
   const isInApp = /OKApp\/\(\S+\/\S+\)/i.test(navigator.userAgent);
 

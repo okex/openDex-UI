@@ -4,6 +4,7 @@ import util from './util';
 import PageURL from '../constants/PageURL';
 import history from './history';
 import { toLocale } from '../locale/react-locale';
+import env from '../constants/env';
 
 const MOCK = false;
 
@@ -13,13 +14,13 @@ function handleStatus(response) {
     const { pathname, search, hash } = window.location;
     const forward = encodeURIComponent(pathname + search + hash);
     history.push(
-      `${PageURL.homePage}/dex/account/login?logout=true&forward=${forward}`
+      `${PageURL.homePage}/${env.envConfig.pagePath}/account/login?logout=true&forward=${forward}`
     );
   }
   if (status >= 200 && status < 300) {
     const newToken = response.headers.get('x-ok-token');
     if (newToken && newToken.length !== 0) {
-      localStorage.setItem('dex_token', newToken);
+      localStorage.setItem(env.envConfig.dexToken, newToken);
     }
     return response;
   }
@@ -44,7 +45,7 @@ export function doFetch(url, paramObj, successCallback, errorCallback) {
   }
   const fetchParam = {
     headers: {
-      Authorization: localStorage.getItem('dex_token') || '',
+      Authorization: localStorage.getItem(env.envConfig.dexToken) || '',
       devid: localStorage.getItem('devid') || '',
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -113,7 +114,7 @@ export function download(url, data) {
     'Content-Type': 'application/json',
     app_type: 'web',
   };
-  header.Authorization = localStorage.getItem('dex_token');
+  header.Authorization = localStorage.getItem(env.envConfig.dexToken);
   let fetchUrl = url;
   if (data) {
     let query = '';
