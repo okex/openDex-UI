@@ -70,7 +70,7 @@ export default class DashboardPanel extends React.Component {
   }
 
   getTimerDis = (data) => {
-    if (data.active === 1)
+    if (data.active !== 2)
       return (
         <>
           {toLocale('Will finish in')}
