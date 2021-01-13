@@ -272,6 +272,7 @@ const util = {
     return localStorage.getItem('theme') === Enum.themes.theme2 ? 'dark' : '';
   },
   precisionInput(num, precision = 18) {
+    if(!num) num = 0;
     let result = BigNumber(num).toFixed(precision + 1);
     return result.slice(0, result.length - 1);
   },
