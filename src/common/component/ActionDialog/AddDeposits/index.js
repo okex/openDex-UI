@@ -45,13 +45,13 @@ class AddDepositsDialog extends Component {
         this.setState({ value: '' });
         isFunction(afterAdd) && afterAdd();
         const { result } = res;
-        const { txhash } = result;
+        const { data } = result;
         if (!validateTxs(res)) {
           showError(
             toLocale(`error.code.${res.result.code}`) || res.result.msg
           );
         } else {
-          showSuccessDialog('Add deposits success！', txhash);
+          showSuccessDialog('Add deposits success！', data);
         }
       })
       .catch((err) => {
