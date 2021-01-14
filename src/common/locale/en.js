@@ -209,7 +209,7 @@ const enUS = {
   'error.code.66016': 'insufficient amount',
   'error.code.66017': 'invalid height',
   'error.code.66018': 'invalid pool name length',
-  'error.code.66019': 'locked amount too low',
+  'error.code.66019': 'Stake amount is less than minimum amount',
   'error.code.66020': 'send coins from module to account failed',
   'error.code.66021': 'swap token pair not exist',
   'error.code.67000': 'validator does not existinvalid validator address',
