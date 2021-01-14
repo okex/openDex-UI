@@ -1102,7 +1102,7 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   'Go stake': 'Go stake',
   'Connect wallet to check your farming':
     'Connect wallet to check your farming',
-  'Total staked LP / Pool ratio': 'Total staked LP / Pool ratio',
+  'Total staked LP / Pool ratio': 'Total staked token / Pool ratio',
   'Will start in': 'Will start in',
   'Will finish in': 'Will finish in',
   'Total farmed / Farm APY': 'Total farmed(USD) / Farm APY',
