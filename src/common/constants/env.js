@@ -32,7 +32,7 @@ const mainnet = {
     base: 'okt',
     quote: 'usdk',
     quoteName: 'USDK',
-    defaultProduct: 'btc_usdk',
+    defaultProduct: 'okt_usdk',
     productKey: 'product',
     activeMarketKey: 'activeMarket',
     favoritesKey: 'favorites',

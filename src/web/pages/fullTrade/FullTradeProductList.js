@@ -101,18 +101,11 @@ class FullTradeProductList extends React.Component {
   }
 
   getCurrListByArea = (productList, activeMarket) => {
-    const { groupId, groupName } = activeMarket;
+    const { groupName } = activeMarket;
     const quoteSymbol = groupName || env.envConfig.token.quoteName;
-    let currList = [];
-    if (groupId === -1) {
-      currList = productList.filter((item) => {
-        return item.quote_asset_symbol.toUpperCase() === quoteSymbol || item.quote_asset_symbol.toUpperCase() === 'OKT';
-      });
-    } else {
-      currList = productList.filter((item) => {
-        return item.quote_asset_symbol.toUpperCase() === quoteSymbol || item.quote_asset_symbol.toUpperCase() === 'OKT';
-      });
-    }
+    let currList = productList.filter((item) => {
+      return item.quote_asset_symbol.toUpperCase() === quoteSymbol || item.quote_asset_symbol.toUpperCase() === 'OKT';
+    });
     return currList;
   };
 

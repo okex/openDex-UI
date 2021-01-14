@@ -14,6 +14,7 @@ import PassWordDialog from '_component/PasswordDialog';
 import * as CommonAction from '../../redux/actions/CommonAction';
 import WalletMenuTool from './WalletMenuTool';
 import DocMenu from './DocMenu';
+import DesktopTypeMenu from '_component/DesktopTypeMenu';
 import env from '../../constants/env';
 
 import './index.less';
@@ -79,6 +80,13 @@ class DexLoggedMenu extends React.Component {
     });
   };
 
+  isDexMenu() {
+    const current = DesktopTypeMenu.current
+      ? DesktopTypeMenu.current.url
+      : null;
+    return current === PageURL.spotFullPage;
+  }
+
   handleLogOut = () => {
     const dialog = Dialog.confirm({
       title: toLocale('header_menu_logout1'),
@@ -101,7 +109,7 @@ class DexLoggedMenu extends React.Component {
     const { isShowPassword, passwordError } = this.state;
     let addr = '';
     try {
-      const user = JSON.parse(window.localStorage.getItem('dex_user'));
+      const user = JSON.parse(window.localStorage.getItem(env.envConfig.dexUser));
       addr = user ? user.addr : '';
     } catch (e) {
       console.warn(e);
@@ -148,7 +156,8 @@ class DexLoggedMenu extends React.Component {
               {toLocale('header_menu_logout')}
             </Menu.Item>
           </SubMenu>
-          <SubMenu
+          {this.isDexMenu() && 
+            <SubMenu
             key="order"
             title={
               <React.Fragment>
@@ -182,6 +191,7 @@ class DexLoggedMenu extends React.Component {
               </NavLink>
             </Menu.Item>
           </SubMenu>
+          }
           {hasDoc && <DocMenu />}
         </Menu>
       </React.Fragment>

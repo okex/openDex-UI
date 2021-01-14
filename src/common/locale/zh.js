@@ -202,7 +202,7 @@ const zhCN = {
   'error.code.66016': '余额不足',
   'error.code.66017': '无效高度',
   'error.code.66018': '无效pool name长度',
-  'error.code.66019': '锁仓金额过少',
+  'error.code.66019': '质押金额小于最小限定值',
   'error.code.66020': '从module账户到普通账户转账失败\t',
   'error.code.66021': '币对在swap中不存在',
   'error.code.67000': 'Validators不存在',
