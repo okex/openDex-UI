@@ -44,7 +44,7 @@ export default class Stake extends React.Component {
       else if (isStake && Number(data.pool_total_staked)) {
         poolRatio =
           util.precisionInput(
-            calc.mul(calc.div(value, data.pool_total_staked), 100),
+            calc.mul(calc.div(value, calc.add(value,data.pool_total_staked)), 100),
             2
           ) + '%';
       } else {
