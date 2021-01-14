@@ -55,6 +55,10 @@ export default class FarmPanel extends React.Component {
     this.setState({ data });
   }
 
+  refreshData = () => {
+    this.init();
+  }
+
   getTimerDis = (data) => {
     if (data.active === 0) return data.timeInfo;
     if (data.active === 1) return `${toLocale('Finish in')} ${data.timeInfo}`;
@@ -115,7 +119,7 @@ export default class FarmPanel extends React.Component {
                 {d.pool_rate_dis}/{toLocale('1Day')}
               </div>
               <SimpleBtnDialog
-                component={() => Stake.getStake(d)}
+                component={() => Stake.getStake({data:d,onSuccess:this.refreshData})}
                 disabled={d.active !== 1}
               >
                 <div
@@ -140,7 +144,7 @@ export default class FarmPanel extends React.Component {
             </div>
           </div>
         </div>
-        <WatchlistPanel ref={this.normal} />
+        <WatchlistPanel ref={this.normal}/>
       </div>
     );
   }

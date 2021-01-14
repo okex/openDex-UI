@@ -90,7 +90,7 @@ export default class WatchlistPanel extends React.Component {
         component: ({ row }) => {
           return (
             <SimpleBtnDialog
-              component={() => Stake.getStake(row)}
+              component={() => Stake.getStake({data:row, onSuccess:this.refreshData})}
               disabled={!row.active}
             >
               <div className="action-opt-wrap">
@@ -128,6 +128,10 @@ export default class WatchlistPanel extends React.Component {
     const { data, param_page } = await api.normal(params);
     return { data, total: param_page.total };
   };
+
+  refreshData = () => {
+    this.init({});
+  }
 
   onChange = async (current) => {
     const data = await this.init({ current });

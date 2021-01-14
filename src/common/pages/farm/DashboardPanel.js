@@ -69,6 +69,10 @@ export default class DashboardPanel extends React.Component {
     return { data, total: param_page.total };
   }
 
+  refreshData = () => {
+    this.init({});
+  }
+
   getTimerDis = (data) => {
     if (data.active !== 2)
       return (
@@ -195,7 +199,7 @@ export default class DashboardPanel extends React.Component {
                   )}
                   <div className="opt-footer">
                     <SimpleBtnDialog
-                      component={() => Stake.getStake(d)}
+                      component={() => Stake.getStake({data:d,onSuccess:this.refreshData})}
                       disabled={d.active !== 1}
                     >
                       <div
@@ -206,10 +210,10 @@ export default class DashboardPanel extends React.Component {
                         {toLocale('STAKE')}
                       </div>
                     </SimpleBtnDialog>
-                    <SimpleBtnDialog component={() => Stake.getStake(d, false)}>
+                    <SimpleBtnDialog component={() => Stake.getStake({data:d, isStake:false, onSuccess:this.refreshData})}>
                       <div className="linkbtn">{toLocale('UNSTAKE')}</div>
                     </SimpleBtnDialog>
-                    <SimpleBtnDialog component={<Claim data={d} />}>
+                    <SimpleBtnDialog component={<Claim data={d} onSuccess={this.refreshData}/>}>
                       <div className="farm-btn">{toLocale('Claim all')}</div>
                     </SimpleBtnDialog>
                   </div>

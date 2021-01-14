@@ -62,7 +62,7 @@ function _proccessData(data) {
         util.precisionInput(calc.mul(d.pool_ratio, 100), 4) + '%';
       d.start_at_dis = calc.mul(d.start_at, 1000);
       d.finish_at_dis = calc.mul(d.finish_at, 1000);
-      d.total_farmed_dis = util.precisionInput(d.total_farmed, 8);
+      d.total_farmed_dis = util.precisionInput(d.total_farmed, 2);
       d.farmed_details &&
         d.farmed_details.forEach((d) => {
           d.symbol_dis = d.symbol.toUpperCase();

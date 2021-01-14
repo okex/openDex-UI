@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { toLocale } from '_src/locale/react-locale';
 import Confirm from '../../../component/Confirm';
+import { validateTxs } from '_src/utils/client';
 
 function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
@@ -11,9 +12,19 @@ function mapStateToProps(state) {
 @connect(mapStateToProps)
 export default class Stake extends React.Component {
   confirm = () => {
-    const { okexchainClient, data } = this.props;
+    const { okexchainClient, data, onClose, onSuccess } = this.props;
     const params = [data.pool_name, '', null];
-    return okexchainClient.sendFarmClaimTransaction(...params);
+    return new Promise((resolve, reject) => {
+      okexchainClient.sendFarmClaimTransaction(...params)
+        .then((res) => {
+          resolve(res);
+          if (validateTxs(res)) {
+            onClose && onClose();
+            onSuccess && onSuccess();
+          }
+        })
+        .catch((err) => reject(err));
+    });
   };
 
   render() {

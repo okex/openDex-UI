@@ -35,7 +35,7 @@ export default class Stake extends React.Component {
 
   onInputChange = (value) => {
     let poolRatio = '-';
-    let error = !value;
+    let error = !value || !Number(value);
     const { data, isStake = true } = this.props;
     if (value) {
       const max = this.getAvailable();
@@ -60,7 +60,7 @@ export default class Stake extends React.Component {
 
   confirm = () => {
     const { value, error } = this.state;
-    const { okexchainClient, data, isStake, onClose } = this.props;
+    const { okexchainClient, data, isStake, onClose, onSuccess } = this.props;
     if (!value || error) return;
     const params = [
       data.pool_name,
@@ -76,6 +76,7 @@ export default class Stake extends React.Component {
           resolve(res);
           if (validateTxs(res)) {
             onClose && onClose();
+            onSuccess && onSuccess();
           }
         })
         .catch((err) => reject(err));
@@ -188,9 +189,9 @@ export default class Stake extends React.Component {
   }
 }
 
-Stake.getStake = async (data, isStake = true) => {
+Stake.getStake = async ({data, isStake = true, onSuccess}) => {
   if (!util.isLogined()) return <ConnectInfoTip />;
   const stakeInfo = await api.stakedInfo({ poolName: data.pool_name });
   if (!Number(stakeInfo.balance) && data.isLpToken) return <LiquidityInfoTip data={data} />;
-  return <Stake data={{ ...data, ...stakeInfo }} isStake={isStake} />;
+  return <Stake data={{ ...data, ...stakeInfo }} isStake={isStake} onSuccess={onSuccess}/>;
 };
