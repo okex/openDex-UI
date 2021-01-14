@@ -73,7 +73,7 @@ class IssueToken extends Component {
       .then((res) => {
         this.setState({ isActionLoading: false });
         const { result } = res;
-        const { txhash } = result;
+        const { data } = result;
         if (!validateTxs(res)) {
           showError(
             toLocale(`error.code.${res.result.code}`) || res.result.msg
@@ -88,7 +88,7 @@ class IssueToken extends Component {
               background: '#112F62',
             },
             onConfirm: () => {
-              window.open(`${Config.okexchain.browserUrl}/tx/${txhash}`);
+              window.open(`${Config.okexchain.browserUrl}/tx/${data}`);
               dialog.destroy();
             },
           });

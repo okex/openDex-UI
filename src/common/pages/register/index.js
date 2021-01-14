@@ -101,7 +101,7 @@ class Register extends Component {
       .then((res) => {
         this.setState({ isActionLoading: false });
         const { result } = res;
-        const { txhash } = result;
+        const { data } = result;
         if (!validateTxs(res)) {
           showError(
             toLocale(`error.code.${res.result.code}`) || res.result.msg
@@ -116,7 +116,7 @@ class Register extends Component {
               background: '#112F62',
             },
             onConfirm: () => {
-              window.open(`${Config.okexchain.browserUrl}/tx/${txhash}`);
+              window.open(`${Config.okexchain.browserUrl}/tx/${data}`);
               dialog.destroy();
             },
           });

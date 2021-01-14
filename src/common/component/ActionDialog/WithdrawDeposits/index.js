@@ -50,13 +50,13 @@ class WithdrawDepositsDialog extends Component {
         this.setState({ value: '' });
         isFunction(afterWithdraw) && afterWithdraw();
         const { result } = res;
-        const { txhash } = result;
+        const { data } = result;
         if (!validateTxs(res)) {
           showError(
             toLocale(`error.code.${res.result.code}`) || res.result.msg
           );
         } else {
-          showSuccessDialog('Withdraw deposits success！', txhash);
+          showSuccessDialog('Withdraw deposits success！', data);
         }
       })
       .catch((err) => {

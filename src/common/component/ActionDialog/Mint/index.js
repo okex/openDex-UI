@@ -45,13 +45,13 @@ class MintDialog extends Component {
         this.setState({ value: '' });
         isFunction(afterMint) && afterMint();
         const { result } = res;
-        const { txhash } = result;
+        const { data } = result;
         if (!validateTxs(res)) {
           showError(
             toLocale(`error.code.${res.result.code}`) || res.result.msg
           );
         } else {
-          showSuccessDialog('Mint success！', txhash);
+          showSuccessDialog('Mint success！', data);
         }
       })
       .catch((err) => {

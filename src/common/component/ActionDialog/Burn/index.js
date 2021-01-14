@@ -45,13 +45,13 @@ class BurnDialog extends Component {
         this.setState({ value: '' });
         isFunction(afterBurn) && afterBurn();
         const { result } = res;
-        const { txhash } = result;
+        const { data } = result;
         if (!validateTxs(res)) {
           showError(
             toLocale(`error.code.${res.result.code}`) || res.result.msg
           );
         } else {
-          showSuccessDialog('Burn success！', txhash);
+          showSuccessDialog('Burn success！', data);
         }
       })
       .catch((err) => {
