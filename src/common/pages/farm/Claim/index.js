@@ -13,7 +13,7 @@ export default class Stake extends React.Component {
   confirm = () => {
     const { okexchainClient, data } = this.props;
     const params = [data.pool_name, '', null];
-    return okexchainClient.sendSwapTokenTransaction(...params);
+    return okexchainClient.sendFarmClaimTransaction(...params);
   };
 
   render() {
