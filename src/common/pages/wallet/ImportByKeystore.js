@@ -56,7 +56,6 @@ class ImportByKeystore extends Component {
       return;
     }
     const fileReader = new FileReader();
-    fileReader.readAsText(file);
     const total = file.size;
     fileReader.onprogress = (e) => {
       const progress = (e.loaded / total).toFixed(2);
@@ -67,7 +66,6 @@ class ImportByKeystore extends Component {
         });
       } else {
         try {
-          this.keyStore = JSON.parse(e.target.result);
           this.setState({
             fileStatus: fileStatusEnum.done,
             fileError: '',
@@ -81,6 +79,10 @@ class ImportByKeystore extends Component {
         }
       }
     };
+    fileReader.onload = () => {
+      this.keyStore = JSON.parse(fileReader.result);
+    }
+    fileReader.readAsText(file);
   };
   changePwd = (e) => {
     const password = e.target.value;
