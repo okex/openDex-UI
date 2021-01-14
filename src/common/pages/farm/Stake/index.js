@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import Confirm from '../../../component/Confirm';
 import { channelsV3 } from '../../../utils/websocket';
 import FarmContext from '../FarmContext';
+import { validateTxs } from '_src/utils/client';
 import * as api from '../util/api';
 
 function mapStateToProps(state) {
@@ -58,7 +59,7 @@ export default class Stake extends React.Component {
 
   confirm = () => {
     const { value, error } = this.state;
-    const { okexchainClient, data, isStake } = this.props;
+    const { okexchainClient, data, isStake, onClose } = this.props;
     if (!value || error) return;
     const params = [
       data.pool_name,
@@ -67,8 +68,18 @@ export default class Stake extends React.Component {
       '',
       null,
     ];
-    if (isStake) return okexchainClient.sendFarmLockTransaction(...params);
-    return okexchainClient.sendFarmUnLockTransaction(...params);
+    return new Promise((resolve, reject) => {
+      let method = isStake ? 'sendFarmLockTransaction' : 'sendFarmUnLockTransaction';
+      okexchainClient[method](...params)
+        .then((res) => {
+          resolve(res);
+          if (validateTxs(res)) {
+            onClose && onClose();
+          }
+        })
+        .catch((err) => reject(err));
+    });
+    
   };
 
   getAvailable() {
