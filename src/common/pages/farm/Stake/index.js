@@ -84,7 +84,8 @@ export default class Stake extends React.Component {
   };
 
   getAvailable() {
-    const { data } = this.props;
+    const { data, isStake = true } = this.props;
+    if(!isStake) return util.precisionInput(data.account_staked, 8);
     let { balance_dis, pool_name } = data;
     let { account4Swap } = this.props;
     const temp = account4Swap[pool_name];
