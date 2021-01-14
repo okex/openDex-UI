@@ -97,6 +97,7 @@ module.exports = {
         balance: '100.980000000000000000',
         account_staked: '10.000000000000000000',
         pool_total_staked: '10.000000000000000000',
+        min_lock_amount: '5.000000000000000000'
       },
     });
   },

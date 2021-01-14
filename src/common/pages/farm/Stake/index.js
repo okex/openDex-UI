@@ -29,17 +29,18 @@ export default class Stake extends React.Component {
     this.state = {
       value: '',
       poolRatio: '-',
-      error: false,
+      error: true,
     };
   }
 
   onInputChange = (value) => {
     let poolRatio = '-';
-    let error = false;
+    let error = !value;
     const { data, isStake = true } = this.props;
     if (value) {
       const max = this.getAvailable();
-      if (util.compareNumber(max, value)) error = true;
+      if (util.compareNumber(max, value)) error = toLocale('balance not enough');
+      else if(isStake && util.compareNumber(value, data.min_lock_amount)) error = toLocale('error.code.66019');
       else if (isStake && Number(data.pool_total_staked)) {
         poolRatio =
           util.precisionInput(
@@ -145,8 +146,8 @@ export default class Stake extends React.Component {
                 </div>
               </div>
             </div>
-            {error && (
-              <div className="error-tip">*{toLocale('balance not enough')}</div>
+            {error && error.length && (
+              <div className="error-tip">*{error}</div>
             )}
           </div>
           {isStake && (
@@ -170,13 +171,16 @@ export default class Stake extends React.Component {
           <div className="farm-btn cancel" onClick={onClose}>
             {toLocale('cancel')}
           </div>
-          <Confirm
+          {error ? 
+            <div className="farm-btn disabled">{toLocale(locale)}</div>:
+            <Confirm
             onClick={this.confirm}
             loadingTxt={toLocale('pending transactions')}
             successTxt={toLocale('transaction confirmed')}
           >
             <div className="farm-btn">{toLocale(locale)}</div>
           </Confirm>
+          }
         </div>
       </div>
     );
