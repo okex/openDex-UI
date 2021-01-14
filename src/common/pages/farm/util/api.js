@@ -53,12 +53,16 @@ function _proccessData(data) {
             calc.thousandFormat(
               util.precisionInput(calc.mul(d.total_staked, 1), 2)
             );
+      d.total_staked_dashbord_dis = Number(d.total_staked) === 0
+      ? '--'
+      : util.precisionInput(calc.mul(d.total_staked, 1), 8);
       d.pool_ratio_dis =
         util.precisionInput(calc.mul(d.pool_ratio, 100), 2) + '%';
       d.pool_ratio_dis_4 =
         util.precisionInput(calc.mul(d.pool_ratio, 100), 4) + '%';
       d.start_at_dis = calc.mul(d.start_at, 1000);
       d.finish_at_dis = calc.mul(d.finish_at, 1000);
+      d.total_farmed_dis = util.precisionInput(d.total_farmed, 8);
       d.farmed_details &&
         d.farmed_details.forEach((d) => {
           d.symbol_dis = d.symbol.toUpperCase();
