@@ -114,8 +114,7 @@ function _getLockSymbolInfos(lock_symbol) {
   const lpToken = getLpTokenInfo(lock_symbol);
   const result = {symbols: [], name:''}
   if(lpToken) {
-    result.symbols.push(lpToken.base);
-    result.symbols.push(lpToken.quote);
+    result.symbols = lpToken.base;
     result.name = lpToken.name;
   } else {
     result.symbols.push(lock_symbol);
