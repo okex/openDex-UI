@@ -47,8 +47,10 @@ export default class Stake extends React.Component {
             calc.mul(calc.div(value, calc.add(value,data.pool_total_staked)), 100),
             2
           ) + '%';
+      } else if(isStake && Number(value)) {
+        poolRatio = '100.00%';
       } else {
-        poolRatio = '100%';
+        poolRatio = '0.00%';
       }
     }
     this.setState({ value, poolRatio, error });
