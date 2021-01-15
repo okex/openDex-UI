@@ -5,6 +5,7 @@ import Icon from '_component/IconLite';
 import { calc } from '_component/okit';
 import { toLocale } from '_src/locale/react-locale';
 import Config from '_constants/Config';
+import { getLpTokenInfo } from '_src/utils/lpTokenUtil';
 import util from './util';
 
 export const getIssueCols = ({ mint, burn }) => {
@@ -14,7 +15,8 @@ export const getIssueCols = ({ mint, burn }) => {
       key: 'original_symbol',
       render: (text, data) => {
         const { whole_name, symbol } = data;
-        const whole_nameString = whole_name ? ` (${whole_name})` : '';
+        const lpTokenInfo = getLpTokenInfo(whole_name);
+        const whole_nameString = whole_name ? ` (${lpTokenInfo ? lpTokenInfo.name : whole_name})` : '';
         return (
           <div className="symbol-line">
             <Tooltip
@@ -202,7 +204,8 @@ export const getAccountsCols = ({ transfer }) => {
       key: 'assetToken',
       render: (text, data) => {
         const { whole_name, symbol } = data;
-        const whole_nameString = whole_name ? ` (${whole_name})` : '';
+        const lpTokenInfo = getLpTokenInfo(whole_name);
+        const whole_nameString = whole_name ? ` (${lpTokenInfo ? lpTokenInfo.name : whole_name})` : '';
         return (
           <div className="symbol-line">
             <Tooltip
