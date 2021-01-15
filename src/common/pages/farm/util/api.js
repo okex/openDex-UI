@@ -39,7 +39,9 @@ function _proccessData(data) {
       d.total_apy_4 = util.precisionInput(calc.mul(total_apy, 100), 4) + '%';
       d.farm_apy_dis = farm_apy.join('+');
       d.pool_rate.forEach((dd) => {
-        dd.denom_dis = dd.denom.toUpperCase();
+        const lpToken = getLpTokenInfo(dd.denom);
+        if(lpToken) dd.denom_dis = lpToken.name;
+        else dd.denom_dis = dd.denom.toUpperCase();
         pool_rate.push(
           `${util.precisionInput(calc.mul(dd.amount, 1), 2)} ${dd.denom_dis}`
         );
