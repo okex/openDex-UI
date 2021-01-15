@@ -143,9 +143,9 @@ util.accountsCols = ({ transfer }, { valuationUnit }) => {
       title: toLocale('assets_column_assets'),
       key: 'assetToken',
       render: (text, data) => {
-        const { whole_name, symbol } = data;
-        const lpTokenInfo = getLpTokenInfo(whole_name);
-        const whole_nameString = whole_name ? ` (${lpTokenInfo ? lpTokenInfo.name : whole_name})` : '';
+        const { symbol } = data;
+        const lpTokenInfo = getLpTokenInfo(symbol);
+        const whole_nameString = symbol ? ` (${lpTokenInfo ? lpTokenInfo.name : symbol})` : '';
         return (
           <div className="symbol-line">
             <Tooltip
