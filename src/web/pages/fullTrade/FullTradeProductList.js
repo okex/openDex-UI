@@ -104,7 +104,7 @@ class FullTradeProductList extends React.Component {
     const { groupName } = activeMarket;
     const quoteSymbol = groupName || env.envConfig.token.quoteName;
     let currList = productList.filter((item) => {
-      return item.quote_asset_symbol.toUpperCase() === quoteSymbol || item.quote_asset_symbol.toUpperCase() === 'OKT';
+      return item.quote_asset_symbol.toUpperCase() === quoteSymbol;
     });
     return currList;
   };
