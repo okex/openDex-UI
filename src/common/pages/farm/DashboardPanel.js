@@ -177,7 +177,7 @@ export default class DashboardPanel extends React.Component {
                       </div>
                     </div>
                   </div>
-                  {d.farmed_details.length && (
+                  {!!d.farmed_details.length && (
                     <div className="pool-claim">
                       <table>
                         <tbody>
