@@ -201,7 +201,7 @@ export function fetchTickers() {
     ont.get(URL.GET_PRODUCT_TICKERS).then((res) => {
       const tickers = {};
       const arr = res.data;
-      if (arr.length) {
+      if (arr && arr.length) {
         arr.forEach((item) => {
           const newO = { ...item };
           newO.change = Number(newO.price) === -1 ? 0 : newO.price - newO.open;
