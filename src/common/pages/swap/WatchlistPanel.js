@@ -245,7 +245,7 @@ export default class WatchlistPanel extends React.Component {
             <div className="nodata">{toLocale('watchlist noData')}</div>
           )}
         </WatchList>
-        {total > pageSize && (
+        {!!total && (
           <div className="pagination-wrap">
             <Pagination
               className="watchlist-pagination"
