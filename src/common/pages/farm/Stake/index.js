@@ -113,6 +113,7 @@ export default class Stake extends React.Component {
     const avaliableLocale = isStake
       ? 'Avaliable to stake'
       : 'Avaliable to unstake';
+    const hasErrorTip = error && error.length;
     return (
       <div className="stake-panel">
         <div className="stake-panel-title">
@@ -138,6 +139,7 @@ export default class Stake extends React.Component {
                   onChange={this.onInputChange}
                   placeholder="0.00000000"
                   precision={8}
+                  className={classNames({invalid: hasErrorTip})}
                 />
               </div>
               <div className="right">
@@ -150,7 +152,7 @@ export default class Stake extends React.Component {
                 </div>
               </div>
             </div>
-            {error && error.length && (
+            {hasErrorTip && (
               <div className="error-tip">*{error}</div>
             )}
           </div>
