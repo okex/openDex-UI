@@ -18,7 +18,6 @@ export default class FarmPanel extends React.Component {
     this.state = {
       data: [],
     };
-    this.normal = React.createRef();
   }
 
   componentDidMount() {
@@ -32,14 +31,15 @@ export default class FarmPanel extends React.Component {
 
   startTimer() {
     this.stopTimer();
-    const { current: normal } = this.normal;
     this.interval = setInterval(() => {
       console.log('start farm');
       const { data } = this.state;
       api.process(data);
-      normal.update();
       this.setState({});
     }, 1000);
+    this.refreshInterval = setInterval(() => {
+      this.refreshData();
+    }, 5000);
   }
 
   stopTimer() {
@@ -47,6 +47,10 @@ export default class FarmPanel extends React.Component {
       clearInterval(this.interval);
       this.interval = null;
       console.log('stop farm');
+    }
+    if (this.refreshInterval) {
+      clearInterval(this.refreshInterval);
+      this.refreshInterval = null;
     }
   }
 
@@ -144,7 +148,7 @@ export default class FarmPanel extends React.Component {
             </div>
           </div>
         </div>
-        <WatchlistPanel ref={this.normal}/>
+        <WatchlistPanel/>
       </div>
     );
   }

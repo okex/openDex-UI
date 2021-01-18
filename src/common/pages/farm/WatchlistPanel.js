@@ -46,13 +46,13 @@ export default class WatchlistPanel extends React.Component {
       {
         field: 'pool_rate_dis',
         name: toLocale('Pool rate(1Day)'),
-        width: '260',
+        width: '240',
       },
       {
         field: 'total_apy',
         name: toLocale('Farm APY'),
         canSort: true,
-        width: '122',
+        width: '142',
         component({ row, data }) {
           return (
             <div className="coin2coin">
@@ -129,8 +129,9 @@ export default class WatchlistPanel extends React.Component {
     return { data, total: param_page.total };
   };
 
-  refreshData = () => {
-    this.init({});
+  refreshData = async () => {
+    const data = await this.init({});
+    this.setState(data);
   }
 
   onChange = async (current) => {
@@ -144,13 +145,22 @@ export default class WatchlistPanel extends React.Component {
   };
 
   async componentDidMount() {
-    const data = await this.init({ current: this.state.current });
-    this.setState(data);
+    this.refreshData();
+    this.stopTimer();
+    this.refreshInterval = setInterval(() => {
+      this.refreshData();
+    }, 5000);
   }
 
-  async reload() {
-    const data = await this.init({ current: 1 });
-    this.setState({ ...data, current: 1 });
+  componentWillUnmount() {
+    this.stopTimer();
+  }
+
+  stopTimer() {
+    if (this.refreshInterval) {
+      clearInterval(this.refreshInterval);
+      this.refreshInterval = null;
+    }
   }
 
   update() {
