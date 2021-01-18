@@ -40,7 +40,7 @@ export default class Stake extends React.Component {
     if (value) {
       const max = this.getAvailable();
       if (util.compareNumber(max, value)) error = toLocale('balance not enough');
-      else if(isStake && util.compareNumber(value, data.min_lock_amount)) error = toLocale('error.code.66019');
+      else if(isStake && util.compareNumber(value, data.min_lock_amount)) error = toLocale('stake min input',{num:util.precisionInput(data.min_lock_amount,8)});
       else if (isStake && Number(data.pool_total_staked)) {
         poolRatio =
           util.precisionInput(
@@ -137,9 +137,8 @@ export default class Stake extends React.Component {
                   type="text"
                   value={value}
                   onChange={this.onInputChange}
-                  placeholder="0.00000000"
+                  placeholder={toLocale('stake min input placehold',{num:util.precisionInput(data.min_lock_amount,8)})}
                   precision={8}
-                  className={classNames({invalid: hasErrorTip})}
                 />
               </div>
               <div className="right">

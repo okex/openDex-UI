@@ -1133,6 +1133,8 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   'Claim details': 'Claim details',
   '1Day': '1Day',
   'balance not enough': 'balance not enough',
-  'finished': 'finished',
+  'finished': 'Finished',
+  'stake min input': 'Input is less than minimum stake amount {num}',
+  'stake min input placehold': 'Minimum stake {num}',
 };
 export default enUS;

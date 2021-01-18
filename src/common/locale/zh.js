@@ -1132,6 +1132,8 @@ const zhCN = {
   'Claim details': 'Claim details',
   '1Day': '1Day',
   'balance not enough': 'balance not enough',
-  'finished': 'finished',
+  'finished': 'Finished',
+  'stake min input': '输入小于最小质押额{num}',
+  'stake min input placehold': '最少质押{num}',
 };
 export default zhCN;
