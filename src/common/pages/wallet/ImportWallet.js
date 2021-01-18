@@ -4,12 +4,15 @@ import WalletContainer from './WalletContainer';
 import ImportByKeystore from './ImportByKeystore';
 import ImportByMnemonic from './ImportByMnemonic';
 import ImportByPrivate from './ImportByPrivate';
+import ImportByWalletConnect from './ImportByWalletConnect';
+import env from '../../constants/env';
 import './ImportWallet.less';
 
 const typeEnmu = {
   keystore: 'keystore',
   mnemonic: 'mnemonic',
   private: 'private',
+  walletconnect: 'walletconnect',
 };
 class ImportWallet extends Component {
   constructor(props) {
@@ -37,6 +40,9 @@ class ImportWallet extends Component {
       case typeEnmu.private:
         component = <ImportByPrivate />;
         break;
+      case typeEnmu.walletconnect:
+          component = <ImportByWalletConnect />;
+          break;
       default:
         component = <ImportByKeystore />;
         break;
@@ -68,6 +74,14 @@ class ImportWallet extends Component {
             >
               {toLocale('wallet_privateKey')}
             </div>
+            {!env.envConfig.isTest && 
+            <div
+              className={`${imporyType === typeEnmu.walletconnect && 'active'}`}
+              onClick={this.activeTab(typeEnmu.walletconnect)}
+            >
+              {toLocale('wallet_connect')}
+            </div>
+            }
           </div>
           {this.renderByType(imporyType)}
         </div>
