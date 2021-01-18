@@ -177,26 +177,24 @@ export default class DashboardPanel extends React.Component {
                       </div>
                     </div>
                   </div>
-                  {!!d.farmed_details.length && (
-                    <div className="pool-claim">
-                      <table>
-                        <tbody>
-                          <tr className="table-head">
-                            <td>{toLocale('Token')}</td>
-                            <td>{toLocale('Claimed')}</td>
-                            <td>{toLocale('Unclaimed')}</td>
+                  <div className="pool-claim">
+                    <table>
+                      <tbody>
+                        <tr className="table-head">
+                          <td>{toLocale('Token')}</td>
+                          <td>{toLocale('Claimed')}</td>
+                          <td>{toLocale('Unclaimed')}</td>
+                        </tr>
+                        {!!d.farmed_details.length && d.farmed_details.map((detail, index) => (
+                          <tr key={index}>
+                            <td>{detail.symbol_dis}</td>
+                            <td>{detail.claimed_dis}</td>
+                            <td>{detail.unclaimed_dis}</td>
                           </tr>
-                          {d.farmed_details.map((detail, index) => (
-                            <tr key={index}>
-                              <td>{detail.symbol_dis}</td>
-                              <td>{detail.claimed_dis}</td>
-                              <td>{detail.unclaimed_dis}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  )}
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                   <div className="opt-footer">
                     <SimpleBtnDialog
                       component={() => Stake.getStake({data:d,onSuccess:this.refreshData})}
@@ -220,8 +218,7 @@ export default class DashboardPanel extends React.Component {
                 </div>
               ))}
             </div>
-            {!!total && (
-              <div className="pagination-wrap">
+            <div className="pagination-wrap">
                 <Pagination
                   className="watchlist-pagination"
                   total={total}
@@ -231,7 +228,6 @@ export default class DashboardPanel extends React.Component {
                   hideOnSinglePage={false}
                 />
               </div>
-            )}
           </div>
         ) : (
           this.getPanel()
