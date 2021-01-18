@@ -1050,7 +1050,7 @@ const zhCN = {
   'Swap Pair': '交易对',
   Liquidity: '流动性',
   '24H Volume': '24H交易量',
-  'Fee APY': '手续费年化',
+  'Fee APY': '做市年化',
   'Last Price': '价格',
   '24H Change': '24H涨跌幅',
   Action: '操作',
