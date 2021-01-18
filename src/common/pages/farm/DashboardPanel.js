@@ -220,7 +220,7 @@ export default class DashboardPanel extends React.Component {
                 </div>
               ))}
             </div>
-            {total > pageSize && (
+            {!!total && (
               <div className="pagination-wrap">
                 <Pagination
                   className="watchlist-pagination"
