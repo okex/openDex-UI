@@ -26,6 +26,7 @@ export default class Confirm extends React.Component {
       isShow: false,
       pwdErr: '',
       processingPwd: false,
+      loading: false,
     };
     this._onClick = util.debounce(this.onClick, 300);
   }
@@ -78,6 +79,7 @@ export default class Confirm extends React.Component {
     const { loadingTxt, successTxt, onClick, okexchainClient } = this.props;
     if (!onClick || this.loading) return;
     if (checkPwd && !this.checkPwd()) return;
+    this.setState({loading: true});
     privateKey = privateKey || this.props.privateKey;
     okexchainClient
       .setAccountInfo(privateKey || this.props.privateKey)
@@ -112,7 +114,10 @@ export default class Confirm extends React.Component {
         } finally {
           if (loadingToast) loadingToast.destroy();
           this.loading = false;
+          this.setState({loading: false});
         }
+      }).catch(() => {
+        this.setState({loading: false});
       });
   };
 

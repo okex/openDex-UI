@@ -29,7 +29,7 @@ export default class AddLiquidity extends React.Component {
   }
 
   _getDefaultState(props) {
-    const { baseSymbol, targetSymbol, targetTokenDisabled } = this._process(
+    const { baseSymbol, targetSymbol, isEmptyPool } = this._process(
       props.liquidity
     );
     return {
@@ -52,14 +52,14 @@ export default class AddLiquidity extends React.Component {
       },
       liquidity: props.liquidity,
       userLiquidity: props.userLiquidity,
-      targetTokenDisabled,
+      isEmptyPool,
     };
   }
 
   _process(liquidity) {
     let baseSymbol = '',
       targetSymbol = '',
-      targetTokenDisabled = true;
+      isEmptyPool = false;
     if (liquidity) {
       baseSymbol = liquidity.base_pooled_coin.denom;
       targetSymbol = liquidity.quote_pooled_coin.denom;
@@ -68,22 +68,21 @@ export default class AddLiquidity extends React.Component {
           liquidity.quote_pooled_coin.amount &&
         calc.div(liquidity.base_pooled_coin.amount, 1) === 0
       ) {
-        targetTokenDisabled = false;
+        isEmptyPool = true;
       }
     }
-    return { baseSymbol, targetSymbol, targetTokenDisabled };
+    return { baseSymbol, targetSymbol, isEmptyPool };
   }
 
   changeBase = (token) => {
-    const { baseToken, targetToken, targetTokenDisabled } = this.state;
+    const { baseToken, targetToken, isEmptyPool } = this.state;
     const data = {
       ...this.state,
       baseToken: { ...baseToken, ...token },
       targetToken: { ...targetToken },
     };
-    if (targetTokenDisabled && !data.baseToken.value)
-      data.targetToken.value = '';
-    this.updateInfo(data);
+    if (!isEmptyPool && !data.baseToken.value) data.targetToken.value = '';
+    this.updateLiquidInfo4RealTime(data);
   };
 
   changeTarget = (token) => {
@@ -93,8 +92,34 @@ export default class AddLiquidity extends React.Component {
       targetToken: { ...targetToken, ...token },
       baseToken: { ...baseToken },
     };
-    this.updateInfo(data);
+    this.updateLiquidInfo4RealTime(data, 'targetToken');
   };
+
+  _clearTimer() {
+    if (this.updateLiquidInfo4RealTime.interval) {
+      clearInterval(this.updateLiquidInfo4RealTime.interval);
+      this.updateLiquidInfo4RealTime.interval = null;
+    }
+  }
+
+  async updateLiquidInfo4RealTime(data, key='baseToken', time = 3000) {
+    this._clearTimer();
+    await this.updateInfo(data, key, true);
+    this.setState(data, () => {
+      this._clearTimer();
+      this.setState({});
+      data[key].value &&
+        (this.updateLiquidInfo4RealTime.interval = setInterval(async () => {
+          const temp = {
+            baseToken: { ...this.state.baseToken },
+            targetToken: { ...this.state.targetToken },
+            exchangeInfo: { ...this.state.exchangeInfo },
+          };
+          await this.updateInfo(temp, key);
+          this.setState(temp);
+        }, time));
+    });
+  }
 
   init = async (state) => {
     const { baseToken, targetToken } = state;
@@ -118,21 +143,21 @@ export default class AddLiquidity extends React.Component {
       )[0];
       if (target) data.targetToken = { ...targetToken, ...target };
     }
-    this.updateInfo(data);
+    this.updateLiquidInfo4RealTime(data);
   };
 
-  async updateInfo(data) {
+  async updateInfo(data,key, errTip = false) {
     try {
       await this._check(data);
       await this._updateExchangePrice(data);
-      await this._updateExchange(data);
+      await this._updateExchange(data,key);
     } catch (e) {
-      Message.error({
-        content: e.message || toLocale(`error.code.${e.code}`),
-        duration: 3,
-      });
-    } finally {
-      this.setState(data);
+      if(errTip) {
+        Message.error({
+          content: e.message || toLocale(`error.code.${e.code}`),
+          duration: 3,
+        });
+      } 
     }
   }
 
@@ -144,10 +169,10 @@ export default class AddLiquidity extends React.Component {
     };
     const liquidity = await api.tokenPair(params);
     const liquidityInfo = await api.liquidityInfo(params);
-    const { targetTokenDisabled } = this._process(liquidity);
+    const { isEmptyPool } = this._process(liquidity);
     data.liquidity = liquidity;
     data.userLiquidity = liquidityInfo && liquidityInfo[0];
-    data.targetTokenDisabled = targetTokenDisabled;
+    data.isEmptyPool = isEmptyPool;
   }
 
   async _updateExchangePrice(data) {
@@ -173,16 +198,21 @@ export default class AddLiquidity extends React.Component {
     }
   }
 
-  async _updateExchange(data) {
+  async _updateExchange(data, key) {
     const { baseToken, targetToken, exchangeInfo } = data;
-    if (baseToken.symbol && targetToken.symbol && data.targetTokenDisabled) {
-      if (baseToken.value) {
+    let _baseToken = baseToken ,_targetToken = targetToken;
+    if((key === 'targetToken' && targetToken.value) || (targetToken.value && !baseToken.value)) {
+      _baseToken = targetToken;
+      _targetToken = baseToken;
+    }
+    if (baseToken.symbol && targetToken.symbol && !data.isEmptyPool) {
+      if (_baseToken.value) {
         const { base_token_amount = '', pool_share = '' } = await api.addInfo({
-          base_token: targetToken.symbol,
-          quote_token_amount: baseToken.value + baseToken.symbol,
-          value: baseToken.value,
+          base_token: _targetToken.symbol,
+          quote_token_amount: _baseToken.value + _baseToken.symbol,
+          value: _baseToken.value,
         });
-        targetToken.value = baseToken.value ? base_token_amount : '';
+        _targetToken.value = _baseToken.value ? base_token_amount : '';
         exchangeInfo.pool_share = pool_share;
       } else {
         exchangeInfo.pool_share = 0;
@@ -254,7 +284,7 @@ export default class AddLiquidity extends React.Component {
       baseToken,
       targetToken,
       exchangeInfo,
-      targetTokenDisabled,
+      isEmptyPool,
     } = this.state;
     let priceInfo,
       price = exchangeInfo.price;
@@ -266,7 +296,7 @@ export default class AddLiquidity extends React.Component {
       if (Number.isNaN(price)) price = '-';
       else price = util.precisionInput(price, 8);
     }
-    if (!targetTokenDisabled) {
+    if (isEmptyPool) {
       if (!baseToken.value || !targetToken.value) {
         priceInfo = `1${baseToken.symbol.toUpperCase()} ≈ -${targetToken.symbol.toUpperCase()}`;
       } else {
@@ -358,7 +388,7 @@ export default class AddLiquidity extends React.Component {
         .then((res) => {
           resolve(res);
           if (validateTxs(res)) {
-            this.updateInfo({
+            this.updateLiquidInfo4RealTime({
               ...this.state,
               baseToken: { ..._baseToken, value: '' },
               targetToken: { ..._targetToken, value: '' },
@@ -394,13 +424,13 @@ export default class AddLiquidity extends React.Component {
     const {
       baseToken,
       targetToken,
-      targetTokenDisabled,
+      isEmptyPool,
       userLiquidity,
     } = this.state;
     const exchangeInfo = this.getExchangeInfo();
     const btn = this.getBtn();
     const isEmpty =
-      baseToken.symbol && targetToken.symbol && !targetTokenDisabled;
+      baseToken.symbol && targetToken.symbol && isEmptyPool;
     return (
       <>
         <div className="panel">
@@ -426,7 +456,6 @@ export default class AddLiquidity extends React.Component {
             <CoinItem
               label={toLocale('Input')}
               token={targetToken}
-              disabled={targetTokenDisabled}
               onChange={this.changeTarget}
               loadCoinList={this.loadTargetCoinList}
               disabledChangeCoin={disabledChangeCoin}
