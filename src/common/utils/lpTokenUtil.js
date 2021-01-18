@@ -1,5 +1,3 @@
-
-
 export function isLpToken(tokenPair) {
   let ammswap = /(ammswap_)/.test(tokenPair);
   if(!ammswap) return null;

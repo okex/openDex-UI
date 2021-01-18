@@ -52,12 +52,19 @@ export default class ReduceLiquidity extends React.Component {
     return coins;
   }
 
-  change = async (ratio) => {
+  _getValueByRatio(ratio) {
+    if(!ratio) ratio = this.state.ratio;
+    if(!ratio) return this.state.value;
     const max = this.getAvailable();
     const value = calc.mul(max, ratio.value);
+    return value;
+  }
+
+  change = async (ratio) => {
+    const value = this._getValueByRatio(ratio);
     this.setState({ ratio, value, error: false });
     this.updateCoins(value, false);
-  };
+  }
 
   onInputChange = async (value) => {
     const max = this.getAvailable();
@@ -97,7 +104,7 @@ export default class ReduceLiquidity extends React.Component {
     const { okexchainClient } = this.props;
     const { baseToken, targetToken } = this._exchangeTokenData();
     const params = [
-      util.precisionInput(this.state.value),
+      util.precisionInput(this._getValueByRatio()),
       baseToken.amount,
       baseToken.denom,
       targetToken.amount,
