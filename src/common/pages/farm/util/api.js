@@ -43,7 +43,7 @@ function _proccessData(data) {
         if(lpToken) dd.denom_dis = lpToken.name;
         else dd.denom_dis = dd.denom.toUpperCase();
         pool_rate.push(
-          `${util.precisionInput(calc.mul(dd.amount, 1), 2)} ${dd.denom_dis}`
+          `${util.precisionInput(dd.amount, 2)} ${dd.denom_dis}`
         );
       });
       d.pool_rate_dis = pool_rate.join('+');
@@ -53,11 +53,11 @@ function _proccessData(data) {
           ? '--'
           : '$' +
             calc.thousandFormat(
-              util.precisionInput(calc.mul(d.total_staked, 1), 2)
+              util.precisionInput(d.total_staked, 2)
             );
       d.total_staked_dashbord_dis = Number(d.total_staked) === 0
       ? '--'
-      : util.precisionInput(calc.mul(d.total_staked, 1), 8);
+      : util.precisionInput(d.total_staked, 8);
       d.pool_ratio_dis =
         util.precisionInput(calc.mul(d.pool_ratio, 100), 2) + '%';
       d.pool_ratio_dis_4 =
@@ -69,8 +69,8 @@ function _proccessData(data) {
       d.farmed_details &&
         d.farmed_details.forEach((d) => {
           d.symbol_dis = d.symbol.toUpperCase();
-          d.claimed_dis = util.precisionInput(calc.mul(d.claimed, 1), 8);
-          d.unclaimed_dis = util.precisionInput(calc.mul(d.unclaimed, 1), 8);
+          d.claimed_dis = util.precisionInput(d.claimed, 8);
+          d.unclaimed_dis = util.precisionInput(d.unclaimed, 8);
         });
       _proccessTimer(d);
     });
