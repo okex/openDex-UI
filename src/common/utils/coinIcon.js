@@ -1,5 +1,6 @@
 import coinDefault from '_src/assets/images/icon_f2pool@2x.png';
 import coinOkt from '_src/assets/images/icon_usdt@2x.png';
+import defaultcoin from '_src/assets/images/defaultcoin.png';
 
 const icons = {
   OKT: coinOkt,
@@ -20,5 +21,5 @@ export function getCoinIcon(symbol) {
     (d) => d.toLowerCase() === symbol.toLowerCase()
   );
   if (temp[0]) return icons[temp[0]];
-  return coinOkt;
+  return defaultcoin;
 }
