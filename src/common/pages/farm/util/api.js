@@ -2,7 +2,7 @@ import ont from '_src/utils/dataProxy';
 import URL from '_constants/URL';
 import util from '_src/utils/util';
 import calc from '_src/utils/calc';
-import { getLpTokenInfo } from '_src/utils/lpTokenUtil';
+import { getLpTokenInfo, getLpTokenStr } from '_src/utils/lpTokenUtil';
 import { toLocale } from '_src/locale/react-locale';
 
 function ajax(method, url, params) {
@@ -23,14 +23,14 @@ function _proccessData(data) {
       let total_apy = 0,
         farm_apy = [],
         pool_rate = [];
-      d.pool_name_dis = d.pool_name.toUpperCase();
-      d.lock_symbol_dis = d.lock_symbol.toUpperCase();
-      d.yield_symbol_dis = d.yield_symbol.toUpperCase();
+      d.pool_name_dis = getLpTokenStr(d.pool_name);
+      d.lock_symbol_dis = getLpTokenStr(d.lock_symbol);
+      d.yield_symbol_dis = getLpTokenStr(d.yield_symbol);
       d.lock_symbol_info = _getLockSymbolInfos(d.lock_symbol);
       d.isLpToken = d.lock_symbol_info.symbols.length > 1;
       d.farm_apy.forEach((dd) => {
         total_apy = calc.add(total_apy, dd.amount);
-        dd.denom_dis = dd.denom.toUpperCase();
+        dd.denom_dis = getLpTokenStr(dd.denom);
         farm_apy.push(
           `${util.precisionInput(calc.mul(dd.amount, 100), 2)}%${dd.denom_dis}`
         );
@@ -39,9 +39,7 @@ function _proccessData(data) {
       d.total_apy_4 = util.precisionInput(calc.mul(total_apy, 100), 4) + '%';
       d.farm_apy_dis = farm_apy.join('+');
       d.pool_rate.forEach((dd) => {
-        const lpToken = getLpTokenInfo(dd.denom);
-        if(lpToken) dd.denom_dis = lpToken.name;
-        else dd.denom_dis = dd.denom.toUpperCase();
+        dd.denom_dis = getLpTokenStr(dd.denom);
         pool_rate.push(
           `${util.precisionInput(dd.amount, 2)} ${dd.denom_dis}`
         );
@@ -68,7 +66,7 @@ function _proccessData(data) {
       !d.farmed_details && (d.farmed_details = []);
       d.farmed_details &&
         d.farmed_details.forEach((d) => {
-          d.symbol_dis = d.symbol.toUpperCase();
+          d.symbol_dis = getLpTokenStr(d.symbol);
           d.claimed_dis = util.precisionInput(d.claimed, 8);
           d.unclaimed_dis = util.precisionInput(d.unclaimed, 8);
         });
@@ -121,7 +119,7 @@ function _getLockSymbolInfos(lock_symbol) {
     result.name = lpToken.name;
   } else {
     result.symbols.push(lock_symbol);
-    result.name = lock_symbol.toUpperCase();
+    result.name = getLpTokenStr(lock_symbol);
   }
   return result;
 }
@@ -168,7 +166,7 @@ export function stakedInfo({ poolName }) {
   return get(
     `${URL.GET_FARM_STAKED_INFO.replace('{poolName}', poolName)}`,{address}
   ).then((data) => {
-    data.pool_name_dis = data.pool_name.toUpperCase();
+    data.pool_name_dis = getLpTokenStr(data.pool_name);
     data.balance_dis = util.precisionInput(data.balance, 8);
     data.account_staked = util.precisionInput(data.account_staked, 8);
     data.pool_total_staked_dis = util.precisionInput(data.pool_total_staked, 8);
