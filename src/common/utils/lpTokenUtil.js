@@ -31,6 +31,12 @@ export function getLpTokenInfo(tokenPair) {
 
 }
 
+export function getLpTokenStr(tokenPair='') {
+  const lpTokenInfo = getLpTokenInfo(tokenPair);
+  if(lpTokenInfo) return lpTokenInfo.name;
+  return tokenPair.toUpperCase();
+}
+
 function getLpTokenName(base, quote, baseStr='', quoteStr='') {
   if(base.length === 1) baseStr = base[0].toUpperCase();
   else if(base.length === 2) baseStr = `LP (${base[0].toUpperCase()}/${base[1].toUpperCase()})`;
