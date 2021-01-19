@@ -641,8 +641,10 @@
         td:first-child {
           padding-left: 24px;
         }
-        td:last-child {
+        td {
           padding-right: 24px;
+        }
+        td:last-child {
           text-align: right;
         }
       }
@@ -692,13 +694,16 @@
           }
           
         }
+        td {
+          padding-right: 0;
+        }
       }
     }
     .pagination-wrap {
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      padding-right: 124px;
+      padding-right: 24px;
       height: 60px;
       background: #1E2F4F;
       box-shadow: 0px -1px 0px 0px #0F1D35;

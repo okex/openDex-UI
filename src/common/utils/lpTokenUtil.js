@@ -1,9 +1,8 @@
-
-
 export function isLpToken(tokenPair) {
   let ammswap = /(ammswap_)/.test(tokenPair);
   if(!ammswap) return null;
   const tokens = tokenPair.split('_');
+  if(tokens.filter(d => d === 'ammswap').length > 2) return null;
   return tokens;
 }
 
@@ -30,6 +29,12 @@ export function getLpTokenInfo(tokenPair) {
     name: getLpTokenName(lptokens[0],lptokens[1])
   }
 
+}
+
+export function getLpTokenStr(tokenPair='') {
+  const lpTokenInfo = getLpTokenInfo(tokenPair);
+  if(lpTokenInfo) return lpTokenInfo.name;
+  return tokenPair.toUpperCase();
 }
 
 function getLpTokenName(base, quote, baseStr='', quoteStr='') {

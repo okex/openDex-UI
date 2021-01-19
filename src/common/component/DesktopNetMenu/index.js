@@ -46,13 +46,15 @@ class DesktopNetMenu extends Component {
             }`}
             style={{ display: 'inline-block' }}
           />
-          <div className="combo-box">
-            <ComboBox
-              current={current}
-              comboBoxDataSource={
-                this.netTypeList.length > 1 ? this.netTypeList : []
-              }
-            />
+          <div className="combo-box-wrap">
+            <div className="combo-box">
+              <ComboBox
+                current={current}
+                comboBoxDataSource={
+                  this.netTypeList.length > 1 ? this.netTypeList : []
+                }
+              />
+            </div>
           </div>
         </div>
       </div>

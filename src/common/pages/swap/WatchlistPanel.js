@@ -94,7 +94,7 @@ export default class WatchlistPanel extends React.Component {
           let baseSymbol = tokens[0];
           let targetSymbol = tokens[1];
           return (
-            <div style={{ paddingRight: '5px' }}>
+            <div>
               1 {baseSymbol.toUpperCase()}≈
               {Number(price) === 0 || Number(price) === Infinity
                 ? '-'
@@ -245,7 +245,7 @@ export default class WatchlistPanel extends React.Component {
             <div className="nodata">{toLocale('watchlist noData')}</div>
           )}
         </WatchList>
-        {total > pageSize && (
+        {!!total && (
           <div className="pagination-wrap">
             <Pagination
               className="watchlist-pagination"

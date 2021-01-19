@@ -273,8 +273,8 @@ const util = {
   },
   precisionInput(num, precision = 18) {
     if(!num) num = 0;
-    let result = BigNumber(num).toFixed(precision + 1);
-    return result.slice(0, result.length - 1);
+    let result = BigNumber(num).toFixed(precision,BigNumber.ROUND_FLOOR);
+    return result;
   },
   compareNumber(a, b) {
     return calc.div(a, 1) < calc.div(b, 1);
