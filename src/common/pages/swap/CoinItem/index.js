@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import { channelsV3 } from '../../../utils/websocket';
 import SwapContext from '../SwapContext';
 import util from '_src/utils/util';
+import calc from '_src/utils/calc';
 
 function mapStateToProps(state) {
   const { account4Swap } = state.SwapStore;
@@ -37,11 +38,12 @@ export default class CoinItem extends React.Component {
       const max = this.getAvailable();
       if (util.compareNumber(max, value)) error = true;
     }
-    this.props.onChange({ ...token, value, error });
+    this.props.onChange({ ...token, value, error }, true);
   };
 
   setMaxValue = () => {
-    this.onInputChange(this.getAvailable());
+    const max = this.getAvailable(true);
+    this.onInputChange(util.precisionInput(calc.sub(max, '0.05'),8));
   };
 
   showCoinSelectList = async (e) => {
@@ -99,16 +101,17 @@ export default class CoinItem extends React.Component {
   select = (coin) => {
     const { token } = this.props;
     this.hideCoinSelectList();
-    this.props.onChange({ ...token, ...coin });
+    this.props.onChange({ ...token, ...coin }, false);
   };
 
-  getAvailable() {
+  getAvailable(original) {
     let {
       token: { available, symbol },
       account4Swap,
     } = this.props;
     const temp = account4Swap[symbol.toLowerCase()];
     if (temp) available = temp.available;
+    if(original) return available;
     return util.precisionInput(available, 8);
   }
 
