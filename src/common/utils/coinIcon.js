@@ -3,7 +3,6 @@ import coinOkt from '_src/assets/images/icon_usdt@2x.png';
 
 const icons = {
   OKT: coinOkt,
-  TOKT: coinOkt,
   BTCK: '//static.coinall.ltd/cdn/assets/imgs/2012/BE4B2476FC222ECB.png?x-oss-process=image/format,webp',
   USDT: '//static.coinall.ltd/cdn/assets/imgs/2011/6C04D5C74FCC0D3D.png',
   ETHK: '',
