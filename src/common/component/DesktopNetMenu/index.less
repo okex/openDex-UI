@@ -25,20 +25,23 @@
       background-size: 14px auto;
       transition: transform 0.3s, -webkit-transform 0.3s;
     }
-    > div.combo-box {
+    > div.combo-box-wrap {
       position: absolute;
-      box-sizing: border-box;
-      display: none;
       z-index: 10;
-      line-height: 32px;
-      top: 30px;
+      display: none;
+      top: 26px;
       margin-left: -12px;
       padding-top: 4px;
-      padding-bottom: 9px;
-      width: 120px;
-      background: #1B283E;
-      box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.05);
-      border-radius: 4px;
+      .combo-box {
+        box-sizing: border-box;
+        line-height: 32px;
+        padding-top: 4px;
+        padding-bottom: 9px;
+        width: 120px;
+        background: #1B283E;
+        box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.05);
+        border-radius: 4px;
+      }
       .ok-combo-box > ul > li {
         padding: 0 8px;
         text-align: left;
@@ -54,7 +57,7 @@
       }
     }
     &:hover {
-      > div.combo-box {
+      > div.combo-box-wrap {
         display: block;
       }
       > .down-arrow.has-more {
