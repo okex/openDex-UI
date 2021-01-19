@@ -101,4 +101,21 @@ module.exports = {
       },
     });
   },
+  first(url) {
+    Mock.mock(RegExp(`${url}.*`), {
+      code: 0,
+      msg: '',
+      detail_msg: '',
+      data: {
+        pool_name:"1st_pool_okt_usdt",
+        farm_apy:"128.980000000000000000",
+        farm_amount:"10.000000000000000000",
+        total_staked:"100000.123000000000000000",
+        claim_at: parseInt(Date.now() / 1000) + 2,
+        account_staked:"1.000000000000000000",
+        estimated_farm:"10.000000000000000000",
+        balance:"99999989989.980000000000000000",
+      },
+    });
+  },
 };

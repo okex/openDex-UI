@@ -1136,5 +1136,13 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   'finished': 'Finished',
   'stake min input': 'Input is less than minimum stake amount {num}',
   'stake min input placehold': 'Minimum stake {num}',
+  'First Pool': '1st Pool',
+  'Farm amount (OKT)': 'Farm amount (OKT)',
+  'Your Staked LP': 'Your Staked LP',
+  'Estimated farm(OKT)': 'Estimated farm(OKT)',
+  'Claim in': 'Claim in',
+  'You have claimed': 'You have claimed {num} OKT!',
+  'claimed check': 'You could now check your rewards in your farmings.',
+  'Check': 'Check',
 };
 export default enUS;

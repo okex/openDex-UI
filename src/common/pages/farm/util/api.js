@@ -91,6 +91,18 @@ function _proccessTimer(data) {
   }
 }
 
+function _proccessTimer4First(data) {
+  const now = (Date.now() / 1000).toFixed();
+  const start = calc.sub(data.claim_at, now);
+  if (start > 0) {
+    data.active = 0;
+    data.timeInfo = _getTimerByCount(start);
+  } else {
+    data.active = 1;
+    data.timeInfo = _getTimerByCount();
+  }
+}
+
 function _getTimerByCount(count = 0) {
   let d = 0,
     h = 0,
@@ -136,6 +148,7 @@ export function whitelist() {
 export function normal(param = {}) {
   //@mock mocker.normal(URL.GET_FARM_POOLS_NORMAL);
   return get(URL.GET_FARM_POOLS_NORMAL, param).then((data) => {
+    data.data = data.data.filter(d => d.in_whitelist || d.pool_name !== '1st_pool_okt_usdt');
     _proccessData(data.data);
     return data;
   });
@@ -145,6 +158,7 @@ export function dashboard(param = {}) {
   const address = util.getMyAddr();
   //@mock mocker.dashboard(`${URL.GET_FARM_DASHBOARD}/${address}`);
   return get(`${URL.GET_FARM_DASHBOARD}/${address}`, param).then((data) => {
+    data.data = data.data.filter(d => d.in_whitelist || d.pool_name !== '1st_pool_okt_usdt');
     _proccessData(data.data);
     return data;
   });
@@ -172,6 +186,27 @@ export function stakedInfo({ poolName }) {
     data.pool_total_staked_dis = util.precisionInput(data.pool_total_staked, 8);
     return data;
   });
+}
+
+export function first(params={}) {
+  //@mock mocker.first(URL.GET_FARM_FIRST);
+  const address = util.getMyAddr();
+  if(address) params.address = address;
+  return get(URL.GET_FARM_FIRST,params).then((data) => {
+    processFirst(data);
+    return data;
+  });
+}
+
+export function processFirst(data) {
+  data.lock_symbol_info = {symbols:['OKT','USDT'],name:'LP (OKT/USDT)'};
+  data.pool_name_dis = data.lock_symbol_info.name;
+  data.farm_apy_dis = util.precisionInput(calc.mul(data.farm_apy, 100), 4)+'%';
+  data.farm_amount_dis = util.precisionInput(data.farm_amount, 8);
+  data.total_staked_dis = '$'+util.precisionInput(data.total_staked, 8);
+  _proccessTimer4First(data);
+  data.account_staked_dis = util.precisionInput(data.account_staked, 8);
+  data.estimated_farm_dis = util.precisionInput(data.estimated_farm, 8);
 }
 
 export function process(data) {

@@ -69,6 +69,7 @@ export default class Confirm extends React.Component {
 
   confirmBtn() {
     const { children } = this.props;
+    if(!children) return null;
     const child = React.Children.only(children);
     return React.cloneElement(child, {
       onClick: () => this._onClick(),
@@ -120,6 +121,11 @@ export default class Confirm extends React.Component {
         this.setState({loading: false});
       });
   };
+
+  async componentDidMount() {
+    const {exec} = this.props;
+    if(exec) this._onClick();
+  }
 
   render() {
     const { pwdErr, processingPwd, isShow } = this.state;

@@ -1135,5 +1135,13 @@ const zhCN = {
   'finished': 'Finished',
   'stake min input': '输入小于最小质押额{num}',
   'stake min input placehold': '最少质押{num}',
+  'First Pool': '1st Pool',
+  'Farm amount (OKT)': 'Farm amount (OKT)',
+  'Your Staked LP': 'Your Staked LP',
+  'Estimated farm(OKT)': 'Estimated farm(OKT)',
+  'Claim in': 'Claim in',
+  'You have claimed': 'You have claimed {num} OKT!',
+  'claimed check': 'You could now check your rewards in your farmings.',
+  'Check': 'Check',
 };
 export default zhCN;

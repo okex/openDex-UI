@@ -10,7 +10,7 @@ function mapStateToProps(state) {
 }
 
 @connect(mapStateToProps)
-export default class Stake extends React.Component {
+export default class Claim extends React.Component {
   confirm = () => {
     const { okexchainClient, data, onClose, onSuccess } = this.props;
     const params = [data.pool_name, '', null];

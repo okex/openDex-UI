@@ -2,6 +2,11 @@
 @farm-watchlist-width: 1180px;
 @watchlist-contaner: calc(@farm-container-width - @farm-watchlist-width);
 @watchlist-left: calc(@watchlist-contaner / 2);
+@first-container-width: 680px;
+@first-contaner: calc(@farm-container-width - @first-container-width);
+@first-left: calc(@first-contaner / 2);
+
+
 
 .scrollbar() {
   &::-webkit-scrollbar {
@@ -272,7 +277,7 @@
         }
         .info-item-title {
           .coin2coin {
-            .coin2coin-img(20px,-5px,8px);
+            .coin2coin-img(20px,-5px,0px);
           }
         }
         .pool-detail-wrap {
@@ -451,6 +456,165 @@
     }
   }
 
+  .panel-first {
+    width: @first-container-width;
+    margin-left: @first-left;
+    width: 680px;
+    .info-item {
+      position: relative;
+      box-sizing: border-box;
+      padding: 30px 24px 34px 24px;
+      height: 320px;
+      background: linear-gradient(180deg, #133675 0%, #152A57 100%);
+      border-radius: 4px;
+      margin-bottom: 20px;
+      .coin2coin {
+        .coin2coin-img(36px,-8px,0px);
+      }
+      &::after {
+        content:'';
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 194px;
+        height: 176px;
+        background: url(../../assets/images/no_record@2x.png) 0 0 no-repeat;
+        background-size: 194px auto;
+      }
+      .info-item-title {
+        font-size: 24px;
+        font-weight: 500;
+        color: #FFFFFF;
+        line-height: 24px;
+        margin-bottom: 48px;
+      }
+      .info-item-label {
+        font-size: 18px;
+        font-weight: 500;
+        color: #2EAD65;
+        line-height: 20px;
+        margin-bottom: 12px;
+      }
+      .info-item-apy {
+        font-size: 48px;
+        font-weight: 500;
+        color: #2EAD65;
+        line-height: 52px;
+        margin-bottom: 48px;
+      }
+      .info-item-detail {
+        display: flex;
+        .left {
+          display: flex;
+          flex-direction: column;
+          width: 340px;
+        }
+        .right {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+        }
+        .title {
+          font-size: 24px;
+          font-weight: 500;
+          color: #FFFFFF;
+          line-height: 28px;
+          margin-bottom: 4px;
+        }
+        .title-tip {
+          font-size: 16px;
+          font-weight: 400;
+          color: rgba(255, 255, 255, 0.6);
+          line-height: 20px;
+        }
+      }
+      
+    }
+    .info-account {
+      display: flex;
+      margin-bottom: 20px;
+      .left {
+        display: flex;
+        flex-direction: column;
+        width: 330px;
+        box-sizing: border-box;
+        padding: 18px 24px;
+        height: 88px;
+        background: #152A57;
+        border-radius: 4px;
+      }
+      .right {
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        flex: 1;
+        padding: 18px 24px;
+        height: 88px;
+        background: #152A57;
+        border-radius: 4px;
+        margin-left: 20px;
+      }
+      .title {
+        font-size: 24px;
+        font-weight: 500;
+        color: #FFFFFF;
+        line-height: 28px;
+        margin-bottom: 4px;
+      }
+      .title-tip {
+        font-size: 16px;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.6);
+        line-height: 20px;
+      }
+      &.disabled {
+        .left,.right {
+          background: #1E2F4F;
+        }
+        .title {
+          color: rgba(255, 255, 255, 0.6);
+        }
+      }
+    }
+    .info-opt {
+      display: flex;
+      .stake-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 120px;
+        height: 40px;
+        border-radius: 2px;
+        border: 1px solid #2D60E0;
+        background-color: transparent;
+        margin-right: 20px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        color: #2D60E0;
+        line-height: 20px;
+      }
+      .claim-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+        height: 40px;
+        background: rgba(45,96,224,.35);
+        border-radius: 4px;
+        font-size: 16px;
+        font-weight: 500;
+        color: #FFFFFF;
+        line-height: 20px;
+        cursor: default;
+        &.active {
+          background: #2D60E0;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
   .stake-panel {
     box-sizing: border-box;
     width: 600px;
@@ -605,6 +769,22 @@
         background-size: 48px auto;
         margin-top: -40px;
         margin-bottom: 16px;
+      }
+      &.claim-success::before {
+        background-image: url(../../assets/images/claimsuccess.png);
+      }
+      .title {
+        font-size: 18px;
+        font-weight: 500;
+        color: #FFFFFF;
+        line-height: 24px;
+        margin-bottom: 8px;
+      }
+      .title-tip {
+        font-size: 14px;
+        font-weight: 400;
+        color:rgba(255, 255, 255, 0.45);
+        line-height: 20px;
       }
     }
   }

@@ -113,5 +113,8 @@ const URL = {
   get GET_FARM_STAKED_INFO() {
     return `${BASEURL.FARM}/pools/{poolName}/staked_info`;
   },
+  get GET_FARM_FIRST() {
+    return `${BASEURL.FARM}/pools/first`;
+  },
 };
 export default URL;

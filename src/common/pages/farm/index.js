@@ -5,8 +5,10 @@ import FarmPanel from './FarmPanel';
 import DashboardPanel from './DashboardPanel';
 import { toLocale } from '_src/locale/react-locale';
 import SwapPushWrapper from '_app/wrapper/SwapPushWrapper';
+import FirstPanel from './FirstPanel';
 import './index.less';
 
+const FIRST = '0';
 const FARM = '1';
 const DASHBOARD = '2';
 
@@ -15,7 +17,7 @@ export default class Farm extends React.Component {
   constructor() {
     super();
     this.state = {
-      activekey: FARM,
+      activekey: FIRST,
     };
     this.farm = null;
     this.dashboard = null;
@@ -28,6 +30,10 @@ export default class Farm extends React.Component {
   onFarm = () => {
     this.setState({ activekey: FARM });
   };
+
+  onDashboard = () => {
+    this.setState({ activekey: DASHBOARD });
+  }
 
   componentDidMount() {
     this.preSeoTitle = document.title;
@@ -50,6 +56,9 @@ export default class Farm extends React.Component {
             onChange={this.onChange}
             destroyInactiveTabPane
           >
+            <TabPane tab={toLocale('First Pool')} key={FIRST}>
+              <FirstPanel onDashboard={this.onDashboard}/>
+            </TabPane>
             <TabPane tab={toLocale('Farm')} key={FARM}>
               <FarmPanel />
             </TabPane>
