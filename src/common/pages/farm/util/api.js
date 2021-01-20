@@ -104,15 +104,17 @@ function _proccessTimer4First(data) {
 }
 
 function _getTimerByCount(count = 0) {
-  let d = 0,
-    h = 0,
+  let d = 0, d_mod = 0,
+    h = 0, h_mod = 0,
     m = 0,
     s = 0;
   if (count > 0) {
     d = parseInt(count / (24 * 3600), 10);
-    h = parseInt(count / 3600, 10);
-    m = parseInt((count % 3600) / 60, 10);
-    s = count % 60;
+    d_mod = count % (24 * 3600);
+    h = parseInt(d_mod / 3600, 10);
+    h_mod = d_mod % 3600; 
+    m = parseInt(h_mod / 60, 10)
+    s = h_mod % 60;
   }
   const d_dis = d > 0 ? (d >= 10 ? d + '' : '0' + d) : '00';
   const h_dis = h > 0 ? (h >= 10 ? h + '' : '0' + h) : '00';
