@@ -204,7 +204,7 @@ export function first(params={}) {
 }
 
 export function processFirst(data) {
-  data.lock_symbol = 'ammswap_okt_usdt';
+  data.lock_symbol = 'ammswap_okt_usdk';
   data.lock_symbol_info = _getLockSymbolInfos(data.lock_symbol);
   data.pool_name = '1st_pool_okt_usdt';
   data.isLpToken = data.lock_symbol_info.symbols.length > 1;
