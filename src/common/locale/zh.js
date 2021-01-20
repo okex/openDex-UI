@@ -1085,7 +1085,7 @@ const zhCN = {
   'spot.asset.farm': 'Farm',
   seoFarmTitle: '流动性挖矿FARM',
   Farm: 'Farm池',
-  Dashboard: '我哦收益',
+  Dashboard: '我的收益',
   'You haven’t connected a wallet.': '你还没有连接钱包',
   'White listed': '白名单池',
   'White listed help': '什么是白名单池',

@@ -15,6 +15,7 @@ function mapStateToProps(state) {
 export default class ClaimBtn extends React.Component {
   constructor() {
     super();
+    this.confirmRef = React.createRef()
     this.state = {
       show: false,
       triggerClick: false
@@ -60,12 +61,13 @@ export default class ClaimBtn extends React.Component {
 
   onClick = async () => {
     this.setState({triggerClick: true});
+    this.confirmInstance && this.confirmInstance._onClick();
   };
 
   getRender = () => {
     const { show, triggerClick } = this.state;
     if(!triggerClick) return null;
-    if (!util.isLogined()) return <ConnectInfoTip/>;
+    if (!util.isLogined()) return <ConnectInfoTip onClose={this.onClose}/>;
     if(show) return (
       <Dialog visible hideCloseBtn>
         <div className="stake-panel" style={{ width: '496px' }}>
@@ -95,12 +97,7 @@ export default class ClaimBtn extends React.Component {
         </div>
       </Dialog>
     );
-    return <Confirm
-    onClick={this.confirm}
-    loadingTxt={toLocale('pending transactions')}
-    successTxt={toLocale('transaction confirmed')}
-    exec
-  ></Confirm>
+    return null
   }
 
   render() {
@@ -108,6 +105,12 @@ export default class ClaimBtn extends React.Component {
       <>
         {this.getRender()}
         {this.createBtn()}
+        <Confirm
+        onClick={this.confirm}
+        loadingTxt={toLocale('pending transactions')}
+        successTxt={toLocale('transaction confirmed')}
+        getRef={(instance) => (this.confirmInstance = instance)}
+      ></Confirm>
       </>
     );
   }

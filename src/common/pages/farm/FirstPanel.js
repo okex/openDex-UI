@@ -8,7 +8,6 @@ import Stake from './Stake';
 import ClaimBtn from './ClaimBtn';
 import * as api from './util/api';
 
-
 export default class FarmPanel extends React.Component {
   constructor() {
     super();
