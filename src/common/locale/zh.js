@@ -1139,7 +1139,7 @@ const zhCN = {
   'Farm amount (OKT)': '挖矿总量 (OKT)',
   'Your Staked LP': '我质押的LP',
   'Estimated farm(OKT)': '我的预估挖矿收益(OKT)',
-  'Claim in': '后领取',
+  'Claim in': '{time} 后领取',
   'You have claimed': '你已领取{num} OKT!',
   'claimed check': '你现在可以在我的收益中查看',
   'Check': '查看',

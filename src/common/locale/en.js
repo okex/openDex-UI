@@ -1140,7 +1140,7 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   'Farm amount (OKT)': 'Farm amount (OKT)',
   'Your Staked LP': 'My Staked LP',
   'Estimated farm(OKT)': 'My estimated farm(OKT)',
-  'Claim in': 'Claim in',
+  'Claim in': 'Claim in {time}',
   'You have claimed': 'You have claimed {num} OKT!',
   'claimed check': 'You could now check your rewards in your farmings.',
   'Check': 'Check',

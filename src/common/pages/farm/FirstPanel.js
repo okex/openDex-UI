@@ -60,7 +60,7 @@ export default class FarmPanel extends React.Component {
   }
 
   getTimerDis = (data) => {
-    if (!data.active) return `${toLocale('Claim in')} ${data.timeInfo}`;
+    if (!data.active) return toLocale('Claim in', {time:data.timeInfo});
     return `${toLocale('Claim all')}`;
   };
 
