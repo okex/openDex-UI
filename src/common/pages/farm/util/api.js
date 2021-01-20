@@ -202,7 +202,8 @@ export function first(params={}) {
 }
 
 export function processFirst(data) {
-  data.lock_symbol_info = {symbols:['OKT','USDT'],name:'LP (OKT/USDT)'};
+  data.lock_symbol = 'ammswap_okt_usdt';
+  data.lock_symbol_info = _getLockSymbolInfos(data.lock_symbol);
   data.pool_name = '1st_pool_okt_usdt';
   data.pool_name_dis = data.lock_symbol_info.name;
   data.farm_apy_dis = util.precisionInput(calc.mul(data.farm_apy, 100), 4)+'%';
