@@ -143,7 +143,7 @@ class DexLoggedMenu extends React.Component {
             </Menu.Item>
             <Menu.Item key="wallet-2">
               {href ? 
-                <a href={PageURL.walletAssets}>{toLocale('header_menu_assets')}</a>:
+                <a href={PageURL.walletAssets} target="_blank">{toLocale('header_menu_assets')}</a>:
                   <NavLink
                   to={PageURL.walletAssets}
                   activeClassName="active-menu-item"
