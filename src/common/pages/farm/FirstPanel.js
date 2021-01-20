@@ -5,7 +5,7 @@ import { getCoinIcon } from '../../utils/coinIcon';
 import SimpleBtnDialog from './SimpleBtnDialog';
 import classNames from 'classnames';
 import Stake from './Stake';
-import ClaimSuccess from './ClaimSuccess';
+import ClaimBtn from './ClaimBtn';
 import * as api from './util/api';
 
 
@@ -115,9 +115,9 @@ export default class FarmPanel extends React.Component {
           <SimpleBtnDialog component={() => Stake.getStake({data, isStake:false, onSuccess:this.refreshData})}>
             <div className="farm-btn stake-btn">{toLocale('UNSTAKE')}</div>
           </SimpleBtnDialog>
-          <SimpleBtnDialog component={() => ClaimSuccess.getClaim({data, onSuccess:this.props.onDashboard})} disabled={!data.active}>
+          <ClaimBtn data={data} onSuccess={this.props.onDashboard} disabled={!data.active}>
             <div className={classNames('farm-btn','claim-btn',{active:data.active})}>{this.getTimerDis(data)}</div>
-          </SimpleBtnDialog>
+          </ClaimBtn>
         </div>
       </div>
     );
