@@ -114,7 +114,7 @@ const URL = {
     return `${BASEURL.FARM}/pools/{poolName}/staked_info`;
   },
   get GET_FARM_FIRST() {
-    return `${BASEURL.FARM}/pools/first`;
+    return `${BASEURL.FARM}/pools/first_pool`;
   },
 };
 export default URL;
