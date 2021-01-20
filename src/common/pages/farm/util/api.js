@@ -191,7 +191,7 @@ export function stakedInfo({ poolName }) {
 export function first(params={}) {
   //@mock mocker.first(URL.GET_FARM_FIRST);
   const address = util.getMyAddr();
-  params.parseInt(Date.now() / 1000) + 1000000;
+  params.stake_at = parseInt(Date.now() / 1000) + 1000000;
   params.pool_name = '1st_pool_okt_usdt';
   params.claim_height = '100000';
   if(address) params.address = address;
