@@ -1121,6 +1121,7 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   Claimed: 'Claimed',
   Unclaimed: 'Unclaimed',
   'Claim all': 'Claim all',
+  'Claim': 'Claim',
   Stake: 'Stake',
   Unstake: 'Unstake',
   Number: 'Number',

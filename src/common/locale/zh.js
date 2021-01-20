@@ -1120,6 +1120,7 @@ const zhCN = {
   Claimed: '已领取',
   Unclaimed: '待领取',
   'Claim all': '领取全部',
+  'Claim': '领取',
   Stake: '质押',
   Unstake: '赎回',
   Number: '数字',

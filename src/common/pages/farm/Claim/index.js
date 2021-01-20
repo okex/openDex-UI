@@ -43,13 +43,11 @@ export default class Claim extends React.Component {
               <tbody>
                 <tr className="thead">
                   <td width="153">{toLocale('Token')}</td>
-                  <td>{toLocale('Claimed')}</td>
-                  <td width="150">{toLocale('Unclaimed')}</td>
+                  <td width="150">{toLocale('Claim')}</td>
                 </tr>
                 {data.farmed_details.map((d, index) => (
                   <tr key={index}>
                     <td>{d.symbol_dis}</td>
-                    <td>{d.claimed_dis}</td>
                     <td>{d.unclaimed_dis}</td>
                   </tr>
                 ))}
