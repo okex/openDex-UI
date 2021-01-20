@@ -27,7 +27,7 @@ const testnet = {
     pool_name: '1st_pool_okt_usdt',
     lock_symbol: 'ammswap_okt_usdt-25a',
     stake_at: 1611150900,
-    claim_height: 291610,
+    claim_height: 292010,
     claim_height_extra: 24 * 60 * 60,
     claim_height_extra1: 3 * 24 * 60 * 60
   }
@@ -60,7 +60,7 @@ const mainnet = {
     pool_name: '1st_pool_okt_usdt',
     lock_symbol: 'ammswap_okt_usdt-25a',
     stake_at: 1611150900,
-    claim_height: 291610,
+    claim_height: 292010,
     claim_height_extra: 24 * 60 * 60,
     claim_height_extra1: 3 * 24 * 60 * 60
   }
