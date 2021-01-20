@@ -153,7 +153,11 @@ export function whitelist() {
 export function normal(param = {}) {
   //@mock mocker.normal(URL.GET_FARM_POOLS_NORMAL);
   return get(URL.GET_FARM_POOLS_NORMAL, param).then((data) => {
-    data.data = data.data.filter(d => d.in_whitelist || d.pool_name !== firstPoolConf.pool_name);
+    data.data = data.data.filter(d => {
+      const need = d.in_whitelist || d.pool_name !== firstPoolConf.pool_name;
+      if(!need) data.param_page.total = data.param_page.total - 1;
+      return need;
+    });
     _proccessData(data.data);
     return data;
   });
@@ -163,7 +167,11 @@ export function dashboard(param = {}) {
   const address = util.getMyAddr();
   //@mock mocker.dashboard(`${URL.GET_FARM_DASHBOARD}/${address}`);
   return get(`${URL.GET_FARM_DASHBOARD}/${address}`, param).then((data) => {
-    data.data = data.data.filter(d => d.in_whitelist || d.pool_name !== firstPoolConf.pool_name);
+    data.data = data.data.filter(d => {
+      const need = d.in_whitelist || d.pool_name !== firstPoolConf.pool_name;
+      if(!need) data.param_page.total = data.param_page.total - 1;
+      return need;
+    });
     _proccessData(data.data);
     return data;
   });
@@ -213,7 +221,7 @@ export function processFirst(data) {
   data.pool_name = firstPoolConf.pool_name;
   data.isLpToken = data.lock_symbol_info.symbols.length > 1;
   data.pool_name_dis = data.lock_symbol_info.name;
-  data.farm_apy_dis = util.precisionInput(calc.mul(data.farm_apy, 100), 4)+'%';
+  data.farm_apy_dis = util.precisionInput(calc.mul(data.farm_apy, 100), 2)+'%';
   data.farm_amount_dis = util.precisionInput(data.farm_amount, 8);
   data.total_staked_dis = '$'+util.precisionInput(data.total_staked, 8);
   _proccessTimer4First(data);

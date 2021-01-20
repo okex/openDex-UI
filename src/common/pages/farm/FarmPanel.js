@@ -10,6 +10,7 @@ import WatchlistPanel from './WatchlistPanel';
 import SimpleBtnDialog from './SimpleBtnDialog';
 import classNames from 'classnames';
 import Stake from './Stake';
+import { Dialog } from '../../component/Dialog';
 import * as api from './util/api';
 
 export default class FarmPanel extends React.Component {
@@ -17,6 +18,7 @@ export default class FarmPanel extends React.Component {
     super();
     this.state = {
       data: null,
+      show: false
     };
   }
 
@@ -63,6 +65,20 @@ export default class FarmPanel extends React.Component {
     this.init();
   }
 
+  renderHelp = () => {
+    return <div className="stake-help-info">
+      <div className="help-title">{toLocale('White listed help')}</div>
+      <div className="help-desc">{toLocale('White listed help desc')}</div>
+      </div>;
+  };
+
+  showHelp = () => {
+    Dialog.show({
+      width: '440px',
+      children: this.renderHelp(),
+    });
+  }
+
   getTimerDis = (data) => {
     if (data.active === 0) return data.timeInfo;
     if (data.active === 1) return `${toLocale('Finish in')} ${data.timeInfo}`;
@@ -92,12 +108,7 @@ export default class FarmPanel extends React.Component {
         )}
         <div className="title-wrap">
           {toLocale('White listed')}
-          <Tooltip
-            placement="right"
-            overlay={toLocale('White listed help')}
-          >
-            <i className="help" />
-          </Tooltip>
+          <i className="help" onClick={this.showHelp}/>
         </div>
         <div className="info-items">
           {data.map((d, index) => (

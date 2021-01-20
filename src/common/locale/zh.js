@@ -1089,6 +1089,7 @@ const zhCN = {
   'You haven’t connected a wallet.': '你还没有连接钱包',
   'White listed': '白名单池',
   'White listed help': '什么是白名单池',
+  'White listed help desc': '白名单池通过提案产生。任何一个项目方都可以提案自己的Farm池变成白名单Farm池。一旦提案通过成为白名单池，那么这个Farm池可以根据抵押金额按比例额外获得每个区块产生的0.5个okt奖励。',
   'Total staked：': '总质押：',
   'Pool rate：': '挖矿速率：',
   STAKE: '质押',
