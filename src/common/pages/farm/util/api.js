@@ -195,7 +195,7 @@ export function first(params={}) {
   const address = util.getMyAddr();
   params.stake_at = 1611072000;
   params.pool_name = '1st_pool_okt_usdt';
-  params.claim_height = '115200';
+  params.claim_height = '10000';
   if(address) params.address = address;
   return get(URL.GET_FARM_FIRST,params).then((data) => {
     processFirst(data);
