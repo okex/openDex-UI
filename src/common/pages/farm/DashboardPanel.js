@@ -149,7 +149,7 @@ export default class DashboardPanel extends React.Component {
                 <div className="info-item" key={index}>
                   {d.in_whitelist && (
                     <div
-                      className={classNames('tag', { active: d.active === 1 })}
+                      className={classNames('tag', { active: d.active !== 2 })}
                     ></div>
                   )}
                   <div className="info-item-title">
@@ -206,11 +206,11 @@ export default class DashboardPanel extends React.Component {
                   <div className="opt-footer">
                     <SimpleBtnDialog
                       component={() => Stake.getStake({data:d,onSuccess:this.refreshData})}
-                      disabled={d.active !== 1}
+                      disabled={d.active === 2}
                     >
                       <div
                         className={classNames('linkbtn', {
-                          disabled: d.active !== 1,
+                          disabled: d.active === 2,
                         })}
                       >
                         {toLocale('STAKE')}
