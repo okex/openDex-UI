@@ -137,16 +137,15 @@ export default class Stake extends React.Component {
                   type="text"
                   value={value}
                   onChange={this.onInputChange}
-                  placeholder={toLocale('stake min input placehold',{num:util.precisionInput(data.min_lock_amount,8)})}
+                  placeholder={isStake ? toLocale('stake min input placehold',{num:util.precisionInput(data.min_lock_amount,8)}) : ''}
                   precision={8}
                 />
               </div>
               <div className="right">
                 <div className="coin2coin">
-                  <img src={getCoinIcon(data.lock_symbol)} />
-                  <img src={getCoinIcon(data.yield_symbol)} />
+                 {data.lock_symbol_info.symbols.map((symbol,symbolIndex) => <img src={getCoinIcon(symbol)} key={symbolIndex}/>)}
                   <span>
-                    {data.lock_symbol_dis}/{data.yield_symbol_dis}
+                  {data.lock_symbol_info.name}
                   </span>
                 </div>
               </div>

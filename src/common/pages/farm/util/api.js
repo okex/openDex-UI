@@ -210,10 +210,6 @@ export function processFirst(data) {
   _proccessTimer4First(data);
   data.account_staked_dis = util.precisionInput(data.account_staked, 8);
   data.estimated_farm_dis = util.precisionInput(data.estimated_farm, 8);
-  data.lock_symbol = 'okt';
-  data.lock_symbol_dis = 'OKT';
-  data.yield_symbol = 'usdt';
-  data.yield_symbol_dis = 'USDT';
 }
 
 export function process(data) {
