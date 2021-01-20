@@ -30,7 +30,7 @@ export default class ClaimBtn extends React.Component {
         .then((res) => {
           resolve(res);
           if (validateTxs(res)) {
-            this.state({show: true})
+            this.setState({show: true})
           }
         })
         .catch((err) => reject(err));
@@ -61,13 +61,14 @@ export default class ClaimBtn extends React.Component {
 
   onClick = async () => {
     this.setState({triggerClick: true});
-    this.confirmInstance && this.confirmInstance._onClick();
+    util.isLogined() && this.confirmInstance && this.confirmInstance._onClick();
   };
 
   getRender = () => {
+    const {data} = this.props;
     const { show, triggerClick } = this.state;
     if(!triggerClick) return null;
-    if (!util.isLogined()) return <ConnectInfoTip onClose={this.onClose}/>;
+    if (!util.isLogined()) return <Dialog visible hideCloseBtn><ConnectInfoTip onClose={this.onClose}/></Dialog>;
     if(show) return (
       <Dialog visible hideCloseBtn>
         <div className="stake-panel" style={{ width: '496px' }}>

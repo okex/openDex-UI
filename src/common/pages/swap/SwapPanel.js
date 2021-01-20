@@ -11,7 +11,7 @@ import { getCoinIcon } from '../../utils/coinIcon';
 import * as api from './util/api';
 import Confirm from '../../component/Confirm';
 import { getDeadLine4sdk } from './util';
-import getRef from './getRef';
+import getRef from '../../component/getRef';
 import Tooltip from '../../component/Tooltip';
 import { validateTxs } from '_src/utils/client';
 import Message from '_src/component/Message';

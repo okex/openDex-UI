@@ -124,11 +124,6 @@ export default class Confirm extends React.Component {
       });
   };
 
-  async componentDidMount() {
-    const {exec} = this.props;
-    if(exec) this._onClick();
-  }
-
   render() {
     const { pwdErr, processingPwd, isShow } = this.state;
     return (

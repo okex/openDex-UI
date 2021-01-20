@@ -6,7 +6,7 @@ import WatchList from './Watchlist';
 import * as api from './util/api';
 import calc from '_src/utils/calc';
 import AddLiquidity from './AddLiquidity';
-import getRef from './getRef';
+import getRef from '../../component/getRef';
 import Tooltip from '../../component/Tooltip';
 @getRef
 export default class WatchlistPanel extends React.Component {
