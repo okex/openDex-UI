@@ -16,7 +16,7 @@ export default class FarmPanel extends React.Component {
   constructor() {
     super();
     this.state = {
-      data: [],
+      data: null,
     };
   }
 
@@ -73,6 +73,7 @@ export default class FarmPanel extends React.Component {
   render() {
     const isLogined = util.isLogined();
     const { data } = this.state;
+    if(!data) return null;
     return (
       <div className="panel-farm">
         {!isLogined && (

@@ -49,15 +49,15 @@ export default class WatchlistPanel extends React.Component {
         width: '240',
       },
       {
-        field: 'total_apy',
+        field: 'farm_apy',
         name: toLocale('Farm APY'),
         canSort: true,
         width: '142',
-        component({ row, data }) {
+        component({ row }) {
           return (
             <div className="coin2coin">
               <Tooltip placement="right" overlay={row.farm_apy_dis}>
-                <span>{data}</span>
+                <span>{row.total_apy}</span>
               </Tooltip>
               {row.farm_apy.map((d,index) => <img src={getCoinIcon(d.denom)} key={index}/>)}
             </div>
