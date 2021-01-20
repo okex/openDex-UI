@@ -11,11 +11,17 @@ const legalCurrencyId = 'dex_legalCurrencyId';
 
 export function initOKExChainClient() {
   return (dispatch) => {
+    console.log({
+      chainId: env.envConfig.chainId,
+      relativePath: `/${env.envConfig.apiPath}`,
+      isMainnet: !env.envConfig.isTest,
+    })
     const client = new OKExChainClient(
       Config.okexchain.clientUrl,
       {
         chainId: env.envConfig.chainId,
-        relativePath: `/${env.envConfig.apiPath}`
+        relativePath: `/${env.envConfig.apiPath}`,
+        isMainnet: !env.envConfig.isTest,
       }
     );
     dispatch({
