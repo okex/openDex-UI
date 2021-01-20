@@ -4,6 +4,9 @@ import util from '_src/utils/util';
 import calc from '_src/utils/calc';
 import { getLpTokenInfo, getLpTokenStr } from '_src/utils/lpTokenUtil';
 import { toLocale } from '_src/locale/react-locale';
+import env from '../../../constants/env';
+
+const firstPoolConf = env.envConfig.firstPoolConf;
 
 function ajax(method, url, params) {
   return ont[method](url, params || undefined).then((data) => {
@@ -150,7 +153,7 @@ export function whitelist() {
 export function normal(param = {}) {
   //@mock mocker.normal(URL.GET_FARM_POOLS_NORMAL);
   return get(URL.GET_FARM_POOLS_NORMAL, param).then((data) => {
-    data.data = data.data.filter(d => d.in_whitelist || d.pool_name !== '1st_pool_okt_usdt');
+    data.data = data.data.filter(d => d.in_whitelist || d.pool_name !== firstPoolConf.pool_name);
     _proccessData(data.data);
     return data;
   });
@@ -160,7 +163,7 @@ export function dashboard(param = {}) {
   const address = util.getMyAddr();
   //@mock mocker.dashboard(`${URL.GET_FARM_DASHBOARD}/${address}`);
   return get(`${URL.GET_FARM_DASHBOARD}/${address}`, param).then((data) => {
-    data.data = data.data.filter(d => d.in_whitelist || d.pool_name !== '1st_pool_okt_usdt');
+    data.data = data.data.filter(d => d.in_whitelist || d.pool_name !== firstPoolConf.pool_name);
     _proccessData(data.data);
     return data;
   });
@@ -193,20 +196,21 @@ export function stakedInfo({ poolName }) {
 export function first(params={}) {
   //@mock mocker.first(URL.GET_FARM_FIRST);
   const address = util.getMyAddr();
-  params.stake_at = 1611072000;
-  params.pool_name = '1st_pool_okt_usdt';
-  params.claim_height = '10000';
+  params.stake_at = firstPoolConf.stake_at;
+  params.pool_name = firstPoolConf.pool_name;
+  params.claim_height = calc.add(firstPoolConf.claim_height, firstPoolConf.claim_height_extra);
   if(address) params.address = address;
   return get(URL.GET_FARM_FIRST,params).then((data) => {
+    data.claim_at = calc.sub(data.claim_at,firstPoolConf.claim_height_extra1);
     processFirst(data);
     return data;
   });
 }
 
 export function processFirst(data) {
-  data.lock_symbol = 'ammswap_okt_usdk';
+  data.lock_symbol = firstPoolConf.lock_symbol;
   data.lock_symbol_info = _getLockSymbolInfos(data.lock_symbol);
-  data.pool_name = '1st_pool_okt_usdt';
+  data.pool_name = firstPoolConf.pool_name;
   data.isLpToken = data.lock_symbol_info.symbols.length > 1;
   data.pool_name_dis = data.lock_symbol_info.name;
   data.farm_apy_dis = util.precisionInput(calc.mul(data.farm_apy, 100), 4)+'%';

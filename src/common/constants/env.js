@@ -23,6 +23,14 @@ const testnet = {
   swapSetting: 'swap_setting_config_test',
   oklinkPagePath: 'okexchain-test',
   isMainnet: false,
+  firstPoolConf: {
+    pool_name: '1st_pool_okt_usdt',
+    lock_symbol: 'ammswap_okt_usdt-25a',
+    stake_at: 1611150900,
+    claim_height: 291610,
+    claim_height_extra: 24 * 60 * 60,
+    claim_height_extra1: 3 * 24 * 60 * 60
+  }
 };
 
 const mainnet = {
@@ -43,11 +51,19 @@ const mainnet = {
   },
   apiPath: 'okexchain/v1',
   pagePath: 'dex',
-  chainId: 'okexchain-1',
+  chainId: 'okexchain-66',
   kId: 'okex-dex',
   swapSetting: 'swap_setting_config',
   oklinkPagePath: 'okexchain',
-  isMainnet: false,
+  isMainnet: true,
+  firstPoolConf: {
+    pool_name: '1st_pool_okt_usdt',
+    lock_symbol: 'ammswap_okt_usdt-25a',
+    stake_at: 1611150900,
+    claim_height: 291610,
+    claim_height_extra: 24 * 60 * 60,
+    claim_height_extra1: 3 * 24 * 60 * 60
+  }
 };
 
 function envConfig() {
