@@ -22,6 +22,7 @@ const testnet = {
   kId: 'okex-dex-test',
   swapSetting: 'swap_setting_config_test',
   oklinkPagePath: 'okexchain-test',
+  isMainnet: false,
 };
 
 const mainnet = {
@@ -46,6 +47,7 @@ const mainnet = {
   kId: 'okex-dex',
   swapSetting: 'swap_setting_config',
   oklinkPagePath: 'okexchain',
+  isMainnet: false,
 };
 
 function envConfig() {

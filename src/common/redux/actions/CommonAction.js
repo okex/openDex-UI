@@ -14,14 +14,14 @@ export function initOKExChainClient() {
     console.log({
       chainId: env.envConfig.chainId,
       relativePath: `/${env.envConfig.apiPath}`,
-      isMainnet: !env.envConfig.isTest,
+      isMainnet: env.envConfig.isMainnet,
     })
     const client = new OKExChainClient(
       Config.okexchain.clientUrl,
       {
         chainId: env.envConfig.chainId,
         relativePath: `/${env.envConfig.apiPath}`,
-        isMainnet: !env.envConfig.isTest,
+        isMainnet: env.envConfig.isMainnet,
       }
     );
     dispatch({
