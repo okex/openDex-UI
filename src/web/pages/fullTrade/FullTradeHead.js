@@ -121,7 +121,7 @@ class FullTradeHead extends React.Component {
         {this.isTradePage() ? <FullTradeProductList /> : null}
         {this.isTradePage() ? <FullTradeTicker /> : null}
         <div className="okdex-header-right">
-          {util.isLogined() ? <LoggedMenu /> : <LoginMenu />}
+          {util.isLogined() ? <LoggedMenu href/> : <LoginMenu />}
           {this.isSwapMenu() && <SwapSetting />}
           <DocMenu />
           {!this.isSwapMenu() && <DesktopLinkMenu hasVersion={false} />}

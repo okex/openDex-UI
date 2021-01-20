@@ -105,7 +105,7 @@ class DexLoggedMenu extends React.Component {
     });
   };
   render() {
-    const { hasDoc } = this.props;
+    const { hasDoc, href } = this.props;
     const { isShowPassword, passwordError } = this.state;
     let addr = '';
     try {
@@ -142,12 +142,15 @@ class DexLoggedMenu extends React.Component {
               <WalletMenuTool address={addr} />
             </Menu.Item>
             <Menu.Item key="wallet-2">
-              <NavLink
-                to={PageURL.walletAssets}
-                activeClassName="active-menu-item"
-              >
-                {toLocale('header_menu_assets')}
-              </NavLink>
+              {href ? 
+                <a href={PageURL.walletAssets}>{toLocale('header_menu_assets')}</a>:
+                  <NavLink
+                  to={PageURL.walletAssets}
+                  activeClassName="active-menu-item"
+                >
+                  {toLocale('header_menu_assets')}
+                </NavLink>  
+              }
             </Menu.Item>
             <Menu.Item key="wallet-3" onClick={this.handleDownKeyStore}>
               {toLocale('header_menu_down_keystore')}
