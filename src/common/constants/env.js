@@ -58,7 +58,7 @@ const mainnet = {
   isMainnet: true,
   firstPoolConf: {
     pool_name: '1st_pool_okt_usdt',
-    lock_symbol: 'ammswap_okt_usdt-25a',
+    lock_symbol: 'ammswap_okt_usdk',
     stake_at: 1611150900,
     claim_height: 292010,
     claim_height_extra: 24 * 60 * 60,
