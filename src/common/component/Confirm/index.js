@@ -92,7 +92,10 @@ export default class Confirm extends React.Component {
           this.loading = true;
           loadingToast = loadingTxt
             ? Message.loading({
-                content: loadingTxt,
+                content: (
+                <span>
+                  {loadingTxt}<a target="_blank" rel="noopener noreferrer"
+                href={`${Config.okexchain.browserAddressUrl}/${util.getMyAddr()}`} >{toLocale('pending transactions link')}</a></span>),
                 duration: 0,
               })
             : null;

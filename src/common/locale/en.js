@@ -1062,7 +1062,8 @@ Immediate or Cancel requires all or part of the order to be executed immediately
     'The difference between the market price and estimated price due to trade size.',
   'Liquidity Provider Fee help':
     'A portion of each trade (0.3%) goes to liquidity providers as a protocol incentive.',
-  'pending transactions': 'pending transactions',
+  'pending transactions': 'pending transactions, ',
+  'pending transactions link': 'view in oklink>>',
   'transaction confirmed': 'transaction confirmed',
   'based on 24hr volume annualized':
     "It's 1 year fees/liquidity based on 24 hr volume annualized",

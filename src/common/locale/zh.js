@@ -1065,7 +1065,8 @@ const zhCN = {
   'Price Impact help': '受交易规模影响，市价与预期价格之间的差值。',
   'Liquidity Provider Fee help':
     '流动性提供者将获得每笔交易的 0.3% 作为协议奖励。',
-  'pending transactions': '交易打包中',
+  'pending transactions': '交易打包中，',
+  'pending transactions link': '前往浏览器查看>>',
   'transaction confirmed': '交易完成',
   'based on 24hr volume annualized': '手续费收益年化利率 (基于24小时交易量)',
   "Current pair can only swap through OKT, there's no direct pair for the 2 tokens.":
