@@ -170,7 +170,10 @@ export function dashboard(param = {}) {
     if(!Array.isArray(data.data)) data.data = [];
     data.data = data.data.filter((d) => {
       const need = d.in_whitelist || d.pool_name !== firstPoolConf.pool_name;
-      if (!need) data.param_page.total = data.param_page.total - 1;
+      if (!need) {
+        data.param_page.total = data.param_page.total - 1;
+        data.hasFirstPool = true;
+      }
       return need;
     });
     _proccessData(data.data);

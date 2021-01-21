@@ -73,8 +73,8 @@ export default class DashboardPanel extends React.Component {
     const { pageSize } = this.state;
     if (!current) current = this.state.current;
     let params = { page: current, per_page: pageSize };
-    const { data, param_page } = await api.dashboard(params);
-    return { data, total: param_page.total };
+    const { data, param_page, hasFirstPool } = await api.dashboard(params);
+    return { data, total: param_page.total, hasFirstPool };
   }
 
   refreshData = async () => {
@@ -101,7 +101,7 @@ export default class DashboardPanel extends React.Component {
   getPanel = () => {
     const { maxApy,hasFirstPool } = this.state;
     if (this.initial && !this.state.total) {
-      return hasFirstPool ? <div className="nodata">{toLocale('watchlist noData')}</div>: (
+      return hasFirstPool ? <div className="panel-watchlist"><div className="nodata">{toLocale('watchlist noData')}</div></div>: (
         <div className="panel panel-connect">
           <div className="connect-wallet-tip">
             <div>
