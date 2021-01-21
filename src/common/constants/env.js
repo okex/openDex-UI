@@ -40,9 +40,9 @@ const mainnet = {
   dexToken: 'dex_token',
   token: {
     base: 'okt',
-    quote: 'usdk',
-    quoteName: 'USDK',
-    defaultProduct: 'okt_usdk',
+    quote: 'usdt-a2b',
+    quoteName: 'USDT-A2B',
+    defaultProduct: 'okt_usdt-a2b',
     productKey: 'product',
     activeMarketKey: 'activeMarket',
     favoritesKey: 'favorites',
