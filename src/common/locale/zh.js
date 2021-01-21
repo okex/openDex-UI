@@ -1083,7 +1083,7 @@ const zhCN = {
   'insufficient lp token': 'LP Token余额不足',
   mainnet: '主网',
   testnet: '测试网',
-  'spot.asset.farm': 'Farm',
+  'spot.asset.farm': 'FARM池',
   seoFarmTitle: '流动性挖矿FARM',
   Farm: 'Farm池',
   Dashboard: '我的收益',
