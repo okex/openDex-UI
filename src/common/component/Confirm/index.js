@@ -7,6 +7,7 @@ import Message from '_src/component/Message';
 import PasswordDialog from '_component/PasswordDialog';
 import * as CommonAction from '_src/redux/actions/CommonAction';
 import { validateTxs } from '_src/utils/client';
+import Config from '../../constants/Config';
 import getRef from '../getRef';
 
 function mapStateToProps(state) {
