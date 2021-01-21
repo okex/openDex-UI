@@ -25,7 +25,7 @@ export default class WatchlistPanel extends React.Component {
               {row.lock_symbol_info.symbols.map((symbol, symbolIndex) => (
                 <img src={getCoinIcon(symbol)} key={symbolIndex} />
               ))}
-              <Tooltip placement="right" overlay={row.pool_name_dis}>
+              <Tooltip placement="right" overlay={row.pool_name}>
                 <span>{row.lock_symbol_info.name}</span>
               </Tooltip>
             </div>

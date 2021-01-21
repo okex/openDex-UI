@@ -45,11 +45,11 @@ function _proccessData(data) {
         dd.denom_dis = getLpTokenStr(dd.denom);
         pool_rate.push(`${util.precisionInput(dd.amount, 2)} ${dd.denom_dis}`);
       });
-      d.pool_rate_dis = pool_rate.join('+');
+      d.pool_rate_dis = pool_rate.join('+') || '--';
       d.poolEmpty = d.status === 1;
       d.total_staked_dis =
         Number(d.total_staked) === 0
-          ? '--'
+          ? '$0'
           : '$' + calc.thousandFormat(util.precisionInput(d.total_staked, 2));
       d.total_staked_dashbord_dis =
         Number(d.total_staked) === 0

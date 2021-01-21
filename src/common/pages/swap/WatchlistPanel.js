@@ -87,9 +87,10 @@ export default class WatchlistPanel extends React.Component {
         component({ row, data }) {
           const tokens = row.swap_pair.split('_');
           let price = data;
-          if (row.isRevert) {
-            tokens.reverse();
+          if (!row.isRevert) {
             price = calc.div(1, data);
+          } else {
+            tokens.reverse();
           }
           let baseSymbol = tokens[0];
           let targetSymbol = tokens[1];
