@@ -82,9 +82,7 @@ function getDefaultActivedMenu(current) {
 class DesktopTypeMenu extends Component {
   constructor(props) {
     super(props);
-    this.headTypeList = headTypeList;
-    if (props.isDexDesk) this.headTypeList = this.headTypeList.slice(5);
-    else this.headTypeList = this.headTypeList.slice(0, 7);
+    this.headTypeList = headTypeList.slice(5);
   }
 
   change = (item) => {

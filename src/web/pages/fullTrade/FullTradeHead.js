@@ -117,14 +117,14 @@ class FullTradeHead extends React.Component {
           <img src={okexLogo} style={this.iconStyle} />
         </a>
         <DesktopNetMenu />
-        {!this.isFarmMenu() && <DesktopTypeMenu current={current} />}
+        <DesktopTypeMenu current={current} />
         {this.isTradePage() ? <FullTradeProductList /> : null}
         {this.isTradePage() ? <FullTradeTicker /> : null}
         <div className="okdex-header-right">
           {util.isLogined() ? <LoggedMenu href /> : <LoginMenu />}
           {this.isSwapMenu() && <SwapSetting />}
           <DocMenu />
-          {!this.isSwapMenu() && <DesktopLinkMenu hasVersion={false} />}
+          {!this.isSwapMenu() && !this.isFarmMenu() && <DesktopLinkMenu hasVersion={false} />}
         </div>
       </div>
     );
