@@ -61,10 +61,10 @@ const mainnet = {
     pool_name: '1st_pool_okt_usdt',
     lock_symbol: 'ammswap_okt_usdk',
     stake_at: 1611234000,
-    claim_height: 1611236400,
+    claim_height: 1,
     claim_height_extra: 24 * 60 * 60,
     claim_height_extra1: 3 * 24 * 60 * 60,
-    claim_at: 1611219000,
+    claim_at: 1611236400,
   },
 };
 
