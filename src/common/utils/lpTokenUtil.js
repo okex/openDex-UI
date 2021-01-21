@@ -8,7 +8,7 @@ export function isLpToken(tokenPair) {
   return tokens;
 }
 
-export function getLpTokenInfo(tokenPair) {
+export function getLpTokenInfo(tokenPair,filter=true) {
   const tokens = isLpToken(tokenPair);
   if (!tokens) return null;
   const lptokens = [[], []];
@@ -28,25 +28,25 @@ export function getLpTokenInfo(tokenPair) {
   return {
     base: lptokens[0],
     quote: lptokens[1],
-    name: getLpTokenName(lptokens[0], lptokens[1]),
+    name: getLpTokenName(lptokens[0], lptokens[1], filter),
   };
 }
 
-export function getLpTokenStr(tokenPair = '') {
+export function getLpTokenStr(tokenPair = '', filter=true) {
   const lpTokenInfo = getLpTokenInfo(tokenPair);
   if (lpTokenInfo) return lpTokenInfo.name;
   if (/(ammswap_)/.test(tokenPair)) return tokenPair.toUpperCase();
-  return getDisplaySymbol(tokenPair);
+  return getDisplaySymbol(tokenPair, filter);
 }
 
-function getLpTokenName(base, quote, baseStr = '', quoteStr = '') {
-  if (base.length === 1) baseStr = getDisplaySymbol(base[0]);
+function getLpTokenName(base, quote, baseStr = '', quoteStr = '', filter=true) {
+  if (base.length === 1) baseStr = getDisplaySymbol(base[0], filter);
   else if (base.length === 2)
-    baseStr = `LP (${getDisplaySymbol(base[0])}/${getDisplaySymbol(base[1])})`;
+    baseStr = `LP (${getDisplaySymbol(base[0], filter)}/${getDisplaySymbol(base[1], filter)})`;
   if (quote.length === 1) quoteStr = quote[0].toUpperCase();
   else if (quote.length === 2)
-    quoteStr = `LP (${getDisplaySymbol(quote[0])}/${getDisplaySymbol(
-      quote[1]
+    quoteStr = `LP (${getDisplaySymbol(quote[0], filter)}/${getDisplaySymbol(
+      quote[1], filter
     )})`;
   if (!baseStr) return quoteStr;
   if (!quoteStr) return baseStr;

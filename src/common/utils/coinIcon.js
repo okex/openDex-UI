@@ -27,11 +27,11 @@ export function getCoinIcon(symbol) {
   return defaultcoin;
 }
 
-export function getDisplaySymbol(symbol) {
+export function getDisplaySymbol(symbol, filter=true) {
   if (!symbol) return symbol;
   const temp = Object.keys(icons).filter(
     (d) => d.toLowerCase() === symbol.toLowerCase()
   );
-  if (temp[0]) return temp[0].replace(/\-.*/, '').toUpperCase();
+  if (temp[0] && filter) return temp[0].replace(/\-.*/, '').toUpperCase();
   return symbol.toUpperCase();
 }
