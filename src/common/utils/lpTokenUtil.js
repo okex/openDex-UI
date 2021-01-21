@@ -33,7 +33,7 @@ export function getLpTokenInfo(tokenPair,filter=true) {
 }
 
 export function getLpTokenStr(tokenPair = '', filter=true) {
-  const lpTokenInfo = getLpTokenInfo(tokenPair);
+  const lpTokenInfo = getLpTokenInfo(tokenPair, filter);
   if (lpTokenInfo) return lpTokenInfo.name;
   if (/(ammswap_)/.test(tokenPair)) return tokenPair.toUpperCase();
   return getDisplaySymbol(tokenPair, filter);

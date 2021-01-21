@@ -175,7 +175,7 @@ export default class Stake extends React.Component {
               <div className="space-between stake-panel-detail">
                 <div className="left">{toLocale('FARM APY')}</div>
                 <div className="right">
-                  {data.total_apy} {data.farm_apy_dis}
+                  {data.farm_apy_dis}
                 </div>
               </div>
             </>

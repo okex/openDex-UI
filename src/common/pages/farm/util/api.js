@@ -26,10 +26,10 @@ function _proccessData(data) {
       let total_apy = 0,
         farm_apy = [],
         pool_rate = [];
-      d.pool_name_dis = getLpTokenStr(d.pool_name);
       d.lock_symbol_dis = getLpTokenStr(d.lock_symbol);
       d.yield_symbol_dis = getLpTokenStr(d.yield_symbol);
       d.lock_symbol_info = _getLockSymbolInfos(d.lock_symbol);
+      d.pool_name_dis = d.lock_symbol_info.name;
       d.isLpToken = d.lock_symbol_info.symbols.length > 1;
       d.farm_apy.forEach((dd) => {
         total_apy = calc.add(total_apy, dd.amount);
