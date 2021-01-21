@@ -23,6 +23,7 @@ export default class DashboardPanel extends React.Component {
       pageSize: 15,
       total: 0,
       maxApy: null,
+      hasFirstPool: false
     };
   }
 
@@ -98,9 +99,9 @@ export default class DashboardPanel extends React.Component {
   };
 
   getPanel = () => {
-    const { maxApy } = this.state;
+    const { maxApy,hasFirstPool } = this.state;
     if (this.initial && !this.state.total) {
-      return (
+      return hasFirstPool ? <div className="nodata">{toLocale('watchlist noData')}</div>: (
         <div className="panel panel-connect">
           <div className="connect-wallet-tip">
             <div>
@@ -164,7 +165,7 @@ export default class DashboardPanel extends React.Component {
                               />
                             )
                           )}
-                          <Tooltip placement="right" overlay={d.pool_name_dis}>
+                          <Tooltip placement="right" overlay={d.pool_name}>
                             <span>{d.lock_symbol_info.name}</span>
                           </Tooltip>
                         </div>

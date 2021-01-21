@@ -83,8 +83,8 @@ export default class FarmPanel extends React.Component {
 
   getTimerDis = (data) => {
     if (data.active === 0) return data.timeInfo;
-    if (data.active === 1) return `${toLocale('Finish in')} ${data.timeInfo}`;
-    if (data.active === 2) return `${toLocale('Start in')} ${data.timeInfo}`;
+    if (data.active === 1) return toLocale('Finish in', {time: data.timeInfo});
+    if (data.active === 2) return toLocale('Start in', {time: data.timeInfo});
     return null;
   };
 
@@ -122,7 +122,7 @@ export default class FarmPanel extends React.Component {
                 {d.lock_symbol_info.symbols.map((symbol, symbolIndex) => (
                   <img src={getCoinIcon(symbol)} key={symbolIndex} />
                 ))}
-                <Tooltip placement="right" overlay={d.pool_name_dis}>
+                <Tooltip placement="right" overlay={d.pool_name}>
                   <span>{d.lock_symbol_info.name}</span>
                 </Tooltip>
               </div>
