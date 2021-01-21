@@ -1131,7 +1131,7 @@ const zhCN = {
   'Pool ratio': '占比',
   'FARM APY': '挖矿年化收益率',
   'You didn’t have any LP tokens':
-    '你还没有{pool_name} LP Token, 需要先添加流动性获得.',
+    '你还没有{pool_name}, 需要先添加流动性获得.',
   'Claim details': '领取详情',
   '1Day': '1天',
   'balance not enough': '余额不足',
