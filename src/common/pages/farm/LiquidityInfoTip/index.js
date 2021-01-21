@@ -24,9 +24,9 @@ export default class LiquidityInfoTip extends React.Component {
           <div className="farm-btn cancel" onClick={onClose}>
             {toLocale('cancel')}
           </div>
-          <Link to={getLangURL(PageURL.swapPage)}>
+          <a href={getLangURL(PageURL.swapPage)} target="_blank" rel="noopener noreferrer">
             <div className="farm-btn">{toLocale('Add Liquidity')}</div>
-          </Link>
+          </a>
         </div>
       </div>
     );
