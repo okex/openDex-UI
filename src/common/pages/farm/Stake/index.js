@@ -207,7 +207,7 @@ export default class Stake extends React.Component {
 Stake.getStake = async ({ data, isStake = true, onSuccess }) => {
   if (!util.isLogined()) return <ConnectInfoTip />;
   const stakeInfo = await api.stakedInfo({ poolName: data.pool_name });
-  if (!Number(stakeInfo.balance) && data.isLpToken)
+  if (!Number(stakeInfo.balance) && data.isLpToken && isStake)
     return <LiquidityInfoTip data={data} />;
   return (
     <Stake
