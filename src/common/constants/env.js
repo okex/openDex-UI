@@ -25,11 +25,12 @@ const testnet = {
   isMainnet: false,
   firstPoolConf: {
     pool_name: '1st_pool_okt_usdt',
-    lock_symbol: 'ammswap_okt_usdt-25a',
+    lock_symbol: 'ammswap_okt_usdk',
     stake_at: 1611150900,
-    claim_height: 292010,
+    claim_height: 1003128,
     claim_height_extra: 24 * 60 * 60,
     claim_height_extra1: 3 * 24 * 60 * 60,
+    claim_at: 1611219000,
   },
 };
 
@@ -60,9 +61,10 @@ const mainnet = {
     pool_name: '1st_pool_okt_usdt',
     lock_symbol: 'ammswap_okt_usdk',
     stake_at: 1611150900,
-    claim_height: 5400,
+    claim_height: 1003128,
     claim_height_extra: 24 * 60 * 60,
     claim_height_extra1: 3 * 24 * 60 * 60,
+    claim_at: 1611219000,
   },
 };
 

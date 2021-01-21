@@ -212,7 +212,7 @@ export function first(params = {}) {
   );
   if (address) params.address = address;
   return get(URL.GET_FARM_FIRST, params).then((data) => {
-    data.claim_at = calc.sub(data.claim_at, firstPoolConf.claim_height_extra1);
+    data.claim_at = firstPoolConf.claim_at;
     processFirst(data);
     return data;
   });
