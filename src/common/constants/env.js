@@ -52,7 +52,7 @@ const mainnet = {
   },
   apiPath: 'okexchain/v1',
   pagePath: 'dex',
-  chainId: 'okexchain-1',
+  chainId: 'okexchain-66',
   kId: 'okex-dex',
   swapSetting: 'swap_setting_config',
   oklinkPagePath: 'okexchain',
