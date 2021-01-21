@@ -25,12 +25,12 @@ const testnet = {
   isMainnet: false,
   firstPoolConf: {
     pool_name: '1st_pool_okt_usdt',
-    lock_symbol: 'ammswap_okt_usdk',
-    stake_at: 1611150900,
+    lock_symbol: 'ammswap_okt_usdt-25a',
+    stake_at: 1611309600,
     claim_height: 1003128,
     claim_height_extra: 24 * 60 * 60,
     claim_height_extra1: 3 * 24 * 60 * 60,
-    claim_at: 1611219000,
+    claim_at: 1611655200,
   },
 };
 
@@ -52,19 +52,19 @@ const mainnet = {
   },
   apiPath: 'okexchain/v1',
   pagePath: 'dex',
-  chainId: 'okexchain-1',
+  chainId: 'okexchain-66',
   kId: 'okex-dex',
   swapSetting: 'swap_setting_config',
   oklinkPagePath: 'okexchain',
   isMainnet: true,
   firstPoolConf: {
     pool_name: '1st_pool_okt_usdt',
-    lock_symbol: 'ammswap_okt_usdk',
-    stake_at: 1611234000,
-    claim_height: 1,
+    lock_symbol: 'ammswap_okt_usdt-a2b',
+    stake_at: 1611309600,
+    claim_height: 1003128,
     claim_height_extra: 24 * 60 * 60,
     claim_height_extra1: 3 * 24 * 60 * 60,
-    claim_at: 1611236400,
+    claim_at: 1611655200,
   },
 };
 
