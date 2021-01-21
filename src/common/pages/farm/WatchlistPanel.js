@@ -88,7 +88,7 @@ export default class WatchlistPanel extends React.Component {
       },
       {
         name: toLocale('Action'),
-        width: '100',
+        width: '80',
         component: ({ row }) => {
           return (
             <SimpleBtnDialog
