@@ -1,6 +1,6 @@
 import React from 'react';
 import { toLocale } from '_src/locale/react-locale';
-import { getCoinIcon } from '../../../utils/coinIcon';
+import { getCoinIcon, getDisplaySymbol } from '../../../utils/coinIcon';
 import calc from '_src/utils/calc';
 import util from '_src/utils/util';
 
@@ -16,8 +16,8 @@ export default class InfoItem extends React.Component {
             <img src={getCoinIcon(data.base_pooled_coin.denom)} />
             <img src={getCoinIcon(data.quote_pooled_coin.denom)} />
             <span className="title-name">
-              {data.base_pooled_coin.denom.toUpperCase()}/
-              {data.quote_pooled_coin.denom.toUpperCase()}
+              {getDisplaySymbol(data.base_pooled_coin.denom)}/
+              {getDisplaySymbol(data.quote_pooled_coin.denom)}
             </span>
           </div>
           <div className="right title-opt">
@@ -35,8 +35,8 @@ export default class InfoItem extends React.Component {
         </div>
         <div className="space-between poll-item-txt">
           <div className="left">
-            {toLocale('Amount')} {data.base_pooled_coin.denom.toUpperCase()}/
-            {data.quote_pooled_coin.denom.toUpperCase()}
+            {toLocale('Amount')} {getDisplaySymbol(data.base_pooled_coin.denom)}/
+            {getDisplaySymbol(data.quote_pooled_coin.denom)}
           </div>
           <div className="right">{toLocale('LP token/ratio')}</div>
         </div>

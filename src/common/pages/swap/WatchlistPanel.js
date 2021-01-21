@@ -1,6 +1,6 @@
 import React from 'react';
 import Pagination from '_component/Pagination';
-import { getCoinIcon } from '../../utils/coinIcon';
+import { getCoinIcon,getDisplaySymbol } from '../../utils/coinIcon';
 import { toLocale } from '_src/locale/react-locale';
 import WatchList from './Watchlist';
 import * as api from './util/api';
@@ -28,7 +28,7 @@ export default class WatchlistPanel extends React.Component {
               <img src={getCoinIcon(baseSymbol)} />
               <img src={getCoinIcon(targetSymbol)} />
               <span>
-                {baseSymbol.toUpperCase()}/{targetSymbol.toUpperCase()}
+                {getDisplaySymbol(baseSymbol)}/{getDisplaySymbol(targetSymbol)}
               </span>
             </div>
           );
@@ -95,11 +95,11 @@ export default class WatchlistPanel extends React.Component {
           let targetSymbol = tokens[1];
           return (
             <div>
-              1 {baseSymbol.toUpperCase()}≈
+              1 {getDisplaySymbol(baseSymbol)}≈
               {Number(price) === 0 || Number(price) === Infinity
                 ? '-'
                 : calc.mul(price, 1).toFixed(4)}{' '}
-              {targetSymbol.toUpperCase()}
+              {getDisplaySymbol(targetSymbol)}
             </div>
           );
         },

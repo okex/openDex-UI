@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { toLocale } from '_src/locale/react-locale';
 import InputNum from '_component/InputNum';
 import SelectCoin from '../SelectCoin';
-import { getCoinIcon } from '../../../utils/coinIcon';
+import { getCoinIcon, getDisplaySymbol } from '../../../utils/coinIcon';
 import classNames from 'classnames';
 import { channelsV3 } from '../../../utils/websocket';
 import SwapContext from '../SwapContext';
@@ -161,7 +161,7 @@ export default class CoinItem extends React.Component {
           >
             <img className="coin-icon" src={getCoinIcon(symbol)} />
             {symbol ? (
-              <span className="text active">{symbol.toUpperCase()}</span>
+              <span className="text active">{getDisplaySymbol(symbol)}</span>
             ) : (
               <span className="text">{toLocale('Select a token')}</span>
             )}

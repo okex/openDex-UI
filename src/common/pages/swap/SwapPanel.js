@@ -7,7 +7,7 @@ import { getLangURL } from '_src/utils/navigation';
 import PageURL from '_constants/PageURL';
 import { Link } from 'react-router-dom';
 import CoinItem from './CoinItem';
-import { getCoinIcon } from '../../utils/coinIcon';
+import { getCoinIcon, getDisplaySymbol } from '../../utils/coinIcon';
 import * as api from './util/api';
 import Confirm from '../../component/Confirm';
 import { getDeadLine4sdk } from './util';
@@ -229,22 +229,22 @@ export default class SwapPanel extends React.Component {
             <div className="info">
               <div className="info-name">{toLocale('Price')}</div>
               <div className="info-value">
-                <i className="exchange" />1{baseToken.symbol.toUpperCase()} ≈ -
-                {targetToken.symbol.toUpperCase()}
+                <i className="exchange" />1{getDisplaySymbol(baseToken.symbol)} ≈ -
+                {getDisplaySymbol(targetToken.symbol)}
               </div>
             </div>
           </div>
         );
       } else {
-        let priceInfo = `1${baseToken.symbol.toUpperCase()} ≈ ${util.precisionInput(
+        let priceInfo = `1${getDisplaySymbol(baseToken.symbol)} ≈ ${util.precisionInput(
           exchangeInfo.price,
           8
-        )}${targetToken.symbol.toUpperCase()}`;
+        )}${getDisplaySymbol(targetToken.symbol)}`;
         if (exchangeInfo.isReverse)
-          priceInfo = `1${targetToken.symbol.toUpperCase()} ≈ ${util.precisionInput(
+          priceInfo = `1${getDisplaySymbol(targetToken.symbol)} ≈ ${util.precisionInput(
             calc.div(1, exchangeInfo.price),
             8
-          )}${baseToken.symbol.toUpperCase()}`;
+          )}${getDisplaySymbol(baseToken.symbol)}`;
         return (
           <div className="coin-exchange-detail">
             <div className="info">
@@ -266,7 +266,7 @@ export default class SwapPanel extends React.Component {
                 </Tooltip>
               </div>
               <div className="info-value">
-                {this.getMinimumReceived(8)} {targetToken.symbol.toUpperCase()}
+                {this.getMinimumReceived(8)} {getDisplaySymbol(targetToken.symbol)}
               </div>
             </div>
             <div className="info">
@@ -295,7 +295,7 @@ export default class SwapPanel extends React.Component {
               </div>
               <div className="info-value">
                 {!fee && '≈'}
-                {util.precisionInput(fee, 8)} {baseToken.symbol.toUpperCase()}
+                {util.precisionInput(fee, 8)} {getDisplaySymbol(baseToken.symbol)}
               </div>
             </div>
             {exchangeInfo.route && (
@@ -313,11 +313,11 @@ export default class SwapPanel extends React.Component {
                 </div>
                 <div className="info-value">
                   <img className="coin" src={getCoinIcon(baseToken.symbol)} />
-                  {baseToken.symbol.toUpperCase()} &gt;{' '}
+                  {getDisplaySymbol(baseToken.symbol)} &gt;{' '}
                   <img className="coin" src={getCoinIcon(exchangeInfo.route)} />
-                  {exchangeInfo.route.toUpperCase()} &gt;
+                  {getDisplaySymbol(exchangeInfo.route)} &gt;
                   <img className="coin" src={getCoinIcon(targetToken.symbol)} />
-                  {targetToken.symbol.toUpperCase()}
+                  {getDisplaySymbol(targetToken.symbol)}
                 </div>
               </div>
             )}
@@ -357,7 +357,7 @@ export default class SwapPanel extends React.Component {
     } else if (baseToken.error) {
       btn = (
         <div className="btn disabled">
-          {toLocale('insufficient', { coin: baseToken.symbol.toUpperCase() })}
+          {toLocale('insufficient', { coin: getDisplaySymbol(baseToken.symbol) })}
         </div>
       );
     } else {

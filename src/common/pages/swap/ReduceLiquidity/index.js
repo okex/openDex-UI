@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { toLocale } from '_src/locale/react-locale';
-import { getCoinIcon } from '../../../utils/coinIcon';
+import { getCoinIcon, getDisplaySymbol } from '../../../utils/coinIcon';
 import * as api from '../util/api';
 import InputNum from '_component/InputNum';
 import calc from '_src/utils/calc';
@@ -206,10 +206,10 @@ export default class ReduceLiquidity extends React.Component {
             <div className="space-between coin-withdraw" key={index}>
               <div className="left">
                 <img src={getCoinIcon(d.denom)} />
-                {d.denom.toUpperCase()}
+                {getDisplaySymbol(d.denom)}
               </div>
               <div className="right">
-                {util.precisionInput(d.amount, 8)} {d.denom.toUpperCase()}
+                {util.precisionInput(d.amount, 8)} {getDisplaySymbol(d.denom)}
               </div>
             </div>
           ))}

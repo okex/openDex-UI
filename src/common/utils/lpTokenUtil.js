@@ -1,3 +1,5 @@
+import { getDisplaySymbol } from './coinIcon';
+
 export function isLpToken(tokenPair) {
   let ammswap = /(ammswap_)/.test(tokenPair);
   if(!ammswap) return null;
@@ -34,14 +36,15 @@ export function getLpTokenInfo(tokenPair) {
 export function getLpTokenStr(tokenPair='') {
   const lpTokenInfo = getLpTokenInfo(tokenPair);
   if(lpTokenInfo) return lpTokenInfo.name;
-  return tokenPair.toUpperCase();
+  if(/(ammswap_)/.test(tokenPair)) return tokenPair.toUpperCase();
+  return getDisplaySymbol(tokenPair);
 }
 
 function getLpTokenName(base, quote, baseStr='', quoteStr='') {
-  if(base.length === 1) baseStr = base[0].toUpperCase();
-  else if(base.length === 2) baseStr = `LP (${base[0].toUpperCase()}/${base[1].toUpperCase()})`;
+  if(base.length === 1) baseStr = getDisplaySymbol(base[0]);
+  else if(base.length === 2) baseStr = `LP (${getDisplaySymbol(base[0])}/${getDisplaySymbol(base[1])})`;
   if(quote.length === 1) quoteStr = quote[0].toUpperCase();
-  else if(quote.length === 2) quoteStr = `LP (${quote[0].toUpperCase()}/${quote[1].toUpperCase()})`;
+  else if(quote.length === 2) quoteStr = `LP (${getDisplaySymbol(quote[0])}/${getDisplaySymbol(quote[1])})`;
   if(!baseStr) return quoteStr;
   if(!quoteStr) return baseStr;
   return `${baseStr}/${quoteStr}`;

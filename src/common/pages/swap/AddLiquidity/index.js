@@ -15,6 +15,7 @@ import { getDeadLine4sdk } from '../util';
 import Message from '_src/component/Message';
 import Tooltip from '../../../component/Tooltip';
 import { validateTxs } from '_src/utils/client';
+import { getDisplaySymbol } from '../../../utils/coinIcon';
 
 function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
@@ -299,16 +300,16 @@ export default class AddLiquidity extends React.Component {
     }
     if (isEmptyPool) {
       if (!baseToken.value || !targetToken.value) {
-        priceInfo = `1${baseToken.symbol.toUpperCase()} ≈ -${targetToken.symbol.toUpperCase()}`;
+        priceInfo = `1${getDisplaySymbol(baseToken.symbol)} ≈ -${getDisplaySymbol(targetToken.symbol)}`;
       } else {
         let tempPrice = calc.div(targetToken.value, baseToken.value);
         if (Number.isNaN(tempPrice)) tempPrice = '-';
         else tempPrice = util.precisionInput(tempPrice, 8);
-        priceInfo = `1${baseToken.symbol.toUpperCase()} ≈ ${tempPrice}${targetToken.symbol.toUpperCase()}`;
+        priceInfo = `1${getDisplaySymbol(baseToken.symbol)} ≈ ${tempPrice}${getDisplaySymbol(targetToken.symbol)}`;
       }
       return { priceInfo, poolShare: 1 };
     }
-    priceInfo = `1${baseToken.symbol.toUpperCase()} ≈ ${price}${targetToken.symbol.toUpperCase()}`;
+    priceInfo = `1${getDisplaySymbol(baseToken.symbol)} ≈ ${price}${getDisplaySymbol(targetToken.symbol)}`;
     return { priceInfo, poolShare: exchangeInfo.pool_share };
   }
 
@@ -334,13 +335,13 @@ export default class AddLiquidity extends React.Component {
     } else if (baseToken.error) {
       btn = (
         <div className="btn disabled">
-          {toLocale('insufficient', { coin: baseToken.symbol.toUpperCase() })}
+          {toLocale('insufficient', { coin: getDisplaySymbol(baseToken.symbol) })}
         </div>
       );
     } else if (targetToken.error) {
       btn = (
         <div className="btn disabled">
-          {toLocale('insufficient', { coin: targetToken.symbol.toUpperCase() })}
+          {toLocale('insufficient', { coin: getDisplaySymbol(targetToken.symbol) })}
         </div>
       );
     } else {

@@ -25,3 +25,12 @@ export function getCoinIcon(symbol) {
   if (temp[0]) return icons[temp[0]];
   return defaultcoin;
 }
+
+export function getDisplaySymbol(symbol) {
+  if (!symbol) return symbol;
+  const temp = Object.keys(icons).filter(
+    (d) => d.toLowerCase() === symbol.toLowerCase()
+  );
+  if (temp[0]) return temp[0].replace(/\-.*/,'').toUpperCase();
+  return symbol.toUpperCase();
+}
