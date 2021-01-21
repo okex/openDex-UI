@@ -95,12 +95,12 @@ export default class WatchlistPanel extends React.Component {
               component={() =>
                 Stake.getStake({ data: row, onSuccess: this.refreshData })
               }
-              disabled={row.active !== 1}
+              disabled={row.active === 2}
             >
               <div className="action-opt-wrap">
                 <div
                   className={classNames('action-opt', {
-                    disabled: row.active !== 1,
+                    disabled: row.active === 2,
                   })}
                 >
                   {toLocale('Stake')}
