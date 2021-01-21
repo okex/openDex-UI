@@ -3,7 +3,7 @@ const enUS = {
   "error.code.60002": "tx parse error",
   "error.code.60003": "invalid sequence",
   "error.code.60004": "unauthorized",
-  "error.code.60005": "insufficient balance",
+  "error.code.60005": "Insufficient OKT balance, transaction failed",
   "error.code.60006": "unknown request",
   "error.code.60007": "invalid address",
   "error.code.60008": "invalid pubkey",

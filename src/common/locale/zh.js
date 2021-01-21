@@ -3,7 +3,7 @@ const zhCN = {
   "error.code.60002": "交易解析失败",
   "error.code.60003": "无效序列",
   "error.code.60004": "未经授权",
-  "error.code.60005": "资金余额不足",
+  "error.code.60005": "OKT余额不足，无法发送交易",
   "error.code.60006": "未知请求",
   "error.code.60007": "无效地址",
   "error.code.60008": "无效公钥",
