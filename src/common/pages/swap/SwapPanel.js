@@ -229,19 +229,22 @@ export default class SwapPanel extends React.Component {
             <div className="info">
               <div className="info-name">{toLocale('Price')}</div>
               <div className="info-value">
-                <i className="exchange" />1{getDisplaySymbol(baseToken.symbol)} ≈ -
-                {getDisplaySymbol(targetToken.symbol)}
+                <i className="exchange" />1{getDisplaySymbol(baseToken.symbol)}{' '}
+                ≈ -{getDisplaySymbol(targetToken.symbol)}
               </div>
             </div>
           </div>
         );
       } else {
-        let priceInfo = `1${getDisplaySymbol(baseToken.symbol)} ≈ ${util.precisionInput(
-          exchangeInfo.price,
-          8
-        )}${getDisplaySymbol(targetToken.symbol)}`;
+        let priceInfo = `1${getDisplaySymbol(
+          baseToken.symbol
+        )} ≈ ${util.precisionInput(exchangeInfo.price, 8)}${getDisplaySymbol(
+          targetToken.symbol
+        )}`;
         if (exchangeInfo.isReverse)
-          priceInfo = `1${getDisplaySymbol(targetToken.symbol)} ≈ ${util.precisionInput(
+          priceInfo = `1${getDisplaySymbol(
+            targetToken.symbol
+          )} ≈ ${util.precisionInput(
             calc.div(1, exchangeInfo.price),
             8
           )}${getDisplaySymbol(baseToken.symbol)}`;
@@ -266,7 +269,8 @@ export default class SwapPanel extends React.Component {
                 </Tooltip>
               </div>
               <div className="info-value">
-                {this.getMinimumReceived(8)} {getDisplaySymbol(targetToken.symbol)}
+                {this.getMinimumReceived(8)}{' '}
+                {getDisplaySymbol(targetToken.symbol)}
               </div>
             </div>
             <div className="info">
@@ -295,7 +299,8 @@ export default class SwapPanel extends React.Component {
               </div>
               <div className="info-value">
                 {!fee && '≈'}
-                {util.precisionInput(fee, 8)} {getDisplaySymbol(baseToken.symbol)}
+                {util.precisionInput(fee, 8)}{' '}
+                {getDisplaySymbol(baseToken.symbol)}
               </div>
             </div>
             {exchangeInfo.route && (
@@ -357,7 +362,9 @@ export default class SwapPanel extends React.Component {
     } else if (baseToken.error) {
       btn = (
         <div className="btn disabled">
-          {toLocale('insufficient', { coin: getDisplaySymbol(baseToken.symbol) })}
+          {toLocale('insufficient', {
+            coin: getDisplaySymbol(baseToken.symbol),
+          })}
         </div>
       );
     } else {

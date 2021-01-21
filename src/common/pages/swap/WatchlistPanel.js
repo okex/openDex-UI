@@ -1,6 +1,6 @@
 import React from 'react';
 import Pagination from '_component/Pagination';
-import { getCoinIcon,getDisplaySymbol } from '../../utils/coinIcon';
+import { getCoinIcon, getDisplaySymbol } from '../../utils/coinIcon';
 import { toLocale } from '_src/locale/react-locale';
 import WatchList from './Watchlist';
 import * as api from './util/api';

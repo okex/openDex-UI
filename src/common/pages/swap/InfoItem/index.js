@@ -5,7 +5,6 @@ import calc from '_src/utils/calc';
 import util from '_src/utils/util';
 
 export default class InfoItem extends React.Component {
-
   render() {
     const { data, add, reduce } = this.props;
     let available = data.pool_token_coin.amount;
@@ -35,8 +34,8 @@ export default class InfoItem extends React.Component {
         </div>
         <div className="space-between poll-item-txt">
           <div className="left">
-            {toLocale('Amount')} {getDisplaySymbol(data.base_pooled_coin.denom)}/
-            {getDisplaySymbol(data.quote_pooled_coin.denom)}
+            {toLocale('Amount')} {getDisplaySymbol(data.base_pooled_coin.denom)}
+            /{getDisplaySymbol(data.quote_pooled_coin.denom)}
           </div>
           <div className="right">{toLocale('LP token/ratio')}</div>
         </div>

@@ -39,15 +39,22 @@ export default class Stake extends React.Component {
     const { data, isStake = true } = this.props;
     if (value) {
       const max = this.getAvailable();
-      if (util.compareNumber(max, value)) error = toLocale('balance not enough');
-      else if(isStake && util.compareNumber(value, data.min_lock_amount)) error = toLocale('stake min input',{num:util.precisionInput(data.min_lock_amount,8)});
+      if (util.compareNumber(max, value))
+        error = toLocale('balance not enough');
+      else if (isStake && util.compareNumber(value, data.min_lock_amount))
+        error = toLocale('stake min input', {
+          num: util.precisionInput(data.min_lock_amount, 8),
+        });
       else if (isStake && Number(data.pool_total_staked)) {
         poolRatio =
           util.precisionInput(
-            calc.mul(calc.div(value, calc.add(value,data.pool_total_staked)), 100),
+            calc.mul(
+              calc.div(value, calc.add(value, data.pool_total_staked)),
+              100
+            ),
             2
           ) + '%';
-      } else if(isStake && Number(value)) {
+      } else if (isStake && Number(value)) {
         poolRatio = '100.00%';
       } else {
         poolRatio = '0.00%';
@@ -72,7 +79,9 @@ export default class Stake extends React.Component {
       null,
     ];
     return new Promise((resolve, reject) => {
-      let method = isStake ? 'sendFarmLockTransaction' : 'sendFarmUnLockTransaction';
+      let method = isStake
+        ? 'sendFarmLockTransaction'
+        : 'sendFarmUnLockTransaction';
       okexchainClient[method](...params)
         .then((res) => {
           resolve(res);
@@ -83,12 +92,11 @@ export default class Stake extends React.Component {
         })
         .catch((err) => reject(err));
     });
-    
   };
 
   getAvailable() {
     const { data, isStake = true } = this.props;
-    if(!isStake) return util.precisionInput(data.account_staked, 8);
+    if (!isStake) return util.precisionInput(data.account_staked, 8);
     let { balance_dis, pool_name } = data;
     let { account4Swap } = this.props;
     const temp = account4Swap[pool_name];
@@ -137,22 +145,26 @@ export default class Stake extends React.Component {
                   type="text"
                   value={value}
                   onChange={this.onInputChange}
-                  placeholder={isStake ? toLocale('stake min input placehold',{num:util.precisionInput(data.min_lock_amount,8)}) : ''}
+                  placeholder={
+                    isStake
+                      ? toLocale('stake min input placehold', {
+                          num: util.precisionInput(data.min_lock_amount, 8),
+                        })
+                      : ''
+                  }
                   precision={8}
                 />
               </div>
               <div className="right">
                 <div className="coin2coin">
-                 {data.lock_symbol_info.symbols.map((symbol,symbolIndex) => <img src={getCoinIcon(symbol)} key={symbolIndex}/>)}
-                  <span>
-                  {data.lock_symbol_info.name}
-                  </span>
+                  {data.lock_symbol_info.symbols.map((symbol, symbolIndex) => (
+                    <img src={getCoinIcon(symbol)} key={symbolIndex} />
+                  ))}
+                  <span>{data.lock_symbol_info.name}</span>
                 </div>
               </div>
             </div>
-            {hasErrorTip && (
-              <div className="error-tip">*{error}</div>
-            )}
+            {hasErrorTip && <div className="error-tip">*{error}</div>}
           </div>
           {isStake && (
             <>
@@ -175,25 +187,33 @@ export default class Stake extends React.Component {
           <div className="farm-btn cancel" onClick={onClose}>
             {toLocale('cancel')}
           </div>
-          {error ? 
-            <div className="farm-btn disabled">{toLocale(locale)}</div>:
+          {error ? (
+            <div className="farm-btn disabled">{toLocale(locale)}</div>
+          ) : (
             <Confirm
-            onClick={this.confirm}
-            loadingTxt={toLocale('pending transactions')}
-            successTxt={toLocale('transaction confirmed')}
-          >
-            <div className="farm-btn">{toLocale(locale)}</div>
-          </Confirm>
-          }
+              onClick={this.confirm}
+              loadingTxt={toLocale('pending transactions')}
+              successTxt={toLocale('transaction confirmed')}
+            >
+              <div className="farm-btn">{toLocale(locale)}</div>
+            </Confirm>
+          )}
         </div>
       </div>
     );
   }
 }
 
-Stake.getStake = async ({data, isStake = true, onSuccess}) => {
+Stake.getStake = async ({ data, isStake = true, onSuccess }) => {
   if (!util.isLogined()) return <ConnectInfoTip />;
   const stakeInfo = await api.stakedInfo({ poolName: data.pool_name });
-  if (!Number(stakeInfo.balance) && data.isLpToken) return <LiquidityInfoTip data={data} />;
-  return <Stake data={{ ...data, ...stakeInfo }} isStake={isStake} onSuccess={onSuccess}/>;
+  if (!Number(stakeInfo.balance) && data.isLpToken)
+    return <LiquidityInfoTip data={data} />;
+  return (
+    <Stake
+      data={{ ...data, ...stakeInfo }}
+      isStake={isStake}
+      onSuccess={onSuccess}
+    />
+  );
 };

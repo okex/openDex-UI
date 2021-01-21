@@ -71,7 +71,7 @@ export default class Confirm extends React.Component {
 
   confirmBtn() {
     const { children } = this.props;
-    if(!children) return null;
+    if (!children) return null;
     const child = React.Children.only(children);
     return React.cloneElement(child, {
       onClick: () => this._onClick(),
@@ -82,7 +82,7 @@ export default class Confirm extends React.Component {
     const { loadingTxt, successTxt, onClick, okexchainClient } = this.props;
     if (!onClick || this.loading) return;
     if (checkPwd && !this.checkPwd()) return;
-    this.setState({loading: true});
+    this.setState({ loading: true });
     privateKey = privateKey || this.props.privateKey;
     okexchainClient
       .setAccountInfo(privateKey || this.props.privateKey)
@@ -93,9 +93,19 @@ export default class Confirm extends React.Component {
           loadingToast = loadingTxt
             ? Message.loading({
                 content: (
-                <span>
-                  {loadingTxt}<a target="_blank" rel="noopener noreferrer"
-                href={`${Config.okexchain.browserAddressUrl}/${util.getMyAddr()}`} >{toLocale('pending transactions link')}</a></span>),
+                  <span>
+                    {loadingTxt}
+                    <a
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href={`${
+                        Config.okexchain.browserAddressUrl
+                      }/${util.getMyAddr()}`}
+                    >
+                      {toLocale('pending transactions link')}
+                    </a>
+                  </span>
+                ),
                 duration: 0,
               })
             : null;
@@ -120,10 +130,11 @@ export default class Confirm extends React.Component {
         } finally {
           if (loadingToast) loadingToast.destroy();
           this.loading = false;
-          this.setState({loading: false});
+          this.setState({ loading: false });
         }
-      }).catch(() => {
-        this.setState({loading: false});
+      })
+      .catch(() => {
+        this.setState({ loading: false });
       });
   };
 

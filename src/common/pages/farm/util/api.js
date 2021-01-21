@@ -43,22 +43,18 @@ function _proccessData(data) {
       d.farm_apy_dis = farm_apy.join('+');
       d.pool_rate.forEach((dd) => {
         dd.denom_dis = getLpTokenStr(dd.denom);
-        pool_rate.push(
-          `${util.precisionInput(dd.amount, 2)} ${dd.denom_dis}`
-        );
+        pool_rate.push(`${util.precisionInput(dd.amount, 2)} ${dd.denom_dis}`);
       });
       d.pool_rate_dis = pool_rate.join('+');
       d.poolEmpty = d.status === 1;
       d.total_staked_dis =
         Number(d.total_staked) === 0
           ? '--'
-          : '$' +
-            calc.thousandFormat(
-              util.precisionInput(d.total_staked, 2)
-            );
-      d.total_staked_dashbord_dis = Number(d.total_staked) === 0
-      ? '--'
-      : util.precisionInput(d.total_staked, 8);
+          : '$' + calc.thousandFormat(util.precisionInput(d.total_staked, 2));
+      d.total_staked_dashbord_dis =
+        Number(d.total_staked) === 0
+          ? '--'
+          : util.precisionInput(d.total_staked, 8);
       d.pool_ratio_dis =
         util.precisionInput(calc.mul(d.pool_ratio, 100), 2) + '%';
       d.pool_ratio_dis_4 =
@@ -107,16 +103,18 @@ function _proccessTimer4First(data) {
 }
 
 function _getTimerByCount(count = 0) {
-  let d = 0, d_mod = 0,
-    h = 0, h_mod = 0,
+  let d = 0,
+    d_mod = 0,
+    h = 0,
+    h_mod = 0,
     m = 0,
     s = 0;
   if (count > 0) {
     d = parseInt(count / (24 * 3600), 10);
     d_mod = count % (24 * 3600);
     h = parseInt(d_mod / 3600, 10);
-    h_mod = d_mod % 3600; 
-    m = parseInt(h_mod / 60, 10)
+    h_mod = d_mod % 3600;
+    m = parseInt(h_mod / 60, 10);
     s = h_mod % 60;
   }
   const d_dis = d > 0 ? (d >= 10 ? d + '' : '0' + d) : '00';
@@ -130,8 +128,8 @@ function _getTimerByCount(count = 0) {
 
 function _getLockSymbolInfos(lock_symbol) {
   const lpToken = getLpTokenInfo(lock_symbol);
-  const result = {symbols: [], name:''}
-  if(lpToken) {
+  const result = { symbols: [], name: '' };
+  if (lpToken) {
     result.symbols = lpToken.base;
     result.name = lpToken.name;
   } else {
@@ -153,9 +151,9 @@ export function whitelist() {
 export function normal(param = {}) {
   //@mock mocker.normal(URL.GET_FARM_POOLS_NORMAL);
   return get(URL.GET_FARM_POOLS_NORMAL, param).then((data) => {
-    data.data = data.data.filter(d => {
+    data.data = data.data.filter((d) => {
       const need = d.in_whitelist || d.pool_name !== firstPoolConf.pool_name;
-      if(!need) data.param_page.total = data.param_page.total - 1;
+      if (!need) data.param_page.total = data.param_page.total - 1;
       return need;
     });
     _proccessData(data.data);
@@ -167,9 +165,9 @@ export function dashboard(param = {}) {
   const address = util.getMyAddr();
   //@mock mocker.dashboard(`${URL.GET_FARM_DASHBOARD}/${address}`);
   return get(`${URL.GET_FARM_DASHBOARD}/${address}`, param).then((data) => {
-    data.data = data.data.filter(d => {
+    data.data = data.data.filter((d) => {
       const need = d.in_whitelist || d.pool_name !== firstPoolConf.pool_name;
-      if(!need) data.param_page.total = data.param_page.total - 1;
+      if (!need) data.param_page.total = data.param_page.total - 1;
       return need;
     });
     _proccessData(data.data);
@@ -181,7 +179,9 @@ export function maxApy() {
   //@mock mocker.maxAPY(`${URL.GET_FARM_MAX_APY}`);
   return get(`${URL.GET_FARM_MAX_APY}`).then((data) => {
     return {
-      data_dis: Number(data) ? util.precisionInput(calc.mul(data, 100), 2) + '%' : '300.00%',
+      data_dis: Number(data)
+        ? util.precisionInput(calc.mul(data, 100), 2) + '%'
+        : '300.00%',
       data,
     };
   });
@@ -190,9 +190,9 @@ export function maxApy() {
 export function stakedInfo({ poolName }) {
   //@mock mocker.stakedInfo(`${URL.GET_FARM_STAKED_INFO.replace('{poolName}',poolName)}`);
   const address = util.getMyAddr();
-  return get(
-    `${URL.GET_FARM_STAKED_INFO.replace('{poolName}', poolName)}`,{address}
-  ).then((data) => {
+  return get(`${URL.GET_FARM_STAKED_INFO.replace('{poolName}', poolName)}`, {
+    address,
+  }).then((data) => {
     data.pool_name_dis = getLpTokenStr(data.pool_name);
     data.balance_dis = util.precisionInput(data.balance, 8);
     data.account_staked = util.precisionInput(data.account_staked, 8);
@@ -201,15 +201,18 @@ export function stakedInfo({ poolName }) {
   });
 }
 
-export function first(params={}) {
+export function first(params = {}) {
   //@mock mocker.first(URL.GET_FARM_FIRST);
   const address = util.getMyAddr();
   params.stake_at = firstPoolConf.stake_at;
   params.pool_name = firstPoolConf.pool_name;
-  params.claim_height = calc.add(firstPoolConf.claim_height, firstPoolConf.claim_height_extra);
-  if(address) params.address = address;
-  return get(URL.GET_FARM_FIRST,params).then((data) => {
-    data.claim_at = calc.sub(data.claim_at,firstPoolConf.claim_height_extra1);
+  params.claim_height = calc.add(
+    firstPoolConf.claim_height,
+    firstPoolConf.claim_height_extra
+  );
+  if (address) params.address = address;
+  return get(URL.GET_FARM_FIRST, params).then((data) => {
+    data.claim_at = calc.sub(data.claim_at, firstPoolConf.claim_height_extra1);
     processFirst(data);
     return data;
   });
@@ -221,9 +224,10 @@ export function processFirst(data) {
   data.pool_name = firstPoolConf.pool_name;
   data.isLpToken = data.lock_symbol_info.symbols.length > 1;
   data.pool_name_dis = data.lock_symbol_info.name;
-  data.farm_apy_dis = util.precisionInput(calc.mul(data.farm_apy, 100), 2)+'%';
+  data.farm_apy_dis =
+    util.precisionInput(calc.mul(data.farm_apy, 100), 2) + '%';
   data.farm_amount_dis = util.precisionInput(data.farm_amount, 8);
-  data.total_staked_dis = '$'+util.precisionInput(data.total_staked, 8);
+  data.total_staked_dis = '$' + util.precisionInput(data.total_staked, 8);
   _proccessTimer4First(data);
   data.account_staked_dis = util.precisionInput(data.account_staked, 8);
   data.estimated_farm_dis = util.precisionInput(data.estimated_farm, 8);

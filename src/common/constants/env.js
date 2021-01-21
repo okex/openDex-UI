@@ -29,8 +29,8 @@ const testnet = {
     stake_at: 1611150900,
     claim_height: 292010,
     claim_height_extra: 24 * 60 * 60,
-    claim_height_extra1: 3 * 24 * 60 * 60
-  }
+    claim_height_extra1: 3 * 24 * 60 * 60,
+  },
 };
 
 const mainnet = {
@@ -62,8 +62,8 @@ const mainnet = {
     stake_at: 1611150900,
     claim_height: 5400,
     claim_height_extra: 24 * 60 * 60,
-    claim_height_extra1: 3 * 24 * 60 * 60
-  }
+    claim_height_extra1: 3 * 24 * 60 * 60,
+  },
 };
 
 function envConfig() {
@@ -76,7 +76,7 @@ function envConfig() {
 const env = {
   envConfig: envConfig(),
   testnet,
-  mainnet
+  mainnet,
 };
 
 export default env;

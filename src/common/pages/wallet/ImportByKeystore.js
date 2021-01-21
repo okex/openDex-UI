@@ -81,7 +81,7 @@ class ImportByKeystore extends Component {
     };
     fileReader.onload = () => {
       this.keyStore = JSON.parse(fileReader.result);
-    }
+    };
     fileReader.readAsText(file);
   };
   changePwd = (e) => {

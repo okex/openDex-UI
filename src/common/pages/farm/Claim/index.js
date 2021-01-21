@@ -15,7 +15,8 @@ export default class Claim extends React.Component {
     const { okexchainClient, data, onClose, onSuccess } = this.props;
     const params = [data.pool_name, '', null];
     return new Promise((resolve, reject) => {
-      okexchainClient.sendFarmClaimTransaction(...params)
+      okexchainClient
+        .sendFarmClaimTransaction(...params)
         .then((res) => {
           resolve(res);
           if (validateTxs(res)) {

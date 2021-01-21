@@ -18,7 +18,7 @@ export default class FarmPanel extends React.Component {
     super();
     this.state = {
       data: null,
-      show: false
+      show: false,
     };
   }
 
@@ -63,13 +63,15 @@ export default class FarmPanel extends React.Component {
 
   refreshData = () => {
     this.init();
-  }
+  };
 
   renderHelp = () => {
-    return <div className="stake-help-info">
-      <div className="help-title">{toLocale('White listed help')}</div>
-      <div className="help-desc">{toLocale('White listed help desc')}</div>
-      </div>;
+    return (
+      <div className="stake-help-info">
+        <div className="help-title">{toLocale('White listed help')}</div>
+        <div className="help-desc">{toLocale('White listed help desc')}</div>
+      </div>
+    );
   };
 
   showHelp = () => {
@@ -77,7 +79,7 @@ export default class FarmPanel extends React.Component {
       width: '440px',
       children: this.renderHelp(),
     });
-  }
+  };
 
   getTimerDis = (data) => {
     if (data.active === 0) return data.timeInfo;
@@ -89,7 +91,7 @@ export default class FarmPanel extends React.Component {
   render() {
     const isLogined = util.isLogined();
     const { data } = this.state;
-    if(!data) return null;
+    if (!data) return null;
     return (
       <div className="panel-farm">
         {!isLogined && (
@@ -108,7 +110,7 @@ export default class FarmPanel extends React.Component {
         )}
         <div className="title-wrap">
           {toLocale('White listed')}
-          <i className="help" onClick={this.showHelp}/>
+          <i className="help" onClick={this.showHelp} />
         </div>
         <div className="info-items">
           {data.map((d, index) => (
@@ -117,11 +119,11 @@ export default class FarmPanel extends React.Component {
                 className={classNames('tag', { active: d.active !== 2 })}
               ></div>
               <div className="coin2coin">
-                {d.lock_symbol_info.symbols.map((symbol,symbolIndex) => <img src={getCoinIcon(symbol)} key={symbolIndex}/>)}
+                {d.lock_symbol_info.symbols.map((symbol, symbolIndex) => (
+                  <img src={getCoinIcon(symbol)} key={symbolIndex} />
+                ))}
                 <Tooltip placement="right" overlay={d.pool_name_dis}>
-                  <span>
-                    {d.lock_symbol_info.name}
-                  </span>
+                  <span>{d.lock_symbol_info.name}</span>
                 </Tooltip>
               </div>
               <div className="rate">{d.total_apy}</div>
@@ -135,7 +137,9 @@ export default class FarmPanel extends React.Component {
                 {d.pool_rate_dis}/{toLocale('1Day')}
               </div>
               <SimpleBtnDialog
-                component={() => Stake.getStake({data:d,onSuccess:this.refreshData})}
+                component={() =>
+                  Stake.getStake({ data: d, onSuccess: this.refreshData })
+                }
                 disabled={d.active === 2}
               >
                 <div
@@ -144,7 +148,9 @@ export default class FarmPanel extends React.Component {
                   })}
                 >
                   {toLocale('STAKE')}
-                  {!d.poolEmpty && <span className="timer">&nbsp;{this.getTimerDis(d)}</span>}
+                  {!d.poolEmpty && (
+                    <span className="timer">&nbsp;{this.getTimerDis(d)}</span>
+                  )}
                 </div>
               </SimpleBtnDialog>
             </div>
@@ -155,12 +161,10 @@ export default class FarmPanel extends React.Component {
         </div>
         <div className="title-wrap">
           <div className="space-between">
-            <div className="left">
-              {toLocale('Other pools')}
-            </div>
+            <div className="left">{toLocale('Other pools')}</div>
           </div>
         </div>
-        <WatchlistPanel/>
+        <WatchlistPanel />
       </div>
     );
   }

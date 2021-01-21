@@ -18,7 +18,7 @@ export default class FarmPanel extends React.Component {
 
   async componentDidMount() {
     const data = await this.init();
-    if(!data.active) this.startTimer();
+    if (!data.active) this.startTimer();
   }
 
   componentWillUnmount() {
@@ -28,7 +28,7 @@ export default class FarmPanel extends React.Component {
   startTimer() {
     this.stopTimer();
     this.interval = setInterval(() => {
-      const {data} = this.state;
+      const { data } = this.state;
       api.processFirst(data);
       this.setState({});
     }, 1000);
@@ -50,34 +50,34 @@ export default class FarmPanel extends React.Component {
 
   async init() {
     const data = await api.first();
-    if(data.active) this.stopTimer();
+    if (data.active) this.stopTimer();
     this.setState({ data });
     return data;
   }
 
   refreshData = () => {
     this.init();
-  }
+  };
 
   getTimerDis = (data) => {
-    if (!data.active) return toLocale('Claim in', {time:data.timeInfo});
+    if (!data.active) return toLocale('Claim in', { time: data.timeInfo });
     return `${toLocale('Claim all')}`;
   };
 
   render() {
     const { data } = this.state;
     const isLogined = util.isLogined();
-    if(!data) return null;
+    if (!data) return null;
     return (
       <div className="panel-first">
         <div className="info-item">
           <div className="space-between info-item-title">
-            <div className="left">
-              {data.lock_symbol_info.name}
-            </div>
+            <div className="left">{data.lock_symbol_info.name}</div>
             <div className="right">
               <div className="coin2coin">
-                {data.lock_symbol_info.symbols.map((symbol,symbolIndex) => <img src={getCoinIcon(symbol)} key={symbolIndex}/>)}
+                {data.lock_symbol_info.symbols.map((symbol, symbolIndex) => (
+                  <img src={getCoinIcon(symbol)} key={symbolIndex} />
+                ))}
                 <span></span>
               </div>
             </div>
@@ -93,9 +93,9 @@ export default class FarmPanel extends React.Component {
               <div className="title">{data.total_staked_dis}</div>
               <div className="title-tip">{toLocale('Total staked')}</div>
             </div>
-          </div> 
+          </div>
         </div>
-        <div className={classNames('info-account',{disabled: !isLogined})}>
+        <div className={classNames('info-account', { disabled: !isLogined })}>
           <div className="left">
             <div className="title">{data.account_staked_dis}</div>
             <div className="title-tip">{toLocale('Your Staked LP')}</div>
@@ -107,15 +107,35 @@ export default class FarmPanel extends React.Component {
         </div>
         <div className="info-opt">
           <SimpleBtnDialog
-            component={() => Stake.getStake({data,onSuccess:this.refreshData})}
+            component={() =>
+              Stake.getStake({ data, onSuccess: this.refreshData })
+            }
           >
-          <div className="farm-btn stake-btn">{toLocale('STAKE')}</div>
+            <div className="farm-btn stake-btn">{toLocale('STAKE')}</div>
           </SimpleBtnDialog>
-          <SimpleBtnDialog component={() => Stake.getStake({data, isStake:false, onSuccess:this.refreshData})}>
+          <SimpleBtnDialog
+            component={() =>
+              Stake.getStake({
+                data,
+                isStake: false,
+                onSuccess: this.refreshData,
+              })
+            }
+          >
             <div className="farm-btn stake-btn">{toLocale('UNSTAKE')}</div>
           </SimpleBtnDialog>
-          <ClaimBtn data={data} onSuccess={this.props.onDashboard} disabled={!data.active}>
-            <div className={classNames('farm-btn','claim-btn',{active:data.active})}>{this.getTimerDis(data)}</div>
+          <ClaimBtn
+            data={data}
+            onSuccess={this.props.onDashboard}
+            disabled={!data.active}
+          >
+            <div
+              className={classNames('farm-btn', 'claim-btn', {
+                active: data.active,
+              })}
+            >
+              {this.getTimerDis(data)}
+            </div>
           </ClaimBtn>
         </div>
       </div>

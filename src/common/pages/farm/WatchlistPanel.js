@@ -22,11 +22,11 @@ export default class WatchlistPanel extends React.Component {
         component: ({ row }) => {
           return (
             <div className="coin2coin">
-              {row.lock_symbol_info.symbols.map((symbol,symbolIndex) => <img src={getCoinIcon(symbol)} key={symbolIndex}/>)}
+              {row.lock_symbol_info.symbols.map((symbol, symbolIndex) => (
+                <img src={getCoinIcon(symbol)} key={symbolIndex} />
+              ))}
               <Tooltip placement="right" overlay={row.pool_name_dis}>
-                <span>
-                  {row.lock_symbol_info.name}
-                </span>
+                <span>{row.lock_symbol_info.name}</span>
               </Tooltip>
             </div>
           );
@@ -59,7 +59,9 @@ export default class WatchlistPanel extends React.Component {
               <Tooltip placement="right" overlay={row.farm_apy_dis}>
                 <span>{row.total_apy}</span>
               </Tooltip>
-              {row.farm_apy.map((d,index) => <img src={getCoinIcon(d.denom)} key={index}/>)}
+              {row.farm_apy.map((d, index) => (
+                <img src={getCoinIcon(d.denom)} key={index} />
+              ))}
             </div>
           );
         },
@@ -70,7 +72,7 @@ export default class WatchlistPanel extends React.Component {
         canSort: true,
         width: '194',
         component: ({ row }) => {
-          if(!row.start_at) return '--';
+          if (!row.start_at) return '--';
           return dateFns.format(row.start_at_dis);
         },
       },
@@ -79,8 +81,8 @@ export default class WatchlistPanel extends React.Component {
         name: toLocale('Finish at'),
         canSort: true,
         component: ({ row }) => {
-          if(!row.start_at) return '--';
-          if(!row.finish_at) return toLocale('finished');
+          if (!row.start_at) return '--';
+          if (!row.finish_at) return toLocale('finished');
           return dateFns.format(row.finish_at_dis);
         },
       },
@@ -90,7 +92,9 @@ export default class WatchlistPanel extends React.Component {
         component: ({ row }) => {
           return (
             <SimpleBtnDialog
-              component={() => Stake.getStake({data:row, onSuccess:this.refreshData})}
+              component={() =>
+                Stake.getStake({ data: row, onSuccess: this.refreshData })
+              }
               disabled={row.active !== 1}
             >
               <div className="action-opt-wrap">
@@ -132,7 +136,7 @@ export default class WatchlistPanel extends React.Component {
   refreshData = async () => {
     const data = await this.init({});
     this.setState(data);
-  }
+  };
 
   onChange = async (current) => {
     const data = await this.init({ current });

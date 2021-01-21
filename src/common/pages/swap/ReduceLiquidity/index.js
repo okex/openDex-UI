@@ -53,8 +53,8 @@ export default class ReduceLiquidity extends React.Component {
   }
 
   _getValueByRatio(ratio) {
-    if(!ratio) ratio = this.state.ratio;
-    if(!ratio) return this.state.value;
+    if (!ratio) ratio = this.state.ratio;
+    if (!ratio) return this.state.value;
     const max = this.getAvailable();
     const value = calc.mul(max, ratio.value);
     return value;
@@ -64,7 +64,7 @@ export default class ReduceLiquidity extends React.Component {
     const value = this._getValueByRatio(ratio);
     this.setState({ ratio, value, error: false });
     this.updateCoins(value, false);
-  }
+  };
 
   onInputChange = async (value) => {
     const max = this.getAvailable();

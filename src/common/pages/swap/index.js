@@ -26,20 +26,20 @@ export default class Swap extends React.Component {
   }
 
   onTrade = ({ baseSymbol, targetSymbol }) => {
-    this.onChange(SWAP,() => {
+    this.onChange(SWAP, () => {
       this.swap &&
-      this.swap.init({
-        baseToken: {
-          available: '',
-          value: '',
-          symbol: baseSymbol,
-        },
-        targetToken: {
-          available: '',
-          value: '',
-          symbol: targetSymbol,
-        },
-      });
+        this.swap.init({
+          baseToken: {
+            available: '',
+            value: '',
+            symbol: baseSymbol,
+          },
+          targetToken: {
+            available: '',
+            value: '',
+            symbol: targetSymbol,
+          },
+        });
     });
   };
 
@@ -50,7 +50,7 @@ export default class Swap extends React.Component {
   };
 
   onChange = (activekey, callback) => {
-    this.setState({ activekey },() => {
+    this.setState({ activekey }, () => {
       callback && callback();
     });
   };

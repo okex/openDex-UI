@@ -33,7 +33,7 @@ export default class Farm extends React.Component {
 
   onDashboard = () => {
     this.setState({ activekey: DASHBOARD });
-  }
+  };
 
   componentDidMount() {
     this.preSeoTitle = document.title;
@@ -57,7 +57,7 @@ export default class Farm extends React.Component {
             destroyInactiveTabPane
           >
             <TabPane tab={toLocale('First Pool')} key={FIRST}>
-              <FirstPanel onDashboard={this.onDashboard}/>
+              <FirstPanel onDashboard={this.onDashboard} />
             </TabPane>
             <TabPane tab={toLocale('Farm')} key={FARM}>
               <FarmPanel />

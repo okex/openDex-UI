@@ -43,7 +43,7 @@ export default class CoinItem extends React.Component {
 
   setMaxValue = () => {
     const max = this.getAvailable(true);
-    this.onInputChange(util.precisionInput(calc.sub(max, '0.05'),8));
+    this.onInputChange(util.precisionInput(calc.sub(max, '0.05'), 8));
   };
 
   showCoinSelectList = async (e) => {
@@ -111,7 +111,7 @@ export default class CoinItem extends React.Component {
     } = this.props;
     const temp = account4Swap[symbol.toLowerCase()];
     if (temp) available = temp.available;
-    if(original) return available;
+    if (original) return available;
     return util.precisionInput(available, 8);
   }
 

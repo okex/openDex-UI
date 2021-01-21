@@ -97,7 +97,7 @@ module.exports = {
         balance: '100.980000000000000000',
         account_staked: '10.000000000000000000',
         pool_total_staked: '10.000000000000000000',
-        min_lock_amount: '5.000000000000000000'
+        min_lock_amount: '5.000000000000000000',
       },
     });
   },
@@ -107,14 +107,14 @@ module.exports = {
       msg: '',
       detail_msg: '',
       data: {
-        pool_name:"1st_pool_okt_usdt",
-        farm_apy:"128.980000000000000000",
-        farm_amount:"10.000000000000000000",
-        total_staked:"100000.123000000000000000",
+        pool_name: '1st_pool_okt_usdt',
+        farm_apy: '128.980000000000000000',
+        farm_amount: '10.000000000000000000',
+        total_staked: '100000.123000000000000000',
         claim_at: parseInt(Date.now() / 1000) + 2,
-        account_staked:"1.000000000000000000",
-        estimated_farm:"10.000000000000000000",
-        balance:"99999989989.980000000000000000",
+        account_staked: '1.000000000000000000',
+        estimated_farm: '10.000000000000000000',
+        balance: '99999989989.980000000000000000',
       },
     });
   },

@@ -145,7 +145,9 @@ util.accountsCols = ({ transfer }, { valuationUnit }) => {
       render: (text, data) => {
         const { symbol } = data;
         const lpTokenInfo = getLpTokenInfo(symbol);
-        const whole_nameString = symbol ? ` (${lpTokenInfo ? lpTokenInfo.name : symbol})` : '';
+        const whole_nameString = symbol
+          ? ` (${lpTokenInfo ? lpTokenInfo.name : symbol})`
+          : '';
         return (
           <div className="symbol-line">
             <Tooltip

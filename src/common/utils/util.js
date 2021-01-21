@@ -40,7 +40,7 @@ const util = {
       return '';
     }
     const lpTokenInfo = getLpTokenInfo(product);
-    if(lpTokenInfo) return lpTokenInfo.name;
+    if (lpTokenInfo) return lpTokenInfo.name;
     if (product.split('_').length === 2) {
       product = product.toUpperCase().replace('_', '/');
     }
@@ -81,7 +81,9 @@ const util = {
   getMyAddr() {
     let addr = '';
     try {
-      const user = JSON.parse(window.localStorage.getItem(env.envConfig.dexUser) || '{}');
+      const user = JSON.parse(
+        window.localStorage.getItem(env.envConfig.dexUser) || '{}'
+      );
       addr = user && user.addr ? user.addr : '';
     } catch (e) {
       console.warn(e.message);
@@ -272,8 +274,8 @@ const util = {
     return localStorage.getItem('theme') === Enum.themes.theme2 ? 'dark' : '';
   },
   precisionInput(num, precision = 18) {
-    if(!num) num = 0;
-    let result = BigNumber(num).toFixed(precision,BigNumber.ROUND_FLOOR);
+    if (!num) num = 0;
+    let result = BigNumber(num).toFixed(precision, BigNumber.ROUND_FLOOR);
     return result;
   },
   compareNumber(a, b) {

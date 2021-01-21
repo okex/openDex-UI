@@ -16,7 +16,9 @@ export const getIssueCols = ({ mint, burn }) => {
       render: (text, data) => {
         const { whole_name, symbol } = data;
         const lpTokenInfo = getLpTokenInfo(whole_name);
-        const whole_nameString = whole_name ? ` (${lpTokenInfo ? lpTokenInfo.name : whole_name})` : '';
+        const whole_nameString = whole_name
+          ? ` (${lpTokenInfo ? lpTokenInfo.name : whole_name})`
+          : '';
         return (
           <div className="symbol-line">
             <Tooltip
@@ -205,7 +207,9 @@ export const getAccountsCols = ({ transfer }) => {
       render: (text, data) => {
         const { whole_name, symbol } = data;
         const lpTokenInfo = getLpTokenInfo(whole_name);
-        const whole_nameString = whole_name ? ` (${lpTokenInfo ? lpTokenInfo.name : whole_name})` : '';
+        const whole_nameString = whole_name
+          ? ` (${lpTokenInfo ? lpTokenInfo.name : whole_name})`
+          : '';
         return (
           <div className="symbol-line">
             <Tooltip

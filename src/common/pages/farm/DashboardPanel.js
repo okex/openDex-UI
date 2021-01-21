@@ -79,7 +79,7 @@ export default class DashboardPanel extends React.Component {
   refreshData = async () => {
     const data = await this.init({});
     this.setState(data);
-  }
+  };
 
   getTimerDis = (data) => {
     if (data.active !== 2)
@@ -156,12 +156,17 @@ export default class DashboardPanel extends React.Component {
                     <div className="space-between">
                       <div className="left">
                         <div className="coin2coin">
-                        {d.lock_symbol_info.symbols.map((symbol,symbolIndex) => <img src={getCoinIcon(symbol)} key={symbolIndex}/>)}
-                        <Tooltip placement="right" overlay={d.pool_name_dis}>
-                          <span>
-                            {d.lock_symbol_info.name}
-                          </span>
-                        </Tooltip>
+                          {d.lock_symbol_info.symbols.map(
+                            (symbol, symbolIndex) => (
+                              <img
+                                src={getCoinIcon(symbol)}
+                                key={symbolIndex}
+                              />
+                            )
+                          )}
+                          <Tooltip placement="right" overlay={d.pool_name_dis}>
+                            <span>{d.lock_symbol_info.name}</span>
+                          </Tooltip>
                         </div>
                       </div>
                       <div className="right">{this.getTimerDis(d)}</div>
@@ -193,19 +198,22 @@ export default class DashboardPanel extends React.Component {
                           <td>{toLocale('Claimed')}</td>
                           <td>{toLocale('Unclaimed')}</td>
                         </tr>
-                        {!!d.farmed_details.length && d.farmed_details.map((detail, index) => (
-                          <tr key={index}>
-                            <td>{detail.symbol_dis}</td>
-                            <td>{detail.claimed_dis}</td>
-                            <td>{detail.unclaimed_dis}</td>
-                          </tr>
-                        ))}
+                        {!!d.farmed_details.length &&
+                          d.farmed_details.map((detail, index) => (
+                            <tr key={index}>
+                              <td>{detail.symbol_dis}</td>
+                              <td>{detail.claimed_dis}</td>
+                              <td>{detail.unclaimed_dis}</td>
+                            </tr>
+                          ))}
                       </tbody>
                     </table>
                   </div>
                   <div className="opt-footer">
                     <SimpleBtnDialog
-                      component={() => Stake.getStake({data:d,onSuccess:this.refreshData})}
+                      component={() =>
+                        Stake.getStake({ data: d, onSuccess: this.refreshData })
+                      }
                       disabled={d.active === 2}
                     >
                       <div
@@ -216,10 +224,22 @@ export default class DashboardPanel extends React.Component {
                         {toLocale('STAKE')}
                       </div>
                     </SimpleBtnDialog>
-                    <SimpleBtnDialog component={() => Stake.getStake({data:d, isStake:false, onSuccess:this.refreshData})}>
+                    <SimpleBtnDialog
+                      component={() =>
+                        Stake.getStake({
+                          data: d,
+                          isStake: false,
+                          onSuccess: this.refreshData,
+                        })
+                      }
+                    >
                       <div className="linkbtn">{toLocale('UNSTAKE')}</div>
                     </SimpleBtnDialog>
-                    <SimpleBtnDialog component={<Claim data={d} onSuccess={this.refreshData}/>}>
+                    <SimpleBtnDialog
+                      component={
+                        <Claim data={d} onSuccess={this.refreshData} />
+                      }
+                    >
                       <div className="farm-btn">{toLocale('Claim all')}</div>
                     </SimpleBtnDialog>
                   </div>
@@ -227,15 +247,15 @@ export default class DashboardPanel extends React.Component {
               ))}
             </div>
             <div className="pagination-wrap">
-                <Pagination
-                  className="watchlist-pagination"
-                  total={total}
-                  pageSize={pageSize}
-                  current={current}
-                  onChange={this.onChange}
-                  hideOnSinglePage={false}
-                />
-              </div>
+              <Pagination
+                className="watchlist-pagination"
+                total={total}
+                pageSize={pageSize}
+                current={current}
+                onChange={this.onChange}
+                hideOnSinglePage={false}
+              />
+            </div>
           </div>
         ) : (
           this.getPanel()

@@ -83,7 +83,7 @@ export default class AddLiquidity extends React.Component {
       targetToken: { ...targetToken },
     };
     if (!isEmptyPool && !data.baseToken.value) data.targetToken.value = '';
-    this.updateLiquidInfo4RealTime({data, inputChanged});
+    this.updateLiquidInfo4RealTime({ data, inputChanged });
   };
 
   changeTarget = (token, inputChanged) => {
@@ -93,7 +93,7 @@ export default class AddLiquidity extends React.Component {
       targetToken: { ...targetToken, ...token },
       baseToken: { ...baseToken },
     };
-    this.updateLiquidInfo4RealTime({data, key:'targetToken', inputChanged});
+    this.updateLiquidInfo4RealTime({ data, key: 'targetToken', inputChanged });
   };
 
   _clearTimer() {
@@ -103,7 +103,12 @@ export default class AddLiquidity extends React.Component {
     }
   }
 
-  async updateLiquidInfo4RealTime({data, key='baseToken', time = 3000, inputChanged=true}) {
+  async updateLiquidInfo4RealTime({
+    data,
+    key = 'baseToken',
+    time = 3000,
+    inputChanged = true,
+  }) {
     this._clearTimer();
     await this.updateInfo(data, key, true, inputChanged);
     this.setState(data, () => {
@@ -144,21 +149,21 @@ export default class AddLiquidity extends React.Component {
       )[0];
       if (target) data.targetToken = { ...targetToken, ...target };
     }
-    this.updateLiquidInfo4RealTime({data});
+    this.updateLiquidInfo4RealTime({ data });
   };
 
-  async updateInfo(data,key, errTip = false, inputChanged=true) {
+  async updateInfo(data, key, errTip = false, inputChanged = true) {
     try {
       await this._check(data);
       await this._updateExchangePrice(data);
-      await this._updateExchange(data,key, inputChanged);
+      await this._updateExchange(data, key, inputChanged);
     } catch (e) {
-      if(errTip) {
+      if (errTip) {
         Message.error({
           content: e.message || toLocale(`error.code.${e.code}`),
           duration: 3,
         });
-      } 
+      }
     }
   }
 
@@ -201,8 +206,12 @@ export default class AddLiquidity extends React.Component {
 
   async _updateExchange(data, key, inputChanged) {
     const { baseToken, targetToken, exchangeInfo } = data;
-    let _baseToken = baseToken ,_targetToken = targetToken;
-    if((key === 'targetToken' && (targetToken.value || inputChanged)) || (targetToken.value && !baseToken.value)) {
+    let _baseToken = baseToken,
+      _targetToken = targetToken;
+    if (
+      (key === 'targetToken' && (targetToken.value || inputChanged)) ||
+      (targetToken.value && !baseToken.value)
+    ) {
       _baseToken = targetToken;
       _targetToken = baseToken;
     }
@@ -282,12 +291,7 @@ export default class AddLiquidity extends React.Component {
   }
 
   _getExchangeData() {
-    let {
-      baseToken,
-      targetToken,
-      exchangeInfo,
-      isEmptyPool,
-    } = this.state;
+    let { baseToken, targetToken, exchangeInfo, isEmptyPool } = this.state;
     let priceInfo,
       price = exchangeInfo.price;
     if (exchangeInfo.isReverse) {
@@ -300,16 +304,22 @@ export default class AddLiquidity extends React.Component {
     }
     if (isEmptyPool) {
       if (!baseToken.value || !targetToken.value) {
-        priceInfo = `1${getDisplaySymbol(baseToken.symbol)} ≈ -${getDisplaySymbol(targetToken.symbol)}`;
+        priceInfo = `1${getDisplaySymbol(
+          baseToken.symbol
+        )} ≈ -${getDisplaySymbol(targetToken.symbol)}`;
       } else {
         let tempPrice = calc.div(targetToken.value, baseToken.value);
         if (Number.isNaN(tempPrice)) tempPrice = '-';
         else tempPrice = util.precisionInput(tempPrice, 8);
-        priceInfo = `1${getDisplaySymbol(baseToken.symbol)} ≈ ${tempPrice}${getDisplaySymbol(targetToken.symbol)}`;
+        priceInfo = `1${getDisplaySymbol(
+          baseToken.symbol
+        )} ≈ ${tempPrice}${getDisplaySymbol(targetToken.symbol)}`;
       }
       return { priceInfo, poolShare: 1 };
     }
-    priceInfo = `1${getDisplaySymbol(baseToken.symbol)} ≈ ${price}${getDisplaySymbol(targetToken.symbol)}`;
+    priceInfo = `1${getDisplaySymbol(
+      baseToken.symbol
+    )} ≈ ${price}${getDisplaySymbol(targetToken.symbol)}`;
     return { priceInfo, poolShare: exchangeInfo.pool_share };
   }
 
@@ -335,13 +345,17 @@ export default class AddLiquidity extends React.Component {
     } else if (baseToken.error) {
       btn = (
         <div className="btn disabled">
-          {toLocale('insufficient', { coin: getDisplaySymbol(baseToken.symbol) })}
+          {toLocale('insufficient', {
+            coin: getDisplaySymbol(baseToken.symbol),
+          })}
         </div>
       );
     } else if (targetToken.error) {
       btn = (
         <div className="btn disabled">
-          {toLocale('insufficient', { coin: getDisplaySymbol(targetToken.symbol) })}
+          {toLocale('insufficient', {
+            coin: getDisplaySymbol(targetToken.symbol),
+          })}
         </div>
       );
     } else {
@@ -390,11 +404,13 @@ export default class AddLiquidity extends React.Component {
         .then((res) => {
           resolve(res);
           if (validateTxs(res)) {
-            this.updateLiquidInfo4RealTime({data: {
-              ...this.state,
-              baseToken: { ..._baseToken, value: '' },
-              targetToken: { ..._targetToken, value: '' },
-            }});
+            this.updateLiquidInfo4RealTime({
+              data: {
+                ...this.state,
+                baseToken: { ..._baseToken, value: '' },
+                targetToken: { ..._targetToken, value: '' },
+              },
+            });
           }
         })
         .catch((err) => reject(err));
@@ -423,16 +439,10 @@ export default class AddLiquidity extends React.Component {
 
   render() {
     const { back, disabledChangeCoin = false } = this.props;
-    const {
-      baseToken,
-      targetToken,
-      isEmptyPool,
-      userLiquidity,
-    } = this.state;
+    const { baseToken, targetToken, isEmptyPool, userLiquidity } = this.state;
     const exchangeInfo = this.getExchangeInfo();
     const btn = this.getBtn();
-    const isEmpty =
-      baseToken.symbol && targetToken.symbol && isEmptyPool;
+    const isEmpty = baseToken.symbol && targetToken.symbol && isEmptyPool;
     return (
       <>
         <div className="panel">
