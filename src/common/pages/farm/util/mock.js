@@ -5,6 +5,7 @@ const data = {
   lock_symbol: 'okt',
   yield_symbol: 'aaa-882',
   total_staked: '100000.123000000000000000',
+  user_staked: '1100000.123000000000000000',
   start_at: parseInt(Date.now() / 1000) + 4,
   finish_at: parseInt(Date.now() / 1000) + 10,
   pool_rate: [

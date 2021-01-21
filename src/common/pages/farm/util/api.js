@@ -55,6 +55,10 @@ function _proccessData(data) {
         Number(d.total_staked) === 0
           ? '--'
           : util.precisionInput(d.total_staked, 8);
+      d.user_staked_dashbord_dis =
+        Number(d.user_staked) === 0
+          ? '--'
+          : util.precisionInput(d.user_staked, 8);
       d.pool_ratio_dis =
         util.precisionInput(calc.mul(d.pool_ratio, 100), 2) + '%';
       d.pool_ratio_dis_4 =
