@@ -166,7 +166,7 @@ export default class Stake extends React.Component {
             </div>
             {hasErrorTip && <div className="error-tip">*{error}</div>}
           </div>
-          {isStake && (
+          {isStake ? (
             <>
               <div className="space-between stake-panel-detail">
                 <div className="left">{toLocale('Pool ratio')}</div>
@@ -178,8 +178,15 @@ export default class Stake extends React.Component {
                   {data.farm_apy_dis}
                 </div>
               </div>
+              <div className="space-between stake-panel-detail">
+                <div className="left staketip">{toLocale('stake tip')}</div>
+              </div>
             </>
-          )}
+          ) : 
+          <div className="space-between stake-panel-detail">
+            <div className="left staketip">{toLocale('unstake tip')}</div>
+          </div>
+          }
         </div>
         <div
           className={classNames('stake-panel-footer', { nomargin: isStake })}

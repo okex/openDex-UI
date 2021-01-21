@@ -1158,5 +1158,7 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   'You have claimed': 'You have claimed {num} OKT!',
   'claimed check': 'You could now check your rewards in your farmings.',
   Check: 'Check',
+  'stake tip': 'This stake action will also trigger claim tokens. ',
+  'unstake tip': 'This unstake action will also trigger claim tokens.'
 };
 export default enUS;

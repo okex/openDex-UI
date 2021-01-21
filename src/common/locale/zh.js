@@ -1146,5 +1146,7 @@ const zhCN = {
   'You have claimed': '你已领取{num} OKT!',
   'claimed check': '你现在可以在我的收益中查看',
   Check: '查看',
+  'stake tip': '本次质押操作同时也会触发领取挖矿收益。',
+  'unstake tip': '本次赎回操作同时也会触发领取挖矿收益。',
 };
 export default zhCN;
