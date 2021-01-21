@@ -13,6 +13,7 @@ import LeftMenu from '_src/component/leftMenu';
 import Introduce from '_src/component/kline/Introduce';
 import * as SpotActions from '_src/redux/actions/SpotAction';
 import PageURL from '_src/constants/PageURL';
+import { getDisplaySymbol } from '_src/utils/coinIcon';
 import env from '../../../common/constants/env';
 
 function mapStateToProps(state) {
@@ -345,7 +346,7 @@ class FullTradeProductList extends React.Component {
                         }
                         onClick={this.handleMarketChange(market)}
                       >
-                        {groupKey ? toLocale(groupKey) : groupName}
+                        {groupKey ? toLocale(groupKey) : getDisplaySymbol(groupName)}
                       </li>
                     );
                   })}
