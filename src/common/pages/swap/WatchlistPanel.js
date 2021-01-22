@@ -83,7 +83,7 @@ export default class WatchlistPanel extends React.Component {
         field: 'last_price',
         name: toLocale('Last Price'),
         canSort: true,
-        width: '194',
+        width: '222',
         component({ row, data }) {
           const tokens = row.swap_pair.split('_');
           let price = data;
@@ -109,7 +109,7 @@ export default class WatchlistPanel extends React.Component {
         field: 'change24h',
         name: toLocale('24H Change'),
         canSort: true,
-        width: '128',
+        width: '100',
         component({ row, data }) {
           let change = calc.add(data, 0);
           if (row.isRevert) change = calc.div(1, calc.add(data, 1)) - 1;
