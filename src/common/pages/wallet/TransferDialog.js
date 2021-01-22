@@ -13,6 +13,7 @@ import { calc } from '_component/okit';
 import PasswordDialog from '_component/PasswordDialog';
 import util from '../../utils/util';
 import ont from '../../utils/dataProxy';
+import {getLpTokenStr} from '../../utils/lpTokenUtil';
 import './TransferDialog.less';
 
 function mapStateToProps(state) {
@@ -44,7 +45,7 @@ class TransferDialog extends Component {
       amountErr: false,
       note: '',
       noteErr: false,
-      fee: 0.02,
+      fee: 0.0005,
       feeErr: false,
       pwdErr: '',
       available: 0,
@@ -379,7 +380,7 @@ class TransferDialog extends Component {
                       value={amount}
                     />
                     <div className="trans-op-right">
-                      <span>{original_symbol.toUpperCase()}</span>
+                      <span>{getLpTokenStr(original_symbol)}</span>
                       <a onClick={this.allIn}>{toLocale('all')}</a>
                     </div>
                     <p className="amount-left-info">
