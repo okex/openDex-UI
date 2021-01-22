@@ -1159,6 +1159,8 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   'claimed check': 'You could now check your rewards in your farmings.',
   Check: 'Check',
   'stake tip': 'This stake action will also trigger claim tokens. ',
-  'unstake tip': 'This unstake action will also trigger claim tokens.'
+  'unstake tip': 'This unstake action will also trigger claim tokens.',
+  'info':'Notice',
+  'info desc': `Please note that adding liquidity is based on the AMM automatic market-making model, the two currencies you added in mining will fluctuate in number. Changes in quantity and price at the time of redemption may cause losses, which are called impermanence losses. Please note the risk, click confirm will finish liquidity adding.`
 };
 export default enUS;

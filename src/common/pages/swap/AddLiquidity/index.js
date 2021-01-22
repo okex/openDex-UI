@@ -16,6 +16,7 @@ import Message from '_src/component/Message';
 import Tooltip from '../../../component/Tooltip';
 import { validateTxs } from '_src/utils/client';
 import { getDisplaySymbol } from '../../../utils/coinIcon';
+import { Dialog } from '../../../component/Dialog';
 
 function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
@@ -26,6 +27,7 @@ function mapStateToProps(state) {
 export default class AddLiquidity extends React.Component {
   constructor(props) {
     super(props);
+    this.confirmRef = React.createRef();
     this.state = this._getDefaultState(props);
   }
 
@@ -54,6 +56,7 @@ export default class AddLiquidity extends React.Component {
       liquidity: props.liquidity,
       userLiquidity: props.userLiquidity,
       isEmptyPool,
+      showConfirmDialog: false
     };
   }
 
@@ -66,7 +69,7 @@ export default class AddLiquidity extends React.Component {
       targetSymbol = liquidity.quote_pooled_coin.denom;
       if (
         liquidity.base_pooled_coin.amount ===
-          liquidity.quote_pooled_coin.amount &&
+        liquidity.quote_pooled_coin.amount &&
         calc.div(liquidity.base_pooled_coin.amount, 1) === 0
       ) {
         isEmptyPool = true;
@@ -329,6 +332,10 @@ export default class AddLiquidity extends React.Component {
     this.setState({ exchangeInfo });
   };
 
+  confirmDialog = (showConfirmDialog = true) => {
+    this.setState({ showConfirmDialog })
+  }
+
   getBtn() {
     const { baseToken, targetToken } = this.state;
     let btn;
@@ -360,13 +367,7 @@ export default class AddLiquidity extends React.Component {
       );
     } else {
       btn = (
-        <Confirm
-          onClick={this.confirm}
-          loadingTxt={toLocale('pending transactions')}
-          successTxt={toLocale('transaction confirmed')}
-        >
-          <div className="btn">{toLocale('Confirm')}</div>
-        </Confirm>
+        <div className="btn" onClick={() => this.confirmDialog()}>{toLocale('Confirm')}</div>
       );
     }
     return btn;
@@ -417,6 +418,11 @@ export default class AddLiquidity extends React.Component {
     });
   };
 
+  triggerConfirm = () => {
+    this.confirmDialog(false);
+    this.confirmInstance._onClick();
+  }
+
   componentDidMount() {
     this.init(this.state);
   }
@@ -439,7 +445,7 @@ export default class AddLiquidity extends React.Component {
 
   render() {
     const { back, disabledChangeCoin = false } = this.props;
-    const { baseToken, targetToken, isEmptyPool, userLiquidity } = this.state;
+    const { baseToken, targetToken, isEmptyPool, userLiquidity, showConfirmDialog } = this.state;
     const exchangeInfo = this.getExchangeInfo();
     const btn = this.getBtn();
     const isEmpty = baseToken.symbol && targetToken.symbol && isEmptyPool;
@@ -482,6 +488,41 @@ export default class AddLiquidity extends React.Component {
             <InfoItem data={userLiquidity} reduce={this.reduce} />
           </div>
         )}
+        <Dialog visible={showConfirmDialog} hideCloseBtn>
+          <div className="panel-dialog-info">
+            <div className="panel-dialog-info-title">
+              {toLocale('info')}
+              <span className="close" onClick={() => this.confirmDialog(false)}>
+                ×
+              </span>
+            </div>
+            <div className="panel-dialog-info-content">
+              {toLocale('info desc')}
+            </div>
+            <div
+              className='panel-dialog-info-footer'
+            >
+              <div className="btn1 cancel" onClick={() => this.confirmDialog(false)}>
+                {toLocale('cancel')}
+              </div>
+              {/* <Confirm
+                onClick={this.confirm}
+                loadingTxt={toLocale('pending transactions')}
+                successTxt={toLocale('transaction confirmed')}
+              > */}
+                <div className="btn1" onClick={this.triggerConfirm}>
+                  {toLocale('Confirm')}
+                </div>
+              {/* </Confirm> */}
+            </div>
+          </div>
+        </Dialog>
+        <Confirm
+          onClick={this.confirm}
+          loadingTxt={toLocale('pending transactions')}
+          successTxt={toLocale('transaction confirmed')}
+          getRef={(instance) => (this.confirmInstance = instance)}
+        ></Confirm>
       </>
     );
   }
