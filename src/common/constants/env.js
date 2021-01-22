@@ -36,8 +36,8 @@ const testnet = {
 
 const mainnet = {
   isTest: false,
-  dexUser: 'dex_user',
-  dexToken: 'dex_token',
+  dexUser: 'dex_user_main',
+  dexToken: 'dex_token_main',
   token: {
     base: 'okt',
     quote: 'usdt-a2b',
