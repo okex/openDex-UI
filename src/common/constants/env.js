@@ -42,7 +42,7 @@ const mainnet = {
     base: 'okt',
     quote: 'usdt-a2b',
     quoteName: 'USDT-A2B',
-    defaultProduct: 'okt_usdt-a2b',
+    defaultProduct: 'btck-ba9_usdt-a2b',
     productKey: 'product',
     activeMarketKey: 'activeMarket',
     favoritesKey: 'favorites',
