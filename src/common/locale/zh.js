@@ -763,7 +763,7 @@ const zhCN = {
   wallet_password_chartValidate: '必须包含数字、大小写字母',
   wallet_twicePassword: '再次输入密码',
   wallet_passwordNotSame: '两次密码输入不一致',
-  wallet_unsaveTip: '我确认DEX不会保存我的任何密码/助记词/Keystore/私钥',
+  wallet_unsaveTip: '我确认钱包不会保存我的任何密码/助记词/Keystore/私钥',
   wallet_hadWallet: '已有钱包.',
   wallet_importNow: '立即导入>>',
   wallet_nextStep: '下一步',
