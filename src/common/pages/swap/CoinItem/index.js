@@ -42,8 +42,10 @@ export default class CoinItem extends React.Component {
   };
 
   setMaxValue = () => {
+    const { token } = this.props;
     const max = this.getAvailable(true);
-    this.onInputChange(util.precisionInput(calc.sub(max, '0.05'), 8));
+    if(token.symbol.toLowerCase() == 'okt') this.onInputChange(util.precisionInput(calc.sub(max, '0.05'), 8));
+    else this.onInputChange(max);
   };
 
   showCoinSelectList = async (e) => {
