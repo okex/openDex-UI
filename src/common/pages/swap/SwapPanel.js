@@ -164,7 +164,10 @@ export default class SwapPanel extends React.Component {
   };
 
   loadBaseCoinList = async () => {
-    const data = await api.swapTokens();
+    const {
+      targetToken: { symbol },
+    } = this.state;
+    const data = await api.swapTokens({symbol});
     if (!data) return [];
     let { tokens = [] } = data;
     tokens = tokens || [];
