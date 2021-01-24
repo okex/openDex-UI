@@ -23,6 +23,7 @@ const testnet = {
   swapSetting: 'swap_setting_config_test',
   oklinkPagePath: 'okexchain-test',
   isMainnet: false,
+  fee: 0.05,
   firstPoolConf: {
     pool_name: '1st_pool_okt_usdt',
     lock_symbol: 'ammswap_okt_usdt-25a',
@@ -57,6 +58,7 @@ const mainnet = {
   swapSetting: 'swap_setting_config',
   oklinkPagePath: 'okexchain',
   isMainnet: true,
+  fee: 0.0005,
   firstPoolConf: {
     pool_name: '1st_pool_okt_usdt',
     lock_symbol: 'ammswap_okt_usdt-a2b',

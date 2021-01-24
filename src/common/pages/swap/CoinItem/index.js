@@ -9,6 +9,7 @@ import { channelsV3 } from '../../../utils/websocket';
 import SwapContext from '../SwapContext';
 import util from '_src/utils/util';
 import calc from '_src/utils/calc';
+import env from '../../../constants/env';
 
 function mapStateToProps(state) {
   const { account4Swap } = state.SwapStore;
@@ -44,7 +45,7 @@ export default class CoinItem extends React.Component {
   setMaxValue = () => {
     const { token } = this.props;
     const max = this.getAvailable(true);
-    if(token.symbol.toLowerCase() == 'okt') this.onInputChange(util.precisionInput(calc.sub(max, '0.05'), 8));
+    if(token.symbol.toLowerCase() === env.envConfig.token.base) this.onInputChange(util.precisionInput(calc.sub(max, env.envConfig.fee, false), 8));
     else this.onInputChange(max);
   };
 

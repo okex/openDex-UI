@@ -14,6 +14,7 @@ import PasswordDialog from '_component/PasswordDialog';
 import util from '../../utils/util';
 import ont from '../../utils/dataProxy';
 import {getLpTokenStr} from '../../utils/lpTokenUtil';
+import env from '../../constants/env';
 import './TransferDialog.less';
 
 function mapStateToProps(state) {
@@ -45,7 +46,7 @@ class TransferDialog extends Component {
       amountErr: false,
       note: '',
       noteErr: false,
-      fee: 0.0005,
+      fee: env.envConfig.fee,
       feeErr: false,
       pwdErr: '',
       available: 0,
@@ -170,8 +171,12 @@ class TransferDialog extends Component {
     };
   };
   allIn = () => {
-    const { available } = this.state;
-    this.setState({ amount: available });
+    const { tokenMap } = this.props;
+    const { available,symbol } = this.state;
+    const { original_symbol } = tokenMap[symbol] || { original_symbol: '' };
+    let amount = util.precisionInput(available,8)
+    if(original_symbol.toLowerCase() === env.envConfig.token.base) amount = util.precisionInput(calc.sub(available, env.envConfig.fee, false), 8);
+    this.setState({ amount });
   };
   setSymbol = (symbol, checkFee = true) => {
     this.setState({ symbol }, () => {
@@ -229,10 +234,13 @@ class TransferDialog extends Component {
             pwd,
             (privateKey) => {
               const { onClose, onSuccess, okexchainClient } = this.props;
-              const { symbol, address, amount, note } = this.state;
+              const { symbol, address, amount, note, available } = this.state;
               onClose();
               this.setState({ transferring: true });
-              const amountStr = util.precisionInput(amount);
+              let amountStr = util.precisionInput(amount);
+              if(util.precisionInput(amount,8) === util.precisionInput(available,8)) {
+                amountStr = available;
+              }
               okexchainClient.setAccountInfo(privateKey).then(() => {
                 okexchainClient
                   .sendSendTransaction(address, amountStr, symbol, note)
