@@ -127,8 +127,8 @@ class AssetsAccounts extends Component {
           const symbolUp = symbol.toUpperCase();
           const assetToken = (original_symbol || '').toUpperCase() || symbolUp;
           const sumOKB = calc.add(
-            calc.add(available || 0, freeze || 0),
-            locked || 0
+            calc.add(available || 0, freeze || 0,false),
+            locked || 0,false
           );
           return {
             ...curr,

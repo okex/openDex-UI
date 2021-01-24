@@ -178,7 +178,7 @@ util.accountsCols = ({ transfer }, { valuationUnit }) => {
       key: 'available',
       alignRight: true,
       render: (text) => {
-        return calc.showFloorTruncation(text, 8, false);
+        return calc.showFloorTruncation(text, 8, true);
       },
     },
     {
@@ -186,7 +186,7 @@ util.accountsCols = ({ transfer }, { valuationUnit }) => {
       key: 'locked',
       alignRight: true,
       render: (text) => {
-        return calc.showFloorTruncation(text, 8, false);
+        return calc.showFloorTruncation(text, 8, true);
       },
     },
     {

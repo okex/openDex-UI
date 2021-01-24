@@ -101,7 +101,6 @@ class TransferDialog extends Component {
   calAvaIsFeeToken = () => {
     const { fee } = this.state;
     if (this.feeLeft > fee) {
-      console.log(calc.sub(this.feeLeft, fee, false))
       this.setState({ available: util.precisionInput(calc.sub(this.feeLeft, fee, false)) });
     } else {
       this.setState({ available: 0 });
@@ -171,12 +170,8 @@ class TransferDialog extends Component {
     };
   };
   allIn = () => {
-    const { tokenMap } = this.props;
-    const { available,symbol } = this.state;
-    const { original_symbol } = tokenMap[symbol] || { original_symbol: '' };
-    let amount = util.precisionInput(available,8)
-    if(original_symbol.toLowerCase() === env.envConfig.token.base) amount = util.precisionInput(calc.sub(available, env.envConfig.fee, false), 8);
-    this.setState({ amount });
+    const { available } = this.state;
+    this.setState({ amount:util.precisionInput(available,8) });
   };
   setSymbol = (symbol, checkFee = true) => {
     this.setState({ symbol }, () => {
