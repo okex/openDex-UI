@@ -100,7 +100,8 @@ class TransferDialog extends Component {
   calAvaIsFeeToken = () => {
     const { fee } = this.state;
     if (this.feeLeft > fee) {
-      this.setState({ available: calc.sub(this.feeLeft, fee) });
+      console.log(calc.sub(this.feeLeft, fee, false))
+      this.setState({ available: util.precisionInput(calc.sub(this.feeLeft, fee, false)) });
     } else {
       this.setState({ available: 0 });
     }
@@ -385,7 +386,7 @@ class TransferDialog extends Component {
                     </div>
                     <p className="amount-left-info">
                       <span>{toLocale('trans_available')}</span>
-                      {calc.showFloorTruncation(available, 8, false)}
+                      {calc.showFloorTruncation(available, 8, true)}
                     </p>
                     {amountErr && (
                       <p className="error">

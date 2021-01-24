@@ -4,20 +4,24 @@ function digitLength(num) {
   return BigNumber(num).dp();
 }
 
-function add(a, b) {
+function add(a, b, toNumber=true) {
+  if(!toNumber) return BigNumber(a).plus(b);
   return BigNumber(a).plus(b).toNumber();
 }
 
-function sub(a, b) {
+function sub(a, b, toNumber=true) {
+  if(!toNumber) return BigNumber(a).minus(b);
   return BigNumber(a).minus(b).toNumber();
 }
 
-function mul(a, b) {
+function mul(a, b, toNumber=true) {
+  if(!toNumber) return BigNumber(a).times(b);
   return BigNumber(a).times(b).toNumber();
 }
 
-function div(a, b) {
+function div(a, b, toNumber=true) {
   BigNumber.config({ DECIMAL_PLACES: 40 });
+  if(!toNumber) return BigNumber(a).div(b);
   return BigNumber(a).div(b).toNumber();
 }
 
@@ -65,7 +69,7 @@ function showFloorTruncation(num, digit, needZero = true) {
 }
 
 function showTruncation(num, digit, needZero = true) {
-  return BigNumber(BigNumber(num).toFixed(digit)).toFormat(
+  return BigNumber(BigNumber(num).toFixed(digit, BigNumber.ROUND_FLOOR)).toFormat(
     needZero ? digit : undefined
   );
 }
