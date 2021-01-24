@@ -231,7 +231,7 @@ class TransferDialog extends Component {
               const { symbol, address, amount, note } = this.state;
               onClose();
               this.setState({ transferring: true });
-              const amountStr = Number(amount).toFixed(8);
+              const amountStr = util.precisionInput(amount);
               okexchainClient.setAccountInfo(privateKey).then(() => {
                 okexchainClient
                   .sendSendTransaction(address, amountStr, symbol, note)
