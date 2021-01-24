@@ -62,7 +62,7 @@ export default class ReduceLiquidity extends React.Component {
 
   change = async (ratio) => {
     const value = this._getValueByRatio(ratio);
-    this.setState({ ratio, value, error: false });
+    this.setState({ ratio, value:util.precisionInput(value), error: false });
     this.updateCoins(value, false);
   };
 
