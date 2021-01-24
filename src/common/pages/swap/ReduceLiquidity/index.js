@@ -55,7 +55,7 @@ export default class ReduceLiquidity extends React.Component {
   _getValueByRatio(ratio) {
     if (!ratio) ratio = this.state.ratio;
     if (!ratio) return this.state.value;
-    const max = this.getAvailable();
+    const max = this.getAvailable(true);
     const value = calc.mul(max, ratio.value);
     return value;
   }
@@ -126,11 +126,12 @@ export default class ReduceLiquidity extends React.Component {
     });
   };
 
-  getAvailable() {
+  getAvailable(origin) {
     const { liquidity, account4Swap } = this.props;
     let available = liquidity.pool_token_coin.amount;
     const temp = account4Swap[liquidity.pool_token_coin.denom.toLowerCase()];
     if (temp) available = temp.available;
+    if(origin) return available;
     return util.precisionInput(available, 8);
   }
 
@@ -163,7 +164,7 @@ export default class ReduceLiquidity extends React.Component {
     const { back } = this.props;
     const { ratios, ratio, coins, value } = this.state;
     let available = this.getAvailable();
-    const btn = this.getBtn(value, available, coins);
+    const btn = this.getBtn(value, this._getValueByRatio(), coins);
     return (
       <div className="panel">
         <div className="panel-header">
