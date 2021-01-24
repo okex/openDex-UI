@@ -154,7 +154,7 @@ class TransferDialog extends Component {
       }
       if (type === 'amount') {
         err = util.compareNumber(available,value);
-        if (!err && this.feeLeft < fee) {
+        if (!err && util.compareNumber(this.feeLeft, fee)) {
           this.setState({
             feeErr: true,
           });
@@ -204,8 +204,8 @@ class TransferDialog extends Component {
       address.trim() &&
       this.addrReg.test(address.trim()) &&
       Number(amount) &&
-      util.compareNumber(amount,available) &&
-      this.feeLeft > fee &&
+      !util.compareNumber(available,amount) &&
+      util.compareNumber(fee,this.feeLeft) &&
       this.addr &&
       this.addr.toLowerCase() !== address.trim().toLowerCase()
     );
