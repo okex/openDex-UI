@@ -90,7 +90,7 @@ class TransferDialog extends Component {
         const { currencies } = data;
         const assets = currencies || [];
         if (assets.length) {
-          this.feeLeft = Number(assets[0].available);
+          this.feeLeft = assets[0].available;
           if (symbol === this.feeToken) {
             this.calAvaIsFeeToken();
           }
@@ -112,7 +112,7 @@ class TransferDialog extends Component {
         const { currencies } = data;
         const assets = currencies || [];
         if (assets.length) {
-          this.setState({ available: Number(assets[0].available) });
+          this.setState({ available: assets[0].available });
         }
       });
   };
@@ -152,7 +152,7 @@ class TransferDialog extends Component {
         }
       }
       if (type === 'amount') {
-        err = Number(value) > available;
+        err = util.compareNumber(available,value);
         if (!err && this.feeLeft < fee) {
           this.setState({
             feeErr: true,
@@ -203,7 +203,7 @@ class TransferDialog extends Component {
       address.trim() &&
       this.addrReg.test(address.trim()) &&
       Number(amount) &&
-      Number(amount) <= available &&
+      util.compareNumber(amount,available) &&
       this.feeLeft > fee &&
       this.addr &&
       this.addr.toLowerCase() !== address.trim().toLowerCase()
