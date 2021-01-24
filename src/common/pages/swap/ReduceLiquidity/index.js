@@ -56,7 +56,7 @@ export default class ReduceLiquidity extends React.Component {
     if (!ratio) ratio = this.state.ratio;
     if (!ratio) return this.state.value;
     const max = this.getAvailable(true);
-    const value = calc.mul(max, ratio.value);
+    const value = calc.mul(max, ratio.value, false);
     return value;
   }
 

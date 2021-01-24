@@ -201,7 +201,7 @@ export default class AddLiquidity extends React.Component {
         quote_pooled_coin = tempSymbol;
       }
       exchangeInfo.price = util.precisionInput(
-        calc.div(quote_pooled_coin.amount, base_pooled_coin.amount),
+        calc.div(quote_pooled_coin.amount, base_pooled_coin.amount,false),
         8
       );
     }
@@ -286,7 +286,7 @@ export default class AddLiquidity extends React.Component {
             </Tooltip>
           </div>
           <div className="info-value">
-            {calc.mul(poolShare, 100).toFixed(2)}%
+            {util.precisionInput(calc.mul(poolShare, 100,false),2)}%
           </div>
         </div>
       </div>
