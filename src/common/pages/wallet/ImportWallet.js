@@ -5,6 +5,7 @@ import ImportByKeystore from './ImportByKeystore';
 import ImportByMnemonic from './ImportByMnemonic';
 import ImportByPrivate from './ImportByPrivate';
 import ImportByWalletConnect from './ImportByWalletConnect';
+import classNames from 'classnames';
 import env from '../../constants/env';
 import './ImportWallet.less';
 
@@ -53,7 +54,7 @@ class ImportWallet extends Component {
     const { imporyType } = this.state;
     return (
       <WalletContainer>
-        <div className="wallet-import-container">
+        <div className={classNames('wallet-import-container',{qrcode:!env.envConfig.isTest})}>
           <div className="wallet-import-title">{toLocale('wallet_import')}</div>
           <div className="wallet-import-tab">
             <div
