@@ -127,7 +127,7 @@ export default class FarmPanel extends React.Component {
                 </Tooltip>
               </div>
               <div className="rate">{d.total_apy}</div>
-              <div className="rate-tip">{d.farm_apy_dis}</div>
+              <div className="rate-tip">{d.farm_apy.length > 1 ? d.farm_apy_dis : toLocale('Farm APY')+`（${d.farm_apy[0].denom_dis}）`}</div>
               <div className="info-detail">
                 {toLocale('Total staked：')}
                 {d.total_staked_dis}
