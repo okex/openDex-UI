@@ -174,7 +174,7 @@ const zhCN = {
   'error.code.65013': '地址缺失',
   'error.code.65014': '为零值',
   'error.code.65015': '区块时间超过限制',
-  'error.code.65016': '输入数值超出系统上限',
+  'error.code.65016': '池子比例发生变化，交易失败，请重试。',
   'error.code.65017': '生产lp token失败',
   'error.code.65018': '发送token失败',
   'error.code.65019': '销毁lp token失败',
