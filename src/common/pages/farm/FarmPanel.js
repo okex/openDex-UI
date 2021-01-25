@@ -116,7 +116,7 @@ export default class FarmPanel extends React.Component {
           {data.map((d, index) => (
             <div className="info-item" key={index}>
               <div
-                className={classNames('tag', { active: d.active !== 2 })}
+                className={classNames('tag','active')}
               ></div>
               <div className="coin2coin">
                 {d.lock_symbol_info.symbols.map((symbol, symbolIndex) => (
@@ -140,17 +140,11 @@ export default class FarmPanel extends React.Component {
                 component={() =>
                   Stake.getStake({ data: d, onSuccess: this.refreshData })
                 }
-                disabled={d.active === 2}
               >
                 <div
-                  className={classNames('farm-btn', {
-                    disabled: d.active === 2,
-                  })}
+                  className={classNames('farm-btn')}
                 >
                   {toLocale('STAKE')}
-                  {!d.poolEmpty && (
-                    <span className="timer">&nbsp;{this.getTimerDis(d)}</span>
-                  )}
                 </div>
               </SimpleBtnDialog>
             </div>

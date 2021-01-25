@@ -31,7 +31,7 @@ export default class FarmPanel extends React.Component {
     const showUnstake = await Stake.getStake({
       data,
       isStake: false,
-      onClose: () => { console.log(111);this.setState({showUnstake: false})},
+      onClose: () => { this.setState({showUnstake: false})},
       onSuccess: this.refreshData,
     });
     this.setState({showUnstake});
