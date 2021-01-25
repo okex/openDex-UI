@@ -1161,6 +1161,9 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   'stake tip': 'This stake action will also trigger claim tokens. ',
   'unstake tip': 'This unstake action will also trigger claim tokens.',
   'info':'Notice',
-  'info desc': `Please note that adding liquidity is based on the AMM automatic market-making model, the two currencies you added in mining will fluctuate in number. Changes in quantity and price at the time of redemption may cause losses, which are called impermanence losses. Please note the risk, click confirm will finish liquidity adding.`
+  'info desc': `Please note that adding liquidity is based on the AMM automatic market-making model, the two currencies you added in mining will fluctuate in number. Changes in quantity and price at the time of redemption may cause losses, which are called impermanence losses. Please note the risk, click confirm will finish liquidity adding.`,
+  'home_receive_swap': 'swap',
+  'home_receive_farm': 'farm',
+  'lp introduce': 'lp introduce',
 };
 export default enUS;

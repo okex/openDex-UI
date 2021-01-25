@@ -1149,6 +1149,9 @@ const zhCN = {
   'stake tip': '本次质押操作同时也会触发领取挖矿收益。',
   'unstake tip': '本次赎回操作同时也会触发领取挖矿收益。',
   'info':'提示',
-  'info desc': `请注意流动性添加基于AMM自动做市模型，您投入挖矿的两个币种，数量将会此消彼长，赎回时数量和价格变化有可能导致一定的损失(即：“无常损失”)。请明确知晓此风险，点击确认将完成流动性添加。`
+  'info desc': `请注意流动性添加基于AMM自动做市模型，您投入挖矿的两个币种，数量将会此消彼长，赎回时数量和价格变化有可能导致一定的损失(即：“无常损失”)。请明确知晓此风险，点击确认将完成流动性添加。`,
+  'home_receive_swap': 'swap',
+  'home_receive_farm': 'farm',
+  'lp introduce': 'lp introduce',
 };
 export default zhCN;

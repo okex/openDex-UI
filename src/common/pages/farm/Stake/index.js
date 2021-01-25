@@ -27,18 +27,20 @@ export default class Stake extends React.Component {
   constructor() {
     super();
     this.state = {
+      selectMax: false,
       value: '',
       poolRatio: '-',
       error: true,
     };
   }
 
-  onInputChange = (value) => {
+  onInputChange = (value, selectMax = false) => {
+    if(selectMax) value = this.getAvailable(selectMax);
     let poolRatio = '-';
     let error = !value || !Number(value);
     const { data, isStake = true } = this.props;
     if (value) {
-      const max = this.getAvailable();
+      const max = this.getAvailable(selectMax);
       if (util.compareNumber(max, value))
         error = toLocale('balance not enough');
       else if (isStake && util.compareNumber(value, data.min_lock_amount))
@@ -60,21 +62,21 @@ export default class Stake extends React.Component {
         poolRatio = '0.00%';
       }
     }
-    this.setState({ value, poolRatio, error });
+    this.setState({ value, poolRatio, error, selectMax });
   };
 
   setMaxValue = () => {
-    this.onInputChange(this.getAvailable());
+    this.onInputChange(this.getAvailable(), true);
   };
 
   confirm = () => {
-    const { value, error } = this.state;
+    const { value, error, selectMax } = this.state;
     const { okexchainClient, data, isStake, onClose, onSuccess } = this.props;
     if (!value || error) return;
     const params = [
       data.pool_name,
       data.lock_symbol,
-      util.precisionInput(value),
+      selectMax ? this.getAvailable(true) : util.precisionInput(value),
       '',
       null,
     ];
@@ -94,13 +96,17 @@ export default class Stake extends React.Component {
     });
   };
 
-  getAvailable() {
+  getAvailable(origin) {
     const { data, isStake = true } = this.props;
-    if (!isStake) return util.precisionInput(data.account_staked, 8);
-    let { balance_dis, pool_name } = data;
+    if (!isStake) return origin ? data.account_staked : data.account_staked_dis;
+    let { balance_dis, pool_name, balance } = data;
     let { account4Swap } = this.props;
     const temp = account4Swap[pool_name];
-    if (temp) balance_dis = util.precisionInput(temp.available, 8);
+    if (temp) {
+      balance = temp.available;
+      balance_dis = util.precisionInput(temp.available, 8);
+    }
+    if(origin) return balance;
     return balance_dis;
   }
 
@@ -133,9 +139,12 @@ export default class Stake extends React.Component {
         <div className="stake-panel-content">
           <div className="space-between stake-panel-label">
             <div className="left">{toLocale('Number')}</div>
-            <div className="right" onClick={this.setMaxValue}>
+            <div className="right">
               {toLocale(avaliableLocale)}
               {this.getAvailable()}
+              <span className="max" onClick={this.setMaxValue}>
+                MAX
+              </span>
             </div>
           </div>
           <div className="stake-panel-input-wrap">
@@ -144,7 +153,7 @@ export default class Stake extends React.Component {
                 <InputNum
                   type="text"
                   value={value}
-                  onChange={this.onInputChange}
+                  onChange={(value) => {this.onInputChange(value)}}
                   placeholder={
                     isStake
                       ? toLocale('stake min input placehold', {

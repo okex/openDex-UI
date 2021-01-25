@@ -205,7 +205,7 @@ export function stakedInfo({ poolName }) {
   }).then((data) => {
     data.pool_name_dis = getLpTokenStr(data.pool_name);
     data.balance_dis = util.precisionInput(data.balance, 8);
-    data.account_staked = util.precisionInput(data.account_staked, 8);
+    data.account_staked_dis = util.precisionInput(data.account_staked, 8);
     data.pool_total_staked_dis = util.precisionInput(data.pool_total_staked, 8);
     return data;
   });

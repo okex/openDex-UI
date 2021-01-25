@@ -1,6 +1,7 @@
 import React from 'react';
 import { toLocale } from '_src/locale/react-locale';
 import { getCoinIcon, getDisplaySymbol } from '../../../utils/coinIcon';
+import Tooltip from '../../../component/Tooltip';
 import calc from '_src/utils/calc';
 import util from '_src/utils/util';
 
@@ -37,7 +38,15 @@ export default class InfoItem extends React.Component {
             {toLocale('Amount')} {getDisplaySymbol(data.base_pooled_coin.denom)}
             /{getDisplaySymbol(data.quote_pooled_coin.denom)}
           </div>
-          <div className="right">{toLocale('LP token/ratio')}</div>
+          <div className="right">
+            <Tooltip
+              placement="right"
+              overlay={toLocale("lp introduce")}
+            >
+              <i className="help" />
+            </Tooltip>
+            {toLocale('LP token/ratio')}
+          </div>
         </div>
         <div className="space-between poll-item-info">
           <div className="left">
