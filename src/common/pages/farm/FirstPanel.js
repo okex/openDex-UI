@@ -3,17 +3,38 @@ import { toLocale } from '_src/locale/react-locale';
 import util from '_src/utils/util';
 import { getCoinIcon } from '../../utils/coinIcon';
 import SimpleBtnDialog from './SimpleBtnDialog';
+import { Dialog } from '../../component/Dialog';
 import classNames from 'classnames';
 import Stake from './Stake';
 import ClaimBtn from './ClaimBtn';
+import ClaimCheck from './ClaimCheck';
 import * as api from './util/api';
+import env from '../../constants/env';
 
 export default class FarmPanel extends React.Component {
   constructor() {
     super();
     this.state = {
       data: null,
+      showCheck: false,
+      showUnstake: false,
     };
+  }
+
+  check() {
+    const now = (Date.now() / 1000).toFixed();
+    return now < env.envConfig.firstPoolConf.claim_at;
+  }
+
+  onCheckSuccess = async () => {
+    const {data} = this.state;
+    const showUnstake = await Stake.getStake({
+      data,
+      isStake: false,
+      onClose: () => { console.log(111);this.setState({showUnstake: false})},
+      onSuccess: this.refreshData,
+    });
+    this.setState({showUnstake});
   }
 
   async componentDidMount() {
@@ -48,6 +69,11 @@ export default class FarmPanel extends React.Component {
     }
   }
 
+  unstake = () => {
+    if(this.check()) this.setState({showCheck: true});
+    else this.onCheckSuccess();
+  }
+
   async init() {
     const data = await api.first();
     if (data.active) this.stopTimer();
@@ -65,7 +91,7 @@ export default class FarmPanel extends React.Component {
   };
 
   render() {
-    const { data } = this.state;
+    const { data,showCheck,showUnstake } = this.state;
     const isLogined = util.isLogined();
     if (!data) return null;
     return (
@@ -113,17 +139,17 @@ export default class FarmPanel extends React.Component {
           >
             <div className="farm-btn stake-btn">{toLocale('STAKE')}</div>
           </SimpleBtnDialog>
-          <SimpleBtnDialog
-            component={() =>
-              Stake.getStake({
-                data,
-                isStake: false,
-                onSuccess: this.refreshData,
-              })
-            }
-          >
-            <div className="farm-btn stake-btn">{toLocale('UNSTAKE')}</div>
-          </SimpleBtnDialog>
+          <div className="farm-btn stake-btn" onClick={this.unstake}>{toLocale('UNSTAKE')}</div>
+          <Dialog visible={showCheck} hideCloseBtn>
+            <ClaimCheck onClose={() => this .setState({showCheck: false})} onSuccess={this.onCheckSuccess}/>
+          </Dialog>
+          {showUnstake && 
+            <Dialog visible hideCloseBtn>
+              {
+                showUnstake
+              }
+            </Dialog>
+          }
           <ClaimBtn
             data={data}
             onSuccess={this.props.onDashboard}

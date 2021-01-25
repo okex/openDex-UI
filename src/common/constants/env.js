@@ -32,7 +32,6 @@ const testnet = {
     claim_height_extra: 24 * 60 * 60,
     claim_height_extra1: 3 * 24 * 60 * 60,
     claim_at: 1611655200,
-    redeem_at: 1611655200,
   },
 };
 
@@ -68,7 +67,6 @@ const mainnet = {
     claim_height_extra: 24 * 60 * 60,
     claim_height_extra1: 3 * 24 * 60 * 60,
     claim_at: 1611582090,
-    redeem_at: 1611655200,
   },
 };
 

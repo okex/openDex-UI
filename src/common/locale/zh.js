@@ -1153,5 +1153,6 @@ const zhCN = {
   'home_receive_swap': 'swap',
   'home_receive_farm': 'farm',
   'lp introduce': 'lp introduce',
+  'unstake confirm info': '1st pool rewards will be released at 2021/1/26  18:00（UTC+8）. You won’t get any rewards if you have no LP tokens staked at that time.',
 };
 export default zhCN;
