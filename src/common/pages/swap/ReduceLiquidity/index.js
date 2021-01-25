@@ -145,10 +145,11 @@ export default class ReduceLiquidity extends React.Component {
   getBtn = (value, available) => {
     if (!Number(value))
       return <div className="btn disabled">{toLocale('Confirm')}</div>;
-    if (util.compareNumber(available, value))
+    if (util.compareNumber(available, value)) {
       return (
         <div className="btn disabled">{toLocale('insufficient lp token')}</div>
       );
+    }
     return (
       <Confirm
         onClick={this.confirm}
@@ -164,7 +165,7 @@ export default class ReduceLiquidity extends React.Component {
     const { back } = this.props;
     const { ratios, ratio, coins, value } = this.state;
     let available = this.getAvailable();
-    const btn = this.getBtn(value, this._getValueByRatio(), coins);
+    const btn = this.getBtn(value, this._getValueByRatio({value:1}) );
     return (
       <div className="panel">
         <div className="panel-header">
