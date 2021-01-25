@@ -22,7 +22,8 @@ const Config = {
     get receiveFarmUrl() {
       if(lang === 'zh_CN') return 'https://sourl.cn/SQbtvR';
       return 'https://www.okex.com/academy/en/how-to-use-okex-swap-farm-pools-okexchain';
-    }
+    },
+    liquidity:''
   },
   validatePwdDeferSecond: 100,
   operateResultDelaySecond: 500,

@@ -556,6 +556,40 @@
       margin-top: -4px;
       margin-bottom: 12px;
     }
+    .tip-liquidity-warn {
+      display: flex;
+      align-items: center;
+      height: 32px;
+      background: rgba(243, 136, 43,.15);
+      font-size: 12px;
+      font-weight: 400;
+      color: #F3882B;
+      margin-bottom: 24px;
+      padding: 0 8px;
+    }
+    .tip-liquidity-check {
+      display: flex;
+      margin-top: 24px;
+      .check {
+        display: flex;
+        width: 16px;
+        height: 16px;
+        background: url() 0 0 no-repeat;
+        background-size: 16px auto;
+        margin-right: 9px;
+        cursor: pointer;
+        &.active {
+          background-image: url();
+        }
+      }
+      .protocol {
+        width: 447px;
+        font-size: 12px;
+        font-weight: 400;
+        color: #FFFFFF;
+        line-height: 16px;
+      }
+    }
   }
 
   .panel-header {

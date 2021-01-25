@@ -1,5 +1,4 @@
 import SwapActionType from '../actionTypes/SwapActionType';
-import util from '_src/utils/util';
 
 export function setting(data) {
   return (dispatch) => {

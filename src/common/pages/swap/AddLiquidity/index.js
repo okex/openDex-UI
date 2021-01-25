@@ -11,12 +11,15 @@ import InfoItem from '../InfoItem';
 import ReduceLiquidity from '../ReduceLiquidity';
 import Confirm from '../../../component/Confirm';
 import util from '_src/utils/util';
+import {getLiquidityCheck, liquidityCheck} from '../util';
+import Config from '../../../constants/Config';
 import { getDeadLine4sdk } from '../util';
 import Message from '_src/component/Message';
 import Tooltip from '../../../component/Tooltip';
 import { validateTxs } from '_src/utils/client';
 import { getDisplaySymbol } from '../../../utils/coinIcon';
 import { Dialog } from '../../../component/Dialog';
+import classNames from 'classnames';
 
 function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
@@ -56,7 +59,8 @@ export default class AddLiquidity extends React.Component {
       liquidity: props.liquidity,
       userLiquidity: props.userLiquidity,
       isEmptyPool,
-      showConfirmDialog: false
+      showConfirmDialog: false,
+      check: getLiquidityCheck(),
     };
   }
 
@@ -76,6 +80,12 @@ export default class AddLiquidity extends React.Component {
       }
     }
     return { baseSymbol, targetSymbol, isEmptyPool };
+  }
+
+  checkProtocol = () => {
+    const check = getLiquidityCheck();
+    this.setState({check});
+    liquidityCheck(check?'':'true');
   }
 
   changeBase = (token, inputChanged) => {
@@ -337,7 +347,7 @@ export default class AddLiquidity extends React.Component {
   }
 
   getBtn() {
-    const { baseToken, targetToken } = this.state;
+    const { baseToken, targetToken,check } = this.state;
     let btn;
     if (!util.isLogined()) {
       btn = (
@@ -363,6 +373,12 @@ export default class AddLiquidity extends React.Component {
           {toLocale('insufficient', {
             coin: getDisplaySymbol(targetToken.symbol),
           })}
+        </div>
+      );
+    } else if(!check) {
+      btn = (
+        <div className="btn disabled">
+          {toLocale('check protocol')}
         </div>
       );
     } else {
@@ -445,7 +461,7 @@ export default class AddLiquidity extends React.Component {
 
   render() {
     const { back, disabledChangeCoin = false } = this.props;
-    const { baseToken, targetToken, isEmptyPool, userLiquidity, showConfirmDialog } = this.state;
+    const { baseToken, targetToken, isEmptyPool, userLiquidity, showConfirmDialog, check } = this.state;
     const exchangeInfo = this.getExchangeInfo();
     const btn = this.getBtn();
     const isEmpty = baseToken.symbol && targetToken.symbol && isEmptyPool;
@@ -457,6 +473,11 @@ export default class AddLiquidity extends React.Component {
             {toLocale('Add Liquidity')}
           </div>
           <div className="add-liquidity-content">
+            {baseToken.symbol && targetToken.symbol && 
+            <div className="tip-liquidity-warn">
+              {toLocale('pool warn tip',{base:baseToken.symbol.toUpperCase(),quote: targetToken.symbol.toUpperCase()})}
+            </div>
+            }
             {isEmpty && (
               <div className="tip-liquidity-empty">
                 {toLocale('pool empty tip')}
@@ -480,6 +501,10 @@ export default class AddLiquidity extends React.Component {
               max={true}
             />
             {exchangeInfo}
+            <div className="tip-liquidity-check">
+              <span className={classNames('check',{active: check})} onClick={this.checkProtocol}></span>
+              <div className="protocol">{toLocale('info desc')}<a href={Config.okexchain.liquidity} target="_blank" rel="noopener noreferrer">{toLocale('go detail')}</a></div>
+            </div>
             <div className="btn-wrap">{btn}</div>
           </div>
         </div>

@@ -1166,5 +1166,8 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   'home_receive_farm': 'farm',
   'lp introduce': 'lp introduce',
   'unstake confirm info': '1st pool rewards will be released at 2021/1/26  18:00（UTC+8）. You won’t get any rewards if you have no LP tokens staked at that time.',
+  'pool warn tip':'Please prepare equal assets of {base} and {quote} to add liquidity.',
+  'go detail': '查看详情>',
+  'check protocol': 'check protocol',
 };
 export default enUS;
