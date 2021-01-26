@@ -83,6 +83,8 @@ export default class DashboardPanel extends React.Component {
   };
 
   getTimerDis = (data) => {
+    if(data.in_whitelist) return null;
+    if(!data.active) return toLocale('finished');
     if (data.active !== 2)
       return (
         <>
@@ -150,7 +152,7 @@ export default class DashboardPanel extends React.Component {
                 <div className="info-item" key={index}>
                   {d.in_whitelist && (
                     <div
-                      className={classNames('tag', { active: d.active !== 2 })}
+                      className={classNames('tag', 'active')}
                     ></div>
                   )}
                   <div className="info-item-title">
@@ -215,12 +217,9 @@ export default class DashboardPanel extends React.Component {
                       component={() =>
                         Stake.getStake({ data: d, onSuccess: this.refreshData })
                       }
-                      disabled={d.active === 2}
                     >
                       <div
-                        className={classNames('linkbtn', {
-                          disabled: d.active === 2,
-                        })}
+                        className={classNames('linkbtn')}
                       >
                         {toLocale('STAKE')}
                       </div>
