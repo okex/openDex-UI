@@ -66,7 +66,7 @@ const mainnet = {
     claim_height: 1003128,
     claim_height_extra: 24 * 60 * 60,
     claim_height_extra1: 3 * 24 * 60 * 60,
-    claim_at: 1611582090,
+    claim_at: 1611653606,
   },
 };
 
