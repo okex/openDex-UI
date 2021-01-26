@@ -584,13 +584,64 @@
   .tip-info-warn {
     display: flex;
     align-items: center;
-    height: 32px;
+    min-height: 32px;
     background: rgba(243, 136, 43,.15);
     font-size: 12px;
     font-weight: 400;
     color: #F3882B;
     margin-bottom: 24px;
     padding: 0 8px;
+    line-height: 16px;
+  }
+
+  .panel-confirm {
+    padding: 24px 0;
+    .coin {
+      color: #fff;
+      font-size: 18px;
+      font-weight: 500;
+      color: #FFFFFF;
+      line-height: 24px;
+      img {
+        width: 24px;
+        height: 24px;
+        margin-right: 8px;
+      }
+    }
+    .down {
+      width: 11px;
+      height: 14px;
+      margin: 13px 0;
+      background: url() 0 0 no-repeat;
+      background-size: 11px auto;
+    }
+    .tip-info-warn {
+      margin-top: 24px;
+      &.tip-info-accept {
+        background-color:rgba(45, 96, 224, 0.15);
+      }
+    }
+    .tip-info-accept {
+      font-size: 12px;
+      font-weight: 400;
+      color: #E35E5E;
+      line-height: 16px;
+      padding-right: 4px;
+      .btn {
+        height: 24px;
+        padding: 0 8px;
+        font-size: 12px;
+        font-weight: 400;
+      }
+    }
+    .coin-exchange-detail {
+      margin-top: 0;
+      margin-bottom: 0;
+      .info-value {
+        color: #FFFFFF;
+        font-weight: 500;
+      }
+    }
   }
 
   .panel-header {

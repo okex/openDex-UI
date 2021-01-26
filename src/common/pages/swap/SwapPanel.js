@@ -56,7 +56,8 @@ export default class SwapPanel extends React.Component {
       targetToken: props.targetToken,
       exchangeInfo: { ...SwapPanel.exchangeInfo },
       isPoolEmpty: false,
-      showConfirmDialog: false
+      showConfirmDialog: false,
+      active:false,
     };
   }
 
@@ -233,7 +234,7 @@ export default class SwapPanel extends React.Component {
     );
   }
 
-  getExchangeInfo() {
+  getExchangeInfo(isConfirm) {
     const { baseToken, targetToken, exchangeInfo } = this.state;
     const fee = Number(exchangeInfo.fee.replace(baseToken.symbol, ''));
     if (baseToken.symbol && targetToken.symbol) {
@@ -243,25 +244,50 @@ export default class SwapPanel extends React.Component {
             <div className="info">
               <div className="info-name">{toLocale('Price')}</div>
               <div className="info-value">
-                <i className="exchange" />1{getDisplaySymbol(baseToken.symbol)}{' '}
+                <i className="exchange" />
+                {!isConfirm ? <>
+                  1{getDisplaySymbol(baseToken.symbol)}{' '}
                 ≈ -{getDisplaySymbol(targetToken.symbol)}
+                </> :
+                <>
+                - {getDisplaySymbol(targetToken.symbol)}/{getDisplaySymbol(baseToken.symbol)}
+                </>
+                }
               </div>
             </div>
           </div>
         );
       } else {
-        let priceInfo = `1${getDisplaySymbol(
-          baseToken.symbol
-        )} ≈ ${util.precisionInput(exchangeInfo.price, 8)}${getDisplaySymbol(
-          targetToken.symbol
-        )}`;
-        if (exchangeInfo.isReverse)
-          priceInfo = `1${getDisplaySymbol(
+        let priceInfo;
+        if(isConfirm) {
+          priceInfo = `${util.precisionInput(exchangeInfo.price, 8)} ${getDisplaySymbol(
             targetToken.symbol
-          )} ≈ ${util.precisionInput(
-            calc.div(1, exchangeInfo.price),
-            8
-          )}${getDisplaySymbol(baseToken.symbol)}`;
+          )}/${getDisplaySymbol(
+            baseToken.symbol
+          )}`
+        } else {
+          priceInfo = `1${getDisplaySymbol(
+            baseToken.symbol
+          )} ≈ ${util.precisionInput(exchangeInfo.price, 8)}${getDisplaySymbol(
+            targetToken.symbol
+          )}`
+        }
+        if (exchangeInfo.isReverse)
+          if(!isConfirm) {
+            priceInfo = `1${getDisplaySymbol(
+              targetToken.symbol
+            )} ≈ ${util.precisionInput(
+              calc.div(1, exchangeInfo.price),
+              8
+            )}${getDisplaySymbol(baseToken.symbol)}`;
+          } else {
+            priceInfo = `${util.precisionInput(
+              calc.div(1, exchangeInfo.price),
+              8
+            )} ${getDisplaySymbol(targetToken.symbol)}/${getDisplaySymbol(
+              baseToken.symbol
+            )} `;
+          }
         return (
           <div className="coin-exchange-detail">
             <div className="info">
@@ -275,12 +301,12 @@ export default class SwapPanel extends React.Component {
             <div className="info">
               <div className="info-name">
                 {toLocale('Minimum received')}
-                <Tooltip
+                {!isConfirm && <Tooltip
                   placement="right"
                   overlay={toLocale('Minimum received help')}
                 >
                   <i className="help" />
-                </Tooltip>
+                </Tooltip>}
               </div>
               <div className="info-value">
                 {this.getMinimumReceived(8)}{' '}
@@ -290,12 +316,13 @@ export default class SwapPanel extends React.Component {
             <div className="info">
               <div className="info-name">
                 {toLocale('Price Impact')}
-                <Tooltip
+                {!isConfirm && <Tooltip
                   placement="right"
                   overlay={toLocale('Price Impact help')}
                 >
                   <i className="help" />
                 </Tooltip>
+      }
               </div>
               <div className="info-value">
                 {calc.mul(exchangeInfo.price_impact, 100).toFixed(2)}%
@@ -304,12 +331,13 @@ export default class SwapPanel extends React.Component {
             <div className="info">
               <div className="info-name">
                 {toLocale('Liquidity Provider Fee')}
-                <Tooltip
+                {!isConfirm && <Tooltip
                   placement="right"
                   overlay={toLocale('Liquidity Provider Fee help')}
                 >
                   <i className="help" />
                 </Tooltip>
+      }
               </div>
               <div className="info-value">
                 {!fee && '≈'}
@@ -416,6 +444,7 @@ export default class SwapPanel extends React.Component {
   render() {
     const { baseToken, targetToken,showConfirmDialog } = this.state;
     const exchangeInfo = this.getExchangeInfo();
+    const exchangeInfoConfirm = this.getExchangeInfo(true);
     const btn = this.getBtn();
     return (
       <div className="panel panel-swap">
@@ -448,31 +477,34 @@ export default class SwapPanel extends React.Component {
             </div>
             <div className="panel-dialog-info-content">
               <div className="panel-confirm">
-              <div className="space-between">
-                <div className="left">
-                  <div className="coin2coin">
-                    <img src={getCoinIcon(baseToken.symbol)} />
+                <div className="space-between coin">
+                  <div className="left">
+                    <img src={getCoinIcon(baseToken.symbol)}/>
                     {getDisplaySymbol(baseToken.symbol)}
                   </div>
+                  <div className="right">
+                    {util.precisionInput(baseToken.value, 8)}
+                  </div>
                 </div>
-                <div className="right">
-                  {util.precisionInput(baseToken.value, 8)}
-                </div>
-              </div>
-              <div className="space-between">
+                <div className="down" />
+                <div className="space-between coin">
                 <div className="left">
-                  <img src={getCoinIcon(targetToken.symbol)} />
+                  <img src={getCoinIcon(targetToken.symbol)}/>
                   {getDisplaySymbol(targetToken.symbol)}
                 </div>
                 <div className="right">
                   {util.precisionInput(targetToken.value, 8)}
                 </div>
               </div>
+              <div className="space-between tip-info-warn tip-info-accept">
+              <div className="left">{toLocale('Price Updated')}</div>
+              <div className="right"><div className="btn">{toLocale('Accept')}</div></div>
               </div>
               <div className="tip-info-warn">
                 {toLocale('swap warn tip',{num:this.getMinimumReceived(8),quote: getDisplaySymbol(targetToken.symbol)})}
               </div>
-              {exchangeInfo}
+              {exchangeInfoConfirm}
+              </div>
             </div>
             <div
               className='panel-dialog-info-footer'
