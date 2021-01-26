@@ -14,7 +14,7 @@ import { validateTxs } from '_src/utils/client';
 
 function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
-  const { account4Swap } = state.SwapStore;
+  const { account4Swap, setting } = state.SwapStore;
   return { okexchainClient, account4Swap };
 }
 
@@ -50,6 +50,16 @@ export default class ReduceLiquidity extends React.Component {
       amount: 0.0,
     });
     return coins;
+  }
+
+  getMinimumReceived(value, precision = 16) {
+    const {
+      setting: { slippageTolerance },
+    } = this.props;
+    return util.precisionInput(
+      calc.mul(value, 1 - slippageTolerance * 0.01),
+      precision
+    );
   }
 
   _getValueByRatio(ratio) {
@@ -105,9 +115,9 @@ export default class ReduceLiquidity extends React.Component {
     const { baseToken, targetToken } = this._exchangeTokenData();
     const params = [
       util.precisionInput(this._getValueByRatio()),
-      baseToken.amount,
+      this.getMinimumReceived(baseToken.amount),
       baseToken.denom,
-      targetToken.amount,
+      this.getMinimumReceived(targetToken.amount),
       targetToken.denom,
       getDeadLine4sdk(),
       '',
@@ -211,7 +221,7 @@ export default class ReduceLiquidity extends React.Component {
                 {getDisplaySymbol(d.denom)}
               </div>
               <div className="right">
-                {util.precisionInput(d.amount, 8)} {getDisplaySymbol(d.denom)}
+                {this.getMinimumReceived(d.amount,8)} {getDisplaySymbol(d.denom)}
               </div>
             </div>
           ))}
