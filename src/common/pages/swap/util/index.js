@@ -21,5 +21,5 @@ export function setting(data) {
 }
 
 export function getDeadLine4sdk() {
-  return parseInt(Date.now() / 1000) + 1000000 + '';
+  return parseInt(Date.now() / 1000) + 94608000000 + '';
 }
