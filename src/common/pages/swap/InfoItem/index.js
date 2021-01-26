@@ -39,12 +39,12 @@ export default class InfoItem extends React.Component {
             /{getDisplaySymbol(data.quote_pooled_coin.denom)}
           </div>
           <div className="right">
-            <Tooltip
+            {/* <Tooltip
               placement="right"
               overlay={toLocale("lp introduce")}
             >
               <i className="help" />
-            </Tooltip>
+            </Tooltip> */}
             {toLocale('LP token/ratio')}
           </div>
         </div>
