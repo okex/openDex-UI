@@ -61,7 +61,7 @@ const mainnet = {
   fee: 0.0005,
   firstPoolConf: {
     pool_name: '1st_pool_okt_usdt',
-    lock_symbol: 'ammswap_okt_usdt-a2b',
+    lock_symbol: 'ammswap_okt_usdk',
     stake_at: 1611309600,
     claim_height: 1003128,
     claim_height_extra: 24 * 60 * 60,
