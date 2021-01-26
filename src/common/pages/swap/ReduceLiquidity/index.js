@@ -15,7 +15,7 @@ import { validateTxs } from '_src/utils/client';
 function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
   const { account4Swap, setting } = state.SwapStore;
-  return { okexchainClient, account4Swap };
+  return { okexchainClient, account4Swap,setting };
 }
 
 @connect(mapStateToProps)
