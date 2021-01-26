@@ -1154,5 +1154,7 @@ const zhCN = {
   'home_receive_farm': 'Farm教程',
   'lp introduce': 'lp introduce',
   'unstake confirm info': '头矿奖励将在2021/1/26  18:00（UTC+8）释放，如果你在这个时间之前你没有LP token质押到头矿池，你将无法领取奖励。',
+  'first pool end': '头矿已结束，请前往我的收益查看详情。',
+  'notice': '通知',
 };
 export default zhCN;

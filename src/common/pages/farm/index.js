@@ -5,6 +5,7 @@ import FarmPanel from './FarmPanel';
 import DashboardPanel from './DashboardPanel';
 import { toLocale } from '_src/locale/react-locale';
 import SwapPushWrapper from '_app/wrapper/SwapPushWrapper';
+import { Dialog } from '../../component/Dialog';
 import FirstPanel from './FirstPanel';
 import './index.less';
 
@@ -17,10 +18,15 @@ export default class Farm extends React.Component {
   constructor() {
     super();
     this.state = {
-      activekey: FIRST,
+      activekey: FARM,
+      show: true,
     };
     this.farm = null;
     this.dashboard = null;
+  }
+
+  showDialog = (show=true) => {
+    this.setState({show})
   }
 
   onChange = (activekey) => {
@@ -46,8 +52,9 @@ export default class Farm extends React.Component {
 
   render() {
     const { wsV3 } = this.props;
-    const { activekey } = this.state;
+    const { activekey,show } = this.state;
     return (
+      <>
       <FarmContext.Provider value={wsV3}>
         <div className="farm-container">
           <Tabs
@@ -56,9 +63,6 @@ export default class Farm extends React.Component {
             onChange={this.onChange}
             destroyInactiveTabPane
           >
-            <TabPane tab={toLocale('First Pool')} key={FIRST}>
-              <FirstPanel onDashboard={this.onDashboard} />
-            </TabPane>
             <TabPane tab={toLocale('Farm')} key={FARM}>
               <FarmPanel />
             </TabPane>
@@ -68,6 +72,27 @@ export default class Farm extends React.Component {
           </Tabs>
         </div>
       </FarmContext.Provider>
+      
+      <Dialog visible={show} hideCloseBtn>
+      <div className="dialog-stake-panel" style={{ width: '496px' }}>
+          <div className="stake-panel-title">
+            {toLocale('notice')}
+            <span className="close" onClick={() => this.showDialog(false)}>
+              ×
+            </span>
+          </div>
+          <div className="stake-panel-content">
+            <div className="infotip">
+              {toLocale('first pool end')}
+            </div>
+          </div>
+          <div className="stake-panel-footer nomargin noshadow">
+            <div className="farm-btn cancel" onClick={() => this.showDialog(false)}>{toLocale('cancel')}</div>
+            <div className="farm-btn" onClick={() => {this.showDialog(false);this.onDashboard()}}>{toLocale('Check')}</div>
+          </div>
+        </div> 
+      </Dialog>
+      </>
     );
   }
 }
