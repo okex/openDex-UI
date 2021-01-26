@@ -7,6 +7,7 @@ import { toLocale } from '_src/locale/react-locale';
 import SwapPushWrapper from '_app/wrapper/SwapPushWrapper';
 import { Dialog } from '../../component/Dialog';
 import FirstPanel from './FirstPanel';
+import env from '../../constants/env';
 import './index.less';
 
 const FIRST = '0';
@@ -19,13 +20,14 @@ export default class Farm extends React.Component {
     super();
     this.state = {
       activekey: FARM,
-      show: true,
+      show: !window.localStorage.getItem(env.envConfig.firstPoolConf.noticeSetting),
     };
     this.farm = null;
     this.dashboard = null;
   }
 
   showDialog = (show=true) => {
+    window.localStorage.setItem(env.envConfig.firstPoolConf.noticeSetting,'true');
     this.setState({show})
   }
 
