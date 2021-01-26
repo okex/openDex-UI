@@ -53,7 +53,7 @@ const mainnet = {
   },
   apiPath: 'okexchain/v1',
   pagePath: 'dex',
-  chainId: 'okexchain-1',
+  chainId: 'okexchain-66',
   kId: 'okex-dex',
   swapSetting: 'swap_setting_config',
   oklinkPagePath: 'okexchain',
@@ -61,12 +61,12 @@ const mainnet = {
   fee: 0.0005,
   firstPoolConf: {
     pool_name: '1st_pool_okt_usdt',
-    lock_symbol: 'ammswap_okt_usdk',
+    lock_symbol: 'ammswap_okt_usdt-a2b',
     stake_at: 1611309600,
     claim_height: 1003128,
     claim_height_extra: 24 * 60 * 60,
     claim_height_extra1: 3 * 24 * 60 * 60,
-    claim_at: 1611653606,
+    claim_at: 1611655200,
   },
 };
 
