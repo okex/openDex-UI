@@ -11,6 +11,7 @@ import { channelsV3 } from '../../../utils/websocket';
 import { getDeadLine4sdk } from '../util';
 import SwapContext from '../SwapContext';
 import { validateTxs } from '_src/utils/client';
+import { Dialog } from '../../../component/Dialog';
 
 function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
@@ -36,6 +37,7 @@ export default class ReduceLiquidity extends React.Component {
       ratios,
       ratio: null,
       value: '',
+      showConfirmDialog:false
     };
   }
 
@@ -151,19 +153,22 @@ export default class ReduceLiquidity extends React.Component {
       );
     }
     return (
-      <Confirm
-        onClick={this.confirm}
-        loadingTxt={toLocale('pending transactions')}
-        successTxt={toLocale('transaction confirmed')}
-      >
-        <div className="btn">{toLocale('Confirm')}</div>
-      </Confirm>
+      <div className="btn" onClick={() => this.confirmDialog()}>{toLocale('Confirm')}</div>
     );
+  };
+
+  confirmDialog = (showConfirmDialog = true) => {
+    this.setState({ showConfirmDialog })
+  };
+
+  triggerConfirm = () => {
+    this.confirmDialog(false);
+    this.confirmInstance._onClick();
   };
 
   render() {
     const { back } = this.props;
-    const { ratios, ratio, coins, value } = this.state;
+    const { ratios, ratio, coins, value, showConfirmDialog } = this.state;
     let available = this.getAvailable();
     const btn = this.getBtn(value, this._getValueByRatio({value:1}) );
     return (
@@ -216,6 +221,35 @@ export default class ReduceLiquidity extends React.Component {
             </div>
           ))}
           <div className="btn-wrap">{btn}</div>
+          <Dialog visible={showConfirmDialog} hideCloseBtn>
+          <div className="panel-dialog-info">
+            <div className="panel-dialog-info-title">
+              {toLocale('Confirm Reduce')}
+              <span className="close" onClick={() => this.confirmDialog(false)}>
+                ×
+              </span>
+            </div>
+            <div className="panel-dialog-info-content">
+              
+            </div>
+            <div
+              className='panel-dialog-info-footer'
+            >
+              <div className="btn1 cancel" onClick={() => this.confirmDialog(false)}>
+                {toLocale('cancel')}
+              </div>
+              <div className="btn1" onClick={this.triggerConfirm}>
+                {toLocale('Confirm')}
+              </div>
+            </div>
+          </div>
+          </Dialog>
+          <Confirm
+          onClick={this.confirm}
+          loadingTxt={toLocale('pending transactions')}
+          successTxt={toLocale('transaction confirmed')}
+          getRef={(instance) => (this.confirmInstance = instance)}
+        ></Confirm>
         </div>
       </div>
     );

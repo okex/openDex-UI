@@ -15,6 +15,7 @@ import getRef from '../../component/getRef';
 import Tooltip from '../../component/Tooltip';
 import { validateTxs } from '_src/utils/client';
 import Message from '_src/component/Message';
+import { Dialog } from '../../component/Dialog';
 
 function mapStateToProps(state) {
   const { setting } = state.SwapStore;
@@ -55,6 +56,7 @@ export default class SwapPanel extends React.Component {
       targetToken: props.targetToken,
       exchangeInfo: { ...SwapPanel.exchangeInfo },
       isPoolEmpty: false,
+      showConfirmDialog: false
     };
   }
 
@@ -191,6 +193,15 @@ export default class SwapPanel extends React.Component {
     let exchangeInfo = { ...this.state.exchangeInfo };
     exchangeInfo.isReverse = !exchangeInfo.isReverse;
     this.setState({ exchangeInfo });
+  };
+
+  confirmDialog = (showConfirmDialog = true) => {
+    this.setState({ showConfirmDialog })
+  };
+
+  triggerConfirm = () => {
+    this.confirmDialog(false);
+    this.confirmInstance._onClick();
   };
 
   componentWillUnmount() {
@@ -371,15 +382,7 @@ export default class SwapPanel extends React.Component {
         </div>
       );
     } else {
-      btn = (
-        <Confirm
-          onClick={this.confirm}
-          loadingTxt={toLocale('pending transactions')}
-          successTxt={toLocale('transaction confirmed')}
-        >
-          <div className="btn">{toLocale('Confirm')}</div>
-        </Confirm>
-      );
+      btn = <div className="btn" onClick={() => this.confirmDialog()}>{toLocale('Confirm')}</div>
     }
     return <div className="btn-wrap">{btn}</div>;
   }
@@ -411,7 +414,7 @@ export default class SwapPanel extends React.Component {
   };
 
   render() {
-    const { baseToken, targetToken } = this.state;
+    const { baseToken, targetToken,showConfirmDialog } = this.state;
     const exchangeInfo = this.getExchangeInfo();
     const btn = this.getBtn();
     return (
@@ -435,6 +438,35 @@ export default class SwapPanel extends React.Component {
         />
         {exchangeInfo}
         {btn}
+        <Dialog visible={showConfirmDialog} hideCloseBtn>
+          <div className="panel-dialog-info">
+            <div className="panel-dialog-info-title">
+              {toLocale('Confirm Swap')}
+              <span className="close" onClick={() => this.confirmDialog(false)}>
+                ×
+              </span>
+            </div>
+            <div className="panel-dialog-info-content">
+              
+            </div>
+            <div
+              className='panel-dialog-info-footer'
+            >
+              <div className="btn1 cancel" onClick={() => this.confirmDialog(false)}>
+                {toLocale('cancel')}
+              </div>
+              <div className="btn1" onClick={this.triggerConfirm}>
+                {toLocale('Confirm')}
+              </div>
+            </div>
+          </div>
+        </Dialog>
+        <Confirm
+        onClick={this.confirm}
+        loadingTxt={toLocale('pending transactions')}
+        successTxt={toLocale('transaction confirmed')}
+        getRef={(instance) => (this.confirmInstance = instance)}
+      ></Confirm>
       </div>
     );
   }

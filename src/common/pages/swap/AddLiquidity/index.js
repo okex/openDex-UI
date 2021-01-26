@@ -516,7 +516,7 @@ export default class AddLiquidity extends React.Component {
         <Dialog visible={showConfirmDialog} hideCloseBtn>
           <div className="panel-dialog-info">
             <div className="panel-dialog-info-title">
-              {toLocale('info')}
+              {toLocale('Confirm Supply')}
               <span className="close" onClick={() => this.confirmDialog(false)}>
                 ×
               </span>
@@ -530,15 +530,9 @@ export default class AddLiquidity extends React.Component {
               <div className="btn1 cancel" onClick={() => this.confirmDialog(false)}>
                 {toLocale('cancel')}
               </div>
-              {/* <Confirm
-                onClick={this.confirm}
-                loadingTxt={toLocale('pending transactions')}
-                successTxt={toLocale('transaction confirmed')}
-              > */}
                 <div className="btn1" onClick={this.triggerConfirm}>
                   {toLocale('Confirm')}
                 </div>
-              {/* </Confirm> */}
             </div>
           </div>
         </Dialog>

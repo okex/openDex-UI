@@ -1169,5 +1169,8 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   'pool warn tip':'Please prepare equal assets of {base} and {quote} to add liquidity.',
   'go detail': '查看详情>',
   'check protocol': 'check protocol',
+  'Confirm Reduce': 'Confirm Reduce',
+  'Confirm Swap': 'Confirm Swap',
+  'Confirm Supply': 'Confirm Supply',
 };
 export default enUS;

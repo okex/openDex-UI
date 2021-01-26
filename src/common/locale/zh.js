@@ -1157,5 +1157,8 @@ const zhCN = {
   'pool warn tip':'请准备同等资金价值的{base}和{quote}来添加流动性。',
   'go detail': '查看详情>',
   'check protocol': 'check protocol',
+  'Confirm Reduce': 'Confirm Reduce',
+  'Confirm Swap': 'Confirm Swap',
+  'Confirm Supply': 'Confirm Supply',
 };
 export default zhCN;
