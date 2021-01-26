@@ -81,13 +81,6 @@ export default class FarmPanel extends React.Component {
     });
   };
 
-  getTimerDis = (data) => {
-    if (data.active === 0) return data.timeInfo;
-    if (data.active === 1) return toLocale('Finish in', {time: data.timeInfo});
-    if (data.active === 2) return toLocale('Start in', {time: data.timeInfo});
-    return null;
-  };
-
   render() {
     const isLogined = util.isLogined();
     const { data } = this.state;

@@ -152,7 +152,7 @@ export default class DashboardPanel extends React.Component {
                 <div className="info-item" key={index}>
                   {d.in_whitelist && (
                     <div
-                      className={classNames('tag','active')}
+                      className={classNames('tag', 'active')}
                     ></div>
                   )}
                   <div className="info-item-title">
