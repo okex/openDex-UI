@@ -447,7 +447,32 @@ export default class SwapPanel extends React.Component {
               </span>
             </div>
             <div className="panel-dialog-info-content">
-              
+              <div className="panel-confirm">
+              <div className="space-between">
+                <div className="left">
+                  <div className="coin2coin">
+                    <img src={getCoinIcon(baseToken.symbol)} />
+                    {getDisplaySymbol(baseToken.symbol)}
+                  </div>
+                </div>
+                <div className="right">
+                  {util.precisionInput(baseToken.value, 8)}
+                </div>
+              </div>
+              <div className="space-between">
+                <div className="left">
+                  <img src={getCoinIcon(targetToken.symbol)} />
+                  {getDisplaySymbol(targetToken.symbol)}
+                </div>
+                <div className="right">
+                  {util.precisionInput(targetToken.value, 8)}
+                </div>
+              </div>
+              </div>
+              <div className="tip-info-warn">
+                {toLocale('swap warn tip',{num:this.getMinimumReceived(8),quote: getDisplaySymbol(targetToken.symbol)})}
+              </div>
+              {exchangeInfo}
             </div>
             <div
               className='panel-dialog-info-footer'

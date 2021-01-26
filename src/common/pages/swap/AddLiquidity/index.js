@@ -474,8 +474,8 @@ export default class AddLiquidity extends React.Component {
           </div>
           <div className="add-liquidity-content">
             {baseToken.symbol && targetToken.symbol && 
-            <div className="tip-liquidity-warn">
-              {toLocale('pool warn tip',{base:baseToken.symbol.toUpperCase(),quote: targetToken.symbol.toUpperCase()})}
+            <div className="tip-info-warn">
+              {toLocale('pool warn tip',{base:getDisplaySymbol(baseToken.symbol),quote: getDisplaySymbol(targetToken.symbol)})}
             </div>
             }
             {isEmpty && (

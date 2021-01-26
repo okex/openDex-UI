@@ -1160,5 +1160,8 @@ const zhCN = {
   'Confirm Reduce': 'Confirm Reduce',
   'Confirm Swap': 'Confirm Swap',
   'Confirm Supply': 'Confirm Supply',
+  'swap warn tip':'Output is estimated.You will receive at least {num} {quote} or the transaction will revert',
+  'Price Updated':'Price Updated',
+  'Accept': 'Accept',
 };
 export default zhCN;
