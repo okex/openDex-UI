@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { toLocale } from '_src/locale/react-locale';
 import Confirm from '../../../component/Confirm';
 import { validateTxs } from '_src/utils/client';
+import env from '../../../constants/env';
 
 function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
@@ -54,6 +55,7 @@ export default class Claim extends React.Component {
                 ))}
               </tbody>
             </table>
+            <div className="gas-info-tip">{toLocale('claim gas fee info', {fee: env.envConfig.fee})}</div>      
           </div>
         </div>
         <div className="stake-panel-footer nomargin">

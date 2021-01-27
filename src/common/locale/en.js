@@ -1177,5 +1177,6 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   'Accept': 'Accept',
   'first pool end': '1st pool is finished, please check details in my farmings.',
   'notice': 'Notice',
+  'claim gas fee info': 'Notice：This claim action will cost {fee} OKT gas fee.',
 };
 export default enUS;
