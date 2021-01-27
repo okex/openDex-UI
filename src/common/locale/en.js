@@ -1168,5 +1168,6 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   'unstake confirm info': '1st pool rewards will be released at 2021/1/26  18:00（UTC+8）. You won’t get any rewards if you have no LP tokens staked at that time.',
   'first pool end': '1st pool is finished, please check details in my farmings.',
   'notice': 'Notice',
+  'claim gas fee info': 'Notice：This claim action will cost {fee} OKT gas fee.',
 };
 export default enUS;
