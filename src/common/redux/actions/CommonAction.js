@@ -138,3 +138,21 @@ export function fetchCurrency2LegalRate(legalObj) {
       .catch(() => {});
   };
 }
+
+export function getWalletConnectQrcode(successCallback, errorCallback) {
+  return (dispatch) => {
+    dispatch({
+      type: CommonActionType.WALLET_CONNECT_QRCODE,
+      data: '111',
+    });
+  };
+}
+
+export function clearWalletConnectQrcode() {
+  return (dispatch) => {
+    dispatch({
+      type: CommonActionType.WALLET_CONNECT_QRCODE,
+      data: '',
+    });
+  };
+}

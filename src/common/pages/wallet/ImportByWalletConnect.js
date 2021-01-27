@@ -29,7 +29,6 @@ class ImportByWalletConnect extends Component {
     super(props);
     this.state = {
       buttonLoading: false,
-      qrcodeUri:'',
       walletBtnTxtKey: 'wallet_connect_ensure'
     };
   }
@@ -39,11 +38,13 @@ class ImportByWalletConnect extends Component {
       {
         buttonLoading: true,
         walletBtnTxtKey: 'wallet_connect_ensureing'
-      },
-      () => {
-        setTimeout(this.validateWalletConnect, 3000);
       }
     );
+    this.props.commonAction.getWalletConnectQrcode(() => {
+      setTimeout(this.validateWalletConnect, 3000);
+    },() => {
+      
+    })
   };
   validateWalletConnect = () => {
     try {
@@ -56,6 +57,7 @@ class ImportByWalletConnect extends Component {
       });
     }
   };
+  
   render() {
     const {
       buttonLoading,walletBtnTxtKey
@@ -67,13 +69,6 @@ class ImportByWalletConnect extends Component {
           <div className="walletconnect-title-tip">{toLocale('wallet_connect_title_tip')}</div>
           <div className="walletconnect-error"><span>{toLocale('wallet_connect_error')}</span></div>
         </div>
-        {/* <div className="qrcode-wrap">
-          <div className="qrcode-title">{toLocale('wallet_connect_qrcode')}</div>
-          <div className="qrcode-contain">
-            <div className="qrcode-title-desc">{toLocale('wallet_connect_qrcodedesc')}</div>
-            <div className="qrcode-img"></div>
-          </div>
-        </div> */}
         <Button
           type="primary"
           className={classNames({loading:buttonLoading})}

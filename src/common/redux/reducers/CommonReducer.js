@@ -7,6 +7,7 @@ const initialState = {
   legalId: -1,
   legalObj: {},
   latestHeight: 0,
+  qrcodeUri: '',
 };
 export default function reducer(state = initialState, action) {
   switch (action.type) {
@@ -39,6 +40,11 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         latestHeight: action.data,
+      };
+    case CommonActionType.WALLET_CONNECT_QRCODE:
+      return {
+        ...state,
+        qrcodeUri: action.data,
       };
     default:
       return state;

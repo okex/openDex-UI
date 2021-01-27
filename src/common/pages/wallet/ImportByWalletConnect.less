@@ -58,19 +58,28 @@
     }
   }
   
-  .qrcode-wrap {
+  
+}
+
+.wallet-connect-qrcode-wrap {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  &::before {
+    content: '';
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: #1F2533;
+    opacity: 0.9;
+  }
+  .wallet-connect-qrcode {
     position: fixed;
     left: 50%;
     top: 50%;
     transform: translate3d(-50%,-50%,0);
-    &::before {
-      content: '';
-      position: fixed;
-      width: 100vw;
-      height: 100vh;
-      background: #1F2533;
-      opacity: 0.9;
-    }
     .qrcode-title {
       display: flex;
       line-height: 20px;
@@ -85,15 +94,16 @@
         height: 18px;
         margin-right: 6px;
         background: url(../../assets/images/icon_usdt@2x.png) 0 0 no-repeat;
-        background-size: 18p auto;
+        background-size: 18px auto;
       }
     }
     .qrcode-contain {
       box-sizing: border-box;
-      padding: 20px 20px 24px 20px;
+      padding: 20px 40px 24px 40px;
       width: 320px;
       height: 336px;
       text-align: center;
+      background-color: #ffffff;
     }
     .qrcode-title-desc {
       font-size: 12px;
