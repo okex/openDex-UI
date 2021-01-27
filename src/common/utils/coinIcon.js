@@ -1,5 +1,5 @@
 import coinDefault from '_src/assets/images/icon_f2pool@2x.png';
-import coinOkt from '_src/assets/images/icon_usdt@2x.png';
+import coinOkt from '_src/assets/images/okt.png';
 import defaultcoin from '_src/assets/images/defaultcoin.png';
 import coinEthk from '_src/assets/images/icon_ethk.png';
 import coinLtck from '_src/assets/images/icon_ltck.png';
