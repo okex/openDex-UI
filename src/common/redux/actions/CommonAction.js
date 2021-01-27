@@ -1,4 +1,4 @@
-import OKExChainClient, { crypto } from '@okexchain/javascript-sdk';
+import OKExChainClient, { crypto, wallet } from '@okexchain/javascript-sdk';
 import { toLocale } from '_src/locale/react-locale';
 import CommonActionType from '../actionTypes/CommonActionType';
 import Config from '../../constants/Config';
@@ -139,17 +139,19 @@ export function fetchCurrency2LegalRate(legalObj) {
   };
 }
 
-export function getWalletConnectQrcode(successCallback, errorCallback) {
-  return (dispatch) => {
+export function getWalletConnectQrcode({sessionSuccess,sessionFail,sessionCancel,success,error}) {
+  return async (dispatch) => {
+    const session = await wallet.getSession({sessionSuccess,sessionFail,sessionCancel,success,error});
     dispatch({
       type: CommonActionType.WALLET_CONNECT_QRCODE,
-      data: '111',
+      data: session,
     });
   };
 }
 
 export function clearWalletConnectQrcode() {
-  return (dispatch) => {
+  return async (dispatch) => {
+    wallet.killSession();
     dispatch({
       type: CommonActionType.WALLET_CONNECT_QRCODE,
       data: '',

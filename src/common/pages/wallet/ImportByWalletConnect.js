@@ -29,6 +29,7 @@ class ImportByWalletConnect extends Component {
     super(props);
     this.state = {
       buttonLoading: false,
+      qrcodeError: false,
       walletBtnTxtKey: 'wallet_connect_ensure'
     };
   }
@@ -37,37 +38,57 @@ class ImportByWalletConnect extends Component {
     this.setState(
       {
         buttonLoading: true,
+        qrcodeError: false,
         walletBtnTxtKey: 'wallet_connect_ensureing'
       }
     );
-    this.props.commonAction.getWalletConnectQrcode(() => {
-      setTimeout(this.validateWalletConnect, 3000);
-    },() => {
-      
-    })
+    this.props.commonAction.getWalletConnectQrcode({
+        sessionSuccess:() => {
+          this.setState({
+            buttonLoading: false,
+            walletBtnTxtKey: 'wallet_connect_ensure'
+          });
+        },
+        sessionCancel:() => {
+          this.setState({
+            buttonLoading: false,
+            walletBtnTxtKey: 'wallet_connect_ensure'
+          });
+        },
+        sessionFail: () => {
+          this.setState(
+            {
+              buttonLoading: false,
+              qrcodeError: true,
+              walletBtnTxtKey: 'wallet_connect_ensure'
+            }
+          );
+        },
+        success:() => {
+          this.validateWalletConnect();
+        },
+        error:() => {
+
+        }
+      }
+    )
   };
+
   validateWalletConnect = () => {
-    try {
-      // walletUtil.setUserInSessionStroage(walletconnect, keyStore);
-      util.go(DesktopTypeMenu.current ? DesktopTypeMenu.current.url : void 0);
-    } finally {
-      this.setState({
-        buttonLoading: false,
-        walletBtnTxtKey: 'wallet_connect_ensure'
-      });
-    }
+    // walletUtil.setUserInSessionStroage(walletconnect, keyStore);
+    util.go(DesktopTypeMenu.current ? DesktopTypeMenu.current.url : void 0);
   };
   
   render() {
     const {
-      buttonLoading,walletBtnTxtKey
+      buttonLoading,walletBtnTxtKey, qrcodeError
     } = this.state;
     return (
       <div className="import-by-walletconnect-container">
         <div className="walletconnect-container">
           <div className="walletconnect-title">{toLocale('wallet_connect_title')}</div>
           <div className="walletconnect-title-tip">{toLocale('wallet_connect_title_tip')}</div>
-          <div className="walletconnect-error"><span>{toLocale('wallet_connect_error')}</span></div>
+          {qrcodeError && <div className="walletconnect-error"><span>{toLocale('wallet_connect_error')}</span></div>}
         </div>
         <Button
           type="primary"
