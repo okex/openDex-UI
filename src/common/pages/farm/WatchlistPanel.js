@@ -18,7 +18,7 @@ export default class WatchlistPanel extends React.Component {
     this.columns = [
       {
         name: toLocale('Farm pool'),
-        width: '180',
+        width: '200',
         component: ({ row }) => {
           return (
             <div className="coin2coin">

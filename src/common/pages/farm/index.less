@@ -896,7 +896,7 @@
           padding-left: 24px;
         }
         td:last-child {
-          text-align: right;
+          // text-align: right;
         }
       }
       tr.table-head {
@@ -949,6 +949,7 @@
           padding-right: 0;
         }
         td:last-child {
+          text-align: right;
           padding-right: 24px;
         }
       }
@@ -1121,3 +1122,215 @@
   }
   line-height: 20px;
 }
+
+.dialog-stake-panel {
+  box-sizing: border-box;
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  margin-top: -45px;
+  margin-bottom: -24px;
+  .stake-panel-title {
+    display: flex;
+    justify-content: space-between;
+    height: 64px;
+    align-items: center;
+    padding-left: 24px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #FFFFFF;
+    line-height: 24px;
+    box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.15);
+    .close {
+      display: flex;
+      cursor: pointer;
+      font-size:22px;
+      width: 32px;
+      height: 32px;
+      justify-content: center;
+      align-items: center;
+      margin-right: 8px;
+      color:#9AA1B1
+      
+    }
+    &.no-title {
+      justify-content:flex-end;
+      box-shadow:none;
+    }
+  }
+  .stake-panel-content {
+    margin: 0 24px;
+    line-height: 20px;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .stake-panel-label {
+    margin-top: 24px;
+    margin-bottom: 4px;
+    > .left {
+      color: rgba(255,255,255,0.65);
+      font-weight: 500;
+    }
+    > .right {
+      .max {
+        color: #2D60E0;
+        cursor: pointer;
+        margin-left: 10px;
+      }
+    }
+  }
+  .stake-panel-input-wrap {
+    margin-bottom: 24px;
+  }
+  .stake-panel-input {
+    box-sizing: border-box;
+    background: #112F62;
+    border-radius: 2px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 0 12px 0 9px;
+    > .left {
+      flex: 1;
+      height: 38px;
+      input {
+        width: 100%;
+        line-height: normal;
+        height: 26px;
+        color: #FFFFFF;
+        &.invalid,&::-webkit-input-placeholder {
+          color:rgba(255,255,255,0.65);
+        }
+      }
+    }
+    .coin2coin {
+      .coin2coin-img(16px,-3px,8px);
+    }
+  }
+  .stake-panel-detail {
+    margin-bottom: 20px;
+    > .left {
+      color: rgba(255, 255, 255, 0.65);
+    }
+    .staketip {
+      font-size: 12px;
+      &::before {
+        content: '';
+        display: flex;
+        width:14px;
+        height: 14px;
+        background: url(../../assets/images/info.png) 0 0 no-repeat;
+        background-size: 14px auto;
+        margin-right: 5px;
+      }
+    }
+  }
+  .stake-panel-table {
+    margin: 24px 0;
+    table {
+      width: 100%;
+      color: #ffffff;
+      tr {
+        td {
+          min-height: 36px;
+          height: 36px;
+          &:last-child {
+            text-align: right;
+          }
+        }
+        &.thead td{
+          font-weight: 500;
+          color: rgba(255, 255, 255, 0.45);
+          height: 32px;
+          vertical-align: top;
+        }
+      }
+    }
+  }
+  .stake-panel-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 76px;
+    box-shadow: 0px -1px 0px 0px rgba(0, 0, 0, 0.15);
+    padding-right: 24px;
+    &.isStake {
+      margin-top: 12px;
+    }
+    .farm-btn {
+      margin-left: 24px;
+      margin-top: 0 !important;
+      width: 128px;
+      height: 36px !important;
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      &.cancel {
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background-color: transparent;
+      }
+    }
+    &.noshadow {
+      box-shadow:none;
+      height: 84px;
+      a,.farm-btn {
+        display: flex;
+        flex: 1;
+      }
+    }
+  }
+  .infotip {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 12px;
+    .title {
+      font-size: 18px;
+      font-weight: 500;
+      color: #FFFFFF;
+      line-height: 24px;
+      margin-bottom: 8px;
+    }
+    .title-tip {
+      font-size: 14px;
+      font-weight: 400;
+      color:rgba(255, 255, 255, 0.45);
+      line-height: 20px;
+    }
+    &.unstake {
+      font-weight: 500;
+      &::before {
+        margin-bottom: 24px;
+      }
+    }
+  }
+}
+.farm-btn {
+  display: flex;
+  height: 48px;
+  justify-content: center;
+  align-items: center;
+  background: #2D60E0;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+  font-size: 16px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #FFFFFF;
+  &.disabled {
+    background: #152A57;
+    color:rgba(255,255,255,0.35);
+    cursor: default;
+  }
+  &.add-icon::before {
+    content: '';
+    display: flex;
+    width: 14px;
+    height: 14px;
+    margin-right: 10px;
+    background: url(../../assets/images/add@2x.png) 0 0 no-repeat;
+    background-size: 14px auto;
+  }
+}
+

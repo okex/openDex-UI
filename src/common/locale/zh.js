@@ -3,7 +3,7 @@ const zhCN = {
   'error.code.60002': '交易解析失败',
   'error.code.60003': '无效序列',
   'error.code.60004': '未经授权',
-  'error.code.60005': 'OKT余额不足，无法发送交易',
+  'error.code.60005': 'OKT余额不足无法支付Gas fee',
   'error.code.60006': '未知请求',
   'error.code.60007': '无效地址',
   'error.code.60008': '无效公钥',
@@ -1150,8 +1150,8 @@ const zhCN = {
   'unstake tip': '本次赎回操作同时也会触发领取挖矿收益。',
   'info':'提示',
   'info desc': `请注意流动性添加基于AMM自动做市模型，您投入挖矿的两个币种，数量将会此消彼长，赎回时数量和价格变化有可能导致一定的损失(即：“无常损失”)。请明确知晓此风险，点击确认将完成流动性添加。`,
-  'home_receive_swap': 'swap',
-  'home_receive_farm': 'farm',
+  'home_receive_swap': 'Swap教程',
+  'home_receive_farm': 'Farm教程',
   'lp introduce': 'lp introduce',
   'unstake confirm info': '1st pool rewards will be released at 2021/1/26  18:00（UTC+8）. You won’t get any rewards if you have no LP tokens staked at that time.',
   'pool warn tip':'请准备同等资金价值的{base}和{quote}来添加流动性。',
@@ -1163,5 +1163,8 @@ const zhCN = {
   'swap warn tip':'Output is estimated.You will receive at least {num} {quote} or the transaction will revert',
   'Price Updated':'Price Updated',
   'Accept': 'Accept',
+  'unstake confirm info': '头矿奖励将在2021/1/26  18:00（UTC+8）释放，如果你在这个时间之前你没有LP token质押到头矿池，你将无法领取奖励。',
+  'first pool end': '头矿已结束，请前往我的收益查看详情。',
+  'notice': '通知',
 };
 export default zhCN;

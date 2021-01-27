@@ -33,6 +33,7 @@ const testnet = {
     claim_height_extra: 24 * 60 * 60,
     claim_height_extra1: 3 * 24 * 60 * 60,
     claim_at: 1611655200,
+    noticeSetting: 'notice_setting_test',
   },
 };
 
@@ -54,7 +55,7 @@ const mainnet = {
   },
   apiPath: 'okexchain/v1',
   pagePath: 'dex',
-  chainId: 'okexchain-1',
+  chainId: 'okexchain-66',
   kId: 'okex-dex',
   swapSetting: 'swap_setting_config',
   liquidityCheck: 'liquidity_check',
@@ -68,7 +69,8 @@ const mainnet = {
     claim_height: 1003128,
     claim_height_extra: 24 * 60 * 60,
     claim_height_extra1: 3 * 24 * 60 * 60,
-    claim_at: 1611582090,
+    claim_at: 1611655200,
+    noticeSetting: 'notice_setting',
   },
 };
 

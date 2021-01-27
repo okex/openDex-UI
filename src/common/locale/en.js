@@ -3,7 +3,7 @@ const enUS = {
   'error.code.60002': 'tx parse error',
   'error.code.60003': 'invalid sequence',
   'error.code.60004': 'unauthorized',
-  'error.code.60005': 'Insufficient OKT balance, transaction failed',
+  'error.code.60005': 'OKT balance is not enough to cover gas fee',
   'error.code.60006': 'unknown request',
   'error.code.60007': 'invalid address',
   'error.code.60008': 'invalid pubkey',
@@ -1162,8 +1162,8 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   'unstake tip': 'This unstake action will also trigger claim tokens.',
   'info':'Notice',
   'info desc': `Please note that adding liquidity is based on the AMM automatic market-making model, the two currencies you added in mining will fluctuate in number. Changes in quantity and price at the time of redemption may cause losses, which are called impermanence losses. Please note the risk, click confirm will finish liquidity adding.`,
-  'home_receive_swap': 'swap',
-  'home_receive_farm': 'farm',
+  'home_receive_swap': 'Swap Tutorial',
+  'home_receive_farm': 'Farm Tutorial',
   'lp introduce': 'lp introduce',
   'unstake confirm info': '1st pool rewards will be released at 2021/1/26  18:00（UTC+8）. You won’t get any rewards if you have no LP tokens staked at that time.',
   'pool warn tip':'Please prepare equal assets of {base} and {quote} to add liquidity.',
@@ -1175,5 +1175,7 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   'swap warn tip':'Output is estimated.You will receive at least {num} {quote} or the transaction will revert',
   'Price Updated':'Price Updated',
   'Accept': 'Accept',
+  'first pool end': '1st pool is finished, please check details in my farmings.',
+  'notice': 'Notice',
 };
 export default enUS;
