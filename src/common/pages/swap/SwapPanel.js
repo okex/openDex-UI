@@ -287,8 +287,8 @@ export default class SwapPanel extends React.Component {
             priceInfo = `${util.precisionInput(
               calc.div(1, exchangeInfo.price),
               8
-            )} ${getDisplaySymbol(targetToken.symbol)}/${getDisplaySymbol(
-              baseToken.symbol
+            )} ${getDisplaySymbol(baseToken.symbol)}/${getDisplaySymbol(
+              targetToken.symbol
             )} `;
           }
         return (
