@@ -15,6 +15,7 @@ import getRef from '../../component/getRef';
 import Tooltip from '../../component/Tooltip';
 import { validateTxs } from '_src/utils/client';
 import Message from '_src/component/Message';
+import classNames from 'classnames';
 import { Dialog } from '../../component/Dialog';
 
 function mapStateToProps(state) {
@@ -108,6 +109,8 @@ export default class SwapPanel extends React.Component {
     } else {
       target.value = '';
     }
+    const {showConfirmDialog, targetToken} = this.state;
+    if(showConfirmDialog && targetToken.value !== data.targetToken.value) data.active = true;
   }
 
   changeBase = (token) => {
@@ -197,7 +200,7 @@ export default class SwapPanel extends React.Component {
   };
 
   confirmDialog = (showConfirmDialog = true) => {
-    this.setState({ showConfirmDialog })
+    this.setState({ showConfirmDialog, active:false })
   };
 
   triggerConfirm = () => {
@@ -442,7 +445,7 @@ export default class SwapPanel extends React.Component {
   };
 
   render() {
-    const { baseToken, targetToken,showConfirmDialog } = this.state;
+    const { baseToken, targetToken,showConfirmDialog,active } = this.state;
     const exchangeInfo = this.getExchangeInfo();
     const exchangeInfoConfirm = this.getExchangeInfo(true);
     const btn = this.getBtn();
@@ -492,14 +495,15 @@ export default class SwapPanel extends React.Component {
                   <img src={getCoinIcon(targetToken.symbol)}/>
                   {getDisplaySymbol(targetToken.symbol)}
                 </div>
-                <div className="right">
+                <div className={classNames('right',{red:active})}>
                   {util.precisionInput(targetToken.value, 8)}
                 </div>
               </div>
-              <div className="space-between tip-info-warn tip-info-accept">
-              <div className="left">{toLocale('Price Updated')}</div>
-              <div className="right"><div className="btn">{toLocale('Accept')}</div></div>
+              {active && <div className="space-between tip-info-warn tip-info-accept">
+                <div className="left">{toLocale('Price Updated')}</div>
+                <div className="right"><div className="btn" onClick={() => this.setState({active: false})}>{toLocale('Accept')}</div></div>
               </div>
+              }
               <div className="tip-info-warn">
                 {toLocale('swap warn tip',{num:this.getMinimumReceived(8),quote: getDisplaySymbol(targetToken.symbol)})}
               </div>
@@ -512,8 +516,8 @@ export default class SwapPanel extends React.Component {
               <div className="btn1 cancel" onClick={() => this.confirmDialog(false)}>
                 {toLocale('cancel')}
               </div>
-              <div className="btn1" onClick={this.triggerConfirm}>
-                {toLocale('Confirm')}
+              <div className={classNames('btn1',{loading: active})} onClick={this.triggerConfirm}>
+                {toLocale('Confirm Swap')}
               </div>
             </div>
           </div>

@@ -60,6 +60,7 @@ export default class AddLiquidity extends React.Component {
       userLiquidity: props.userLiquidity,
       isEmptyPool,
       showConfirmDialog: false,
+      active:false,
       check: getLiquidityCheck(),
     };
   }
@@ -83,9 +84,12 @@ export default class AddLiquidity extends React.Component {
   }
 
   checkProtocol = () => {
-    const check = getLiquidityCheck();
-    this.setState({check});
-    liquidityCheck(check?'':'true');
+    this.setState(state => {
+      liquidityCheck(state.check?'':'true');
+      return {
+        check: !state.check
+      }
+    });
   }
 
   changeBase = (token, inputChanged) => {
@@ -439,6 +443,10 @@ export default class AddLiquidity extends React.Component {
     this.confirmInstance._onClick();
   }
 
+  componentWillUnmount() {
+    this._clearTimer();
+  }
+
   componentDidMount() {
     this.init(this.state);
   }
@@ -461,7 +469,7 @@ export default class AddLiquidity extends React.Component {
 
   render() {
     const { back, disabledChangeCoin = false } = this.props;
-    const { baseToken, targetToken, isEmptyPool, userLiquidity, showConfirmDialog, check } = this.state;
+    const { baseToken, targetToken, isEmptyPool, userLiquidity, showConfirmDialog, check, active } = this.state;
     const exchangeInfo = this.getExchangeInfo();
     const btn = this.getBtn();
     const isEmpty = baseToken.symbol && targetToken.symbol && isEmptyPool;
@@ -514,7 +522,7 @@ export default class AddLiquidity extends React.Component {
           </div>
         )}
         <Dialog visible={showConfirmDialog} hideCloseBtn>
-          <div className="panel-dialog-info">
+        <div className="panel-dialog-info">
             <div className="panel-dialog-info-title">
               {toLocale('Confirm Supply')}
               <span className="close" onClick={() => this.confirmDialog(false)}>
@@ -522,7 +530,16 @@ export default class AddLiquidity extends React.Component {
               </span>
             </div>
             <div className="panel-dialog-info-content">
-              {toLocale('info desc')}
+              <div className="panel-confirm">
+              {active && <div className="space-between tip-info-warn tip-info-accept">
+                <div className="left">{toLocale('Price Updated')}</div>
+                <div className="right"><div className="btn" onClick={() => this.setState({active: false})}>{toLocale('Accept')}</div></div>
+              </div>
+              }
+              <div className="tip-info-warn">
+              </div>
+              {}
+              </div>
             </div>
             <div
               className='panel-dialog-info-footer'
@@ -530,9 +547,9 @@ export default class AddLiquidity extends React.Component {
               <div className="btn1 cancel" onClick={() => this.confirmDialog(false)}>
                 {toLocale('cancel')}
               </div>
-                <div className="btn1" onClick={this.triggerConfirm}>
-                  {toLocale('Confirm')}
-                </div>
+              <div className={classNames('btn1',{loading: active})} onClick={this.triggerConfirm}>
+                {toLocale('Confirm Supply')}
+              </div>
             </div>
           </div>
         </Dialog>
