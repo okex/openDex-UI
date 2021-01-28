@@ -32,14 +32,14 @@ export default class CoinItem extends React.Component {
     CoinItem._cache = null;
   }
 
-  onInputChange = (value, originValue='') => {
+  onInputChange = (value,) => {
     const { token } = this.props;
     let error = false;
     if (this.props.max) {
       const max = this.getAvailable();
       if (util.compareNumber(max, value)) error = true;
     }
-    this.props.onChange({ ...token, value, error,originValue }, true);
+    this.props.onChange({ ...token, value:''+value, error }, true);
   };
 
   setMaxValue = () => {
@@ -47,10 +47,10 @@ export default class CoinItem extends React.Component {
     const max = this.getAvailable(true);
     if(token.symbol.toLowerCase() === env.envConfig.token.base) {
       let value = calc.sub(max, env.envConfig.fee, false);
-      if(+value < 0) value = 0;
-      this.onInputChange(util.precisionInput(value, 8),max);
+      if(+value < 0) value = util.precisionInput(0,8);
+      this.onInputChange(value);
     }
-    else this.onInputChange(this.getAvailable(), max);
+    else this.onInputChange(max);
   };
 
   showCoinSelectList = async (e) => {

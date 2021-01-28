@@ -38,14 +38,12 @@ export default class SwapPanel extends React.Component {
     baseToken: {
       available: '',
       value: '',
-      originValue: '',
       symbol: '',
       error: false,
     },
     targetToken: {
       available: '',
       value: '',
-      originValue: '',
       symbol: '',
       error: false,
     },
