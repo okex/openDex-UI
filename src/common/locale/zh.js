@@ -1167,5 +1167,8 @@ const zhCN = {
   'first pool end': '头矿已结束，请前往我的收益查看详情。',
   'notice': '通知',
   'claim gas fee info': '提示：本次领取操作会消耗{fee} OKT gas费',
+  'You will receive': 'You will receive',
+  'liquidity warn tip': 'Output is estimated.If the price changes by more than 1% your transaction will revert.',
+  'pool tokens': '{base}/{quote} Pool Tokens',
 };
 export default zhCN;

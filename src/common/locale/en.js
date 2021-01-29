@@ -1178,5 +1178,8 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   'first pool end': '1st pool is finished, please check details in my farmings.',
   'notice': 'Notice',
   'claim gas fee info': 'Notice：This claim action will cost {fee} OKT gas fee.',
+  'You will receive': 'You will receive',
+  'liquidity warn tip': 'Output is estimated.If the price changes by more than 1% your transaction will revert.',
+  'pool tokens': '{base}/{quote} Pool Tokens',
 };
 export default enUS;
