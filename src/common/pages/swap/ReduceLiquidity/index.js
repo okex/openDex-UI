@@ -11,6 +11,7 @@ import { channelsV3 } from '../../../utils/websocket';
 import { getDeadLine4sdk } from '../util';
 import SwapContext from '../SwapContext';
 import { validateTxs } from '_src/utils/client';
+import classNames from 'classnames';
 import { Dialog } from '../../../component/Dialog';
 
 function mapStateToProps(state) {
@@ -37,7 +38,9 @@ export default class ReduceLiquidity extends React.Component {
       ratios,
       ratio: null,
       value: '',
-      showConfirmDialog:false
+      error: false,
+      showConfirmDialog:false,
+      active:true,
     };
   }
 
@@ -72,31 +75,50 @@ export default class ReduceLiquidity extends React.Component {
     return value;
   }
 
+  async updateCoins4RealTime(data,time = 3000,) {
+    this._clearTimer();
+    await this.updateCoins(data);
+    this.setState(data, () => {
+      this._clearTimer();
+      this.setState({});
+      data.value && !data.error && 
+        (this.updateCoins4RealTime.interval = setInterval(async () => {
+          const temp = {...this.state};
+          await this.updateCoins(temp);
+          this.setState(temp);
+        }, time));
+    });
+  }
+
   change = async (ratio) => {
     const value = this._getValueByRatio(ratio);
-    this.setState({ ratio, value:util.precisionInput(value), error: false });
-    this.updateCoins(value, false);
+    this.setState({ ratio, value, error: false }, () => {
+      this.updateCoins4RealTime({...this.state});
+    });
   };
 
   onInputChange = async (value) => {
     const max = this.getAvailable();
     const error = util.compareNumber(max, value);
-    this.setState({ value, ratio: null, error });
-    this.updateCoins(value, error);
+    this.setState({ value, ratio: null, error }, () => {
+      this.updateCoins4RealTime({...this.state});
+    });
   };
 
-  updateCoins = async (value, error) => {
-    if (!Number(value) || error) {
-      this.setState({ coins: this._process(this.props.liquidity) });
+  updateCoins = async (data) => {
+    if (!Number(data.value) || data.error) {
+      data.coins = this._process(this.props.liquidity);
       return;
     }
     const { liquidity } = this.props;
-    const coins = await api.redeemableAssets({
-      liquidity: util.precisionInput(value),
+    data.coins = await api.redeemableAssets({
+      liquidity: util.precisionInput(data.value),
       base_token: liquidity.base_pooled_coin.denom,
       quote_token: liquidity.quote_pooled_coin.denom,
     });
-    this.setState({ coins });
+    const {showConfirmDialog, coins} = this.state;
+    if(showConfirmDialog && (coins[0].amount !== data.coins[0].amount || coins[1].amount !== data.coins[1].amount)) data.active = true;
+    return;
   };
 
   _exchangeTokenData() {
@@ -115,8 +137,9 @@ export default class ReduceLiquidity extends React.Component {
   confirm = () => {
     const { okexchainClient } = this.props;
     const { baseToken, targetToken } = this._exchangeTokenData();
+    const { value } = this.state;
     const params = [
-      util.precisionInput(this._getValueByRatio()),
+      value,
       this.getMinimumReceived(baseToken.amount),
       baseToken.denom,
       this.getMinimumReceived(targetToken.amount),
@@ -138,13 +161,24 @@ export default class ReduceLiquidity extends React.Component {
     });
   };
 
-  getAvailable(origin) {
+  getAvailable(original) {
     const { liquidity, account4Swap } = this.props;
     let available = liquidity.pool_token_coin.amount;
     const temp = account4Swap[liquidity.pool_token_coin.denom.toLowerCase()];
     if (temp) available = temp.available;
-    if(origin) return available;
+    if(original) return available;
     return util.precisionInput(available, 8);
+  }
+
+  _clearTimer() {
+    if (this.updateCoins4RealTime.interval) {
+      clearInterval(this.updateCoins4RealTime.interval);
+      this.updateCoins4RealTime.interval = null;
+    }
+  }
+
+  componentWillUnmount() {
+    this._clearTimer();
   }
 
   componentDidMount() {
@@ -168,7 +202,7 @@ export default class ReduceLiquidity extends React.Component {
   };
 
   confirmDialog = (showConfirmDialog = true) => {
-    this.setState({ showConfirmDialog })
+    this.setState({ showConfirmDialog,active:false })
   };
 
   triggerConfirm = () => {
@@ -178,7 +212,7 @@ export default class ReduceLiquidity extends React.Component {
 
   render() {
     const { back } = this.props;
-    const { ratios, ratio, coins, value, showConfirmDialog } = this.state;
+    const { ratios, ratio, coins, value, showConfirmDialog,active } = this.state;
     let available = this.getAvailable();
     const btn = this.getBtn(value, this._getValueByRatio({value:1}) );
     return (
@@ -240,7 +274,44 @@ export default class ReduceLiquidity extends React.Component {
               </span>
             </div>
             <div className="panel-dialog-info-content">
-              
+              <div className="panel-confirm">
+                <div className="space-between coin">
+                  <div className="left">
+                    <img src={getCoinIcon(coins[0].denom)}/>
+                    {getDisplaySymbol(coins[0].denom)}
+                  </div>
+                  <div className="right">
+                  {this.getMinimumReceived(coins[0].amount,8)}
+                  </div>
+                </div>
+                <div className="down add"/>
+                <div className="space-between coin">
+                  <div className="left">
+                    <img src={getCoinIcon(coins[1].denom)}/>
+                    {getDisplaySymbol(coins[1].denom)}
+                  </div>
+                  <div className="right">
+                  {this.getMinimumReceived(coins[1].amount,8)}
+                  </div>
+                </div>
+              {active && <div className="space-between tip-info-warn tip-info-accept">
+                <div className="left">{toLocale('Price Updated')}</div>
+                <div className="right"><div className="btn" onClick={() => this.setState({active: false})}>{toLocale('Accept')}</div></div>
+              </div>
+              }
+              <div className="tip-info-warn">
+                {toLocale('reduce liquidity warn tip')}
+              </div>
+              <div className="coin-exchange-detail">
+                <div className="info">
+                  <div className="info-name">{toLocale('UNI Burned',{base:getDisplaySymbol(coins[0].denom),quote:getDisplaySymbol(coins[1].denom)})}</div>
+                  <div className="info-value">
+                    <img src={getCoinIcon(coins[0].denom)} className="min-coin"/><img src={getCoinIcon(coins[1].denom)} className="min-coin"/>
+                    &nbsp;{util.precisionInput(value,8)}
+                  </div>
+                </div>
+              </div>
+              </div>
             </div>
             <div
               className='panel-dialog-info-footer'
@@ -248,8 +319,8 @@ export default class ReduceLiquidity extends React.Component {
               <div className="btn1 cancel" onClick={() => this.confirmDialog(false)}>
                 {toLocale('cancel')}
               </div>
-              <div className="btn1" onClick={this.triggerConfirm}>
-                {toLocale('Confirm')}
+              <div className={classNames('btn1',{loading: active})} onClick={this.triggerConfirm}>
+                {toLocale('Confirm Reduce')}
               </div>
             </div>
           </div>

@@ -1181,5 +1181,7 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   'You will receive': 'You will receive',
   'liquidity warn tip': 'Output is estimated.If the price changes by more than 1% your transaction will revert.',
   'pool tokens': '{base}/{quote} Pool Tokens',
+  'reduce liquidity warn tip': 'Output is estimated.You will receive at least',
+  'UNI UNI/ETH Burned': 'UNI {base}/{quote} Burned',
 };
 export default enUS;

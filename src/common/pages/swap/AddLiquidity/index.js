@@ -174,6 +174,8 @@ export default class AddLiquidity extends React.Component {
       await this._check(data);
       await this._updateExchangePrice(data);
       await this._updateExchange(data, key, inputChanged);
+      const {showConfirmDialog, baseToken, targetToken} = this.state;
+      if(showConfirmDialog && (baseToken.value !== data.baseToken.value || targetToken.value !== data.targetToken.value)) data.active = true;
     } catch (e) {
       if (errTip) {
         Message.error({
@@ -284,7 +286,6 @@ export default class AddLiquidity extends React.Component {
           <div className="info-value">
             <i className="exchange" onClick={this.revert} />
             {priceInfo}
-            <i />
           </div>
         </div>
         <div className="info">
@@ -365,7 +366,7 @@ export default class AddLiquidity extends React.Component {
   };
 
   confirmDialog = (showConfirmDialog = true) => {
-    this.setState({ showConfirmDialog })
+    this.setState({ showConfirmDialog,active:false })
   }
 
   getBtn() {
