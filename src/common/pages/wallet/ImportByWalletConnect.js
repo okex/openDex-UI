@@ -46,12 +46,14 @@ class ImportByWalletConnect extends Component {
         sessionSuccess:() => {
           this.setState({
             buttonLoading: false,
+            qrcodeError: false,
             walletBtnTxtKey: 'wallet_connect_ensure'
           });
         },
         sessionCancel:() => {
           this.setState({
             buttonLoading: false,
+            qrcodeError: false,
             walletBtnTxtKey: 'wallet_connect_ensure'
           });
         },
