@@ -20,7 +20,7 @@ export default class Farm extends React.Component {
     super();
     this.state = {
       activekey: FARM,
-      show: !window.localStorage.getItem(env.envConfig.firstPoolConf.noticeSetting),
+      show: false,
     };
     this.farm = null;
     this.dashboard = null;

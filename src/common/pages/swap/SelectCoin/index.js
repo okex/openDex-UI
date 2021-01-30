@@ -34,7 +34,12 @@ export default class SelectCoin extends React.Component {
 
   render() {
     const { data, search } = this.state;
-    const list = data.filter((d) => d.symbol.match(new RegExp(search, 'gi')));
+    let list;
+    try {
+      list = data.filter((d) => d.symbol.match(new RegExp(search, 'gi')));
+    } catch {
+      list = [];
+    }
     return this.init ? (
       <div className="panel-coin-search">
         <div className="search-wrap iconfont">
