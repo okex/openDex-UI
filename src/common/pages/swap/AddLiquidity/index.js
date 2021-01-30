@@ -428,12 +428,13 @@ export default class AddLiquidity extends React.Component {
     return { baseToken, targetToken };
   }
 
-  getMinimumReceived(value) {
+  getMinimumReceived(value,precision=16) {
     const {
       setting: { slippageTolerance },
     } = this.props;
     return util.precisionInput(
-      calc.mul(value, 1 - slippageTolerance * 0.01)
+      calc.mul(value, 1 - slippageTolerance * 0.01),
+      precision
     );
   }
 
@@ -570,7 +571,7 @@ export default class AddLiquidity extends React.Component {
                   <div className="info-name">{toLocale('You will receive')}</div>
                 </div>
                 <div className="info">
-                  <div className="info-name lg">{this.getMinimumReceived(liquidity)}</div>
+                  <div className="info-name lg">{this.getMinimumReceived(liquidity,8)}</div>
                 </div>
                 <div className="info">
                   <div className="info-name">{toLocale('pool tokens',{base: getDisplaySymbol(baseToken.symbol),quote: getDisplaySymbol(targetToken.symbol)})}</div>
