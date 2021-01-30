@@ -23,7 +23,10 @@ const Config = {
       if(lang === 'zh_CN') return 'https://sourl.cn/SQbtvR';
       return 'https://www.okex.com/academy/en/how-to-use-okex-swap-farm-pools-okexchain';
     },
-    liquidity:''
+    get liquidity() {
+      if(lang === 'zh_CN') return 'https://docs.qq.com/doc/DQm13amR4QXBKRUxH';
+      return 'https://docs.qq.com/doc/DQm13amR4QXBKRUxH';
+    }
   },
   validatePwdDeferSecond: 100,
   operateResultDelaySecond: 500,

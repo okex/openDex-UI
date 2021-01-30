@@ -237,16 +237,18 @@ export default class AddLiquidity extends React.Component {
     }
     if (baseToken.symbol && targetToken.symbol && !data.isEmptyPool) {
       if (_baseToken.value) {
-        const { base_token_amount = '', pool_share = '' } = await api.addInfo({
+        const { base_token_amount = '', pool_share = '', liquidity = '' } = await api.addInfo({
           base_token: _targetToken.symbol,
           quote_token_amount: _baseToken.value + _baseToken.symbol,
           value: _baseToken.value,
         });
         _targetToken.value = _baseToken.value ? base_token_amount : '';
         exchangeInfo.pool_share = pool_share;
+        exchangeInfo.liquidity = liquidity;
       } else {
         _targetToken.value = '';
         exchangeInfo.pool_share = 0;
+        exchangeInfo.liquidity = '';
       }
     }
   }
@@ -504,7 +506,7 @@ export default class AddLiquidity extends React.Component {
           </div>
           <div className="add-liquidity-content">
             {baseToken.symbol && targetToken.symbol && 
-            <div className="tip-info-warn">
+            <div className="tip-info-warn size14">
               {toLocale('pool warn tip',{base:getDisplaySymbol(baseToken.symbol),quote: getDisplaySymbol(targetToken.symbol)})}
             </div>
             }
