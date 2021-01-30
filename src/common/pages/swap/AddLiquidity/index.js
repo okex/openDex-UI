@@ -432,8 +432,10 @@ export default class AddLiquidity extends React.Component {
     const {
       setting: { slippageTolerance },
     } = this.props;
+    const {isEmptyPool} = this.state;
+    const tolerance = isEmptyPool ? 1 : 1 - slippageTolerance * 0.01;
     return util.precisionInput(
-      calc.mul(value, 1 - slippageTolerance * 0.01),
+      calc.mul(value, tolerance),
       precision
     );
   }
@@ -568,7 +570,7 @@ export default class AddLiquidity extends React.Component {
               <div className="panel-confirm">
               <div className="coin-exchange-detail">
                 <div className="info">
-                  <div className="info-name">{toLocale('You will receive')}</div>
+                  <div className="info-name">{toLocale(isEmptyPool ? 'empty add list' : 'You will receive')}</div>
                 </div>
                 <div className="info">
                   <div className="info-name lg">{this.getMinimumReceived(liquidity,8)}</div>

@@ -1172,6 +1172,7 @@ const zhCN = {
   'pool tokens': '{base}/{quote} Pool Tokens',
   'reduce liquidity warn tip': 'Output is estimated.You will receive at least',
   'UNI Burned': 'UNI {base}/{quote} Burned',
-  'swap warn tip2': 'Please note that the price impact is {num}, you will have loss in this transaction.'
+  'swap warn tip2': 'Please note that the price impact is {num}, you will have loss in this transaction.',
+  'empty add list': 'empty add list',
 };
 export default zhCN;
