@@ -7,6 +7,7 @@ const initialState = {
   legalId: -1,
   legalObj: {},
   latestHeight: 0,
+  activedMenu:'',
 };
 export default function reducer(state = initialState, action) {
   switch (action.type) {
@@ -39,6 +40,11 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         latestHeight: action.data,
+      };
+    case CommonActionType.ACTIVEDMENU:
+      return {
+        ...state,
+        activedMenu: action.data,
       };
     default:
       return state;

@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as CommonAction from '_src/redux/actions/CommonAction';
 import { toLocale } from '_src/locale/react-locale';
 import PageURL from '_constants/PageURL';
 import ComboBox from '_src/component/ComboBox/ComboBox';
@@ -76,9 +79,21 @@ const headTypeList = [
 
 let activedMenu = getDefaultActivedMenu(PageURL.getCurrent());
 
-function getDefaultActivedMenu(current) {
-  return headTypeList.filter((d) => d.url === current)[0] || headTypeList[5];
+export function getDefaultActivedMenu(current) {
+  return headTypeList.filter((d) => current.startsWith(d.url))[0] || headTypeList[5];
 }
+
+function mapStateToProps(state) {
+  const { activedMenu } = state.Common;
+  return { activedMenu };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    commonAction: bindActionCreators(CommonAction, dispatch),
+  };
+}
+@connect(mapStateToProps,mapDispatchToProps)
 class DesktopTypeMenu extends Component {
   constructor(props) {
     super(props);
@@ -86,11 +101,14 @@ class DesktopTypeMenu extends Component {
   }
 
   change = (item) => {
-    if (item.isRoute) activedMenu = item;
+    if (item.isRoute) {
+      activedMenu = item;
+      this.props.commonAction.setActivedMenu(activedMenu);
+    }
   };
 
   render() {
-    const current = activedMenu || getDefaultActivedMenu(this.props.current);
+    const current = this.props.activedMenu || getDefaultActivedMenu(this.props.current);
     activedMenu = current;
     return (
       <div className="top-info-title">

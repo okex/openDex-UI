@@ -143,3 +143,12 @@ export function fetchCurrency2LegalRate(legalObj) {
       .catch(() => {});
   };
 }
+
+export function setActivedMenu(activedMenu) {
+  return (dispatch) => {
+    dispatch({
+      type: CommonActionType.ACTIVEDMENU,
+      data: activedMenu,
+    })
+  }
+}

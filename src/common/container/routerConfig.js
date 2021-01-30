@@ -1,3 +1,4 @@
+import React from 'react';
 import PageURL from '_constants/PageURL';
 import Home from '../pages/home/index';
 import FullTrade from '_app/pages/fullTrade/FullTrade';
@@ -94,6 +95,14 @@ const routes = [
   {
     path: PageURL.swapPage,
     component: Swap,
+  },
+  {
+    path: PageURL.liquidityPage,
+    component: () => <Swap activekey='2'/>,
+  },
+  {
+    path: PageURL.watchlistPage,
+    component: () => <Swap activekey='3'/>,
   },
   {
     path: PageURL.farmPage,

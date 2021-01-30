@@ -1,9 +1,30 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { getLangURL } from '_src/utils/navigation';
+import { connect } from 'react-redux';
+import * as CommonAction from '_src/redux/actions/CommonAction';
+import { bindActionCreators } from 'redux';
 import PageURL from '_constants/PageURL';
 import { toLocale } from '_src/locale/react-locale';
+import {getDefaultActivedMenu} from '../../../component/DesktopTypeMenu';
+
+function mapStateToProps() {
+  return {};
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    commonAction: bindActionCreators(CommonAction, dispatch),
+  };
+}
+@connect(mapStateToProps,mapDispatchToProps)
 export default class LiquidityInfoTip extends React.Component {
+
+  goLiquidity = () => {
+    const { onClose } = this.props;
+    onClose();
+    this.props.commonAction.setActivedMenu(getDefaultActivedMenu(PageURL.liquidityPage));
+  }
+
   render() {
     const { onClose, data } = this.props;
     return (
@@ -25,9 +46,9 @@ export default class LiquidityInfoTip extends React.Component {
             {toLocale('cancel')}
           </div>
           {/* 暂未考虑桌面端 */}
-          <a href={getLangURL(PageURL.swapPage)} target="_blank" rel="noopener noreferrer" onClick={onClose}>
+          <Link to={PageURL.liquidityPage} onClick={this.goLiquidity}>
             <div className="farm-btn">{toLocale('Add Liquidity')}</div>
-          </a>
+          </Link>
         </div>
       </div>
     );
