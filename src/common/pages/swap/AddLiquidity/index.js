@@ -56,7 +56,7 @@ export default class AddLiquidity extends React.Component {
         price: '',
         pool_share: '',
         isReverse: false,
-        liquidity: ''
+        liquidity: '1'
       },
       liquidity: props.liquidity,
       userLiquidity: props.userLiquidity,
