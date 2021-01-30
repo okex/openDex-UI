@@ -212,27 +212,21 @@ export default class SwapPanel extends React.Component {
     this._clearTimer();
   }
 
-  componentDidMount() {
-    this.init();
+  async componentDidMount() {
+    await this.init();
   }
 
   async init(data) {
     if (!data) {
-      this.initBaseToken();
+      await this.initBaseToken();
       return;
     }
-    const temp = {
-      ...this.state,
-      baseToken: data.baseToken,
-      targetToken: data.targetToken,
-    };
-    this.setState(temp);
     const tokens = await api.swapTokens();
-    const baseToken = await this.searchToken(tokens, temp.baseToken.symbol);
-    const targetToken = await this.searchToken(tokens, temp.targetToken.symbol);
+    const baseToken = await this.searchToken(tokens, data.baseToken.symbol);
+    const targetToken = await this.searchToken(tokens, data.targetToken.symbol);
     baseToken.value = '';
     targetToken.value = '';
-    this.setState({ ...temp, baseToken, targetToken })
+    this.setState({ baseToken, targetToken })
   }
 
   getExchangeInfo(isConfirm) {
