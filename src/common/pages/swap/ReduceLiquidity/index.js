@@ -215,6 +215,9 @@ export default class ReduceLiquidity extends React.Component {
     const { ratios, ratio, coins, value, showConfirmDialog,active } = this.state;
     let available = this.getAvailable();
     const btn = this.getBtn(value, this._getValueByRatio({value:1}) );
+    const {
+      setting: { slippageTolerance },
+    } = this.props;
     return (
       <div className="panel">
         <div className="panel-header">
@@ -300,7 +303,7 @@ export default class ReduceLiquidity extends React.Component {
               </div>
               }
               <div className="tip-info-warn">
-                {toLocale('reduce liquidity warn tip')}
+                {toLocale('reduce liquidity warn tip',{num: slippageTolerance})}
               </div>
               <div className="coin-exchange-detail">
                 <div className="info">
@@ -320,7 +323,7 @@ export default class ReduceLiquidity extends React.Component {
                 {toLocale('cancel')}
               </div>
               <div className={classNames('btn1',{loading: active})} onClick={this.triggerConfirm}>
-                {toLocale('Confirm Reduce')}
+                {toLocale('Confirm Reduce btn')}
               </div>
             </div>
           </div>

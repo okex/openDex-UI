@@ -59,6 +59,7 @@ export default class SwapPanel extends React.Component {
       isPoolEmpty: false,
       showConfirmDialog: false,
       active:false,
+      trading: false
     };
   }
 
@@ -200,6 +201,7 @@ export default class SwapPanel extends React.Component {
   };
 
   confirmDialog = (showConfirmDialog = true) => {
+    if(showConfirmDialog && this.state.trading) return;
     this.setState({ showConfirmDialog, active:false })
   };
 
@@ -406,6 +408,7 @@ export default class SwapPanel extends React.Component {
       null,
     ];
     return new Promise((resolve, reject) => {
+      this.setState({trading: true});
       okexchainClient
         .sendSwapTokenTransaction(...params)
         .then((res) => {
@@ -414,14 +417,16 @@ export default class SwapPanel extends React.Component {
             this.changeBase({ ...baseToken, value: '' });
           }
         })
-        .catch((err) => reject(err));
+        .catch((err) => reject(err)).finally(() => {
+          this.setState({trading: false})
+        });
     });
   };
 
   hasWarn() {
     const { exchangeInfo } = this.state;
     if(!exchangeInfo.price_impact) return false;
-    return !util.compareNumber(exchangeInfo.price_impact, '0.05'); 
+    return !util.compareNumber(exchangeInfo.price_impact, '0.0005'); 
   }
 
   render() {

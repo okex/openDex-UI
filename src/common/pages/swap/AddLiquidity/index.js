@@ -600,7 +600,7 @@ export default class AddLiquidity extends React.Component {
                 {toLocale('cancel')}
               </div>
               <div className={classNames('btn1',{loading: active})} onClick={this.triggerConfirm}>
-                {toLocale('Confirm Supply')}
+                {toLocale('Confirm Supply btn')}
               </div>
             </div>
           </div>
