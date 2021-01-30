@@ -1183,5 +1183,6 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   'pool tokens': '{base}/{quote} Pool Tokens',
   'reduce liquidity warn tip': 'Output is estimated.You will receive at least',
   'UNI UNI/ETH Burned': 'UNI {base}/{quote} Burned',
+  'swap warn tip2': 'Please note that the price impact is {num}, you will have loss in this transaction.'
 };
 export default enUS;

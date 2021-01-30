@@ -602,6 +602,34 @@
     margin-bottom: 24px;
     padding: 0 8px;
     line-height: 16px;
+    &.no {
+      background:transparent;
+    }
+  }
+
+  .tip-info-warn2 {
+    display: flex;
+    align-items: center;
+    background: rgba(243,136,43,0.15);
+    padding: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #F17878;
+    line-height: 20px;
+    margin-bottom: 24px;
+    &::before {
+      display: flex;
+      content: '';
+      margin-right: 12px;
+      width: 24px;
+      height: 24px;
+      background: url(../../assets/images/risk.png) 0 0 no-repeat;
+      background-size: 24px auto;
+    }
+    > div {
+      display: flex;
+      flex: 1;
+    }
   }
 
   .panel-confirm {
