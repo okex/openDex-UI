@@ -22,8 +22,9 @@ import { Dialog } from '../../../component/Dialog';
 import classNames from 'classnames';
 
 function mapStateToProps(state) {
+  const { setting } = state.SwapStore;
   const { okexchainClient } = state.Common;
-  return { okexchainClient };
+  return { okexchainClient, setting };
 }
 @withRouter
 @connect(mapStateToProps)
@@ -427,12 +428,21 @@ export default class AddLiquidity extends React.Component {
     return { baseToken, targetToken };
   }
 
+  getMinimumReceived(value) {
+    const {
+      setting: { slippageTolerance },
+    } = this.props;
+    return util.precisionInput(
+      calc.mul(value, 1 - slippageTolerance * 0.01)
+    );
+  }
+
   confirm = () => {
     const { baseToken: _baseToken, targetToken: _targetToken,exchangeInfo } = this.state;
     let { baseToken, targetToken } = this._exchangeTokenData();
     const { okexchainClient } = this.props;
     const params = [
-      util.precisionInput(exchangeInfo.liquidity),
+      this.getMinimumReceived(exchangeInfo.liquidity),
       util.precisionInput(baseToken.value),
       baseToken.symbol,
       util.precisionInput(targetToken.value),
