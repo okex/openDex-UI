@@ -59,8 +59,10 @@ export default class SwapPanel extends React.Component {
       isPoolEmpty: false,
       showConfirmDialog: false,
       active: false,
-      trading: false,
     };
+    this.trading = false;
+    this.initial = false
+    this.needInitData = null;
   }
 
   exchange = async () => {
@@ -202,7 +204,7 @@ export default class SwapPanel extends React.Component {
   };
 
   confirmDialog = (showConfirmDialog = true) => {
-    if (showConfirmDialog && this.state.trading) return;
+    if (showConfirmDialog && this.trading) return;
     this.setState({ showConfirmDialog, active: false });
   };
 
@@ -216,12 +218,17 @@ export default class SwapPanel extends React.Component {
   }
 
   async componentDidMount() {
-    await this.init();
+    await this.initBaseToken();
+    this.initial = true;
+    if(this.needInitData) {
+      this.init(this.needInitData);
+      this.needInitData = null;
+    }
   }
 
   async init(data) {
-    if (!data) {
-      await this.initBaseToken();
+    if(!this.initial) {
+      this.needInitData = data;
       return;
     }
     const tokens = await api.swapTokens();
@@ -414,7 +421,7 @@ export default class SwapPanel extends React.Component {
       null,
     ];
     return new Promise((resolve, reject) => {
-      this.setState({ trading: true });
+      this.trading = true;
       okexchainClient
         .sendSwapTokenTransaction(...params)
         .then((res) => {
@@ -425,7 +432,7 @@ export default class SwapPanel extends React.Component {
         })
         .catch((err) => reject(err))
         .finally(() => {
-          this.setState({ trading: false });
+          this.trading = false;
         });
     });
   };
