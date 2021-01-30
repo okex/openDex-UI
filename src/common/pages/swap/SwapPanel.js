@@ -426,7 +426,7 @@ export default class SwapPanel extends React.Component {
   hasWarn() {
     const { exchangeInfo } = this.state;
     if(!exchangeInfo.price_impact) return false;
-    return !util.compareNumber(exchangeInfo.price_impact, '0.0005'); 
+    return !util.compareNumber(exchangeInfo.price_impact, '0.05'); 
   }
 
   render() {
