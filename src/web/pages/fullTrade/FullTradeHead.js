@@ -124,7 +124,9 @@ class FullTradeHead extends React.Component {
           {util.isLogined() ? <LoggedMenu href /> : <LoginMenu />}
           {this.isSwapMenu() && <SwapSetting />}
           <DocMenu />
-          {!this.isSwapMenu() && !this.isFarmMenu() && <DesktopLinkMenu hasVersion={false} />}
+          {!this.isSwapMenu() && !this.isFarmMenu() && (
+            <DesktopLinkMenu hasVersion={false} />
+          )}
         </div>
       </div>
     );

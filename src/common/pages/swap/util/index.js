@@ -30,6 +30,6 @@ export function getLiquidityCheck() {
   return !!store;
 }
 
-export function liquidityCheck(data='') {
+export function liquidityCheck(data = '') {
   window.localStorage.setItem(SWAP_LIQUIDITY_STOREKEY, data);
 }

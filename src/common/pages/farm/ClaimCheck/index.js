@@ -1,12 +1,11 @@
 import React from 'react';
 import { toLocale } from '_src/locale/react-locale';
 export default class ClaimCheck extends React.Component {
-
   onSuccess = () => {
     const { onClose, onSuccess } = this.props;
     onClose && onClose();
     onSuccess && onSuccess();
-  }
+  };
 
   render() {
     const { onClose } = this.props;
@@ -26,7 +25,9 @@ export default class ClaimCheck extends React.Component {
           <div className="farm-btn cancel" onClick={onClose}>
             {toLocale('cancel')}
           </div>
-          <div className="farm-btn" onClick={this.onSuccess}>{toLocale('Unstake')}</div>
+          <div className="farm-btn" onClick={this.onSuccess}>
+            {toLocale('Unstake')}
+          </div>
         </div>
       </div>
     );

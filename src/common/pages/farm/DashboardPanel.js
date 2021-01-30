@@ -23,7 +23,7 @@ export default class DashboardPanel extends React.Component {
       pageSize: 15,
       total: 0,
       maxApy: null,
-      hasFirstPool: false
+      hasFirstPool: false,
     };
   }
 
@@ -83,8 +83,8 @@ export default class DashboardPanel extends React.Component {
   };
 
   getTimerDis = (data) => {
-    if(data.in_whitelist) return null;
-    if(!data.active) return toLocale('finished');
+    if (data.in_whitelist) return null;
+    if (!data.active) return toLocale('finished');
     if (data.active !== 2)
       return (
         <>
@@ -101,9 +101,13 @@ export default class DashboardPanel extends React.Component {
   };
 
   getPanel = () => {
-    const { maxApy,hasFirstPool } = this.state;
+    const { maxApy, hasFirstPool } = this.state;
     if (this.initial && !this.state.total) {
-      return hasFirstPool ? <div className="panel-watchlist"><div className="nodata">{toLocale('watchlist noData')}</div></div>: (
+      return hasFirstPool ? (
+        <div className="panel-watchlist">
+          <div className="nodata">{toLocale('watchlist noData')}</div>
+        </div>
+      ) : (
         <div className="panel panel-connect">
           <div className="connect-wallet-tip">
             <div>
@@ -151,9 +155,7 @@ export default class DashboardPanel extends React.Component {
               {data.map((d, index) => (
                 <div className="info-item" key={index}>
                   {d.in_whitelist && (
-                    <div
-                      className={classNames('tag', 'active')}
-                    ></div>
+                    <div className={classNames('tag', 'active')}></div>
                   )}
                   <div className="info-item-title">
                     <div className="space-between">
@@ -218,9 +220,7 @@ export default class DashboardPanel extends React.Component {
                         Stake.getStake({ data: d, onSuccess: this.refreshData })
                       }
                     >
-                      <div
-                        className={classNames('linkbtn')}
-                      >
+                      <div className={classNames('linkbtn')}>
                         {toLocale('STAKE')}
                       </div>
                     </SimpleBtnDialog>

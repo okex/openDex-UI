@@ -78,7 +78,7 @@ class ImportByprivateKey extends Component {
   validatePrivateKey = () => {
     try {
       let { privateKey, password } = this.state;
-      privateKey = privateKey.replace(/^(0x)/,'');
+      privateKey = privateKey.replace(/^(0x)/, '');
       if (!/^[\d|a-f]{64}$/.test(privateKey)) {
         throw new Error('not pass the reg');
       }

@@ -27,15 +27,17 @@ export default class FarmPanel extends React.Component {
   }
 
   onCheckSuccess = async () => {
-    const {data} = this.state;
+    const { data } = this.state;
     const showUnstake = await Stake.getStake({
       data,
       isStake: false,
-      onClose: () => { this.setState({showUnstake: false})},
+      onClose: () => {
+        this.setState({ showUnstake: false });
+      },
       onSuccess: this.refreshData,
     });
-    this.setState({showUnstake});
-  }
+    this.setState({ showUnstake });
+  };
 
   async componentDidMount() {
     const data = await this.init();
@@ -70,9 +72,9 @@ export default class FarmPanel extends React.Component {
   }
 
   unstake = () => {
-    if(this.check()) this.setState({showCheck: true});
+    if (this.check()) this.setState({ showCheck: true });
     else this.onCheckSuccess();
-  }
+  };
 
   async init() {
     const data = await api.first();
@@ -91,7 +93,7 @@ export default class FarmPanel extends React.Component {
   };
 
   render() {
-    const { data,showCheck,showUnstake } = this.state;
+    const { data, showCheck, showUnstake } = this.state;
     const isLogined = util.isLogined();
     if (!data) return null;
     return (
@@ -139,17 +141,20 @@ export default class FarmPanel extends React.Component {
           >
             <div className="farm-btn stake-btn">{toLocale('STAKE')}</div>
           </SimpleBtnDialog>
-          <div className="farm-btn stake-btn" onClick={this.unstake}>{toLocale('UNSTAKE')}</div>
+          <div className="farm-btn stake-btn" onClick={this.unstake}>
+            {toLocale('UNSTAKE')}
+          </div>
           <Dialog visible={showCheck} hideCloseBtn>
-            <ClaimCheck onClose={() => this .setState({showCheck: false})} onSuccess={this.onCheckSuccess}/>
+            <ClaimCheck
+              onClose={() => this.setState({ showCheck: false })}
+              onSuccess={this.onCheckSuccess}
+            />
           </Dialog>
-          {showUnstake && 
+          {showUnstake && (
             <Dialog visible hideCloseBtn>
-              {
-                showUnstake
-              }
+              {showUnstake}
             </Dialog>
-          }
+          )}
           <ClaimBtn
             data={data}
             onSuccess={this.props.onDashboard}

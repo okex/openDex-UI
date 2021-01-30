@@ -35,7 +35,7 @@ export default class Stake extends React.Component {
   }
 
   onInputChange = (value, selectMax = false) => {
-    if(selectMax) value = this.getAvailable(selectMax);
+    if (selectMax) value = this.getAvailable(selectMax);
     let poolRatio = '-';
     let error = !value || !Number(value);
     const { data, isStake = true } = this.props;
@@ -106,7 +106,7 @@ export default class Stake extends React.Component {
       balance = temp.available;
       balance_dis = util.precisionInput(temp.available, 8);
     }
-    if(origin) return balance;
+    if (origin) return balance;
     return balance_dis;
   }
 
@@ -153,7 +153,9 @@ export default class Stake extends React.Component {
                 <InputNum
                   type="text"
                   value={value}
-                  onChange={(value) => {this.onInputChange(value)}}
+                  onChange={(value) => {
+                    this.onInputChange(value);
+                  }}
                   placeholder={
                     isStake
                       ? toLocale('stake min input placehold', {
@@ -183,19 +185,17 @@ export default class Stake extends React.Component {
               </div>
               <div className="space-between stake-panel-detail">
                 <div className="left">{toLocale('FARM APY')}</div>
-                <div className="right">
-                  {data.farm_apy_dis}
-                </div>
+                <div className="right">{data.farm_apy_dis}</div>
               </div>
               <div className="space-between stake-panel-detail">
                 <div className="left staketip">{toLocale('stake tip')}</div>
               </div>
             </>
-          ) : 
-          <div className="space-between stake-panel-detail">
-            <div className="left staketip">{toLocale('unstake tip')}</div>
-          </div>
-          }
+          ) : (
+            <div className="space-between stake-panel-detail">
+              <div className="left staketip">{toLocale('unstake tip')}</div>
+            </div>
+          )}
         </div>
         <div
           className={classNames('stake-panel-footer', { nomargin: isStake })}
@@ -221,10 +221,10 @@ export default class Stake extends React.Component {
 }
 
 Stake.getStake = async ({ data, isStake = true, onClose, onSuccess }) => {
-  if (!util.isLogined()) return <ConnectInfoTip onClose={onClose}/>;
+  if (!util.isLogined()) return <ConnectInfoTip onClose={onClose} />;
   const stakeInfo = await api.stakedInfo({ poolName: data.pool_name });
   if (!Number(stakeInfo.balance) && data.isLpToken && isStake)
-    return <LiquidityInfoTip data={data} onClose={onClose}/>;
+    return <LiquidityInfoTip data={data} onClose={onClose} />;
   return (
     <Stake
       data={{ ...data, ...stakeInfo }}

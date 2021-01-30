@@ -5,7 +5,7 @@ import * as CommonAction from '_src/redux/actions/CommonAction';
 import { bindActionCreators } from 'redux';
 import PageURL from '_constants/PageURL';
 import { toLocale } from '_src/locale/react-locale';
-import {getDefaultActivedMenu} from '../../../component/DesktopTypeMenu';
+import { getDefaultActivedMenu } from '../../../component/DesktopTypeMenu';
 
 function mapStateToProps() {
   return {};
@@ -16,14 +16,15 @@ function mapDispatchToProps(dispatch) {
     commonAction: bindActionCreators(CommonAction, dispatch),
   };
 }
-@connect(mapStateToProps,mapDispatchToProps)
+@connect(mapStateToProps, mapDispatchToProps)
 export default class LiquidityInfoTip extends React.Component {
-
   goLiquidity = () => {
     const { onClose } = this.props;
     onClose();
-    this.props.commonAction.setActivedMenu(getDefaultActivedMenu(PageURL.liquidityPage));
-  }
+    this.props.commonAction.setActivedMenu(
+      getDefaultActivedMenu(PageURL.liquidityPage)
+    );
+  };
 
   render() {
     const { onClose, data } = this.props;

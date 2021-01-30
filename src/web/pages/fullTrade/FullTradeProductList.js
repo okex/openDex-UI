@@ -346,7 +346,9 @@ class FullTradeProductList extends React.Component {
                         }
                         onClick={this.handleMarketChange(market)}
                       >
-                        {groupKey ? toLocale(groupKey) : getDisplaySymbol(groupName)}
+                        {groupKey
+                          ? toLocale(groupKey)
+                          : getDisplaySymbol(groupName)}
                       </li>
                     );
                   })}

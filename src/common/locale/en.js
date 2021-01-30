@@ -1160,13 +1160,15 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   Check: 'Check',
   'stake tip': 'This stake action will also trigger claim tokens. ',
   'unstake tip': 'This unstake action will also trigger claim tokens.',
-  'info':'Notice',
+  info: 'Notice',
   'info desc': `I know how AMM works and accept the risks of it`,
-  'home_receive_swap': 'Swap Tutorial',
-  'home_receive_farm': 'Farm Tutorial',
+  home_receive_swap: 'Swap Tutorial',
+  home_receive_farm: 'Farm Tutorial',
   'lp introduce': `You will get LP Token after add liquidity, it's your proof of market making.`,
-  'unstake confirm info': '1st pool rewards will be released at 2021/1/26  18:00（UTC+8）. You won’t get any rewards if you have no LP tokens staked at that time.',
-  'pool warn tip':'Please prepare equal assets of {base} and {quote} to add liquidity.',
+  'unstake confirm info':
+    '1st pool rewards will be released at 2021/1/26  18:00（UTC+8）. You won’t get any rewards if you have no LP tokens staked at that time.',
+  'pool warn tip':
+    'Please prepare equal assets of {base} and {quote} to add liquidity.',
   'go detail': 'Check details>',
   'check protocol': 'Confirm',
   'Confirm Reduce': 'Confirm Reduce',
@@ -1174,18 +1176,24 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   'Confirm Swap': 'Confirm Swap',
   'Confirm Supply': 'Confirm Supply',
   'Confirm Supply btn': 'Confirm Supply',
-  'swap warn tip':'Output is estimated.You will receive at least {num} {quote} or the transaction will revert',
-  'Price Updated':'Price Updated',
-  'Accept': 'Accept',
-  'first pool end': '1st pool is finished, please check details in my farmings.',
-  'notice': 'Notice',
-  'claim gas fee info': 'Notice：This claim action will cost {fee} OKT gas fee.',
+  'swap warn tip':
+    'Output is estimated.You will receive at least {num} {quote} or the transaction will revert',
+  'Price Updated': 'Price Updated',
+  Accept: 'Accept',
+  'first pool end':
+    '1st pool is finished, please check details in my farmings.',
+  notice: 'Notice',
+  'claim gas fee info':
+    'Notice：This claim action will cost {fee} OKT gas fee.',
   'You will receive': 'You will at least receive',
-  'liquidity warn tip': 'Output is estimated.If the price changes by more than {num}% your transaction will revert.',
+  'liquidity warn tip':
+    'Output is estimated.If the price changes by more than {num}% your transaction will revert.',
   'pool tokens': '{base}/{quote} Pool Tokens',
-  'reduce liquidity warn tip': 'Output is estimated.If the price changes by more than {num}% your transaction will revert.',
+  'reduce liquidity warn tip':
+    'Output is estimated.If the price changes by more than {num}% your transaction will revert.',
   'UNI UNI/ETH Burned': 'Burn LP ({base}/{quote})',
-  'swap warn tip2': 'Please note that the price impact is {num}, you will have loss in this transaction.',
+  'swap warn tip2':
+    'Please note that the price impact is {num}, you will have loss in this transaction.',
   'empty add list': 'You will at least receive',
 };
 export default enUS;

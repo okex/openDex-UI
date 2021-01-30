@@ -58,8 +58,8 @@ export default class SwapPanel extends React.Component {
       exchangeInfo: { ...SwapPanel.exchangeInfo },
       isPoolEmpty: false,
       showConfirmDialog: false,
-      active:false,
-      trading: false
+      active: false,
+      trading: false,
     };
   }
 
@@ -110,8 +110,9 @@ export default class SwapPanel extends React.Component {
     } else {
       target.value = '';
     }
-    const {showConfirmDialog, targetToken} = this.state;
-    if(showConfirmDialog && targetToken.value !== data.targetToken.value) data.active = true;
+    const { showConfirmDialog, targetToken } = this.state;
+    if (showConfirmDialog && targetToken.value !== data.targetToken.value)
+      data.active = true;
   }
 
   changeBase = (token) => {
@@ -174,7 +175,7 @@ export default class SwapPanel extends React.Component {
     const {
       targetToken: { symbol },
     } = this.state;
-    const data = await api.swapTokens({symbol});
+    const data = await api.swapTokens({ symbol });
     if (!data) return [];
     let { tokens = [] } = data;
     tokens = tokens || [];
@@ -201,8 +202,8 @@ export default class SwapPanel extends React.Component {
   };
 
   confirmDialog = (showConfirmDialog = true) => {
-    if(showConfirmDialog && this.state.trading) return;
-    this.setState({ showConfirmDialog, active:false })
+    if (showConfirmDialog && this.state.trading) return;
+    this.setState({ showConfirmDialog, active: false });
   };
 
   triggerConfirm = () => {
@@ -228,12 +229,12 @@ export default class SwapPanel extends React.Component {
     const targetToken = await this.searchToken(tokens, data.targetToken.symbol);
     baseToken.value = '';
     targetToken.value = '';
-    this.setState({ baseToken, targetToken })
+    this.setState({ baseToken, targetToken });
   }
 
   priceImpact() {
-    const {exchangeInfo} = this.state;
-    return calc.mul(exchangeInfo.price_impact, 100).toFixed(2)+'%';
+    const { exchangeInfo } = this.state;
+    return calc.mul(exchangeInfo.price_impact, 100).toFixed(2) + '%';
   }
 
   getExchangeInfo(isConfirm) {
@@ -246,8 +247,7 @@ export default class SwapPanel extends React.Component {
             <div className="info">
               <div className="info-name">{toLocale('Price')}</div>
               <div className="info-value">
-                <i className="exchange" />
-                  1{getDisplaySymbol(baseToken.symbol)}{' '}
+                <i className="exchange" />1{getDisplaySymbol(baseToken.symbol)}{' '}
                 ≈ -{getDisplaySymbol(targetToken.symbol)}
               </div>
             </div>
@@ -261,12 +261,12 @@ export default class SwapPanel extends React.Component {
           targetToken.symbol
         )}`;
         if (exchangeInfo.isReverse)
-        priceInfo = `1${getDisplaySymbol(
-          targetToken.symbol
-        )} ≈ ${util.precisionInput(
-          calc.div(1, exchangeInfo.price),
-          8
-        )}${getDisplaySymbol(baseToken.symbol)}`;
+          priceInfo = `1${getDisplaySymbol(
+            targetToken.symbol
+          )} ≈ ${util.precisionInput(
+            calc.div(1, exchangeInfo.price),
+            8
+          )}${getDisplaySymbol(baseToken.symbol)}`;
         return (
           <div className="coin-exchange-detail">
             <div className="info">
@@ -280,12 +280,14 @@ export default class SwapPanel extends React.Component {
             <div className="info">
               <div className="info-name">
                 {toLocale('Minimum received')}
-                {!isConfirm && <Tooltip
-                  placement="right"
-                  overlay={toLocale('Minimum received help')}
-                >
-                  <i className="help" />
-                </Tooltip>}
+                {!isConfirm && (
+                  <Tooltip
+                    placement="right"
+                    overlay={toLocale('Minimum received help')}
+                  >
+                    <i className="help" />
+                  </Tooltip>
+                )}
               </div>
               <div className="info-value">
                 {this.getMinimumReceived(8)}{' '}
@@ -295,28 +297,28 @@ export default class SwapPanel extends React.Component {
             <div className="info">
               <div className="info-name">
                 {toLocale('Price Impact')}
-                {!isConfirm && <Tooltip
-                  placement="right"
-                  overlay={toLocale('Price Impact help')}
-                >
-                  <i className="help" />
-                </Tooltip>
-      }
+                {!isConfirm && (
+                  <Tooltip
+                    placement="right"
+                    overlay={toLocale('Price Impact help')}
+                  >
+                    <i className="help" />
+                  </Tooltip>
+                )}
               </div>
-              <div className="info-value">
-                {this.priceImpact(exchangeInfo)}
-              </div>
+              <div className="info-value">{this.priceImpact(exchangeInfo)}</div>
             </div>
             <div className="info">
               <div className="info-name">
                 {toLocale('Liquidity Provider Fee')}
-                {!isConfirm && <Tooltip
-                  placement="right"
-                  overlay={toLocale('Liquidity Provider Fee help')}
-                >
-                  <i className="help" />
-                </Tooltip>
-      }
+                {!isConfirm && (
+                  <Tooltip
+                    placement="right"
+                    overlay={toLocale('Liquidity Provider Fee help')}
+                  >
+                    <i className="help" />
+                  </Tooltip>
+                )}
               </div>
               <div className="info-value">
                 {!fee && '≈'}
@@ -389,7 +391,11 @@ export default class SwapPanel extends React.Component {
         </div>
       );
     } else {
-      btn = <div className="btn" onClick={() => this.confirmDialog()}>{toLocale('Confirm')}</div>
+      btn = (
+        <div className="btn" onClick={() => this.confirmDialog()}>
+          {toLocale('Confirm')}
+        </div>
+      );
     }
     return <div className="btn-wrap">{btn}</div>;
   }
@@ -408,7 +414,7 @@ export default class SwapPanel extends React.Component {
       null,
     ];
     return new Promise((resolve, reject) => {
-      this.setState({trading: true});
+      this.setState({ trading: true });
       okexchainClient
         .sendSwapTokenTransaction(...params)
         .then((res) => {
@@ -417,20 +423,21 @@ export default class SwapPanel extends React.Component {
             this.changeBase({ ...baseToken, value: '' });
           }
         })
-        .catch((err) => reject(err)).finally(() => {
-          this.setState({trading: false})
+        .catch((err) => reject(err))
+        .finally(() => {
+          this.setState({ trading: false });
         });
     });
   };
 
   hasWarn() {
     const { exchangeInfo } = this.state;
-    if(!exchangeInfo.price_impact) return false;
-    return !util.compareNumber(exchangeInfo.price_impact, '0.05'); 
+    if (!exchangeInfo.price_impact) return false;
+    return !util.compareNumber(exchangeInfo.price_impact, '0.05');
   }
 
   render() {
-    const { baseToken, targetToken,showConfirmDialog,active } = this.state;
+    const { baseToken, targetToken, showConfirmDialog, active } = this.state;
     const exchangeInfo = this.getExchangeInfo();
     const exchangeInfoConfirm = this.getExchangeInfo(true);
     const btn = this.getBtn();
@@ -466,13 +473,16 @@ export default class SwapPanel extends React.Component {
             </div>
             <div className="panel-dialog-info-content">
               <div className="panel-confirm">
-                {hasWarn && <div className="tip-info-warn2">
-                  <div>{toLocale('swap warn tip2',{num:this.priceImpact()})}</div>
-                </div>
-                }
+                {hasWarn && (
+                  <div className="tip-info-warn2">
+                    <div>
+                      {toLocale('swap warn tip2', { num: this.priceImpact() })}
+                    </div>
+                  </div>
+                )}
                 <div className="space-between coin">
                   <div className="left">
-                    <img src={getCoinIcon(baseToken.symbol)}/>
+                    <img src={getCoinIcon(baseToken.symbol)} />
                     {getDisplaySymbol(baseToken.symbol)}
                   </div>
                   <div className="right">
@@ -481,43 +491,58 @@ export default class SwapPanel extends React.Component {
                 </div>
                 <div className="down" />
                 <div className="space-between coin">
-                <div className="left">
-                  <img src={getCoinIcon(targetToken.symbol)}/>
-                  {getDisplaySymbol(targetToken.symbol)}
+                  <div className="left">
+                    <img src={getCoinIcon(targetToken.symbol)} />
+                    {getDisplaySymbol(targetToken.symbol)}
+                  </div>
+                  <div className={classNames('right', { red: active })}>
+                    {util.precisionInput(targetToken.value, 8)}
+                  </div>
                 </div>
-                <div className={classNames('right',{red:active})}>
-                  {util.precisionInput(targetToken.value, 8)}
+                {active && (
+                  <div className="space-between tip-info-warn tip-info-accept">
+                    <div className="left">{toLocale('Price Updated')}</div>
+                    <div className="right">
+                      <div
+                        className="btn"
+                        onClick={() => this.setState({ active: false })}
+                      >
+                        {toLocale('Accept')}
+                      </div>
+                    </div>
+                  </div>
+                )}
+                <div className={classNames('tip-info-warn', { no: hasWarn })}>
+                  {toLocale('swap warn tip', {
+                    num: this.getMinimumReceived(8),
+                    quote: getDisplaySymbol(targetToken.symbol),
+                  })}
                 </div>
-              </div>
-              {active && <div className="space-between tip-info-warn tip-info-accept">
-                <div className="left">{toLocale('Price Updated')}</div>
-                <div className="right"><div className="btn" onClick={() => this.setState({active: false})}>{toLocale('Accept')}</div></div>
-              </div>
-              }
-              <div className={classNames('tip-info-warn',{no: hasWarn})}>
-                {toLocale('swap warn tip',{num:this.getMinimumReceived(8),quote: getDisplaySymbol(targetToken.symbol)})}
-              </div>
-              {exchangeInfoConfirm}
+                {exchangeInfoConfirm}
               </div>
             </div>
-            <div
-              className='panel-dialog-info-footer'
-            >
-              <div className="btn1 cancel" onClick={() => this.confirmDialog(false)}>
+            <div className="panel-dialog-info-footer">
+              <div
+                className="btn1 cancel"
+                onClick={() => this.confirmDialog(false)}
+              >
                 {toLocale('cancel')}
               </div>
-              <div className={classNames('btn1',{loading: active})} onClick={this.triggerConfirm}>
+              <div
+                className={classNames('btn1', { loading: active })}
+                onClick={this.triggerConfirm}
+              >
                 {toLocale('Confirm Swap')}
               </div>
             </div>
           </div>
         </Dialog>
         <Confirm
-        onClick={this.confirm}
-        loadingTxt={toLocale('pending transactions')}
-        successTxt={toLocale('transaction confirmed')}
-        getRef={(instance) => (this.confirmInstance = instance)}
-      ></Confirm>
+          onClick={this.confirm}
+          loadingTxt={toLocale('pending transactions')}
+          successTxt={toLocale('transaction confirmed')}
+          getRef={(instance) => (this.confirmInstance = instance)}
+        ></Confirm>
       </div>
     );
   }

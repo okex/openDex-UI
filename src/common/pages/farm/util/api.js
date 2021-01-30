@@ -147,7 +147,7 @@ function _getLockSymbolInfos(lock_symbol) {
 export function whitelist() {
   //@mock mocker.whitelist(URL.GET_FARM_POOLS_WHITELIST);
   return get(URL.GET_FARM_POOLS_WHITELIST).then((data) => {
-    if(!Array.isArray(data.data)) data.data = [];
+    if (!Array.isArray(data.data)) data.data = [];
     _proccessData(data.data);
     return data;
   });
@@ -156,7 +156,7 @@ export function whitelist() {
 export function normal(param = {}) {
   //@mock mocker.normal(URL.GET_FARM_POOLS_NORMAL);
   return get(URL.GET_FARM_POOLS_NORMAL, param).then((data) => {
-    if(!Array.isArray(data.data)) data.data = [];
+    if (!Array.isArray(data.data)) data.data = [];
     data.data = data.data.filter((d) => {
       const need = d.in_whitelist || d.pool_name !== firstPoolConf.pool_name;
       if (!need) data.param_page.total = data.param_page.total - 1;
@@ -171,7 +171,7 @@ export function dashboard(param = {}) {
   const address = util.getMyAddr();
   //@mock mocker.dashboard(`${URL.GET_FARM_DASHBOARD}/${address}`);
   return get(`${URL.GET_FARM_DASHBOARD}/${address}`, param).then((data) => {
-    if(!Array.isArray(data.data)) data.data = [];
+    if (!Array.isArray(data.data)) data.data = [];
     data.data = data.data.filter((d) => {
       const need = d.in_whitelist || d.pool_name !== firstPoolConf.pool_name;
       if (!need) {

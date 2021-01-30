@@ -1,7 +1,7 @@
 import { getDisplaySymbol } from './coinIcon';
 
 export function isLpToken(tokenPair) {
-  if(!tokenPair) return null;
+  if (!tokenPair) return null;
   tokenPair = tokenPair.toLowerCase();
   let ammswap = /(ammswap_)/.test(tokenPair);
   if (!ammswap) return null;
@@ -10,7 +10,7 @@ export function isLpToken(tokenPair) {
   return tokens;
 }
 
-export function getLpTokenInfo(tokenPair,filter=true) {
+export function getLpTokenInfo(tokenPair, filter = true) {
   tokenPair = tokenPair.toLowerCase();
   const tokens = isLpToken(tokenPair);
   if (!tokens) return null;
@@ -31,11 +31,11 @@ export function getLpTokenInfo(tokenPair,filter=true) {
   return {
     base: lptokens[0],
     quote: lptokens[1],
-    name: getLpTokenName(lptokens[0], lptokens[1], '', '' ,filter),
+    name: getLpTokenName(lptokens[0], lptokens[1], '', '', filter),
   };
 }
 
-export function getLpTokenStr(tokenPair = '', filter=true) {
+export function getLpTokenStr(tokenPair = '', filter = true) {
   tokenPair = tokenPair.toLowerCase();
   const lpTokenInfo = getLpTokenInfo(tokenPair, filter);
   if (lpTokenInfo) return lpTokenInfo.name;
@@ -43,14 +43,24 @@ export function getLpTokenStr(tokenPair = '', filter=true) {
   return getDisplaySymbol(tokenPair, filter);
 }
 
-function getLpTokenName(base, quote, baseStr = '', quoteStr = '', filter=true) {
+function getLpTokenName(
+  base,
+  quote,
+  baseStr = '',
+  quoteStr = '',
+  filter = true
+) {
   if (base.length === 1) baseStr = getDisplaySymbol(base[0], filter);
   else if (base.length === 2)
-    baseStr = `LP (${getDisplaySymbol(base[0], filter)}/${getDisplaySymbol(base[1], filter)})`;
+    baseStr = `LP (${getDisplaySymbol(base[0], filter)}/${getDisplaySymbol(
+      base[1],
+      filter
+    )})`;
   if (quote.length === 1) quoteStr = quote[0].toUpperCase();
   else if (quote.length === 2)
     quoteStr = `LP (${getDisplaySymbol(quote[0], filter)}/${getDisplaySymbol(
-      quote[1], filter
+      quote[1],
+      filter
     )})`;
   if (!baseStr) return quoteStr;
   if (!quoteStr) return baseStr;

@@ -279,8 +279,8 @@ const util = {
     return result;
   },
   compareNumber(a, b) {
-    if(!a) a = 0;
-    if(!b) b = 0;
+    if (!a) a = 0;
+    if (!b) b = 0;
     return calc.div(a, 1) < calc.div(b, 1);
   },
   go(path = PageURL.spotFullPage) {

@@ -113,7 +113,7 @@ export default class WatchlistPanel extends React.Component {
         component({ row, data }) {
           let change = calc.add(data, 0);
           if (!row.isRevert) change = calc.div(1, calc.add(data, 1)) - 1;
-          if(!Number.isFinite(change)) return '--';
+          if (!Number.isFinite(change)) return '--';
           if (change > 0)
             return (
               <span className="green">

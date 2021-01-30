@@ -13,7 +13,7 @@ import OKB from '_src/assets/images/OKB.png';
 
 const icons = {
   OKT: coinOkt,
-  'BTCK-BA9':BTCK,
+  'BTCK-BA9': BTCK,
   'USDT-A2B': USDT,
   'ETHK-C63': coinEthk,
   'LTCK-5CB': coinLtck,
@@ -33,7 +33,7 @@ export function getCoinIcon(symbol) {
   return defaultcoin;
 }
 
-export function getDisplaySymbol(symbol, filter=true) {
+export function getDisplaySymbol(symbol, filter = true) {
   if (!symbol) return symbol;
   const temp = Object.keys(icons).filter(
     (d) => d.toLowerCase() === symbol.toLowerCase()

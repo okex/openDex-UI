@@ -149,6 +149,6 @@ export function setActivedMenu(activedMenu) {
     dispatch({
       type: CommonActionType.ACTIVEDMENU,
       data: activedMenu,
-    })
-  }
+    });
+  };
 }

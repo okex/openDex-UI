@@ -98,11 +98,11 @@ const routes = [
   },
   {
     path: PageURL.liquidityPage,
-    component: () => <Swap activekey='2'/>,
+    component: () => <Swap activekey="2" />,
   },
   {
     path: PageURL.watchlistPage,
-    component: () => <Swap activekey='3'/>,
+    component: () => <Swap activekey="3" />,
   },
   {
     path: PageURL.farmPage,

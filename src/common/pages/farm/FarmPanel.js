@@ -108,9 +108,7 @@ export default class FarmPanel extends React.Component {
         <div className="info-items">
           {data.map((d, index) => (
             <div className="info-item" key={index}>
-              <div
-                className={classNames('tag','active')}
-              ></div>
+              <div className={classNames('tag', 'active')}></div>
               <div className="coin2coin">
                 {d.lock_symbol_info.symbols.map((symbol, symbolIndex) => (
                   <img src={getCoinIcon(symbol)} key={symbolIndex} />
@@ -120,7 +118,12 @@ export default class FarmPanel extends React.Component {
                 </Tooltip>
               </div>
               <div className="rate">{d.total_apy}</div>
-              <div className="rate-tip">{d.farm_apy.length > 1 ? d.farm_apy_dis : toLocale('Farm APY')+ (d.farm_apy[0] ?`（${d.farm_apy[0].denom_dis}）`:'')}</div>
+              <div className="rate-tip">
+                {d.farm_apy.length > 1
+                  ? d.farm_apy_dis
+                  : toLocale('Farm APY') +
+                    (d.farm_apy[0] ? `（${d.farm_apy[0].denom_dis}）` : '')}
+              </div>
               <div className="info-detail">
                 {toLocale('Total staked：')}
                 {d.total_staked_dis}
@@ -134,9 +137,7 @@ export default class FarmPanel extends React.Component {
                   Stake.getStake({ data: d, onSuccess: this.refreshData })
                 }
               >
-                <div
-                  className={classNames('farm-btn')}
-                >
+                <div className={classNames('farm-btn')}>
                   {toLocale('STAKE')}
                 </div>
               </SimpleBtnDialog>

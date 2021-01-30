@@ -80,7 +80,9 @@ const headTypeList = [
 let activedMenu = getDefaultActivedMenu(PageURL.getCurrent());
 
 export function getDefaultActivedMenu(current) {
-  return headTypeList.filter((d) => current.startsWith(d.url))[0] || headTypeList[5];
+  return (
+    headTypeList.filter((d) => current.startsWith(d.url))[0] || headTypeList[5]
+  );
 }
 
 function mapStateToProps(state) {
@@ -93,7 +95,7 @@ function mapDispatchToProps(dispatch) {
     commonAction: bindActionCreators(CommonAction, dispatch),
   };
 }
-@connect(mapStateToProps,mapDispatchToProps)
+@connect(mapStateToProps, mapDispatchToProps)
 class DesktopTypeMenu extends Component {
   constructor(props) {
     super(props);
@@ -108,7 +110,8 @@ class DesktopTypeMenu extends Component {
   };
 
   render() {
-    const current = this.props.activedMenu || getDefaultActivedMenu(this.props.current);
+    const current =
+      this.props.activedMenu || getDefaultActivedMenu(this.props.current);
     activedMenu = current;
     return (
       <div className="top-info-title">

@@ -97,9 +97,7 @@ export default class WatchlistPanel extends React.Component {
               }
             >
               <div className="action-opt-wrap">
-                <div
-                  className={classNames('action-opt')}
-                >
+                <div className={classNames('action-opt')}>
                   {toLocale('Stake')}
                 </div>
               </div>

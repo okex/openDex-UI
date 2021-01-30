@@ -26,10 +26,13 @@ export default class Farm extends React.Component {
     this.dashboard = null;
   }
 
-  showDialog = (show=true) => {
-    window.localStorage.setItem(env.envConfig.firstPoolConf.noticeSetting,'true');
-    this.setState({show})
-  }
+  showDialog = (show = true) => {
+    window.localStorage.setItem(
+      env.envConfig.firstPoolConf.noticeSetting,
+      'true'
+    );
+    this.setState({ show });
+  };
 
   onChange = (activekey) => {
     this.setState({ activekey });
@@ -54,46 +57,57 @@ export default class Farm extends React.Component {
 
   render() {
     const { wsV3 } = this.props;
-    const { activekey,show } = this.state;
+    const { activekey, show } = this.state;
     return (
       <>
-      <FarmContext.Provider value={wsV3}>
-        <div className="farm-container">
-          <Tabs
-            activeKey={activekey}
-            prefixCls="farm"
-            onChange={this.onChange}
-            destroyInactiveTabPane
-          >
-            <TabPane tab={toLocale('Farm')} key={FARM}>
-              <FarmPanel />
-            </TabPane>
-            <TabPane tab={toLocale('Dashboard')} key={DASHBOARD}>
-              <DashboardPanel onFarm={this.onFarm} />
-            </TabPane>
-          </Tabs>
-        </div>
-      </FarmContext.Provider>
-      
-      <Dialog visible={show} hideCloseBtn>
-      <div className="dialog-stake-panel" style={{ width: '496px' }}>
-          <div className="stake-panel-title">
-            {toLocale('notice')}
-            <span className="close" onClick={() => this.showDialog(false)}>
-              ×
-            </span>
+        <FarmContext.Provider value={wsV3}>
+          <div className="farm-container">
+            <Tabs
+              activeKey={activekey}
+              prefixCls="farm"
+              onChange={this.onChange}
+              destroyInactiveTabPane
+            >
+              <TabPane tab={toLocale('Farm')} key={FARM}>
+                <FarmPanel />
+              </TabPane>
+              <TabPane tab={toLocale('Dashboard')} key={DASHBOARD}>
+                <DashboardPanel onFarm={this.onFarm} />
+              </TabPane>
+            </Tabs>
           </div>
-          <div className="stake-panel-content">
-            <div className="infotip">
-              {toLocale('first pool end')}
+        </FarmContext.Provider>
+
+        <Dialog visible={show} hideCloseBtn>
+          <div className="dialog-stake-panel" style={{ width: '496px' }}>
+            <div className="stake-panel-title">
+              {toLocale('notice')}
+              <span className="close" onClick={() => this.showDialog(false)}>
+                ×
+              </span>
+            </div>
+            <div className="stake-panel-content">
+              <div className="infotip">{toLocale('first pool end')}</div>
+            </div>
+            <div className="stake-panel-footer nomargin noshadow">
+              <div
+                className="farm-btn cancel"
+                onClick={() => this.showDialog(false)}
+              >
+                {toLocale('cancel')}
+              </div>
+              <div
+                className="farm-btn"
+                onClick={() => {
+                  this.showDialog(false);
+                  this.onDashboard();
+                }}
+              >
+                {toLocale('Check')}
+              </div>
             </div>
           </div>
-          <div className="stake-panel-footer nomargin noshadow">
-            <div className="farm-btn cancel" onClick={() => this.showDialog(false)}>{toLocale('cancel')}</div>
-            <div className="farm-btn" onClick={() => {this.showDialog(false);this.onDashboard()}}>{toLocale('Check')}</div>
-          </div>
-        </div> 
-      </Dialog>
+        </Dialog>
       </>
     );
   }

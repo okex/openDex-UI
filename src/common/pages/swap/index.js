@@ -51,12 +51,12 @@ export default class Swap extends React.Component {
   };
 
   changeHash(activekey) {
-    if(activekey === POOL) {
-      window.history.replaceState({},'',PageURL.liquidityPage);
-    } else if(activekey === WATCHLIST){
-      window.history.replaceState({},'',PageURL.watchlistPage);
+    if (activekey === POOL) {
+      window.history.replaceState({}, '', PageURL.liquidityPage);
+    } else if (activekey === WATCHLIST) {
+      window.history.replaceState({}, '', PageURL.watchlistPage);
     } else {
-      window.history.replaceState({},'',PageURL.swapPage);
+      window.history.replaceState({}, '', PageURL.swapPage);
     }
   }
 

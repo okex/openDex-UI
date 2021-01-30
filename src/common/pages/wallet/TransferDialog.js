@@ -13,7 +13,7 @@ import { calc } from '_component/okit';
 import PasswordDialog from '_component/PasswordDialog';
 import util from '../../utils/util';
 import ont from '../../utils/dataProxy';
-import {getLpTokenStr} from '../../utils/lpTokenUtil';
+import { getLpTokenStr } from '../../utils/lpTokenUtil';
 import env from '../../constants/env';
 import './TransferDialog.less';
 
@@ -101,7 +101,9 @@ class TransferDialog extends Component {
   calAvaIsFeeToken = () => {
     const { fee } = this.state;
     if (this.feeLeft > fee) {
-      this.setState({ available: util.precisionInput(calc.sub(this.feeLeft, fee, false)) });
+      this.setState({
+        available: util.precisionInput(calc.sub(this.feeLeft, fee, false)),
+      });
     } else {
       this.setState({ available: 0 });
     }
@@ -153,7 +155,7 @@ class TransferDialog extends Component {
         }
       }
       if (type === 'amount') {
-        err = util.compareNumber(available,value);
+        err = util.compareNumber(available, value);
         if (!err && util.compareNumber(this.feeLeft, fee)) {
           this.setState({
             feeErr: true,
@@ -171,7 +173,7 @@ class TransferDialog extends Component {
   };
   allIn = () => {
     const { available } = this.state;
-    this.setState({ amount:util.precisionInput(available,8) });
+    this.setState({ amount: util.precisionInput(available, 8) });
   };
   setSymbol = (symbol, checkFee = true) => {
     this.setState({ symbol }, () => {
@@ -204,8 +206,8 @@ class TransferDialog extends Component {
       address.trim() &&
       this.addrReg.test(address.trim()) &&
       Number(amount) &&
-      !util.compareNumber(available,amount) &&
-      util.compareNumber(fee,this.feeLeft) &&
+      !util.compareNumber(available, amount) &&
+      util.compareNumber(fee, this.feeLeft) &&
       this.addr &&
       this.addr.toLowerCase() !== address.trim().toLowerCase()
     );
@@ -233,7 +235,10 @@ class TransferDialog extends Component {
               onClose();
               this.setState({ transferring: true });
               let amountStr = util.precisionInput(amount);
-              if(util.precisionInput(amount,8) === util.precisionInput(available,8)) {
+              if (
+                util.precisionInput(amount, 8) ===
+                util.precisionInput(available, 8)
+              ) {
                 amountStr = available;
               }
               okexchainClient.setAccountInfo(privateKey).then(() => {

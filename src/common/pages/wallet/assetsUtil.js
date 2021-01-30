@@ -149,7 +149,7 @@ util.accountsCols = ({ transfer }, { valuationUnit }) => {
         const whole_nameString = symbol
           ? ` (${lpTokenInfo ? lpTokenInfo.name : symbol})`
           : '';
-        if(textLpTokenInfo) text = textLpTokenInfo.name;
+        if (textLpTokenInfo) text = textLpTokenInfo.name;
         return (
           <div className="symbol-line">
             <Tooltip
