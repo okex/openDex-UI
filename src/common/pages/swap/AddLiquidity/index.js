@@ -510,6 +510,9 @@ export default class AddLiquidity extends React.Component {
     const exchangeInfoConfirm = this.getExchangeInfo(true);
     const btn = this.getBtn();
     const isEmpty = baseToken.symbol && targetToken.symbol && isEmptyPool;
+    const {
+      setting: { slippageTolerance },
+    } = this.props;
     return (
       <>
         <div className="panel">
@@ -585,7 +588,7 @@ export default class AddLiquidity extends React.Component {
               </div>
               }
               <div className="tip-info-warn">
-                {toLocale('liquidity warn tip')}
+                {toLocale('liquidity warn tip',{num:slippageTolerance})}
               </div>
               {exchangeInfoConfirm}
               </div>
