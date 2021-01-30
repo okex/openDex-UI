@@ -150,7 +150,7 @@ export default class WatchlistPanel extends React.Component {
     this.stopTimer();
     this.refreshInterval = setInterval(() => {
       this.refreshData();
-    }, 5000);
+    }, 3000);
   }
 
   componentWillUnmount() {

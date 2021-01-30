@@ -54,7 +54,7 @@ export default class DashboardPanel extends React.Component {
     }, 1000);
     this.refreshInterval = setInterval(() => {
       this.refreshData();
-    }, 5000);
+    }, 3000);
   }
 
   stopTimer() {

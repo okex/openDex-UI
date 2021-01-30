@@ -55,6 +55,7 @@ export default class AddLiquidity extends React.Component {
         price: '',
         pool_share: '',
         isReverse: false,
+        liquidity: ''
       },
       liquidity: props.liquidity,
       userLiquidity: props.userLiquidity,
@@ -425,11 +426,11 @@ export default class AddLiquidity extends React.Component {
   }
 
   confirm = () => {
-    const { baseToken: _baseToken, targetToken: _targetToken } = this.state;
+    const { baseToken: _baseToken, targetToken: _targetToken,exchangeInfo } = this.state;
     let { baseToken, targetToken } = this._exchangeTokenData();
     const { okexchainClient } = this.props;
     const params = [
-      util.precisionInput(0),
+      util.precisionInput(exchangeInfo.liquidity),
       util.precisionInput(baseToken.value),
       baseToken.symbol,
       util.precisionInput(targetToken.value),
@@ -489,6 +490,7 @@ export default class AddLiquidity extends React.Component {
   render() {
     const { back, disabledChangeCoin = false } = this.props;
     const { baseToken, targetToken, isEmptyPool, userLiquidity, showConfirmDialog, check, active } = this.state;
+    const liquidity = this.state.exchangeInfo.liquidity;
     const exchangeInfo = this.getExchangeInfo();
     const exchangeInfoConfirm = this.getExchangeInfo(true);
     const btn = this.getBtn();
@@ -556,7 +558,7 @@ export default class AddLiquidity extends React.Component {
                   <div className="info-name">{toLocale('You will receive')}</div>
                 </div>
                 <div className="info">
-                  <div className="info-name lg">112222</div>
+                  <div className="info-name lg">{util.precisionInput(liquidity,8)}</div>
                 </div>
                 <div className="info">
                   <div className="info-name">{toLocale('pool tokens',{base: getDisplaySymbol(baseToken.symbol),quote: getDisplaySymbol(targetToken.symbol)})}</div>

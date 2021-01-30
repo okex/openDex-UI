@@ -55,7 +55,7 @@ export default class FarmPanel extends React.Component {
     }, 1000);
     this.refreshInterval = setInterval(() => {
       this.refreshData();
-    }, 5000);
+    }, 3000);
   }
 
   stopTimer() {
