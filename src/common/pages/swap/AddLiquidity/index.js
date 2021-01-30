@@ -64,6 +64,7 @@ export default class AddLiquidity extends React.Component {
       showConfirmDialog: false,
       active:false,
       check: getLiquidityCheck(),
+      trading: false
     };
   }
 
@@ -370,6 +371,7 @@ export default class AddLiquidity extends React.Component {
   };
 
   confirmDialog = (showConfirmDialog = true) => {
+    if(showConfirmDialog && this.state.trading) return;
     this.setState({ showConfirmDialog,active:false })
   }
 
@@ -455,6 +457,7 @@ export default class AddLiquidity extends React.Component {
       null,
     ];
     return new Promise((resolve, reject) => {
+      this.setState({trading: true});
       okexchainClient
         .sendAddLiquidityTransaction(...params)
         .then((res) => {
@@ -469,7 +472,9 @@ export default class AddLiquidity extends React.Component {
             });
           }
         })
-        .catch((err) => reject(err));
+        .catch((err) => reject(err)).finally(() => {
+          this.setState({trading: false})
+        });
     });
   };
 
