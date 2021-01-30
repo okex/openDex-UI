@@ -139,7 +139,7 @@ export default class ReduceLiquidity extends React.Component {
     const { baseToken, targetToken } = this._exchangeTokenData();
     const { value } = this.state;
     const params = [
-      value,
+      util.precisionInput(value),
       this.getMinimumReceived(baseToken.amount),
       baseToken.denom,
       this.getMinimumReceived(targetToken.amount),
