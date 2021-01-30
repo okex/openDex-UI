@@ -232,10 +232,7 @@ export default class SwapPanel extends React.Component {
     const targetToken = await this.searchToken(tokens, temp.targetToken.symbol);
     baseToken.value = '';
     targetToken.value = '';
-    this.updateSwapInfo4RealTime(
-      { ...temp, baseToken, targetToken },
-      'baseToken'
-    );
+    this.setState({ ...temp, baseToken, targetToken })
   }
 
   getExchangeInfo(isConfirm) {
