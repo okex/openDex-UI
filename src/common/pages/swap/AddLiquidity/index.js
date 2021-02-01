@@ -290,7 +290,7 @@ export default class AddLiquidity extends React.Component {
 
   getExchangeInfo(isConfirm) {
     const { baseToken, targetToken } = this.state;
-    const { priceInfo, poolShare } = this._getExchangeData(isConfirm);
+    const { priceInfo, poolShare } = this._getExchangeData();
     if (!baseToken.symbol || !targetToken.symbol || poolShare === '')
       return null;
     return (
@@ -324,7 +324,7 @@ export default class AddLiquidity extends React.Component {
     );
   }
 
-  _getExchangeData(isConfirm) {
+  _getExchangeData() {
     let { baseToken, targetToken, exchangeInfo, isEmptyPool } = this.state;
     let priceInfo,
       price = exchangeInfo.price;
@@ -338,40 +338,22 @@ export default class AddLiquidity extends React.Component {
     }
     if (isEmptyPool) {
       if (!baseToken.value || !targetToken.value) {
-        if (!isConfirm) {
-          priceInfo = `1${getDisplaySymbol(
-            baseToken.symbol
-          )} ≈ -${getDisplaySymbol(targetToken.symbol)}`;
-        } else {
-          priceInfo = `-${getDisplaySymbol(
-            targetToken.symbol
-          )}/${getDisplaySymbol(baseToken.symbol)}`;
-        }
+        priceInfo = `1${getDisplaySymbol(
+          baseToken.symbol
+        )} ≈ -${getDisplaySymbol(targetToken.symbol)}`;
       } else {
         let tempPrice = calc.div(targetToken.value, baseToken.value);
         if (Number.isNaN(tempPrice)) tempPrice = '-';
         else tempPrice = util.precisionInput(tempPrice, 8);
-        if (!isConfirm) {
-          priceInfo = `1${getDisplaySymbol(
-            baseToken.symbol
-          )} ≈ ${tempPrice} ${getDisplaySymbol(targetToken.symbol)}`;
-        } else {
-          priceInfo = `${tempPrice} ${getDisplaySymbol(
-            targetToken.symbol
-          )}/${getDisplaySymbol(baseToken.symbol)}`;
-        }
+        priceInfo = `1${getDisplaySymbol(
+          baseToken.symbol
+        )} ≈ ${tempPrice} ${getDisplaySymbol(targetToken.symbol)}`;
       }
       return { priceInfo, poolShare: 1 };
     }
-    if (!isConfirm) {
-      priceInfo = `1${getDisplaySymbol(
-        baseToken.symbol
-      )} ≈ ${price}${getDisplaySymbol(targetToken.symbol)}`;
-    } else {
-      priceInfo = `${price} ${getDisplaySymbol(
-        targetToken.symbol
-      )}/${getDisplaySymbol(baseToken.symbol)}`;
-    }
+    priceInfo = `1${getDisplaySymbol(
+      baseToken.symbol
+    )} ≈ ${price}${getDisplaySymbol(targetToken.symbol)}`;
     return { priceInfo, poolShare: exchangeInfo.pool_share };
   }
 
