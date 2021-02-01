@@ -420,7 +420,7 @@ export default class AddLiquidity extends React.Component {
     } else {
       btn = (
         <div className="btn" onClick={() => this.confirmDialog()}>
-          {toLocale('Confirm')}
+          {toLocale('Confirm Supply btn')}
         </div>
       );
     }

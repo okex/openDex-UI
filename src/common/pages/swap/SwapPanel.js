@@ -400,7 +400,7 @@ export default class SwapPanel extends React.Component {
     } else {
       btn = (
         <div className="btn" onClick={() => this.confirmDialog()}>
-          {toLocale('Confirm')}
+          {toLocale('Confirm Swap')}
         </div>
       );
     }

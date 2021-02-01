@@ -209,7 +209,7 @@ export default class ReduceLiquidity extends React.Component {
     }
     return (
       <div className="btn" onClick={() => this.confirmDialog()}>
-        {toLocale('Confirm')}
+        {toLocale('Confirm Reduce btn')}
       </div>
     );
   };
