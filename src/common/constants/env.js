@@ -21,18 +21,31 @@ const testnet = {
   chainId: 'okexchain-65',
   kId: 'okex-dex-test',
   swapSetting: 'swap_setting_config_test',
+  liquidityCheck: 'liquidity_check_test',
   oklinkPagePath: 'okexchain-test',
+  isMainnet: false,
+  fee: 0.05,
+  firstPoolConf: {
+    pool_name: '1st_pool_okt_usdt',
+    lock_symbol: 'ammswap_okt_usdt-25a',
+    stake_at: 1611309600,
+    claim_height: 1003128,
+    claim_height_extra: 24 * 60 * 60,
+    claim_height_extra1: 3 * 24 * 60 * 60,
+    claim_at: 1611655200,
+    noticeSetting: 'notice_setting_test',
+  },
 };
 
 const mainnet = {
   isTest: false,
-  dexUser: 'dex_user',
-  dexToken: 'dex_token',
+  dexUser: 'dex_user_main',
+  dexToken: 'dex_token_main',
   token: {
     base: 'okt',
-    quote: 'usdk',
-    quoteName: 'USDK',
-    defaultProduct: 'okt_usdk',
+    quote: 'usdt-a2b',
+    quoteName: 'USDT-A2B',
+    defaultProduct: 'btck-ba9_usdt-a2b',
     productKey: 'product',
     activeMarketKey: 'activeMarket',
     favoritesKey: 'favorites',
@@ -45,7 +58,20 @@ const mainnet = {
   chainId: 'okexchain-66',
   kId: 'okex-dex',
   swapSetting: 'swap_setting_config',
+  liquidityCheck: 'liquidity_check',
   oklinkPagePath: 'okexchain',
+  isMainnet: true,
+  fee: 0.0005,
+  firstPoolConf: {
+    pool_name: '1st_pool_okt_usdt',
+    lock_symbol: 'ammswap_okt_usdt-a2b',
+    stake_at: 1611309600,
+    claim_height: 1003128,
+    claim_height_extra: 24 * 60 * 60,
+    claim_height_extra1: 3 * 24 * 60 * 60,
+    claim_at: 1611655200,
+    noticeSetting: 'notice_setting',
+  },
 };
 
 function envConfig() {
@@ -58,7 +84,7 @@ function envConfig() {
 const env = {
   envConfig: envConfig(),
   testnet,
-  mainnet
+  mainnet,
 };
 
 export default env;

@@ -13,6 +13,8 @@ import { calc } from '_component/okit';
 import PasswordDialog from '_component/PasswordDialog';
 import util from '../../utils/util';
 import ont from '../../utils/dataProxy';
+import { getLpTokenStr } from '../../utils/lpTokenUtil';
+import env from '../../constants/env';
 import './TransferDialog.less';
 
 function mapStateToProps(state) {
@@ -44,7 +46,7 @@ class TransferDialog extends Component {
       amountErr: false,
       note: '',
       noteErr: false,
-      fee: 0.02,
+      fee: env.envConfig.fee,
       feeErr: false,
       pwdErr: '',
       available: 0,
@@ -89,7 +91,7 @@ class TransferDialog extends Component {
         const { currencies } = data;
         const assets = currencies || [];
         if (assets.length) {
-          this.feeLeft = Number(assets[0].available);
+          this.feeLeft = assets[0].available;
           if (symbol === this.feeToken) {
             this.calAvaIsFeeToken();
           }
@@ -99,7 +101,9 @@ class TransferDialog extends Component {
   calAvaIsFeeToken = () => {
     const { fee } = this.state;
     if (this.feeLeft > fee) {
-      this.setState({ available: calc.sub(this.feeLeft, fee) });
+      this.setState({
+        available: util.precisionInput(calc.sub(this.feeLeft, fee, false)),
+      });
     } else {
       this.setState({ available: 0 });
     }
@@ -111,7 +115,7 @@ class TransferDialog extends Component {
         const { currencies } = data;
         const assets = currencies || [];
         if (assets.length) {
-          this.setState({ available: Number(assets[0].available) });
+          this.setState({ available: assets[0].available });
         }
       });
   };
@@ -151,8 +155,8 @@ class TransferDialog extends Component {
         }
       }
       if (type === 'amount') {
-        err = Number(value) > available;
-        if (!err && this.feeLeft < fee) {
+        err = util.compareNumber(available, value);
+        if (!err && util.compareNumber(this.feeLeft, fee)) {
           this.setState({
             feeErr: true,
           });
@@ -169,7 +173,7 @@ class TransferDialog extends Component {
   };
   allIn = () => {
     const { available } = this.state;
-    this.setState({ amount: available });
+    this.setState({ amount: util.precisionInput(available, 8) });
   };
   setSymbol = (symbol, checkFee = true) => {
     this.setState({ symbol }, () => {
@@ -202,8 +206,8 @@ class TransferDialog extends Component {
       address.trim() &&
       this.addrReg.test(address.trim()) &&
       Number(amount) &&
-      Number(amount) <= available &&
-      this.feeLeft > fee &&
+      !util.compareNumber(available, amount) &&
+      util.compareNumber(fee, this.feeLeft) &&
       this.addr &&
       this.addr.toLowerCase() !== address.trim().toLowerCase()
     );
@@ -227,10 +231,16 @@ class TransferDialog extends Component {
             pwd,
             (privateKey) => {
               const { onClose, onSuccess, okexchainClient } = this.props;
-              const { symbol, address, amount, note } = this.state;
+              const { symbol, address, amount, note, available } = this.state;
               onClose();
               this.setState({ transferring: true });
-              const amountStr = Number(amount).toFixed(8);
+              let amountStr = util.precisionInput(amount);
+              if (
+                util.precisionInput(amount, 8) ===
+                util.precisionInput(available, 8)
+              ) {
+                amountStr = available;
+              }
               okexchainClient.setAccountInfo(privateKey).then(() => {
                 okexchainClient
                   .sendSendTransaction(address, amountStr, symbol, note)
@@ -379,12 +389,12 @@ class TransferDialog extends Component {
                       value={amount}
                     />
                     <div className="trans-op-right">
-                      <span>{original_symbol.toUpperCase()}</span>
+                      <span>{getLpTokenStr(original_symbol)}</span>
                       <a onClick={this.allIn}>{toLocale('all')}</a>
                     </div>
                     <p className="amount-left-info">
                       <span>{toLocale('trans_available')}</span>
-                      {calc.showFloorTruncation(available, 8, false)}
+                      {calc.showFloorTruncation(available, 8, true)}
                     </p>
                     {amountErr && (
                       <p className="error">

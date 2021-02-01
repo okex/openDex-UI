@@ -144,8 +144,12 @@ util.accountsCols = ({ transfer }, { valuationUnit }) => {
       key: 'assetToken',
       render: (text, data) => {
         const { symbol } = data;
-        const lpTokenInfo = getLpTokenInfo(symbol);
-        const whole_nameString = symbol ? ` (${lpTokenInfo ? lpTokenInfo.name : symbol})` : '';
+        const lpTokenInfo = getLpTokenInfo(symbol, false);
+        const textLpTokenInfo = getLpTokenInfo(text);
+        const whole_nameString = symbol
+          ? ` (${lpTokenInfo ? lpTokenInfo.name : symbol})`
+          : '';
+        if (textLpTokenInfo) text = textLpTokenInfo.name;
         return (
           <div className="symbol-line">
             <Tooltip
@@ -174,7 +178,7 @@ util.accountsCols = ({ transfer }, { valuationUnit }) => {
       key: 'available',
       alignRight: true,
       render: (text) => {
-        return calc.showFloorTruncation(text, 8, false);
+        return calc.showFloorTruncation(text, 8, true);
       },
     },
     {
@@ -182,7 +186,7 @@ util.accountsCols = ({ transfer }, { valuationUnit }) => {
       key: 'locked',
       alignRight: true,
       render: (text) => {
-        return calc.showFloorTruncation(text, 8, false);
+        return calc.showFloorTruncation(text, 8, true);
       },
     },
     {

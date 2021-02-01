@@ -7,14 +7,16 @@ import { getLangURL } from '_src/utils/navigation';
 import PageURL from '_constants/PageURL';
 import { Link } from 'react-router-dom';
 import CoinItem from './CoinItem';
-import { getCoinIcon } from '../../utils/coinIcon';
+import { getCoinIcon, getDisplaySymbol } from '../../utils/coinIcon';
 import * as api from './util/api';
 import Confirm from '../../component/Confirm';
 import { getDeadLine4sdk } from './util';
-import getRef from './getRef';
+import getRef from '../../component/getRef';
 import Tooltip from '../../component/Tooltip';
 import { validateTxs } from '_src/utils/client';
 import Message from '_src/component/Message';
+import classNames from 'classnames';
+import { Dialog } from '../../component/Dialog';
 
 function mapStateToProps(state) {
   const { setting } = state.SwapStore;
@@ -55,7 +57,12 @@ export default class SwapPanel extends React.Component {
       targetToken: props.targetToken,
       exchangeInfo: { ...SwapPanel.exchangeInfo },
       isPoolEmpty: false,
+      showConfirmDialog: false,
+      active: false,
     };
+    this.trading = false;
+    this.initial = false
+    this.needInitData = null;
   }
 
   exchange = async () => {
@@ -105,6 +112,9 @@ export default class SwapPanel extends React.Component {
     } else {
       target.value = '';
     }
+    const { showConfirmDialog, targetToken } = this.state;
+    if (showConfirmDialog && targetToken.value !== data.targetToken.value)
+      data.active = true;
   }
 
   changeBase = (token) => {
@@ -164,7 +174,10 @@ export default class SwapPanel extends React.Component {
   };
 
   loadBaseCoinList = async () => {
-    const data = await api.swapTokens();
+    const {
+      targetToken: { symbol },
+    } = this.state;
+    const data = await api.swapTokens({ symbol });
     if (!data) return [];
     let { tokens = [] } = data;
     tokens = tokens || [];
@@ -190,36 +203,48 @@ export default class SwapPanel extends React.Component {
     this.setState({ exchangeInfo });
   };
 
+  confirmDialog = (showConfirmDialog = true) => {
+    if (showConfirmDialog && this.trading) return;
+    this.setState({ showConfirmDialog, active: false });
+  };
+
+  triggerConfirm = () => {
+    this.confirmDialog(false);
+    this.confirmInstance._onClick();
+  };
+
   componentWillUnmount() {
     this._clearTimer();
   }
 
-  componentDidMount() {
-    this.init();
+  async componentDidMount() {
+    await this.initBaseToken();
+    this.initial = true;
+    if(this.needInitData) {
+      this.init(this.needInitData);
+      this.needInitData = null;
+    }
   }
 
   async init(data) {
-    if (!data) {
-      this.initBaseToken();
+    if(!this.initial) {
+      this.needInitData = data;
       return;
     }
     const tokens = await api.swapTokens();
-    const temp = {
-      ...this.state,
-      baseToken: data.baseToken,
-      targetToken: data.targetToken,
-    };
-    const baseToken = await this.searchToken(tokens, temp.baseToken.symbol);
-    const targetToken = await this.searchToken(tokens, temp.targetToken.symbol);
+    const baseToken = await this.searchToken(tokens, data.baseToken.symbol);
+    const targetToken = await this.searchToken(tokens, data.targetToken.symbol);
     baseToken.value = '';
     targetToken.value = '';
-    this.updateSwapInfo4RealTime(
-      { ...temp, baseToken, targetToken },
-      'baseToken'
-    );
+    this.setState({ baseToken, targetToken });
   }
 
-  getExchangeInfo() {
+  priceImpact() {
+    const { exchangeInfo } = this.state;
+    return calc.mul(exchangeInfo.price_impact, 100).toFixed(2) + '%';
+  }
+
+  getExchangeInfo(isConfirm) {
     const { baseToken, targetToken, exchangeInfo } = this.state;
     const fee = Number(exchangeInfo.fee.replace(baseToken.symbol, ''));
     if (baseToken.symbol && targetToken.symbol) {
@@ -229,22 +254,26 @@ export default class SwapPanel extends React.Component {
             <div className="info">
               <div className="info-name">{toLocale('Price')}</div>
               <div className="info-value">
-                <i className="exchange" />1{baseToken.symbol.toUpperCase()} ≈ -
-                {targetToken.symbol.toUpperCase()}
+                <i className="exchange" />1{getDisplaySymbol(baseToken.symbol)}{' '}
+                ≈ -{getDisplaySymbol(targetToken.symbol)}
               </div>
             </div>
           </div>
         );
       } else {
-        let priceInfo = `1${baseToken.symbol.toUpperCase()} ≈ ${util.precisionInput(
-          exchangeInfo.price,
-          8
-        )}${targetToken.symbol.toUpperCase()}`;
+        let priceInfo;
+        priceInfo = `1${getDisplaySymbol(
+          baseToken.symbol
+        )} ≈ ${util.precisionInput(exchangeInfo.price, 8)}${getDisplaySymbol(
+          targetToken.symbol
+        )}`;
         if (exchangeInfo.isReverse)
-          priceInfo = `1${targetToken.symbol.toUpperCase()} ≈ ${util.precisionInput(
+          priceInfo = `1${getDisplaySymbol(
+            targetToken.symbol
+          )} ≈ ${util.precisionInput(
             calc.div(1, exchangeInfo.price),
             8
-          )}${baseToken.symbol.toUpperCase()}`;
+          )}${getDisplaySymbol(baseToken.symbol)}`;
         return (
           <div className="coin-exchange-detail">
             <div className="info">
@@ -258,44 +287,50 @@ export default class SwapPanel extends React.Component {
             <div className="info">
               <div className="info-name">
                 {toLocale('Minimum received')}
-                <Tooltip
-                  placement="right"
-                  overlay={toLocale('Minimum received help')}
-                >
-                  <i className="help" />
-                </Tooltip>
+                {!isConfirm && (
+                  <Tooltip
+                    placement="right"
+                    overlay={toLocale('Minimum received help')}
+                  >
+                    <i className="help" />
+                  </Tooltip>
+                )}
               </div>
               <div className="info-value">
-                {this.getMinimumReceived(8)} {targetToken.symbol.toUpperCase()}
+                {this.getMinimumReceived(8)}{' '}
+                {getDisplaySymbol(targetToken.symbol)}
               </div>
             </div>
             <div className="info">
               <div className="info-name">
                 {toLocale('Price Impact')}
-                <Tooltip
-                  placement="right"
-                  overlay={toLocale('Price Impact help')}
-                >
-                  <i className="help" />
-                </Tooltip>
+                {!isConfirm && (
+                  <Tooltip
+                    placement="right"
+                    overlay={toLocale('Price Impact help')}
+                  >
+                    <i className="help" />
+                  </Tooltip>
+                )}
               </div>
-              <div className="info-value">
-                {calc.mul(exchangeInfo.price_impact, 100).toFixed(2)}%
-              </div>
+              <div className="info-value">{this.priceImpact(exchangeInfo)}</div>
             </div>
             <div className="info">
               <div className="info-name">
                 {toLocale('Liquidity Provider Fee')}
-                <Tooltip
-                  placement="right"
-                  overlay={toLocale('Liquidity Provider Fee help')}
-                >
-                  <i className="help" />
-                </Tooltip>
+                {!isConfirm && (
+                  <Tooltip
+                    placement="right"
+                    overlay={toLocale('Liquidity Provider Fee help')}
+                  >
+                    <i className="help" />
+                  </Tooltip>
+                )}
               </div>
               <div className="info-value">
                 {!fee && '≈'}
-                {util.precisionInput(fee, 8)} {baseToken.symbol.toUpperCase()}
+                {util.precisionInput(fee, 8)}{' '}
+                {getDisplaySymbol(baseToken.symbol)}
               </div>
             </div>
             {exchangeInfo.route && (
@@ -313,11 +348,11 @@ export default class SwapPanel extends React.Component {
                 </div>
                 <div className="info-value">
                   <img className="coin" src={getCoinIcon(baseToken.symbol)} />
-                  {baseToken.symbol.toUpperCase()} &gt;{' '}
+                  {getDisplaySymbol(baseToken.symbol)} &gt;{' '}
                   <img className="coin" src={getCoinIcon(exchangeInfo.route)} />
-                  {exchangeInfo.route.toUpperCase()} &gt;
+                  {getDisplaySymbol(exchangeInfo.route)} &gt;
                   <img className="coin" src={getCoinIcon(targetToken.symbol)} />
-                  {targetToken.symbol.toUpperCase()}
+                  {getDisplaySymbol(targetToken.symbol)}
                 </div>
               </div>
             )}
@@ -357,18 +392,16 @@ export default class SwapPanel extends React.Component {
     } else if (baseToken.error) {
       btn = (
         <div className="btn disabled">
-          {toLocale('insufficient', { coin: baseToken.symbol.toUpperCase() })}
+          {toLocale('insufficient', {
+            coin: getDisplaySymbol(baseToken.symbol),
+          })}
         </div>
       );
     } else {
       btn = (
-        <Confirm
-          onClick={this.confirm}
-          loadingTxt={toLocale('pending transactions')}
-          successTxt={toLocale('transaction confirmed')}
-        >
-          <div className="btn">{toLocale('Confirm')}</div>
-        </Confirm>
+        <div className="btn" onClick={() => this.confirmDialog()}>
+          {toLocale('Confirm')}
+        </div>
       );
     }
     return <div className="btn-wrap">{btn}</div>;
@@ -388,6 +421,7 @@ export default class SwapPanel extends React.Component {
       null,
     ];
     return new Promise((resolve, reject) => {
+      this.trading = true;
       okexchainClient
         .sendSwapTokenTransaction(...params)
         .then((res) => {
@@ -396,14 +430,25 @@ export default class SwapPanel extends React.Component {
             this.changeBase({ ...baseToken, value: '' });
           }
         })
-        .catch((err) => reject(err));
+        .catch((err) => reject(err))
+        .finally(() => {
+          this.trading = false;
+        });
     });
   };
 
+  hasWarn() {
+    const { exchangeInfo } = this.state;
+    if (!exchangeInfo.price_impact) return false;
+    return !util.compareNumber(exchangeInfo.price_impact, '0.05');
+  }
+
   render() {
-    const { baseToken, targetToken } = this.state;
+    const { baseToken, targetToken, showConfirmDialog, active } = this.state;
     const exchangeInfo = this.getExchangeInfo();
+    const exchangeInfoConfirm = this.getExchangeInfo(true);
     const btn = this.getBtn();
+    const hasWarn = this.hasWarn();
     return (
       <div className="panel panel-swap">
         <CoinItem
@@ -425,6 +470,86 @@ export default class SwapPanel extends React.Component {
         />
         {exchangeInfo}
         {btn}
+        <Dialog visible={showConfirmDialog} hideCloseBtn>
+          <div className="panel-dialog-info">
+            <div className="panel-dialog-info-title">
+              {toLocale('Confirm Swap')}
+              <span className="close" onClick={() => this.confirmDialog(false)}>
+                ×
+              </span>
+            </div>
+            <div className="panel-dialog-info-content">
+              <div className="panel-confirm">
+                {hasWarn && (
+                  <div className="tip-info-warn2">
+                    <div>
+                      {toLocale('swap warn tip2', { num: this.priceImpact() })}
+                    </div>
+                  </div>
+                )}
+                <div className="space-between coin">
+                  <div className="left">
+                    <img src={getCoinIcon(baseToken.symbol)} />
+                    {getDisplaySymbol(baseToken.symbol)}
+                  </div>
+                  <div className="right">
+                    {util.precisionInput(baseToken.value, 8)}
+                  </div>
+                </div>
+                <div className="down" />
+                <div className="space-between coin">
+                  <div className="left">
+                    <img src={getCoinIcon(targetToken.symbol)} />
+                    {getDisplaySymbol(targetToken.symbol)}
+                  </div>
+                  <div className={classNames('right', { red: active })}>
+                    {util.precisionInput(targetToken.value, 8)}
+                  </div>
+                </div>
+                {active && (
+                  <div className="space-between tip-info-warn tip-info-accept">
+                    <div className="left">{toLocale('Price Updated')}</div>
+                    <div className="right">
+                      <div
+                        className="btn"
+                        onClick={() => this.setState({ active: false })}
+                      >
+                        {toLocale('Accept')}
+                      </div>
+                    </div>
+                  </div>
+                )}
+                <div className={classNames('tip-info-warn', { no: hasWarn })}>
+                  {toLocale('swap warn tip', {
+                    num: this.getMinimumReceived(8),
+                    quote: getDisplaySymbol(targetToken.symbol),
+                  })}
+                </div>
+                {exchangeInfoConfirm}
+              </div>
+            </div>
+            <div className="panel-dialog-info-footer">
+              <div
+                className="btn1 cancel"
+                onClick={() => this.confirmDialog(false)}
+              >
+                {toLocale('cancel')}
+              </div>
+              <div
+                className={classNames('btn1', { loading: active })}
+                onClick={this.triggerConfirm}
+              >
+                {toLocale('Confirm Swap')}
+              </div>
+            </div>
+          </div>
+        </Dialog>
+        <Confirm
+          onClick={this.confirm}
+          loadingTxt={toLocale('pending transactions')}
+          successTxt={toLocale('transaction confirmed')}
+          getRef={(instance) => (this.confirmInstance = instance)}
+        ></Confirm>
       </div>
     );
   }

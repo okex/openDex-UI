@@ -8,6 +8,7 @@ const initialState = {
   legalObj: {},
   latestHeight: 0,
   qrcodeUri: '',
+  activedMenu: '',
 };
 export default function reducer(state = initialState, action) {
   switch (action.type) {
@@ -45,6 +46,11 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         qrcodeUri: action.data,
+      };
+    case CommonActionType.ACTIVEDMENU:
+      return {
+        ...state,
+        activedMenu: action.data,
       };
     default:
       return state;

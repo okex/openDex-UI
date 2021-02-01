@@ -134,11 +134,13 @@ class DexLoggedMenu extends React.Component {
   }
 
   render() {
-    const { hasDoc } = this.props;
+    const { hasDoc, href } = this.props;
     const { isShowPassword, passwordError } = this.state;
     let addr = '';
     try {
-      const user = JSON.parse(window.localStorage.getItem(env.envConfig.dexUser));
+      const user = JSON.parse(
+        window.localStorage.getItem(env.envConfig.dexUser)
+      );
       addr = user ? user.addr : '';
     } catch (e) {
       console.warn(e);
@@ -171,12 +173,18 @@ class DexLoggedMenu extends React.Component {
               <WalletMenuTool address={addr} />
             </Menu.Item>
             <Menu.Item key="wallet-2">
-              <NavLink
-                to={PageURL.walletAssets}
-                activeClassName="active-menu-item"
-              >
-                {toLocale('header_menu_assets')}
-              </NavLink>
+              {href ? (
+                <a href={PageURL.walletAssets} target="_blank">
+                  {toLocale('header_menu_assets')}
+                </a>
+              ) : (
+                <NavLink
+                  to={PageURL.walletAssets}
+                  activeClassName="active-menu-item"
+                >
+                  {toLocale('header_menu_assets')}
+                </NavLink>
+              )}
             </Menu.Item>
             {this.hasKeyStore() && 
             <Menu.Item key="wallet-3" onClick={this.handleDownKeyStore}>
@@ -187,42 +195,42 @@ class DexLoggedMenu extends React.Component {
               {toLocale('header_menu_logout')}
             </Menu.Item>
           </SubMenu>
-          {this.isDexMenu() && 
+          {this.isDexMenu() && (
             <SubMenu
-            key="order"
-            title={
-              <React.Fragment>
-                {toLocale('header_menu_order')}
-                <IconFountUnfold />
-              </React.Fragment>
-            }
-          >
-            <Menu.Item key="order-1">
-              <NavLink
-                to={PageURL.spotOpenPage}
-                activeClassName="active-menu-item"
-              >
-                {toLocale('header_menu_current_entrust')}
-              </NavLink>
-            </Menu.Item>
-            <Menu.Item key="order-2">
-              <NavLink
-                to={PageURL.spotHistoryPage}
-                activeClassName="active-menu-item"
-              >
-                {toLocale('header_menu_history_entrust')}
-              </NavLink>
-            </Menu.Item>
-            <Menu.Item key="order-3">
-              <NavLink
-                to={PageURL.spotDealsPage}
-                activeClassName="active-menu-item"
-              >
-                {toLocale('header_menu_deal_entrust')}
-              </NavLink>
-            </Menu.Item>
-          </SubMenu>
-          }
+              key="order"
+              title={
+                <React.Fragment>
+                  {toLocale('header_menu_order')}
+                  <IconFountUnfold />
+                </React.Fragment>
+              }
+            >
+              <Menu.Item key="order-1">
+                <NavLink
+                  to={PageURL.spotOpenPage}
+                  activeClassName="active-menu-item"
+                >
+                  {toLocale('header_menu_current_entrust')}
+                </NavLink>
+              </Menu.Item>
+              <Menu.Item key="order-2">
+                <NavLink
+                  to={PageURL.spotHistoryPage}
+                  activeClassName="active-menu-item"
+                >
+                  {toLocale('header_menu_history_entrust')}
+                </NavLink>
+              </Menu.Item>
+              <Menu.Item key="order-3">
+                <NavLink
+                  to={PageURL.spotDealsPage}
+                  activeClassName="active-menu-item"
+                >
+                  {toLocale('header_menu_deal_entrust')}
+                </NavLink>
+              </Menu.Item>
+            </SubMenu>
+          )}
           {hasDoc && <DocMenu />}
         </Menu>
       </React.Fragment>

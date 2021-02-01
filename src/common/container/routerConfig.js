@@ -1,3 +1,4 @@
+import React from 'react';
 import PageURL from '_constants/PageURL';
 import Home from '../pages/home/index';
 import FullTrade from '_app/pages/fullTrade/FullTrade';
@@ -15,13 +16,18 @@ import IssueDetail from '../pages/issueDetail';
 import TokenpairDetail from '../pages/tokenpairDetail';
 import Fees from '../pages/fees';
 import Swap from '../pages/swap';
+import Farm from '../pages/farm';
 import env from '../constants/env';
 
 const routes = [
-  ...(env.envConfig.isTest ? [{
-    path: PageURL.homePage,
-    component: Home,
-  }]:[]),
+  ...(env.envConfig.isTest
+    ? [
+        {
+          path: PageURL.homePage,
+          component: Home,
+        },
+      ]
+    : []),
   {
     path: PageURL.spotFullPage,
     component: FullTrade,
@@ -89,6 +95,18 @@ const routes = [
   {
     path: PageURL.swapPage,
     component: Swap,
+  },
+  {
+    path: PageURL.liquidityPage,
+    component: () => <Swap activekey="2" />,
+  },
+  {
+    path: PageURL.watchlistPage,
+    component: () => <Swap activekey="3" />,
+  },
+  {
+    path: PageURL.farmPage,
+    component: Farm,
   },
 ];
 

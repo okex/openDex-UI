@@ -86,7 +86,8 @@ export default class FullTradeKLine extends React.Component {
       element: '#full-kline-container',
       klineUrl:
         Config.okexchain.clientUrl +
-        '/' + env.envConfig.apiPath +
+        '/' +
+        env.envConfig.apiPath +
         '/candles/<symbol>',
       klineType: 'TradingView',
       showToggle: false,

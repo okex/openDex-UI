@@ -11,21 +11,29 @@ import InfoItem from '../InfoItem';
 import ReduceLiquidity from '../ReduceLiquidity';
 import Confirm from '../../../component/Confirm';
 import util from '_src/utils/util';
+import { getLiquidityCheck, liquidityCheck } from '../util';
+import Config from '../../../constants/Config';
 import { getDeadLine4sdk } from '../util';
 import Message from '_src/component/Message';
 import Tooltip from '../../../component/Tooltip';
 import { validateTxs } from '_src/utils/client';
+import { getDisplaySymbol } from '../../../utils/coinIcon';
+import { Dialog } from '../../../component/Dialog';
+import classNames from 'classnames';
 
 function mapStateToProps(state) {
+  const { setting } = state.SwapStore;
   const { okexchainClient } = state.Common;
-  return { okexchainClient };
+  return { okexchainClient, setting };
 }
 @withRouter
 @connect(mapStateToProps)
 export default class AddLiquidity extends React.Component {
   constructor(props) {
     super(props);
+    this.confirmRef = React.createRef();
     this.state = this._getDefaultState(props);
+    this.trading = false;
   }
 
   _getDefaultState(props) {
@@ -49,10 +57,14 @@ export default class AddLiquidity extends React.Component {
         price: '',
         pool_share: '',
         isReverse: false,
+        liquidity: '1',
       },
       liquidity: props.liquidity,
       userLiquidity: props.userLiquidity,
       isEmptyPool,
+      showConfirmDialog: false,
+      active: false,
+      check: getLiquidityCheck()
     };
   }
 
@@ -74,7 +86,16 @@ export default class AddLiquidity extends React.Component {
     return { baseSymbol, targetSymbol, isEmptyPool };
   }
 
-  changeBase = (token) => {
+  checkProtocol = () => {
+    this.setState((state) => {
+      liquidityCheck(state.check ? '' : 'true');
+      return {
+        check: !state.check,
+      };
+    });
+  };
+
+  changeBase = (token, inputChanged) => {
     const { baseToken, targetToken, isEmptyPool } = this.state;
     const data = {
       ...this.state,
@@ -82,17 +103,17 @@ export default class AddLiquidity extends React.Component {
       targetToken: { ...targetToken },
     };
     if (!isEmptyPool && !data.baseToken.value) data.targetToken.value = '';
-    this.updateLiquidInfo4RealTime(data);
+    this.updateLiquidInfo4RealTime({ data, inputChanged });
   };
 
-  changeTarget = (token) => {
+  changeTarget = (token, inputChanged) => {
     const { baseToken, targetToken } = this.state;
     const data = {
       ...this.state,
       targetToken: { ...targetToken, ...token },
       baseToken: { ...baseToken },
     };
-    this.updateLiquidInfo4RealTime(data, 'targetToken');
+    this.updateLiquidInfo4RealTime({ data, key: 'targetToken', inputChanged });
   };
 
   _clearTimer() {
@@ -102,9 +123,14 @@ export default class AddLiquidity extends React.Component {
     }
   }
 
-  async updateLiquidInfo4RealTime(data, key='baseToken', time = 3000) {
+  async updateLiquidInfo4RealTime({
+    data,
+    key = 'baseToken',
+    time = 3000,
+    inputChanged = true,
+  }) {
     this._clearTimer();
-    await this.updateInfo(data, key, true);
+    await this.updateInfo(data, key, true, inputChanged);
     this.setState(data, () => {
       this._clearTimer();
       this.setState({});
@@ -115,7 +141,7 @@ export default class AddLiquidity extends React.Component {
             targetToken: { ...this.state.targetToken },
             exchangeInfo: { ...this.state.exchangeInfo },
           };
-          await this.updateInfo(temp, key);
+          await this.updateInfo(temp, key, false, inputChanged);
           this.setState(temp);
         }, time));
     });
@@ -143,21 +169,28 @@ export default class AddLiquidity extends React.Component {
       )[0];
       if (target) data.targetToken = { ...targetToken, ...target };
     }
-    this.updateLiquidInfo4RealTime(data);
+    this.updateLiquidInfo4RealTime({ data });
   };
 
-  async updateInfo(data,key, errTip = false) {
+  async updateInfo(data, key, errTip = false, inputChanged = true) {
     try {
       await this._check(data);
       await this._updateExchangePrice(data);
-      await this._updateExchange(data,key);
+      await this._updateExchange(data, key, inputChanged);
+      const { showConfirmDialog, baseToken, targetToken } = this.state;
+      if (
+        showConfirmDialog &&
+        (baseToken.value !== data.baseToken.value ||
+          targetToken.value !== data.targetToken.value)
+      )
+        data.active = true;
     } catch (e) {
-      if(errTip) {
+      if (errTip) {
         Message.error({
           content: e.message || toLocale(`error.code.${e.code}`),
           duration: 3,
         });
-      } 
+      }
     }
   }
 
@@ -192,30 +225,41 @@ export default class AddLiquidity extends React.Component {
         quote_pooled_coin = tempSymbol;
       }
       exchangeInfo.price = util.precisionInput(
-        calc.div(quote_pooled_coin.amount, base_pooled_coin.amount),
+        calc.div(quote_pooled_coin.amount, base_pooled_coin.amount, false),
         8
       );
     }
   }
 
-  async _updateExchange(data, key) {
+  async _updateExchange(data, key, inputChanged) {
     const { baseToken, targetToken, exchangeInfo } = data;
-    let _baseToken = baseToken ,_targetToken = targetToken;
-    if((key === 'targetToken' && targetToken.value) || (targetToken.value && !baseToken.value)) {
+    let _baseToken = baseToken,
+      _targetToken = targetToken;
+    if (
+      (key === 'targetToken' && (targetToken.value || inputChanged)) ||
+      (targetToken.value && !baseToken.value)
+    ) {
       _baseToken = targetToken;
       _targetToken = baseToken;
     }
     if (baseToken.symbol && targetToken.symbol && !data.isEmptyPool) {
       if (_baseToken.value) {
-        const { base_token_amount = '', pool_share = '' } = await api.addInfo({
+        const {
+          base_token_amount = '',
+          pool_share = '',
+          liquidity = '',
+        } = await api.addInfo({
           base_token: _targetToken.symbol,
           quote_token_amount: _baseToken.value + _baseToken.symbol,
           value: _baseToken.value,
         });
         _targetToken.value = _baseToken.value ? base_token_amount : '';
         exchangeInfo.pool_share = pool_share;
+        exchangeInfo.liquidity = liquidity;
       } else {
+        _targetToken.value = '';
         exchangeInfo.pool_share = 0;
+        exchangeInfo.liquidity = '';
       }
     }
   }
@@ -244,9 +288,9 @@ export default class AddLiquidity extends React.Component {
     return tokens.filter((d) => d.symbol !== symbol);
   };
 
-  getExchangeInfo() {
+  getExchangeInfo(isConfirm) {
     const { baseToken, targetToken } = this.state;
-    const { priceInfo, poolShare } = this._getExchangeData();
+    const { priceInfo, poolShare } = this._getExchangeData(isConfirm);
     if (!baseToken.symbol || !targetToken.symbol || poolShare === '')
       return null;
     return (
@@ -256,36 +300,32 @@ export default class AddLiquidity extends React.Component {
           <div className="info-value">
             <i className="exchange" onClick={this.revert} />
             {priceInfo}
-            <i />
           </div>
         </div>
         <div className="info">
           <div className="info-name">
             {toLocale('Pool share')}
-            <Tooltip
-              placement="right"
-              overlay={toLocale(
-                'The share of the pool liquidity after you add.'
-              )}
-            >
-              <i className="help" />
-            </Tooltip>
+            {!isConfirm && (
+              <Tooltip
+                placement="right"
+                overlay={toLocale(
+                  'The share of the pool liquidity after you add.'
+                )}
+              >
+                <i className="help" />
+              </Tooltip>
+            )}
           </div>
           <div className="info-value">
-            {calc.mul(poolShare, 100).toFixed(2)}%
+            {util.precisionInput(calc.mul(poolShare, 100, false), 2)}%
           </div>
         </div>
       </div>
     );
   }
 
-  _getExchangeData() {
-    let {
-      baseToken,
-      targetToken,
-      exchangeInfo,
-      isEmptyPool,
-    } = this.state;
+  _getExchangeData(isConfirm) {
+    let { baseToken, targetToken, exchangeInfo, isEmptyPool } = this.state;
     let priceInfo,
       price = exchangeInfo.price;
     if (exchangeInfo.isReverse) {
@@ -298,16 +338,40 @@ export default class AddLiquidity extends React.Component {
     }
     if (isEmptyPool) {
       if (!baseToken.value || !targetToken.value) {
-        priceInfo = `1${baseToken.symbol.toUpperCase()} ≈ -${targetToken.symbol.toUpperCase()}`;
+        if (!isConfirm) {
+          priceInfo = `1${getDisplaySymbol(
+            baseToken.symbol
+          )} ≈ -${getDisplaySymbol(targetToken.symbol)}`;
+        } else {
+          priceInfo = `-${getDisplaySymbol(
+            targetToken.symbol
+          )}/${getDisplaySymbol(baseToken.symbol)}`;
+        }
       } else {
         let tempPrice = calc.div(targetToken.value, baseToken.value);
         if (Number.isNaN(tempPrice)) tempPrice = '-';
         else tempPrice = util.precisionInput(tempPrice, 8);
-        priceInfo = `1${baseToken.symbol.toUpperCase()} ≈ ${tempPrice}${targetToken.symbol.toUpperCase()}`;
+        if (!isConfirm) {
+          priceInfo = `1${getDisplaySymbol(
+            baseToken.symbol
+          )} ≈ ${tempPrice} ${getDisplaySymbol(targetToken.symbol)}`;
+        } else {
+          priceInfo = `${tempPrice} ${getDisplaySymbol(
+            targetToken.symbol
+          )}/${getDisplaySymbol(baseToken.symbol)}`;
+        }
       }
       return { priceInfo, poolShare: 1 };
     }
-    priceInfo = `1${baseToken.symbol.toUpperCase()} ≈ ${price}${targetToken.symbol.toUpperCase()}`;
+    if (!isConfirm) {
+      priceInfo = `1${getDisplaySymbol(
+        baseToken.symbol
+      )} ≈ ${price}${getDisplaySymbol(targetToken.symbol)}`;
+    } else {
+      priceInfo = `${price} ${getDisplaySymbol(
+        targetToken.symbol
+      )}/${getDisplaySymbol(baseToken.symbol)}`;
+    }
     return { priceInfo, poolShare: exchangeInfo.pool_share };
   }
 
@@ -317,8 +381,13 @@ export default class AddLiquidity extends React.Component {
     this.setState({ exchangeInfo });
   };
 
+  confirmDialog = (showConfirmDialog = true) => {
+    if (showConfirmDialog && this.trading) return;
+    this.setState({ showConfirmDialog, active: false });
+  };
+
   getBtn() {
-    const { baseToken, targetToken } = this.state;
+    const { baseToken, targetToken, check } = this.state;
     let btn;
     if (!util.isLogined()) {
       btn = (
@@ -333,24 +402,26 @@ export default class AddLiquidity extends React.Component {
     } else if (baseToken.error) {
       btn = (
         <div className="btn disabled">
-          {toLocale('insufficient', { coin: baseToken.symbol.toUpperCase() })}
+          {toLocale('insufficient', {
+            coin: getDisplaySymbol(baseToken.symbol),
+          })}
         </div>
       );
     } else if (targetToken.error) {
       btn = (
         <div className="btn disabled">
-          {toLocale('insufficient', { coin: targetToken.symbol.toUpperCase() })}
+          {toLocale('insufficient', {
+            coin: getDisplaySymbol(targetToken.symbol),
+          })}
         </div>
       );
+    } else if (!check) {
+      btn = <div className="btn disabled">{toLocale('check protocol')}</div>;
     } else {
       btn = (
-        <Confirm
-          onClick={this.confirm}
-          loadingTxt={toLocale('pending transactions')}
-          successTxt={toLocale('transaction confirmed')}
-        >
-          <div className="btn">{toLocale('Confirm')}</div>
-        </Confirm>
+        <div className="btn" onClick={() => this.confirmDialog()}>
+          {toLocale('Confirm')}
+        </div>
       );
     }
     return btn;
@@ -368,12 +439,25 @@ export default class AddLiquidity extends React.Component {
     return { baseToken, targetToken };
   }
 
+  getMinimumReceived(value, precision = 16) {
+    const {
+      setting: { slippageTolerance },
+    } = this.props;
+    const { isEmptyPool } = this.state;
+    const tolerance = isEmptyPool ? 1 : 1 - slippageTolerance * 0.01;
+    return util.precisionInput(calc.mul(value, tolerance), precision);
+  }
+
   confirm = () => {
-    const { baseToken: _baseToken, targetToken: _targetToken } = this.state;
+    const {
+      baseToken: _baseToken,
+      targetToken: _targetToken,
+      exchangeInfo,
+    } = this.state;
     let { baseToken, targetToken } = this._exchangeTokenData();
     const { okexchainClient } = this.props;
     const params = [
-      util.precisionInput(0),
+      this.getMinimumReceived(exchangeInfo.liquidity),
       util.precisionInput(baseToken.value),
       baseToken.symbol,
       util.precisionInput(targetToken.value),
@@ -383,21 +467,36 @@ export default class AddLiquidity extends React.Component {
       null,
     ];
     return new Promise((resolve, reject) => {
+      this.trading = true;
       okexchainClient
         .sendAddLiquidityTransaction(...params)
         .then((res) => {
           resolve(res);
           if (validateTxs(res)) {
             this.updateLiquidInfo4RealTime({
-              ...this.state,
-              baseToken: { ..._baseToken, value: '' },
-              targetToken: { ..._targetToken, value: '' },
+              data: {
+                ...this.state,
+                baseToken: { ..._baseToken, value: '' },
+                targetToken: { ..._targetToken, value: '' },
+              },
             });
           }
         })
-        .catch((err) => reject(err));
+        .catch((err) => reject(err))
+        .finally(() => {
+          this.trading = false;
+        });
     });
   };
+
+  triggerConfirm = () => {
+    this.confirmDialog(false);
+    this.confirmInstance._onClick();
+  };
+
+  componentWillUnmount() {
+    this._clearTimer();
+  }
 
   componentDidMount() {
     this.init(this.state);
@@ -426,11 +525,18 @@ export default class AddLiquidity extends React.Component {
       targetToken,
       isEmptyPool,
       userLiquidity,
+      showConfirmDialog,
+      check,
+      active,
     } = this.state;
+    const liquidity = this.state.exchangeInfo.liquidity;
     const exchangeInfo = this.getExchangeInfo();
+    const exchangeInfoConfirm = this.getExchangeInfo(true);
     const btn = this.getBtn();
-    const isEmpty =
-      baseToken.symbol && targetToken.symbol && isEmptyPool;
+    const isEmpty = baseToken.symbol && targetToken.symbol && isEmptyPool;
+    const {
+      setting: { slippageTolerance },
+    } = this.props;
     return (
       <>
         <div className="panel">
@@ -439,6 +545,14 @@ export default class AddLiquidity extends React.Component {
             {toLocale('Add Liquidity')}
           </div>
           <div className="add-liquidity-content">
+            {baseToken.symbol && targetToken.symbol && (
+              <div className="tip-info-warn size14">
+                {toLocale('pool warn tip', {
+                  base: getDisplaySymbol(baseToken.symbol),
+                  quote: getDisplaySymbol(targetToken.symbol),
+                })}
+              </div>
+            )}
             {isEmpty && (
               <div className="tip-liquidity-empty">
                 {toLocale('pool empty tip')}
@@ -462,6 +576,22 @@ export default class AddLiquidity extends React.Component {
               max={true}
             />
             {exchangeInfo}
+            <div className="tip-liquidity-check">
+              <span
+                className={classNames('check', { active: check })}
+                onClick={this.checkProtocol}
+              ></span>
+              <div className="protocol">
+                {toLocale('info desc')}
+                <a
+                  href={Config.okexchain.liquidity}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {toLocale('go detail')}
+                </a>
+              </div>
+            </div>
             <div className="btn-wrap">{btn}</div>
           </div>
         </div>
@@ -470,6 +600,79 @@ export default class AddLiquidity extends React.Component {
             <InfoItem data={userLiquidity} reduce={this.reduce} />
           </div>
         )}
+        <Dialog visible={showConfirmDialog} hideCloseBtn>
+          <div className="panel-dialog-info">
+            <div className="panel-dialog-info-title">
+              {toLocale('Confirm Supply')}
+              <span className="close" onClick={() => this.confirmDialog(false)}>
+                ×
+              </span>
+            </div>
+            <div className="panel-dialog-info-content">
+              <div className="panel-confirm">
+                <div className="coin-exchange-detail">
+                  <div className="info">
+                    <div className="info-name">
+                      {toLocale(
+                        isEmptyPool ? 'empty add list' : 'You will receive'
+                      )}
+                    </div>
+                  </div>
+                  <div className="info">
+                    <div className="info-name lg">
+                      {this.getMinimumReceived(liquidity, 8)}
+                    </div>
+                  </div>
+                  <div className="info">
+                    <div className="info-name">
+                      {toLocale('pool tokens', {
+                        base: getDisplaySymbol(baseToken.symbol),
+                        quote: getDisplaySymbol(targetToken.symbol),
+                      })}
+                    </div>
+                  </div>
+                </div>
+                {active && (
+                  <div className="space-between tip-info-warn tip-info-accept">
+                    <div className="left">{toLocale('Price Updated')}</div>
+                    <div className="right">
+                      <div
+                        className="btn"
+                        onClick={() => this.setState({ active: false })}
+                      >
+                        {toLocale('Accept')}
+                      </div>
+                    </div>
+                  </div>
+                )}
+                <div className="tip-info-warn">
+                  {toLocale('liquidity warn tip', { num: slippageTolerance })}
+                </div>
+                {exchangeInfoConfirm}
+              </div>
+            </div>
+            <div className="panel-dialog-info-footer">
+              <div
+                className="btn1 cancel"
+                onClick={() => this.confirmDialog(false)}
+              >
+                {toLocale('cancel')}
+              </div>
+              <div
+                className={classNames('btn1', { loading: active })}
+                onClick={this.triggerConfirm}
+              >
+                {toLocale('Confirm Supply btn')}
+              </div>
+            </div>
+          </div>
+        </Dialog>
+        <Confirm
+          onClick={this.confirm}
+          loadingTxt={toLocale('pending transactions')}
+          successTxt={toLocale('transaction confirmed')}
+          getRef={(instance) => (this.confirmInstance = instance)}
+        ></Confirm>
       </>
     );
   }

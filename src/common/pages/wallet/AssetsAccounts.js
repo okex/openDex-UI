@@ -13,6 +13,7 @@ import TransferDialog from './TransferDialog';
 import assetsUtil from './assetsUtil';
 import './Assets.less';
 import * as CommonAction from '../../redux/actions/CommonAction';
+import { getLpTokenStr } from '../../utils/lpTokenUtil';
 
 function mapStateToProps(state) {
   const { legalId, legalObj, legalList } = state.Common;
@@ -85,14 +86,14 @@ class AssetsAccounts extends Component {
             const { symbol, original_symbol, whole_name } = token;
             const originalAndWhole = `${original_symbol.toUpperCase()}___${whole_name}`;
             tokenMap[symbol] = { ...token, originalAndWhole };
+            console.log(symbol, original_symbol, whole_name);
             return {
               value: symbol,
               label: (
                 <span>
                   <span className="symbol-left">
-                    {original_symbol.toUpperCase()}
+                    {getLpTokenStr(original_symbol)}
                   </span>
-                  {whole_name}
                 </span>
               ),
             };
@@ -126,8 +127,9 @@ class AssetsAccounts extends Component {
           const symbolUp = symbol.toUpperCase();
           const assetToken = (original_symbol || '').toUpperCase() || symbolUp;
           const sumOKB = calc.add(
-            calc.add(available || 0, freeze || 0),
-            locked || 0
+            calc.add(available || 0, freeze || 0, false),
+            locked || 0,
+            false
           );
           return {
             ...curr,

@@ -1,12 +1,12 @@
 import React from 'react';
 import Pagination from '_component/Pagination';
-import { getCoinIcon } from '../../utils/coinIcon';
+import { getCoinIcon, getDisplaySymbol } from '../../utils/coinIcon';
 import { toLocale } from '_src/locale/react-locale';
 import WatchList from './Watchlist';
 import * as api from './util/api';
 import calc from '_src/utils/calc';
 import AddLiquidity from './AddLiquidity';
-import getRef from './getRef';
+import getRef from '../../component/getRef';
 import Tooltip from '../../component/Tooltip';
 @getRef
 export default class WatchlistPanel extends React.Component {
@@ -16,7 +16,7 @@ export default class WatchlistPanel extends React.Component {
       {
         field: 'swap_pair',
         name: toLocale('Swap Pair'),
-        width: '269',
+        width: '259',
         component: ({ row, data }) => {
           const tokens = data.split('_');
           if (row.isRevert) tokens.reverse();
@@ -28,7 +28,7 @@ export default class WatchlistPanel extends React.Component {
               <img src={getCoinIcon(baseSymbol)} />
               <img src={getCoinIcon(targetSymbol)} />
               <span>
-                {baseSymbol.toUpperCase()}/{targetSymbol.toUpperCase()}
+                {getDisplaySymbol(baseSymbol)}/{getDisplaySymbol(targetSymbol)}
               </span>
             </div>
           );
@@ -83,23 +83,24 @@ export default class WatchlistPanel extends React.Component {
         field: 'last_price',
         name: toLocale('Last Price'),
         canSort: true,
-        width: '194',
+        width: '222',
         component({ row, data }) {
           const tokens = row.swap_pair.split('_');
           let price = data;
-          if (row.isRevert) {
-            tokens.reverse();
+          if (!row.isRevert) {
             price = calc.div(1, data);
+          } else {
+            tokens.reverse();
           }
           let baseSymbol = tokens[0];
           let targetSymbol = tokens[1];
           return (
             <div>
-              1 {baseSymbol.toUpperCase()}≈
+              1 {getDisplaySymbol(baseSymbol)}≈
               {Number(price) === 0 || Number(price) === Infinity
                 ? '-'
                 : calc.mul(price, 1).toFixed(4)}{' '}
-              {targetSymbol.toUpperCase()}
+              {getDisplaySymbol(targetSymbol)}
             </div>
           );
         },
@@ -108,10 +109,11 @@ export default class WatchlistPanel extends React.Component {
         field: 'change24h',
         name: toLocale('24H Change'),
         canSort: true,
-        width: '128',
+        width: '110',
         component({ row, data }) {
           let change = calc.add(data, 0);
-          if (row.isRevert) change = calc.div(1, calc.add(data, 1)) - 1;
+          if (!row.isRevert) change = calc.div(1, calc.add(data, 1)) - 1;
+          if (!Number.isFinite(change)) return '--';
           if (change > 0)
             return (
               <span className="green">

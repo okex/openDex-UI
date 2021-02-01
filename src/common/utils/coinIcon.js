@@ -1,18 +1,27 @@
 import coinDefault from '_src/assets/images/icon_f2pool@2x.png';
-import coinOkt from '_src/assets/images/icon_usdt@2x.png';
+import coinOkt from '_src/assets/images/okt.png';
+import defaultcoin from '_src/assets/images/defaultcoin.png';
+import coinEthk from '_src/assets/images/icon_ethk.png';
+import coinLtck from '_src/assets/images/icon_ltck.png';
+import BTCK from '_src/assets/images/BTCK.png';
+import USDT from '_src/assets/images/USDT.png';
+import DOTK from '_src/assets/images/DOTK.png';
+import FILK from '_src/assets/images/FILK.png';
+import USDC from '_src/assets/images/USDC.png';
+import USDK from '_src/assets/images/USDK.png';
+import OKB from '_src/assets/images/OKB.png';
 
 const icons = {
   OKT: coinOkt,
-  TOKT: coinOkt,
-  BTCK: '//static.coinall.ltd/cdn/assets/imgs/2012/BE4B2476FC222ECB.png?x-oss-process=image/format,webp',
-  USDT: '//static.coinall.ltd/cdn/assets/imgs/2011/6C04D5C74FCC0D3D.png',
-  ETHK: '',
-  LTCK: '',
-  DOTK: '//static.coinall.ltd/cdn/assets/imgs/2012/1F10D45986407FF1.png',
-  FILK: '//static.coinall.ltd/cdn/assets/imgs/2012/2895A447B916043F.png',
-  USDC: '//static.coinall.ltd/cdn/assets/imgs/2011/635D4664F3F1C5E7.png',
-  USDK: '//static.coinall.ltd/cdn/assets/imgs/2011/3405CB273D823CB6.png',
-  OKB: '//static.coinall.ltd/cdn/assets/imgs/2011/D1CF44F8F575D0C8.png'
+  'BTCK-BA9': BTCK,
+  'USDT-A2B': USDT,
+  'ETHK-C63': coinEthk,
+  'LTCK-5CB': coinLtck,
+  'DOTK-4C0': DOTK,
+  'FILK-2EE': FILK,
+  'USDC-E6C': USDC,
+  'USDK-956': USDK,
+  'OKB-C4D': OKB,
 };
 
 export function getCoinIcon(symbol) {
@@ -21,5 +30,14 @@ export function getCoinIcon(symbol) {
     (d) => d.toLowerCase() === symbol.toLowerCase()
   );
   if (temp[0]) return icons[temp[0]];
-  return coinOkt;
+  return defaultcoin;
+}
+
+export function getDisplaySymbol(symbol, filter = true) {
+  if (!symbol) return symbol;
+  const temp = Object.keys(icons).filter(
+    (d) => d.toLowerCase() === symbol.toLowerCase()
+  );
+  if (temp[0] && filter) return temp[0].replace(/\-.*/, '').toUpperCase();
+  return symbol.toUpperCase();
 }

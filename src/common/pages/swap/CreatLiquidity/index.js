@@ -38,7 +38,7 @@ export default class CreatLiquidity extends React.Component {
     const tokens = await this.getTokens();
     const baseToken = tokens.filter((d) => {
       const temp = d.symbol.toLowerCase();
-      return temp === 'okt' || temp === 'tokt';
+      return temp === 'okt';
     })[0];
     if (baseToken) this.setState({ baseToken });
   }

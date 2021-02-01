@@ -8,8 +8,11 @@ import './index.less';
 const netTypeList = [
   {
     get url() {
-      if(!env.envConfig.isTest) return window.location.href;
-      return PageURL.getCurrent().replace(new RegExp(`^/${env.testnet.pagePath}`),`/${env.mainnet.pagePath}`);
+      if (!env.envConfig.isTest) return window.location.href;
+      return PageURL.getCurrent().replace(
+        new RegExp(`^/${env.testnet.pagePath}`),
+        `/${env.mainnet.pagePath}`
+      );
     },
     type: `/${env.mainnet.pagePath}`,
     get label() {
@@ -18,8 +21,11 @@ const netTypeList = [
   },
   {
     get url() {
-      if(env.envConfig.isTest) return window.location.href;
-      return PageURL.getCurrent().replace(new RegExp(`/${env.mainnet.pagePath}`),`/${env.testnet.pagePath}`);
+      if (env.envConfig.isTest) return window.location.href;
+      return PageURL.getCurrent().replace(
+        new RegExp(`/${env.mainnet.pagePath}`),
+        `/${env.testnet.pagePath}`
+      );
     },
     type: `/${env.testnet.pagePath}`,
     get label() {

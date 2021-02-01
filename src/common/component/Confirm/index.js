@@ -7,6 +7,8 @@ import Message from '_src/component/Message';
 import PasswordDialog from '_component/PasswordDialog';
 import * as CommonAction from '_src/redux/actions/CommonAction';
 import { validateTxs } from '_src/utils/client';
+import Config from '../../constants/Config';
+import getRef from '../getRef';
 
 function mapStateToProps(state) {
   const { okexchainClient, privateKey } = state.Common;
@@ -19,6 +21,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 @connect(mapStateToProps, mapDispatchToProps)
+@getRef
 export default class Confirm extends React.Component {
   constructor() {
     super();
@@ -69,6 +72,7 @@ export default class Confirm extends React.Component {
 
   confirmBtn() {
     const { children } = this.props;
+    if (!children) return null;
     const child = React.Children.only(children);
     return React.cloneElement(child, {
       onClick: () => this._onClick(),
@@ -79,7 +83,7 @@ export default class Confirm extends React.Component {
     const { loadingTxt, successTxt, onClick, okexchainClient } = this.props;
     if (!onClick || this.loading) return;
     if (checkPwd && !this.checkPwd()) return;
-    this.setState({loading: true});
+    this.setState({ loading: true });
     privateKey = privateKey || this.props.privateKey;
     okexchainClient
       .setAccountInfo(privateKey || this.props.privateKey)
@@ -89,7 +93,20 @@ export default class Confirm extends React.Component {
           this.loading = true;
           loadingToast = loadingTxt
             ? Message.loading({
-                content: loadingTxt,
+                content: (
+                  <span>
+                    {loadingTxt}
+                    <a
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href={`${
+                        Config.okexchain.browserAddressUrl
+                      }/${util.getMyAddr()}`}
+                    >
+                      {toLocale('pending transactions link')}
+                    </a>
+                  </span>
+                ),
                 duration: 0,
               })
             : null;
@@ -114,10 +131,11 @@ export default class Confirm extends React.Component {
         } finally {
           if (loadingToast) loadingToast.destroy();
           this.loading = false;
-          this.setState({loading: false});
+          this.setState({ loading: false });
         }
-      }).catch(() => {
-        this.setState({loading: false});
+      })
+      .catch(() => {
+        this.setState({ loading: false });
       });
   };
 

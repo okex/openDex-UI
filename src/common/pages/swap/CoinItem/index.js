@@ -3,11 +3,13 @@ import { connect } from 'react-redux';
 import { toLocale } from '_src/locale/react-locale';
 import InputNum from '_component/InputNum';
 import SelectCoin from '../SelectCoin';
-import { getCoinIcon } from '../../../utils/coinIcon';
+import { getCoinIcon, getDisplaySymbol } from '../../../utils/coinIcon';
 import classNames from 'classnames';
 import { channelsV3 } from '../../../utils/websocket';
 import SwapContext from '../SwapContext';
 import util from '_src/utils/util';
+import calc from '_src/utils/calc';
+import env from '../../../constants/env';
 
 function mapStateToProps(state) {
   const { account4Swap } = state.SwapStore;
@@ -37,11 +39,17 @@ export default class CoinItem extends React.Component {
       const max = this.getAvailable();
       if (util.compareNumber(max, value)) error = true;
     }
-    this.props.onChange({ ...token, value, error });
+    this.props.onChange({ ...token, value: '' + value, error }, true);
   };
 
   setMaxValue = () => {
-    this.onInputChange(this.getAvailable());
+    const { token } = this.props;
+    const max = this.getAvailable(true);
+    if (token.symbol.toLowerCase() === env.envConfig.token.base) {
+      let value = calc.sub(max, env.envConfig.fee, false);
+      if (+value < 0) value = util.precisionInput(0, 8);
+      this.onInputChange(value);
+    } else this.onInputChange(max);
   };
 
   showCoinSelectList = async (e) => {
@@ -99,16 +107,17 @@ export default class CoinItem extends React.Component {
   select = (coin) => {
     const { token } = this.props;
     this.hideCoinSelectList();
-    this.props.onChange({ ...token, ...coin });
+    this.props.onChange({ ...token, ...coin }, false);
   };
 
-  getAvailable() {
+  getAvailable(original) {
     let {
       token: { available, symbol },
       account4Swap,
     } = this.props;
     const temp = account4Swap[symbol.toLowerCase()];
     if (temp) available = temp.available;
+    if (original) return available;
     return util.precisionInput(available, 8);
   }
 
@@ -158,7 +167,7 @@ export default class CoinItem extends React.Component {
           >
             <img className="coin-icon" src={getCoinIcon(symbol)} />
             {symbol ? (
-              <span className="text active">{symbol.toUpperCase()}</span>
+              <span className="text active">{getDisplaySymbol(symbol)}</span>
             ) : (
               <span className="text">{toLocale('Select a token')}</span>
             )}

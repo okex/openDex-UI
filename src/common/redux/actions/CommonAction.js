@@ -12,13 +12,16 @@ const legalCurrencyId = 'dex_legalCurrencyId';
 
 export function initOKExChainClient() {
   return (dispatch) => {
-    const client = new OKExChainClient(
-      Config.okexchain.clientUrl,
-      {
-        chainId: env.envConfig.chainId,
-        relativePath: `/${env.envConfig.apiPath}`
-      }
-    );
+    console.log({
+      chainId: env.envConfig.chainId,
+      relativePath: `/${env.envConfig.apiPath}`,
+      isMainnet: env.envConfig.isMainnet,
+    });
+    const client = new OKExChainClient(Config.okexchain.clientUrl, {
+      chainId: env.envConfig.chainId,
+      relativePath: `/${env.envConfig.apiPath}`,
+      isMainnet: env.envConfig.isMainnet,
+    });
     dispatch({
       type: CommonActionType.SET_OKEXCHAIN_CLIENT,
       data: client,
@@ -29,7 +32,9 @@ export function initOKExChainClient() {
 export function validatePassword(pwd, successCallback, errorCallback) {
   return (dispatch) => {
     try {
-      const user = JSON.parse(window.localStorage.getItem(env.envConfig.dexUser) || '{}');
+      const user = JSON.parse(
+        window.localStorage.getItem(env.envConfig.dexUser) || '{}'
+      );
       const pk = crypto.getPrivateKeyFromKeyStore(user.info, pwd);
       this.setPrivateKey(pk);
       successCallback && successCallback(pk);
@@ -156,6 +161,15 @@ export function clearWalletConnectQrcode() {
     dispatch({
       type: CommonActionType.WALLET_CONNECT_QRCODE,
       data: '',
+    });
+  }
+}
+
+export function setActivedMenu(activedMenu) {
+  return (dispatch) => {
+    dispatch({
+      type: CommonActionType.ACTIVEDMENU,
+      data: activedMenu,
     });
   };
 }

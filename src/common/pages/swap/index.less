@@ -292,7 +292,7 @@
       cursor: pointer;
       background: 0 0 no-repeat;
       background-size: 24px auto;
-      background-image: url(../../assets/images/change.png);
+      background-image: url(../../assets/images/change1.png);
     }
     &.add-sep::before {
       display: flex;
@@ -323,6 +323,12 @@
       .info-name {
         display: flex;
         align-items: center;
+        &.lg {
+          font-size: 24px;
+          font-weight: 500;
+          color: #FFFFFF;
+          line-height: 28px;
+        }
         .has-tooltip {
           border: none;
         }
@@ -350,6 +356,10 @@
           height: 14px;
           margin-right: 4px;
           margin-left: 4px;
+        }
+        .min-coin {
+          width: 16px;
+          height: 16px;
         }
       }
     }
@@ -441,7 +451,7 @@
       font-family: PingFangSC-Regular, PingFang SC;
       background: #2D60E0;
       opacity:1;
-      border:none;
+      border-color: #2D60E0;
     }
   }
 
@@ -522,6 +532,11 @@
       margin-top: 16px;
       margin-bottom: 8px;
       color: rgba(255, 255, 255, 0.35);
+      .help {
+        .help;
+        margin-right: 5px;
+        display: flex;
+      }
     }
   }
 
@@ -550,6 +565,129 @@
       line-height: 20px;
       margin-top: -4px;
       margin-bottom: 12px;
+    }
+    .tip-liquidity-check {
+      display: flex;
+      margin-top: 24px;
+      .check {
+        display: flex;
+        width: 16px;
+        height: 16px;
+        background: url(../../assets/images/checkbox.png) 0 0 no-repeat;
+        background-size: 16px auto;
+        margin-right: 9px;
+        cursor: pointer;
+        &.active {
+          background-image: url(../../assets/images/checked.png);
+        }
+      }
+      .protocol {
+        width: 447px;
+        font-size: 12px;
+        font-weight: 400;
+        color: #FFFFFF;
+        line-height: 16px;
+        a {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .tip-info-warn {
+    display: flex;
+    align-items: center;
+    background: rgba(243, 136, 43,.15);
+    font-size: 12px;
+    font-weight: 400;
+    color: #F3882B;
+    margin-bottom: 24px;
+    padding: 8px;
+    line-height: 16px;
+    &.no {
+      background:transparent;
+    }
+    &.size14 {
+      font-size: 14px;
+    }
+  }
+
+  .tip-info-warn2 {
+    display: flex;
+    align-items: center;
+    background: rgba(243,136,43,0.15);
+    padding: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #F17878;
+    line-height: 20px;
+    margin-bottom: 24px;
+    &::before {
+      display: flex;
+      content: '';
+      margin-right: 12px;
+      width: 24px;
+      height: 24px;
+      background: url(../../assets/images/risk.png) 0 0 no-repeat;
+      background-size: 24px auto;
+    }
+    > div {
+      display: flex;
+      flex: 1;
+    }
+  }
+
+  .panel-confirm {
+    padding: 24px 0;
+    .coin {
+      color: #fff;
+      font-size: 18px;
+      font-weight: 500;
+      color: #FFFFFF;
+      line-height: 24px;
+      img {
+        width: 24px;
+        height: 24px;
+        margin-right: 8px;
+      }
+    }
+    .down {
+      width: 11px;
+      height: 14px;
+      margin: 13px 0;
+      background: url(../../assets/images/icon_to.png) 0 0 no-repeat;
+      background-size: 11px auto;
+      margin-left: 6px;
+      &.add {
+        background-image: url(../../assets/images/add@2x.png);
+      }
+    }
+    .tip-info-warn {
+      margin-top: 24px;
+      &.tip-info-accept {
+        background-color:rgba(45, 96, 224, 0.15);
+      }
+    }
+    .tip-info-accept {
+      font-size: 12px;
+      font-weight: 400;
+      color: #E35E5E;
+      line-height: 16px;
+      padding-right: 4px;
+      .btn {
+        height: 24px;
+        padding: 0 8px;
+        font-size: 12px;
+        font-weight: 400;
+      }
+    }
+    .coin-exchange-detail {
+      margin-top: 0;
+      margin-bottom: 0;
+      .info-value {
+        color: #FFFFFF;
+        font-weight: 500;
+      }
     }
   }
 
@@ -711,6 +849,147 @@
     .nodata {
       .nodata('../../assets/images/no-search.png', 54px, 48px);
       margin-top: 150px;
+    }
+  }
+
+  .panel-dialog-info {
+    box-sizing: border-box;
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    margin-top: -45px;
+    margin-bottom: -24px;
+    .panel-dialog-info-title {
+      display: flex;
+      justify-content: space-between;
+      height: 64px;
+      align-items: center;
+      padding-left: 24px;
+      font-size: 18px;
+      font-weight: 500;
+      color: #FFFFFF;
+      line-height: 24px;
+      box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.15);
+      .close {
+        display: flex;
+        cursor: pointer;
+        font-size:22px;
+        width: 32px;
+        height: 32px;
+        justify-content: center;
+        align-items: center;
+        margin-right: 8px;
+        color:#9AA1B1
+        
+      }
+      &.no-title {
+        justify-content:flex-end;
+        box-shadow:none;
+      }
+    }
+    .panel-dialog-info-content {
+      margin: 0 24px;
+      line-height: 20px;
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    .panel-dialog-info-footer {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      height: 76px;
+      box-shadow: 0px -1px 0px 0px rgba(0, 0, 0, 0.15);
+      padding-right: 24px;
+      .btn1 {
+        display: flex;
+        height: 48px;
+        justify-content: center;
+        align-items: center;
+        background: #2D60E0;
+        border-radius: 4px;
+        cursor: pointer;
+        border: none;
+        font-size: 16px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: #FFFFFF;
+        &.disabled {
+          background: #152A57;
+          color:rgba(255,255,255,0.35);
+          cursor: default;
+        }
+        &.add-icon::before {
+          content: '';
+          display: flex;
+          width: 14px;
+          height: 14px;
+          margin-right: 10px;
+          background: url(../../assets/images/add@2x.png) 0 0 no-repeat;
+          background-size: 14px auto;
+        }
+        &.loading {
+          background: #BDCFFF;
+        }
+      }
+      .btn1 {
+        margin-left: 16px;
+        margin-top: 0 !important;
+        width: 128px;
+        height: 36px !important;
+        font-size: 14px !important;
+        font-weight: 500 !important;
+        &.cancel {
+          border: 1px solid rgba(255, 255, 255, 0.15);
+          background-color: transparent;
+        }
+      }
+      &.noshadow {
+        box-shadow:none;
+        height: 84px;
+        a,.farm-btn {
+          display: flex;
+          flex: 1;
+        }
+      }
+    }
+    .infotip {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      &::before {
+        content: '';
+        display: flex;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: url(../../assets/images/warn.png) 0 0 no-repeat;
+        background-size: 48px auto;
+        margin-top: -40px;
+        margin-bottom: 16px;
+      }
+      &.claim-success::before {
+        border-radius:initial;
+        background-image: url(../../assets/images/claimsuccess.png);
+      }
+      .title {
+        font-size: 18px;
+        font-weight: 500;
+        color: #FFFFFF;
+        line-height: 24px;
+        margin-bottom: 8px;
+      }
+      .title-tip {
+        font-size: 14px;
+        font-weight: 400;
+        color:rgba(255, 255, 255, 0.45);
+        line-height: 20px;
+      }
+    }
+    .red {
+      color: #E35E5E;
     }
   }
   

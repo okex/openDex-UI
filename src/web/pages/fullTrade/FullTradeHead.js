@@ -86,6 +86,13 @@ class FullTradeHead extends React.Component {
     return current === PageURL.swapPage;
   }
 
+  isFarmMenu() {
+    const current = DesktopTypeMenu.current
+      ? DesktopTypeMenu.current.url
+      : null;
+    return current === PageURL.farmPage;
+  }
+
   render() {
     const { productObj, product, callMarketObj } = this.props;
     const current = PageURL.getCurrent();
@@ -114,10 +121,12 @@ class FullTradeHead extends React.Component {
         {this.isTradePage() ? <FullTradeProductList /> : null}
         {this.isTradePage() ? <FullTradeTicker /> : null}
         <div className="okdex-header-right">
-          {util.isLogined() ? <LoggedMenu /> : <LoginMenu />}
+          {util.isLogined() ? <LoggedMenu href /> : <LoginMenu />}
           {this.isSwapMenu() && <SwapSetting />}
           <DocMenu />
-          {!this.isSwapMenu() && <DesktopLinkMenu hasVersion={false} />}
+          {!this.isSwapMenu() && !this.isFarmMenu() && (
+            <DesktopLinkMenu hasVersion={false} />
+          )}
         </div>
       </div>
     );

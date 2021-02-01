@@ -1,6 +1,6 @@
 import React from 'react';
 import { toLocale } from '_src/locale/react-locale';
-import { getCoinIcon } from '../../../utils/coinIcon';
+import { getCoinIcon, getDisplaySymbol } from '../../../utils/coinIcon';
 import util from '_src/utils/util';
 
 export default class SelectCoin extends React.Component {
@@ -34,7 +34,12 @@ export default class SelectCoin extends React.Component {
 
   render() {
     const { data, search } = this.state;
-    const list = data.filter((d) => d.symbol.match(new RegExp(search, 'gi')));
+    let list;
+    try {
+      list = data.filter((d) => d.symbol.match(new RegExp(search, 'gi')));
+    } catch {
+      list = [];
+    }
     return this.init ? (
       <div className="panel-coin-search">
         <div className="search-wrap iconfont">
@@ -55,7 +60,7 @@ export default class SelectCoin extends React.Component {
                 >
                   <div className="name">
                     <img src={getCoinIcon(d.symbol)} />
-                    {d.symbol.toUpperCase()}
+                    {getDisplaySymbol(d.symbol)}
                   </div>
                   <div className="value">
                     {util.precisionInput(d.available, 8)}

@@ -15,6 +15,18 @@ const Config = {
     homeUrl: receiveCoinUrl,
     receiveCoinUrl: `${receiveCoinUrl}/activities/pro/drawdex`,
     docUrl: `https://okexchain-docs.readthedocs.io/en/latest/`,
+    get receiveSwapUrl() {
+      if (lang === 'zh_CN') return 'https://sourl.cn/VfNTkc';
+      return 'https://www.okex.com/academy/en/how-to-use-okex-swap-farm-pools-okexchain';
+    },
+    get receiveFarmUrl() {
+      if (lang === 'zh_CN') return 'https://sourl.cn/SQbtvR';
+      return 'https://www.okex.com/academy/en/how-to-use-okex-swap-farm-pools-okexchain';
+    },
+    get liquidity() {
+      if (lang === 'zh_CN') return 'https://docs.qq.com/doc/DQm13amR4QXBKRUxH';
+      return 'https://docs.qq.com/doc/DQm13amR4QXBKRUxH';
+    },
   },
   validatePwdDeferSecond: 100,
   operateResultDelaySecond: 500,

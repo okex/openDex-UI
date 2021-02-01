@@ -5,6 +5,7 @@ import SwapContext from './SwapContext';
 import SwapPanel from './SwapPanel';
 import PoolPanel from './PoolPanel';
 import WatchlistPanel from './WatchlistPanel';
+import PageURL from '_constants/PageURL';
 import { toLocale } from '_src/locale/react-locale';
 import SwapPushWrapper from '_app/wrapper/SwapPushWrapper';
 import './index.less';
@@ -15,10 +16,10 @@ const WATCHLIST = '3';
 
 @SwapPushWrapper
 export default class Swap extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      activekey: SWAP,
+      activekey: props.activekey || SWAP,
     };
     this.router = React.createRef();
     this.swap = null;
@@ -26,20 +27,20 @@ export default class Swap extends React.Component {
   }
 
   onTrade = ({ baseSymbol, targetSymbol }) => {
-    this.onChange(SWAP,() => {
+    this.onChange(SWAP, () => {
       this.swap &&
-      this.swap.init({
-        baseToken: {
-          available: '',
-          value: '',
-          symbol: baseSymbol,
-        },
-        targetToken: {
-          available: '',
-          value: '',
-          symbol: targetSymbol,
-        },
-      });
+        this.swap.init({
+          baseToken: {
+            available: '',
+            value: '',
+            symbol: baseSymbol,
+          },
+          targetToken: {
+            available: '',
+            value: '',
+            symbol: targetSymbol,
+          },
+        });
     });
   };
 
@@ -49,8 +50,19 @@ export default class Swap extends React.Component {
     router.push(route, true);
   };
 
+  changeHash(activekey) {
+    if (activekey === POOL) {
+      window.history.replaceState({}, '', PageURL.liquidityPage);
+    } else if (activekey === WATCHLIST) {
+      window.history.replaceState({}, '', PageURL.watchlistPage);
+    } else {
+      window.history.replaceState({}, '', PageURL.swapPage);
+    }
+  }
+
   onChange = (activekey, callback) => {
-    this.setState({ activekey },() => {
+    this.changeHash(activekey);
+    this.setState({ activekey }, () => {
       callback && callback();
     });
   };
