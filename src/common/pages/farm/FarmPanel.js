@@ -149,7 +149,11 @@ export default class FarmPanel extends React.Component {
         </div>
         <div className="title-wrap">
           <div className="space-between">
-            <div className="left">{toLocale('Other pools')}</div>
+            <div className="left">{toLocale('Other pools')}
+            <Tooltip placement="right" overlay={toLocale('Other pools desc')}>
+              <i className="help"></i>
+            </Tooltip>
+            </div>
           </div>
         </div>
         <WatchlistPanel />
