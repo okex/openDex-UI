@@ -102,7 +102,7 @@ class TransferDialog extends Component {
     const { fee } = this.state;
     if (this.feeLeft > fee) {
       this.setState({
-        available: util.precisionInput(calc.sub(this.feeLeft, fee, false)),
+        available: util.precisionInput(calc.sub(this.feeLeft, fee, false)).replace(/,/g,''),
       });
     } else {
       this.setState({ available: 0 });
@@ -173,7 +173,7 @@ class TransferDialog extends Component {
   };
   allIn = () => {
     const { available } = this.state;
-    this.setState({ amount: util.precisionInput(available, 8) });
+    this.setState({ amount: util.precisionInput(available, 8, false) });
   };
   setSymbol = (symbol, checkFee = true) => {
     this.setState({ symbol }, () => {
@@ -234,7 +234,7 @@ class TransferDialog extends Component {
               const { symbol, address, amount, note, available } = this.state;
               onClose();
               this.setState({ transferring: true });
-              let amountStr = util.precisionInput(amount);
+              let amountStr = util.precisionInput(amount).replace(/,/g,'');
               if (
                 util.precisionInput(amount, 8) ===
                 util.precisionInput(available, 8)

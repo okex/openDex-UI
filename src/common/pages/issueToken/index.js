@@ -66,7 +66,7 @@ class IssueToken extends Component {
     const { symbol, wholename, totalSupply, mintable, desc } = this.state;
     const { okexchainClient } = this.props;
     const fSymbol = symbol.toLowerCase();
-    const fTotal = util.precisionInput(totalSupply);
+    const fTotal = util.precisionInput(totalSupply).replace(/,/g,'');
     const fMintable = mintable === 1;
     okexchainClient
       .sendTokenIssueTransaction(fSymbol, wholename, fTotal, fMintable, desc)

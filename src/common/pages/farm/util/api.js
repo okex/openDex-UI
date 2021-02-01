@@ -50,7 +50,7 @@ function _proccessData(data) {
       d.total_staked_dis =
         Number(d.total_staked) === 0
           ? '$0'
-          : '$' + calc.thousandFormat(util.precisionInput(d.total_staked, 2));
+          : '$' + util.precisionInput(d.total_staked, 2);
       d.total_staked_dashbord_dis =
         Number(d.total_staked) === 0
           ? '--'

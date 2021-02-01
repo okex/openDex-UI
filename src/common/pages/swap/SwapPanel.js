@@ -412,9 +412,9 @@ export default class SwapPanel extends React.Component {
     const { okexchainClient } = this.props;
     const { baseToken, targetToken } = this.state;
     const params = [
-      util.precisionInput(baseToken.value),
+      util.precisionInput(baseToken.value).replace(/,/g,''),
       baseToken.symbol,
-      this.getMinimumReceived(),
+      this.getMinimumReceived().replace(/,/g,''),
       targetToken.symbol,
       getDeadLine4sdk(),
       util.getMyAddr(),

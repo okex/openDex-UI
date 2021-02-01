@@ -71,7 +71,7 @@ export default class ReduceLiquidity extends React.Component {
   _getValueByRatio(ratio) {
     if (!ratio) ratio = this.state.ratio;
     if (!ratio) return this.state.value;
-    const max = this.getAvailable(true);
+    const max = this.getAvailable(true).replace(/,/g,'');
     const value = calc.mul(max, ratio.value, false);
     return value;
   }
@@ -100,7 +100,7 @@ export default class ReduceLiquidity extends React.Component {
   };
 
   onInputChange = async (value) => {
-    const max = this.getAvailable();
+    const max = this.getAvailable().replace(/,/g,'');
     const error = util.compareNumber(max, value);
     this.setState({ value, ratio: null, error }, () => {
       this.updateCoins4RealTime({ ...this.state });
@@ -114,7 +114,7 @@ export default class ReduceLiquidity extends React.Component {
     }
     const { liquidity } = this.props;
     data.coins = await api.redeemableAssets({
-      liquidity: util.precisionInput(data.value),
+      liquidity: util.precisionInput(data.value).replace(/,/g,''),
       base_token: liquidity.base_pooled_coin.denom,
       quote_token: liquidity.quote_pooled_coin.denom,
     });
@@ -146,10 +146,10 @@ export default class ReduceLiquidity extends React.Component {
     const { baseToken, targetToken } = this._exchangeTokenData();
     const { value } = this.state;
     const params = [
-      util.precisionInput(value),
-      this.getMinimumReceived(baseToken.amount),
+      util.precisionInput(value).replace(/,/g,''),
+      this.getMinimumReceived(baseToken.amount).replace(/,/g,''),
       baseToken.denom,
-      this.getMinimumReceived(targetToken.amount),
+      this.getMinimumReceived(targetToken.amount).replace(/,/g,''),
       targetToken.denom,
       getDeadLine4sdk(),
       '',

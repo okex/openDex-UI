@@ -457,10 +457,10 @@ export default class AddLiquidity extends React.Component {
     let { baseToken, targetToken } = this._exchangeTokenData();
     const { okexchainClient } = this.props;
     const params = [
-      this.getMinimumReceived(exchangeInfo.liquidity),
-      util.precisionInput(baseToken.value),
+      this.getMinimumReceived(exchangeInfo.liquidity).replace(/,/g,''),
+      util.precisionInput(baseToken.value).replace(/,/g,''),
       baseToken.symbol,
-      util.precisionInput(targetToken.value),
+      util.precisionInput(targetToken.value).replace(/,/g,''),
       targetToken.symbol,
       getDeadLine4sdk(),
       '',
