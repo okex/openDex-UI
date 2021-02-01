@@ -92,7 +92,7 @@ export default class SwapPanel extends React.Component {
           sell_token_amount: `${value}${symbol}`,
           token: target.symbol,
         });
-        data.exchangeInfo = { price, price_impact, fee, route };
+        data.exchangeInfo = { ...data.exchangeInfo, price, price_impact, fee, route };
         target.value = buy_amount;
       } catch (e) {
         if (errTip) {
