@@ -10,7 +10,7 @@ export function isLpToken(tokenPair) {
   return tokens;
 }
 
-export function getLpTokenInfo(tokenPair, filter = true) {
+export function getLpTokenInfo(tokenPair='', filter = true) {
   tokenPair = tokenPair.toLowerCase();
   const tokens = isLpToken(tokenPair);
   if (!tokens) return null;
