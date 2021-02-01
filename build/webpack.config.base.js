@@ -95,6 +95,7 @@ const base = {
       _component: path.resolve(__dirname, '../src/common/component/'),
       _constants: path.resolve(__dirname, '../src/common/constants/'),
       _app: path.resolve(__dirname, `../src/${client}/`),
+      '@okexchain/javascript-sdk':'@okexchain/javascript-sdk-qrcode',
     },
   },
 };
