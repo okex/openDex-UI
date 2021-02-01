@@ -247,6 +247,7 @@ export default class SwapPanel extends React.Component {
   getExchangeInfo(isConfirm) {
     const { baseToken, targetToken, exchangeInfo } = this.state;
     const fee = Number(exchangeInfo.fee.replace(baseToken.symbol, ''));
+    const hasWarn = this.hasWarn();
     if (baseToken.symbol && targetToken.symbol) {
       if (!baseToken.value || !targetToken.value) {
         return (
@@ -302,7 +303,7 @@ export default class SwapPanel extends React.Component {
               </div>
             </div>
             <div className="info">
-              <div className="info-name">
+              <div className={classNames('info-name',{red: hasWarn})}>
                 {toLocale('Price Impact')}
                 {!isConfirm && (
                   <Tooltip
@@ -313,7 +314,7 @@ export default class SwapPanel extends React.Component {
                   </Tooltip>
                 )}
               </div>
-              <div className="info-value">{this.priceImpact(exchangeInfo)}</div>
+              <div className={classNames('info-value',{red: hasWarn})}>{this.priceImpact(exchangeInfo)}</div>
             </div>
             <div className="info">
               <div className="info-name">
