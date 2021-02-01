@@ -89,6 +89,7 @@ export default class InputNum extends React.Component {
   };
 
   checkInpNumber = (inputValue, num) => {
+    if(inputValue === '.') inputValue = '0.';
     let inps = inputValue.replace('。', '.').split('.');
     let inpNumber = '';
     if (inps.length > 1) {
