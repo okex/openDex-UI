@@ -1162,7 +1162,7 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   'stake tip': 'This stake action will also trigger claim tokens. ',
   'unstake tip': 'This unstake action will also trigger claim tokens.',
   info: 'Notice',
-  'info desc': `I know how AMM works and accept the risks of it`,
+  'info desc': `I know how AMM works and accept the risks of it. `,
   home_receive_swap: 'Swap Tutorial',
   home_receive_farm: 'Farm Tutorial',
   'lp introduce': `You will get LP Token after add liquidity, it's your proof of market making.`,
