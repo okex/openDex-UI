@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Button } from '_component/Button';
 import { toLocale } from '_src/locale/react-locale';
-import { crypto } from '@okexchain/javascript-sdk'; 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as commonActions from '_src/redux/actions/CommonAction';
@@ -66,18 +65,18 @@ class ImportByWalletConnect extends Component {
             }
           );
         },
-        success:() => {
-          this.validateWalletConnect();
+        success:({address}) => {
+          this.validateWalletConnect(address);
         },
         error:() => {
-
+          console.log(1)
         }
       }
-    )
+    );
   };
 
-  validateWalletConnect = () => {
-    // walletUtil.setUserInSessionStroage(walletconnect, keyStore);
+  validateWalletConnect = (address) => {
+    walletUtil.setUserInSessionStroageByWalletConnect(address);
     util.go(DesktopTypeMenu.current ? DesktopTypeMenu.current.url : void 0);
   };
   

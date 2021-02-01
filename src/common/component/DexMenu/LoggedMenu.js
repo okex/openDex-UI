@@ -3,7 +3,7 @@ import moment from 'moment';
 import { toLocale } from '_src/locale/react-locale';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { crypto } from '@okexchain/javascript-sdk';
+import { crypto, wallet } from '@okexchain/javascript-sdk';
 import { Dialog } from '_component/Dialog';
 import Menu from '_src/component/Menu';
 import util from '_src/utils/util';
@@ -115,10 +115,24 @@ class DexLoggedMenu extends React.Component {
       onConfirm: () => {
         util.doLogout();
         dialog.destroy();
+        if(this.isWalletConnect()) {
+          wallet.killSession();
+        }
         window.location.reload();
       },
     });
   };
+
+  isWalletConnect() {
+    return util.isLogined() && !this.hasKeyStore();
+  }
+
+  componentDidMount() {
+    if(this.isWalletConnect()) {
+      wallet.getSession();
+    }
+  }
+
   render() {
     const { hasDoc } = this.props;
     const { isShowPassword, passwordError } = this.state;
