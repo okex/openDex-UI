@@ -1180,7 +1180,7 @@ const zhCN = {
   'reduce liquidity warn tip':
     '获得币的数量是预估的。如果价格变化超过{num}%，你的交易将会被退回。',
   'UNI Burned': '销毁LP ({base}/{quote})',
-  'swap warn tip2': '请注意当前交易滑点为{num}, 执行这笔交易将会亏损',
+  'swap warn tip2': '请注意当前价格影响为{num}, 执行这笔交易将会亏损',
   'empty add list': '你将至少获得',
 };
 export default zhCN;
