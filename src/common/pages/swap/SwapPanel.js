@@ -63,6 +63,7 @@ export default class SwapPanel extends React.Component {
     this.trading = false;
     this.initial = false
     this.needInitData = null;
+    this.updateSwapInfo4RealTime = util.debounce(this.updateSwapInfo4RealTime);
   }
 
   exchange = async () => {
@@ -76,7 +77,7 @@ export default class SwapPanel extends React.Component {
     this.updateSwapInfo4RealTime(data, 'baseToken');
   };
 
-  async updateSwapInfo(data, key, errTip = false) {
+  updateSwapInfo = async (data, key, errTip = false) => {
     const { value, symbol } = data[key];
     const target = key === 'baseToken' ? data.targetToken : data.baseToken;
     if (value && symbol && target.symbol) {
@@ -119,9 +120,16 @@ export default class SwapPanel extends React.Component {
 
   changeBase = (token) => {
     let baseToken = { ...this.state.baseToken, ...token };
-    let targetToken = { ...this.state.targetToken, value: '' };
+    let targetToken = { ...this.state.targetToken};
     const data = { ...this.state, baseToken, targetToken, isPoolEmpty: false };
-    this.updateSwapInfo4RealTime(data, 'baseToken');
+    this.setState(data, () => {
+      const temp = {
+        baseToken: { ...this.state.baseToken },
+        targetToken: { ...this.state.targetToken },
+        exchangeInfo: { ...this.state.exchangeInfo },
+      };
+      this.updateSwapInfo4RealTime(temp, 'baseToken');
+    });
   };
 
   _clearTimer() {
@@ -131,7 +139,7 @@ export default class SwapPanel extends React.Component {
     }
   }
 
-  async updateSwapInfo4RealTime(data, key, time = 3000) {
+  updateSwapInfo4RealTime = async (data, key, time = 3000) => {
     this._clearTimer();
     await this.updateSwapInfo(data, key, true);
     this.setState(data, () => {

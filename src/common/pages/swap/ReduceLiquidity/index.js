@@ -43,6 +43,7 @@ export default class ReduceLiquidity extends React.Component {
       active: true,
     };
     this.trading = false;
+    this.updateCoins4RealTime = util.debounce(this.updateCoins4RealTime);
   }
 
   _process(liquidity) {
@@ -76,7 +77,7 @@ export default class ReduceLiquidity extends React.Component {
     return value;
   }
 
-  async updateCoins4RealTime(data, time = 3000) {
+  updateCoins4RealTime = async (data, time = 3000) => {
     this._clearTimer();
     await this.updateCoins(data);
     this.setState(data, () => {

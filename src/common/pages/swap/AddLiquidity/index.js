@@ -34,6 +34,7 @@ export default class AddLiquidity extends React.Component {
     this.confirmRef = React.createRef();
     this.state = this._getDefaultState(props);
     this.trading = false;
+    this.updateLiquidInfo4RealTime = util.debounce(this.updateLiquidInfo4RealTime);
   }
 
   _getDefaultState(props) {
@@ -103,7 +104,14 @@ export default class AddLiquidity extends React.Component {
       targetToken: { ...targetToken },
     };
     if (!isEmptyPool && !data.baseToken.value) data.targetToken.value = '';
-    this.updateLiquidInfo4RealTime({ data, inputChanged });
+    this.setState(data, () => {
+      const temp = {
+        baseToken: { ...this.state.baseToken },
+        targetToken: { ...this.state.targetToken },
+        exchangeInfo: { ...this.state.exchangeInfo },
+      };
+      this.updateLiquidInfo4RealTime({ data:temp, inputChanged });
+    });
   };
 
   changeTarget = (token, inputChanged) => {
@@ -113,7 +121,15 @@ export default class AddLiquidity extends React.Component {
       targetToken: { ...targetToken, ...token },
       baseToken: { ...baseToken },
     };
-    this.updateLiquidInfo4RealTime({ data, key: 'targetToken', inputChanged });
+    this.setState(data, () => {
+      const temp = {
+        baseToken: { ...this.state.baseToken },
+        targetToken: { ...this.state.targetToken },
+        exchangeInfo: { ...this.state.exchangeInfo },
+      };
+      this.updateLiquidInfo4RealTime({ data:temp, key: 'targetToken', inputChanged });
+    });
+    
   };
 
   _clearTimer() {
@@ -123,12 +139,12 @@ export default class AddLiquidity extends React.Component {
     }
   }
 
-  async updateLiquidInfo4RealTime({
+  updateLiquidInfo4RealTime = async ({
     data,
     key = 'baseToken',
     time = 3000,
     inputChanged = true,
-  }) {
+  }) => {
     this._clearTimer();
     await this.updateInfo(data, key, true, inputChanged);
     this.setState(data, () => {
