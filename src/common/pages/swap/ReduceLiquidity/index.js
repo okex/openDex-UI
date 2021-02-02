@@ -285,7 +285,7 @@ export default class ReduceLiquidity extends React.Component {
                 {getDisplaySymbol(d.denom)}
               </div>
               <div className="right">
-                {this.getMinimumReceived(d.amount, 8)}{' '}
+                {util.precisionInput(d.amount, 8)}{' '}
                 {getDisplaySymbol(d.denom)}
               </div>
             </div>
@@ -310,7 +310,7 @@ export default class ReduceLiquidity extends React.Component {
                       {getDisplaySymbol(coins[0].denom)}
                     </div>
                     <div className="right">
-                      {this.getMinimumReceived(coins[0].amount, 8)}
+                      {util.precisionInput(coins[0].amount, 8)}
                     </div>
                   </div>
                   <div className="down add" />
@@ -320,7 +320,7 @@ export default class ReduceLiquidity extends React.Component {
                       {getDisplaySymbol(coins[1].denom)}
                     </div>
                     <div className="right">
-                      {this.getMinimumReceived(coins[1].amount, 8)}
+                      {util.precisionInput(coins[1].amount, 8)}
                     </div>
                   </div>
                   {active && (
