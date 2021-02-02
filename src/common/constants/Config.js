@@ -24,8 +24,8 @@ const Config = {
       return 'https://www.okex.com/academy/en/how-to-use-okex-swap-farm-pools-okexchain';
     },
     get liquidity() {
-      if (lang === 'zh_CN') return 'https://docs.qq.com/doc/DQm13amR4QXBKRUxH';
-      return 'https://docs.qq.com/doc/DQm13amR4QXBKRUxH';
+      if (lang === 'zh_CN') return 'https://www.okexcn.com/academy/zh/what-is-impermanent-loss';
+      return '';
     },
   },
   validatePwdDeferSecond: 100,

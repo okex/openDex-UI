@@ -581,13 +581,15 @@ export default class AddLiquidity extends React.Component {
               ></span>
               <div className="protocol">
                 {toLocale('info desc')}
-                <a
-                  href={Config.okexchain.liquidity}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {toLocale('go detail')}
-                </a>
+                {Config.okexchain.liquidity && 
+                  <a
+                    href={Config.okexchain.liquidity}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {toLocale('go detail')}
+                  </a>
+                }
               </div>
             </div>
             <div className="btn-wrap">{btn}</div>
