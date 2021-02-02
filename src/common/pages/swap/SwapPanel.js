@@ -346,14 +346,14 @@ export default class SwapPanel extends React.Component {
               <div className="info">
                 <div className="info-name">
                   {toLocale('Route')}
-                  <Tooltip
+                  {!isConfirm && (<Tooltip
                     placement="right"
                     overlay={toLocale(
                       "Current pair can only swap through OKT, there's no direct pair for the 2 tokens."
                     )}
                   >
                     <i className="help" />
-                  </Tooltip>
+                  </Tooltip>)}
                 </div>
                 <div className="info-value">
                   <img className="coin" src={getCoinIcon(baseToken.symbol)} />
