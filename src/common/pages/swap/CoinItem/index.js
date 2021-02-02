@@ -46,7 +46,7 @@ export default class CoinItem extends React.Component {
     const { token } = this.props;
     const max = this.getAvailable(true).replace(/,/g,'');
     if (token.symbol.toLowerCase() === env.envConfig.token.base) {
-      let value = calc.sub(max, env.envConfig.fee, false);
+      let value = calc.sub(max, env.envConfig.fee * 10, false);
       if (+value < 0) value = util.precisionInput(0, 8, false);
       this.onInputChange(value);
     } else this.onInputChange(max);
