@@ -244,7 +244,7 @@ export default class SwapPanel extends React.Component {
     const targetToken = await this.searchToken(tokens, data.targetToken.symbol);
     baseToken.value = '';
     targetToken.value = '';
-    this.setState({ baseToken, targetToken });
+    this.updateSwapInfo4RealTime({ baseToken, targetToken }, 'baseToken');
   }
 
   priceImpact() {
