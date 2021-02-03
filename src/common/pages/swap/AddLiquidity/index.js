@@ -535,6 +535,11 @@ export default class AddLiquidity extends React.Component {
     const {
       setting: { slippageTolerance },
     } = this.props;
+    let lpBaseSymbol = baseToken.symbol, lpTargetSymbol = targetToken.symbol;
+    if(baseToken.symbol > targetToken.symbol) {
+      lpBaseSymbol = lpTargetSymbol;
+      lpTargetSymbol = baseToken.symbol;
+    }
     return (
       <>
         <div className="panel">
@@ -626,8 +631,8 @@ export default class AddLiquidity extends React.Component {
                   <div className="info">
                     <div className="info-name">
                       {toLocale('pool tokens', {
-                        base: getDisplaySymbol(baseToken.symbol),
-                        quote: getDisplaySymbol(targetToken.symbol),
+                        base: getDisplaySymbol(lpBaseSymbol),
+                        quote: getDisplaySymbol(lpTargetSymbol),
                       })}
                     </div>
                   </div>

@@ -1116,7 +1116,7 @@ const zhCN = {
   APY: ' 年化!',
   'Go stake': '去质押',
   'Connect wallet to check your farming': '连接钱包查看你的收益',
-  'Total staked LP / Pool ratio': '总质押Token',
+  'Total staked LP / Pool ratio': '总质押Token / 池子占比',
   'Will start in': '开始于',
   'Will finish in': '结束于',
   'Total farmed / Farm APY': '挖矿总收益(USD) / 挖矿年化收益率',
@@ -1176,11 +1176,12 @@ const zhCN = {
   'You will receive': '你将至少获得',
   'liquidity warn tip':
     '获得的LP的数量是预估的，如果价格变化超过{num}%，你的交易将会被退回。',
-  'pool tokens': '{base}/{quote} Tokens',
+  'pool tokens': 'LP ({base}/{quote}) Tokens',
   'reduce liquidity warn tip':
     '获得币的数量是预估的。如果价格变化超过{num}%，你的交易将会被退回。',
   'UNI Burned': '销毁LP ({base}/{quote})',
   'swap warn tip2': '请注意当前价格影响为{num}, 执行这笔交易将会亏损',
   'empty add list': '你将至少获得',
+  'lp token transfer': '如果转到交易所就找不回资产',
 };
 export default zhCN;
