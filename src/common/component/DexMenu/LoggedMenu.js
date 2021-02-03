@@ -113,12 +113,16 @@ class DexLoggedMenu extends React.Component {
         background: '#112F62',
       },
       onConfirm: () => {
-        util.doLogout();
         dialog.destroy();
         if(this.isWalletConnect()) {
-          wallet.killSession();
+          wallet.killSession(function() {
+            util.doLogout();
+            window.location.reload();
+          });
+        } else {
+          util.doLogout();
+          window.location.reload();
         }
-        window.location.reload();
       },
     });
   };

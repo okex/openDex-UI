@@ -6,6 +6,7 @@ import Config from '../../constants/Config';
 import FormActionType from '../actionTypes/FormActionType';
 import ont from '../../utils/dataProxy';
 import URL from '../../constants/URL';
+import util from '_src/utils/util';
 import env from '../../constants/env';
 
 const legalCurrencyId = 'dex_legalCurrencyId';
@@ -22,6 +23,21 @@ export function initOKExChainClient() {
       relativePath: `/${env.envConfig.apiPath}`,
       isMainnet: env.envConfig.isMainnet,
     });
+    let user = window.localStorage.getItem(env.envConfig.dexUser);
+    if (user) {
+      try {
+        user = JSON.parse(user);
+        if(!user.info) {
+          wallet.getSession({
+            sessionCancel:() => {
+              util.doLogout();
+              window.location.reload();
+            }
+          });
+        }
+      } catch (e) {
+      }
+    }
     dispatch({
       type: CommonActionType.SET_OKEXCHAIN_CLIENT,
       data: client,
