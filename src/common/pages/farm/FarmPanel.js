@@ -134,7 +134,7 @@ export default class FarmPanel extends React.Component {
               </div>
               <SimpleBtnDialog
                 component={() =>
-                  Stake.getStake({ data: d, onSuccess: this.refreshData })
+                  Stake.getStake({ data: d, onSuccess: this.props.onDashboard })
                 }
               >
                 <div className={classNames('farm-btn')}>
@@ -154,7 +154,7 @@ export default class FarmPanel extends React.Component {
             </div>
           </div>
         </div>
-        <WatchlistPanel />
+        <WatchlistPanel onDashboard={this.props.onDashboard}/>
       </div>
     );
   }
