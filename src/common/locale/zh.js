@@ -1124,7 +1124,7 @@ const zhCN = {
   APY: ' 年化!',
   'Go stake': '去质押',
   'Connect wallet to check your farming': '连接钱包查看你的收益',
-  'Total staked LP / Pool ratio': '总质押Token / 池子占比',
+  'Total staked LP / Pool ratio': '总质押Token / 占比',
   'Will start in': '开始于',
   'Will finish in': '结束于',
   'Total farmed / Farm APY': '挖矿总收益(USD) / 挖矿年化收益率',

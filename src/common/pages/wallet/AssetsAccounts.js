@@ -10,11 +10,10 @@ import Icon from '_src/component/IconLite';
 import DexTable from '_component/DexTable';
 import ont from '../../utils/dataProxy';
 import TransferDialog from './TransferDialog';
-import { Dialog } from '_component/Dialog';
 import assetsUtil from './assetsUtil';
 import './Assets.less';
 import * as CommonAction from '../../redux/actions/CommonAction';
-import { getLpTokenStr, isLpToken } from '../../utils/lpTokenUtil';
+import { getLpTokenStr } from '../../utils/lpTokenUtil';
 import util from '../../utils/util';
 
 function mapStateToProps(state) {
@@ -91,7 +90,6 @@ class AssetsAccounts extends Component {
             const { symbol, original_symbol, whole_name } = token;
             const originalAndWhole = `${original_symbol.toUpperCase()}___${whole_name}`;
             tokenMap[symbol] = { ...token, originalAndWhole };
-            console.log(symbol, original_symbol, whole_name);
             return {
               value: symbol,
               label: (
@@ -156,31 +154,10 @@ class AssetsAccounts extends Component {
   };
   openTransfer = (symbol) => {
     return () => {
-      console.log(symbol);
-      if(isLpToken(symbol)) {
-        const dialog = Dialog.confirm({
-          title: toLocale('lp token transfer'),
-          confirmText: toLocale('ensure'),
-          cancelText: toLocale('cancel'),
-          theme: 'dark',
-          dialogId: 'okdex-logout',
-          windowStyle: {
-            background: '#112F62',
-          },
-          onConfirm: () => {
-            dialog.destroy();
-            this.setState({
-              transferSymbol: symbol,
-              showTransfer: true,
-            });
-          }
-        });
-      } else {
-            this.setState({
-              transferSymbol: symbol,
-              showTransfer: true,
-            });
-      }
+      this.setState({
+        transferSymbol: symbol,
+        showTransfer: true,
+      });
     };
   };
   closeTransfer = () => {
@@ -222,8 +199,6 @@ class AssetsAccounts extends Component {
       transferSymbol,
       loading,
       tokenList,
-      okbTotalValuation,
-      legalTotalValuation,
       tokenMap,
       hideZero,
       valuationUnit,

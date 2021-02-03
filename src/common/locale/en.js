@@ -1122,7 +1122,7 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   m: 'm',
   s: 's',
   'Other pools': 'Normal pools',
-  'Other pools help': `What's normal pools`,
+  'Other pools help': `What's Normal pools`,
   'Other pools help desc': 'Anyone can become a farm owner by creating an ordinary pool through OKEx Farm, without any review or approval. The farm owner can deposit coins for staking when creating an ordinary pool, while users who participate in staking in the same pool can obtain the coins deposited by the farm owner, thereby obtaining staking revenue.',
   'Farm pool': 'Farm pool',
   'Total staked': 'Total staked',
