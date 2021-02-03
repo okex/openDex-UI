@@ -1193,7 +1193,7 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   'pool tokens': '{base}/{quote} Pool Tokens',
   'reduce liquidity warn tip':
     'Output is estimated.If the price changes by more than {num}% your transaction will revert.',
-  'UNI UNI/ETH Burned': 'Burn LP ({base}/{quote})',
+  'UNI Burned': 'Burn LP ({base}/{quote})',
   'swap warn tip2':
     'Please note that the price impact is {num}, you will have loss in this transaction.',
   'empty add list': 'You will at least receive',
