@@ -889,7 +889,7 @@ const zhCN = {
   assets_tab_transactions: '交易记录',
   assets_address: '地址：',
   assets_product_search: '币种搜索',
-  assets_hide_zero: '隐藏零余额资产',
+  assets_hide_zero: '隐藏小额资产',
   assets_empty: '暂无资产',
   assets_column_assets: '资产',
   assets_column_total: '总量',
@@ -1111,6 +1111,8 @@ const zhCN = {
   m: '分钟',
   s: '秒',
   'Other pools': '普通池',
+  'Other pools help': '什么是普通池',
+  'Other pools help desc': '任何人都可以通过OKEx Farm创建普通池成为Farm owner，无需审核和批准，在创建时注入可以挖的币，通过普通池参与质押挖矿的用户可以获得Farm owner注入的币，从而获取挖矿收益。',
   'Farm pool': 'Farm池',
   'Total staked': '总质押',
   'Pool rate(1Day)': '挖矿速率：(1天)',
@@ -1122,7 +1124,7 @@ const zhCN = {
   APY: ' 年化!',
   'Go stake': '去质押',
   'Connect wallet to check your farming': '连接钱包查看你的收益',
-  'Total staked LP / Pool ratio': '总质押Token',
+  'Total staked LP / Pool ratio': '总质押Token / 池子占比',
   'Will start in': '开始于',
   'Will finish in': '结束于',
   'Total farmed / Farm APY': '挖矿总收益(USD) / 挖矿年化收益率',
@@ -1182,11 +1184,12 @@ const zhCN = {
   'You will receive': '你将至少获得',
   'liquidity warn tip':
     '获得的LP的数量是预估的，如果价格变化超过{num}%，你的交易将会被退回。',
-  'pool tokens': '{base}/{quote} Tokens',
+  'pool tokens': 'LP ({base}/{quote}) Tokens',
   'reduce liquidity warn tip':
     '获得币的数量是预估的。如果价格变化超过{num}%，你的交易将会被退回。',
   'UNI Burned': '销毁LP ({base}/{quote})',
-  'swap warn tip2': '请注意当前交易滑点为{num}, 执行这笔交易将会亏损',
+  'swap warn tip2': '请注意当前价格影响为{num}, 执行这笔交易将会亏损',
   'empty add list': '你将至少获得',
+  'lp token transfer': '如果转到交易所就找不回资产',
 };
 export default zhCN;

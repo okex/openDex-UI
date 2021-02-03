@@ -47,14 +47,20 @@ const util = {
         key: 'txhash',
         render: (text) => {
           return (
+            <Tooltip
+              placement="bottomLeft"
+              overlay={<div style={{"wordBreak":"break-all"}}>{text}</div>}
+              maxWidth={300}
+              noUnderline
+            >
             <a
               href={`${Config.okexchain.browserUrl}/tx/${text}`}
               target="_blank"
               rel="noopener noreferrer"
-              title={text}
             >
               {FormatNum.hashShort(text)}
             </a>
+            </Tooltip>
           );
         },
       },

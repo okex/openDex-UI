@@ -65,19 +65,19 @@ export default class FarmPanel extends React.Component {
     this.init();
   };
 
-  renderHelp = () => {
+  renderHelp = (title,desc) => {
     return (
       <div className="stake-help-info">
-        <div className="help-title">{toLocale('White listed help')}</div>
-        <div className="help-desc">{toLocale('White listed help desc')}</div>
+        <div className="help-title">{title}</div>
+        <div className="help-desc">{desc}</div>
       </div>
     );
   };
 
-  showHelp = () => {
+  showHelp = (title,desc) => {
     Dialog.show({
       width: '440px',
-      children: this.renderHelp(),
+      children: this.renderHelp(title,desc),
     });
   };
 
@@ -103,7 +103,7 @@ export default class FarmPanel extends React.Component {
         )}
         <div className="title-wrap">
           {toLocale('White listed')}
-          <i className="help" onClick={this.showHelp} />
+          <i className="help" onClick={() => this.showHelp(toLocale('White listed help'),toLocale('White listed help desc'))} />
         </div>
         <div className="info-items">
           {data.map((d, index) => (
@@ -149,7 +149,9 @@ export default class FarmPanel extends React.Component {
         </div>
         <div className="title-wrap">
           <div className="space-between">
-            <div className="left">{toLocale('Other pools')}</div>
+            <div className="left">{toLocale('Other pools')}
+            <i className="help" onClick={() => this.showHelp(toLocale('Other pools help'),toLocale('Other pools help desc'))}></i>
+            </div>
           </div>
         </div>
         <WatchlistPanel />

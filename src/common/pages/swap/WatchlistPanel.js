@@ -8,6 +8,7 @@ import calc from '_src/utils/calc';
 import AddLiquidity from './AddLiquidity';
 import getRef from '../../component/getRef';
 import Tooltip from '../../component/Tooltip';
+import util from '_src/utils/util';
 @getRef
 export default class WatchlistPanel extends React.Component {
   constructor() {
@@ -42,7 +43,7 @@ export default class WatchlistPanel extends React.Component {
         component(props) {
           return Number(props.data) === 0
             ? '--'
-            : '$' + calc.mul(props.data, 1).toFixed(2);
+            : '$' + util.precisionInput(props.data,2);
         },
       },
       {
@@ -53,7 +54,7 @@ export default class WatchlistPanel extends React.Component {
         component(props) {
           return Number(props.data) === 0
             ? '--'
-            : '$' + calc.mul(props.data, 1).toFixed(2);
+            : '$' + util.precisionInput(props.data,2);
         },
       },
       {
@@ -76,7 +77,7 @@ export default class WatchlistPanel extends React.Component {
         component(props) {
           return Number(props.data) === 0
             ? '--'
-            : calc.mul(props.data, 100).toFixed(2) + '%';
+            : util.precisionInput(calc.mul(props.data, 100),2) + '%';
         },
       },
       {
@@ -99,7 +100,7 @@ export default class WatchlistPanel extends React.Component {
               1 {getDisplaySymbol(baseSymbol)}≈
               {Number(price) === 0 || Number(price) === Infinity
                 ? '-'
-                : calc.mul(price, 1).toFixed(4)}{' '}
+                : util.precisionInput(price, 4)}{' '}
               {getDisplaySymbol(targetSymbol)}
             </div>
           );
@@ -117,16 +118,16 @@ export default class WatchlistPanel extends React.Component {
           if (change > 0)
             return (
               <span className="green">
-                {calc.mul(change, 100).toFixed(2) + '%'}
+                {util.precisionInput(calc.mul(change, 100),2) + '%'}
               </span>
             );
           else if (change < 0)
             return (
               <span className="red">
-                {calc.mul(change, 100).toFixed(2) + '%'}
+                {util.precisionInput(calc.mul(change, 100),2) + '%'}
               </span>
             );
-          return calc.mul(change, 100).toFixed(2) + '%';
+          return util.precisionInput(calc.mul(change, 100),2) + '%';
         },
       },
       {
@@ -222,10 +223,15 @@ export default class WatchlistPanel extends React.Component {
     const data = await this.init({ sort });
     this.setState({ ...data, sort });
   };
+  
+  componentWillUnmount() {
+    this._clearTimer();
+  }
 
   async componentDidMount() {
     const data = await this.init({ current: this.state.current });
     this.setState(data);
+    this.updateWatchList4RealTime();
   }
 
   async reload() {
@@ -233,6 +239,21 @@ export default class WatchlistPanel extends React.Component {
     this.setState({ ...data, current: 1 });
   }
 
+  _clearTimer() {
+    if (this.updateWatchList4RealTime.interval) {
+      clearInterval(this.updateWatchList4RealTime.interval);
+      this.updateWatchList4RealTime.interval = null;
+    }
+  }
+
+  updateWatchList4RealTime = async (time = 3000) => {
+    this._clearTimer();
+    this.updateWatchList4RealTime.interval = setInterval(async () => {
+      const data = await this.init({});
+      this.setState(data);
+    }, time);
+  }
+  
   render() {
     const { sort, data, current, pageSize, total } = this.state;
     return (

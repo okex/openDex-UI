@@ -10,10 +10,12 @@ import Icon from '_src/component/IconLite';
 import DexTable from '_component/DexTable';
 import ont from '../../utils/dataProxy';
 import TransferDialog from './TransferDialog';
+import { Dialog } from '_component/Dialog';
 import assetsUtil from './assetsUtil';
 import './Assets.less';
 import * as CommonAction from '../../redux/actions/CommonAction';
-import { getLpTokenStr } from '../../utils/lpTokenUtil';
+import { getLpTokenStr, isLpToken } from '../../utils/lpTokenUtil';
+import util from '../../utils/util';
 
 function mapStateToProps(state) {
   const { legalId, legalObj, legalList } = state.Common;
@@ -70,8 +72,11 @@ class AssetsAccounts extends Component {
           params: { show: this.state.hideZero ? undefined : 'all' },
         })
         .then(({ data }) => {
-          const { currencies } = data;
-          resolve(currencies || []);
+          const { currencies=[] } = data;
+          resolve(currencies.filter(d => {
+            if(!this.state.hideZero) return true;
+            return !!Number(util.precisionInput(d.available,8,false));
+          }));
         })
         .catch(() => {
           resolve([]);
@@ -151,10 +156,31 @@ class AssetsAccounts extends Component {
   };
   openTransfer = (symbol) => {
     return () => {
-      this.setState({
-        transferSymbol: symbol,
-        showTransfer: true,
-      });
+      console.log(symbol);
+      if(isLpToken(symbol)) {
+        const dialog = Dialog.confirm({
+          title: toLocale('lp token transfer'),
+          confirmText: toLocale('ensure'),
+          cancelText: toLocale('cancel'),
+          theme: 'dark',
+          dialogId: 'okdex-logout',
+          windowStyle: {
+            background: '#112F62',
+          },
+          onConfirm: () => {
+            dialog.destroy();
+            this.setState({
+              transferSymbol: symbol,
+              showTransfer: true,
+            });
+          }
+        });
+      } else {
+            this.setState({
+              transferSymbol: symbol,
+              showTransfer: true,
+            });
+      }
     };
   };
   closeTransfer = () => {

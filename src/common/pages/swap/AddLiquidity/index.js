@@ -34,6 +34,7 @@ export default class AddLiquidity extends React.Component {
     this.confirmRef = React.createRef();
     this.state = this._getDefaultState(props);
     this.trading = false;
+    this.updateLiquidInfo4RealTime = util.debounce(this.updateLiquidInfo4RealTime);
   }
 
   _getDefaultState(props) {
@@ -103,7 +104,14 @@ export default class AddLiquidity extends React.Component {
       targetToken: { ...targetToken },
     };
     if (!isEmptyPool && !data.baseToken.value) data.targetToken.value = '';
-    this.updateLiquidInfo4RealTime({ data, inputChanged });
+    this.setState(data, () => {
+      const temp = {
+        baseToken: { ...this.state.baseToken },
+        targetToken: { ...this.state.targetToken },
+        exchangeInfo: { ...this.state.exchangeInfo },
+      };
+      this.updateLiquidInfo4RealTime({ data:temp, inputChanged });
+    });
   };
 
   changeTarget = (token, inputChanged) => {
@@ -113,7 +121,15 @@ export default class AddLiquidity extends React.Component {
       targetToken: { ...targetToken, ...token },
       baseToken: { ...baseToken },
     };
-    this.updateLiquidInfo4RealTime({ data, key: 'targetToken', inputChanged });
+    this.setState(data, () => {
+      const temp = {
+        baseToken: { ...this.state.baseToken },
+        targetToken: { ...this.state.targetToken },
+        exchangeInfo: { ...this.state.exchangeInfo },
+      };
+      this.updateLiquidInfo4RealTime({ data:temp, key: 'targetToken', inputChanged });
+    });
+    
   };
 
   _clearTimer() {
@@ -123,12 +139,12 @@ export default class AddLiquidity extends React.Component {
     }
   }
 
-  async updateLiquidInfo4RealTime({
+  updateLiquidInfo4RealTime = async ({
     data,
     key = 'baseToken',
     time = 3000,
     inputChanged = true,
-  }) {
+  }) => {
     this._clearTimer();
     await this.updateInfo(data, key, true, inputChanged);
     this.setState(data, () => {
@@ -290,7 +306,7 @@ export default class AddLiquidity extends React.Component {
 
   getExchangeInfo(isConfirm) {
     const { baseToken, targetToken } = this.state;
-    const { priceInfo, poolShare } = this._getExchangeData(isConfirm);
+    const { priceInfo, poolShare } = this._getExchangeData();
     if (!baseToken.symbol || !targetToken.symbol || poolShare === '')
       return null;
     return (
@@ -324,7 +340,7 @@ export default class AddLiquidity extends React.Component {
     );
   }
 
-  _getExchangeData(isConfirm) {
+  _getExchangeData() {
     let { baseToken, targetToken, exchangeInfo, isEmptyPool } = this.state;
     let priceInfo,
       price = exchangeInfo.price;
@@ -338,40 +354,22 @@ export default class AddLiquidity extends React.Component {
     }
     if (isEmptyPool) {
       if (!baseToken.value || !targetToken.value) {
-        if (!isConfirm) {
-          priceInfo = `1${getDisplaySymbol(
-            baseToken.symbol
-          )} ≈ -${getDisplaySymbol(targetToken.symbol)}`;
-        } else {
-          priceInfo = `-${getDisplaySymbol(
-            targetToken.symbol
-          )}/${getDisplaySymbol(baseToken.symbol)}`;
-        }
+        priceInfo = `1${getDisplaySymbol(
+          baseToken.symbol
+        )} ≈ -${getDisplaySymbol(targetToken.symbol)}`;
       } else {
         let tempPrice = calc.div(targetToken.value, baseToken.value);
         if (Number.isNaN(tempPrice)) tempPrice = '-';
         else tempPrice = util.precisionInput(tempPrice, 8);
-        if (!isConfirm) {
-          priceInfo = `1${getDisplaySymbol(
-            baseToken.symbol
-          )} ≈ ${tempPrice} ${getDisplaySymbol(targetToken.symbol)}`;
-        } else {
-          priceInfo = `${tempPrice} ${getDisplaySymbol(
-            targetToken.symbol
-          )}/${getDisplaySymbol(baseToken.symbol)}`;
-        }
+        priceInfo = `1${getDisplaySymbol(
+          baseToken.symbol
+        )} ≈ ${tempPrice} ${getDisplaySymbol(targetToken.symbol)}`;
       }
       return { priceInfo, poolShare: 1 };
     }
-    if (!isConfirm) {
-      priceInfo = `1${getDisplaySymbol(
-        baseToken.symbol
-      )} ≈ ${price}${getDisplaySymbol(targetToken.symbol)}`;
-    } else {
-      priceInfo = `${price} ${getDisplaySymbol(
-        targetToken.symbol
-      )}/${getDisplaySymbol(baseToken.symbol)}`;
-    }
+    priceInfo = `1${getDisplaySymbol(
+      baseToken.symbol
+    )} ≈ ${price}${getDisplaySymbol(targetToken.symbol)}`;
     return { priceInfo, poolShare: exchangeInfo.pool_share };
   }
 
@@ -420,7 +418,7 @@ export default class AddLiquidity extends React.Component {
     } else {
       btn = (
         <div className="btn" onClick={() => this.confirmDialog()}>
-          {toLocale('Confirm')}
+          {toLocale('Confirm Supply btn')}
         </div>
       );
     }
@@ -457,10 +455,10 @@ export default class AddLiquidity extends React.Component {
     let { baseToken, targetToken } = this._exchangeTokenData();
     const { okexchainClient } = this.props;
     const params = [
-      this.getMinimumReceived(exchangeInfo.liquidity),
-      util.precisionInput(baseToken.value),
+      this.getMinimumReceived(exchangeInfo.liquidity).replace(/,/g,''),
+      util.precisionInput(baseToken.value).replace(/,/g,''),
       baseToken.symbol,
-      util.precisionInput(targetToken.value),
+      util.precisionInput(targetToken.value).replace(/,/g,''),
       targetToken.symbol,
       getDeadLine4sdk(),
       '',
@@ -537,6 +535,11 @@ export default class AddLiquidity extends React.Component {
     const {
       setting: { slippageTolerance },
     } = this.props;
+    let lpBaseSymbol = baseToken.symbol, lpTargetSymbol = targetToken.symbol;
+    if(baseToken.symbol > targetToken.symbol) {
+      lpBaseSymbol = lpTargetSymbol;
+      lpTargetSymbol = baseToken.symbol;
+    }
     return (
       <>
         <div className="panel">
@@ -583,13 +586,15 @@ export default class AddLiquidity extends React.Component {
               ></span>
               <div className="protocol">
                 {toLocale('info desc')}
-                <a
-                  href={Config.okexchain.liquidity}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {toLocale('go detail')}
-                </a>
+                {Config.okexchain.liquidity && 
+                  <a
+                    href={Config.okexchain.liquidity}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {toLocale('go detail')}
+                  </a>
+                }
               </div>
             </div>
             <div className="btn-wrap">{btn}</div>
@@ -626,8 +631,8 @@ export default class AddLiquidity extends React.Component {
                   <div className="info">
                     <div className="info-name">
                       {toLocale('pool tokens', {
-                        base: getDisplaySymbol(baseToken.symbol),
-                        quote: getDisplaySymbol(targetToken.symbol),
+                        base: getDisplaySymbol(lpBaseSymbol),
+                        quote: getDisplaySymbol(lpTargetSymbol),
                       })}
                     </div>
                   </div>

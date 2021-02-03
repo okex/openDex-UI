@@ -38,7 +38,7 @@ class AddDepositsDialog extends Component {
     const { okexchainClient, project, beforeAdd, afterAdd } = this.props;
     isFunction(beforeAdd) && beforeAdd();
     const { value } = this.state;
-    const amount = util.precisionInput(value);
+    const amount = util.precisionInput(value).replace(/,/g,'');
     okexchainClient
       .sendAddProductDepositTransaction(amount, project)
       .then((res) => {

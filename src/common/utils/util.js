@@ -273,9 +273,14 @@ const util = {
   getTheme() {
     return localStorage.getItem('theme') === Enum.themes.theme2 ? 'dark' : '';
   },
-  precisionInput(num, precision = 18) {
+  precisionInput(num, precision = 18,format=true) {
+    if(typeof num === 'string') num = num.replace(',' ,'');
     if (!num) num = 0;
-    let result = BigNumber(num).toFixed(precision, BigNumber.ROUND_FLOOR);
+    let result;
+    if(format) result = BigNumber(
+      BigNumber(num).toFixed(precision, BigNumber.ROUND_FLOOR)
+    ).toFormat(precision);
+    else result = BigNumber(num).toFixed(precision, BigNumber.ROUND_FLOOR);
     return result;
   },
   compareNumber(a, b) {
