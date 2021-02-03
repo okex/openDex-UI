@@ -8,12 +8,13 @@ import URL from '_src/constants/URL';
 import { Dialog } from '_component/Dialog';
 import { Button } from '_component/Button';
 import Select from '_component/ReactSelect';
+import Checkbox from 'rc-checkbox';
 import FormatNum from '_src/utils/FormatNum';
 import { calc } from '_component/okit';
 import PasswordDialog from '_component/PasswordDialog';
 import util from '../../utils/util';
 import ont from '../../utils/dataProxy';
-import { getLpTokenStr } from '../../utils/lpTokenUtil';
+import { getLpTokenStr, isLpToken } from '../../utils/lpTokenUtil';
 import env from '../../constants/env';
 import './TransferDialog.less';
 
@@ -55,6 +56,8 @@ class TransferDialog extends Component {
     this.state = {
       transferring: false,
       ...this.initState,
+      check: !isLpToken(props.symbol),
+      hideCheck: !isLpToken(props.symbol),
     };
     this.feeLeft = 0;
     this.addr = window.OK_GLOBAL.senderAddr;
@@ -176,7 +179,10 @@ class TransferDialog extends Component {
     this.setState({ amount: util.precisionInput(available, 8, false) });
   };
   setSymbol = (symbol, checkFee = true) => {
-    this.setState({ symbol }, () => {
+    this.setState({ symbol,
+      check: !isLpToken(symbol),
+      hideCheck: !isLpToken(symbol)
+    }, () => {
       if (symbol) {
         this.setState(
           {
@@ -199,7 +205,7 @@ class TransferDialog extends Component {
     });
   };
   canProceed = () => {
-    const { fee, symbol, address, amount, available } = this.state;
+    const { fee, symbol, address, amount, available,check } = this.state;
     return (
       this.props.tokenList.length &&
       symbol &&
@@ -209,7 +215,8 @@ class TransferDialog extends Component {
       !util.compareNumber(available, amount) &&
       util.compareNumber(fee, this.feeLeft) &&
       this.addr &&
-      this.addr.toLowerCase() !== address.trim().toLowerCase()
+      this.addr.toLowerCase() !== address.trim().toLowerCase() &&
+      check
     );
   };
   onTypeChange = ({ value }) => {
@@ -314,6 +321,9 @@ class TransferDialog extends Component {
       }
     );
   };
+  toggleCheck = (e) => {
+    this.setState({ check: e.target.checked });
+  }
   render() {
     const { state, props } = this;
     const {
@@ -331,6 +341,8 @@ class TransferDialog extends Component {
       pwdErr,
       processingPwd,
       transferring,
+      hideCheck,
+      check,
     } = state;
     const { show, onClose, tokenList, tokenMap } = props;
     const { original_symbol } = tokenMap[symbol] || { original_symbol: '' };
@@ -430,6 +442,16 @@ class TransferDialog extends Component {
                 </tr>
               </tbody>
             </table>
+            {!hideCheck && 
+              <label className="cursor-pointer lp-checkbox">
+                <Checkbox
+                  onChange={this.toggleCheck}
+                  className="content-box"
+                  checked={check}
+                />
+                {toLocale('lp token transfer')}
+              </label>
+            }
             <Button
               block
               type={Button.btnType.primary}

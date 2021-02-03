@@ -1197,6 +1197,6 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   'swap warn tip2':
     'Please note that the price impact is {num}, you will have loss in this transaction.',
   'empty add list': 'You will at least receive',
-  'lp token transfer': '如果转到交易所就找不回资产',
+  'lp token transfer': 'I understand that the LP token deposited to OKEx exchange will not be retrieved.',
 };
 export default enUS;
