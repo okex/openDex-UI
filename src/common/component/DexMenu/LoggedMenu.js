@@ -87,21 +87,6 @@ class DexLoggedMenu extends React.Component {
     return current === PageURL.spotFullPage;
   }
 
-  hasKeyStore() {
-    let keyStore = false;
-    if (!util.isLogined()) return keyStore;
-    let user = window.localStorage.getItem(env.envConfig.dexUser);
-    if (user) {
-      try {
-        user = JSON.parse(user);
-        keyStore = !!user.info;
-      } catch (e) {
-        keyStore = false;
-      }
-    }
-    return keyStore;
-  }
-
   handleLogOut = () => {
     const dialog = Dialog.confirm({
       title: toLocale('header_menu_logout1'),
@@ -114,7 +99,7 @@ class DexLoggedMenu extends React.Component {
       },
       onConfirm: () => {
         dialog.destroy();
-        if(this.isWalletConnect()) {
+        if(util.isWalletConnect()) {
           wallet.killSession(function() {
             util.doLogout();
             window.location.reload();
@@ -126,16 +111,6 @@ class DexLoggedMenu extends React.Component {
       },
     });
   };
-
-  isWalletConnect() {
-    return util.isLogined() && !this.hasKeyStore();
-  }
-
-  componentDidMount() {
-    if(this.isWalletConnect()) {
-      wallet.getSession();
-    }
-  }
 
   render() {
     const { hasDoc, href } = this.props;
@@ -190,7 +165,7 @@ class DexLoggedMenu extends React.Component {
                 </NavLink>
               )}
             </Menu.Item>
-            {this.hasKeyStore() && 
+            {util.hasKeyStore() && 
             <Menu.Item key="wallet-3" onClick={this.handleDownKeyStore}>
               {toLocale('header_menu_down_keystore')}
             </Menu.Item>

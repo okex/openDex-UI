@@ -7,35 +7,28 @@ import FormActionType from '../actionTypes/FormActionType';
 import ont from '../../utils/dataProxy';
 import URL from '../../constants/URL';
 import util from '_src/utils/util';
+import walletUtil from '../../pages/wallet/walletUtil';
 import env from '../../constants/env';
 
 const legalCurrencyId = 'dex_legalCurrencyId';
 
 export function initOKExChainClient() {
   return (dispatch) => {
-    console.log({
-      chainId: env.envConfig.chainId,
-      relativePath: `/${env.envConfig.apiPath}`,
-      isMainnet: env.envConfig.isMainnet,
-    });
     const client = new OKExChainClient(Config.okexchain.clientUrl, {
       chainId: env.envConfig.chainId,
       relativePath: `/${env.envConfig.apiPath}`,
       isMainnet: env.envConfig.isMainnet,
     });
-    let user = window.localStorage.getItem(env.envConfig.dexUser);
-    if (user) {
-      try {
-        user = JSON.parse(user);
-        if(!user.info) {
-          wallet.getSession({
-            sessionCancel:() => {
-              util.doLogout();
-              window.location.reload();
-            }
-          });
+    if(util.isWalletConnect()) {
+      wallet.getSession({
+        sessionCancel:() => {
+          util.doLogout();
+          window.location.reload();
         }
-      } catch (e) {
+      });
+      const addr = wallet.getAddress()
+      if(addr) {
+        walletUtil.setUserInSessionStroageByWalletConnect(addr);
       }
     }
     dispatch({

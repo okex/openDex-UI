@@ -296,6 +296,23 @@ const util = {
       window.location.href = path;
     }
   },
+  hasKeyStore() {
+    let keyStore = false;
+    if (!this.isLogined()) return keyStore;
+    let user = window.localStorage.getItem(env.envConfig.dexUser);
+    if (user) {
+      try {
+        user = JSON.parse(user);
+        keyStore = !!user.info;
+      } catch (e) {
+        keyStore = false;
+      }
+    }
+    return keyStore;
+  },
+  isWalletConnect() {
+    return this.isLogined() && !this.hasKeyStore();
+  }
 };
 
 export default util;
