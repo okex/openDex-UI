@@ -1,11 +1,11 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { toLocale } from '_src/locale/react-locale';
+import PageURL from '_constants/PageURL';
 import * as api from './util/api';
 import InfoItem from './InfoItem';
-import AddLiquidity from './AddLiquidity';
-import CreateLiquidity from './CreatLiquidity';
-import ReduceLiquidity from './ReduceLiquidity';
 import Tooltip from '../../component/Tooltip';
+@withRouter
 export default class PoolPanel extends React.Component {
   constructor() {
     super();
@@ -32,39 +32,18 @@ export default class PoolPanel extends React.Component {
   }
 
   add = async (userLiquidity) => {
-    if (!userLiquidity) return this.goAddLiquidity();
-    const liquidity = await api.tokenPair({
-      base_token: userLiquidity.base_pooled_coin.denom,
-      quote_token: userLiquidity.quote_pooled_coin.denom,
-    });
-    this.goAddLiquidity({ liquidity, userLiquidity });
+    let route;
+    if (!userLiquidity) route = PageURL.addLiquidityPage;
+    else route = `${PageURL.addLiquidityPage}/${userLiquidity.base_pooled_coin.denom}/${userLiquidity.quote_pooled_coin.denom}`
+    this.props.history.push(route);
   };
 
-  goAddLiquidity(data = {}) {
-    const { liquidity, userLiquidity } = data;
-    this.props.push({
-      component: AddLiquidity,
-      props: {
-        liquidity,
-        userLiquidity,
-        disabledChangeCoin: !!userLiquidity,
-      },
-    });
-  }
-
   create = () => {
-    this.props.push({
-      component: CreateLiquidity,
-    });
+    this.props.history.push(PageURL.createLiquidityPage);
   };
 
   reduce = (liquidity) => {
-    this.props.push({
-      component: ReduceLiquidity,
-      props: {
-        liquidity,
-      },
-    });
+    this.props.history.push(`${PageURL.reduceLiquidityPage}/${liquidity.base_pooled_coin.denom}/${liquidity.quote_pooled_coin.denom}`);
   };
 
   render() {

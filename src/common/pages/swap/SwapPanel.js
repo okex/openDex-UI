@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { toLocale } from '_src/locale/react-locale';
 import util from '_src/utils/util';
@@ -11,12 +12,12 @@ import { getCoinIcon, getDisplaySymbol } from '../../utils/coinIcon';
 import * as api from './util/api';
 import Confirm from '../../component/Confirm';
 import { getDeadLine4sdk } from './util';
-import getRef from '../../component/getRef';
 import Tooltip from '../../component/Tooltip';
 import { validateTxs } from '_src/utils/client';
 import Message from '_src/component/Message';
 import classNames from 'classnames';
 import { Dialog } from '../../component/Dialog';
+import env from '../../constants/env';
 
 function mapStateToProps(state) {
   const { setting } = state.SwapStore;
@@ -24,8 +25,8 @@ function mapStateToProps(state) {
   return { okexchainClient, setting };
 }
 
+@withRouter
 @connect(mapStateToProps)
-@getRef
 export default class SwapPanel extends React.Component {
   static exchangeInfo = {
     price: '',
@@ -35,34 +36,27 @@ export default class SwapPanel extends React.Component {
     isReverse: false,
   };
 
-  static defaultProps = {
-    baseToken: {
+  static getDefaultToken(symbol='') {
+    return {
       available: '',
       value: '',
-      symbol: '',
+      symbol,
       error: false,
-    },
-    targetToken: {
-      available: '',
-      value: '',
-      symbol: '',
-      error: false,
-    },
-  };
+    }
+  }
 
   constructor(props) {
     super(props);
+    const {match:{params:{base,target}}} = props;
     this.state = {
-      baseToken: props.baseToken,
-      targetToken: props.targetToken,
+      baseToken: SwapPanel.getDefaultToken(base||env.envConfig.token.base),
+      targetToken: SwapPanel.getDefaultToken(target),
       exchangeInfo: { ...SwapPanel.exchangeInfo },
       isPoolEmpty: false,
       showConfirmDialog: false,
       active: false,
     };
     this.trading = false;
-    this.initial = false
-    this.needInitData = null;
     this.updateSwapInfo4RealTime = util.debounce(this.updateSwapInfo4RealTime);
   }
 
@@ -168,9 +162,7 @@ export default class SwapPanel extends React.Component {
   async searchToken(data, symbol) {
     if (!data) data = await api.swapTokens();
     if (!data) return null;
-    let { native_token = '', tokens = [] } = data;
-    tokens = tokens || [];
-    symbol = symbol || native_token;
+    let { tokens = [] } = data;
     const base = tokens.filter((d) => d.symbol === symbol)[0];
     return base || null;
   }
@@ -225,25 +217,20 @@ export default class SwapPanel extends React.Component {
     this._clearTimer();
   }
 
-  async componentDidMount() {
-    await this.initBaseToken();
-    this.initial = true;
-    if(this.needInitData) {
-      this.init(this.needInitData);
-      this.needInitData = null;
-    }
+  componentDidMount() {
+    this.init();
   }
 
-  async init(data) {
-    if(!this.initial) {
-      this.needInitData = data;
-      return;
-    }
+  async init() {
+    const data = this.state;
+    if(!data.baseToken.symbol) return this.initBaseToken();
     const tokens = await api.swapTokens();
-    const baseToken = await this.searchToken(tokens, data.baseToken.symbol);
-    const targetToken = await this.searchToken(tokens, data.targetToken.symbol);
-    baseToken.value = '';
-    targetToken.value = '';
+    let baseToken = await this.searchToken(tokens, data.baseToken.symbol);
+    let targetToken = await this.searchToken(tokens, data.targetToken.symbol);
+    if(baseToken) baseToken.value = '';
+    else baseToken = {...data.baseToken,symbol:''};
+    if(targetToken) targetToken.value = '';
+    else targetToken = {...data.targetToken,symbol:''};
     this.updateSwapInfo4RealTime({ baseToken, targetToken }, 'baseToken');
   }
 

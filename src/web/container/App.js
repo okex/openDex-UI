@@ -1,6 +1,6 @@
 import { hot } from 'react-hot-loader/root';
 import React from 'react';
-import { Router, Route, Switch, Redirect } from 'react-router-dom';
+import { Router, Switch, Redirect } from 'react-router-dom';
 import PageURL from '_constants/PageURL';
 import { toLocale } from '_src/locale/react-locale';
 import util from '_src/utils/util';
@@ -25,35 +25,12 @@ class App extends React.Component {
     }
   }
   render() {
+    const routes = routerConfig.getRoute({FullTradeHead});
     return (
       <Router basename={window.okGlobal.langPath} history={history}>
         <div className="main-container">
           <Switch>
-            {routerConfig.map((router, index) => {
-              const { path, component: Page } = router;
-              return (
-                <Route
-                  path={path}
-                  exact
-                  component={() => {
-                    return (
-                      <React.Fragment>
-                        {path === PageURL.spotFullPage ||
-                        path === PageURL.homePage ? (
-                          ''
-                        ) : (
-                          <div className="full-head">
-                            <FullTradeHead />
-                          </div>
-                        )}
-                        <Page />
-                      </React.Fragment>
-                    );
-                  }}
-                  key={index}
-                />
-              );
-            })}
+            {routes}
             <Redirect from="/" to={PageURL.spotFullPage} />
           </Switch>
         </div>

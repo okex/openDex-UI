@@ -1,15 +1,15 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import Pagination from '_component/Pagination';
+import PageURL from '_constants/PageURL';
 import { getCoinIcon, getDisplaySymbol } from '../../utils/coinIcon';
 import { toLocale } from '_src/locale/react-locale';
 import WatchList from './Watchlist';
 import * as api from './util/api';
 import calc from '_src/utils/calc';
-import AddLiquidity from './AddLiquidity';
-import getRef from '../../component/getRef';
 import Tooltip from '../../component/Tooltip';
 import util from '_src/utils/util';
-@getRef
+@withRouter
 export default class WatchlistPanel extends React.Component {
   constructor() {
     super();
@@ -171,26 +171,7 @@ export default class WatchlistPanel extends React.Component {
 
   async addLiquidity(row) {
     const tokens = row.swap_pair.split('_');
-    const params = {
-      base_token: tokens[0],
-      quote_token: tokens[1],
-    };
-    let liquidity, liquidityInfo, userLiquidity;
-    try {
-      liquidity = await api.tokenPair(params);
-      liquidityInfo = await api.liquidityInfo(params);
-      userLiquidity = liquidityInfo && liquidityInfo[0];
-    } catch (e) {
-      console.log(e);
-    }
-    this.props.onAddLiquidity({
-      component: AddLiquidity,
-      props: {
-        liquidity,
-        userLiquidity,
-        disabledChangeCoin: false,
-      },
-    });
+    this.props.history.push(`${PageURL.addLiquidityPage}/${tokens[0]}/${tokens[1]}`);
   }
 
   goTrade(row) {
@@ -198,7 +179,7 @@ export default class WatchlistPanel extends React.Component {
     if (row.isRevert) tokens.reverse();
     let baseSymbol = tokens[0];
     let targetSymbol = tokens[1];
-    this.props.onTrade({ baseSymbol, targetSymbol });
+    this.props.history.push(`${PageURL.swapPage}/${baseSymbol}/${targetSymbol}`);
   }
 
   init = async ({ current, sort }) => {
@@ -232,11 +213,6 @@ export default class WatchlistPanel extends React.Component {
     const data = await this.init({ current: this.state.current });
     this.setState(data);
     this.updateWatchList4RealTime();
-  }
-
-  async reload() {
-    const data = await this.init({ current: 1 });
-    this.setState({ ...data, current: 1 });
   }
 
   _clearTimer() {

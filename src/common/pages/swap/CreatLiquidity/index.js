@@ -6,9 +6,9 @@ import PageURL from '_constants/PageURL';
 import { withRouter, Link } from 'react-router-dom';
 import * as api from '../util/api';
 import CoinDropdown from './CoinDropdown';
-import AddLiquidity from '../AddLiquidity';
 import Confirm from '../../../component/Confirm';
 import { validateTxs } from '_src/utils/client';
+import env from '../../../constants/env';
 import util from '_src/utils/util';
 
 function mapStateToProps(state) {
@@ -22,7 +22,7 @@ export default class CreatLiquidity extends React.Component {
     super();
     this.state = {
       baseToken: {
-        symbol: '',
+        symbol: env.envConfig.token.base,
         available: '',
       },
       targetToken: {
@@ -109,14 +109,7 @@ export default class CreatLiquidity extends React.Component {
 
   addLiquidity = (liquidity) => {
     if (!liquidity) liquidity = this.state.error;
-    this.props.push({
-      component: AddLiquidity,
-      props: {
-        liquidity,
-        showLiquidity: false,
-        disabledChangeCoin: !!liquidity,
-      },
-    });
+    this.props.history.push(`${PageURL.addLiquidityPage}/${liquidity.base_pooled_coin.denom}/${liquidity.quote_pooled_coin.denom}`);
   };
 
   getBtn() {
@@ -145,13 +138,12 @@ export default class CreatLiquidity extends React.Component {
   }
 
   render() {
-    const { back } = this.props;
     const { baseToken, targetToken, error } = this.state;
     const btn = this.getBtn();
     return (
       <div className="panel">
         <div className="panel-header">
-          <i className="iconfont before" onClick={back}></i>
+          <i className="iconfont before" onClick={() => this.props.history.goBack()}></i>
           {toLocale('Input Pool')}
         </div>
         <div className="add-liquidity-content">
