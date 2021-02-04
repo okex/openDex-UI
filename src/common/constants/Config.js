@@ -1,4 +1,6 @@
 import { getCurrentApiUrl } from './getApiUrl';
+import okexznLogo from '../assets/images/okexzh.png';
+import okexenLogo from '../assets/images/okexen.png';
 import Cookies from 'js-cookie';
 import env from './env';
 const okbExplorePrefix = env.envConfig.oklinkPagePath;
@@ -6,7 +8,7 @@ const exploreUrl = 'https://www.oklink.com';
 const lang = Cookies.get('locale') || '';
 const receiveCoinUrl =
   lang === 'en_US' ? 'https://www.okex.com' : 'https://www.okexcn.com';
-
+const okexLogo = lang === 'zh_CN' ? okexznLogo : okexenLogo;
 const Config = {
   okexchain: {
     browserUrl: `${exploreUrl}/${okbExplorePrefix}`,
@@ -38,5 +40,6 @@ const Config = {
     chartReg: /(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])/,
   },
   needLegalPrice: false,
+  okexLogo,
 };
 export default Config;
