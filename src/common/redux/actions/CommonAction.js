@@ -7,7 +7,6 @@ import FormActionType from '../actionTypes/FormActionType';
 import ont from '../../utils/dataProxy';
 import URL from '../../constants/URL';
 import util from '_src/utils/util';
-import walletUtil from '../../pages/wallet/walletUtil';
 import env from '../../constants/env';
 
 const legalCurrencyId = 'dex_legalCurrencyId';
@@ -26,10 +25,6 @@ export function initOKExChainClient() {
           window.location.reload();
         }
       });
-      const addr = wallet.getAddress()
-      if(addr) {
-        walletUtil.setUserInSessionStroageByWalletConnect(addr);
-      }
     }
     dispatch({
       type: CommonActionType.SET_OKEXCHAIN_CLIENT,
