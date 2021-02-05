@@ -58,6 +58,7 @@ const config = [
   {
     path: PageURL.spotDefaultPage,
     component: FullTrade,
+    containHead: false,
   },
   {
     path: PageURL.walletCreate,
