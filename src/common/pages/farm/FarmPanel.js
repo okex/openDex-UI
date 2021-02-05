@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { toLocale } from '_src/locale/react-locale';
 import util from '_src/utils/util';
 import { getCoinIcon } from '../../utils/coinIcon';
@@ -12,7 +13,7 @@ import classNames from 'classnames';
 import Stake from './Stake';
 import { Dialog } from '../../component/Dialog';
 import * as api from './util/api';
-
+@withRouter
 export default class FarmPanel extends React.Component {
   constructor() {
     super();
@@ -134,7 +135,7 @@ export default class FarmPanel extends React.Component {
               </div>
               <SimpleBtnDialog
                 component={() =>
-                  Stake.getStake({ data: d, onSuccess: this.props.onDashboard })
+                  Stake.getStake({ data: d, onSuccess: () => this.props.history.push(PageURL.myfarmingsPage) })
                 }
               >
                 <div className={classNames('farm-btn')}>
@@ -154,7 +155,7 @@ export default class FarmPanel extends React.Component {
             </div>
           </div>
         </div>
-        <WatchlistPanel onDashboard={this.props.onDashboard}/>
+        <WatchlistPanel/>
       </div>
     );
   }

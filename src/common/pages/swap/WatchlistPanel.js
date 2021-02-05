@@ -155,6 +155,7 @@ export default class WatchlistPanel extends React.Component {
         },
       },
     ];
+    this.inited = false
     this.state = {
       sort: { field: 'liquidity', sort: 'desc' },
       data: [],
@@ -210,6 +211,7 @@ export default class WatchlistPanel extends React.Component {
   }
 
   async componentDidMount() {
+    this.inited = true;
     const data = await this.init({ current: this.state.current });
     this.setState(data);
     this.updateWatchList4RealTime();
@@ -240,7 +242,7 @@ export default class WatchlistPanel extends React.Component {
           columns={this.columns}
           onSort={this.onSort}
         >
-          {!total && (
+          {this.inited && !total && (
             <div className="nodata">{toLocale('watchlist noData')}</div>
           )}
         </WatchList>

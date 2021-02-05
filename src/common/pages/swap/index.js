@@ -15,30 +15,6 @@ const WATCHLIST = '3';
 @SwapPushWrapper
 export default class Swap extends React.Component {
 
-  onTrade = ({ baseSymbol, targetSymbol }) => {
-    this.onChange(SWAP, () => {
-      this.swap &&
-        this.swap.init({
-          baseToken: {
-            available: '',
-            value: '',
-            symbol: baseSymbol,
-          },
-          targetToken: {
-            available: '',
-            value: '',
-            symbol: targetSymbol,
-          },
-        });
-    });
-  };
-
-  onAddLiquidity = (route) => {
-    this.onChange(POOL);
-    const { current: router } = this.router;
-    router.push(route, true);
-  };
-
   onChange = (activekey) => {
     let route = PageURL.swapPage;
     if (activekey === POOL) {

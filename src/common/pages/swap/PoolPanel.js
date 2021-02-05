@@ -67,15 +67,16 @@ export default class PoolPanel extends React.Component {
             {toLocale('Create Liquidity')}
           </div>
         </div>
-        {this.init && userLiquidityInfo.length ? (
+        {this.init && userLiquidityInfo.length && 
           <div className="poll-items-wrap">
             <div className="poll-items">
               {this.liquidity(userLiquidityInfo)}
             </div>
           </div>
-        ) : (
-          <div className="nodata">{toLocale('No Liquidity Found')}</div>
-        )}
+        }
+        {
+          this.init && !userLiquidityInfo.length && <div className="nodata">{toLocale('No Liquidity Found')}</div>
+        }
       </div>
     );
   }

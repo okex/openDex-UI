@@ -17,6 +17,7 @@ export default class AddLiquidityWrap extends React.Component {
   async componentDidMount() {
     this.init = true;
     const {match:{params:{base,target}}} = this.props;
+    if(!base || !target) return this.setState({});
     let {liquidity, userLiquidity} = await api.getLiquidity(base,target);
     this.setState({
       liquidity,

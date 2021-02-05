@@ -19,6 +19,7 @@ import { validateTxs } from '_src/utils/client';
 import { getDisplaySymbol } from '../../../utils/coinIcon';
 import { Dialog } from '../../../component/Dialog';
 import classNames from 'classnames';
+import env from '../../../constants/env';
 
 function mapStateToProps(state) {
   const { setting } = state.SwapStore;
@@ -70,7 +71,7 @@ export default class AddLiquidity extends React.Component {
   }
 
   _process(liquidity) {
-    let baseSymbol = '',
+    let baseSymbol = env.envConfig.token.base,
       targetSymbol = '',
       isEmptyPool = false;
     if (liquidity) {
@@ -493,13 +494,6 @@ export default class AddLiquidity extends React.Component {
 
   componentDidMount() {
     this.init(this.state);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps !== this.props) {
-      const state = this._getDefaultState(nextProps);
-      this.init(state);
-    }
   }
 
   reduce = (liquidity) => {

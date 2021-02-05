@@ -24,6 +24,8 @@ import CreatLiquidity from '../pages/swap/CreatLiquidity';
 import ReduceLiquidity from '../pages/swap/ReduceLiquidity';
 import WatchlistPanel from '../pages/swap/WatchlistPanel';
 import Farm from '../pages/farm';
+import FarmPanel from '../pages/farm/FarmPanel';
+import DashboardPanel from '../pages/farm/DashboardPanel';
 import env from '../constants/env';
 
 const config = [
@@ -135,11 +137,11 @@ const config = [
   },
   {
     path: PageURL.myfarmingsPage,
-    component: Farm,
+    component: () => <Farm activekey="2"><DashboardPanel/></Farm>,
   },
   {
     path: PageURL.farmPage,
-    component: Farm,
+    component: () => <Farm><FarmPanel/></Farm>,
   },
 ];
 
