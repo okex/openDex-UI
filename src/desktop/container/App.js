@@ -1,7 +1,6 @@
 import { hot } from 'react-hot-loader/root';
 import React from 'react';
-import { Router, Switch, Redirect } from 'react-router-dom';
-import PageURL from '_constants/PageURL';
+import { Router, Switch } from 'react-router-dom';
 import { toLocale } from '_src/locale/react-locale';
 import util from '_src/utils/util';
 import history from '_src/utils/history';
@@ -31,7 +30,6 @@ class App extends React.Component {
         <div className="main-container">
           <Switch>
             {routes}
-            <Redirect from="/" to={PageURL.swapPage} />
           </Switch>
         </div>
       </Router>

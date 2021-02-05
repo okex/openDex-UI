@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import PageURL from '_constants/PageURL';
 import Home from '../pages/home/index';
 import FullTrade from '_app/pages/fullTrade/FullTrade';
@@ -129,6 +129,10 @@ const config = [
     component: () => <Swap><SwapPanel/></Swap>,
   },
   {
+    path: PageURL.swapPage + '/*',
+    redirect: PageURL.swapPage,
+  },
+  {
     path: PageURL.myfarmingsPage,
     component: () => <Farm activekey="2"><DashboardPanel/></Farm>,
   },
@@ -136,13 +140,22 @@ const config = [
     path: PageURL.farmPage,
     component: () => <Farm><FarmPanel/></Farm>,
   },
+  {
+    path: PageURL.farmPage + '/*',
+    redirect: PageURL.farmPage,
+  },
+  {
+    path: '/',
+    redirect: PageURL.spotFullPage,
+  },
 ];
 
 function getRoute({routerConfig=config,FullTradeHead}) {
   let routes = [];
-  routerConfig.forEach(router => {
-    const { path, component: Page, containHead = true, children } = router;
-    routes.push(
+  routerConfig.forEach((router,index) => {
+    const { path, component: Page, containHead = true, redirect } = router;
+    if(redirect) routes.push(<Redirect from={path} to={redirect} key={index}/>)
+    else routes.push(
       <Route
         path={path}
         exact
@@ -154,13 +167,12 @@ function getRoute({routerConfig=config,FullTradeHead}) {
                 <FullTradeHead />
               </div>
               }
-              {Page && <Page />}
+              {Page && <Page/>}
             </React.Fragment>
           );
         }}
-        key={path}
+        key={index}
       >
-        {children && getRoute({routerConfig:children, FullTradeHead})}
       </Route>
     );
   });
