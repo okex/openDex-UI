@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link,withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as CommonAction from '_src/redux/actions/CommonAction';
 import { bindActionCreators } from 'redux';
@@ -16,6 +16,7 @@ function mapDispatchToProps(dispatch) {
     commonAction: bindActionCreators(CommonAction, dispatch),
   };
 }
+@withRouter
 @connect(mapStateToProps, mapDispatchToProps)
 export default class LiquidityInfoTip extends React.Component {
   goLiquidity = () => {
@@ -28,6 +29,11 @@ export default class LiquidityInfoTip extends React.Component {
 
   render() {
     const { onClose, data } = this.props;
+    const {lock_symbol_info:{symbols}} = data;
+    const base = symbols[0];
+    const quote =symbols[1];
+    let url = PageURL.addLiquidityPage;
+    if(base && quote) url = `${url}/${base}/${quote}`;
     return (
       <div className="stake-panel" style={{ width: '496px' }}>
         <div className="stake-panel-title no-title">
@@ -47,7 +53,7 @@ export default class LiquidityInfoTip extends React.Component {
             {toLocale('cancel')}
           </div>
           {/* 暂未考虑桌面端 */}
-          <Link to={PageURL.liquidityPage} onClick={this.goLiquidity}>
+          <Link to={url} onClick={this.goLiquidity}>
             <div className="farm-btn">{toLocale('Add Liquidity')}</div>
           </Link>
         </div>
