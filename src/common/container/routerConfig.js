@@ -105,11 +105,7 @@ const config = [
     component: Fees,
   },
   {
-    path: PageURL.addLiquidityPage+'/:base/:target',
-    component: () => <Swap activekey="2"><AddLiquidity/></Swap>,
-  },
-  {
-    path: PageURL.addLiquidityPage,
+    path: [PageURL.addLiquidityPage,PageURL.addLiquidityPage+'/:base/:target'],
     component: () => <Swap activekey="2"><AddLiquidity/></Swap>,
   },
   {
@@ -129,11 +125,7 @@ const config = [
     component: () => <Swap activekey="3"><WatchlistPanel/></Swap>,
   },
   {
-    path: PageURL.swapPage+'/:base/:target',
-    component: () => <Swap><SwapPanel/></Swap>,
-  },
-  {
-    path: PageURL.swapPage,
+    path: [PageURL.swapPage,PageURL.swapPage+'/:base/:target'],
     component: () => <Swap><SwapPanel/></Swap>,
   },
   {
