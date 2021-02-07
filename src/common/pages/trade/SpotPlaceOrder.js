@@ -210,7 +210,7 @@ class SpotPlaceOrder extends React.Component {
     }
     this.formParam = { ...formParam, product: this.props.product };
     const expiredTime = window.localStorage.getItem('pExpiredTime') || 0;
-    if (new Date().getTime() < +expiredTime && this.props.privateKey) {
+    if (util.isWalletConnect() || (new Date().getTime() < +expiredTime && this.props.privateKey)) {
       const param = { ...this.formParam, pk: this.props.privateKey };
       return formAction.submitOrder(param, this.successToast, this.onSubmitErr);
     }

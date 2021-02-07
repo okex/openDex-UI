@@ -237,78 +237,7 @@ class TransferDialog extends Component {
           this.props.commonAction.validatePassword(
             pwd,
             (privateKey) => {
-              const { onClose, onSuccess, okexchainClient } = this.props;
-              const { symbol, address, amount, note, available } = this.state;
-              onClose();
-              this.setState({ transferring: true });
-              let amountStr = util.precisionInput(amount).replace(/,/g,'');
-              if (
-                util.precisionInput(amount, 8) ===
-                util.precisionInput(available, 8)
-              ) {
-                amountStr = available;
-              }
-              okexchainClient.setAccountInfo(privateKey).then(() => {
-                okexchainClient
-                  .sendSendTransaction(address, amountStr, symbol, note)
-                  .then((res) => {
-                    if (res.result.code) {
-                      setTimeout(() => {
-                        this.setState({ transferring: false });
-                        const dialog = Dialog.show({
-                          theme: 'dark trans-alert',
-                          hideCloseBtn: true,
-                          children: (
-                            <div className="trans-msg">
-                              <Icon className="icon-icon_fail" isColor />
-                              {toLocale(`error.code.${res.result.code}`) ||
-                                toLocale('trans_fail')}
-                            </div>
-                          ),
-                        });
-                        setTimeout(() => {
-                          dialog.destroy();
-                        }, this.transDur);
-                      }, this.loadingDur);
-                    } else {
-                      setTimeout(() => {
-                        this.setState({ transferring: false });
-                        const dialog = Dialog.show({
-                          theme: 'dark trans-alert',
-                          hideCloseBtn: true,
-                          children: (
-                            <div className="trans-msg">
-                              <Icon className="icon-icon_success" isColor />
-                              {toLocale('trans_success')}
-                            </div>
-                          ),
-                        });
-                        setTimeout(() => {
-                          dialog.destroy();
-                          onSuccess();
-                        }, this.transDur);
-                      }, this.loadingDur);
-                    }
-                  })
-                  .catch(() => {
-                    setTimeout(() => {
-                      this.setState({ transferring: false });
-                      const dialog = Dialog.show({
-                        theme: 'dark trans-alert',
-                        hideCloseBtn: true,
-                        children: (
-                          <div className="trans-msg">
-                            <Icon className="icon-icon_fail" isColor />
-                            {toLocale('trans_fail')}
-                          </div>
-                        ),
-                      });
-                      setTimeout(() => {
-                        dialog.destroy();
-                      }, this.transDur);
-                    }, this.loadingDur);
-                  });
-              });
+              this._transfer(privateKey);
             },
             () => {
               this.setState({
@@ -321,9 +250,92 @@ class TransferDialog extends Component {
       }
     );
   };
+  _transfer = (privateKey='') => {
+    const { onClose, onSuccess, okexchainClient } = this.props;
+    const { symbol, address, amount, note, available } = this.state;
+    onClose();
+    this.setState({ transferring: true });
+    let amountStr = util.precisionInput(amount).replace(/,/g,'');
+    if (
+      util.precisionInput(amount, 8) ===
+      util.precisionInput(available, 8)
+    ) {
+      amountStr = available;
+    }
+    okexchainClient.setAccountInfo(privateKey).then(() => {
+      okexchainClient
+        .sendSendTransaction(address, amountStr, symbol, note)
+        .then((res) => {
+          if (res.result.code) {
+            setTimeout(() => {
+              this.setState({ transferring: false });
+              const dialog = Dialog.show({
+                theme: 'dark trans-alert',
+                hideCloseBtn: true,
+                children: (
+                  <div className="trans-msg">
+                    <Icon className="icon-icon_fail" isColor />
+                    {toLocale(`error.code.${res.result.code}`) ||
+                      toLocale('trans_fail')}
+                  </div>
+                ),
+              });
+              setTimeout(() => {
+                dialog.destroy();
+              }, this.transDur);
+            }, this.loadingDur);
+          } else {
+            setTimeout(() => {
+              this.setState({ transferring: false });
+              const dialog = Dialog.show({
+                theme: 'dark trans-alert',
+                hideCloseBtn: true,
+                children: (
+                  <div className="trans-msg">
+                    <Icon className="icon-icon_success" isColor />
+                    {toLocale('trans_success')}
+                  </div>
+                ),
+              });
+              setTimeout(() => {
+                dialog.destroy();
+                onSuccess();
+              }, this.transDur);
+            }, this.loadingDur);
+          }
+        })
+        .catch(() => {
+          setTimeout(() => {
+            this.setState({ transferring: false });
+            const dialog = Dialog.show({
+              theme: 'dark trans-alert',
+              hideCloseBtn: true,
+              children: (
+                <div className="trans-msg">
+                  <Icon className="icon-icon_fail" isColor />
+                  {toLocale('trans_fail')}
+                </div>
+              ),
+            });
+            setTimeout(() => {
+              dialog.destroy();
+            }, this.transDur);
+          }, this.loadingDur);
+        });
+    });
+  };
   toggleCheck = (e) => {
     this.setState({ check: e.target.checked });
   }
+
+  submit = () => {
+    if(util.isWalletConnect()) {
+      this._transfer();
+    } else {
+      this.setState({ step: 3 }, this.clearPwd);
+    }
+  }
+
   render() {
     const { state, props } = this;
     const {
@@ -506,9 +518,7 @@ class TransferDialog extends Component {
               </Button>
               <Button
                 type={Button.btnType.primary}
-                onClick={() => {
-                  this.setState({ step: 3 }, this.clearPwd);
-                }}
+                onClick={this.submit}
               >
                 {toLocale('ensure')}
               </Button>

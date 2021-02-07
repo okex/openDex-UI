@@ -158,7 +158,7 @@ class OpenList extends RouterCredential {
             this.formParam = { ...this.formParam, side: _this.state.side };
           }
           const expiredTime = window.localStorage.getItem('pExpiredTime') || 0;
-          if (new Date().getTime() < +expiredTime && this.props.privateKey) {
+          if (util.isWalletConnect() || (new Date().getTime() < +expiredTime && this.props.privateKey)) {
             const param = { ...this.formParam, pk: this.props.privateKey };
             this.setState(
               {

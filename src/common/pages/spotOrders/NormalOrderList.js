@@ -119,7 +119,7 @@ export default class NormalOrderList extends React.Component {
             this.formParam = { ...this.formParam, product: this.props.product };
           }
           const expiredTime = window.localStorage.getItem('pExpiredTime') || 0;
-          if (new Date().getTime() < +expiredTime && this.props.privateKey) {
+          if (util.isWalletConnect() || (new Date().getTime() < +expiredTime && this.props.privateKey)) {
             const param = { ...this.formParam, pk: this.props.privateKey };
             this.setState(
               {
