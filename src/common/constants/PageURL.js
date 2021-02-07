@@ -33,6 +33,8 @@ const paths = {
   farmPage: `${contentPath}/farm`,
 };
 
+console.log(paths);
+
 export default {
   ...paths,
   contentPath,
