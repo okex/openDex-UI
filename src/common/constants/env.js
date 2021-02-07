@@ -1,4 +1,6 @@
 import { getPathAndHash } from '../utils/pathUtil';
+const { okGlobal = {} } = window;
+const { langPath = '' } = okGlobal;
 
 const testnet = {
   isTest: true,
@@ -76,7 +78,8 @@ const mainnet = {
 
 function envConfig() {
   let { pathname, hash } = getPathAndHash();
-  if (/^\/dex\-test/.test(pathname) || /^\/dex\-test/.test(hash))
+  const regexp = new RegExp(`^${langPath}\/dex\-test`);
+  if (regexp.test(pathname) || regexp.test(hash))
     return testnet;
   return mainnet;
 }
