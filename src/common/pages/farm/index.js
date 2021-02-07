@@ -6,11 +6,9 @@ import DashboardPanel from './DashboardPanel';
 import { toLocale } from '_src/locale/react-locale';
 import SwapPushWrapper from '_app/wrapper/SwapPushWrapper';
 import { Dialog } from '../../component/Dialog';
-import FirstPanel from './FirstPanel';
 import env from '../../constants/env';
 import './index.less';
 
-const FIRST = '0';
 const FARM = '1';
 const DASHBOARD = '2';
 
@@ -69,7 +67,7 @@ export default class Farm extends React.Component {
               destroyInactiveTabPane
             >
               <TabPane tab={toLocale('Farm')} key={FARM}>
-                <FarmPanel />
+                <FarmPanel onDashboard={this.onDashboard}/>
               </TabPane>
               <TabPane tab={toLocale('Dashboard')} key={DASHBOARD}>
                 <DashboardPanel onFarm={this.onFarm} />

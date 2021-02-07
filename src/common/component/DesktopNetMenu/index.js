@@ -5,13 +5,15 @@ import ComboBox from '_src/component/ComboBox/ComboBox';
 import env from '../../constants/env';
 import './index.less';
 
+const { okGlobal = {} } = window;
+const { langPath = '' } = okGlobal;
 const netTypeList = [
   {
     get url() {
       if (!env.envConfig.isTest) return window.location.href;
       return PageURL.getCurrent().replace(
-        new RegExp(`^/${env.testnet.pagePath}`),
-        `/${env.mainnet.pagePath}`
+        new RegExp(`^${langPath}/${env.testnet.pagePath}`),
+        `${langPath}/${env.mainnet.pagePath}`
       );
     },
     type: `/${env.mainnet.pagePath}`,
@@ -23,8 +25,8 @@ const netTypeList = [
     get url() {
       if (env.envConfig.isTest) return window.location.href;
       return PageURL.getCurrent().replace(
-        new RegExp(`/${env.mainnet.pagePath}`),
-        `/${env.testnet.pagePath}`
+        new RegExp(`${langPath}/${env.mainnet.pagePath}`),
+        `${langPath}/${env.testnet.pagePath}`
       );
     },
     type: `/${env.testnet.pagePath}`,

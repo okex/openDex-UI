@@ -93,7 +93,7 @@ export default class WatchlistPanel extends React.Component {
           return (
             <SimpleBtnDialog
               component={() =>
-                Stake.getStake({ data: row, onSuccess: this.refreshData })
+                Stake.getStake({ data: row, onSuccess: this.props.onDashboard })
               }
             >
               <div className="action-opt-wrap">

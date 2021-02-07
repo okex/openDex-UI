@@ -2,7 +2,6 @@ import React from 'react';
 import DesktopNodeMenu from '_app/component/DesktopNodeMenu';
 import DesktopLinkMenu from '_component/DesktopLinkMenu';
 import DesktopTypeMenu from '_component/DesktopTypeMenu';
-import okexLogo from '_src/assets/images/OKEx.png';
 import Config from '_src/constants/Config';
 import PageURL from '_src/constants/PageURL';
 import FullTradeTicker from '_src/pages/fullTrade/FullTradeTicker';
@@ -32,13 +31,6 @@ function mapDispatchToProps(dispatch) {
 @withRouter
 @connect(mapStateToProps, mapDispatchToProps)
 class FullTradeHead extends React.Component {
-  constructor(props) {
-    super(props);
-    this.iconStyle = {
-      width: '100%',
-      marginTop: -25,
-    };
-  }
 
   componentDidMount() {
     this.props.commonAction.initOKExChainClient();
@@ -64,7 +56,7 @@ class FullTradeHead extends React.Component {
           target="_blank"
           href={Config.okexchain.homeUrl}
         >
-          <img src={okexLogo} style={this.iconStyle} />
+          <img src={Config.okexLogo}/>
         </a>
         <DesktopTypeMenu isDexDesk={true} current={current} />
         {this.isTradePage() && <DesktopNodeMenu />}

@@ -1190,6 +1190,6 @@ const zhCN = {
   'UNI Burned': '销毁LP ({base}/{quote})',
   'swap warn tip2': '请注意当前价格影响为{num}, 执行这笔交易将会亏损',
   'empty add list': '你将至少获得',
-  'lp token transfer': '如果转到交易所就找不回资产',
+  'lp token transfer': '我已知晓将LP Token充值到OKEx交易所会无法找回。',
 };
 export default zhCN;

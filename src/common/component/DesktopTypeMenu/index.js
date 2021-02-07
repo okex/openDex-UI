@@ -109,6 +109,10 @@ class DesktopTypeMenu extends Component {
     }
   };
 
+  componentDidMount() {
+    this.props.commonAction.setActivedMenu(activedMenu || '');
+  }
+
   render() {
     const current =
       this.props.activedMenu || getDefaultActivedMenu(this.props.current);
