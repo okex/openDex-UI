@@ -163,10 +163,13 @@ export default class WatchlistPanel extends React.Component {
       pageSize: 15,
       total: 0,
     };
+    this.reverted = new Set();
   }
 
   exchange(row) {
     row.isRevert = !row.isRevert;
+    if(row.isRevert) this.reverted.add(row.swap_pair);
+    else this.reverted.delete(row.swap_pair);
     this.setState({});
   }
 
@@ -183,7 +186,7 @@ export default class WatchlistPanel extends React.Component {
     this.props.history.push(`${PageURL.swapPage}/${baseSymbol}/${targetSymbol}`);
   }
 
-  init = async ({ current, sort }) => {
+  init = async ({ current, sort }, clear = false) => {
     const { pageSize } = this.state;
     if (!current) current = this.state.current;
     if (!sort) sort = this.state.sort;
@@ -192,17 +195,22 @@ export default class WatchlistPanel extends React.Component {
       params.sort_column = sort.field;
       params.sort_direction = sort.sort;
     }
-    const { data, param_page } = await api.watchlist(params);
+    const { data=[], param_page } = await api.watchlist(params);
+    if(!clear) {
+      data.forEach(d => {
+        d.isRevert = this.reverted.has(d.swap_pair);
+      });
+    }
     return { data, total: param_page.total };
   };
 
   onChange = async (current) => {
-    const data = await this.init({ current });
+    const data = await this.init({ current }, true);
     this.setState({ ...data, current });
   };
 
   onSort = async (sort) => {
-    const data = await this.init({ sort });
+    const data = await this.init({ sort }, true);
     this.setState({ ...data, sort });
   };
   
