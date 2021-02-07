@@ -200,6 +200,8 @@ export default class WatchlistPanel extends React.Component {
       data.forEach(d => {
         d.isRevert = this.reverted.has(d.swap_pair);
       });
+    } else {
+      this.reverted.clear();
     }
     return { data, total: param_page.total };
   };
