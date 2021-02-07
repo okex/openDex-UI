@@ -25,8 +25,8 @@ const netTypeList = [
     get url() {
       if (env.envConfig.isTest) return window.location.href;
       return PageURL.getCurrent().replace(
-        new RegExp(`/${env.mainnet.pagePath}`),
-        `/${env.testnet.pagePath}`
+        new RegExp(`${langPath}/${env.mainnet.pagePath}`),
+        `${langPath}/${env.testnet.pagePath}`
       );
     },
     type: `/${env.testnet.pagePath}`,
