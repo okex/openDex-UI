@@ -49,7 +49,6 @@ export default class DashboardPanel extends React.Component {
     this.stopTimer();
     const { data } = this.state;
     this.interval = setInterval(() => {
-      console.log('start dashboard');
       api.process(data);
       this.setState({});
     }, 1000);
@@ -62,7 +61,6 @@ export default class DashboardPanel extends React.Component {
     if (this.interval) {
       clearInterval(this.interval);
       this.interval = null;
-      console.log('stop dashboard');
     }
     if (this.refreshInterval) {
       clearInterval(this.refreshInterval);

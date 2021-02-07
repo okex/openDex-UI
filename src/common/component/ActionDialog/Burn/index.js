@@ -55,7 +55,6 @@ class BurnDialog extends Component {
         }
       })
       .catch((err) => {
-        console.log(err);
         isFunction(afterBurn) && afterBurn();
         showError(err.message || toLocale('sysError'));
         this.setState({ value: '' });

@@ -35,7 +35,7 @@ export default class AddLiquidity extends React.Component {
     this.confirmRef = React.createRef();
     this.state = this._getDefaultState(props);
     this.trading = false;
-    this.updateLiquidInfo4RealTime = util.debounce(this.updateLiquidInfo4RealTime);
+    this.debounceUpdateLiquidInfo4RealTime = util.debounce(this.updateLiquidInfo4RealTime);
   }
 
   _getDefaultState(props) {
@@ -111,7 +111,8 @@ export default class AddLiquidity extends React.Component {
         targetToken: { ...this.state.targetToken },
         exchangeInfo: { ...this.state.exchangeInfo },
       };
-      this.updateLiquidInfo4RealTime({ data:temp, inputChanged });
+      if(inputChanged) this.debounceUpdateLiquidInfo4RealTime({ data:temp, inputChanged });
+      else this.updateLiquidInfo4RealTime({ data:temp, inputChanged });
     });
   };
 
@@ -128,6 +129,7 @@ export default class AddLiquidity extends React.Component {
         targetToken: { ...this.state.targetToken },
         exchangeInfo: { ...this.state.exchangeInfo },
       };
+      if(inputChanged) this.debounceUpdateLiquidInfo4RealTime({ data:temp, key: 'targetToken', inputChanged });
       this.updateLiquidInfo4RealTime({ data:temp, key: 'targetToken', inputChanged });
     });
     

@@ -53,7 +53,6 @@ function start(datadir, dispatch, getState, func, terminal = false) {
       const child =
         localNodeServerClient.get() ||
         shell.exec(`${startCommand}`, { async: true }, (code) => {
-          console.log('start code:' + code);
           if (code !== 130 && code !== 0 && code !== 2) {
             Message.error({
               content: 'okexchaind start error',

@@ -60,7 +60,6 @@ class WithdrawDepositsDialog extends Component {
         }
       })
       .catch((err) => {
-        console.log(err);
         isFunction(afterWithdraw) && afterWithdraw();
         showError(err.message || toLocale('sysError'));
         this.setState({ value: '' });

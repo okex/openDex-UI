@@ -81,7 +81,6 @@ export function fetchDepth(product) {
   return (dispatch) => {
     ont.get(URL.GET_DEPTH_BOOK, { params: { product } }).then((res) => {
       if (wsV3.canSend()) {
-        console.log('trace,websocket,error,ajax回调发生在websocket推送之后');
         return;
       }
       const formattedData = transferDepth(res.data);
@@ -109,12 +108,6 @@ export function wsUpdateDepth(data) {
   return (dispatch, getState) => {
     const tradeState = getState().SpotTrade;
     if (data.action === 'partial') {
-      const traceDepth = tradeState.depth || { asks: [] };
-      if (traceDepth.asks.length) {
-        console.log(
-          'trace,websocket,error,ajax回调发生在websocket原清空逻辑之后'
-        );
-      }
       dispatch(clearSortPushDepthData());
     }
 
