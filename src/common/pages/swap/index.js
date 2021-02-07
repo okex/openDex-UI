@@ -1,10 +1,7 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import Tabs, { TabPane } from 'rc-tabs';
-import Router from '../../component/Router';
 import SwapContext from './SwapContext';
-import SwapPanel from './SwapPanel';
-import PoolPanel from './PoolPanel';
-import WatchlistPanel from './WatchlistPanel';
 import PageURL from '_constants/PageURL';
 import { toLocale } from '_src/locale/react-locale';
 import SwapPushWrapper from '_app/wrapper/SwapPushWrapper';
@@ -14,57 +11,18 @@ const SWAP = '1';
 const POOL = '2';
 const WATCHLIST = '3';
 
+@withRouter
 @SwapPushWrapper
 export default class Swap extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activekey: props.activekey || SWAP,
-    };
-    this.router = React.createRef();
-    this.swap = null;
-    this.watchlist = null;
-  }
 
-  onTrade = ({ baseSymbol, targetSymbol }) => {
-    this.onChange(SWAP, () => {
-      this.swap &&
-        this.swap.init({
-          baseToken: {
-            available: '',
-            value: '',
-            symbol: baseSymbol,
-          },
-          targetToken: {
-            available: '',
-            value: '',
-            symbol: targetSymbol,
-          },
-        });
-    });
-  };
-
-  onAddLiquidity = (route) => {
-    this.onChange(POOL);
-    const { current: router } = this.router;
-    router.push(route, true);
-  };
-
-  changeHash(activekey) {
+  onChange = (activekey) => {
+    let route = PageURL.swapPage;
     if (activekey === POOL) {
-      window.history.replaceState({}, '', PageURL.liquidityPage);
+      route = PageURL.liquidityPage;
     } else if (activekey === WATCHLIST) {
-      window.history.replaceState({}, '', PageURL.watchlistPage);
-    } else {
-      window.history.replaceState({}, '', PageURL.swapPage);
+      route = PageURL.watchlistPage;
     }
-  }
-
-  onChange = (activekey, callback) => {
-    this.changeHash(activekey);
-    this.setState({ activekey }, () => {
-      callback && callback();
-    });
+    this.props.history.push(route);
   };
 
   componentDidMount() {
@@ -77,8 +35,7 @@ export default class Swap extends React.Component {
   }
 
   render() {
-    const { wsV3 } = this.props;
-    const { activekey } = this.state;
+    const { wsV3,activekey=SWAP,children } = this.props;
     return (
       <SwapContext.Provider value={wsV3}>
         <div className="swap-container">
@@ -89,17 +46,13 @@ export default class Swap extends React.Component {
             destroyInactiveTabPane
           >
             <TabPane tab={toLocale('Swap')} key={SWAP}>
-              <SwapPanel getRef={(instance) => (this.swap = instance)} />
+              {children}
             </TabPane>
             <TabPane tab={toLocale('Pool')} key={POOL}>
-              <Router route={{ component: PoolPanel }} ref={this.router} />
+              {children}
             </TabPane>
             <TabPane tab={toLocale('Watchlist')} key={WATCHLIST}>
-              <WatchlistPanel
-                onTrade={this.onTrade}
-                onAddLiquidity={this.onAddLiquidity}
-                getRef={(instance) => (this.watchlist = instance)}
-              />
+              {children}
             </TabPane>
           </Tabs>
         </div>

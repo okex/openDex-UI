@@ -27,18 +27,25 @@ const paths = {
   feesPage: `${contentPath}/fees`,
   swapPage: `${contentPath}/swap`,
   liquidityPage: `${contentPath}/swap/liquidity`,
+  reduceLiquidityPage: `${contentPath}/swap/liquidity/reduce`,
+  createLiquidityPage: `${contentPath}/swap/liquidity/create`,
+  addLiquidityPage: `${contentPath}/swap/liquidity/add`,
   watchlistPage: `${contentPath}/swap/watchlist`,
   farmPage: `${contentPath}/farm`,
+  myfarmingsPage: `${contentPath}/farm/myfarmings`,
 };
 
 export default {
   ...paths,
   getCurrent() {
     let { pathname, hash } = getPathAndHash();
+    let result = '';
     for (name in paths) {
       const temp = paths[name];
-      if (pathname === temp || hash === temp) return temp;
+      if (pathname.startsWith(temp) || hash.startsWith(temp)) {
+        if(temp.length > result.length) result = temp;
+      };
     }
-    return '';
+    return result;
   },
 };

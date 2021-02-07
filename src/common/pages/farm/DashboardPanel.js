@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import Pagination from '_component/Pagination';
 import { getCoinIcon } from '../../utils/coinIcon';
 import { toLocale } from '_src/locale/react-locale';
@@ -12,7 +13,7 @@ import SimpleBtnDialog from './SimpleBtnDialog';
 import classNames from 'classnames';
 import Stake from './Stake';
 import Claim from './Claim';
-
+@withRouter
 export default class DashboardPanel extends React.Component {
   constructor() {
     super();
@@ -116,7 +117,7 @@ export default class DashboardPanel extends React.Component {
               {toLocale('APY')}
             </div>
           </div>
-          <div className="farm-btn" onClick={this.props.onFarm}>
+          <div className="farm-btn" onClick={() => this.props.history.push(PageURL.farmPage)}>
             {toLocale('Go stake')}
           </div>
         </div>

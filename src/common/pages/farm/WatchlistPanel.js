@@ -1,7 +1,9 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import Pagination from '_component/Pagination';
 import { getCoinIcon } from '../../utils/coinIcon';
 import { toLocale } from '_src/locale/react-locale';
+import PageURL from '_constants/PageURL';
 import WatchList from './Watchlist';
 import * as api from './util/api';
 import calc from '_src/utils/calc';
@@ -11,7 +13,7 @@ import Tooltip from '../../component/Tooltip';
 import SimpleBtnDialog from './SimpleBtnDialog';
 import classNames from 'classnames';
 import Stake from './Stake';
-
+@withRouter
 export default class WatchlistPanel extends React.Component {
   constructor() {
     super();
@@ -93,7 +95,7 @@ export default class WatchlistPanel extends React.Component {
           return (
             <SimpleBtnDialog
               component={() =>
-                Stake.getStake({ data: row, onSuccess: this.props.onDashboard })
+                Stake.getStake({ data: row, onSuccess: () => this.props.history.push(PageURL.myfarmingsPage)})
               }
             >
               <div className="action-opt-wrap">

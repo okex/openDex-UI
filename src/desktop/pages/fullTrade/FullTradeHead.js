@@ -2,6 +2,7 @@ import React from 'react';
 import DesktopNodeMenu from '_app/component/DesktopNodeMenu';
 import DesktopLinkMenu from '_component/DesktopLinkMenu';
 import DesktopTypeMenu from '_component/DesktopTypeMenu';
+import DesktopNetMenu from '_component/DesktopNetMenu';
 import Config from '_src/constants/Config';
 import PageURL from '_src/constants/PageURL';
 import FullTradeTicker from '_src/pages/fullTrade/FullTradeTicker';
@@ -58,6 +59,7 @@ class FullTradeHead extends React.Component {
         >
           <img src={Config.okexLogo}/>
         </a>
+        <DesktopNetMenu />
         <DesktopTypeMenu isDexDesk={true} current={current} />
         {this.isTradePage() && <DesktopNodeMenu />}
         {this.isTradePage() && <FullTradeProductList />}

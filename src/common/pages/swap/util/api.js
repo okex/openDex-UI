@@ -93,3 +93,19 @@ export function watchlist(params) {
   //@mock mocker.watchlist(URL.GET_SWAP_WATCHLIST);
   return get(URL.GET_SWAP_WATCHLIST, params);
 }
+
+export async function getLiquidity(base,quote) {
+  const params = {
+    base_token: base,
+    quote_token: quote,
+  };
+  let liquidity = null, _liquidityInfo = null, userLiquidity = null;
+  try {
+    liquidity = await tokenPair(params);
+    _liquidityInfo = await liquidityInfo(params);
+    userLiquidity = _liquidityInfo && _liquidityInfo[0];
+  } catch (e) {
+    console.log(e);
+  }
+  return {liquidity, liquidityInfo: _liquidityInfo, userLiquidity};
+}
