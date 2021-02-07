@@ -78,7 +78,7 @@ const mainnet = {
 
 function envConfig() {
   let { pathname, hash } = getPathAndHash();
-  const regexp = new RegExp(`^${langPath.replace('/','\\/')}\/dex\-test`);
+  const regexp = new RegExp(`^${langPath}\/dex\-test`);
   if (regexp.test(pathname) || regexp.test(hash))
     return testnet;
   return mainnet;
