@@ -45,10 +45,6 @@ const routes = [
     component: DealOrders,
   },
   {
-    path: PageURL.spotDefaultPage,
-    component: FullTrade,
-  },
-  {
     path: PageURL.walletCreate,
     component: CreateWallet,
   },
