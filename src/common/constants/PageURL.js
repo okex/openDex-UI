@@ -6,8 +6,6 @@ const contentPath = `${langPath}/${env.envConfig.pagePath}`;
 
 const paths = {
   homePage: `${contentPath}`,
-  indexPage: `${contentPath}/index`,
-  spotDefaultPage: `${contentPath}/spot`,
   spotFullPage: `${contentPath}/spot/trade`,
   spotOpenPage: `${contentPath}/spot/open`,
   spotHistoryPage: `${contentPath}/spot/history`,

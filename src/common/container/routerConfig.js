@@ -56,11 +56,6 @@ const config = [
     component: DealOrders,
   },
   {
-    path: PageURL.spotDefaultPage,
-    component: FullTrade,
-    containHead: false,
-  },
-  {
     path: PageURL.walletCreate,
     component: CreateWallet,
   },
