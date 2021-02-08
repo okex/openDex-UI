@@ -130,7 +130,7 @@ export default class AddLiquidity extends React.Component {
         exchangeInfo: { ...this.state.exchangeInfo },
       };
       if(inputChanged) this.debounceUpdateLiquidInfo4RealTime({ data:temp, key: 'targetToken', inputChanged });
-      this.updateLiquidInfo4RealTime({ data:temp, key: 'targetToken', inputChanged });
+      else this.updateLiquidInfo4RealTime({ data:temp, key: 'targetToken', inputChanged });
     });
     
   };
@@ -147,9 +147,10 @@ export default class AddLiquidity extends React.Component {
     key = 'baseToken',
     time = 3000,
     inputChanged = true,
+    check = true
   }) => {
     this._clearTimer();
-    await this.updateInfo(data, key, true, inputChanged);
+    await this.updateInfo(data, key, true, inputChanged, check);
     this.setState(data, () => {
       this._clearTimer();
       this.setState({});
@@ -182,12 +183,12 @@ export default class AddLiquidity extends React.Component {
       )[0];
       if (target) data.targetToken = { ...targetToken, ...target };
     }
-    this.updateLiquidInfo4RealTime({ data });
+    this.updateLiquidInfo4RealTime({ data, check: false });
   };
 
-  async updateInfo(data, key, errTip = false, inputChanged = true) {
+  async updateInfo(data, key, errTip = false, inputChanged = true, check = true) {
     try {
-      await this._check(data);
+      await this._check(data, check);
       await this._updateExchangePrice(data);
       await this._updateExchange(data, key, inputChanged);
       const { showConfirmDialog, baseToken, targetToken } = this.state;
@@ -207,7 +208,8 @@ export default class AddLiquidity extends React.Component {
     }
   }
 
-  async _check(data) {
+  async _check(data, check) {
+    if(!check) return;
     const { baseToken, targetToken } = data;
     let {liquidity, userLiquidity} = await api.getLiquidity(baseToken.symbol,targetToken.symbol);
     const { isEmptyPool } = this._process(liquidity);
