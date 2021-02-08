@@ -55,9 +55,15 @@ class DexLoggedMenu extends React.Component {
     });
   };
   download = (passValue) => {
+    if(this.state.processingPwd) return;
     const {type} = this.state;
-    if(type === KEYSTORE) this.downKeyStoreCore(passValue);
-    else this.downPrivateKey(passValue);
+    this.setState({processingPwd: true});
+    setTimeout(() => {
+      if(type === KEYSTORE) this.downKeyStoreCore(passValue);
+      else this.downPrivateKey(passValue);
+      this.setState({processingPwd: false});
+    },20);
+    
   };
   getPrivateKey = (passValue) => {
     let result = {privateKey:'',keyStore: null};
@@ -88,6 +94,7 @@ class DexLoggedMenu extends React.Component {
     } catch (e) {
       this.setState({
         isShowPassword: true,
+        processingPwd: false,
         passwordError: toLocale('pwd_error'),
       });
     }
@@ -192,7 +199,7 @@ class DexLoggedMenu extends React.Component {
   };
   render() {
     const { hasDoc, href } = this.props;
-    const { isShowPassword, passwordError } = this.state;
+    const { isShowPassword, passwordError,processingPwd } = this.state;
     let addr = '';
     try {
       const user = JSON.parse(
@@ -208,6 +215,7 @@ class DexLoggedMenu extends React.Component {
           isShow={isShowPassword}
           onEnter={this.download}
           warning={passwordError}
+          btnLoading={processingPwd}
           updateWarning={(err) => {
             this.setState({ passwordError: err });
           }}
