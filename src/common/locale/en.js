@@ -825,6 +825,7 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   header_menu_wallet: 'Wallet',
   header_menu_assets: 'Asset balance',
   header_menu_down_keystore: 'Download keystore',
+  header_menu_down_privatekey: 'Export secret key',
   header_menu_logout: 'Log out',
   header_menu_logout1: 'Log out of your DEX wallet?',
   header_menu_help: 'Help',

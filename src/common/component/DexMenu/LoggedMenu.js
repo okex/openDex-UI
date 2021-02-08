@@ -7,7 +7,10 @@ import { crypto } from '@okexchain/javascript-sdk';
 import { Dialog } from '_component/Dialog';
 import Menu from '_src/component/Menu';
 import util from '_src/utils/util';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { Button } from '_component/Button';
 import IconFountUnfold from './IconFountUnfold';
+import Icon from '_src/component/IconLite';
 import { withRouter, NavLink } from 'react-router-dom';
 import PageURL from '_constants/PageURL';
 import PassWordDialog from '_component/PasswordDialog';
@@ -20,6 +23,8 @@ import env from '../../constants/env';
 import './index.less';
 
 const SubMenu = Menu.SubMenu;
+const KEYSTORE = '1';
+const PRIVATEKEY = '2';
 
 function mapStateToProps(state) {
   const { privateKey } = state.Common;
@@ -40,38 +45,70 @@ class DexLoggedMenu extends React.Component {
   state = {
     isShowPassword: false,
     passwordError: '',
+    type: KEYSTORE,
   };
-  handleDownKeyStore = () => {
+  handleDown = (type=KEYSTORE) => {
     this.setState({
       isShowPassword: true,
       passwordError: '',
+      type,
     });
+  };
+  download = (passValue) => {
+    const {type} = this.state;
+    if(type === KEYSTORE) this.downKeyStoreCore(passValue);
+    else this.downPrivateKey(passValue);
+  };
+  getPrivateKey = (passValue) => {
+    let result = {privateKey:'',keyStore: null};
+    const User = window.localStorage.getItem(env.envConfig.dexUser);
+    if (User) {
+      const UserObj = JSON.parse(User);
+      const { info: keyStore } = UserObj;
+      result.keyStore = keyStore;
+      result.privateKey = crypto.getPrivateKeyFromKeyStore(
+        keyStore,
+        passValue
+      );
+    }
+    return result;
   };
   downKeyStoreCore = (passValue) => {
     if (!util.isLogined()) {
       window.location.reload();
+      return;
     }
-
     const keyStoreName = `keystore_${moment().format('YYYY-MM-DD HH:mm:ss')}`;
-    const User = window.localStorage.getItem(env.envConfig.dexUser);
-    if (User) {
-      try {
-        const UserObj = JSON.parse(User);
-        const { info: keyStore } = UserObj;
-        const privateKey = crypto.getPrivateKeyFromKeyStore(
-          keyStore,
-          passValue
-        );
-        if (privateKey) {
-          util.downloadObjectAsJson(keyStore || '', `${keyStoreName}.txt`);
-          this.setState({ isShowPassword: false, passwordError: '' });
-        }
-      } catch (e) {
-        this.setState({
-          isShowPassword: true,
-          passwordError: toLocale('pwd_error'),
-        });
+    try {
+      const {privateKey,keyStore} = this.getPrivateKey(passValue);
+      if (privateKey) {
+        util.downloadObjectAsJson(keyStore || '', `${keyStoreName}.txt`);
+        this.setState({ isShowPassword: false, passwordError: '' });
       }
+    } catch (e) {
+      this.setState({
+        isShowPassword: true,
+        passwordError: toLocale('pwd_error'),
+      });
+    }
+  };
+  downPrivateKey = (passValue) => {
+    if (!util.isLogined()) {
+      window.location.reload();
+      return;
+    }
+    try {
+      const {privateKey} = this.getPrivateKey(passValue);
+      if (privateKey) {
+        this.setState({ isShowPassword: false, passwordError: '' });
+        this.showPrivate(privateKey);
+      }
+    } catch (e) {
+      console.log(e)
+      this.setState({
+        isShowPassword: true,
+        passwordError: toLocale('pwd_error'),
+      });
     }
   };
   handleClosePassWordDialog = () => {
@@ -80,13 +117,62 @@ class DexLoggedMenu extends React.Component {
     });
   };
 
+  showPrivate = (privateKey) => {
+    this.showPrivate.privateKey = privateKey;
+    this.privateDialog = Dialog.show({
+      windowStyle: { backgroundColor: '#112F62' },
+      children: this.renderPrivateDialog(),
+    });
+  };
+  hidePrivate = () => {
+    this.showPrivate.privateKey = void 0;
+    this.privateDialog.destroy();
+  };
+  handleCopy = () => {
+    this.privateDialog.update({
+      children: this.renderPrivateDialog(true),
+    });
+    clearTimeout(this.copyTimer);
+    this.copyTimer = setTimeout(() => {
+      this.privateDialog.update({
+        children: this.renderPrivateDialog(false),
+      });
+    }, 1000);
+  };
+  renderPrivateDialog = (copySuccess = false) => {
+    const privateKey = this.showPrivate.privateKey;
+    return (
+      <div className="private-container">
+        <div className="private-title">{toLocale('wallet_privateKey')}</div>
+        <Icon
+          className="icon-icon_successfuzhi"
+          isColor
+          style={{ width: 60, height: 60, marginBottom: 30 }}
+        />
+        <div className="private-content">
+          <span id="okdex-wallet-private-key">{privateKey}</span>
+          <span data-clipboard-target="#okdex-wallet-private-key">
+            <CopyToClipboard text={privateKey} onCopy={this.handleCopy}>
+              <Icon
+                className={copySuccess ? 'icon-icon_success' : 'icon-icon_copy'}
+                isColor
+                style={{ width: 14, height: 14, cursor: 'pointer' }}
+              />
+            </CopyToClipboard>
+          </span>
+        </div>
+        <Button type="primary" onClick={this.hidePrivate}>
+          {toLocale('wallet_ensure')}
+        </Button>
+      </div>
+    );
+  };
   isDexMenu() {
     const current = DesktopTypeMenu.current
       ? DesktopTypeMenu.current.url
       : null;
     return current === PageURL.spotFullPage;
   }
-
   handleLogOut = () => {
     const dialog = Dialog.confirm({
       title: toLocale('header_menu_logout1'),
@@ -120,7 +206,7 @@ class DexLoggedMenu extends React.Component {
       <React.Fragment>
         <PassWordDialog
           isShow={isShowPassword}
-          onEnter={this.downKeyStoreCore}
+          onEnter={this.download}
           warning={passwordError}
           updateWarning={(err) => {
             this.setState({ passwordError: err });
@@ -157,8 +243,11 @@ class DexLoggedMenu extends React.Component {
                 </NavLink>
               )}
             </Menu.Item>
-            <Menu.Item key="wallet-3" onClick={this.handleDownKeyStore}>
+            <Menu.Item key="wallet-3" onClick={() => this.handleDown(KEYSTORE)}>
               {toLocale('header_menu_down_keystore')}
+            </Menu.Item>
+            <Menu.Item key="wallet-5" onClick={() => this.handleDown(PRIVATEKEY)}>
+            {toLocale('header_menu_down_privatekey')}
             </Menu.Item>
             <Menu.Item key="wallet-4" onClick={this.handleLogOut}>
               {toLocale('header_menu_logout')}

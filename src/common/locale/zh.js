@@ -820,6 +820,7 @@ const zhCN = {
   header_menu_wallet: '链上钱包',
   header_menu_assets: '资产余额',
   header_menu_down_keystore: '下载keystore文件',
+  header_menu_down_privatekey: '导出私钥',
   header_menu_logout: '退出钱包',
   header_menu_logout1: '确定要退出当前钱包',
   header_menu_help: '帮助',
