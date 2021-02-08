@@ -177,13 +177,7 @@ export default class AddLiquidity extends React.Component {
     const data = { ...state };
     if (base) data.baseToken = { ...baseToken, ...base };
     if (targetToken.symbol) {
-      const temp = await api.addLiquidityTokens({
-        symbol: token,
-      });
-      if (!temp) return;
-      let { tokens: targetTokens } = temp;
-      targetTokens = targetTokens || [];
-      const target = targetTokens.filter(
+      const target = tokens.filter(
         (d) => d.symbol === targetToken.symbol
       )[0];
       if (target) data.targetToken = { ...targetToken, ...target };
