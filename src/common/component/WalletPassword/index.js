@@ -79,6 +79,8 @@ class index extends Component {
           onCompositionEnd={this.handleCompositionEnd}
           onPaste={this.handlePaste}
           className={showPassword ? 'show' : ''}
+          type={!showPassword && !window.navigator.userAgent.match(/webkit/i) ? 'password' : 'text'}
+          autoComplete="new-password"
           allowClear={allowClear}
           suffix={() => {
             const IconClsName = showPassword

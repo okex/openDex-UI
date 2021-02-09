@@ -199,6 +199,8 @@ class ImportByKeystore extends Component {
           <span>
             <Input
               value={password}
+              type={!window.navigator.userAgent.match(/webkit/i) ? 'password' : 'text'}
+              autoComplete="new-password"
               placeholder={toLocale('wallet_import_enterPassword')}
               onChange={this.changePwd}
               onPaste={(e) => {

@@ -135,6 +135,8 @@ class Step1 extends Component {
             <div className="set-password-twice">
               <Input
                 value={pwdTwice}
+                type={!window.navigator.userAgent.match(/webkit/i) ? 'password' : 'text'}
+                autoComplete="new-password"
                 placeholder={toLocale('wallet_twicePassword')}
                 onChange={this.changePwdTwice}
                 onPaste={(e) => {
