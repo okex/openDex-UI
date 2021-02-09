@@ -4,6 +4,7 @@ import { toLocale } from '_src/locale/react-locale';
 import util from '_src/utils/util';
 import Enum from '../../utils/Enum';
 import DepthTitle from '../../component/depth/DepthTitle';
+import { getDisplaySymbol } from '_src/utils/coinIcon';
 import DepthList from './DepthList';
 
 import './Depth.less';
@@ -60,7 +61,7 @@ export default class Depth extends React.Component {
     };
     const priceTitle = (
       <span>
-        {toLocale('spot.price')}(<em>{baseCurr}</em>)
+        {toLocale('spot.price')}(<em>{getDisplaySymbol(baseCurr)}</em>)
       </span>
     );
     const sizeTitle = (

@@ -7,6 +7,7 @@ import { calc } from '_component/okit';
 import Fee from './Fee';
 import Enum from '../../utils/Enum';
 import util from '../../utils/util';
+import { getDisplaySymbol } from '_src/utils/coinIcon';
 
 function mapStateToProps(state) {
   const { FormStore, SpotTrade } = state;
@@ -116,13 +117,13 @@ class Available extends React.Component {
           <div className="spot-availadle">
             <span className="float-left">
               <span className="spot-availadle-desc">
-                {toLocale('spot.ava.buy')} {tradeSymbol}:
+                {toLocale('spot.ava.buy')} {getDisplaySymbol(tradeSymbol)}:
               </span>
               <span className="spot-asset-buy"> {displayAvailBuy}</span>
             </span>
             <span className="float-right">
               <span className="spot-availadle-desc">
-                {baseCurr}
+                {getDisplaySymbol(baseCurr)}
                 {toLocale('spot.bills.balance')}
                 {': '}
               </span>
@@ -135,13 +136,13 @@ class Available extends React.Component {
         <div className="spot-availadle">
           <span className="float-left">
             <span className="spot-availadle-desc">
-              {`${toLocale('spot.ava.sell')} ${baseCurr}: `}
+              {`${toLocale('spot.ava.sell')} ${getDisplaySymbol(baseCurr)}: `}
             </span>
             <span className="spot-asset-sell"> {displayAvailSell}</span>
           </span>
           <span className="float-right">
             <span className="spot-availadle-desc">
-              {tradeCurr}
+              {getDisplaySymbol(tradeCurr)}
               {toLocale('spot.bills.balance')}
               {': '}
             </span>
