@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toLocale } from '_src/locale/react-locale';
 import util from '_src/utils/util';
-import Message from '_src/component/Message';
+import Message from '_src/component/Notification';
 import PasswordDialog from '_component/PasswordDialog';
 import * as CommonAction from '_src/redux/actions/CommonAction';
 import { validateTxs } from '_src/utils/client';
@@ -93,19 +93,17 @@ export default class Confirm extends React.Component {
           this.loading = true;
           loadingToast = loadingTxt
             ? Message.loading({
-                content: (
-                  <span>
-                    {loadingTxt}
-                    <a
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      href={`${
-                        Config.okexchain.browserAddressUrl
-                      }/${util.getMyAddr()}`}
-                    >
-                      {toLocale('pending transactions link')}
-                    </a>
-                  </span>
+                content: loadingTxt,
+                desc:(
+                  <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={`${
+                    Config.okexchain.browserAddressUrl
+                  }/${util.getMyAddr()}`}
+                >
+                  {toLocale('pending transactions link')}
+                </a>
                 ),
                 duration: 0,
               })
@@ -116,20 +114,23 @@ export default class Confirm extends React.Component {
               toLocale(`error.code.${res.result.code}`) || res.result.msg
             );
           }
-          if (loadingToast) loadingToast.destroy();
           if (successTxt)
-            Message.success({
+          loadingToast.update({
               content: successTxt,
-              duration: 3,
+              type: Message.TYPE.success,
             });
           this.loading = false;
         } catch (e) {
-          Message.error({
+          loadingToast.update({
             content: e.message || toLocale('sysError'),
-            duration: 3,
+            type: Message.TYPE.error,
           });
         } finally {
-          if (loadingToast) loadingToast.destroy();
+          if (loadingToast) {
+            setTimeout(() => {
+              loadingToast.destroy();
+            }, 5000);
+          }
           this.loading = false;
           this.setState({ loading: false });
         }

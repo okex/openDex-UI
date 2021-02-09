@@ -14,7 +14,7 @@ import Confirm from '../../component/Confirm';
 import { getDeadLine4sdk } from './util';
 import Tooltip from '../../component/Tooltip';
 import { validateTxs } from '_src/utils/client';
-import Message from '_src/component/Message';
+import Message from '_src/component/Notification';
 import classNames from 'classnames';
 import { Dialog } from '../../component/Dialog';
 import env from '../../constants/env';

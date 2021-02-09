@@ -13,7 +13,7 @@ import util from '_src/utils/util';
 import { getLiquidityCheck, liquidityCheck } from '../util';
 import Config from '../../../constants/Config';
 import { getDeadLine4sdk } from '../util';
-import Message from '_src/component/Message';
+import Message from '_src/component/Notification';
 import Tooltip from '../../../component/Tooltip';
 import { validateTxs } from '_src/utils/client';
 import { getDisplaySymbol } from '../../../utils/coinIcon';
