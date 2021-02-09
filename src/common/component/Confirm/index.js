@@ -35,7 +35,7 @@ export default class Confirm extends React.Component {
   }
 
   onClose = () => {
-    this.setState({ isShow: false });
+    this.setState({ isShow: false,pwdErr:'' });
   };
 
   onEnter = (pwd) => {
