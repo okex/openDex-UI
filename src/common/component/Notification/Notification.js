@@ -58,7 +58,7 @@ export default class Notification extends React.PureComponent {
     /** 是否显示关闭图标 */
     showClose: PropTypes.bool,
     /** 提示的样式，请从Notification.TYPE常量中选择：success、info、warn、error   */
-    type: PropTypes.oneOf([TYPE.success, TYPE.info, TYPE.warn, TYPE.error]),
+    type: PropTypes.oneOf([TYPE.success, TYPE.info, TYPE.warn, TYPE.error, TYPE.loading]),
     /** 弹出位置 请从NotificationDIRECTION常量中选择 */
     // eslint-disable-next-line react/no-unused-prop-types
     placement: PropTypes.oneOf([DIRECTION.topLeft, DIRECTION.topRight, DIRECTION.bottomLeft, DIRECTION.bottomRight]),
