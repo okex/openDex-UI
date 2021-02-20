@@ -56,7 +56,7 @@ class ImportWallet extends Component {
     return (
       <>
         <WalletContainer>
-          <div className={classNames('wallet-import-container')}>
+          <div className={classNames('wallet-import-container','qrcode')}>
             <div className="wallet-import-title">{toLocale('wallet_import')}</div>
             <div className="wallet-import-tab">
               <div
