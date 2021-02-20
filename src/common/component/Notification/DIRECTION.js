@@ -1,4 +1,3 @@
-// 方向常量 主方向-辅方向
 const DIRECTION = {
   top: 'top',
   topLeft: 'topLeft',

@@ -9,12 +9,10 @@ import { zIndexGenerator } from './zIndex';
 
 const prefixCls = `okui-notification`;
 
-// 当前展示中的Notification的列表
 let notificationList = [];
 
 let notificationCount = 0;
 
-// 全局通用配置
 let globalConfig = {
   top: 75,
   left: 20,
@@ -25,7 +23,6 @@ let globalConfig = {
   maxCount: 10
 };
 
-// 从 notificationList 移除对应的Notification销毁方法和定时器ID
 function removeNotificationFromList(id) {
   const newList = [];
   let aimItem = null;
@@ -36,47 +33,27 @@ function removeNotificationFromList(id) {
       newList.push(item);
     }
   });
-  // 停止定时器
   aimItem && aimItem.destroyClockId && clearTimeout(aimItem.destroyClockId);
-  // 从列表移除
   notificationList = newList;
-  // 返回移除的项 可用于销毁
   return aimItem;
 }
 
 
 export default class Notification extends React.PureComponent {
   static propTypes = {
-    /** 提示内容 */
     content: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-    /** 描述内容 */
     desc: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-    /** 是否显示辅助图标 */
     showIcon: PropTypes.bool,
-    /** iconfont class名 */
     icon: PropTypes.string,
-    /** 是否显示关闭图标 */
     showClose: PropTypes.bool,
-    /** 提示的样式，请从Notification.TYPE常量中选择：success、info、warn、error   */
     type: PropTypes.oneOf([TYPE.success, TYPE.info, TYPE.warn, TYPE.error, TYPE.loading]),
-    /** 弹出位置 请从NotificationDIRECTION常量中选择 */
-    // eslint-disable-next-line react/no-unused-prop-types
     placement: PropTypes.oneOf([DIRECTION.topLeft, DIRECTION.topRight, DIRECTION.bottomLeft, DIRECTION.bottomRight]),
-    /** 自动关闭的延时，单位秒。设为 0 时不自动关闭。 */
-    // eslint-disable-next-line react/no-unused-prop-types
     duration: PropTypes.number,
-    /** 是否单行, 会影响操作按钮的布局 */
     isInline: PropTypes.bool,
-    /** 关闭后触发的回调函数 */
-    // eslint-disable-next-line react/no-unused-prop-types
     onClose: PropTypes.func,
-    /** 操作按钮文案 */
     confirmText: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-    /** 操作点击事件 */
     onConfirm: PropTypes.func,
-    /** 次要操作按钮文案 */
     cancelText: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-    /** 次要操作点击事件 */
     onCancel: PropTypes.func,
   };
   static defaultProps = {
@@ -129,20 +106,11 @@ function create(conf) {
     right,
     bottom,
   } = globalConfig;
-  // 当前notification的唯一标志
   const notificationId = ++notificationCount;
-  // 当前配置
   let currentConfig = conf;
-
-  // 用于销毁的定时器的ID
   let destroyClockId = null;
-
   const currentPlacement = currentConfig.placement || globalConfig.placement;
-
-  // 获取所有Notification的父容器
   let parentContainer = document.querySelector(`.${prefixCls}.${prefixCls}-${str.reverseCase(currentPlacement)}`);
-
-  // 没有 则创建所有Notification的父容器
   if (!parentContainer) {
     parentContainer = document.createElement('div');
     parentContainer.className = `${prefixCls} ${prefixCls}-${str.reverseCase(currentPlacement)}`;
@@ -150,20 +118,15 @@ function create(conf) {
     parentContainer.style.zIndex = zIndexGenerator.next(true).value;
     document.body.appendChild(parentContainer);
   }
-
-  // 创建当前Notification的用于挂载的容器 并挂载到父容器
   const container = document.createElement('div');
   container.className = `${prefixCls}-container`;
   parentContainer.appendChild(container);
 
   function destroy() {
-    // 已进入销毁流程 如果存在销毁定时 则清除定时器并从定时器列表中移除
     removeNotificationFromList(notificationId);
 
-    // 添加移除动画
     container.className += ' container-remove';
 
-    // 延时等动画完毕再移除
     setTimeout(() => {
       const unmountResult = ReactDOM.unmountComponentAtNode(container);
       if (unmountResult && container.parentNode) {
@@ -189,17 +152,14 @@ function create(conf) {
 
   render(currentConfig);
 
-  // 有延时 延时自动关闭
   if (conf.duration !== 0) {
     destroyClockId = setTimeout(() => {
       destroy();
     }, Number(conf.duration || globalConfig.duration) * 1000);
   }
 
-  // 将新Notification 存入列表
   notificationList.push({ notificationId, destroyClockId, destroy });
 
-  // 如果数量多于10的时候 清除第一个
   if (notificationList.length >= globalConfig.maxCount) {
     const notification = removeNotificationFromList(notificationList[0].notificationId);
     notification.destroy();
@@ -211,23 +171,19 @@ function create(conf) {
   };
 }
 
-// 销毁所有显示的Notification
 function destroyAll() {
-  // 移除notification的根父容器
   const parentContainers = document.getElementsByClassName(prefixCls);
   if (parentContainers) {
     [...parentContainers].forEach((container) => {
       container.remove();
     });
   }
-  // 清除所有定时器
   notificationList.forEach((item) => {
     clearTimeout(item.destroyClockId);
   });
   notificationList = [];
 }
 
-// 全局配置
 function config(conf) {
   globalConfig = Object.assign(globalConfig, conf);
 }
