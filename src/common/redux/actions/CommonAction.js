@@ -19,6 +19,7 @@ export function initOKExChainClient() {
       isMainnet: env.envConfig.isMainnet,
     });
     if(util.isWalletConnect()) {
+      console.log('开始获取获取session');
       wallet.getSession({
         sessionCancel:() => {
           util.doLogout();
