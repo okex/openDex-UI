@@ -121,8 +121,10 @@ export default class Confirm extends React.Component {
             });
           this.loading = false;
         } catch (e) {
+          let typeErr = e instanceof TypeError;
+          let content = typeErr ? toLocale('network error') :(e.message || toLocale('sysError'));
           loadingToast.update({
-            content: e.message || toLocale('sysError'),
+            content,
             type: Message.TYPE.error,
           });
         } finally {

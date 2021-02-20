@@ -319,6 +319,7 @@ const enUS = {
   needBorrow: 'Borrow ',
   repay: 'Repay',
   sysError: 'System error, please try again later.',
+  'network error': 'Network anomaly, transaction failed',
   operationSuccessful: 'Operation is successful.',
   on: 'On',
   off: 'Off',

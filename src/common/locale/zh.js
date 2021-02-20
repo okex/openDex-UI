@@ -309,6 +309,7 @@ const zhCN = {
   needBorrow: '需借 ',
   repay: '还',
   sysError: '系统错误，请稍后再试。',
+  'network error': '网络异常，交易失败',
   operationSuccessful: '操作成功',
   on: '开',
   off: '关',
