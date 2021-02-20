@@ -35,7 +35,6 @@ export default class FarmPanel extends React.Component {
   startTimer() {
     this.stopTimer();
     this.interval = setInterval(() => {
-      console.log('start farm');
       const { data } = this.state;
       api.process(data);
       this.setState({});
@@ -49,7 +48,6 @@ export default class FarmPanel extends React.Component {
     if (this.interval) {
       clearInterval(this.interval);
       this.interval = null;
-      console.log('stop farm');
     }
     if (this.refreshInterval) {
       clearInterval(this.refreshInterval);

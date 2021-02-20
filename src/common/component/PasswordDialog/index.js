@@ -91,7 +91,7 @@ class Index extends React.Component {
             placeholder={toLocale('wallet_password_placeholder')}
             type={this.inputType}
             className="pwd-input"
-            autoComplete="new-pwd-input"
+            autoComplete="new-password"
             value={password}
             onChange={this.onChangePwd}
             onPaste={(e) => {

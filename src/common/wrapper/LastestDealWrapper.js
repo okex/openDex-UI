@@ -5,6 +5,7 @@ import { calc } from '_component/okit';
 import { toLocale } from '_src/locale/react-locale';
 import { wsV3, channelsV3 } from '../utils/websocket';
 import * as SpotTradeActions from '../redux/actions/SpotTradeAction';
+import { getDisplaySymbol } from '_src/utils/coinIcon';
 import util from '../utils/util';
 
 function mapStateToProps(state) {
@@ -82,7 +83,7 @@ const LastestDealWrapper = (Component) => {
       const config = window.OK_GLOBAL.productConfig;
       return [
         {
-          title: toLocale('spot.deals.price').replace('-', baseCurr),
+          title: toLocale('spot.deals.price').replace('-', getDisplaySymbol(baseCurr)),
           key: 'price',
           render: (text, data) => {
             const price = calc.showFloorTruncation(

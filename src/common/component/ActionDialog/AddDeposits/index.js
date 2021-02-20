@@ -55,7 +55,6 @@ class AddDepositsDialog extends Component {
         }
       })
       .catch((err) => {
-        console.log(err);
         isFunction(afterAdd) && afterAdd();
         showError(err.message || toLocale('sysError'));
         this.setState({ value: '' });

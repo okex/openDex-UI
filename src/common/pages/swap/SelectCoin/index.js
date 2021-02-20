@@ -37,7 +37,8 @@ export default class SelectCoin extends React.Component {
     let list;
     try {
       list = data.filter((d) => d.symbol.match(new RegExp(search, 'gi')));
-    } catch {
+    } catch(e) {
+      console.log(e);
       list = [];
     }
     return this.init ? (

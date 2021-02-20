@@ -147,7 +147,6 @@ const config = [
 
 function getRoute({routerConfig=config,FullTradeHead}) {
   let routes = [];
-  console.log(routerConfig)
   routerConfig.forEach((router,index) => {
     const { path, component: Page, containHead = true, redirect } = router;
     if(redirect) routes.push(<Redirect from={path} to={redirect} key={index}/>)

@@ -13,7 +13,7 @@ import util from '_src/utils/util';
 import { getLiquidityCheck, liquidityCheck } from '../util';
 import Config from '../../../constants/Config';
 import { getDeadLine4sdk } from '../util';
-import Message from '_src/component/Message';
+import Message from '_src/component/Notification';
 import Tooltip from '../../../component/Tooltip';
 import { validateTxs } from '_src/utils/client';
 import { getDisplaySymbol } from '../../../utils/coinIcon';
@@ -35,7 +35,7 @@ export default class AddLiquidity extends React.Component {
     this.confirmRef = React.createRef();
     this.state = this._getDefaultState(props);
     this.trading = false;
-    this.updateLiquidInfo4RealTime = util.debounce(this.updateLiquidInfo4RealTime);
+    this.debounceUpdateLiquidInfo4RealTime = util.debounce(this.updateLiquidInfo4RealTime);
   }
 
   _getDefaultState(props) {
@@ -111,7 +111,8 @@ export default class AddLiquidity extends React.Component {
         targetToken: { ...this.state.targetToken },
         exchangeInfo: { ...this.state.exchangeInfo },
       };
-      this.updateLiquidInfo4RealTime({ data:temp, inputChanged });
+      if(inputChanged) this.debounceUpdateLiquidInfo4RealTime({ data:temp, inputChanged });
+      else this.updateLiquidInfo4RealTime({ data:temp, inputChanged });
     });
   };
 
@@ -128,7 +129,8 @@ export default class AddLiquidity extends React.Component {
         targetToken: { ...this.state.targetToken },
         exchangeInfo: { ...this.state.exchangeInfo },
       };
-      this.updateLiquidInfo4RealTime({ data:temp, key: 'targetToken', inputChanged });
+      if(inputChanged) this.debounceUpdateLiquidInfo4RealTime({ data:temp, key: 'targetToken', inputChanged });
+      else this.updateLiquidInfo4RealTime({ data:temp, key: 'targetToken', inputChanged });
     });
     
   };
@@ -145,9 +147,10 @@ export default class AddLiquidity extends React.Component {
     key = 'baseToken',
     time = 3000,
     inputChanged = true,
+    check = true
   }) => {
     this._clearTimer();
-    await this.updateInfo(data, key, true, inputChanged);
+    await this.updateInfo(data, key, true, inputChanged, check);
     this.setState(data, () => {
       this._clearTimer();
       this.setState({});
@@ -175,23 +178,17 @@ export default class AddLiquidity extends React.Component {
     const data = { ...state };
     if (base) data.baseToken = { ...baseToken, ...base };
     if (targetToken.symbol) {
-      const temp = await api.addLiquidityTokens({
-        symbol: token,
-      });
-      if (!temp) return;
-      let { tokens: targetTokens } = temp;
-      targetTokens = targetTokens || [];
-      const target = targetTokens.filter(
+      const target = tokens.filter(
         (d) => d.symbol === targetToken.symbol
       )[0];
       if (target) data.targetToken = { ...targetToken, ...target };
     }
-    this.updateLiquidInfo4RealTime({ data });
+    this.updateLiquidInfo4RealTime({ data, check: false });
   };
 
-  async updateInfo(data, key, errTip = false, inputChanged = true) {
+  async updateInfo(data, key, errTip = false, inputChanged = true, check = true) {
     try {
-      await this._check(data);
+      await this._check(data, check);
       await this._updateExchangePrice(data);
       await this._updateExchange(data, key, inputChanged);
       const { showConfirmDialog, baseToken, targetToken } = this.state;
@@ -211,7 +208,8 @@ export default class AddLiquidity extends React.Component {
     }
   }
 
-  async _check(data) {
+  async _check(data, check) {
+    if(!check) return;
     const { baseToken, targetToken } = data;
     let {liquidity, userLiquidity} = await api.getLiquidity(baseToken.symbol,targetToken.symbol);
     const { isEmptyPool } = this._process(liquidity);

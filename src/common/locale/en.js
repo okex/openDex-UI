@@ -319,6 +319,7 @@ const enUS = {
   needBorrow: 'Borrow ',
   repay: 'Repay',
   sysError: 'System error, please try again later.',
+  'network error': 'Network anomaly, transaction failed',
   operationSuccessful: 'Operation is successful.',
   on: 'On',
   off: 'Off',
@@ -833,6 +834,7 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   header_menu_wallet: 'Wallet',
   header_menu_assets: 'Asset balance',
   header_menu_down_keystore: 'Download keystore',
+  header_menu_down_privatekey: 'Export secret key',
   header_menu_logout: 'Log out',
   header_menu_logout1: 'Log out of your DEX wallet?',
   header_menu_help: 'Help',
@@ -1080,7 +1082,7 @@ Immediate or Cancel requires all or part of the order to be executed immediately
     'The difference between the market price and estimated price due to trade size.',
   'Liquidity Provider Fee help':
     'A portion of each trade (0.3%) goes to liquidity providers as a protocol incentive.',
-  'pending transactions': 'pending transactions, ',
+  'pending transactions': 'pending transactions',
   'pending transactions link': 'check in oklink>>',
   'transaction confirmed': 'transaction confirmed',
   'based on 24hr volume annualized':

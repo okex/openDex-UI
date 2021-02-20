@@ -14,7 +14,7 @@ import Confirm from '../../component/Confirm';
 import { getDeadLine4sdk } from './util';
 import Tooltip from '../../component/Tooltip';
 import { validateTxs } from '_src/utils/client';
-import Message from '_src/component/Message';
+import Message from '_src/component/Notification';
 import classNames from 'classnames';
 import { Dialog } from '../../component/Dialog';
 import env from '../../constants/env';
@@ -57,7 +57,7 @@ export default class SwapPanel extends React.Component {
       active: false,
     };
     this.trading = false;
-    this.updateSwapInfo4RealTime = util.debounce(this.updateSwapInfo4RealTime);
+    this.debounceUpdateSwapInfo4RealTime = util.debounce(this.updateSwapInfo4RealTime);
   }
 
   exchange = async () => {
@@ -112,7 +112,7 @@ export default class SwapPanel extends React.Component {
       data.active = true;
   }
 
-  changeBase = (token) => {
+  changeBase = (token, inputChanged) => {
     let baseToken = { ...this.state.baseToken, ...token };
     let targetToken = { ...this.state.targetToken};
     const data = { ...this.state, baseToken, targetToken, isPoolEmpty: false };
@@ -122,7 +122,8 @@ export default class SwapPanel extends React.Component {
         targetToken: { ...this.state.targetToken },
         exchangeInfo: { ...this.state.exchangeInfo },
       };
-      this.updateSwapInfo4RealTime(temp, 'baseToken');
+      if(inputChanged) this.debounceUpdateSwapInfo4RealTime(temp, 'baseToken');
+      else this.updateSwapInfo4RealTime(temp, 'baseToken');
     });
   };
 

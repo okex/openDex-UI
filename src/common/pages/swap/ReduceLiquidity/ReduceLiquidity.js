@@ -44,7 +44,7 @@ export default class ReduceLiquidity extends React.Component {
       active: true,
     };
     this.trading = false;
-    this.updateCoins4RealTime = util.debounce(this.updateCoins4RealTime);
+    this.debounceUpdateCoins4RealTime = util.debounce(this.updateCoins4RealTime);
   }
 
   _process(liquidity) {
@@ -105,7 +105,7 @@ export default class ReduceLiquidity extends React.Component {
     const max = this.getAvailable().replace(/,/g,'');
     const error = util.compareNumber(max, value);
     this.setState({ value, ratio: null, error }, () => {
-      this.updateCoins4RealTime({ ...this.state });
+      this.debounceUpdateCoins4RealTime({ ...this.state });
     });
   };
 

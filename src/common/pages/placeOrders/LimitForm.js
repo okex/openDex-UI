@@ -16,6 +16,7 @@ import LegalPrice from '../../component/placeOrder/LegalPrice';
 import QuoteIncrement from '../../component/placeOrder/QuoteIncrement';
 import SubmitButton from '../../component/placeOrder/SubmitButton';
 import TradeSliderBar from '../../component/TradeSliderBar';
+import { getDisplaySymbol } from '_src/utils/coinIcon';
 import Enum from '../../utils/Enum';
 import util from '../../utils/util';
 
@@ -491,7 +492,7 @@ class LimitForm extends React.Component {
       <div className="input-container">
         {tradeType === Enum.tradeType.normalTrade ? (
           <span className="input-title">
-            {toLocale('spot.total')} ({baseCurr})
+            {toLocale('spot.total')} ({getDisplaySymbol(baseCurr)})
           </span>
         ) : null}
 
@@ -507,7 +508,7 @@ class LimitForm extends React.Component {
               : `${
                   toLocale('spot.placeorder.pleaseEnter') +
                   toLocale('spot.total')
-                } (${baseCurr})`
+                } (${getDisplaySymbol(baseCurr)})`
           }
         />
       </div>

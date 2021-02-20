@@ -123,7 +123,6 @@ class Register extends Component {
         }
       })
       .catch((err) => {
-        console.log(err);
         this.setState({ isActionLoading: false });
         showError(err.message || toLocale('sysError'));
       });

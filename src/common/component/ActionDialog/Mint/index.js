@@ -55,7 +55,6 @@ class MintDialog extends Component {
         }
       })
       .catch((err) => {
-        console.log(err);
         isFunction(afterMint) && afterMint();
         showError(err.message || toLocale('sysError'));
         this.setState({ value: '' });
