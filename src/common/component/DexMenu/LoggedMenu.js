@@ -260,14 +260,14 @@ class DexLoggedMenu extends React.Component {
               )}
             </Menu.Item>
             {util.hasKeyStore() && 
-            <>
             <Menu.Item key="wallet-3" onClick={() => this.handleDown(KEYSTORE)}>
               {toLocale('header_menu_down_keystore')}
             </Menu.Item>
+            }
+            {util.hasKeyStore() && 
             <Menu.Item key="wallet-5" onClick={() => this.handleDown(PRIVATEKEY)}>
             {toLocale('header_menu_down_privatekey')}
             </Menu.Item>
-            </>
             }
             <Menu.Item key="wallet-4" onClick={this.handleLogOut}>
               {toLocale('header_menu_logout')}
