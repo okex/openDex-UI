@@ -2,7 +2,7 @@ const enUS = {
   'error.code.60001': 'internal error',
   'error.code.60002': 'tx parse error',
   'error.code.60003': 'invalid sequence',
-  'error.code.60004': 'unauthorized',
+  'error.code.60004': 'Signature failed, please retry',
   'error.code.60005': 'OKT balance is not enough to cover gas fee',
   'error.code.60006': 'unknown request',
   'error.code.60007': 'invalid address',

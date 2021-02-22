@@ -107,6 +107,9 @@ export default class Confirm extends React.Component {
                 </a>
                 ),
                 duration: 0,
+                onClose: () => {
+                  this.loading = false;
+                }
               })
             : null;
           const res = await onClick();
@@ -116,7 +119,7 @@ export default class Confirm extends React.Component {
             );
           }
           if (successTxt)
-          loadingToast.update({
+          loadingToast && loadingToast.update({
               content: successTxt,
               type: Message.TYPE.success,
             });
@@ -124,7 +127,7 @@ export default class Confirm extends React.Component {
         } catch (e) {
           let typeErr = e instanceof TypeError;
           let content = typeErr || e.message.includes('timing out') ? toLocale('network error') :(e.message || toLocale('sysError'));
-          loadingToast.update({
+          loadingToast && loadingToast.update({
             content,
             type: Message.TYPE.error,
           });
