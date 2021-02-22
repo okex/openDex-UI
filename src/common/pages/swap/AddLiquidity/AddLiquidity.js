@@ -481,6 +481,10 @@ export default class AddLiquidity extends React.Component {
     });
   };
 
+  cancel = () => {
+    this.trading = false;
+  }
+
   triggerConfirm = () => {
     this.confirmDialog(false);
     this.confirmInstance._onClick();
@@ -656,6 +660,7 @@ export default class AddLiquidity extends React.Component {
         </Dialog>
         <Confirm
           onClick={this.confirm}
+          onCancel={this.cancel}
           loadingTxt={toLocale('pending transactions')}
           successTxt={toLocale('transaction confirmed')}
           getRef={(instance) => (this.confirmInstance = instance)}

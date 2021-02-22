@@ -81,7 +81,7 @@ export default class Confirm extends React.Component {
   }
 
   onClick = (privateKey, checkPwd = true) => {
-    const { loadingTxt, successTxt, onClick, okexchainClient } = this.props;
+    const { loadingTxt, successTxt, onClick, okexchainClient, onCancel } = this.props;
     if (!onClick || this.loading) return;
     if (checkPwd && !this.checkPwd()) return;
     this.setState({ loading: true });
@@ -109,6 +109,7 @@ export default class Confirm extends React.Component {
                 duration: 0,
                 onClose: () => {
                   this.loading = false;
+                  if(onCancel) onCancel();
                 }
               })
             : null;

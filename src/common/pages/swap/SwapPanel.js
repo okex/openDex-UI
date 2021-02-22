@@ -434,6 +434,10 @@ export default class SwapPanel extends React.Component {
     });
   };
 
+  cancel = () => {
+    this.trading = false;
+  }
+
   hasWarn() {
     const { exchangeInfo } = this.state;
     if (!exchangeInfo.price_impact) return false;
@@ -543,6 +547,7 @@ export default class SwapPanel extends React.Component {
         </Dialog>
         <Confirm
           onClick={this.confirm}
+          onCancel={this.cancel}
           loadingTxt={toLocale('pending transactions')}
           successTxt={toLocale('transaction confirmed')}
           getRef={(instance) => (this.confirmInstance = instance)}
