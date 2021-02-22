@@ -174,6 +174,10 @@ export default class ReduceLiquidity extends React.Component {
     });
   };
 
+  cancel = () => {
+    this.trading = false;
+  }
+
   getAvailable(original) {
     const { liquidity, account4Swap } = this.props;
     let available = liquidity.pool_token_coin.amount;
@@ -382,6 +386,7 @@ export default class ReduceLiquidity extends React.Component {
           </Dialog>
           <Confirm
             onClick={this.confirm}
+            onCancel={this.cancel}
             loadingTxt={toLocale('pending transactions')}
             successTxt={toLocale('transaction confirmed')}
             getRef={(instance) => (this.confirmInstance = instance)}
