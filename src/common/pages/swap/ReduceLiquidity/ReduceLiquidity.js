@@ -75,7 +75,7 @@ export default class ReduceLiquidity extends React.Component {
     if (!ratio) return this.state.value;
     const max = this.getAvailable(true).replace(/,/g,'');
     const value = calc.mul(max, ratio.value, false);
-    return value;
+    return util.precisionInput(value);
   }
 
   updateCoins4RealTime = async (data, time = 3000) => {
