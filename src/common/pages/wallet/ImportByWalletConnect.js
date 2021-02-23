@@ -9,7 +9,7 @@ import walletUtil from './walletUtil';
 import util from '_src/utils/util';
 import classNames from 'classnames';
 import DesktopTypeMenu from '_component/DesktopTypeMenu';
-import './ImportBywalletconnect.less';
+import './walletconnect.less';
 
 function mapStateToProps() {
   return {};
