@@ -254,7 +254,9 @@ class TransferDialog extends Component {
     const { onClose, onSuccess, okexchainClient } = this.props;
     const { symbol, address, amount, note, available } = this.state;
     onClose();
-    this.setState({ transferring: true });
+    setTimeout(() => {
+      this.setState({ transferring: true });
+    },0);
     let amountStr = util.precisionInput(amount).replace(/,/g,'');
     if (
       util.precisionInput(amount, 8) ===
@@ -263,6 +265,7 @@ class TransferDialog extends Component {
       amountStr = available;
     }
     okexchainClient.setAccountInfo(privateKey).then(() => {
+      console.log('发起交易')
       okexchainClient
         .sendSendTransaction(address, amountStr, symbol, note)
         .then((res) => {
@@ -304,7 +307,8 @@ class TransferDialog extends Component {
             }, this.loadingDur);
           }
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log(err)
           setTimeout(() => {
             this.setState({ transferring: false });
             const dialog = Dialog.show({
