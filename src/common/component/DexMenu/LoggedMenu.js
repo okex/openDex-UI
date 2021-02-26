@@ -246,7 +246,7 @@ class DexLoggedMenu extends React.Component {
               <WalletMenuTool address={addr} />
             </Menu.Item>
             <Menu.Item key="wallet-2">
-              {href && !util.hasKeyStore() ? (
+              {href && util.hasKeyStore() ? (
                 <a href={PageURL.walletAssets} target="_blank">
                   {toLocale('header_menu_assets')}
                 </a>
