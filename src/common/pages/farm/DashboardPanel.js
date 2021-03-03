@@ -109,11 +109,6 @@ export default class DashboardPanel extends React.Component {
       ) : (
         <div className="panel panel-connect">
           <div className="connect-wallet-tip">
-            <div>
-              {toLocale('Haven’t farmed yet')}
-              <span>{maxApy.data_dis}</span>
-              {toLocale('APY')}
-            </div>
           </div>
           <div className="farm-btn" onClick={() => this.props.history.push(PageURL.farmPage)}>
             {toLocale('Go stake')}
