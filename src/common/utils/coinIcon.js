@@ -10,9 +10,10 @@ import FILK from '_src/assets/images/FILK.png';
 import USDC from '_src/assets/images/USDC.png';
 import USDK from '_src/assets/images/USDK.png';
 import OKB from '_src/assets/images/OKB.png';
-
+import introduce from '_src/assets/images/introduce.svg'
 const icons = {
   OKT: coinOkt,
+  DEX: introduce,
   'BTCK-BA9': BTCK,
   'USDT-A2B': USDT,
   'ETHK-C63': coinEthk,

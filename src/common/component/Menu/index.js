@@ -32,6 +32,7 @@ export default class Menu extends React.Component {
     style: {},
     mode: 'vertical',
     selectable: true,
+    triggerSubMenuAction: 'click',
     onClick: () => {},
     onSelect: () => {},
     onOpenChange: () => {},

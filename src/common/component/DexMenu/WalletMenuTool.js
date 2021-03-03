@@ -19,12 +19,12 @@ class WalletMenuTool extends React.Component {
     }, 1000);
   };
   render() {
-    const { address } = this.props;
+    const { addressLabel, address } = this.props;
     const { copySuccess } = this.state;
     return (
       <ul className="wallet-menu-address">
         <li className="wallet-menu-address-tool">
-          {toLocale('header_menu_item_address')}
+          { addressLabel }
           <CopyToClipboard text={address} onCopy={this.handleCopy}>
             <Icon
               className={copySuccess ? 'icon-icon_success' : 'icon-icon_copy'}

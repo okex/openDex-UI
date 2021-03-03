@@ -235,7 +235,16 @@ class DexLoggedMenu extends React.Component {
               key="wallet-1"
               style={{ height: 'auto', cursor: 'default' }}
             >
-              <WalletMenuTool address={addr} />
+              <WalletMenuTool address={addr} addressLabel={toLocale('header_menu_item_address')} />
+            </Menu.Item>
+            <Menu.Item
+              key="wallet-11"
+              style={{ height: 'auto', cursor: 'default' }}
+            >
+              <WalletMenuTool address={addr} addressLabel={'对应OKExChain地址'} />
+            </Menu.Item>
+            <Menu.Item style={{ height: 20 }}>
+              <a className="discription" href="javascript:;">什么是双地址？</a>
             </Menu.Item>
             <Menu.Item key="wallet-2">
               {href ? (

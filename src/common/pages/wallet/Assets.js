@@ -67,7 +67,10 @@ class Assets extends Component {
     const { loading } = this.state;
     return (
       <div className="wallet-main">
-        <WalletAddress />
+        <div className="wallet-address-container">
+          <WalletAddress addressType="universality" />
+          <WalletAddress addressType="OKExChain" />
+        </div>
         <DexTab
           tabs={assetsUtil.tabs}
           current={this.isAssets ? 1 : 2}
