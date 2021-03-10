@@ -79,7 +79,7 @@ class ImportByMnemonic extends Component {
     try {
       const { password } = this.state;
       const mnemonic = this.state.mnemonic.trim();
-      const privateKey = crypto.getPrivateKeyFromMnemonic(mnemonic);
+      const privateKey = crypto.getPrivateKeyFromMnemonic(mnemonic, '996');
       const keyStore = crypto.generateKeyStore(privateKey, password);
       walletUtil.setUserInSessionStroage(privateKey, keyStore);
       this.setState({
