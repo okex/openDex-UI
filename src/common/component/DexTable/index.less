@@ -7,22 +7,23 @@
     border-spacing: 0;
     width: 100%;
     tr {
+      border-bottom: 1px solid #1B2436;
       td, th {
         font-weight: normal;
         text-align: left;
         box-sizing: border-box;
-        &:first-of-type {
-          padding-left: 30px;
-        }
+        // &:first-of-type {
+        //   padding-left: 30px;
+        // }
         &:last-of-type {
           text-align: right;
-          padding-right: 30px;
+          // padding-right: 30px;
         }
       }
     }
     thead {
       tr {
-        background-color: @table-head-bg;
+        // background-color: @table-head-bg;
         th {
           height: 40px;
           color: @text-primary-dark;
@@ -31,12 +32,12 @@
     }
     tbody {
       tr {
-        &:nth-of-type(odd) {
-          background-color: @table-line-bg-odd;
-        }
-        &:nth-of-type(even) {
-          background-color: @table-line-bg-even;
-        }
+        // &:nth-of-type(odd) {
+        //   background-color: @table-line-bg-odd;
+        // }
+        // &:nth-of-type(even) {
+        //   background-color: @table-line-bg-even;
+        // }
         &:hover {
           background: fade(@brand, 15%);
         }

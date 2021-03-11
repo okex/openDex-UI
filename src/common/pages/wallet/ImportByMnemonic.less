@@ -17,7 +17,51 @@
       overflow: hidden;
     }
   }
-
+  .step-content{
+    &.hidden {
+      display: none;
+    }
+    .step-path-title {
+      margin-bottom: 10px;
+    }
+    .step-path-content {
+      margin-bottom: 16px;
+      padding: 18px 16px;
+      line-height: 22px;
+      background-color: #183D80;
+      border: 1px solid #183D80;
+      border-radius: 2px;
+      &.select {
+        border-color: #3075EE;
+      }
+    }
+    .select-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      span {
+        padding-bottom: 10px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.85);
+      }
+    }
+    .mnemonic-path-tip {
+      padding-top: 4px;
+      font-size: 12px;
+      line-height: 16px;
+      color: #FFA50D;
+    }
+    .mnemonic-footer {
+      margin-top: 16px;
+      padding-top: 12px;
+      display: flex;
+      justify-content: flex-end;
+      border-top: 1px solid #264170;
+    }
+    .prev-btn {
+      margin-right: 16px;
+    }
+  }
   .password-container {
     margin-top: 30px;
   }
@@ -25,9 +69,8 @@
   .prompt-container {
     color: #FB6262;
   }
-
-  button {
-    width: 100%;
-    margin-top: 24px;
-  }
+  // button {
+  //   width: 100%;
+  //   margin-top: 24px;
+  // }
 }

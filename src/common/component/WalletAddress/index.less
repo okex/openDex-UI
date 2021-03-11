@@ -6,15 +6,17 @@
   display: flex;
   align-items: center;
   font-size: 16px;
-  padding: 0 20px;
-  > span {
+  .address-content {
+    margin-right: 16px;
     line-height:22px;
+    .address-text {
+      padding-left: 16px;
+    }
   }
   .icon-introduce {
     width: 12px;
     height: 12px;
     margin-left: 4px;
-    margin-right: 16px;
   }
   i {
     color: @brand;
@@ -24,15 +26,18 @@
     height: 16px;
   }
   i, svg {
-    margin-left: 30px;
+    margin-left: 8px;
     cursor: pointer;
   }
   .qr-container {
     position: relative;
     display: inline-block;
-    i:hover {
-      &~div {
-        display: flex;
+    img {
+      margin-right: 8px;
+      &:hover {
+        &~div {
+          display: flex;
+        }
       }
     }
     .qr-pic {
@@ -47,5 +52,8 @@
       left: 0;
       display: none;
     }
+  }
+  .hidden {
+    display: none;
   }
 }

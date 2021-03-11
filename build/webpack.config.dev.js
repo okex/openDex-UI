@@ -31,6 +31,12 @@ module.exports = Object.assign(base, {
         changeOrigin: true,
         secure: true,
       },
+      '/web3/*': {
+        target: 'http://18.166.60.86:26659',
+        changeOrigin: true,
+        secure: true,
+        pathRewrite: { '^/web3': '/' }
+      }
     },
     disableHostCheck: true,
     historyApiFallback: {

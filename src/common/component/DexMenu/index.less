@@ -38,7 +38,7 @@
 }
 .wallet-menu-address{
   margin: 0 0 12px 0 !important;
-  width: 160px;
+  width: 240px;
   padding-top: 4px !important;
   .wallet-menu-address-tool{
     display: flex;
@@ -46,9 +46,16 @@
     align-items: center;
     color: fade(white, 45%);
     height: 20px;
+    line-height: 1;
+    .hidden {
+      display: none;
+    }
   }
   .wallet-menu-address-text{
     a{
+      width: 100%;
+      word-break: break-word;
+      white-space: break-spaces;
       color: fade(white, 85%);
       transition: color .3s;
       &:hover{
@@ -58,7 +65,6 @@
 
     display: flex;
     align-items: center;
-    height: 20px;
     line-height: 20px;
     .LinesEllipsis{
       width: 100%;

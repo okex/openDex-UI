@@ -10,6 +10,7 @@ import { getLpTokenInfo } from '../../utils/lpTokenUtil';
 import Config from '../../constants/Config';
 import DesktopTypeMenu from '_component/DesktopTypeMenu';
 import PageURL from '_constants/PageURL';
+import ComboBox from '_src/component/ComboBox/ComboBox';
 
 const util = {
   get tabs() {
@@ -144,6 +145,31 @@ const util = {
 };
 
 util.accountsCols = ({ transfer }, { valuationUnit }) => {
+  const moreBoxConf = [
+    {
+      url: '/spot/full',
+      type: '/spot/full',
+      get label() {
+        return toLocale('dex_more_detail');
+      },
+      monitor: 'full_header,nav_spot,nav_enter_spot',
+    }, {
+      url: '/spot/fullMargin',
+      type: '/spot/fullMargin',
+      get label() {
+        return toLocale('dex_more_migration');
+      },
+      monitor: 'full_header,nav_margin,nav_enter_margin',
+    }, {
+      url: '/spot/fullMargin',
+      type: '/spot/fullMargin',
+      get label() {
+        return toLocale('dex_more_hidden');
+      },
+      monitor: 'full_header,nav_margin,nav_enter_margin',
+    }
+  ]
+  const change = () => {}
   return [
     {
       title: toLocale('assets_column_assets'),
@@ -172,9 +198,15 @@ util.accountsCols = ({ transfer }, { valuationUnit }) => {
       },
     },
     {
+      title: toLocale('assets_column_type'),
+      key: 'assetsType',
+      render: (text) => {
+        return <span className="assets-column-type">{text}</span>;
+      },
+    },
+    {
       title: toLocale('assets_column_total'),
       key: 'total',
-      alignRight: true,
       render: (text) => {
         return text;
       },
@@ -182,7 +214,6 @@ util.accountsCols = ({ transfer }, { valuationUnit }) => {
     {
       title: toLocale('assets_column_balance'),
       key: 'available',
-      alignRight: true,
       render: (text) => {
         return calc.showFloorTruncation(text, 8, true);
       },
@@ -190,7 +221,6 @@ util.accountsCols = ({ transfer }, { valuationUnit }) => {
     {
       title: toLocale('assets_column_list'),
       key: 'locked',
-      alignRight: true,
       render: (text) => {
         return calc.showFloorTruncation(text, 8, true);
       },
@@ -199,11 +229,21 @@ util.accountsCols = ({ transfer }, { valuationUnit }) => {
       title: '',
       key: 'transfer',
       render: (text, { symbol }) => {
-        return (
+        return (<>
           <Button size={Button.size.mini} onClick={transfer(symbol)}>
             {toLocale('assets_trans_btn')}
           </Button>
-        );
+          <Button className="assets-more-bth" size={Button.size.mini} onClick={transfer(symbol)}>
+            {toLocale('assets_more_btn')}
+            <div className="more-box">
+              <ComboBox
+                current={moreBoxConf}
+                comboBoxDataSource={ moreBoxConf }
+                onChange={change}
+              />
+            </div>
+          </Button>
+        </>);
       },
     },
   ];

@@ -1,6 +1,11 @@
 {
   "compilerOptions": {
       "experimentalDecorators": true,
+      "baseUrl": "./",
+      "paths": {
+        "_src/*": ["src/common/*"],
+        "_component/*": ["src/common/component/*"]
+      }
   },
   "include":[
       "./src/**/*"

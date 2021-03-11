@@ -9,12 +9,16 @@ import Checkbox from 'rc-checkbox';
 import Icon from '_src/component/IconLite';
 import DexTable from '_component/DexTable';
 import ont from '../../utils/dataProxy';
+import AddAssetsDialog from './AddAssetsDialog';
 import TransferDialog from './TransferDialog';
 import assetsUtil from './assetsUtil';
 import './Assets.less';
 import * as CommonAction from '../../redux/actions/CommonAction';
 import { getLpTokenStr } from '../../utils/lpTokenUtil';
 import util from '../../utils/util';
+import vector from '_src/assets/images/vector.svg'
+import operationContract from './operationContract'
+import web3Util from '_src/utils/web3Util'
 
 function mapStateToProps(state) {
   const { legalId, legalObj, legalList } = state.Common;
@@ -41,6 +45,7 @@ class AssetsAccounts extends Component {
       tokenList: [],
       tokenMap: {},
       showTransfer: false,
+      showAddAssets: false,
       transferSymbol: '',
       loading: false,
       okbTotalValuation: '--',
@@ -71,7 +76,35 @@ class AssetsAccounts extends Component {
           params: { show: this.state.hideZero ? undefined : 'all' },
         })
         .then(({ data }) => {
-          const { currencies=[] } = data;
+          let { currencies=[] } = data;
+          // let customAssets = operationContract.get()
+          
+          let contractPromiseList = operationContract.get().map(async it => {
+            const available = await web3Util.getBalance()
+            return {
+              currentSymbol: it.shortName,
+              symbol: it.address,
+              precision: it.precision,
+              locked: '0',
+              available,
+              assetsType: 'OIP 20'
+            }
+          })
+          Promise.all(contractPromiseList).then(...res => {
+            console.log(res, 'res------>')
+          })
+          
+          console.log(currencies, '^^^^^^^', 'currencies============>')
+          let hasLP = currencies.find(it => it.symbol === 'ammswap_filk-2ee_okt')
+          currencies.splice(hasLP ? 1: 0, 0, ...[
+            {
+              currentSymbol: 'abc',
+              symbol: 'xxxxxxxxxxxxxxx',
+              locked: '0',
+              available: '999.999',
+              assetsType: 'OIP 20',
+            }
+          ])
           resolve(currencies.filter(d => {
             if(!this.state.hideZero) return true;
             return !!Number(util.precisionInput(d.available,8,false));
@@ -122,18 +155,22 @@ class AssetsAccounts extends Component {
           }
         });
         this.allCurrencies = currencies.map((curr) => {
-          const { symbol, available, freeze, locked } = curr;
+          const { symbol, available, freeze, locked, assetsType, currentSymbol } = curr;
+          
           const tokenObj = tokenMap[symbol] || {
             original_symbol: '',
           };
           const { original_symbol, originalAndWhole } = tokenObj;
           const symbolUp = symbol.toUpperCase();
-          const assetToken = (original_symbol || '').toUpperCase() || symbolUp;
+          const assetToken = (original_symbol || currentSymbol || '').toUpperCase() || symbolUp;
           const sumOKB = calc.add(
             calc.add(available || 0, freeze || 0, false),
             locked || 0,
             false
           );
+          if (!assetsType) {
+            curr.assetsType = 'OIP 10'
+          }
           return {
             ...curr,
             ...tokenObj,
@@ -152,6 +189,16 @@ class AssetsAccounts extends Component {
         this.setState({ loading: false });
       });
   };
+  openAddAssets = () => {
+    this.setState({
+      showAddAssets: true,
+    });
+  };
+  closeAddAssets = () => {
+    this.setState({
+      showAddAssets: false,
+    });
+  };
   openTransfer = (symbol) => {
     return () => {
       this.setState({
@@ -166,6 +213,9 @@ class AssetsAccounts extends Component {
     });
   };
   transferSuccess = () => {
+    this.fetchAccounts();
+  };
+  addAssetsSuccess = () => {
     this.fetchAccounts();
   };
   filterList = (e) => {
@@ -192,10 +242,14 @@ class AssetsAccounts extends Component {
       currencies: filterList,
     });
   };
+  addAssets = () => {
+    this.openAddAssets()
+  }
   render() {
     const {
       currencies,
       showTransfer,
+      showAddAssets,
       transferSymbol,
       loading,
       tokenList,
@@ -220,7 +274,10 @@ class AssetsAccounts extends Component {
               />
               {toLocale('assets_hide_zero')}
             </label>
-          </div>
+            </div>
+            <div className="add-assets cursor-pointer" onClick={this.addAssets}>
+              <img src={vector} alt=""/>{toLocale('add_assets')}
+            </div>
         </div>
         <DexTable
           isLoading={loading}
@@ -241,6 +298,14 @@ class AssetsAccounts extends Component {
           tokenMap={tokenMap}
           onClose={this.closeTransfer}
           onSuccess={this.transferSuccess}
+        />
+        <AddAssetsDialog
+          show={showAddAssets}
+          // symbol={transferSymbol}
+          tokenList={tokenList}
+          tokenMap={tokenMap}
+          onClose={this.closeAddAssets}
+          onSuccess={this.addAssetsSuccess}
         />
       </div>
     );

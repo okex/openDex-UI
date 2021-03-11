@@ -4,11 +4,12 @@ import QRCode from 'qrcode.react';
 import Icon from '_src/component/IconLite';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import WalletAddressTooltip from './WalletAddressTooltip';
-import { getCoinIcon, getDisplaySymbol } from '_src/utils/coinIcon';
+import introduce from '_src/assets/images/introduce.svg'
+import qrcode from '_src/assets/images/qrcode.svg'
+import copy from '_src/assets/images/copy.svg'
+import addressConversion from '_src/utils/conversionAddress';
+
 import './index.less';
-function addressConversion (addr) {
-  return '0x' + addr
-}
 class WalletAddress extends Component {
   constructor() {
     super();
@@ -25,67 +26,43 @@ class WalletAddress extends Component {
       this.setState({ copySuccess: false });
     }, 1000);
   };
-
-  render() {
+  get senderAddr () {
     const { senderAddr } = window.OK_GLOBAL || {};
+    const { addressType } = this.props
+    return addressType === 'OKExChain' ? senderAddr : addressConversion(senderAddr)
+  }
+  render() {
+    const senderAddr = this.senderAddr
     const { copySuccess } = this.state;
     const { addressType } = this.props
     console.log(addressType, 'addressType=====')
     return (
       <div className="my-address">
-        <span>
-          {toLocale('assets_address')}
+        <div className="address-content">
+          {addressType === 'OKExChain' ? toLocale('assets_address_OKExChain') : toLocale('assets_address')}
           {addressType === 'OKExChain' && (<WalletAddressTooltip
-              // tooltipAvg={tooltipAvg}
-              // tooltipTotal={tooltipTotal}
-              // tooltipSum={tooltipSum}
-              placement="bottomRight"// {isDark ? 'right' : 'left'}
+              placement="bottomLeft"
               trigger="click"
-              // symbol={product}
               align={{
-                offset: [30, 10],
+                offset: [-34, 14],
               }}
             >
-              <img className="icon-introduce" src={getCoinIcon('DEX')} alt=""/>
-              {/* <div>this is children</div> */}
-              {/* <li
-                key={`ok-depth-sell-${index}`}
-                className={`sell-item ${
-                  sellIndex > -1 && index >= sellIndex ? 'has-bg' : ''
-                }`}
-                onClick={this.handleClickItem(index, Enum.sell)}
-                onMouseEnter={() => {
-                  this.setState({ sellIndex: index });
-                }}
-                onMouseLeave={() => {
-                  this.setState({ sellIndex: -1 });
-                }}
-              >
-                <span>{price}</span>
-                <span>{amountValue < 0.001 ? '0.001' : amount}</span>
-                {needSum && <span>{sum}</span>}
-                {needBgColor && (
-                  <div
-                    className="process-bar"
-                    style={{ width: barWidth }}
-                  />
-                )}
-              </li> */}
+              <img className="icon-introduce" src={introduce} alt=""/>
             </WalletAddressTooltip>)
           }
-          { addressType === 'OKExChain' ? senderAddr : addressConversion(senderAddr) }
-        </span>
+          <span className="address-text">{ senderAddr }</span>
+        </div>
         <div className="qr-container">
-          <Icon className="icon-icon_erweima" />
+          <img src={qrcode} alt=""/>
           <div className="qr-pic">
             <QRCode value={senderAddr || ''} size={75} />
           </div>
         </div>
         <CopyToClipboard text={senderAddr} onCopy={this.onCopy}>
-          <Icon
-            className={copySuccess ? 'icon-icon_success' : 'icon-icon_copy'}
-            isColor
-          />
+          <div>
+            <Icon style={{display: copySuccess ? 'inline' : 'none' }} className="icon-icon_success" isColor />
+            <img className={copySuccess ? 'hidden' : ''} src={copy} alt=""/>
+          </div>
         </CopyToClipboard>
       </div>
     );

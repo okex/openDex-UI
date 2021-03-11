@@ -1,8 +1,8 @@
 import React from 'react';
 import Icon from '_src/component/IconLite';
-import { toLocale } from '_src/locale/react-locale';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Config from '_constants/Config';
+import copyBlue from '_src/assets/images/copyBlue.svg'
 
 class WalletMenuTool extends React.Component {
   constructor(props) {
@@ -26,15 +26,17 @@ class WalletMenuTool extends React.Component {
         <li className="wallet-menu-address-tool">
           { addressLabel }
           <CopyToClipboard text={address} onCopy={this.handleCopy}>
-            <Icon
-              className={copySuccess ? 'icon-icon_success' : 'icon-icon_copy'}
-              isColor
-              style={{
-                width: 14,
-                height: 14,
-                cursor: 'pointer',
-              }}
-            />
+            <div>
+              <Icon className="icon-icon_success" isColor
+                style={{
+                  width: 14,
+                  height: 14,
+                  cursor: 'pointer',
+                  display: copySuccess ? 'inline' : 'none' 
+                }}
+              />
+              <img className={copySuccess ? 'hidden' : ''} src={copyBlue} alt=""/>
+            </div>
           </CopyToClipboard>
         </li>
         <li className="wallet-menu-address-text">
@@ -43,7 +45,7 @@ class WalletMenuTool extends React.Component {
             rel="noopener noreferrer"
             href={`${Config.okexchain.browserAddressUrl}/${address}`}
           >
-            {`${address.substr(0, 20)}…`}
+            {address}
           </a>
         </li>
       </ul>

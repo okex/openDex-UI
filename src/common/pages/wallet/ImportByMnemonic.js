@@ -12,6 +12,9 @@ import walletUtil from './walletUtil';
 import util from '_src/utils/util';
 import DesktopTypeMenu from '_component/DesktopTypeMenu';
 import './ImportByMnemonic.less';
+import defaultSelect from '_src/assets/images/defaultSelect.svg'
+import selected from '_src/assets/images/selected.svg'
+
 
 function mapStateToProps() {
   return {};
@@ -34,6 +37,8 @@ class ImportByMnemonic extends Component {
       isValidatedMnemonic: true,
       buttonLoading: false,
       isNone: false,
+      step: 1,
+      pathType: 'new'
     };
     this.isValidatedPassword = false;
   }
@@ -52,6 +57,22 @@ class ImportByMnemonic extends Component {
       password: value,
     });
   };
+  nextStep = () => {
+    if (!this.state.pathType) return
+    this.setState({
+      step: 2
+    })
+  }
+  prevStep = () => {
+    this.setState({
+      step: 1
+    })
+  }
+  selectPathType = (type) => {
+    this.setState({
+      pathType: type
+    })
+  }
   handleEnsure = () => {
     if (this.state.mnemonic.length === 0) {
       this.setState({
@@ -77,9 +98,9 @@ class ImportByMnemonic extends Component {
   };
   validateMnemonic = () => {
     try {
-      const { password } = this.state;
+      const { password, pathType } = this.state;
       const mnemonic = this.state.mnemonic.trim();
-      const privateKey = crypto.getPrivateKeyFromMnemonic(mnemonic);
+      const privateKey = crypto.getPrivateKeyFromMnemonic(mnemonic, pathType === 'old' ? 996 : 60);
       const keyStore = crypto.generateKeyStore(privateKey, password);
       walletUtil.setUserInSessionStroage(privateKey, keyStore);
       this.setState({
@@ -98,7 +119,7 @@ class ImportByMnemonic extends Component {
     }
   };
   render() {
-    const { mnemonic, isValidatedMnemonic, buttonLoading, isNone } = this.state;
+    const { mnemonic, isValidatedMnemonic, buttonLoading, isNone, step, pathType } = this.state;
     let p;
     let className = '';
     if (isNone) {
@@ -112,31 +133,67 @@ class ImportByMnemonic extends Component {
     }
     return (
       <div className="import-by-mnemonic-container">
-        <div className="mnemonic-container">
-          <div>{toLocale('wallet_import_mnemonic_enter')}</div>
-          <textarea value={mnemonic} onChange={this.changeMnemonic} />
-          <div className={className} style={{ fontSize: '12px' }}>
-            {toLocale(p)}
+        <div className={"step1 step-content" + (step === 1 ? ' show' : ' hidden')}>
+          <p className="step-path-title">{toLocale('import_mnemonic_select_title')}</p>
+          <div className={"step-path-content" + (pathType === 'new' ? ' select' : '')} onClick={() => this.selectPathType('new')}>
+            <p className="select-box">
+              <span>{toLocale('import_mnemonic_new_user')}</span>
+              <img className="select-icon" src={pathType === 'new' ? selected : defaultSelect} alt=""/>
+            </p>
+            <p>{toLocale('import_mnemonic_new_instructions')}</p>
+          </div>
+          <div className={"step-path-content" + (pathType === 'old' ? ' select' : '')} onClick={() => this.selectPathType('old')}>
+            <p className="select-box">
+              <span>{toLocale('import_mnemonic_old_user')}</span>
+              <img className="select-icon" src={pathType === 'old' ? selected : defaultSelect} alt=""/>
+            </p>
+            <p>{toLocale('import_mnemonic_old_instructions')}</p>
+            <p className="mnemonic-path-tip">{toLocale('import_mnemonic_path_tip')}</p>
+          </div>
+          <div className="mnemonic-footer">
+            <Button
+              type="primary"
+              onClick={this.nextStep}
+            >
+              {toLocale('next_step')}
+            </Button>
           </div>
         </div>
-        <div className="password-container">
-          <WalletPassword
-            placeholder={toLocale('wallet_import_mnemonic_sessionPassword')}
-            onChange={this.changePassword}
-            updateLengthCheck={this.state.updateLengthCheck}
-            updateChartCheck={this.state.updateChartCheck}
-          />
-          <ValidateCheckbox type="warning" className="mar-top8">
-            {toLocale('wallet_import_sessionPasswordTip')}
-          </ValidateCheckbox>
+        <div className={"step2 step-content" + (step === 2 ? ' show' : ' hidden')}>
+          <div className="mnemonic-container">
+            <div>{toLocale('wallet_import_mnemonic_enter')}</div>
+            <textarea value={mnemonic} onChange={this.changeMnemonic} />
+            <div className={className} style={{ fontSize: '12px' }}>
+              {toLocale(p)}
+            </div>
+          </div>
+          <div className="password-container">
+            <WalletPassword
+              placeholder={toLocale('wallet_import_mnemonic_sessionPassword')}
+              onChange={this.changePassword}
+              updateLengthCheck={this.state.updateLengthCheck}
+              updateChartCheck={this.state.updateChartCheck}
+            />
+            <ValidateCheckbox type="warning" className="mar-top8">
+              {toLocale('wallet_import_sessionPasswordTip')}
+            </ValidateCheckbox>
+          </div>
+          <div className="mnemonic-footer">
+            <Button
+              className="prev-btn"
+              onClick={this.prevStep}
+            >
+              {toLocale('prev_step')}
+            </Button>
+            <Button
+              type="primary"
+              loading={buttonLoading}
+              onClick={this.handleEnsure}
+            >
+              {toLocale('ensure')}
+            </Button>
+          </div>
         </div>
-        <Button
-          type="primary"
-          loading={buttonLoading}
-          onClick={this.handleEnsure}
-        >
-          {toLocale('wallet_ensure')}
-        </Button>
       </div>
     );
   }

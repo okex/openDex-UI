@@ -37,6 +37,7 @@ const testnet = {
     claim_at: 1611655200,
     noticeSetting: 'notice_setting_test',
   },
+  contract: 'contract-test'
 };
 
 const mainnet = {
@@ -74,6 +75,7 @@ const mainnet = {
     claim_at: 1611655200,
     noticeSetting: 'notice_setting',
   },
+  contract: 'contract'
 };
 
 function envConfig() {

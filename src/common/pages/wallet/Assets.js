@@ -9,6 +9,8 @@ import WalletAddress from '_component/WalletAddress';
 import AssetsAccounts from './AssetsAccounts';
 import AssetsTransactions from './AssetsTransactions';
 import assetsUtil from './assetsUtil';
+import { toLocale } from '_src/locale/react-locale';
+import information from '_src/assets/images/Information.svg'
 import './Assets.less';
 
 function mapStateToProps() {
@@ -67,6 +69,11 @@ class Assets extends Component {
     const { loading } = this.state;
     return (
       <div className="wallet-main">
+        <div className="top-tip">
+          <img src={information} alt=""/>
+          <p>{toLocale('dex_top_tip')}</p>
+          <a href="javascript:;">{toLocale('for_details')}</a>
+        </div>
         <div className="wallet-address-container">
           <WalletAddress addressType="universality" />
           <WalletAddress addressType="OKExChain" />
