@@ -3,7 +3,7 @@ import moment from 'moment';
 import { toLocale } from '_src/locale/react-locale';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { crypto } from '@okexchain/javascript-sdk';
+import { crypto, wallet } from '@okexchain/javascript-sdk';
 import { Dialog } from '_component/Dialog';
 import Menu from '_src/component/Menu';
 import util from '_src/utils/util';
@@ -191,12 +191,20 @@ class DexLoggedMenu extends React.Component {
         background: '#112F62',
       },
       onConfirm: () => {
-        util.doLogout();
         dialog.destroy();
-        window.location.reload();
+        if(util.isWalletConnect()) {
+          wallet.killSession(function() {
+            util.doLogout();
+            window.location.reload();
+          });
+        } else {
+          util.doLogout();
+          window.location.reload();
+        }
       },
     });
   };
+
   render() {
     const { hasDoc, href } = this.props;
     const { isShowPassword, passwordError,processingPwd } = this.state;
@@ -241,7 +249,7 @@ class DexLoggedMenu extends React.Component {
               <a className="discription" href="javascript:;">{toLocale('dex_address_double')}</a>
             </Menu.Item>
             <Menu.Item key="wallet-2">
-              {href ? (
+              {href && util.hasKeyStore() ? (
                 <a href={PageURL.walletAssets} target="_blank">
                   {toLocale('header_menu_assets')}
                 </a>
@@ -254,12 +262,16 @@ class DexLoggedMenu extends React.Component {
                 </NavLink>
               )}
             </Menu.Item>
+            {util.hasKeyStore() && 
             <Menu.Item key="wallet-3" onClick={() => this.handleDown(KEYSTORE)}>
               {toLocale('header_menu_down_keystore')}
             </Menu.Item>
+            }
+            {util.hasKeyStore() && 
             <Menu.Item key="wallet-5" onClick={() => this.handleDown(PRIVATEKEY)}>
             {toLocale('header_menu_down_privatekey')}
             </Menu.Item>
+            }
             <Menu.Item key="wallet-4" onClick={this.handleLogOut}>
               {toLocale('header_menu_logout')}
             </Menu.Item>

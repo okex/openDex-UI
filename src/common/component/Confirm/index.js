@@ -61,7 +61,8 @@ export default class Confirm extends React.Component {
   };
 
   checkPwd() {
-    if (!util.isLogined()) window.location.reload();
+    if (!util.isLogined()) return window.location.reload();
+    if(util.isWalletConnect()) return true;
     const expiredTime = window.localStorage.getItem('pExpiredTime') || 0;
     if (new Date().getTime() >= +expiredTime || !this.props.privateKey) {
       this.setState({ isShow: true });
