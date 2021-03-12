@@ -53,7 +53,7 @@ class Step1 extends Component {
         setTimeout(() => {
           const { walletAction } = this.props;
           const mnemonic = crypto.generateMnemonic();
-          const privateKey = crypto.getPrivateKeyFromMnemonic(mnemonic);
+          const privateKey = crypto.getPrivateKeyFromMnemonic(mnemonic, '996');
           const keyStore = crypto.generateKeyStore(
             privateKey,
             this.state.pwdFirst
