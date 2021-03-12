@@ -55,6 +55,7 @@ class AssetsAccounts extends Component {
       hideZero: true,
       valuationUnit: '--',
     };
+    this.contractList = []
     this.symbolSearch = '';
     this.addr = window.OK_GLOBAL.senderAddr;
     this.generalAddr = window.OK_GLOBAL.generalAddr;
@@ -73,55 +74,60 @@ class AssetsAccounts extends Component {
 
   fetchAccounts = () => {
     this.setState({ loading: true });
-    const fetchAccounts = new Promise((resolve) => {
+    const fetchContract = () => new Promise(resolve => {
+      console.log('fetchContract')
+      let contractPromiseList = operationContract.get().map(async it => {
+        const available = await web3Util.getBalance()// (it.address, this.generalAddr)
+        return Promise.resolve({
+          original_symbol: it.shortName,
+          originalAndWhole: '',
+          symbol: it.address,
+          precision: it.precision,
+          locked: '0',
+          available,
+          assetsType: 'OIP 20'
+        })
+      })
+      Promise.allSettled(contractPromiseList).then(res => {
+        let response = []
+        res.forEach(item => (item.status === 'fulfilled') && response.push(item.value))
+        resolve(response)
+      }).catch(() => resolve([]))
+    })
+    /* 
+      currencies.unshift(...response)
+      this.contractList = response
+      let oktIndex = currencies.findIndex(it => it.symbol === env.envConfig.token.base)
+      let oktItem = currencies.slice(oktIndex, oktIndex + 1)
+      if (oktIndex > -1) {
+        currencies.splice(oktIndex, 1)
+        currencies.unshift(...oktItem)
+      }
+    */
+    const fetchAccounts = () => new Promise((resolve) => {
+      console.log('fetchAccounts')
       ont
         .get(`${URL.GET_ACCOUNTS}/${this.addr}`, {
           params: { show: this.state.hideZero ? undefined : 'all' },
         })
         .then(({ data }) => {
-          debugger
           let { currencies=[] } = data;
-          
-          let contractPromiseList = operationContract.get().map(async it => {
-            const available = await web3Util.getBalance()// (it.address, this.generalAddr)
-            return Promise.resolve({
-              original_symbol: it.shortName,
-              originalAndWhole: '',
-              symbol: it.address,
-              precision: it.precision,
-              locked: '0',
-              available,
-              assetsType: 'OIP 20'
-            })
-          })
-          Promise.allSettled(contractPromiseList).then(res => {
-            let response = []
-            res.forEach(item => (item.status === 'fulfilled') && response.push(item.value))
-            currencies.unshift(...response)
-            this.contractList = response
-            let oktIndex = currencies.findIndex(it => it.symbol === env.envConfig.token.base)
-            let oktItem = currencies.slice(oktIndex, oktIndex + 1)
-            if (oktIndex > -1) {
-              currencies.splice(oktIndex, 1)
-              currencies.unshift(...oktItem)
-            }
-            debugger
-            resolve(currencies.filter(d => {
-              if(!this.state.hideZero) return true;
-              return !!Number(util.precisionInput(d.available,8,false));
-            }));
-          }).catch(() => resolve([]))
+          resolve(currencies.filter(d => {
+            if(!this.state.hideZero) return true;
+            return !!Number(util.precisionInput(d.available,8,false));
+          }))
         })
         .catch(() => {
           resolve([]);
         });
     });
-    const fetchTokens = new Promise((resolve) => {
+    const fetchTokens = () => new Promise((resolve) => {
+      console.log('fetchTokens')
       ont
         .get(URL.GET_TOKENS)
         .then(({ data }) => {
           const tokenMap = {};
-          debugger
+          // debugger
           /* 
             description: "ammswap_btck-ba9_ethk-c63"
             mintable: true
@@ -134,7 +140,8 @@ class AssetsAccounts extends Component {
             whole_name: "ammswap_btck-ba9_ethk-c63"
           
           */
-          debugger
+          // debugger
+          data.push(...this.contractList)
           const tokenList = data.map((token) => {
             const { symbol, original_symbol, whole_name } = token;
             const originalAndWhole = `${original_symbol.toUpperCase()}___${whole_name}`;
@@ -160,9 +167,18 @@ class AssetsAccounts extends Component {
           resolve({});
         });
     });
-    Promise.all([fetchAccounts, fetchTokens])
-      .then(([currencies, tokenMap]) => {
+    fetchContract().then(response => {
+      this.contractList = response
+      return Promise.all([fetchAccounts(), fetchTokens()])
+    }).then(([currencies, tokenMap]) => {
         const originalAndWholeCounts = {};
+        currencies.unshift(...this.contractList)
+        let oktIndex = currencies.findIndex(it => it.symbol === env.envConfig.token.base)
+        let oktItem = currencies.slice(oktIndex, oktIndex + 1)
+        if (oktIndex > -1) {
+          currencies.splice(oktIndex, 1)
+          currencies.unshift(...oktItem)
+        }
         currencies.forEach((curr) => {
           const { symbol } = curr;
           const tokenObj = tokenMap[symbol] || {};
