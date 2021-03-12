@@ -265,8 +265,8 @@ class TransferDialog extends Component {
     ) {
       amountStr = available;
     }
-    // web3Util.transfer({privateKey}).then(() => {
-    //   this._transferSuccess();
+    // web3Util.transfer({privateKey,amount:amountStr,toAddress:address}).then(() => {
+    //   this._transferSuccess(onSuccess);
     // }).catch(err => {
     //   console.log(err)
     //   this._transferErr(toLocale('trans_fail')); 
@@ -279,7 +279,7 @@ class TransferDialog extends Component {
             this._transferErr(toLocale(`error.code.${res.result.code}`) ||
             toLocale('trans_fail'))
           } else {
-            this._transferSuccess();
+            this._transferSuccess(onSuccess);
           }
         })
         .catch((err) => {
@@ -306,7 +306,7 @@ class TransferDialog extends Component {
       }, this.transDur);
     }, this.loadingDur);
   }
-  _transferSuccess = () => {
+  _transferSuccess = (onSuccess) => {
     setTimeout(() => {
       this.setState({ transferring: false });
       const dialog = Dialog.show({
