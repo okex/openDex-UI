@@ -19,6 +19,7 @@ import util from '../../utils/util';
 import vector from '_src/assets/images/vector.svg'
 import operationContract from './operationContract'
 import web3Util from '_src/utils/web3Util'
+import env from '_src/constants/env';
 
 function mapStateToProps(state) {
   const { legalId, legalObj, legalList, privateKey } = state.Common;
@@ -78,12 +79,14 @@ class AssetsAccounts extends Component {
           params: { show: this.state.hideZero ? undefined : 'all' },
         })
         .then(({ data }) => {
+          debugger
           let { currencies=[] } = data;
           
           let contractPromiseList = operationContract.get().map(async it => {
-            const available = await web3Util.getBalance(it.address, this.generalAddr)
+            const available = await web3Util.getBalance()// (it.address, this.generalAddr)
             return Promise.resolve({
-              currentSymbol: it.shortName,
+              original_symbol: it.shortName,
+              originalAndWhole: '',
               symbol: it.address,
               precision: it.precision,
               locked: '0',
@@ -94,8 +97,15 @@ class AssetsAccounts extends Component {
           Promise.allSettled(contractPromiseList).then(res => {
             let response = []
             res.forEach(item => (item.status === 'fulfilled') && response.push(item.value))
-            let hasLP = currencies.find(it => it.symbol === 'ammswap_filk-2ee_okt')
-            currencies.splice(hasLP ? 1: 0, 0, ...response)
+            currencies.unshift(...response)
+            this.contractList = response
+            let oktIndex = currencies.findIndex(it => it.symbol === env.envConfig.token.base)
+            let oktItem = currencies.slice(oktIndex, oktIndex + 1)
+            if (oktIndex > -1) {
+              currencies.splice(oktIndex, 1)
+              currencies.unshift(...oktItem)
+            }
+            debugger
             resolve(currencies.filter(d => {
               if(!this.state.hideZero) return true;
               return !!Number(util.precisionInput(d.available,8,false));
@@ -111,6 +121,20 @@ class AssetsAccounts extends Component {
         .get(URL.GET_TOKENS)
         .then(({ data }) => {
           const tokenMap = {};
+          debugger
+          /* 
+            description: "ammswap_btck-ba9_ethk-c63"
+            mintable: true
+            original_symbol: "ammswap_btck-ba9_ethk-c63"
+            original_total_supply: "0.000000000000000000"
+            owner: "okexchain1p6mshmwh5kz0g62pe6hghrjc696cyp7l0nf0st"
+            symbol: "ammswap_btck-ba9_ethk-c63"
+            total_supply: "0.000000000000000000"
+            type: "2"
+            whole_name: "ammswap_btck-ba9_ethk-c63"
+          
+          */
+          debugger
           const tokenList = data.map((token) => {
             const { symbol, original_symbol, whole_name } = token;
             const originalAndWhole = `${original_symbol.toUpperCase()}___${whole_name}`;
@@ -131,7 +155,8 @@ class AssetsAccounts extends Component {
           this.setState({ tokenList, tokenMap });
           resolve(tokenMap);
         })
-        .catch(() => {
+        .catch((e) => {
+          console.log(e)
           resolve({});
         });
     });
@@ -149,14 +174,14 @@ class AssetsAccounts extends Component {
           }
         });
         this.allCurrencies = currencies.map((curr) => {
-          const { symbol, available, freeze, locked, assetsType, currentSymbol } = curr;
+          const { symbol, available, freeze, locked, assetsType } = curr;
           
-          const tokenObj = tokenMap[symbol] || {
+          const tokenObj = tokenMap[symbol] || (curr.original_symbol ? curr : {
             original_symbol: '',
-          };
+          }) ;
           const { original_symbol, originalAndWhole } = tokenObj;
           const symbolUp = symbol.toUpperCase();
-          const assetToken = (original_symbol || currentSymbol || '').toUpperCase() || symbolUp;
+          const assetToken = (original_symbol || '').toUpperCase() || symbolUp;
           const sumOKB = calc.add(
             calc.add(available || 0, freeze || 0, false),
             locked || 0,

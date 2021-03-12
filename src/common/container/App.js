@@ -6,14 +6,12 @@ import util from '../utils/util';
 import history from '../utils/history';
 import FullTradeHead from '../pages/fullTrade/FullTradeHead';
 import routerConfig from './routerConfig';
-import { crypto } from '@okexchain/javascript-sdk';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     window.OK_GLOBAL.isLogin = util.isLogined();
-    window.OK_GLOBAL.senderAddr = util.getMyAddr();
-    window.OK_GLOBAL.generalAddr = crypto.convertBech32ToHex(window.OK_GLOBAL.senderAddr)
+    window.OK_GLOBAL.senderAddr = util.getMyAddr();    
     document.title = toLocale('seoTitle');
   }
   componentDidMount() {

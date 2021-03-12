@@ -6,12 +6,14 @@ import util from '_src/utils/util';
 import history from '_src/utils/history';
 import FullTradeHead from '../pages/fullTrade/FullTradeHead';
 import routerConfig from './routerConfig';
+import { crypto } from '@okexchain/javascript-sdk';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     window.OK_GLOBAL.isLogin = util.isLogined();
     window.OK_GLOBAL.senderAddr = util.getMyAddr();
+    window.OK_GLOBAL.generalAddr = window.OK_GLOBAL.senderAddr && crypto.convertBech32ToHex(window.OK_GLOBAL.senderAddr)
     document.title = toLocale('seoTitle');
   }
   componentDidMount() {
@@ -20,7 +22,7 @@ class App extends React.Component {
       localStorage.setItem('theme', 'theme-1');
       document.body.classList.add('theme-1');
     } else {
-      document.body.classList.add(theme);
+      document.body.classList.add(theme);crypto
     }
   }
   render() {
