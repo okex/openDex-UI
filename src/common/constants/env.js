@@ -37,7 +37,8 @@ const testnet = {
     claim_at: 1611655200,
     noticeSetting: 'notice_setting_test',
   },
-  contract: 'contract-test'
+  contract: 'contract-test',
+  web3Provider:'https://exchaintest.okexcn.com'
 };
 
 const mainnet = {
@@ -75,7 +76,8 @@ const mainnet = {
     claim_at: 1611655200,
     noticeSetting: 'notice_setting',
   },
-  contract: 'contract'
+  contract: 'contract',
+  web3Provider:'https://exchaintest.okexcn.com'
 };
 
 function envConfig() {

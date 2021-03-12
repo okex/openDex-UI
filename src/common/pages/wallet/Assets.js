@@ -72,7 +72,7 @@ class Assets extends Component {
         <div className="top-tip">
           <img src={information} alt=""/>
           <p>{toLocale('dex_top_tip')}</p>
-          <a href="javascript:;">{toLocale('for_details')}</a>
+          <a href="#">{toLocale('for_details')}</a>
         </div>
         <div className="wallet-address-container">
           <WalletAddress addressType="universality" />

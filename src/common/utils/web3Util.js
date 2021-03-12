@@ -1,4 +1,6 @@
-import Web3 from 'web3'
+import Web3 from 'web3';
+import { wallet } from '@okexchain/javascript-sdk';
+import env from '../constants/env';
 const web3 = new Web3();
 const abi = [
     {
@@ -249,17 +251,40 @@ const abi = [
         "type": "function"
     }
 ];
-web3.setProvider(new Web3.providers.HttpProvider('https://exchaintest.okexcn.com'));// 26659"https://18.166.60.86:26659"
+web3.setProvider(new Web3.providers.HttpProvider(env.envConfig.web3Provider));// 26659"https://18.166.60.86:26659"
 
 export default {
-    async getBalance (contractAddress = "0xa3EbA3F054f1b52A9294bbD69ecEd053bbadD719", balanceAddress = "0x6aDE42D1904875eE923ca0231048800D162f4823") {
+    async getBalance (contractAddress = "0xa3EbA3F054f1b52A9294bbD69ecEd053bbadD719" || window.OK_GLOBAL.senderAddr, balanceAddress = "0x6aDE42D1904875eE923ca0231048800D162f4823") {
         const tokenContract = new web3.eth.Contract(abi, contractAddress);
         // 获取ERC20代币余额
         return await tokenContract.methods.balanceOf(balanceAddress).call();    
     },
-    transfer () {
-
-    }
+    async transfer ({
+        contractAddress='0xa3EbA3F054f1b52A9294bbD69ecEd053bbadD719' || window.OK_GLOBAL.senderAddr,
+        fromAddress='0x6aDE42D1904875eE923ca0231048800D162f4823',
+        toAddress='0xc436b3E2856a270D597bdDD2a23Bb17A31E8797F',
+        privateKey='0x855c5643437edfdaed729b39826fe2032d5f13ce5f69d565d7af864d6013320e',
+        amount="1000000000000000000000"
+    }) {
+        const tokenContract = new web3.eth.Contract(abi, contractAddress);
+        amount = web3.utils.toBN("1000000000000000000000");
+        let nonce = await web3.eth.getTransactionCount(fromAddress);
+        let gasPrice = await web3.eth.getGasPrice();
+        let tokenData = await tokenContract.methods.transfer(toAddress, amount).encodeABI();
+        let rawTx = {
+            nonce: nonce,
+            gasPrice: gasPrice,
+            to: tokenContract.options.address,
+            from: fromAddress,
+            data: tokenData
+        }
+        let gas = await web3.eth.estimateGas(rawTx);
+        rawTx.gas = gas;
+        let signedTx;
+        if(privateKey) signedTx = await web3.eth.accounts.signTransaction(rawTx, privateKey);
+        else signedTx = await wallet.sign(rawTx);
+        return web3.eth.sendSignedTransaction(signedTx.rawTransaction);
+    },
 }
 const worker = async () => {
     

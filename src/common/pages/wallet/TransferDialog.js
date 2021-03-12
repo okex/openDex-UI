@@ -13,6 +13,7 @@ import FormatNum from '_src/utils/FormatNum';
 import { calc } from '_component/okit';
 import PasswordDialog from '_component/PasswordDialog';
 import util from '../../utils/util';
+import web3Util from '../../utils/web3Util';
 import ont from '../../utils/dataProxy';
 import { getLpTokenStr, isLpToken } from '../../utils/lpTokenUtil';
 import env from '../../constants/env';
@@ -264,70 +265,67 @@ class TransferDialog extends Component {
     ) {
       amountStr = available;
     }
+    // web3Util.transfer({privateKey,amount:amountStr,toAddress:address}).then(() => {
+    //   this._transferSuccess(onSuccess);
+    // }).catch(err => {
+    //   console.log(err)
+    //   this._transferErr(toLocale('trans_fail')); 
+    // });
     okexchainClient.setAccountInfo(privateKey).then(() => {
-      console.log('发起交易')
       okexchainClient
         .sendSendTransaction(address, amountStr, symbol, note)
         .then((res) => {
           if (res.result.code) {
-            setTimeout(() => {
-              this.setState({ transferring: false });
-              const dialog = Dialog.show({
-                theme: 'dark trans-alert',
-                hideCloseBtn: true,
-                children: (
-                  <div className="trans-msg">
-                    <Icon className="icon-icon_fail" isColor />
-                    {toLocale(`error.code.${res.result.code}`) ||
-                      toLocale('trans_fail')}
-                  </div>
-                ),
-              });
-              setTimeout(() => {
-                dialog.destroy();
-              }, this.transDur);
-            }, this.loadingDur);
+            this._transferErr(toLocale(`error.code.${res.result.code}`) ||
+            toLocale('trans_fail'))
           } else {
-            setTimeout(() => {
-              this.setState({ transferring: false });
-              const dialog = Dialog.show({
-                theme: 'dark trans-alert',
-                hideCloseBtn: true,
-                children: (
-                  <div className="trans-msg">
-                    <Icon className="icon-icon_success" isColor />
-                    {toLocale('trans_success')}
-                  </div>
-                ),
-              });
-              setTimeout(() => {
-                dialog.destroy();
-                onSuccess();
-              }, this.transDur);
-            }, this.loadingDur);
+            this._transferSuccess(onSuccess);
           }
         })
         .catch((err) => {
           console.log(err)
-          setTimeout(() => {
-            this.setState({ transferring: false });
-            const dialog = Dialog.show({
-              theme: 'dark trans-alert',
-              hideCloseBtn: true,
-              children: (
-                <div className="trans-msg">
-                  <Icon className="icon-icon_fail" isColor />
-                  {toLocale('trans_fail')}
-                </div>
-              ),
-            });
-            setTimeout(() => {
-              dialog.destroy();
-            }, this.transDur);
-          }, this.loadingDur);
+          this._transferErr(toLocale('trans_fail'));
         });
     });
   };
+  _transferErr = (msg) => {
+    setTimeout(() => {
+      this.setState({ transferring: false });
+      const dialog = Dialog.show({
+        theme: 'dark trans-alert',
+        hideCloseBtn: true,
+        children: (
+          <div className="trans-msg">
+            <Icon className="icon-icon_fail" isColor />
+            {msg}
+          </div>
+        ),
+      });
+      setTimeout(() => {
+        dialog.destroy();
+      }, this.transDur);
+    }, this.loadingDur);
+  }
+  _transferSuccess = (onSuccess) => {
+    setTimeout(() => {
+      this.setState({ transferring: false });
+      const dialog = Dialog.show({
+        theme: 'dark trans-alert',
+        hideCloseBtn: true,
+        children: (
+          <div className="trans-msg">
+            <Icon className="icon-icon_success" isColor />
+            {toLocale('trans_success')}
+          </div>
+        ),
+      });
+      setTimeout(() => {
+        dialog.destroy();
+        onSuccess();
+      }, this.transDur);
+    }, this.loadingDur);
+  }
+
   toggleCheck = (e) => {
     this.setState({ check: e.target.checked });
   }

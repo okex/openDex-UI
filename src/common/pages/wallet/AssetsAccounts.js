@@ -127,7 +127,6 @@ class AssetsAccounts extends Component {
         .get(URL.GET_TOKENS)
         .then(({ data }) => {
           const tokenMap = {};
-          // debugger
           /* 
             description: "ammswap_btck-ba9_ethk-c63"
             mintable: true

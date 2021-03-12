@@ -25,6 +25,8 @@ export function initOKExChainClient() {
           window.location.reload();
         }
       });
+    } else if(env.envConfig.isMainnet) {
+      window.localStorage.removeItem('walletconnect');
     }
     dispatch({
       type: CommonActionType.SET_OKEXCHAIN_CLIENT,
