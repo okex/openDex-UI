@@ -155,7 +155,6 @@
       background: @bg-btn-color;
       min-width: 60px;
       padding: 0 18px;
-      margin-right: 10px;
       color: @btn-text-color;
       border-color: transparent;
       &.assets-more-bth {
@@ -202,11 +201,29 @@
       border-radius: 2px;
       font-size: 12px;
     }
+    tr>td {
+      padding-right: 10px;
+      max-width: 100px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      &:last-of-type {
+        overflow: visible;
+        button:first-of-type {
+          margin-right: 10px;
+        }
+      }
+      
+    }
   }
   .symbol-line {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
     svg.icon {
       width: 14px;
       height: 14px;

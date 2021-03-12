@@ -122,10 +122,11 @@ class AddAssetsDialog extends Component {
     };
   };
   submitAdd = () => {
-    const { onClose } = this.props;
+    const { onClose, onSuccess } = this.props;
     const { address, shortName, precision } = this.state
     operationContract.add(address, shortName, precision)
     onClose()
+    onSuccess()
   };
 
   /* fetchFeeTokenAsset = (symbol) => {

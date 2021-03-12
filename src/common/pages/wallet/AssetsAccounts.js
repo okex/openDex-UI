@@ -21,11 +21,12 @@ import operationContract from './operationContract'
 import web3Util from '_src/utils/web3Util'
 
 function mapStateToProps(state) {
-  const { legalId, legalObj, legalList } = state.Common;
+  const { legalId, legalObj, legalList, privateKey } = state.Common;
   return {
     legalId,
     legalObj,
     legalList,
+    privateKey
   };
 }
 
@@ -55,6 +56,7 @@ class AssetsAccounts extends Component {
     };
     this.symbolSearch = '';
     this.addr = window.OK_GLOBAL.senderAddr;
+    this.generalAddr = window.OK_GLOBAL.generalAddr;
   }
   componentDidMount() {
     this.props.commonAction.initOKExChainClient();
@@ -77,38 +79,28 @@ class AssetsAccounts extends Component {
         })
         .then(({ data }) => {
           let { currencies=[] } = data;
-          // let customAssets = operationContract.get()
           
           let contractPromiseList = operationContract.get().map(async it => {
-            const available = await web3Util.getBalance()
-            return {
+            const available = await web3Util.getBalance(it.address, this.generalAddr)
+            return Promise.resolve({
               currentSymbol: it.shortName,
               symbol: it.address,
               precision: it.precision,
               locked: '0',
               available,
               assetsType: 'OIP 20'
-            }
+            })
           })
-          Promise.all(contractPromiseList).then(...res => {
-            console.log(res, 'res------>')
-          })
-          
-          console.log(currencies, '^^^^^^^', 'currencies============>')
-          let hasLP = currencies.find(it => it.symbol === 'ammswap_filk-2ee_okt')
-          currencies.splice(hasLP ? 1: 0, 0, ...[
-            {
-              currentSymbol: 'abc',
-              symbol: 'xxxxxxxxxxxxxxx',
-              locked: '0',
-              available: '999.999',
-              assetsType: 'OIP 20',
-            }
-          ])
-          resolve(currencies.filter(d => {
-            if(!this.state.hideZero) return true;
-            return !!Number(util.precisionInput(d.available,8,false));
-          }));
+          Promise.allSettled(contractPromiseList).then(res => {
+            let response = []
+            res.forEach(item => (item.status === 'fulfilled') && response.push(item.value))
+            let hasLP = currencies.find(it => it.symbol === 'ammswap_filk-2ee_okt')
+            currencies.splice(hasLP ? 1: 0, 0, ...response)
+            resolve(currencies.filter(d => {
+              if(!this.state.hideZero) return true;
+              return !!Number(util.precisionInput(d.available,8,false));
+            }));
+          }).catch(() => resolve([]))
         })
         .catch(() => {
           resolve([]);
@@ -132,8 +124,10 @@ class AssetsAccounts extends Component {
                   </span>
                 </span>
               ),
+              aa: getLpTokenStr(original_symbol)
             };
           });
+          console.log(tokenList, 'tokenList---')
           this.setState({ tokenList, tokenMap });
           resolve(tokenMap);
         })

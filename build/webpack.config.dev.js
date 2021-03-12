@@ -30,12 +30,6 @@ module.exports = Object.assign(base, {
         target: 'http://okcombeta.bafang.com/',
         changeOrigin: true,
         secure: true,
-      },
-      '/web3/*': {
-        target: 'http://18.166.60.86:26659',
-        changeOrigin: true,
-        secure: true,
-        pathRewrite: { '^/web3': '/' }
       }
     },
     disableHostCheck: true,

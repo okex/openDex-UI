@@ -19,7 +19,6 @@ import WalletMenuTool from './WalletMenuTool';
 import DocMenu from './DocMenu';
 import DesktopTypeMenu from '_component/DesktopTypeMenu';
 import env from '../../constants/env';
-import addressConversion from '_src/utils/conversionAddress';
 
 import './index.less';
 
@@ -201,15 +200,9 @@ class DexLoggedMenu extends React.Component {
   render() {
     const { hasDoc, href } = this.props;
     const { isShowPassword, passwordError,processingPwd } = this.state;
-    let addr = '';
-    try {
-      const user = JSON.parse(
-        window.localStorage.getItem(env.envConfig.dexUser)
-      );
-      addr = user ? user.addr : '';
-    } catch (e) {
-      console.warn(e);
-    }
+    let addr = window.OK_GLOBAL.senderAddr
+    let generalAddr = window.OK_GLOBAL.generalAddr
+
     return (
       <React.Fragment>
         <PassWordDialog
@@ -236,7 +229,7 @@ class DexLoggedMenu extends React.Component {
               key="wallet-1"
               style={{ height: 'auto', cursor: 'default' }}
             >
-              <WalletMenuTool address={addressConversion(addr)} addressLabel={toLocale('header_menu_item_address')} />
+              <WalletMenuTool address={generalAddr} addressLabel={toLocale('header_menu_item_address')} />
             </Menu.Item>
             <Menu.Item
               key="wallet-11"

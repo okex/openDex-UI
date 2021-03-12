@@ -7,7 +7,6 @@ import WalletAddressTooltip from './WalletAddressTooltip';
 import introduce from '_src/assets/images/introduce.svg'
 import qrcode from '_src/assets/images/qrcode.svg'
 import copy from '_src/assets/images/copy.svg'
-import addressConversion from '_src/utils/conversionAddress';
 
 import './index.less';
 class WalletAddress extends Component {
@@ -27,9 +26,9 @@ class WalletAddress extends Component {
     }, 1000);
   };
   get senderAddr () {
-    const { senderAddr } = window.OK_GLOBAL || {};
+    const { senderAddr, generalAddr } = window.OK_GLOBAL || {};
     const { addressType } = this.props
-    return addressType === 'OKExChain' ? senderAddr : addressConversion(senderAddr)
+    return addressType === 'OKExChain' ? senderAddr : generalAddr
   }
   render() {
     const senderAddr = this.senderAddr

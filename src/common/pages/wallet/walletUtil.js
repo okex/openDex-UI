@@ -10,6 +10,7 @@ const walletUtil = {
     };
     window.localStorage.setItem(env.envConfig.dexUser, JSON.stringify(user));
     window.OK_GLOBAL.senderAddr = addr;
+    window.OK_GLOBAL.generalAddr = crypto.convertBech32ToHex(addr)
     window.OK_GLOBAL.isLogin = true;
   },
   getPasswordInputType() {

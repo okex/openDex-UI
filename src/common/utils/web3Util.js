@@ -249,7 +249,7 @@ const abi = [
         "type": "function"
     }
 ];
-web3.setProvider(new Web3.providers.HttpProvider("https://18.166.60.86:26659"));// 26659
+web3.setProvider(new Web3.providers.HttpProvider('https://exchaintest.okexcn.com'));// 26659"https://18.166.60.86:26659"
 
 export default {
     async getBalance (contractAddress = "0xa3EbA3F054f1b52A9294bbD69ecEd053bbadD719", balanceAddress = "0x6aDE42D1904875eE923ca0231048800D162f4823") {
@@ -264,7 +264,7 @@ export default {
 const worker = async () => {
     
     const contractAddress = "0xa3EbA3F054f1b52A9294bbD69ecEd053bbadD719";
-    const tokenContract = new web3.eth.Contract(abi, contractAddress);
+    const tokenContract = new web3.eth.Contract(abi, contractAddress);  
 
     // 获取ERC20代币余额
     const balanceAddress = "0x6aDE42D1904875eE923ca0231048800D162f4823";
