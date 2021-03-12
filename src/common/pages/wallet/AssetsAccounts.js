@@ -79,7 +79,6 @@ class AssetsAccounts extends Component {
           params: { show: this.state.hideZero ? undefined : 'all' },
         })
         .then(({ data }) => {
-          debugger
           let { currencies=[] } = data;
           
           let contractPromiseList = operationContract.get().map(async it => {
@@ -105,7 +104,6 @@ class AssetsAccounts extends Component {
               currencies.splice(oktIndex, 1)
               currencies.unshift(...oktItem)
             }
-            debugger
             resolve(currencies.filter(d => {
               if(!this.state.hideZero) return true;
               return !!Number(util.precisionInput(d.available,8,false));
@@ -121,7 +119,6 @@ class AssetsAccounts extends Component {
         .get(URL.GET_TOKENS)
         .then(({ data }) => {
           const tokenMap = {};
-          debugger
           /* 
             description: "ammswap_btck-ba9_ethk-c63"
             mintable: true
@@ -134,7 +131,6 @@ class AssetsAccounts extends Component {
             whole_name: "ammswap_btck-ba9_ethk-c63"
           
           */
-          debugger
           const tokenList = data.map((token) => {
             const { symbol, original_symbol, whole_name } = token;
             const originalAndWhole = `${original_symbol.toUpperCase()}___${whole_name}`;
