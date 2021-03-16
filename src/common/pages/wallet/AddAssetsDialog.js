@@ -32,37 +32,6 @@ function mapDispatchToProps(dispatch) {
 }
 @connect(mapStateToProps, mapDispatchToProps)
 class AddAssetsDialog extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.feeToken = this.props.valuationToken;
-  //   this.addrReg = /^okexchain/i;
-  //   this.loadingDur = 500;
-  //   this.transDur = 2500;
-  //   this.initState = {
-  //     step: 1,
-  //     symbol: '',
-  //     address: '',
-  //     addressErr: false,
-  //     addressErrType: 'format',
-  //     amount: '',
-  //     amountErr: false,
-  //     note: '',
-  //     noteErr: false,
-  //     fee: env.envConfig.fee,
-  //     feeErr: false,
-  //     pwdErr: '',
-  //     available: 0,
-  //     processingPwd: false,
-  //   };
-  //   this.state = {
-  //     transferring: false,
-  //     ...this.initState,
-  //     check: !isLpToken(props.symbol),
-  //     hideCheck: !isLpToken(props.symbol),
-  //   };
-  //   this.feeLeft = 0;
-  //   this.addr = window.OK_GLOBAL.senderAddr;
-  // }
   constructor(props) {
     super(props)
     this.addrReg = /^0x/i
@@ -83,8 +52,6 @@ class AddAssetsDialog extends Component {
     if (show !== this.props.show && this.props.show) {
       this.setState(Object.assign(this.state, { ...this.initState }));
     }
-    console.log(operationContract.get())
-    // let contractList = window.localStorage.getItem(env.envConfig.contract)
   }
   canProceed = () => {
     const { address, addressErr, shortName, shortNameErr, precision, precisionErr } = this.state;
@@ -95,7 +62,6 @@ class AddAssetsDialog extends Component {
     return (event) => {
       const value = event.target ? event.target.value : event;
       let err = false;
-      const { available, fee } = this.state;
       if (type === 'address') {
         if (value.trim() && !this.addrReg.test(value)) {
           err = true;
@@ -406,21 +372,6 @@ class AddAssetsDialog extends Component {
               </Button>
             </div>
         </Dialog>
-        {/* <PasswordDialog
-          isShow={show && [3].includes(step)}
-          onClose={onClose}
-          onEnter={this.transfer}
-          btnLoading={processingPwd}
-          updateWarning={(err) => {
-            this.setState({ pwdErr: err });
-          }}
-          warning={pwdErr}
-        /> */}
-        {/* <div className={`trans-loading ${transferring ? '' : 'hide'}`}>
-          <div className="loading-icon">
-            <Icon className="icon-loadingCopy" isColor />
-          </div>
-        </div> */}
       </div>
     );
   }

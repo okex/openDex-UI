@@ -34,7 +34,6 @@ class WalletAddress extends Component {
     const senderAddr = this.senderAddr
     const { copySuccess } = this.state;
     const { addressType } = this.props
-    console.log(addressType, 'addressType=====')
     return (
       <div className="my-address">
         <div className="address-content">

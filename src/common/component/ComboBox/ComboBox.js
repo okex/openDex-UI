@@ -5,8 +5,8 @@ import './ComboBox.less';
 
 export default class ComboBox extends React.Component {
   change(item) {
-    const { onChange } = this.props;
-    if (typeof onChange === 'function') onChange(item);
+    const { onChange, data } = this.props;
+    if (typeof onChange === 'function') onChange(item, data);
   }
 
   render() {
@@ -17,7 +17,8 @@ export default class ComboBox extends React.Component {
           {this.props.comboBoxDataSource.map((item, index) => {
             return (
               <li key={index} className={current === item.type ? 'active' : ''}>
-                {!item.isRoute ? (
+                {item.noLink ? <span onClick={() => this.change(item)}>{item.label}</span> :
+                !item.isRoute ? (
                   <a href={item.url}>{item.label}</a>
                 ) : (
                   <Link

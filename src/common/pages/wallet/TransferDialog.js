@@ -65,7 +65,7 @@ class TransferDialog extends Component {
   }
   componentWillReceiveProps(nextProps) {
     if (this.addr) {
-      const { show, symbol } = nextProps;
+      const { show, symbol, assetsType } = nextProps;
       if (show !== this.props.show) {
         if (show) {
           const idx = this.props.tokenList.findIndex((t) => {
@@ -73,7 +73,8 @@ class TransferDialog extends Component {
           });
           this.fetchFeeTokenAsset(symbol);
           if (idx > -1) {
-            this.setSymbol(symbol, false);
+            debugger
+            this.setSymbol(symbol, assetsType, false);
           }
           setTimeout(() => {
             document.querySelector('.trans.address').focus();
@@ -104,6 +105,7 @@ class TransferDialog extends Component {
   };
   calAvaIsFeeToken = () => {
     const { fee } = this.state;
+    debugger
     if (this.feeLeft > fee) {
       this.setState({
         available: util.precisionInput(calc.sub(this.feeLeft, fee, false)).replace(/,/g,''),
@@ -179,12 +181,13 @@ class TransferDialog extends Component {
     const { available } = this.state;
     this.setState({ amount: util.precisionInput(available, 8, false) });
   };
-  setSymbol = (symbol, checkFee = true) => {
+  setSymbol = (symbol, assetsType, checkFee = true) => {
     this.setState({ symbol,
       check: !isLpToken(symbol),
       hideCheck: !isLpToken(symbol)
     }, () => {
       if (symbol) {
+        debugger
         this.setState(
           {
             available: 0,
@@ -197,6 +200,8 @@ class TransferDialog extends Component {
               if (checkFee) {
                 this.calAvaIsFeeToken();
               }
+            } else if (assetsType === 'OIP 20') {
+              web3Util.getBalance(symbol).then(balance => this.setState({ available: balance }))
             } else {
               this.fetchAsset(symbol);
             }
@@ -252,7 +257,7 @@ class TransferDialog extends Component {
     );
   };
   _transfer = (privateKey='') => {
-    const { onClose, onSuccess, okexchainClient } = this.props;
+    const { onClose, onSuccess, okexchainClient, assetsType } = this.props;
     const { symbol, address, amount, note, available } = this.state;
     onClose();
     setTimeout(() => {
@@ -265,12 +270,15 @@ class TransferDialog extends Component {
     ) {
       amountStr = available;
     }
-    // web3Util.transfer({privateKey,amount:amountStr,toAddress:address}).then(() => {
-    //   this._transferSuccess(onSuccess);
-    // }).catch(err => {
-    //   console.log(err)
-    //   this._transferErr(toLocale('trans_fail')); 
-    // });
+    if (assetsType === 'OIP 20') {
+      web3Util.transfer({privateKey,amount:amountStr,toAddress:address}).then(() => {
+        this._transferSuccess(onSuccess);
+      }).catch(err => {
+        this._transferErr(toLocale('trans_fail')); 
+      });
+      return
+    }
+
     okexchainClient.setAccountInfo(privateKey).then(() => {
       okexchainClient
         .sendSendTransaction(address, amountStr, symbol, note)
