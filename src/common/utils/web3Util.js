@@ -4,6 +4,12 @@ import env from '../constants/env';
 const web3 = new Web3();
 const abi = [
     {
+        "inputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+    },
+    {
         "anonymous": false,
         "inputs": [
             {
@@ -127,6 +133,21 @@ const abi = [
         "type": "function"
     },
     {
+        "constant": true,
+        "inputs": [],
+        "name": "decimals",
+        "outputs": [
+            {
+                "internalType": "uint8",
+                "name": "",
+                "type": "uint8"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
         "constant": false,
         "inputs": [
             {
@@ -176,6 +197,36 @@ const abi = [
         ],
         "payable": false,
         "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "name",
+        "outputs": [
+            {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "symbol",
+        "outputs": [
+            {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
         "type": "function"
     },
     {
@@ -284,5 +335,35 @@ export default {
         if(privateKey) signedTx = await web3.eth.accounts.signTransaction(rawTx, privateKey);
         else signedTx = await wallet.sign(rawTx);
         return web3.eth.sendSignedTransaction(signedTx.rawTransaction);
+    },
+    async contract(contractAddress) {
+        const valid = await this.validate0xAddress(contractAddress);
+        if(!valid) return null;
+        const tokenContract = new web3.eth.Contract(abi, contractAddress);
+        const symbol = await this._methodCall(tokenContract, 'symbol');
+        const decimals = await this._methodCall(tokenContract, 'decimals');
+        return {contractAddress, symbol, decimals}
+    },
+    async _methodCall(tokenContract, method) {
+        let result;
+        try {
+            result = await tokenContract.methods[method]().call();
+        } catch {
+            result = '';
+        }
+        return result;
+    },
+    async validate0xAddress(contractAddress) {
+        let valid = false;
+        const validity = web3.utils.checkAddressChecksum(contractAddress);
+        if(validity) {
+            try {
+                const code = await web3.eth.getCode(contractAddress);
+                valid = !!(code && code !== '0x');
+            } catch {
+                valid = false;
+            }
+        }
+        return valid;
     }
 }
