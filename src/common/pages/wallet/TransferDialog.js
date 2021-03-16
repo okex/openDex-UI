@@ -113,6 +113,11 @@ class TransferDialog extends Component {
     }
   };
   fetchAsset = (symbol) => {
+    if(this.isErc20(symbol)) {
+      return web3Util.getBalance(symbol).then(available => {
+        this.setState({ available });
+      });
+    } 
     ont
       .get(`${URL.GET_ACCOUNTS}/${this.addr}`, { params: { symbol } })
       .then(({ data }) => {
@@ -220,6 +225,9 @@ class TransferDialog extends Component {
       check
     );
   };
+  isErc20(symbol) {
+    return /^0x/i.test(symbol);
+  }
   onTypeChange = ({ value }) => {
     this.setSymbol(value);
   };
@@ -265,28 +273,31 @@ class TransferDialog extends Component {
     ) {
       amountStr = available;
     }
-    // web3Util.transfer({privateKey,amount:amountStr,toAddress:address}).then(() => {
-    //   this._transferSuccess(onSuccess);
-    // }).catch(err => {
-    //   console.log(err)
-    //   this._transferErr(toLocale('trans_fail')); 
-    // });
-    okexchainClient.setAccountInfo(privateKey).then(() => {
-      okexchainClient
-        .sendSendTransaction(address, amountStr, symbol, note)
-        .then((res) => {
-          if (res.result.code) {
-            this._transferErr(toLocale(`error.code.${res.result.code}`) ||
-            toLocale('trans_fail'))
-          } else {
-            this._transferSuccess(onSuccess);
-          }
-        })
-        .catch((err) => {
-          console.log(err)
-          this._transferErr(toLocale('trans_fail'));
-        });
-    });
+    if(this.isErc20(symbol)) {
+      web3Util.transfer({contractAddress: symbol, privateKey,amount:amountStr,toAddress:address}).then(() => {
+        this._transferSuccess(onSuccess);
+      }).catch(err => {
+        console.log(err)
+        this._transferErr(toLocale('trans_fail')); 
+      });
+    } else {
+      okexchainClient.setAccountInfo(privateKey).then(() => {
+        okexchainClient
+          .sendSendTransaction(address, amountStr, symbol, note)
+          .then((res) => {
+            if (res.result.code) {
+              this._transferErr(toLocale(`error.code.${res.result.code}`) ||
+              toLocale('trans_fail'))
+            } else {
+              this._transferSuccess(onSuccess);
+            }
+          })
+          .catch((err) => {
+            console.log(err)
+            this._transferErr(toLocale('trans_fail'));
+          });
+      });
+    }
   };
   _transferErr = (msg) => {
     setTimeout(() => {
