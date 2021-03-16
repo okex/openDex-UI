@@ -144,32 +144,32 @@ const util = {
   },
 };
 
-util.accountsCols = ({ transfer }, { valuationUnit }) => {
+util.accountsCols = ({ transfer, moreOperationsChange }, { valuationUnit }) => {
   const moreBoxConf = [
     {
-      url: '/spot/full',
-      type: '/spot/full',
+      url: '',
+      type: 'detail',
       get label() {
         return toLocale('dex_more_detail');
       },
-      monitor: 'full_header,nav_spot,nav_enter_spot',
+      noLink: true
     }, {
-      url: '/spot/fullMargin',
-      type: '/spot/fullMargin',
+      url: '',
+      type: 'migration',
       get label() {
         return toLocale('dex_more_migration');
       },
-      monitor: 'full_header,nav_margin,nav_enter_margin',
+      noLink: true
     }, {
-      url: '/spot/fullMargin',
-      type: '/spot/fullMargin',
+      url: '',
+      type: 'hidden',
       get label() {
         return toLocale('dex_more_hidden');
       },
-      monitor: 'full_header,nav_margin,nav_enter_margin',
+      noLink: true
     }
   ]
-  const change = () => {}
+
   return [
     {
       title: toLocale('assets_column_assets'),
@@ -227,19 +227,20 @@ util.accountsCols = ({ transfer }, { valuationUnit }) => {
     },
     {
       title: '',
-      key: 'transfer',
-      render: (text, { symbol }) => {
+      key: 'operation',
+      render: (text, { symbol, assetsType }) => {
         return (<>
-          <Button size={Button.size.mini} onClick={transfer(symbol)}>
+          <Button size={Button.size.mini} onClick={transfer(symbol, assetsType)}>
             {toLocale('assets_trans_btn')}
           </Button>
-          <Button className="assets-more-bth" size={Button.size.mini} onClick={transfer(symbol)}>
+          <Button className="assets-more-bth" size={Button.size.mini}>
             {toLocale('assets_more_btn')}
             <div className="more-box">
               <ComboBox
                 current={moreBoxConf}
+                data={{symbol}}
                 comboBoxDataSource={ moreBoxConf }
-                onChange={change}
+                onChange={moreOperationsChange}
               />
             </div>
           </Button>

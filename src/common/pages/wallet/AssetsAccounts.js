@@ -49,6 +49,7 @@ class AssetsAccounts extends Component {
       showTransfer: false,
       showAddAssets: false,
       transferSymbol: '',
+      transferAssetsType: '',
       loading: false,
       okbTotalValuation: '--',
       legalTotalValuation: '--',
@@ -75,7 +76,6 @@ class AssetsAccounts extends Component {
   fetchAccounts = () => {
     this.setState({ loading: true });
     const fetchContract = () => new Promise(resolve => {
-      console.log('fetchContract')
       let contractPromiseList = operationContract.get().map(async it => {
         const available = await web3Util.getBalance(it.address, this.generalAddr)
         return Promise.resolve({
@@ -94,18 +94,7 @@ class AssetsAccounts extends Component {
         resolve(response)
       }).catch(() => resolve([]))
     })
-    /* 
-      currencies.unshift(...response)
-      this.contractList = response
-      let oktIndex = currencies.findIndex(it => it.symbol === env.envConfig.token.base)
-      let oktItem = currencies.slice(oktIndex, oktIndex + 1)
-      if (oktIndex > -1) {
-        currencies.splice(oktIndex, 1)
-        currencies.unshift(...oktItem)
-      }
-    */
     const fetchAccounts = () => new Promise((resolve) => {
-      console.log('fetchAccounts')
       ont
         .get(`${URL.GET_ACCOUNTS}/${this.addr}`, {
           params: { show: this.state.hideZero ? undefined : 'all' },
@@ -122,24 +111,10 @@ class AssetsAccounts extends Component {
         });
     });
     const fetchTokens = () => new Promise((resolve) => {
-      console.log('fetchTokens')
       ont
         .get(URL.GET_TOKENS)
         .then(({ data }) => {
           const tokenMap = {};
-          /* 
-            description: "ammswap_btck-ba9_ethk-c63"
-            mintable: true
-            original_symbol: "ammswap_btck-ba9_ethk-c63"
-            original_total_supply: "0.000000000000000000"
-            owner: "okexchain1p6mshmwh5kz0g62pe6hghrjc696cyp7l0nf0st"
-            symbol: "ammswap_btck-ba9_ethk-c63"
-            total_supply: "0.000000000000000000"
-            type: "2"
-            whole_name: "ammswap_btck-ba9_ethk-c63"
-          
-          */
-          // debugger
           data.push(...this.contractList)
           const tokenList = data.map((token) => {
             const { symbol, original_symbol, whole_name } = token;
@@ -157,12 +132,10 @@ class AssetsAccounts extends Component {
               aa: getLpTokenStr(original_symbol)
             };
           });
-          console.log(tokenList, 'tokenList---')
           this.setState({ tokenList, tokenMap });
           resolve(tokenMap);
         })
-        .catch((e) => {
-          console.log(e)
+        .catch(() => {
           resolve({});
         });
     });
@@ -205,6 +178,7 @@ class AssetsAccounts extends Component {
           if (!assetsType) {
             curr.assetsType = 'OIP 10'
           }
+
           return {
             ...curr,
             ...tokenObj,
@@ -233,10 +207,11 @@ class AssetsAccounts extends Component {
       showAddAssets: false,
     });
   };
-  openTransfer = (symbol) => {
+  openTransfer = (symbol, assetsType) => {
     return () => {
       this.setState({
         transferSymbol: symbol,
+        transferAssetsType: assetsType,
         showTransfer: true,
       });
     };
@@ -252,6 +227,22 @@ class AssetsAccounts extends Component {
   addAssetsSuccess = () => {
     this.fetchAccounts();
   };
+  moreOperationsChange = ({type}, {symbol}) => {
+    switch(type) {
+      case 'detail':
+        return this.detail()
+      case 'migration':
+        return this.migration()
+      case 'hidden':
+        return this.hidden(symbol)
+    }
+  }
+  detail = () => {}
+  migration = () => {}
+  hidden = (symbol) => {
+    operationContract.delete(symbol)
+    this.fetchAccounts()
+  }
   filterList = (e) => {
     const symbol = e.target.value.trim().toLowerCase();
     this.symbolSearch = symbol;
@@ -285,6 +276,7 @@ class AssetsAccounts extends Component {
       showTransfer,
       showAddAssets,
       transferSymbol,
+      transferAssetsType,
       loading,
       tokenList,
       tokenMap,
@@ -316,7 +308,7 @@ class AssetsAccounts extends Component {
         <DexTable
           isLoading={loading}
           columns={assetsUtil.accountsCols(
-            { transfer: this.openTransfer },
+            { transfer: this.openTransfer, moreOperationsChange: this.moreOperationsChange },
             { valuationUnit }
           )}
           dataSource={currencies}
@@ -328,6 +320,7 @@ class AssetsAccounts extends Component {
         <TransferDialog
           show={showTransfer}
           symbol={transferSymbol}
+          assetsType={transferAssetsType}
           tokenList={tokenList}
           tokenMap={tokenMap}
           onClose={this.closeTransfer}

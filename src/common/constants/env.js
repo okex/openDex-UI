@@ -37,6 +37,7 @@ const testnet = {
     claim_at: 1611655200,
     noticeSetting: 'notice_setting_test',
   },
+  hiddenList: 'hidden_list_test',
   contract: 'contract-test',
   web3Provider:'https://exchaintest.okexcn.com'
 };
@@ -76,6 +77,7 @@ const mainnet = {
     claim_at: 1611655200,
     noticeSetting: 'notice_setting',
   },
+  hiddenList: 'hidden_list',
   contract: 'contract',
   web3Provider:'https://exchaintest.okexcn.com'
 };
