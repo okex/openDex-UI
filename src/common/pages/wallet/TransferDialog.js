@@ -113,6 +113,11 @@ class TransferDialog extends Component {
     }
   };
   fetchAsset = (symbol) => {
+    if(this.isErc20(symbol)) {
+      return web3Util.getBalance(symbol).then(available => {
+        this.setState({ available });
+      });
+    } 
     ont
       .get(`${URL.GET_ACCOUNTS}/${this.addr}`, { params: { symbol } })
       .then(({ data }) => {
@@ -222,6 +227,9 @@ class TransferDialog extends Component {
       check
     );
   };
+  isErc20(symbol) {
+    return /^0x/i.test(symbol);
+  }
   onTypeChange = ({ value }) => {
     this.setSymbol(value);
   };
@@ -268,9 +276,9 @@ class TransferDialog extends Component {
       amountStr = available;
     }
     if (assetsType === 'OIP 20') {
-      web3Util.transfer({privateKey,amount:amountStr,toAddress:address}).then(() => {
+      web3Util.transfer({contractAddress: symbol, privateKey,amount:amountStr,toAddress:address}).then(() => {
         this._transferSuccess(onSuccess);
-      }).catch(err => {
+      }).catch(() => {
         this._transferErr(toLocale('trans_fail')); 
       });
       return

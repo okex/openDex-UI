@@ -305,20 +305,20 @@ const abi = [
 web3.setProvider(new Web3.providers.HttpProvider(env.envConfig.web3Provider));
 
 export default {
-    async getBalance (contractAddress, balanceAddress = "0x6aDE42D1904875eE923ca0231048800D162f4823" || window.OK_GLOBAL.senderAddr) {
+    async getBalance (contractAddress, balanceAddress = window.OK_GLOBAL.generalAddr) {
         const tokenContract = new web3.eth.Contract(abi, contractAddress);
         // 获取ERC20代币余额
-        return await tokenContract.methods.balanceOf(balanceAddress).call();    
+        return tokenContract.methods.balanceOf(balanceAddress).call();    
     },
     async transfer ({
-        contractAddress='0xa3EbA3F054f1b52A9294bbD69ecEd053bbadD719',
-        fromAddress='0x6aDE42D1904875eE923ca0231048800D162f4823',
-        toAddress='0xc436b3E2856a270D597bdDD2a23Bb17A31E8797F',
-        privateKey='0x855c5643437edfdaed729b39826fe2032d5f13ce5f69d565d7af864d6013320e',
-        amount="1000000000000000000000"
+        contractAddress,
+        fromAddress=window.OK_GLOBAL.generalAddr,
+        toAddress,
+        privateKey,
+        amount
     }) {
         const tokenContract = new web3.eth.Contract(abi, contractAddress);
-        amount = web3.utils.toBN("1000000000000000000000");
+        amount = web3.utils.toBN("1000");
         let nonce = await web3.eth.getTransactionCount(fromAddress);
         let gasPrice = await web3.eth.getGasPrice();
         let tokenData = await tokenContract.methods.transfer(toAddress, amount).encodeABI();
