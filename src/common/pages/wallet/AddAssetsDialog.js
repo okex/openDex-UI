@@ -169,6 +169,7 @@ class AddAssetsDialog extends Component {
                       onBlur={this.onBlur('shortName')}
                       onChange={this.onChange('shortName')}
                       placeholder={toLocale('dex_input_label_short_name')}
+                      style={canInput ? {} : { cursor: 'no-drop' }}
                       disabled={!canInput}
                     />
                     {shortNameErr && (
@@ -188,6 +189,7 @@ class AddAssetsDialog extends Component {
                       onChange={this.onChange('precision')}
                       value={precision}
                       placeholder={toLocale('dex_input_label_precision')}
+                      style={canInput ? {} : { cursor: 'no-drop' }}
                       disabled={!canInput}
                     />
                     {precisionErr && (
