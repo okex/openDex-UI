@@ -13,6 +13,7 @@ const Config = {
   okexchain: {
     browserUrl: `${exploreUrl}/${okbExplorePrefix}`,
     browserAddressUrl: `${exploreUrl}/${okbExplorePrefix}/address`,
+    detailUrl: `${exploreUrl}/${okbExplorePrefix}/token`,
     clientUrl: getCurrentApiUrl(),
     homeUrl: receiveCoinUrl,
     receiveCoinUrl: `${receiveCoinUrl}/activities/pro/drawdex`,

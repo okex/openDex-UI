@@ -7,7 +7,9 @@ import { Dialog } from '_component/Dialog';
 import { Button } from '_component/Button';
 import operationContract from './operationContract.js'
 import web3Util from '_src/utils/web3Util';
+import InputNum from '_component/InputNum';
 import './AddAssetsDialog.less';
+import ThemeSetting from '../common/ThemeSetting.js';
 
 function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
@@ -50,16 +52,27 @@ class AddAssetsDialog extends Component {
     return address && shortName && precision
   };
   onBlur = (type) => {
+    const resetFn = () => {
+      this.setState({
+        canInput: true,
+        shortName: '',
+        precision: '',
+        shortNameErr: false,
+        precisionErr: false
+      })
+    }
     return async (event) => {
       const value = event.target ? event.target.value : event;
       let err = false;
       if (type === 'address') {
         if (!value.trim() || !this.addrReg.test(value)) {
           err = true;
+          resetFn()
         } else {
           const response = await web3Util.contract(value)
           if (!response) {
             err = true
+            resetFn()
           } else if (!!response.symbol && !!response.decimals) {
             this.setState({
               canInput: false,
@@ -151,7 +164,7 @@ class AddAssetsDialog extends Component {
                     <input
                       autoComplete="address"
                       className="assets-input address"
-                      maxLength={50}
+                      maxLength={20}
                       value={shortName}
                       onBlur={this.onBlur('shortName')}
                       onChange={this.onChange('shortName')}
@@ -168,7 +181,8 @@ class AddAssetsDialog extends Component {
                 <tr><td className="add-assets-label">{toLocale('dex_input_label_precision')}</td></tr>
                 <tr>
                   <td>
-                    <input
+                    <InputNum 
+                      precision={0}
                       className="assets-input amount"
                       onBlur={this.onBlur('precision')}
                       onChange={this.onChange('precision')}
@@ -178,7 +192,7 @@ class AddAssetsDialog extends Component {
                     />
                     {precisionErr && (
                       <p className="error">
-                        {toLocale('dex_input_err_tip_precision')}
+                        {precision === '' ? toLocale('dex_input_err_tip_precision') : toLocale('dex_input_err_tip_precision2')}
                       </p>
                     )}
                   </td>

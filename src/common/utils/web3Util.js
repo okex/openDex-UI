@@ -340,8 +340,10 @@ export default {
         return web3.eth.sendSignedTransaction(signedTx.rawTransaction);
     },
     async contract(contractAddress) {
+        const validity = web3.utils.isAddress(contractAddress);
+        if (!validity) return null
         const valid = await this.validate0xAddress(contractAddress);
-        if(!valid) return null;
+        if(!valid) return {contractAddress, symbol: null, decimals: null};
         const tokenContract = new web3.eth.Contract(abi, contractAddress);
         const symbol = await this._methodCall(tokenContract, 'symbol');
         const decimals = await this._methodCall(tokenContract, 'decimals');
@@ -358,14 +360,11 @@ export default {
     },
     async validate0xAddress(contractAddress) {
         let valid = false;
-        const validity = web3.utils.isAddress(contractAddress);
-        if(validity) {
-            try {
-                const code = await web3.eth.getCode(contractAddress);
-                valid = !!(code && code !== '0x');
-            } catch {
-                valid = false;
-            }
+        try {
+            const code = await web3.eth.getCode(contractAddress);
+            valid = !!(code && code !== '0x');
+        } catch {
+            valid = false;
         }
         return valid;
     }

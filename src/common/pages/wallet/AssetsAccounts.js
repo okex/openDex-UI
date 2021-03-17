@@ -20,6 +20,7 @@ import vector from '_src/assets/images/vector.svg'
 import operationContract from './operationContract'
 import web3Util from '_src/utils/web3Util'
 import env from '_src/constants/env';
+import Config from '../../constants/Config';
 
 function mapStateToProps(state) {
   const { legalId, legalObj, legalList, privateKey } = state.Common;
@@ -230,14 +231,18 @@ class AssetsAccounts extends Component {
   moreOperationsChange = ({type}, {symbol}) => {
     switch(type) {
       case 'detail':
-        return this.detail()
+        return this.detail(symbol)
       case 'migration':
         return this.migration()
       case 'hidden':
         return this.hidden(symbol)
     }
   }
-  detail = () => {}
+  detail = (symbol) => {
+    // this.router.push()
+    console.log(Config.okexchain.detailUrl + symbol, '------------->')
+    
+  }
   migration = () => {}
   hidden = (symbol) => {
     operationContract.delete(symbol)

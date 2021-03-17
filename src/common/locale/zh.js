@@ -1212,6 +1212,7 @@ const zhCN = {
   dex_input_err_tip_contract: '请输入正确的合约地址',
   dex_input_err_tip_short_name: '请输入正确的代币简称',
   dex_input_err_tip_precision: '请输入正确的代币精度',
+  dex_input_err_tip_precision2: '请输入 0 ~ 18 之间的数字',
   import_mnemonic_select_title: '请选择助记词路径',
   import_mnemonic_new_user: '兼容以太坊路径（OKExChain新用户）',
   import_mnemonic_old_user: 'OKExChain原路径（3月1日前创建钱包的用户）',
