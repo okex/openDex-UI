@@ -26,7 +26,6 @@ export default {
     delete (address) {
         let history = this.get();
         history = history.filter(it => it.address !== address)
-        debugger
         window.localStorage.setItem(env.envConfig.contract, JSON.stringify(history));
     }
 }

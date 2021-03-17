@@ -2,22 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as CommonAction from '_src/redux/actions/CommonAction';
-import Icon from '_src/component/IconLite';
 import { toLocale } from '_src/locale/react-locale';
-import URL from '_src/constants/URL';
 import { Dialog } from '_component/Dialog';
 import { Button } from '_component/Button';
-import Select from '_component/ReactSelect';
-import Checkbox from 'rc-checkbox';
-import FormatNum from '_src/utils/FormatNum';
-import { calc } from '_component/okit';
-import PasswordDialog from '_component/PasswordDialog';
-import util from '../../utils/util';
-import ont from '../../utils/dataProxy';
-import { getLpTokenStr, isLpToken } from '../../utils/lpTokenUtil';
-import env from '../../constants/env';
-import './AddAssetsDialog.less';
 import operationContract from './operationContract.js'
+import web3Util from '_src/utils/web3Util';
+import './AddAssetsDialog.less';
 
 function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
@@ -34,14 +24,15 @@ function mapDispatchToProps(dispatch) {
 class AddAssetsDialog extends Component {
   constructor(props) {
     super(props)
-    this.addrReg = /^0x/i
+    this.addrReg = /^0x\w*[a-zA-Z]+/
     this.initState = {
       address: '',
       addressErr: false,
       shortName: '',
       shortNameErr: false,
       precision: '',
-      precisionErr: false
+      precisionErr: false,
+      canInput: true
     }
     this.state = {
       ...this.initState
@@ -59,12 +50,27 @@ class AddAssetsDialog extends Component {
     return address && shortName && precision
   };
   onBlur = (type) => {
-    return (event) => {
+    return async (event) => {
       const value = event.target ? event.target.value : event;
       let err = false;
       if (type === 'address') {
-        if (value.trim() && !this.addrReg.test(value)) {
+        if (!value.trim() || !this.addrReg.test(value)) {
           err = true;
+        } else {
+          const response = await web3Util.contract(value)
+          if (!response) {
+            err = true
+          } else if (!!response.symbol && !!response.decimals) {
+            this.setState({
+              canInput: false,
+              shortName: response.symbol,
+              precision: response.decimals,
+              shortNameErr: false,
+              precisionErr: false
+            })
+          } else {
+            this.setState({ canInput: true })
+          }
         }
       }
       if (type === 'shortName') {
@@ -73,6 +79,7 @@ class AddAssetsDialog extends Component {
       if (type === 'precision') {
         err = !value.trim()
       }
+
       this.setState({
         [`${type}Err`]: err,
       });
@@ -95,198 +102,12 @@ class AddAssetsDialog extends Component {
     onSuccess()
   };
 
-  /* fetchFeeTokenAsset = (symbol) => {
-    ont
-      .get(`${URL.GET_ACCOUNTS}/${this.addr}`, {
-        params: { symbol: this.feeToken },
-      })
-      .then(({ data }) => {
-        const { currencies } = data;
-        const assets = currencies || [];
-        if (assets.length) {
-          this.feeLeft = assets[0].available;
-          if (symbol === this.feeToken) {
-            this.calAvaIsFeeToken();
-          }
-        }
-      });
-  };
-  calAvaIsFeeToken = () => {
-    const { fee } = this.state;
-    if (this.feeLeft > fee) {
-      this.setState({
-        available: util.precisionInput(calc.sub(this.feeLeft, fee, false)).replace(/,/g,''),
-      });
-    } else {
-      this.setState({ available: 0 });
-    }
-  };
-  fetchAsset = (symbol) => {
-    ont
-      .get(`${URL.GET_ACCOUNTS}/${this.addr}`, { params: { symbol } })
-      .then(({ data }) => {
-        const { currencies } = data;
-        const assets = currencies || [];
-        if (assets.length) {
-          this.setState({ available: assets[0].available });
-        }
-      });
-  };
-  
-  
-  allIn = () => {
-    const { available } = this.state;
-    this.setState({ amount: util.precisionInput(available, 8, false) });
-  };
-  setSymbol = (symbol, checkFee = true) => {
-    this.setState({ symbol,
-      check: !isLpToken(symbol),
-      hideCheck: !isLpToken(symbol)
-    }, () => {
-      if (symbol) {
-        this.setState(
-          {
-            available: 0,
-            amount: '',
-            amountErr: false,
-            feeErr: false,
-          },
-          () => {
-            if (symbol === this.feeToken) {
-              if (checkFee) {
-                this.calAvaIsFeeToken();
-              }
-            } else {
-              this.fetchAsset(symbol);
-            }
-          }
-        );
-      }
-    });
-  };
-  canProceed = () => {
-    const { fee, symbol, address, amount, available,check } = this.state;
-    return (
-      this.props.tokenList.length &&
-      symbol &&
-      address.trim() &&
-      this.addrReg.test(address.trim()) &&
-      Number(amount) &&
-      !util.compareNumber(available, amount) &&
-      util.compareNumber(fee, this.feeLeft) &&
-      this.addr &&
-      this.addr.toLowerCase() !== address.trim().toLowerCase() &&
-      check
-    );
-  };
-  
-  transfer = (pwd) => {
-    if (!util.isLogined()) {
-      window.location.reload();
-    }
-
-    if (this.state.processingPwd) return;
-    this.setState(
-      {
-        processingPwd: true,
-      },
-      () => {
-        setTimeout(() => {
-          this.props.commonAction.validatePassword(
-            pwd,
-            (privateKey) => {
-              const { onClose, onSuccess, okexchainClient } = this.props;
-              const { symbol, address, amount, note, available } = this.state;
-              onClose();
-              this.setState({ transferring: true });
-              let amountStr = util.precisionInput(amount).replace(/,/g,'');
-              if (
-                util.precisionInput(amount, 8) ===
-                util.precisionInput(available, 8)
-              ) {
-                amountStr = available;
-              }
-              okexchainClient.setAccountInfo(privateKey).then(() => {
-                okexchainClient
-                  .sendSendTransaction(address, amountStr, symbol, note)
-                  .then((res) => {
-                    if (res.result.code) {
-                      setTimeout(() => {
-                        this.setState({ transferring: false });
-                        const dialog = Dialog.show({
-                          theme: 'dark trans-alert',
-                          hideCloseBtn: true,
-                          children: (
-                            <div className="trans-msg">
-                              <Icon className="icon-icon_fail" isColor />
-                              {toLocale(`error.code.${res.result.code}`) ||
-                                toLocale('trans_fail')}
-                            </div>
-                          ),
-                        });
-                        setTimeout(() => {
-                          dialog.destroy();
-                        }, this.transDur);
-                      }, this.loadingDur);
-                    } else {
-                      setTimeout(() => {
-                        this.setState({ transferring: false });
-                        const dialog = Dialog.show({
-                          theme: 'dark trans-alert',
-                          hideCloseBtn: true,
-                          children: (
-                            <div className="trans-msg">
-                              <Icon className="icon-icon_success" isColor />
-                              {toLocale('trans_success')}
-                            </div>
-                          ),
-                        });
-                        setTimeout(() => {
-                          dialog.destroy();
-                          onSuccess();
-                        }, this.transDur);
-                      }, this.loadingDur);
-                    }
-                  })
-                  .catch(() => {
-                    setTimeout(() => {
-                      this.setState({ transferring: false });
-                      const dialog = Dialog.show({
-                        theme: 'dark trans-alert',
-                        hideCloseBtn: true,
-                        children: (
-                          <div className="trans-msg">
-                            <Icon className="icon-icon_fail" isColor />
-                            {toLocale('trans_fail')}
-                          </div>
-                        ),
-                      });
-                      setTimeout(() => {
-                        dialog.destroy();
-                      }, this.transDur);
-                    }, this.loadingDur);
-                  });
-              });
-            },
-            () => {
-              this.setState({
-                pwdErr: toLocale('trans_err_pwd'),
-                processingPwd: false,
-              });
-            }
-          );
-        }, 20);
-      }
-    );
-  };
-  toggleCheck = (e) => {
-    this.setState({ check: e.target.checked });
-  } */
   render() {
     const {
       address,
       shortName,
       precision,
+      canInput,
       addressErr,
       shortNameErr,
       precisionErr,
@@ -333,6 +154,7 @@ class AddAssetsDialog extends Component {
                       onBlur={this.onBlur('shortName')}
                       onChange={this.onChange('shortName')}
                       placeholder={toLocale('dex_input_label_short_name')}
+                      disabled={!canInput}
                     />
                     {shortNameErr && (
                       <p className="error">
@@ -350,6 +172,7 @@ class AddAssetsDialog extends Component {
                       onChange={this.onChange('precision')}
                       value={precision}
                       placeholder={toLocale('dex_input_label_precision')}
+                      disabled={!canInput}
                     />
                     {precisionErr && (
                       <p className="error">

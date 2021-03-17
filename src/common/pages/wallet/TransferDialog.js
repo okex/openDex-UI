@@ -73,7 +73,6 @@ class TransferDialog extends Component {
           });
           this.fetchFeeTokenAsset(symbol);
           if (idx > -1) {
-            debugger
             this.setSymbol(symbol, assetsType, false);
           }
           setTimeout(() => {
@@ -105,7 +104,6 @@ class TransferDialog extends Component {
   };
   calAvaIsFeeToken = () => {
     const { fee } = this.state;
-    debugger
     if (this.feeLeft > fee) {
       this.setState({
         available: util.precisionInput(calc.sub(this.feeLeft, fee, false)).replace(/,/g,''),
@@ -187,7 +185,6 @@ class TransferDialog extends Component {
       hideCheck: !isLpToken(symbol)
     }, () => {
       if (symbol) {
-        debugger
         this.setState(
           {
             available: 0,

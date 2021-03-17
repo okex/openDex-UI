@@ -355,7 +355,7 @@ export default {
     },
     async validate0xAddress(contractAddress) {
         let valid = false;
-        const validity = web3.utils.checkAddressChecksum(contractAddress);
+        const validity = web3.utils.isAddress(contractAddress);
         if(validity) {
             try {
                 const code = await web3.eth.getCode(contractAddress);

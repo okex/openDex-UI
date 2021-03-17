@@ -212,20 +212,6 @@ util.accountsCols = ({ transfer, moreOperationsChange }, { valuationUnit }) => {
       },
     },
     {
-      title: toLocale('assets_column_balance'),
-      key: 'available',
-      render: (text) => {
-        return calc.showFloorTruncation(text, 8, true);
-      },
-    },
-    {
-      title: toLocale('assets_column_list'),
-      key: 'locked',
-      render: (text) => {
-        return calc.showFloorTruncation(text, 8, true);
-      },
-    },
-    {
       title: '',
       key: 'operation',
       render: (text, { symbol, assetsType }) => {

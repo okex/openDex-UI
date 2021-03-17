@@ -185,7 +185,7 @@ class AssetsAccounts extends Component {
             assetToken,
             symbolId:
               originalAndWholeCounts[originalAndWhole] <= 1 ? '' : symbolUp,
-            total: calc.showFloorTruncation(sumOKB, 8, false),
+            total: calc.showFloorTruncation(sumOKB, 18, false),
           };
         });
         this.setState({
