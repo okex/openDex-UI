@@ -109,12 +109,14 @@ export default class InputNum extends React.Component {
   };
 
   _precision(inpNumber) {
+    const inpNumbers = ('' + inpNumber).split('.');
     if (this.props.precision) {
-      const inpNumbers = ('' + inpNumber).split('.');
       if (inpNumbers[1]) {
         inpNumbers[1] = inpNumbers[1].substring(0, this.props.precision);
         inpNumber = inpNumbers[0] + '.' + inpNumbers[1];
       }
+    } else if(this.props.precision === 0) {
+      return inpNumbers[0];
     }
     return inpNumber;
   }
