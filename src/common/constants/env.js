@@ -39,6 +39,7 @@ const testnet = {
   },
   hiddenList: 'hidden_list_test',
   contract: 'contract-test',
+  mnemonicPathType: 'mnemonic_path_type_test',
   web3Provider:'https://exchaintest.okexcn.com'
 };
 
@@ -79,6 +80,7 @@ const mainnet = {
   },
   hiddenList: 'hidden_list',
   contract: 'contract',
+  mnemonicPathType: 'mnemonic_path_type',
   web3Provider:'https://exchaintest.okexcn.com'
 };
 

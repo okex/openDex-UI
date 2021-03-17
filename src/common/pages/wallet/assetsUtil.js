@@ -215,6 +215,10 @@ util.accountsCols = ({ transfer, moreOperationsChange }, { valuationUnit }) => {
       title: '',
       key: 'operation',
       render: (text, { symbol, assetsType }) => {
+        let boxConfig = moreBoxConf
+        if (assetsType === 'OIP 10') boxConfig = moreBoxConf.filter(({type}) => type !== 'hidden')
+        else boxConfig = moreBoxConf.filter(({type}) => type !== 'migration')
+
         return (<>
           <Button size={Button.size.mini} onClick={transfer(symbol, assetsType)}>
             {toLocale('assets_trans_btn')}
@@ -223,9 +227,9 @@ util.accountsCols = ({ transfer, moreOperationsChange }, { valuationUnit }) => {
             {toLocale('assets_more_btn')}
             <div className="more-box">
               <ComboBox
-                current={moreBoxConf}
+                current={{}}
                 data={{symbol}}
-                comboBoxDataSource={ moreBoxConf }
+                comboBoxDataSource={boxConfig}
                 onChange={moreOperationsChange}
               />
             </div>

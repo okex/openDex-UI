@@ -1,6 +1,7 @@
 import Web3 from 'web3';
 import { wallet } from '@okexchain/javascript-sdk';
 import env from '../constants/env';
+import { calc } from '_component/okit';
 const web3 = new Web3();
 const abi = [
     {
@@ -307,8 +308,9 @@ web3.setProvider(new Web3.providers.HttpProvider(env.envConfig.web3Provider));
 export default {
     async getBalance (contractAddress, balanceAddress = window.OK_GLOBAL.generalAddr) {
         const tokenContract = new web3.eth.Contract(abi, contractAddress);
-        // 获取ERC20代币余额
-        return tokenContract.methods.balanceOf(balanceAddress).call();    
+        const decimals = await tokenContract.methods.decimals().call();
+        const balance = await tokenContract.methods.balanceOf(balanceAddress).call();
+        return calc.div(balance, Math.pow(10,decimals));
     },
     async transfer ({
         contractAddress,
@@ -318,10 +320,11 @@ export default {
         amount
     }) {
         const tokenContract = new web3.eth.Contract(abi, contractAddress);
-        amount = web3.utils.toBN("1000");
+        const decimals = await tokenContract.methods.decimals().call();
+        const currAmount = web3.utils.toBN(calc.mul(amount, Math.pow(10,decimals)));
         let nonce = await web3.eth.getTransactionCount(fromAddress);
         let gasPrice = await web3.eth.getGasPrice();
-        let tokenData = await tokenContract.methods.transfer(toAddress, amount).encodeABI();
+        let tokenData = await tokenContract.methods.transfer(toAddress, currAmount).encodeABI();
         let rawTx = {
             nonce: nonce,
             gasPrice: gasPrice,

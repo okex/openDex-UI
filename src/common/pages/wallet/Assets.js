@@ -10,6 +10,7 @@ import AssetsAccounts from './AssetsAccounts';
 import AssetsTransactions from './AssetsTransactions';
 import assetsUtil from './assetsUtil';
 import { toLocale } from '_src/locale/react-locale';
+import env from '_src/constants/env';
 import information from '_src/assets/images/Information.svg'
 import './Assets.less';
 
@@ -33,6 +34,7 @@ class Assets extends Component {
     this.state = {
       loading: false,
       copySuccess: false,
+      pathType: window.localStorage.getItem(env.envConfig.mnemonicPathType)
     };
     this.isAssets = this.props.location.pathname.includes(PageURL.walletAssets);
     if (!window.OK_GLOBAL.senderAddr) {
@@ -66,10 +68,11 @@ class Assets extends Component {
     }, 1000);
   };
   render() {
-    const { loading } = this.state;
+    const { loading, pathType } = this.state;
+    const tipStyle = pathType === 'old' ? {} : { display: 'none' }
     return (
       <div className="wallet-main">
-        <div className="top-tip">
+        <div className="top-tip" style={tipStyle}>
           <img src={information} alt=""/>
           <p>{toLocale('dex_top_tip')}</p>
           <a href="#">{toLocale('for_details')}</a>

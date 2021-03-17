@@ -11,10 +11,10 @@ import ValidateCheckbox from '_component/ValidateCheckbox';
 import walletUtil from './walletUtil';
 import util from '_src/utils/util';
 import DesktopTypeMenu from '_component/DesktopTypeMenu';
-import './ImportByMnemonic.less';
+import env from '_src/constants/env';
 import defaultSelect from '_src/assets/images/defaultSelect.svg'
 import selected from '_src/assets/images/selected.svg'
-
+import './ImportByMnemonic.less';
 
 function mapStateToProps() {
   return {};
@@ -38,7 +38,7 @@ class ImportByMnemonic extends Component {
       buttonLoading: false,
       isNone: false,
       step: 1,
-      pathType: 'new'
+      pathType: ''
     };
     this.isValidatedPassword = false;
   }
@@ -100,6 +100,7 @@ class ImportByMnemonic extends Component {
     try {
       const { password, pathType } = this.state;
       const mnemonic = this.state.mnemonic.trim();
+      window.localStorage.setItem(env.envConfig.mnemonicPathType, pathType)
       const privateKey = crypto.getPrivateKeyFromMnemonic(mnemonic, pathType === 'old' ? 996 : 60);
       const keyStore = crypto.generateKeyStore(privateKey, password);
       walletUtil.setUserInSessionStroage(privateKey, keyStore);
@@ -154,6 +155,7 @@ class ImportByMnemonic extends Component {
             <Button
               type="primary"
               onClick={this.nextStep}
+              disabled={!pathType}
             >
               {toLocale('next_step')}
             </Button>

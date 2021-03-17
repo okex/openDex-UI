@@ -74,10 +74,12 @@ class AddAssetsDialog extends Component {
         }
       }
       if (type === 'shortName') {
-        err = !value.trim()
+        if (!value.trim()) err = true
+        else if (value.trim().length > 20) err = true
       }
       if (type === 'precision') {
-        err = !value.trim()
+        if (!value.trim()) err = true
+        if (+value < 0 || +value > 18) err = true
       }
 
       this.setState({

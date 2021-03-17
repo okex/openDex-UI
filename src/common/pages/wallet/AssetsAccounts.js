@@ -77,7 +77,7 @@ class AssetsAccounts extends Component {
     this.setState({ loading: true });
     const fetchContract = () => new Promise(resolve => {
       let contractPromiseList = operationContract.get().map(async it => {
-        const available = await web3Util.getBalance(it.address, this.generalAddr)
+        const available = await web3Util.getBalance(it.address, this.generalAddr, it.precision)
         return Promise.resolve({
           original_symbol: it.shortName,
           originalAndWhole: '',
