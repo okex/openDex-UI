@@ -101,18 +101,18 @@ const base = {
 if (process.env.NODE_ENV === 'production') {
   base.optimization = {
     minimizer: [
-      new UglifyJsPlugin({
-        cache: true,
-        parallel: true,
-        uglifyOptions: {
-          compress: {
-            warnings: false,
-            drop_console: false,
-            collapse_vars: true,
-            reduce_vars: true,
-          },
-        },
-      }),
+      // new UglifyJsPlugin({
+      //   cache: true,
+      //   parallel: true,
+      //   uglifyOptions: {
+      //     compress: {
+      //       warnings: false,
+      //       drop_console: false,
+      //       collapse_vars: true,
+      //       reduce_vars: true,
+      //     },
+      //   },
+      // }),
       new OptimizeCSSAssetsPlugin({}),
     ],
   };
