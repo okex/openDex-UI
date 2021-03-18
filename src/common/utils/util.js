@@ -94,6 +94,7 @@ const util = {
     window.localStorage.removeItem(env.envConfig.dexUser);
     window.localStorage.removeItem(env.envConfig.dexToken);
     window.localStorage.removeItem('dex_legalCurrencyId');
+    window.localStorage.removeItem(env.envConfig.mnemonicPathType)
   },
   isWsLogin() {
     const tok = window.localStorage.getItem(env.envConfig.dexToken);
