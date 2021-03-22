@@ -201,7 +201,7 @@ util.accountsCols = ({ transfer, moreOperationsChange }, { valuationUnit }) => {
       title: toLocale('assets_column_type'),
       key: 'assetsType',
       render: (text) => {
-        return <span className="assets-column-type">{text}</span>;
+        return !!text ? (<span className="assets-column-type">{text}</span>) : <span></span>;
       },
     },
     {

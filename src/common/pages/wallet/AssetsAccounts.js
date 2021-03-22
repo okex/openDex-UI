@@ -176,7 +176,7 @@ class AssetsAccounts extends Component {
             locked || 0,
             false
           );
-          if (!assetsType) {
+          if (!assetsType && symbol !== 'okt') {
             curr.assetsType = 'OIP 10'
           }
 

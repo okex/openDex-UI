@@ -26,10 +26,10 @@ function mapDispatchToProps(dispatch) {
 class AddAssetsDialog extends Component {
   constructor(props) {
     super(props)
-    this.addrReg = /^0x\w*[a-zA-Z]+/
     this.initState = {
       address: '',
       addressErr: false,
+      addressErrType: 'default',
       shortName: '',
       shortNameErr: false,
       precision: '',
@@ -64,27 +64,47 @@ class AddAssetsDialog extends Component {
     return async (event) => {
       const value = event.target ? event.target.value : event;
       let err = false;
+      let addressErrType = 'default'
       if (type === 'address') {
-        if (!value.trim() || !this.addrReg.test(value)) {
+        if (value.trim() === '') {
           err = true;
           resetFn()
         } else {
+          const contractList = operationContract.get()
           const response = await web3Util.contract(value)
           if (!response) {
             err = true
             resetFn()
-          } else if (!!response.symbol && !!response.decimals) {
-            this.setState({
-              canInput: false,
-              shortName: response.symbol,
-              precision: response.decimals,
-              shortNameErr: false,
-              precisionErr: false
-            })
           } else {
-            this.setState({ canInput: true })
-          }
+            const curr = contractList.filter(it => it.address === value)
+            if (curr.length > 0) {
+              err = true
+              addressErrType = 'repeat'
+              this.setState({
+                [`${type}Err`]: err,
+                addressErrType,
+                canInput: true
+              })
+              return
+            }
+            if (!!response.symbol && !!response.decimals) {
+              this.setState({
+                [`${type}Err`]: err,
+                canInput: false,
+                shortName: response.symbol,
+                precision: response.decimals,
+                shortNameErr: false,
+                precisionErr: false
+              })
+              return
+            }
+          } 
         }
+        this.setState({
+          [`${type}Err`]: err,
+          addressErrType
+        })
+        return
       }
       if (type === 'shortName') {
         if (!value.trim()) err = true
@@ -96,13 +116,19 @@ class AddAssetsDialog extends Component {
       }
 
       this.setState({
-        [`${type}Err`]: err,
+        [`${type}Err`]: err
       });
     };
   };
   onChange = (type) => {
     return (e) => {
       let value = e.target ? e.target.value : e;
+      if (type === 'address') {
+        if(!/^(\w|\d)*$/g.test(value)) return
+      }
+      if (type === 'shortName') {
+        if(!/^(\w|\d)*$/g.test(value)) return
+      }
       this.setState({
         [type]: value,
         [`${type}Err`]: false,
@@ -124,6 +150,7 @@ class AddAssetsDialog extends Component {
       precision,
       canInput,
       addressErr,
+      addressErrType,
       shortNameErr,
       precisionErr,
     } = this.state;
@@ -153,7 +180,7 @@ class AddAssetsDialog extends Component {
                     />
                     {addressErr && (
                       <p className="error">
-                        {toLocale('dex_input_err_tip_contract')}
+                        {toLocale('dex_input_err_tip_contract_' + addressErrType)}
                       </p>
                     )}
                   </td>
