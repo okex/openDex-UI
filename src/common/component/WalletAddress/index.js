@@ -7,6 +7,8 @@ import WalletAddressTooltip from './WalletAddressTooltip';
 import introduce from '_src/assets/images/introduce.svg'
 import qrcode from '_src/assets/images/qrcode.svg'
 import copy from '_src/assets/images/copy.svg'
+import down from '_src/assets/images/down.svg'
+import up from '_src/assets/images/up.svg'
 
 import './index.less';
 class WalletAddress extends Component {
@@ -33,9 +35,9 @@ class WalletAddress extends Component {
   render() {
     const senderAddr = this.senderAddr
     const { copySuccess } = this.state;
-    const { addressType } = this.props
+    const { addressType, expanded, setExpanded, style } = this.props
     return (
-      <div className="my-address">
+      <div className="my-address" style={style}>
         <div className="address-content">
           {addressType === 'OKExChain' ? toLocale('assets_address_OKExChain') : toLocale('assets_address')}
           {addressType === 'OKExChain' && (<WalletAddressTooltip
@@ -62,6 +64,11 @@ class WalletAddress extends Component {
             <img className={copySuccess ? 'hidden' : ''} src={copy} alt=""/>
           </div>
         </CopyToClipboard>
+        { addressType === 'universality'
+        && <span onClick={setExpanded} className="address-expanded">
+          {toLocale(expanded ? 'dex_address_packup': 'dex_address_expanded')}
+          <img src={expanded ? up : down} alt=""/>
+        </span> }
       </div>
     );
   }

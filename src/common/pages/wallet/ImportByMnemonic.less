@@ -18,6 +18,25 @@
     }
   }
   .step-content{
+    &.instructions {
+      .tree {
+        padding: 26px 0;
+        text-align: center;
+      }
+      .article {
+        
+        h1 {
+          height: 40px;
+          line-height: 40px;
+          font-size: 14px;
+          color: rgba(255, 255, 255, 0.85);
+        }
+        p {
+          line-height: 20px;
+          margin-bottom: 8px;
+        }
+      }
+    }
     &.hidden {
       display: none;
     }
@@ -63,6 +82,41 @@
       margin-right: 16px;
     }
   }
+
+  .icon-introduce-container {
+    display: inline-block;
+    position: relative;
+    outline: 0;
+    .icon-introduce {
+      width: 12px;
+      height: 12px;
+      margin-left: 8px;
+      cursor: pointer;
+    }
+    .instruction-tips {
+      position: absolute;
+      top: 20px;
+      left: -4px;
+      width: 280px;
+      padding: 12px;
+      background: #fff;
+      color: #1F2533;
+      font-size: 12px;
+      line-height: 16px;
+      p:nth-of-type(even) {
+        margin: 8px 0;
+      }
+      &::after {
+        content: '';
+        position: absolute;
+        top: -12px;
+        width: 0;
+        height: 0;
+        border: 6px solid transparent;
+        border-bottom-color: #fff;
+      }
+    }
+  }
   .password-container {
     margin-top: 30px;
   }
@@ -70,8 +124,4 @@
   .prompt-container {
     color: #FB6262;
   }
-  // button {
-  //   width: 100%;
-  //   margin-top: 24px;
-  // }
 }

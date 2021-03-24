@@ -56,6 +56,9 @@ const URL = {
   get GET_TRANSACTIONS() {
     return `${BASEURL.OKDEX_BASE_URL}/transactions`;
   },
+  get GET_TRANSACTIONS20() {
+    return `${BASEURL.OKDEX_BASE_URL}/{chain}/addresses/{address}/transfers`;
+  },
   get GET_LATEST_HEIGHT() {
     return `${BASEURL.DEFAULT_BASE_URL}/latestheight`;
   },

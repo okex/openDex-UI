@@ -19,6 +19,8 @@ import WalletMenuTool from './WalletMenuTool';
 import DocMenu from './DocMenu';
 import DesktopTypeMenu from '_component/DesktopTypeMenu';
 import env from '../../constants/env';
+import down from '_src/assets/images/down.svg'
+import up from '_src/assets/images/up.svg'
 
 import './index.less';
 
@@ -46,6 +48,7 @@ class DexLoggedMenu extends React.Component {
     isShowPassword: false,
     passwordError: '',
     type: KEYSTORE,
+    expanded: false
   };
   handleDown = (type=KEYSTORE) => {
     this.setState({
@@ -204,10 +207,14 @@ class DexLoggedMenu extends React.Component {
       },
     });
   };
+  setExpanded = () => {
+    const { expanded } = this.state
+    this.setState({expanded: !expanded})
+  }
 
   render() {
     const { hasDoc, href } = this.props;
-    const { isShowPassword, passwordError,processingPwd } = this.state;
+    const { isShowPassword, passwordError,processingPwd, expanded } = this.state;
     let addr = window.OK_GLOBAL.senderAddr
     let generalAddr = window.OK_GLOBAL.generalAddr
 
@@ -237,16 +244,20 @@ class DexLoggedMenu extends React.Component {
               key="wallet-1"
               style={{ height: 'auto', cursor: 'default' }}
             >
-              <WalletMenuTool address={generalAddr} addressLabel={toLocale('header_menu_item_address')} />
+              <WalletMenuTool address={generalAddr} addressType="default" addressLabel={toLocale('header_menu_item_address')} />
             </Menu.Item>
             <Menu.Item
               key="wallet-11"
-              style={{ height: 'auto', cursor: 'default' }}
+              style={{ height: 'auto', cursor: 'default', display: expanded ? '' : 'none' }}
             >
-              <WalletMenuTool address={addr} addressLabel={toLocale('dex_address_label')} />
+              <WalletMenuTool address={addr} addressType="okexchain" addressLabel={toLocale('dex_address_label')} />
             </Menu.Item>
-            <Menu.Item style={{ height: 20 }}>
-              <a className="discription" href="javascript:;">{toLocale('dex_address_double')}</a>
+            <Menu.Item style={{ height: 20, lineHeight: '20px' }}>
+              <span onClick={this.setExpanded} className="address-expanded discription">
+                {toLocale(expanded ? 'dex_address_packup': 'dex_address_expanded')}
+                <img src={expanded ? up : down} alt=""/>
+              </span>
+              {/* <a className="discription" href="javascript:;">{toLocale('dex_address_double')}</a> */}
             </Menu.Item>
             <Menu.Item key="wallet-2">
               {href && util.hasKeyStore() ? (

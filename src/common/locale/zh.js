@@ -1201,6 +1201,8 @@ const zhCN = {
   dex_popup_tip: '每周五将会发放鼓励金至“待领取鼓励金”，您可以在鼓励金发放后在此领取。鼓励金被领取后将会进入您的资金账户。',
   view_detail: '查看详情',
   add_assets: '添加资产',
+  dex_address_expanded: '展开双地址',
+  dex_address_packup: '收起',
   dex_address_label: '对应OKExChain地址',
   dex_address_double: '什么是双地址？',
   dex_more_detail: '详情',
@@ -1214,12 +1216,18 @@ const zhCN = {
   dex_input_err_tip_short_name: '请输入正确的代币简称',
   dex_input_err_tip_precision: '请输入正确的代币精度',
   dex_input_err_tip_precision2: '请输入 0 ~ 18 之间的数字',
-  import_mnemonic_select_title: '请选择助记词路径',
-  import_mnemonic_new_user: '兼容以太坊路径（OKExChain新用户）',
-  import_mnemonic_old_user: 'OKExChain原路径（3月1日前创建钱包的用户）',
+  import_mnemonic_article_title: 'OKExChain 地址升级',
+  import_mnemonic_article_content1: 'OKExChain 主网 EVM 升级后，兼容以太坊地址，并支持使用一个地址同时管理 OKExChain 和以太坊的资产。',
+  import_mnemonic_article_content2: '如果您在主网升级（2021/3/1 12:00）前创建了钱包并且持有资产，请在输入助记词下一步选择“老账户”，并妥善保管私钥，避免造成资产损失。',
+  import_mnemonic_article_content3: '如果您是新用户，或已经习惯于使用以太坊钱包（例如MetaMask），您可以选择“新账户”。',
+  import_mnemonic_select_title: '请选择账户类型',
+  import_mnemonic_new_user: '新账户（{addr}，余额：{num} OKT）',
+  import_mnemonic_old_user: '老账户（{addr}，余额：{num} OKT）',
   import_mnemonic_new_instructions: '使用一套助记词同时管理您的以太坊账户和OKExChain账户',
   import_mnemonic_old_instructions: 'OKExChain主网升级前的原始路径',
-  import_mnemonic_path_tip: '如果您在2021/03/01 12:00前创建了钱包，请务必选择此路径并按照教程操作。'
-
+  import_mnemonic_path_tip: '如果您在2021/03/01 12:00前创建了钱包，请务必选择此路径并按照教程操作。',
+  import_mnemonic_know_button: '我知道了',
+  wallet_transaction_records_tab10: 'OIP 10 交易',
+  wallet_transaction_records_tab20: 'OIP 20 交易',
 };
 export default zhCN;

@@ -13,6 +13,7 @@ import assetsUtil from './assetsUtil';
 import './Assets.less';
 import ont from '../../utils/dataProxy';
 import util from '../../utils/util';
+import env from '_src/constants/env';
 
 class AssetsTransactions extends Component {
   constructor(props) {
@@ -26,15 +27,10 @@ class AssetsTransactions extends Component {
     };
     this.state = {
       transactions: [],
-      startDate: 0,
-      endDate: 0,
-      type: 0,
       loading: false,
+      currentTab: '10',
       param_page: this.defaultPage,
     };
-    this.typeOptions = [{ value: 0, label: toLocale('all') }].concat(
-      assetsUtil.transactionsTypes
-    );
     this.addr = window.OK_GLOBAL.senderAddr;
   }
   componentDidMount() {
@@ -44,31 +40,16 @@ class AssetsTransactions extends Component {
       this.fetchTransactions();
     }
   }
-  onDatePickerChange = (type) => {
-    return (date) => {
-      this.setState({ [type]: date });
-    };
-  };
-  onTypeChange = ({ value: type }) => {
-    this.setState({ type });
-  };
   fetchTransactions = (page = 1) => {
-    const { startDate, endDate, type } = this.state;
-    const params = {
-      address: this.addr,
-      page,
-      per_page: 20,
-      type: type || undefined,
-      start: startDate
-        ? calc.div(moment(startDate).startOf('day').valueOf(), 1000)
-        : undefined,
-      end: endDate
-        ? calc.div(moment(endDate).endOf('day').valueOf() - 999, 1000)
-        : undefined,
-    };
-    this.setState({ loading: true });
-    ont
-      .get(URL.GET_TRANSACTIONS, { params })
+    const { currentTab } = this.state;
+    if (currentTab === '10') {
+      const params = {
+        address: this.addr,
+        page,
+        per_page: 20,
+      };
+      this.setState({ loading: true });
+      ont.get(URL.GET_TRANSACTIONS, { params })
       .then(({ data }) => {
         const list = data.data.map((item) => {
           const newItem = { ...item };
@@ -89,16 +70,49 @@ class AssetsTransactions extends Component {
       .then(() => {
         this.setState({ loading: false });
       });
+      return
+    }
+    alert('暂不支持')
+    // TODO oip 20
+    // const params = {
+    //   tokenType: 'OIP20'
+    // };
+    // this.setState({ loading: true });
+    // ont.get(URL.GET_TRANSACTIONS20.replace('{chain}', env.envConfig.oklinkPagePath).replace('{address}', this.addr), { params })
+    // .then(({ data }) => {
+    //   const list = data.data.map((item) => {
+    //     const newItem = { ...item };
+    //     newItem.uniqueKey =
+    //       newItem.txhash +
+    //       newItem.type +
+    //       newItem.side +
+    //       newItem.symbol +
+    //       newItem.timestamp;
+    //     return newItem;
+    //   });
+    //   this.setState({
+    //     transactions: list || [],
+    //     param_page: data.param_page || this.defaultPage,
+    //   });
+    // })
+    // .catch()
+    // .then(() => {
+    //   this.setState({ loading: false });
+    // });
   };
+  switchtab = (type) => {
+    this.setState({
+      currentTab: type,
+      page: 1
+    }, () => this.fetchTransactions())
+  }
   handleDateChangeRaw = (e) => {
     e.preventDefault();
   };
   render() {
     const {
       transactions,
-      startDate,
-      endDate,
-      type,
+      currentTab,
       loading,
       param_page,
     } = this.state;
@@ -106,52 +120,12 @@ class AssetsTransactions extends Component {
       <div>
         <div className="query-container">
           <div className="sub-query">
-            <DatePicker
-              small
-              selectsStart
-              theme="dark"
-              placeholderText={toLocale('trade_query_begin')}
-              selected={startDate || null}
-              startDate={startDate || null}
-              endDate={endDate || null}
-              dateFormat="YYYY-MM-DD"
-              onChangeRaw={this.handleDateChangeRaw}
-              minDate={this.minDate}
-              maxDate={endDate || this.maxDate}
-              locale={util
-                .getSupportLocale(Cookies.get('locale') || 'en_US')
-                .toLocaleLowerCase()}
-              onChange={this.onDatePickerChange('startDate')}
-            />
-            <div className="dash" />
-            <DatePicker
-              small
-              selectsEnd
-              theme="dark"
-              placeholderText={toLocale('trade_query_end')}
-              selected={endDate || null}
-              startDate={startDate || null}
-              endDate={endDate || null}
-              dateFormat="YYYY-MM-DD"
-              onChangeRaw={this.handleDateChangeRaw}
-              minDate={startDate || this.minDate}
-              maxDate={this.maxDate}
-              locale={util
-                .getSupportLocale(Cookies.get('locale') || 'en_US')
-                .toLocaleLowerCase()}
-              onChange={this.onDatePickerChange('endDate')}
-            />
-            <span>{toLocale('trade_query_order_type')}</span>
-            <Select
-              clearable={false}
-              searchable={false}
-              small
-              theme="dark"
-              options={this.typeOptions}
-              value={type}
-              onChange={this.onTypeChange}
-              style={{ width: 180 }}
-            />
+            <span onClick={() => this.switchtab('10')} className={'records-tab' + (currentTab === '10' ? ' switch' : '')}>
+              {toLocale('wallet_transaction_records_tab10')}
+            </span>
+            <span onClick={() => this.switchtab('20')} className={'records-tab' + (currentTab === '20' ? ' switch' : '')}>
+              {toLocale('wallet_transaction_records_tab20')}
+            </span>
             <Button
               size={Button.size.small}
               type={Button.btnType.primary}

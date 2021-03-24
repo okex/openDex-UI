@@ -239,9 +239,7 @@ class AssetsAccounts extends Component {
     }
   }
   detail = (symbol) => {
-    // this.router.push()
-    console.log(Config.okexchain.detailUrl + symbol, '------------->')
-    
+    window.open(`${Config.okexchain.detailUrl}/${symbol}`)
   }
   migration = () => {}
   hidden = (symbol) => {

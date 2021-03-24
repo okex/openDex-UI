@@ -34,6 +34,7 @@ class Assets extends Component {
     this.state = {
       loading: false,
       copySuccess: false,
+      expanded: false,
       pathType: window.localStorage.getItem(env.envConfig.mnemonicPathType)
     };
     this.isAssets = this.props.location.pathname.includes(PageURL.walletAssets);
@@ -67,8 +68,12 @@ class Assets extends Component {
       this.setState({ copySuccess: false });
     }, 1000);
   };
+  expanded = () => {
+    const { expanded } = this.state
+    this.setState({expanded: !expanded})
+  }
   render() {
-    const { loading, pathType } = this.state;
+    const { loading, pathType, expanded } = this.state;
     const tipStyle = pathType === 'old' ? {} : { display: 'none' }
     return (
       <div className="wallet-main">
@@ -78,8 +83,8 @@ class Assets extends Component {
           <a href="#">{toLocale('for_details')}</a>
         </div>
         <div className="wallet-address-container">
-          <WalletAddress addressType="universality" />
-          <WalletAddress addressType="OKExChain" />
+          <WalletAddress addressType="universality" setExpanded={this.expanded} expanded={expanded} />
+          <WalletAddress addressType="OKExChain" style={{display: expanded ? '' : 'none' }}/>
         </div>
         <DexTab
           tabs={assetsUtil.tabs}

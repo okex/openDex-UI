@@ -10,10 +10,14 @@ import WalletPassword from '_component/WalletPassword';
 import ValidateCheckbox from '_component/ValidateCheckbox';
 import walletUtil from './walletUtil';
 import util from '_src/utils/util';
+import URL from '_src/constants/URL';
+import ont from '_src/utils/dataProxy';
 import DesktopTypeMenu from '_component/DesktopTypeMenu';
 import env from '_src/constants/env';
 import defaultSelect from '_src/assets/images/defaultSelect.svg'
 import selected from '_src/assets/images/selected.svg'
+import walletTypeTree from '_src/assets/images/walletTypeTree.svg'
+import introduce from '_src/assets/images/introduce.svg'
 import './ImportByMnemonic.less';
 
 function mapStateToProps() {
@@ -31,13 +35,19 @@ function mapDispatchToProps(dispatch) {
 class ImportByMnemonic extends Component {
   constructor(props) {
     super(props);
+    const know = window.localStorage.getItem(env.envConfig.know)
     this.state = {
       mnemonic: '',
       password: '',
       isValidatedMnemonic: true,
       buttonLoading: false,
       isNone: false,
-      step: 1,
+      step: know ? 1 : 0,
+      oldBalance: '',
+      newBalance: '',
+      oldPrivateKey: '',
+      newPrivateKey: '',
+      openInstructions: false,
       pathType: ''
     };
     this.isValidatedPassword = false;
@@ -57,11 +67,14 @@ class ImportByMnemonic extends Component {
       password: value,
     });
   };
-  nextStep = () => {
+  handleEnsure = () => {
     if (!this.state.pathType) return
-    this.setState({
-      step: 2
-    })
+    const { pathType, newPrivateKey, oldPrivateKey, password} = this.state
+    const privateKey = pathType === 'old' ? oldPrivateKey : newPrivateKey
+    const keyStore = crypto.generateKeyStore(privateKey, password);
+    walletUtil.setUserInSessionStroage(privateKey, keyStore);
+    this.props.commonAction.setPrivateKey(privateKey);
+    util.go(DesktopTypeMenu.current ? DesktopTypeMenu.current.url : void 0);
   }
   prevStep = () => {
     this.setState({
@@ -73,7 +86,7 @@ class ImportByMnemonic extends Component {
       pathType: type
     })
   }
-  handleEnsure = () => {
+  nextStep = () => {
     if (this.state.mnemonic.length === 0) {
       this.setState({
         isNone: true,
@@ -96,21 +109,47 @@ class ImportByMnemonic extends Component {
       }
     );
   };
-  validateMnemonic = () => {
+  fetchAcount = (address) => {
+    return new Promise((resolve, reject) => {
+      ont.get(`${URL.GET_ACCOUNTS}/${address}`, {
+        params: { symbol: env.envConfig.token.base },
+      })
+      .then(({ data }) => {
+        let { currencies=[] } = data;
+        if (currencies.length > 0 && currencies[0].symbol === 'okt') {
+          resolve(currencies[0].available)
+          return
+        }
+        resolve(0)
+      })
+      .catch((err) => {
+        reject(err);
+      });
+    })
+  }
+  validateMnemonic = async () => {
     try {
-      const { password, pathType } = this.state;
+      const { pathType } = this.state;
       const mnemonic = this.state.mnemonic.trim();
       window.localStorage.setItem(env.envConfig.mnemonicPathType, pathType)
-      const privateKey = crypto.getPrivateKeyFromMnemonic(mnemonic, pathType === 'old' ? 996 : 60);
-      const keyStore = crypto.generateKeyStore(privateKey, password);
-      walletUtil.setUserInSessionStroage(privateKey, keyStore);
+      const oldPrivateKey = crypto.getPrivateKeyFromMnemonic(mnemonic, 996);
+      const newPrivateKey = crypto.getPrivateKeyFromMnemonic(mnemonic, 60);
+      const oldAddress = crypto.getAddressFromPrivateKey(oldPrivateKey);
+      const newAddress = crypto.getAddressFromPrivateKey(newPrivateKey);
+      const oldBalance = await this.fetchAcount(oldAddress)
+      const newBalance = await this.fetchAcount(newAddress)
       this.setState({
         isValidatedMnemonic: true,
         buttonLoading: false,
         isNone: false,
+        oldBalance,
+        newBalance,
+        oldPrivateKey,
+        newPrivateKey,
+        newAddress: crypto.convertBech32ToHex(newAddress),
+        oldAddress,
+        step: 2
       });
-      this.props.commonAction.setPrivateKey(privateKey);
-      util.go(DesktopTypeMenu.current ? DesktopTypeMenu.current.url : void 0);
     } catch (e) {
       this.setState({
         isValidatedMnemonic: false,
@@ -119,8 +158,31 @@ class ImportByMnemonic extends Component {
       });
     }
   };
+  know = () => {
+    window.localStorage.setItem(env.envConfig.know, 'have')
+    this.setState({
+      step: 1
+    })
+  }
+  openInstructions = () => {
+    this.setState({
+      openInstructions: true
+    })
+  }
+  closeInstructions = () => {
+    this.setState({
+      openInstructions: false
+    })
+  }
+  omit = (addr) => {
+    if (!addr) return ''
+    return addr.slice(0, 5) + '...' + addr.slice(addr.length - 1 - 5, addr.length - 1)
+  }
   render() {
-    const { mnemonic, isValidatedMnemonic, buttonLoading, isNone, step, pathType } = this.state;
+    const {
+      mnemonic, isValidatedMnemonic, buttonLoading, isNone, step, pathType, openInstructions,
+      oldAddress, newAddress, oldBalance, newBalance
+    } = this.state;
     let p;
     let className = '';
     if (isNone) {
@@ -134,34 +196,23 @@ class ImportByMnemonic extends Component {
     }
     return (
       <div className="import-by-mnemonic-container">
-        <div className={"step1 step-content" + (step === 1 ? ' show' : ' hidden')}>
-          <p className="step-path-title">{toLocale('import_mnemonic_select_title')}</p>
-          <div className={"step-path-content" + (pathType === 'new' ? ' select' : '')} onClick={() => this.selectPathType('new')}>
-            <p className="select-box">
-              <span>{toLocale('import_mnemonic_new_user')}</span>
-              <img className="select-icon" src={pathType === 'new' ? selected : defaultSelect} alt=""/>
-            </p>
-            <p>{toLocale('import_mnemonic_new_instructions')}</p>
+        <div className={"step0 step-content instructions" + (step === 0 ? ' show' : ' hidden')}>
+          <div className="tree">
+            <img src={walletTypeTree} alt=""/>
           </div>
-          <div className={"step-path-content" + (pathType === 'old' ? ' select' : '')} onClick={() => this.selectPathType('old')}>
-            <p className="select-box">
-              <span>{toLocale('import_mnemonic_old_user')}</span>
-              <img className="select-icon" src={pathType === 'old' ? selected : defaultSelect} alt=""/>
-            </p>
-            <p>{toLocale('import_mnemonic_old_instructions')}</p>
-            <p className="mnemonic-path-tip">{toLocale('import_mnemonic_path_tip')}</p>
+          <div className="article">
+            <h1>{toLocale('import_mnemonic_article_title')}</h1>
+            <p>{toLocale('import_mnemonic_article_content1')}</p>
+            <p>{toLocale('import_mnemonic_article_content2')}</p>
+            <p>{toLocale('import_mnemonic_article_content3')}</p>
           </div>
           <div className="mnemonic-footer">
-            <Button
-              type="primary"
-              onClick={this.nextStep}
-              disabled={!pathType}
-            >
-              {toLocale('next_step')}
+            <Button type="primary" loading={buttonLoading} onClick={this.know}>
+              {toLocale('import_mnemonic_know_button')}
             </Button>
           </div>
         </div>
-        <div className={"step2 step-content" + (step === 2 ? ' show' : ' hidden')}>
+        <div className={"step1 step-content" + (step === 1 ? ' show' : ' hidden')}>
           <div className="mnemonic-container">
             <div>{toLocale('wallet_import_mnemonic_enter')}</div>
             <textarea value={mnemonic} onChange={this.changeMnemonic} />
@@ -181,7 +232,44 @@ class ImportByMnemonic extends Component {
             </ValidateCheckbox>
           </div>
           <div className="mnemonic-footer">
-            <Button
+            <Button 
+              type="primary"
+              loading={buttonLoading}
+              onClick={this.nextStep}
+             >
+              {toLocale('next_step')}
+             </Button>
+          </div>
+        </div>
+        <div className={"step2 step-content" + (step === 2 ? ' show' : ' hidden')}>
+          <div className="step-path-title">
+            {toLocale('import_mnemonic_select_title')}
+            <div className="icon-introduce-container" tabIndex="0" onBlur={this.closeInstructions}>
+              <img className="icon-introduce" onClick={this.openInstructions} src={introduce} alt=""/>
+              <div className="instruction-tips" style={{display: openInstructions ? '' : 'none'}}>
+                <p>{toLocale('import_mnemonic_article_content1')}</p>
+                <p>{toLocale('import_mnemonic_article_content2')}</p>
+                <p>{toLocale('import_mnemonic_article_content3')}</p>
+              </div>
+            </div>
+          </div>
+          <div className={"step-path-content" + (pathType === 'new' ? ' select' : '')} onClick={() => this.selectPathType('new')}>
+            <p className="select-box">
+              <span>{toLocale('import_mnemonic_new_user', {addr: this.omit(newAddress), num: newBalance})}</span>
+              <img className="select-icon" src={pathType === 'new' ? selected : defaultSelect} alt=""/>
+            </p>
+            <p>{toLocale('import_mnemonic_new_instructions')}</p>
+          </div>
+          <div className={"step-path-content" + (pathType === 'old' ? ' select' : '')} onClick={() => this.selectPathType('old')}>
+            <p className="select-box">
+              <span>{toLocale('import_mnemonic_old_user', {addr: this.omit(oldAddress), num: oldBalance})}</span>
+              <img className="select-icon" src={pathType === 'old' ? selected : defaultSelect} alt=""/>
+            </p>
+            <p>{toLocale('import_mnemonic_old_instructions')}</p>
+            <p className="mnemonic-path-tip">{toLocale('import_mnemonic_path_tip')}</p>
+          </div>
+          <div className="mnemonic-footer">
+          <Button
               className="prev-btn"
               onClick={this.prevStep}
             >
@@ -189,8 +277,8 @@ class ImportByMnemonic extends Component {
             </Button>
             <Button
               type="primary"
-              loading={buttonLoading}
               onClick={this.handleEnsure}
+              disabled={!pathType}
             >
               {toLocale('ensure')}
             </Button>

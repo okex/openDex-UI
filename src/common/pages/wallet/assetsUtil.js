@@ -1,8 +1,7 @@
 import moment from 'moment';
-import React from 'react';
+import React, { Component } from 'react';
 import FormatNum from '_src/utils/FormatNum';
 import Tooltip from '_src/component/Tooltip';
-import { calc } from '_component/okit';
 import { Button } from '_component/Button';
 import { toLocale } from '_src/locale/react-locale';
 import utils from '../../utils/util';
@@ -85,14 +84,14 @@ const util = {
           return symbol.toUpperCase();
         },
       },
-      {
-        title: toLocale('trade_column_type'),
-        alignRight: true,
-        key: 'type',
-        render: (text) => {
-          return util.transactionsTypesMap[text] || '';
-        },
-      },
+      // {
+      //   title: toLocale('trade_column_type'),
+      //   alignRight: true,
+      //   key: 'type',
+      //   render: (text) => {
+      //     return util.transactionsTypesMap[text] || '';
+      //   },
+      // },
       {
         title: toLocale('trade_column_direction'),
         alignRight: true,
@@ -129,17 +128,17 @@ const util = {
           return utils.precisionInput(text, 8);
         },
       },
-      {
-        title: `${toLocale('trade_column_fee')}`,
-        key: 'fee',
-        render: (text) => {
-          text = String(text.split('-')[0]).toUpperCase();
-          text = text.replace(/(\d{1,}\.?\d*)/, function ($1) {
-            return utils.precisionInput($1, 8);
-          });
-          return text;
-        },
-      },
+      // {
+      //   title: `${toLocale('trade_column_fee')}`,
+      //   key: 'fee',
+      //   render: (text) => {
+      //     text = String(text.split('-')[0]).toUpperCase();
+      //     text = text.replace(/(\d{1,}\.?\d*)/, function ($1) {
+      //       return utils.precisionInput($1, 8);
+      //     });
+      //     return text;
+      //   },
+      // },
     ];
   },
 };
@@ -169,7 +168,6 @@ util.accountsCols = ({ transfer, moreOperationsChange }, { valuationUnit }) => {
       noLink: true
     }
   ]
-
   return [
     {
       title: toLocale('assets_column_assets'),
@@ -215,26 +213,42 @@ util.accountsCols = ({ transfer, moreOperationsChange }, { valuationUnit }) => {
       title: '',
       key: 'operation',
       render: (text, { symbol, assetsType }) => {
-        let boxConfig = moreBoxConf
-        if (assetsType === 'OIP 10') boxConfig = moreBoxConf.filter(({type}) => type !== 'hidden')
-        else boxConfig = moreBoxConf.filter(({type}) => type !== 'migration')
-
-        return (<>
-          <Button size={Button.size.mini} onClick={transfer(symbol, assetsType)}>
-            {toLocale('assets_trans_btn')}
-          </Button>
-          <Button className="assets-more-bth" size={Button.size.mini}>
-            {toLocale('assets_more_btn')}
-            <div className="more-box">
-              <ComboBox
-                current={{}}
-                data={{symbol}}
-                comboBoxDataSource={boxConfig}
-                onChange={moreOperationsChange}
-              />
-            </div>
-          </Button>
-        </>);
+        class Operation extends Component {
+          constructor () {
+            super()
+            this.state = {
+              active: false
+            }
+          }
+          render = () => {
+            const active = this.state.active
+            let boxConfig = moreBoxConf
+            if (assetsType !== 'OIP 20') boxConfig = moreBoxConf.filter(({type}) => type !== 'hidden')
+            else boxConfig = moreBoxConf.filter(({type}) => type !== 'migration')
+            return (<>
+              <Button size={Button.size.mini} onClick={transfer(symbol, assetsType)}>
+                {toLocale('assets_trans_btn')}
+              </Button>
+              <Button
+                className={"assets-more-bth" + (active ? ' active' : '')}
+                onBlur={() => this.setState({active: false})}
+                onClick={() => this.setState({active: !active})}
+                size={Button.size.mini}
+              >
+                {toLocale('assets_more_btn')}
+                <div className="more-box">
+                  <ComboBox
+                    current={{}}
+                    data={{symbol}}
+                    comboBoxDataSource={boxConfig}
+                    onChange={moreOperationsChange}
+                  />
+                </div>
+              </Button>
+            </>);
+          }
+        }
+        return <Operation />
       },
     },
   ];

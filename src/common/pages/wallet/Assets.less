@@ -70,10 +70,17 @@
     .sub-query {
       display: flex;
       align-items: center;
-      > span {
+      .records-tab {
+        padding: 6px 12px;
+        margin-right: 8px;
         font-size: 12px;
         color: @text-second-dark;
-        margin: 0 10px 0 30px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 2px;
+        cursor: pointer;
+        &.switch {
+          border-color: #3075EE;
+        }
       }
       button.btn {
         margin-left: 40px;
@@ -87,7 +94,6 @@
       color: fade(@brand, 85);
     }
     input.search-symbol {
-      // box-shadow: inset 0 0 0 1px @border-dark;
       height: 32px;
       width: 300px;
       border-radius: 4px;
@@ -183,7 +189,7 @@
           left: -2px;
           padding-top: 5px;
         }
-        &:hover {
+        &.active {
           > div.more-box {
             display: block;
           }

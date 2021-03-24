@@ -3,6 +3,7 @@ import Icon from '_src/component/IconLite';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Config from '_constants/Config';
 import copyBlue from '_src/assets/images/copyBlue.svg'
+import introduce from '_src/assets/images/introduce.svg'
 
 class WalletMenuTool extends React.Component {
   constructor(props) {
@@ -18,13 +19,20 @@ class WalletMenuTool extends React.Component {
       this.setState({ copySuccess: false });
     }, 1000);
   };
+  openInstructions = () => {
+    // TODO 双地址介绍
+    window.open('')
+  }
   render() {
-    const { addressLabel, address } = this.props;
+    const { addressLabel, address, addressType } = this.props;
     const { copySuccess } = this.state;
     return (
       <ul className="wallet-menu-address">
         <li className="wallet-menu-address-tool">
-          { addressLabel }
+          <div>
+            { addressLabel }
+            { addressType === 'okexchain' && <img className="icon-introduce" onClick={this.openInstructions} src={introduce} alt=""/>}
+          </div>
           <CopyToClipboard text={address} onCopy={this.handleCopy}>
             <div>
               <Icon className="icon-icon_success" isColor
