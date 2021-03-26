@@ -605,6 +605,8 @@ const ruRU = {
   trade_type_pay: '付款',
   trade_type_buy: '买',
   trade_type_sell: '卖',
+  trade_type_in: '转入',
+  trade_type_out: '转出',
   trans_address: '转账地址',
   trans_step_1: '转账',
   trans_step_2: '请确认交易信息',

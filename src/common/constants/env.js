@@ -25,6 +25,7 @@ const testnet = {
   swapSetting: 'swap_setting_config_test',
   liquidityCheck: 'liquidity_check_test',
   oklinkPagePath: 'okexchain-test',
+  oklinkApiPath: 'okexchain_test',
   isMainnet: false,
   fee: 0.05,
   firstPoolConf: {
@@ -67,6 +68,7 @@ const mainnet = {
   swapSetting: 'swap_setting_config',
   liquidityCheck: 'liquidity_check',
   oklinkPagePath: 'okexchain',
+  oklinkApiPath: 'okexchain',
   isMainnet: true,
   fee: 0.0005,
   firstPoolConf: {

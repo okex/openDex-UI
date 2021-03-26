@@ -66,79 +66,62 @@ const util = {
       },
       {
         title: toLocale('trade_column_time'),
-        key: 'timestamp',
+        key: 'blocktime',
         alignRight: true,
         render: (text) => {
           return moment(Number(`${text}000`)).format('MM-DD HH:mm:ss');
         },
       },
       {
-        title: toLocale('trade_column_assets'),
+        title: toLocale('trade_column_num'),
         alignRight: true,
-        key: 'symbol',
-        render: (text) => {
-          const symbol =
-            text.indexOf('_') > 0
-              ? utils.getShortName(text)
-              : utils.getSymbolShortName(text);
-          return symbol.toUpperCase();
+        key: 'numberValue',
+        render: (text, { symbol }) => {
+          const originalSymbol =
+            symbol.indexOf('_') > 0
+              ? utils.getShortName(symbol)
+              : utils.getSymbolShortName(symbol);
+          return `${text} ${originalSymbol.toUpperCase()}`;
         },
       },
-      // {
-      //   title: toLocale('trade_column_type'),
-      //   alignRight: true,
-      //   key: 'type',
-      //   render: (text) => {
-      //     return util.transactionsTypesMap[text] || '';
-      //   },
-      // },
       {
         title: toLocale('trade_column_direction'),
         alignRight: true,
-        key: 'side',
-        render: (text, data) => {
-          const { type } = data;
-          let sideText = '';
-          let color = 'primary-green';
-          if (type === 1) {
-            if (text === 3) {
-              color = 'primary-red';
-              sideText = toLocale('trade_type_pay');
-            }
-            if (text === 4) {
-              sideText = toLocale('trade_type_receive');
-            }
-          } else {
-            if (text === 1) {
-              sideText = toLocale('trade_type_buy');
-            }
-            if (text === 2) {
-              sideText = toLocale('trade_type_sell');
-              color = 'primary-red';
-            }
+        key: 'from',
+        render: (from) => {
+          const userAddr = window.OK_GLOBAL.senderAddr
+          let sideText = toLocale('trade_type_in');
+          if (from === userAddr) {
+            sideText = toLocale('trade_type_out');
           }
-          return <span className={color}>{sideText}</span>;
+          return <span>{sideText}</span>;
         },
       },
       {
-        title: toLocale('trade_column_amount'),
+        title: toLocale('assets_address'),
         alignRight: true,
-        key: 'quantity',
-        render: (text) => {
-          return utils.precisionInput(text, 8);
+        key: 'to',
+        render: (text, { from }) => {
+          const userAddr = window.OK_GLOBAL.senderAddr
+          let address = ''
+          if (from === userAddr) {
+            address = text
+          }
+          address = from
+          let drawText = `${address.slice(0 ,5)}******${address.slice(address.length - 5, address.length - 1)}`;
+
+          return (
+            <Tooltip
+              placement="bottomLeft"
+              overlay={<div style={{"wordBreak":"break-all"}}>{address}</div>}
+              maxWidth={300}
+              noUnderline
+            >
+            {drawText}
+            </Tooltip>
+          );
         },
-      },
-      // {
-      //   title: `${toLocale('trade_column_fee')}`,
-      //   key: 'fee',
-      //   render: (text) => {
-      //     text = String(text.split('-')[0]).toUpperCase();
-      //     text = text.replace(/(\d{1,}\.?\d*)/, function ($1) {
-      //       return utils.precisionInput($1, 8);
-      //     });
-      //     return text;
-      //   },
-      // },
+      }
     ];
   },
 };
@@ -220,6 +203,10 @@ util.accountsCols = ({ transfer, moreOperationsChange }, { valuationUnit }) => {
               active: false
             }
           }
+          moreClick = (e) => {
+            e.target.focus()
+            this.setState({active: !active})
+          }
           render = () => {
             const active = this.state.active
             let boxConfig = moreBoxConf
@@ -232,7 +219,7 @@ util.accountsCols = ({ transfer, moreOperationsChange }, { valuationUnit }) => {
               <Button
                 className={"assets-more-bth" + (active ? ' active' : '')}
                 onBlur={() => this.setState({active: false})}
-                onClick={() => this.setState({active: !active})}
+                onClick={this.moreClick}
                 size={Button.size.mini}
               >
                 {toLocale('assets_more_btn')}

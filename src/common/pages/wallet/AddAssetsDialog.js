@@ -75,6 +75,9 @@ class AddAssetsDialog extends Component {
           if (!response) {
             err = true
             resetFn()
+          } else if (response === 'err') {
+            err = true
+            addressErrType = 'err'
           } else {
             const curr = contractList.filter(it => it.address === value)
             if (curr.length > 0) {
@@ -98,6 +101,8 @@ class AddAssetsDialog extends Component {
               })
               return
             }
+            err = true
+            addressErrType = 'useraddr'
           } 
         }
         this.setState({

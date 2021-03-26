@@ -5,6 +5,9 @@ const BASEURL = {
   get BASE_URL() {
     return getCurrentApiUrl();
   },
+  get BASE_URL_LINK () {
+    return `${this.BASE_URL}/api/explorer/v1/${env.envConfig.oklinkApiPath}`
+  },
   get DEFAULT_BASE_URL() {
     return `${DEFAULT}/${env.envConfig.apiPath}`;
   },
@@ -56,8 +59,11 @@ const URL = {
   get GET_TRANSACTIONS() {
     return `${BASEURL.OKDEX_BASE_URL}/transactions`;
   },
+  get GET_TRANSACTIONS10() {
+    return `${BASEURL.BASE_URL_LINK}/addresses/{address}/transactionsFilterType`;
+  },
   get GET_TRANSACTIONS20() {
-    return `${BASEURL.OKDEX_BASE_URL}/{chain}/addresses/{address}/transfers`;
+    return `${BASEURL.BASE_URL_LINK}/addresses/{address}/transfers`;
   },
   get GET_LATEST_HEIGHT() {
     return `${BASEURL.DEFAULT_BASE_URL}/latestheight`;

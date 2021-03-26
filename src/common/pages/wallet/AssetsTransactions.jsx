@@ -3,17 +3,11 @@ import { Button } from '_component/Button';
 import URL from '_src/constants/URL';
 import { toLocale } from '_src/locale/react-locale';
 import Config from '_constants/Config';
-import DatePicker from '_component/ReactDatepicker';
-import Select from '_component/ReactSelect';
 import DexTable from '_component/DexTable';
 import moment from 'moment';
-import { calc } from '_component/okit';
-import Cookies from 'js-cookie';
 import assetsUtil from './assetsUtil';
 import './Assets.less';
 import ont from '../../utils/dataProxy';
-import util from '../../utils/util';
-import env from '_src/constants/env';
 
 class AssetsTransactions extends Component {
   constructor(props) {
@@ -23,7 +17,7 @@ class AssetsTransactions extends Component {
     this.defaultPage = {
       page: 1,
       per_page: 20,
-      total: 0,
+      total: 0
     };
     this.state = {
       transactions: [],
@@ -44,26 +38,31 @@ class AssetsTransactions extends Component {
     const { currentTab } = this.state;
     if (currentTab === '10') {
       const params = {
-        address: this.addr,
-        page,
-        per_page: 20,
+        type: 'okexchain/token/MsgTransfer',
+        limit: this.state.param_page.per_page,
+        offset: (page - 1) * this.state.param_page.per_page
       };
       this.setState({ loading: true });
-      ont.get(URL.GET_TRANSACTIONS, { params })
+      ont.get(URL.GET_TRANSACTIONS10.replace('{address}', this.addr), { params })
       .then(({ data }) => {
-        const list = data.data.map((item) => {
-          const newItem = { ...item };
-          newItem.uniqueKey =
-            newItem.txhash +
-            newItem.type +
-            newItem.side +
-            newItem.symbol +
-            newItem.timestamp;
-          return newItem;
+        const list = data.hits.map((item) => {
+          return {
+            ...item,
+            uniqueKey: item.hash + item.blocktime,
+            txhash: item.hash,
+            from: item.from[0],
+            to: item.to[0].address,
+            symbol: item.to[0].coins[0].symbol,
+            numberValue: item.to[0].coins[0].value
+          };
         });
+        const param_page = {
+          total: data.total,
+          page: page
+        }
         this.setState({
           transactions: list || [],
-          param_page: data.param_page || this.defaultPage,
+          param_page: { ...this.state.param_page, ...param_page },
         });
       })
       .catch()
@@ -72,33 +71,35 @@ class AssetsTransactions extends Component {
       });
       return
     }
-    alert('暂不支持')
-    // TODO oip 20
-    // const params = {
-    //   tokenType: 'OIP20'
-    // };
-    // this.setState({ loading: true });
-    // ont.get(URL.GET_TRANSACTIONS20.replace('{chain}', env.envConfig.oklinkPagePath).replace('{address}', this.addr), { params })
-    // .then(({ data }) => {
-    //   const list = data.data.map((item) => {
-    //     const newItem = { ...item };
-    //     newItem.uniqueKey =
-    //       newItem.txhash +
-    //       newItem.type +
-    //       newItem.side +
-    //       newItem.symbol +
-    //       newItem.timestamp;
-    //     return newItem;
-    //   });
-    //   this.setState({
-    //     transactions: list || [],
-    //     param_page: data.param_page || this.defaultPage,
-    //   });
-    // })
-    // .catch()
-    // .then(() => {
-    //   this.setState({ loading: false });
-    // });
+    const params = {
+      tokenType: 'OIP20',
+      limit: this.state.param_page.per_page,
+      offset: (page - 1) * this.state.param_page.per_page
+    };
+    this.setState({ loading: true });
+    ont.get(URL.GET_TRANSACTIONS20.replace('{address}', this.addr), { params })
+    .then(({ data }) => {
+      const list = data.hits.map((item) => {
+        return {
+          ...item,
+          numberValue: item.value,
+          uniqueKey: item.txhash + item.blocktime
+        };
+      });
+      
+      const param_page = {
+        total: data.total,
+        page: page
+      }
+      this.setState({
+        transactions: list || [],
+        param_page: { ...this.state.param_page, ...param_page },
+      });
+    })
+    .catch()
+    .then(() => {
+      this.setState({ loading: false });
+    });
   };
   switchtab = (type) => {
     this.setState({

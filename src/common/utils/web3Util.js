@@ -343,6 +343,7 @@ export default {
         const validity = web3.utils.isAddress(contractAddress);
         if (!validity) return null
         const valid = await this.validate0xAddress(contractAddress);
+        if (valid === 'err') return 'err'
         if(!valid) return {contractAddress, symbol: null, decimals: null};
         const tokenContract = new web3.eth.Contract(abi, contractAddress);
         const symbol = await this._methodCall(tokenContract, 'symbol');
@@ -364,7 +365,7 @@ export default {
             const code = await web3.eth.getCode(contractAddress);
             valid = !!(code && code !== '0x');
         } catch {
-            valid = false;
+            valid = 'err';
         }
         return valid;
     }

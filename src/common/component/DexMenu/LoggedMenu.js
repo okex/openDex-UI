@@ -195,6 +195,7 @@ class DexLoggedMenu extends React.Component {
       },
       onConfirm: () => {
         dialog.destroy();
+        window.localStorage.removeItem(env.envConfig.mnemonicPathType)
         if(util.isWalletConnect()) {
           wallet.killSession(function() {
             util.doLogout();

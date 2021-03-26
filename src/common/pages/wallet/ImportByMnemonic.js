@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import { withRouter } from 'react-router-dom';
 import { toLocale } from '_src/locale/react-locale';
 import { Button } from '_component/Button';
@@ -14,6 +14,7 @@ import URL from '_src/constants/URL';
 import ont from '_src/utils/dataProxy';
 import DesktopTypeMenu from '_component/DesktopTypeMenu';
 import env from '_src/constants/env';
+import { calc } from '_component/okit';
 import defaultSelect from '_src/assets/images/defaultSelect.svg'
 import selected from '_src/assets/images/selected.svg'
 import walletTypeTree from '_src/assets/images/walletTypeTree.svg'
@@ -47,10 +48,10 @@ class ImportByMnemonic extends Component {
       newBalance: '',
       oldPrivateKey: '',
       newPrivateKey: '',
-      openInstructions: false,
       pathType: ''
     };
     this.isValidatedPassword = false;
+    this.passwordInput = createRef()
   }
   changeMnemonic = (e) => {
     const mnemonic = e.target.value;
@@ -72,14 +73,18 @@ class ImportByMnemonic extends Component {
     const { pathType, newPrivateKey, oldPrivateKey, password} = this.state
     const privateKey = pathType === 'old' ? oldPrivateKey : newPrivateKey
     const keyStore = crypto.generateKeyStore(privateKey, password);
+    window.localStorage.setItem(env.envConfig.mnemonicPathType, pathType)
     walletUtil.setUserInSessionStroage(privateKey, keyStore);
     this.props.commonAction.setPrivateKey(privateKey);
     util.go(DesktopTypeMenu.current ? DesktopTypeMenu.current.url : void 0);
   }
   prevStep = () => {
     this.setState({
-      step: 1
+      step: 1,
+      pathType: '',
+      mnemonic: ''
     })
+    this.passwordInput.current.changeValue({target: {value: ''}})
   }
   selectPathType = (type) => {
     this.setState({
@@ -129,9 +134,7 @@ class ImportByMnemonic extends Component {
   }
   validateMnemonic = async () => {
     try {
-      const { pathType } = this.state;
       const mnemonic = this.state.mnemonic.trim();
-      window.localStorage.setItem(env.envConfig.mnemonicPathType, pathType)
       const oldPrivateKey = crypto.getPrivateKeyFromMnemonic(mnemonic, 996);
       const newPrivateKey = crypto.getPrivateKeyFromMnemonic(mnemonic, 60);
       const oldAddress = crypto.getAddressFromPrivateKey(oldPrivateKey);
@@ -142,8 +145,8 @@ class ImportByMnemonic extends Component {
         isValidatedMnemonic: true,
         buttonLoading: false,
         isNone: false,
-        oldBalance,
-        newBalance,
+        oldBalance: calc.showFloorTruncation(oldBalance),
+        newBalance: calc.showFloorTruncation(newBalance),
         oldPrivateKey,
         newPrivateKey,
         newAddress: crypto.convertBech32ToHex(newAddress),
@@ -164,23 +167,14 @@ class ImportByMnemonic extends Component {
       step: 1
     })
   }
-  openInstructions = () => {
-    this.setState({
-      openInstructions: true
-    })
-  }
-  closeInstructions = () => {
-    this.setState({
-      openInstructions: false
-    })
-  }
+
   omit = (addr) => {
     if (!addr) return ''
     return addr.slice(0, 5) + '...' + addr.slice(addr.length - 1 - 5, addr.length - 1)
   }
   render() {
     const {
-      mnemonic, isValidatedMnemonic, buttonLoading, isNone, step, pathType, openInstructions,
+      mnemonic, isValidatedMnemonic, buttonLoading, isNone, step, pathType,
       oldAddress, newAddress, oldBalance, newBalance
     } = this.state;
     let p;
@@ -222,6 +216,7 @@ class ImportByMnemonic extends Component {
           </div>
           <div className="password-container">
             <WalletPassword
+              ref={this.passwordInput}
               placeholder={toLocale('wallet_import_mnemonic_sessionPassword')}
               onChange={this.changePassword}
               updateLengthCheck={this.state.updateLengthCheck}
@@ -245,8 +240,8 @@ class ImportByMnemonic extends Component {
           <div className="step-path-title">
             {toLocale('import_mnemonic_select_title')}
             <div className="icon-introduce-container" tabIndex="0" onBlur={this.closeInstructions}>
-              <img className="icon-introduce" onClick={this.openInstructions} src={introduce} alt=""/>
-              <div className="instruction-tips" style={{display: openInstructions ? '' : 'none'}}>
+              <img className="icon-introduce" src={introduce} alt=""/>
+              <div className="instruction-tips">
                 <p>{toLocale('import_mnemonic_article_content1')}</p>
                 <p>{toLocale('import_mnemonic_article_content2')}</p>
                 <p>{toLocale('import_mnemonic_article_content3')}</p>

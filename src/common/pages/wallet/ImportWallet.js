@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import PageURL from '_constants/PageURL';
 import { toLocale } from '_src/locale/react-locale';
 import WalletContainer from './WalletContainer';
 import ImportByKeystore from './ImportByKeystore';
@@ -8,6 +10,7 @@ import ImportByWalletConnect from './ImportByWalletConnect';
 import ImportByWalletConnectQrcode from './ImportByWalletConnectQrcode';
 import classNames from 'classnames';
 import env from '../../constants/env';
+import util from '_src/utils/util';
 import './ImportWallet.less';
 
 const typeEnmu = {
@@ -16,12 +19,17 @@ const typeEnmu = {
   private: 'private',
   walletconnect: 'walletconnect',
 };
+
+@withRouter
 class ImportWallet extends Component {
   constructor(props) {
     super(props);
     this.state = {
       imporyType: typeEnmu.keystore,
     };
+    if(util.isLogined()) {
+      this.props.history.push(PageURL.spotFullPage);
+    }
   }
   activeTab = (imporyType) => {
     return () => {
