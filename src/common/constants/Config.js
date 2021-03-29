@@ -7,7 +7,7 @@ const okbExplorePrefix = env.envConfig.oklinkPagePath;
 const exploreUrl = 'https://www.oklink.com';
 const lang = Cookies.get('locale') || '';
 const receiveCoinUrl =
-  lang === 'en_US' ? 'https://www.okex.com' : 'https://www.okexcn.com';
+  lang === 'en_US' ? 'https://www.okex.com' : window.okGlobal.innerDomain;
 const okexLogo = lang === 'zh_CN' ? okexznLogo : okexenLogo;
 const Config = {
   okexchain: {
@@ -26,7 +26,7 @@ const Config = {
       return 'https://www.okex.com/academy/en/how-to-use-okex-swap-farm-pools-okexchain';
     },
     get liquidity() {
-      if (lang === 'zh_CN') return 'https://www.okexcn.com/academy/zh/what-is-impermanent-loss';
+      if (lang === 'zh_CN') return `${window.okGlobal.innerDomain}/academy/zh/what-is-impermanent-loss`;
       return '';
     },
   },
