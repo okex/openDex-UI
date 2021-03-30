@@ -69,7 +69,7 @@ const util = {
         key: 'blocktime',
         alignRight: true,
         render: (text) => {
-          return moment(Number(`${text}000`)).format('MM-DD HH:mm:ss');
+          return moment(Number(text)).format('MM-DD HH:mm:ss');
         },
       },
       {
@@ -108,7 +108,7 @@ const util = {
             address = text
           }
           address = from
-          let drawText = `${address.slice(0 ,5)}******${address.slice(address.length - 5, address.length - 1)}`;
+          let drawText = `${address.slice(0 ,5)}******${address.slice(address.length - 5, address.length)}`;
 
           return (
             <Tooltip
@@ -204,6 +204,7 @@ util.accountsCols = ({ transfer, moreOperationsChange }, { valuationUnit }) => {
             }
           }
           moreClick = (e) => {
+            const active = this.state.active
             e.target.focus()
             this.setState({active: !active})
           }
