@@ -4,8 +4,8 @@ const { langPath = '' } = okGlobal;
 
 const testnet = {
   isTest: true,
-  dexUser: 'dex_user_test',
-  dexToken: 'dex_token_test',
+  dexUser: 'dex_user_ex_test',
+  dexToken: 'dex_token_ex_test',
   token: {
     base: 'okt',
     quote: 'usdk',
@@ -41,8 +41,8 @@ const testnet = {
 
 const mainnet = {
   isTest: false,
-  dexUser: 'dex_user_main',
-  dexToken: 'dex_token_main',
+  dexUser: 'dex_user_ex_main',
+  dexToken: 'dex_token_ex_main',
   token: {
     base: 'okt',
     quote: 'usdt-a2b',
