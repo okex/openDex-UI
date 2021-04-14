@@ -35,7 +35,7 @@ class TransferDialog extends Component {
   constructor(props) {
     super(props);
     this.feeToken = this.props.valuationToken;
-    this.addrReg = /(^ex)|(^0x)/i;
+    this.addrReg = env.envConfig.isMainnet ? /^okexchain/i : /^ex/i;
     this.loadingDur = 500;
     this.transDur = 2500;
     this.initState = {
