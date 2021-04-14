@@ -278,7 +278,7 @@ class TransferDialog extends Component {
     if (assetsType === 'KIP 20') {
       const toAddress = address
       if (/^ex/i.test(address)) {
-        toAddress = crypto.convertBech32ToHex(address)
+        toAddress = crypto.convertBech32ToHex(address)[0]
       }
       web3Util.transfer({contractAddress: symbol, privateKey,amount:amountStr, toAddress}).then(() => {
         this._transferSuccess(onSuccess);

@@ -13,7 +13,7 @@ class App extends React.Component {
     super(props);
     window.OK_GLOBAL.isLogin = util.isLogined();
     window.OK_GLOBAL.senderAddr = util.getMyAddr();
-    window.OK_GLOBAL.generalAddr = window.OK_GLOBAL.senderAddr && crypto.convertBech32ToHex(window.OK_GLOBAL.senderAddr)
+    window.OK_GLOBAL.generalAddr = window.OK_GLOBAL.senderAddr && crypto.convertBech32ToHex(window.OK_GLOBAL.senderAddr)[0];
     document.title = toLocale('seoTitle');
   }
   componentDidMount() {
