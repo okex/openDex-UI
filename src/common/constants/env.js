@@ -6,6 +6,7 @@ const testnet = {
   isTest: true,
   dexUser: 'dex_user_test_ex',
   dexToken: 'dex_token_test_ex',
+  addressPrefix: 'ex',
   token: {
     base: 'okt',
     quote: 'usdk',
@@ -43,6 +44,7 @@ const mainnet = {
   isTest: false,
   dexUser: 'dex_user_main',
   dexToken: 'dex_token_main',
+  addressPrefix: 'okexchain',
   token: {
     base: 'okt',
     quote: 'usdt-a2b',

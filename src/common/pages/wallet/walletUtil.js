@@ -11,7 +11,7 @@ const walletUtil = {
     window.OK_GLOBAL.isLogin = true;
   },
   setUserInSessionStroage(privateKey, keyStore) {
-    const addr = crypto.getAddressFromPrivateKey(privateKey);
+    const addr = crypto.getAddressFromPrivateKey(privateKey, env.envConfig.addressPrefix);
     const user = {
       addr,
       info: keyStore,
