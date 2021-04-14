@@ -35,7 +35,7 @@ class TransferDialog extends Component {
   constructor(props) {
     super(props);
     this.feeToken = this.props.valuationToken;
-    this.addrReg = /(^okexchain)|(^0x)/i;
+    this.addrReg = /(^ex)|(^0x)/i;
     this.loadingDur = 500;
     this.transDur = 2500;
     this.initState = {
@@ -202,7 +202,7 @@ class TransferDialog extends Component {
               if (checkFee) {
                 this.calAvaIsFeeToken();
               }
-            } else if (assetsType === 'OIP 20') {
+            } else if (assetsType === 'KIP 20') {
               web3Util.getBalance(symbol).then(balance => this.setState({ available: balance }))
             } else {
               this.fetchAsset(symbol);
@@ -275,8 +275,12 @@ class TransferDialog extends Component {
     ) {
       amountStr = available;
     }
-    if (assetsType === 'OIP 20') {
-      web3Util.transfer({contractAddress: symbol, privateKey,amount:amountStr,toAddress:address}).then(() => {
+    if (assetsType === 'KIP 20') {
+      const toAddress = address
+      if (/^ex/i.test(address)) {
+        toAddress = crypto.convertBech32ToHex(address)
+      }
+      web3Util.transfer({contractAddress: symbol, privateKey,amount:amountStr, toAddress}).then(() => {
         this._transferSuccess(onSuccess);
       }).catch(() => {
         this._transferErr(toLocale('trans_fail')); 

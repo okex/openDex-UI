@@ -103,11 +103,10 @@ const util = {
         key: 'to',
         render: (text, { from }) => {
           const userAddr = window.OK_GLOBAL.senderAddr
-          let address = ''
+          let address = from
           if (from === userAddr) {
             address = text
           }
-          address = from
           let drawText = `${address.slice(0 ,5)}******${address.slice(address.length - 5, address.length)}`;
 
           return (
@@ -211,7 +210,7 @@ util.accountsCols = ({ transfer, moreOperationsChange }, { valuationUnit }) => {
           render = () => {
             const active = this.state.active
             let boxConfig = moreBoxConf
-            if (assetsType !== 'OIP 20') boxConfig = moreBoxConf.filter(({type}) => type !== 'hidden')
+            if (assetsType !== 'KIP 20') boxConfig = moreBoxConf.filter(({type}) => type !== 'hidden')
             else boxConfig = moreBoxConf.filter(({type}) => type !== 'migration')
             return (<>
               <Button size={Button.size.mini} onClick={transfer(symbol, assetsType)}>

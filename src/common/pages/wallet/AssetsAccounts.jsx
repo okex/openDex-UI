@@ -86,7 +86,7 @@ class AssetsAccounts extends Component {
           precision: it.precision,
           locked: '0',
           available,
-          assetsType: 'OIP 20'
+          assetsType: 'KIP 20'
         })
       })
       Promise.allSettled(contractPromiseList).then(res => {
@@ -177,7 +177,7 @@ class AssetsAccounts extends Component {
             false
           );
           if (!assetsType && symbol !== 'okt') {
-            curr.assetsType = 'OIP 10'
+            curr.assetsType = 'KIP 10'
           }
 
           return {

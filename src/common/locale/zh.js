@@ -1232,7 +1232,7 @@ const zhCN = {
   import_mnemonic_old_instructions: 'OKExChain主网升级前的原始路径',
   import_mnemonic_path_tip: '如果您在2021/03/01 12:00前创建了钱包，请务必选择此路径并按照教程操作。',
   import_mnemonic_know_button: '我知道了',
-  wallet_transaction_records_tab10: 'OIP 10 交易',
-  wallet_transaction_records_tab20: 'OIP 20 交易',
+  wallet_transaction_records_tab10: 'KIP 10 交易',
+  wallet_transaction_records_tab20: 'KIP 20 交易',
 };
 export default zhCN;
