@@ -9,6 +9,7 @@ import * as SpotTradeActions from '_src/redux/actions/SpotTradeAction';
 import * as OrderAction from '_src/redux/actions/OrderAction';
 import util from '_src/utils/util';
 import PageURL from '_src/constants/PageURL';
+import env from '_src/constants/env';
 
 function mapStateToProps(state) {
   const { tickers } = state.Spot;
@@ -85,23 +86,14 @@ const InitWrapper = (Component) => {
       return fns[table.split(':')[0]];
     };
     startInitWebSocket = () => {
-      if (!window.WebSocketCore) return;
+      if (!window.WebSocketCore || !env.envConfig.isMainnet) return;
       const OK_GLOBAL = window.OK_GLOBAL;
       if (!OK_GLOBAL.ws_v3) {
         const { spotActions } = this.props;
         OK_GLOBAL.ws_v3 = new window.WebSocketCore(getConnectCfg());
         const v3 = OK_GLOBAL.ws_v3;
         v3.onSocketConnected(() => {
-          function getJwtToken() {
-            if (!util.isLogined()) {
-              setTimeout(getJwtToken, 1000);
-            } else {
-              wsV3.login(util.getMyAddr());
-            }
-          }
-          if (!util.isLogined()) {
-            getJwtToken();
-          } else {
+          if (util.isLogined()) {
             wsV3.login(util.getMyAddr());
           }
           spotActions.updateWsStatus(true);
@@ -129,8 +121,10 @@ const InitWrapper = (Component) => {
               Number(errorCode) === 30008 ||
               Number(errorCode) === 30006)
           ) {
-            util.doLogout();
-            window.location.href = PageURL.homePage;
+            if(env.envConfig.isMainnet) {
+              util.doLogout();
+              window.location.href = PageURL.homePage;
+            }
           }
         });
         v3.connect();

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as SwapAction from '_src/redux/actions/SwapAction';
 import util from '_src/utils/util';
 import { getConnectCfg, getWsV3 } from '_src/utils/websocket';
+import env from '_src/constants/env';
 
 function mapStateToProps() {
   return {};
@@ -42,7 +43,7 @@ const SwapPushWrapper = (Component) => {
     };
 
     startInitWebSocket = (wsUrl) => {
-      if (!window.WebSocketCore) return;
+      if (!window.WebSocketCore || !env.envConfig.isMainnet) return;
       const wsV3 = new window.WebSocketCore(wsUrl);
       this.wsV3 = wsV3;
       this.wsV3Instance = getWsV3(wsV3);
@@ -69,7 +70,9 @@ const SwapPushWrapper = (Component) => {
             Number(errorCode) === 30008 ||
             Number(errorCode) === 30006)
         ) {
-          util.doLogout();
+          if(env.envConfig.isMainnet) {
+            util.doLogout();
+          }
         }
       });
       wsV3.connect();
