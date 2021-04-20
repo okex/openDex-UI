@@ -1,7 +1,9 @@
 import moment from 'moment';
 import React, { Component } from 'react';
+import { crypto } from '@okexchain/javascript-sdk';
 import FormatNum from '_src/utils/FormatNum';
 import Tooltip from '_src/component/Tooltip';
+import calc from '_src/utils/calc';
 import { Button } from '_component/Button';
 import { toLocale } from '_src/locale/react-locale';
 import utils from '../../utils/util';
@@ -66,7 +68,7 @@ const util = {
       },
       {
         title: toLocale('trade_column_time'),
-        key: 'blocktime',
+        key: 'blockTimeU0',
         alignRight: true,
         render: (text) => {
           return moment(Number(text)).format('MM-DD HH:mm:ss');
@@ -81,7 +83,7 @@ const util = {
             symbol.indexOf('_') > 0
               ? utils.getShortName(symbol)
               : utils.getSymbolShortName(symbol);
-          return `${text} ${originalSymbol.toUpperCase()}`;
+          return `${calc.ceilTruncate(text)} ${originalSymbol.toUpperCase()}`;
         },
       },
       {
@@ -89,9 +91,9 @@ const util = {
         alignRight: true,
         key: 'from',
         render: (from) => {
-          const userAddr = window.OK_GLOBAL.senderAddr
+          const userAddr = window.OK_GLOBAL.generalAddr
           let sideText = toLocale('trade_type_in');
-          if (from === userAddr) {
+          if (crypto.toChecksumAddress(from) === userAddr) {
             sideText = toLocale('trade_type_out');
           }
           return <span>{sideText}</span>;
@@ -102,10 +104,10 @@ const util = {
         alignRight: true,
         key: 'to',
         render: (text, { from }) => {
-          const userAddr = window.OK_GLOBAL.senderAddr
-          let address = from
-          if (from === userAddr) {
-            address = text
+          const userAddr = window.OK_GLOBAL.generalAddr
+          let address = crypto.toChecksumAddress(from)
+          if (address === userAddr) {
+            address = crypto.toChecksumAddress(text)
           }
           let drawText = `${address.slice(0 ,5)}******${address.slice(address.length - 5, address.length)}`;
 

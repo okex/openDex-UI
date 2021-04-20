@@ -43,7 +43,7 @@ const testnet = {
   contract: 'contract-test',
   know: 'know_test',
   mnemonicPathType: 'mnemonic_path_type_test',
-  web3Provider:'https://exchaintest.okexcn.com'
+  web3Provider:'https://exchaintestrpc.okex.org'
 };
 
 const mainnet = {
@@ -87,7 +87,7 @@ const mainnet = {
   contract: 'contract',
   know: 'know',
   mnemonicPathType: 'mnemonic_path_type',
-  web3Provider:'https://exchaintest.okexcn.com'
+  web3Provider:'https://exchaintestrpc.okex.org'
 };
 
 function envConfig() {

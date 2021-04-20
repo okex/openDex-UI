@@ -129,8 +129,7 @@ class AssetsAccounts extends Component {
                     {getLpTokenStr(original_symbol)}
                   </span>
                 </span>
-              ),
-              aa: getLpTokenStr(original_symbol)
+              )
             };
           });
           this.setState({ tokenList, tokenMap });
