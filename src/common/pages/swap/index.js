@@ -14,7 +14,6 @@ const WATCHLIST = '3';
 @withRouter
 @SwapPushWrapper
 export default class Swap extends React.Component {
-
   onChange = (activekey) => {
     let route = PageURL.swapPage;
     if (activekey === POOL) {
@@ -35,7 +34,7 @@ export default class Swap extends React.Component {
   }
 
   render() {
-    const { wsV3,activekey=SWAP,children } = this.props;
+    const { wsV3, activekey = SWAP, children } = this.props;
     return (
       <SwapContext.Provider value={wsV3}>
         <div className="swap-container">

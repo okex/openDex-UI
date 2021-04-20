@@ -1,46 +1,36 @@
 import { calc } from '_component/okit';
 import util from './util';
 
-const formatDepthArr = (arr) => {
-  return {
-    price: arr[0],
-    quantity: arr[1],
-  };
-};
+const formatDepthArr = (arr) => ({
+  price: arr[0],
+  quantity: arr[1],
+});
 
-const formatProduct = (product) => {
-  return product;
-};
+const formatProduct = (product) => product;
 
-const instrumentId2Product = (instrument_id) => {
-  return instrument_id.toLowerCase().split('_');
-};
+const instrumentId2Product = (instrument_id) =>
+  instrument_id.toLowerCase().split('_');
 
 const formatters = {
-  account: (data) => {
-    return data;
-  },
+  account: (data) => data,
   order([resData]) {
     return resData;
   },
-  kline: (data) => {
-    return data.map(
+  kline: (data) =>
+    data.map(
       ({
         instrument_id,
         candle: [timestamp, open, high, low, close, volume],
-      }) => {
-        return {
-          open,
-          high,
-          low,
-          close,
-          volume,
-          symbol: instrument_id.replace('-', '_').toLowerCase(),
-          createdDate: new Date(timestamp).getTime(),
-        };
-      }
-    );
-  },
+      }) => ({
+        open,
+        high,
+        low,
+        close,
+        volume,
+        symbol: instrument_id.replace('-', '_').toLowerCase(),
+        createdDate: new Date(timestamp).getTime(),
+      })
+    ),
   ticker([resData]) {
     return {
       high: +resData.high,
@@ -54,8 +44,8 @@ const formatters = {
       last: +resData.price,
     };
   },
-  allTickers: (data) => {
-    return data.map((resData) => {
+  allTickers: (data) =>
+    data.map((resData) => {
       const open = resData.o;
       let changePercent = '0.00';
       if (open && +resData.p !== -1) {
@@ -73,8 +63,7 @@ const formatters = {
         changePercentage: `${changeSignStr}${changePercent}%`,
         last: +resData.p,
       };
-    });
-  },
+    }),
   depth: ({ data, action }) => {
     const [resData] = data;
     const [base, quote] = instrumentId2Product(resData.instrument_id);
@@ -88,9 +77,7 @@ const formatters = {
       },
     };
   },
-  matches: (data) => {
-    return data;
-  },
+  matches: (data) => data,
 };
 
 export default formatters;

@@ -85,33 +85,33 @@ const ProductListWrapper = (Component) => {
       const { groupId } = activeMarket;
       if (+groupId === 1) {
         currList = productList
-          .filter((product) => {
-            return `${product}` == product;
-          })
-          .sort((a, b) => {
-            return b.order - a.order;
-          });
+          .filter((product) => `${product}` == product)
+          .sort((a, b) => b.order - a.order);
       } else {
-        currList = productList.filter((product) => {
-          return product.product.split('_')[1] === groupId;
-        });
+        currList = productList.filter(
+          (product) => product.product.split('_')[1] === groupId
+        );
       }
       return currList;
     };
+
     startWs = () => {
       wsV3.send(channelsV3.getAllMarketTickers());
     };
+
     stopWs = () => {
       wsV3.stop(channelsV3.getAllMarketTickers());
     };
+
     handleSearch = (text) => {
       const { spotActions } = this.props;
       spotActions.updateSearch(text);
     };
+
     handleSelectMenu = (item) => {
       const { tradeType } = window.OK_GLOBAL;
       const { spotActions } = this.props;
-      const product = item.product;
+      const { product } = item;
       let urlLink = `${PageURL.spotFullPage}#product=${product.toLowerCase()}`;
       if (tradeType === Enum.tradeType.normalTrade) {
         urlLink = `${PageURL.spotTradePage}#product=${product.toLowerCase()}`;

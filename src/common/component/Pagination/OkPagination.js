@@ -125,7 +125,7 @@ export default class OkPagination extends React.Component {
 
     if ('pageSize' in nextProps) {
       const newState = {};
-      let current = this.state.current;
+      let { current } = this.state;
       const newCurrent = this.calculatePage(nextProps.pageSize);
       current = current > newCurrent ? newCurrent : current;
       if (!('current' in nextProps)) {
@@ -164,9 +164,8 @@ export default class OkPagination extends React.Component {
     return Math.floor((this.props.total - 1) / pageSize) + 1;
   };
 
-  isValid = (page) => {
-    return isInteger(page) && page >= 1 && page !== this.state.current;
-  };
+  isValid = (page) =>
+    isInteger(page) && page >= 1 && page !== this.state.current;
 
   handleKeyDown = (e) => {
     if (e.keyCode === KEYCODE.ARROW_UP || e.keyCode === KEYCODE.ARROW_DOWN) {
@@ -176,7 +175,7 @@ export default class OkPagination extends React.Component {
 
   handleKeyUp = (e) => {
     const inputValue = e.target.value;
-    const currentInputValue = this.state.currentInputValue;
+    const { currentInputValue } = this.state;
     let value;
 
     if (inputValue === '') {
@@ -203,7 +202,7 @@ export default class OkPagination extends React.Component {
   };
 
   changePageSize = (size) => {
-    let current = this.state.current;
+    let { current } = this.state;
     const newCurrent = this.calculatePage(size);
     current = current > newCurrent ? newCurrent : current;
     if (typeof size === 'number') {
@@ -236,7 +235,7 @@ export default class OkPagination extends React.Component {
         });
       }
 
-      const pageSize = this.state.pageSize;
+      const { pageSize } = this.state;
       this.props.onChange(page, pageSize);
 
       return page;
@@ -271,17 +270,14 @@ export default class OkPagination extends React.Component {
   jumpPrev = () => {
     this.handleChange(this.getJumpPrevPage());
   };
+
   jumpNext = () => {
     this.handleChange(this.getJumpNextPage());
   };
 
-  hasPrev = () => {
-    return this.state.current > 1;
-  };
+  hasPrev = () => this.state.current > 1;
 
-  hasNext = () => {
-    return this.state.current < this.calculatePage();
-  };
+  hasNext = () => this.state.current < this.calculatePage();
 
   runIfEnter = (event, callback, ...restParams) => {
     if (event.key === 'Enter' || event.charCode === 13) {
@@ -319,10 +315,10 @@ export default class OkPagination extends React.Component {
       return null;
     }
 
-    const props = this.props;
-    const locale = props.locale;
+    const { props } = this;
+    const { locale } = props;
 
-    const prefixCls = props.prefixCls;
+    const { prefixCls } = props;
     const allPages = this.calculatePage();
     const pagerList = [];
     let jumpPrev = null;

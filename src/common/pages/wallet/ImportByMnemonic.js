@@ -8,9 +8,9 @@ import { connect } from 'react-redux';
 import * as commonActions from '_src/redux/actions/CommonAction';
 import WalletPassword from '_component/WalletPassword';
 import ValidateCheckbox from '_component/ValidateCheckbox';
-import walletUtil from './walletUtil';
 import util from '_src/utils/util';
 import DesktopTypeMenu from '_component/DesktopTypeMenu';
+import walletUtil from './walletUtil';
 import './ImportByMnemonic.less';
 
 function mapStateToProps() {
@@ -37,6 +37,7 @@ class ImportByMnemonic extends Component {
     };
     this.isValidatedPassword = false;
   }
+
   changeMnemonic = (e) => {
     const mnemonic = e.target.value;
     this.setState({
@@ -45,6 +46,7 @@ class ImportByMnemonic extends Component {
       isNone: false,
     });
   };
+
   changePassword = ({ value, lengthCheck, chartCheck }) => {
     this.isValidatedPassword =
       lengthCheck === 'right' && chartCheck === 'right';
@@ -52,6 +54,7 @@ class ImportByMnemonic extends Component {
       password: value,
     });
   };
+
   handleEnsure = () => {
     if (this.state.mnemonic.length === 0) {
       this.setState({
@@ -75,6 +78,7 @@ class ImportByMnemonic extends Component {
       }
     );
   };
+
   validateMnemonic = () => {
     try {
       const { password } = this.state;
@@ -97,6 +101,7 @@ class ImportByMnemonic extends Component {
       });
     }
   };
+
   render() {
     const { mnemonic, isValidatedMnemonic, buttonLoading, isNone } = this.state;
     let p;

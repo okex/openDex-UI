@@ -9,9 +9,13 @@ import './index.less';
 
 export default class Menu extends React.Component {
   static Divider = Divider;
+
   static Item = Item;
+
   static SubMenu = SubMenu;
+
   static ItemGroup = ItemGroup;
+
   static propTypes = {
     mode: PropTypes.oneOf([
       'horizontal',
@@ -27,6 +31,7 @@ export default class Menu extends React.Component {
     onSelect: PropTypes.func,
     onOpenChange: PropTypes.func,
   };
+
   static defaultProps = {
     className: '',
     style: {},
@@ -36,10 +41,12 @@ export default class Menu extends React.Component {
     onSelect: () => {},
     onOpenChange: () => {},
   };
+
   constructor(props) {
     super(props);
     this.state = {};
   }
+
   render() {
     const fixedProps = {
       prefixCls: 'ok-menu',

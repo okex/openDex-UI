@@ -1,10 +1,13 @@
-var path = require('path');
+const path = require('path');
 
 module.exports = {
   parser: 'babel-eslint',
   extends: 'airbnb',
   rules: {
     'class-methods-use-this': 0,
+    'import/no-unresolved': 'off',
+    'react/prop-types': 'off',
+    'no-unused-expressions': 'off'
   },
   env: {
     browser: true,

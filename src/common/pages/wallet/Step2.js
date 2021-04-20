@@ -26,9 +26,11 @@ class Step2 extends Component {
   onNext = () => {
     this.props.walletAction.updateCreateStep(3);
   };
+
   handleSafeTipEnsure = () => {
     this.props.walletAction.updateIsShowSafeTip(false);
   };
+
   render() {
     const { isPass, isShowSafeTip, mnemonic } = this.props;
     return (
@@ -45,14 +47,12 @@ class Step2 extends Component {
                 {toLocale('wallet_create_backupMnemonic')}
               </div>
               <div className="mnemonic-content">
-                {mnemonic.split(' ').map((item, index) => {
-                  return (
-                    <div className="mnemonic-item" key={item}>
-                      <span className="mnemonic-item-no">{index + 1}</span>
-                      <span className="mnemonic-item-word">{item}</span>
-                    </div>
-                  );
-                })}
+                {mnemonic.split(' ').map((item, index) => (
+                  <div className="mnemonic-item" key={item}>
+                    <span className="mnemonic-item-no">{index + 1}</span>
+                    <span className="mnemonic-item-word">{item}</span>
+                  </div>
+                ))}
               </div>
               {!isPass && (
                 <span className="error-tip">

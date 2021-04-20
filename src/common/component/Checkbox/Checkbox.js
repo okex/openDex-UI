@@ -38,14 +38,12 @@ export default class Checkbox extends React.Component {
   }
 
   checkboxChange = (e) => {
-    const checked = e.target.checked;
+    const { checked } = e.target;
     this.setState({
       checked,
     });
     this.props.onChange(checked, {
-      target: Object.assign({}, this.props, {
-        checked,
-      }),
+      target: { ...this.props, checked },
     });
   };
 

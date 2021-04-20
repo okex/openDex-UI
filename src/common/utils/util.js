@@ -1,12 +1,12 @@
 import React from 'react';
 import { calc } from '_component/okit';
-import ont from '../utils/dataProxy';
+import BigNumber from 'bignumber.js';
+import ont from './dataProxy';
 import URL from '../constants/URL';
-import Enum from '../utils/Enum';
+import Enum from './Enum';
 import PageURL from '../constants/PageURL';
 import { getLpTokenInfo } from './lpTokenUtil';
 import env from '../constants/env';
-import BigNumber from 'bignumber.js';
 
 const locales = ['zh_CN', 'en_US'];
 const util = {
@@ -206,7 +206,8 @@ const util = {
       return `${hours > 10 ? hours : `0${hours}`}:00:${
         sec >= 10 ? sec : `0${sec}`
       }`;
-    } else if (sec >= 60) {
+    }
+    if (sec >= 60) {
       if (sec % 60 === 0) {
         const min = Math.floor(sec / 60);
         return `${min > 10 ? min : `0${min}`}:00`;
@@ -273,14 +274,15 @@ const util = {
   getTheme() {
     return localStorage.getItem('theme') === Enum.themes.theme2 ? 'dark' : '';
   },
-  precisionInput(num, precision = 18,format=true) {
-    if(typeof num === 'string') num = num.replace(',' ,'');
+  precisionInput(num, precision = 18, format = true) {
+    if (typeof num === 'string') num = num.replace(',', '');
     if (!num) num = 0;
     let result;
-    if(format) result = BigNumber(
-      BigNumber(num).toFixed(precision, BigNumber.ROUND_FLOOR)
-    ).toFormat(precision);
-    else result = BigNumber(num).toFixed(precision, BigNumber.ROUND_FLOOR);
+    if (format) {
+      result = BigNumber(
+        BigNumber(num).toFixed(precision, BigNumber.ROUND_FLOOR)
+      ).toFormat(precision);
+    } else result = BigNumber(num).toFixed(precision, BigNumber.ROUND_FLOOR);
     return result;
   },
   compareNumber(a, b) {
@@ -312,7 +314,7 @@ const util = {
   },
   isWalletConnect() {
     return this.isLogined() && !this.hasKeyStore();
-  }
+  },
 };
 
 export default util;

@@ -1,5 +1,5 @@
-import { calc } from '_component/okit';
-import { storage } from '_component/okit';
+import { calc, storage } from '_component/okit';
+
 import Cookies from 'js-cookie';
 import Enum from '../../utils/Enum';
 import ont from '../../utils/dataProxy';
@@ -11,9 +11,7 @@ import env from '../../constants/env';
 
 function resetProductConfig(product, productList) {
   if (!product) return;
-  const currProduct = productList.filter((item) => {
-    return item.product === product;
-  })[0];
+  const currProduct = productList.filter((item) => item.product === product)[0];
   if (currProduct) {
     let defaultMerge = Enum.defaultMergeType;
     if (currProduct.mergeTypes && currProduct.mergeTypes.split) {
@@ -197,7 +195,7 @@ export function updateSearch(text) {
 
 export function fetchTickers() {
   return (dispatch, getState) => {
-    const product = getState().SpotTrade.product;
+    const { product } = getState().SpotTrade;
     ont.get(URL.GET_PRODUCT_TICKERS).then((res) => {
       const tickers = {};
       const arr = res.data;
@@ -229,7 +227,7 @@ export function wsUpdateTickers(data) {
     const { tickers } = getState().Spot;
     const newTickers = tickers ? util.cloneDeep(tickers) : {};
     data.forEach((item) => {
-      const product = item.product;
+      const { product } = item;
       if (product) {
         newTickers[product] = item;
       }
@@ -296,9 +294,7 @@ export function fetchCnyRate() {
       method: 'GET',
     };
     fetch(URL.GET_CNY_RATE, fetchParam)
-      .then((response) => {
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((response) => {
         const cnyRate = response.usd_cny_rate;
         dispatch({

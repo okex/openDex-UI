@@ -64,7 +64,7 @@ export default class CheckboxGroup extends React.Component {
       value.splice(optionIndex, 1);
     }
     this.setState({ value });
-    const onChange = this.props.onChange;
+    const { onChange } = this.props;
     if (onChange) {
       onChange(value);
     }
@@ -77,43 +77,39 @@ export default class CheckboxGroup extends React.Component {
       <div className={`${prefixCls}`}>
         {options &&
           options.length > 0 &&
-          this.getOptions().map((item) => {
-            return (
-              <label
-                key={item.value}
+          this.getOptions().map((item) => (
+            <label
+              key={item.value}
+              className={classnames({
+                'checkbox-wrapper': true,
+                'checkbox-wrapper-checked': value.indexOf(item.value) !== -1,
+                'checkbox-wrapper-disabled': item.disabled
+                  ? item.disabled
+                  : disabled,
+              })}
+            >
+              <span
                 className={classnames({
-                  'checkbox-wrapper': true,
-                  'checkbox-wrapper-checked': value.indexOf(item.value) !== -1,
-                  'checkbox-wrapper-disabled': item.disabled
-                    ? item.disabled
-                    : disabled,
+                  checkbox: true,
+                  'checkbox-checked': value.indexOf(item.value) !== -1,
+                  'checkbox-disabled': item.disabled ? item.disabled : disabled,
                 })}
               >
-                <span
-                  className={classnames({
-                    checkbox: true,
-                    'checkbox-checked': value.indexOf(item.value) !== -1,
-                    'checkbox-disabled': item.disabled
-                      ? item.disabled
-                      : disabled,
-                  })}
-                >
-                  <input
-                    type="checkbox"
-                    placeholder=""
-                    checked={value.indexOf(item.value) !== -1}
-                    onChange={() => {
-                      this.toggleOption(item);
-                    }}
-                    className="check-input"
-                    disabled={item.disabled ? item.disabled : disabled}
-                  />
-                  <span className="checkbox-inner" />
-                </span>
-                <span className="check-des">{item.label}</span>
-              </label>
-            );
-          })}
+                <input
+                  type="checkbox"
+                  placeholder=""
+                  checked={value.indexOf(item.value) !== -1}
+                  onChange={() => {
+                    this.toggleOption(item);
+                  }}
+                  className="check-input"
+                  disabled={item.disabled ? item.disabled : disabled}
+                />
+                <span className="checkbox-inner" />
+              </span>
+              <span className="check-des">{item.label}</span>
+            </label>
+          ))}
       </div>
     );
   }

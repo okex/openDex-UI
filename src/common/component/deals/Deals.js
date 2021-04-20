@@ -7,22 +7,20 @@ export default class Deals extends React.Component {
     const { columns, dataSource } = this.props;
     return (
       <ul className="deals-list">
-        {dataSource.map((data, index) => {
-          return (
-            <li key={index}>
-              {columns.map((column) => {
-                if (column.render && typeof column.render === 'function') {
-                  return (
-                    <span key={column.key}>
-                      {column.render(data[column.key], data, index)}
-                    </span>
-                  );
-                }
-                return <span key={column.key}>{data[column.key]}</span>;
-              })}
-            </li>
-          );
-        })}
+        {dataSource.map((data, index) => (
+          <li key={index}>
+            {columns.map((column) => {
+              if (column.render && typeof column.render === 'function') {
+                return (
+                  <span key={column.key}>
+                    {column.render(data[column.key], data, index)}
+                  </span>
+                );
+              }
+              return <span key={column.key}>{data[column.key]}</span>;
+            })}
+          </li>
+        ))}
       </ul>
     );
   };

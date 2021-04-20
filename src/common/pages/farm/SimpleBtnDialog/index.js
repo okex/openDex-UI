@@ -27,7 +27,7 @@ export default class SimpleBtnDialog extends React.Component {
   }
 
   onClick = async () => {
-    let component = this.props.component;
+    let { component } = this.props;
     if (typeof component === 'function') component = await component();
     component = React.cloneElement(component, { onClose: this.onClose });
     this.setState({ show: true, component });

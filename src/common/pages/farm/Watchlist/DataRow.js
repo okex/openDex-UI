@@ -1,4 +1,5 @@
 import React from 'react';
+
 export default class DataRow extends React.Component {
   render() {
     const { data, columns } = this.props;
@@ -6,7 +7,7 @@ export default class DataRow extends React.Component {
       <tr>
         {columns.map((d, index) => {
           const Component = d.component;
-          const field = d.field;
+          const { field } = d;
           if (!Component) return <td key={index}>{data[field]}</td>;
           return (
             <td key={index}>

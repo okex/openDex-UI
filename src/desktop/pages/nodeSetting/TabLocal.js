@@ -55,10 +55,8 @@ class TabLocal extends Component {
     this.onSwitchChange = util.debounce(this.onSwitchChange, 300);
   }
 
-  onChange = () => {
-    return (option) => {
-      this.setState({ selected: option });
-    };
+  onChange = () => (option) => {
+    this.setState({ selected: option });
   };
 
   onP2pChange = (e) => {

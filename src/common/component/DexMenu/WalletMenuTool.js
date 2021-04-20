@@ -11,6 +11,7 @@ class WalletMenuTool extends React.Component {
       copySuccess: false,
     };
   }
+
   handleCopy = () => {
     this.setState({ copySuccess: true });
     clearTimeout(this.copyTimer);
@@ -18,6 +19,7 @@ class WalletMenuTool extends React.Component {
       this.setState({ copySuccess: false });
     }, 1000);
   };
+
   render() {
     const { address } = this.props;
     const { copySuccess } = this.state;

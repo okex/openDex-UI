@@ -19,6 +19,7 @@ class LegalPrice extends React.Component {
     currency: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   };
+
   static defaultProps = {
     currency: '',
     value: 0,

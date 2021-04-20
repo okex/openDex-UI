@@ -1,13 +1,17 @@
 import ont from '_src/utils/dataProxy';
-import { commaLineBreak, divide, multiply } from '_src/utils/ramda';
+import {
+  commaLineBreak,
+  divide,
+  multiply,
+  htmlLineBreak,
+} from '_src/utils/ramda';
 import Message from '_src/component/Message';
 import { NODE_TYPE } from '_constants/Node';
 import { LOCAL_PREFIX } from '_constants/apiConfig';
 import { getStartCommand } from '_src/utils/command';
+import downloadDialog from '_app/pages/fullTrade/DownloadDialog';
 import LocalNodeActionType from '../actionTypes/LocalNodeActionType';
 import NodeActionType from '../actionTypes/NodeActionType';
-import downloadDialog from '_app/pages/fullTrade/DownloadDialog';
-import { htmlLineBreak } from '_src/utils/ramda';
 
 const electronUtils = window.require('electron').remote.require('./src/utils');
 
@@ -86,8 +90,8 @@ function start(datadir, dispatch, getState, func, terminal = false) {
 
 function listenClient() {
   const { localNodeServerClient } = electronUtils;
-  let logs = [],
-    interval = null;
+  const logs = [];
+  let interval = null;
   const MAXLOGCOUNT = 20;
   function getData(data) {
     const temp = htmlLineBreak(data);

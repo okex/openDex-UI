@@ -3,14 +3,14 @@ import { getDisplaySymbol } from './coinIcon';
 export function isLpToken(tokenPair) {
   if (!tokenPair) return null;
   tokenPair = tokenPair.toLowerCase();
-  let ammswap = /(ammswap_)/.test(tokenPair);
+  const ammswap = /(ammswap_)/.test(tokenPair);
   if (!ammswap) return null;
   const tokens = tokenPair.split('_');
   if (tokens.filter((d) => d === 'ammswap').length > 2) return null;
   return tokens;
 }
 
-export function getLpTokenInfo(tokenPair='', filter = true) {
+export function getLpTokenInfo(tokenPair = '', filter = true) {
   tokenPair = tokenPair.toLowerCase();
   const tokens = isLpToken(tokenPair);
   if (!tokens) return null;
@@ -51,17 +51,19 @@ function getLpTokenName(
   filter = true
 ) {
   if (base.length === 1) baseStr = getDisplaySymbol(base[0], filter);
-  else if (base.length === 2)
+  else if (base.length === 2) {
     baseStr = `LP (${getDisplaySymbol(base[0], filter)}/${getDisplaySymbol(
       base[1],
       filter
     )})`;
+  }
   if (quote.length === 1) quoteStr = quote[0].toUpperCase();
-  else if (quote.length === 2)
+  else if (quote.length === 2) {
     quoteStr = `LP (${getDisplaySymbol(quote[0], filter)}/${getDisplaySymbol(
       quote[1],
       filter
     )})`;
+  }
   if (!baseStr) return quoteStr;
   if (!quoteStr) return baseStr;
   return `${baseStr}/${quoteStr}`;

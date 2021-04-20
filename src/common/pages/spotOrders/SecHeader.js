@@ -11,17 +11,15 @@ const SecHeader = ({ entrustType, dataSource, onEntrustTypeChange }) => {
   return (
     <div className="types-line">
       <ul>
-        {dataSource.map(({ type, name }) => {
-          return (
-            <li
-              className={`type-btn ${entrustType === type ? 'current' : ''}`}
-              onClick={onEntrustTypeChange(type)}
-              key={type}
-            >
-              {name}
-            </li>
-          );
-        })}
+        {dataSource.map(({ type, name }) => (
+          <li
+            className={`type-btn ${entrustType === type ? 'current' : ''}`}
+            onClick={onEntrustTypeChange(type)}
+            key={type}
+          >
+            {name}
+          </li>
+        ))}
       </ul>
     </div>
   );

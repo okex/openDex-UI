@@ -30,6 +30,7 @@ class SafeTip extends Component {
   static defaultProps = {
     visible: true,
   };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -37,6 +38,7 @@ class SafeTip extends Component {
       hasDownload: false,
     };
   }
+
   componentDidMount() {
     if (this.state.visible) {
       this.dialog = Dialog.show({
@@ -46,6 +48,7 @@ class SafeTip extends Component {
       });
     }
   }
+
   downloadKeyStore = () => {
     const { keyStore } = this.props;
     const keyStoreName = `keystore_${moment().format('YYYY-MM-DD HH:mm:ss')}`;
@@ -54,6 +57,7 @@ class SafeTip extends Component {
       hasDownload: true,
     });
   };
+
   handleKnew = () => {
     const { onEnsure } = this.props;
     if (!this.state.hasDownload) {
@@ -62,29 +66,30 @@ class SafeTip extends Component {
     this.dialog.destroy();
     onEnsure && onEnsure();
   };
-  renderContent = () => {
-    return (
-      <div className="wallet-safe-tip">
-        <div style={{ fontSize: 18 }}>{toLocale('wallet_safeTip_title')}</div>
-        <img
-          className="mar-top30"
-          src="https://static.bafang.com/cdn/assets/imgs/MjAxOTQ/EB1742AFFE1C68081E13A3404A79A141.png"
-        />
-        <div className="safe-tip-content">
-          {toLocale('wallet_safeTip_beforeKeystore')}
-          <a onClick={this.downloadKeyStore}>Keystore</a>
-          &nbsp;{toLocale('wallet_safeTip_afterKeystore')}
-        </div>
-        <Button
-          className="safe-tip-knew"
-          type="primary"
-          onClick={this.handleKnew}
-        >
-          {toLocale('wallet_known')}
-        </Button>
+
+  renderContent = () => (
+    <div className="wallet-safe-tip">
+      <div style={{ fontSize: 18 }}>{toLocale('wallet_safeTip_title')}</div>
+      <img
+        className="mar-top30"
+        src="https://static.bafang.com/cdn/assets/imgs/MjAxOTQ/EB1742AFFE1C68081E13A3404A79A141.png"
+      />
+      <div className="safe-tip-content">
+        {toLocale('wallet_safeTip_beforeKeystore')}
+        <a onClick={this.downloadKeyStore}>Keystore</a>
+        &nbsp;
+        {toLocale('wallet_safeTip_afterKeystore')}
       </div>
-    );
-  };
+      <Button
+        className="safe-tip-knew"
+        type="primary"
+        onClick={this.handleKnew}
+      >
+        {toLocale('wallet_known')}
+      </Button>
+    </div>
+  );
+
   render() {
     return null;
   }

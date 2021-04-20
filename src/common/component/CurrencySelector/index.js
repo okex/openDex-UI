@@ -12,25 +12,30 @@ export default class CurrencySelector extends React.Component {
       activeId: -1,
     };
   }
+
   componentDidMount() {
     this.setActiveId(this.props.legalId);
   }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.legalId !== this.props.legalId) {
       this.setActiveId(nextProps.legalId);
     }
   }
+
   onChangeCurrency = () => {
     const { onChangeCurrency } = this.props;
     onChangeCurrency && onChangeCurrency(this.state.activeId);
     this.onClose();
   };
+
   onClose = () => {
     this.setState({
       showChangeDialog: false,
     });
     this.setActiveId(this.props.legalId);
   };
+
   onClickCurrency = (e) => {
     e.preventDefault();
     const { legalObj } = this.props;
@@ -40,11 +45,13 @@ export default class CurrencySelector extends React.Component {
       });
     }
   };
+
   setActiveId = (activeId) => {
     this.setState({
       activeId,
     });
   };
+
   getContent = () => {
     const { activeId } = this.state;
     const { legalList } = this.props;
@@ -54,24 +61,23 @@ export default class CurrencySelector extends React.Component {
           <h2>{toLocale('spot.ticker.legal.unit')}</h2>
           <div className={`selector-list ${legalList.length < 5 ? 'lt5' : ''}`}>
             {legalList &&
-              legalList.map(({ legalId, isoCode }) => {
-                return (
-                  <label
-                    key={legalId}
-                    className={activeId === legalId ? 'active' : ''}
-                    onClick={() => {
-                      this.setActiveId(legalId);
-                    }}
-                  >
-                    {isoCode}
-                  </label>
-                );
-              })}
+              legalList.map(({ legalId, isoCode }) => (
+                <label
+                  key={legalId}
+                  className={activeId === legalId ? 'active' : ''}
+                  onClick={() => {
+                    this.setActiveId(legalId);
+                  }}
+                >
+                  {isoCode}
+                </label>
+              ))}
           </div>
         </div>
       </div>
     );
   };
+
   render() {
     const { showChangeDialog } = this.state;
     const { legalObj } = this.props;

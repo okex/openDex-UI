@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import PageURL from '_constants/PageURL';
-import Home from '../pages/home/index';
 import FullTrade from '_app/pages/fullTrade/FullTrade';
+import Home from '../pages/home/index';
 import OpenOrders from '../pages/orders/OpenList';
 import HistoryOrders from '../pages/orders/HistoryList';
 import DealOrders from '../pages/orders/DealsList';
@@ -34,7 +34,7 @@ const config = [
         {
           path: PageURL.homePage,
           component: Home,
-          containHead: false
+          containHead: false,
         },
       ]
     : []),
@@ -100,43 +100,78 @@ const config = [
     component: Fees,
   },
   {
-    path: [PageURL.addLiquidityPage,PageURL.addLiquidityPage+'/:base/:target'],
-    component: () => <Swap activekey="2"><AddLiquidity/></Swap>,
+    path: [
+      PageURL.addLiquidityPage,
+      `${PageURL.addLiquidityPage}/:base/:target`,
+    ],
+    component: () => (
+      <Swap activekey="2">
+        <AddLiquidity />
+      </Swap>
+    ),
   },
   {
     path: PageURL.createLiquidityPage,
-    component: () => <Swap activekey="2"><CreatLiquidity/></Swap>,
+    component: () => (
+      <Swap activekey="2">
+        <CreatLiquidity />
+      </Swap>
+    ),
   },
   {
-    path: PageURL.reduceLiquidityPage+'/:base/:target',
-    component: () => <Swap activekey="2"><ReduceLiquidity/></Swap>,
+    path: `${PageURL.reduceLiquidityPage}/:base/:target`,
+    component: () => (
+      <Swap activekey="2">
+        <ReduceLiquidity />
+      </Swap>
+    ),
   },
   {
     path: PageURL.liquidityPage,
-    component: () => <Swap activekey="2"><PoolPanel/></Swap>,
+    component: () => (
+      <Swap activekey="2">
+        <PoolPanel />
+      </Swap>
+    ),
   },
   {
     path: PageURL.watchlistPage,
-    component: () => <Swap activekey="3"><WatchlistPanel/></Swap>,
+    component: () => (
+      <Swap activekey="3">
+        <WatchlistPanel />
+      </Swap>
+    ),
   },
   {
-    path: [PageURL.swapPage,PageURL.swapPage+'/:base/:target'],
-    component: () => <Swap><SwapPanel/></Swap>,
+    path: [PageURL.swapPage, `${PageURL.swapPage}/:base/:target`],
+    component: () => (
+      <Swap>
+        <SwapPanel />
+      </Swap>
+    ),
   },
   {
-    path: PageURL.swapPage + '/*',
+    path: `${PageURL.swapPage}/*`,
     redirect: PageURL.swapPage,
   },
   {
     path: PageURL.myfarmingsPage,
-    component: () => <Farm activekey="2"><DashboardPanel/></Farm>,
+    component: () => (
+      <Farm activekey="2">
+        <DashboardPanel />
+      </Farm>
+    ),
   },
   {
     path: PageURL.farmPage,
-    component: () => <Farm><FarmPanel/></Farm>,
+    component: () => (
+      <Farm>
+        <FarmPanel />
+      </Farm>
+    ),
   },
   {
-    path: PageURL.farmPage + '/*',
+    path: `${PageURL.farmPage}/*`,
     redirect: PageURL.farmPage,
   },
   {
@@ -145,36 +180,36 @@ const config = [
   },
 ];
 
-function getRoute({routerConfig=config,FullTradeHead}) {
-  let routes = [];
-  routerConfig.forEach((router,index) => {
+function getRoute({ routerConfig = config, FullTradeHead }) {
+  const routes = [];
+  routerConfig.forEach((router, index) => {
     const { path, component: Page, containHead = true, redirect } = router;
-    if(redirect) routes.push(<Redirect from={path} to={redirect} key={index}/>)
-    else routes.push(
-      <Route
-        path={path}
-        exact
-        component={() => {
-          return (
-            <React.Fragment>
-              {containHead && 
-              <div className="full-head">
-                <FullTradeHead />
-              </div>
-              }
-              {Page && <Page/>}
-            </React.Fragment>
-          );
-        }}
-        key={index}
-      >
-      </Route>
-    );
+    if (redirect)
+      routes.push(<Redirect from={path} to={redirect} key={index} />);
+    else {
+      routes.push(
+        <Route
+          path={path}
+          exact
+          component={() => (
+            <>
+              {containHead && (
+                <div className="full-head">
+                  <FullTradeHead />
+                </div>
+              )}
+              {Page && <Page />}
+            </>
+          )}
+          key={index}
+        />
+      );
+    }
   });
   return routes.length ? routes : null;
 }
 
 export default {
   config,
-  getRoute
-}
+  getRoute,
+};

@@ -23,6 +23,7 @@ export default class DepthList extends React.Component {
       isShowMergeList: false,
     };
   }
+
   componentDidUpdate(prevProps) {
     let needToCenter = false;
     const prevData = prevProps.dataSource;
@@ -48,19 +49,19 @@ export default class DepthList extends React.Component {
       isShowMergeList: true,
     });
   };
+
   onMergeTypeOut = () => {
     this.setState({
       isShowMergeList: false,
     });
   };
-  setChooseMergeType = (key) => {
-    return () => {
-      this.setState({
-        isShowMergeList: false,
-      });
-      const { onChooseMergeType } = this.props;
-      onChooseMergeType && onChooseMergeType(key);
-    };
+
+  setChooseMergeType = (key) => () => {
+    this.setState({
+      isShowMergeList: false,
+    });
+    const { onChooseMergeType } = this.props;
+    onChooseMergeType && onChooseMergeType(key);
   };
 
   floatToXDecimal = (originFloat) => {
@@ -134,6 +135,7 @@ export default class DepthList extends React.Component {
       cloneStyle.visibility = 'hidden';
     }
   };
+
   toCenter = () => {
     const { tickerDom, scrollDom } = this;
     scrollDom.scrollTop =
@@ -141,11 +143,10 @@ export default class DepthList extends React.Component {
       scrollDom.clientHeight / 2 +
       tickerDom.clientHeight / 2;
   };
-  handleClickItem = (index, type) => {
-    return () => {
-      const { selectItem } = this.props;
-      selectItem && selectItem(index, type);
-    };
+
+  handleClickItem = (index, type) => () => {
+    const { selectItem } = this.props;
+    selectItem && selectItem(index, type);
   };
 
   render() {
@@ -171,9 +172,9 @@ export default class DepthList extends React.Component {
     return (
       <div className={containerClass} style={style}>
         <div className="title">
-          {columnTitle.map((item, index) => {
-            return <span key={`ok-depth-title${index}`}>{item}</span>;
-          })}
+          {columnTitle.map((item, index) => (
+            <span key={`ok-depth-title${index}`}>{item}</span>
+          ))}
         </div>
         <div className="scroll-container">
           <div

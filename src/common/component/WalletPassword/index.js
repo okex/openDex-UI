@@ -13,11 +13,13 @@ class index extends Component {
     placeholder: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
     onChange: PropTypes.func,
   };
+
   static defaultProps = {
     allowClear: false,
     placeholder: false,
     onChange: () => {},
   };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -27,6 +29,7 @@ class index extends Component {
       value: '',
     };
   }
+
   componentWillReceiveProps(nextProps) {
     if (
       !(this.state.lengthCheck === 'right') &&
@@ -40,13 +43,15 @@ class index extends Component {
       }
     }
   }
+
   toogleInputType = () => {
     this.setState({
       showPassword: !this.state.showPassword,
     });
   };
+
   changeValue = (e) => {
-    const value = e.target.value;
+    const { value } = e.target;
     const lengthCheck = lengthReg.test(value) ? 'right' : 'wrong';
     const chartCheck = chartReg.test(value) ? 'right' : 'wrong';
     return this.setState(
@@ -55,14 +60,14 @@ class index extends Component {
         lengthCheck,
         chartCheck,
       },
-      () => {
-        return this.props.onChange({ value, lengthCheck, chartCheck });
-      }
+      () => this.props.onChange({ value, lengthCheck, chartCheck })
     );
   };
+
   handlePaste = (e) => {
     e.preventDefault();
   };
+
   render() {
     const { value } = this.state;
     const { allowClear, placeholder } = this.props;
@@ -79,7 +84,11 @@ class index extends Component {
           onCompositionEnd={this.handleCompositionEnd}
           onPaste={this.handlePaste}
           className={showPassword ? 'show' : ''}
-          type={!showPassword && !window.navigator.userAgent.match(/webkit/i) ? 'password' : 'text'}
+          type={
+            !showPassword && !window.navigator.userAgent.match(/webkit/i)
+              ? 'password'
+              : 'text'
+          }
           autoComplete="new-password"
           allowClear={allowClear}
           suffix={() => {

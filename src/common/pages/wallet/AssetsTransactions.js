@@ -37,6 +37,7 @@ class AssetsTransactions extends Component {
     );
     this.addr = window.OK_GLOBAL.senderAddr;
   }
+
   componentDidMount() {
     document.title =
       toLocale('assets_tab_transactions') + toLocale('spot.page.title');
@@ -44,14 +45,15 @@ class AssetsTransactions extends Component {
       this.fetchTransactions();
     }
   }
-  onDatePickerChange = (type) => {
-    return (date) => {
-      this.setState({ [type]: date });
-    };
+
+  onDatePickerChange = (type) => (date) => {
+    this.setState({ [type]: date });
   };
+
   onTypeChange = ({ value: type }) => {
     this.setState({ type });
   };
+
   fetchTransactions = (page = 1) => {
     const { startDate, endDate, type } = this.state;
     const params = {
@@ -90,9 +92,11 @@ class AssetsTransactions extends Component {
         this.setState({ loading: false });
       });
   };
+
   handleDateChangeRaw = (e) => {
     e.preventDefault();
   };
+
   render() {
     const {
       transactions,

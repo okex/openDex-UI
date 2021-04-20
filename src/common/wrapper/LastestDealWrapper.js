@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { calc } from '_component/okit';
 import { toLocale } from '_src/locale/react-locale';
+import { getDisplaySymbol } from '_src/utils/coinIcon';
 import { wsV3, channelsV3 } from '../utils/websocket';
 import * as SpotTradeActions from '../redux/actions/SpotTradeAction';
-import { getDisplaySymbol } from '_src/utils/coinIcon';
 import util from '../utils/util';
 
 function mapStateToProps(state) {
@@ -37,6 +37,7 @@ const LastestDealWrapper = (Component) => {
         }
       }
     }
+
     componentWillReceiveProps(nextProps) {
       const oldproduct = this.props.product;
       const newproduct = nextProps.product;
@@ -66,6 +67,7 @@ const LastestDealWrapper = (Component) => {
         spotTradeActions.getDeals(newproduct);
       }
     }
+
     componentWillUnmount() {
       clearInterval(window.dealsHandler);
     }
@@ -83,7 +85,10 @@ const LastestDealWrapper = (Component) => {
       const config = window.OK_GLOBAL.productConfig;
       return [
         {
-          title: toLocale('spot.deals.price').replace('-', getDisplaySymbol(baseCurr)),
+          title: toLocale('spot.deals.price').replace(
+            '-',
+            getDisplaySymbol(baseCurr)
+          ),
           key: 'price',
           render: (text, data) => {
             const price = calc.showFloorTruncation(
@@ -119,9 +124,7 @@ const LastestDealWrapper = (Component) => {
       ];
     };
 
-    getDealsEmpty = () => {
-      return toLocale('spot.deals.no');
-    };
+    getDealsEmpty = () => toLocale('spot.deals.no');
 
     startWs = (product) => {
       const { spotTradeActions } = this.props;
@@ -130,6 +133,7 @@ const LastestDealWrapper = (Component) => {
         wsV3.send(channelsV3.getMatches(product));
       });
     };
+
     changeProduct = (oldproduct, newproduct) => {
       const { wsIsOnlineV3, spotTradeActions } = this.props;
       if (window.OK_GLOBAL.ws_v3 && wsIsOnlineV3) {

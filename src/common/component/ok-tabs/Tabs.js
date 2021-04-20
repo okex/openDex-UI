@@ -20,7 +20,7 @@ class Tabs extends React.Component {
 
   componentWillMount() {
     const active = this.props.active || this.props.defaultIndexKey;
-    const tabBarExtraContent = this.props.tabBarExtraContent;
+    const { tabBarExtraContent } = this.props;
 
     if (tabBarExtraContent) {
       this.setState({

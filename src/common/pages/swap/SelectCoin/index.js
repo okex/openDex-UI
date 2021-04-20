@@ -1,7 +1,7 @@
 import React from 'react';
 import { toLocale } from '_src/locale/react-locale';
-import { getCoinIcon, getDisplaySymbol } from '../../../utils/coinIcon';
 import util from '_src/utils/util';
+import { getCoinIcon, getDisplaySymbol } from '../../../utils/coinIcon';
 
 export default class SelectCoin extends React.Component {
   constructor() {
@@ -37,8 +37,7 @@ export default class SelectCoin extends React.Component {
     let list;
     try {
       list = data.filter((d) => d.symbol.match(new RegExp(search, 'gi')));
-    } catch(e) {
-      console.log(e);
+    } catch (e) {
       list = [];
     }
     return this.init ? (

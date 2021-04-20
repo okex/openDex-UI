@@ -33,7 +33,7 @@ class Introduce extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const product = nextProps.product;
+    const { product } = nextProps;
     if (product) {
       this.getIntroduceBySymbol(product.split('_')[0]);
     }

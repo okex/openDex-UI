@@ -63,13 +63,11 @@ class TokenpairDetail extends Component {
     this.fetchTokenpairs(pagination);
   };
 
-  onAddOpen = (project) => {
-    return () => {
-      this.setState({
-        isShowAddDialog: true,
-        project,
-      });
-    };
+  onAddOpen = (project) => () => {
+    this.setState({
+      isShowAddDialog: true,
+      project,
+    });
   };
 
   onAddClose = () => {
@@ -78,13 +76,11 @@ class TokenpairDetail extends Component {
     });
   };
 
-  onWithdrawOpen = (project) => {
-    return () => {
-      this.setState({
-        isShowWithdrawDialog: true,
-        project,
-      });
-    };
+  onWithdrawOpen = (project) => () => {
+    this.setState({
+      isShowWithdrawDialog: true,
+      project,
+    });
   };
 
   onWithdrawClose = () => {

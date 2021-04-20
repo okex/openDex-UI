@@ -49,9 +49,7 @@ export default class BaseButton extends React.PureComponent {
       loading,
       ...attr
     } = this.props;
-    const Type = (btnType) => {
-      return type.indexOf(btnType) !== -1;
-    };
+    const Type = (btnType) => type.indexOf(btnType) !== -1;
 
     const button = (
       <button

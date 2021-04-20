@@ -73,6 +73,7 @@ class OpenList extends RouterCredential {
     };
     this.targetNode = null;
   }
+
   componentWillMount() {
     const { orderActions } = this.props;
     orderActions.resetData();
@@ -83,7 +84,7 @@ class OpenList extends RouterCredential {
     }
     if (this.props.location.state && this.props.location.state.period) {
       let interval = 1;
-      const period = this.props.location.state.period;
+      const { period } = this.props.location.state;
       if (period === 'oneWeek') {
         interval = 7;
       } else if (period === 'oneMonth') {
@@ -99,6 +100,7 @@ class OpenList extends RouterCredential {
       });
     }
   }
+
   componentDidMount() {
     this.props.commonAction.initOKExChainClient();
     const { spotActions, orderActions } = this.props;
@@ -108,6 +110,7 @@ class OpenList extends RouterCredential {
       toLocale('spot.orders.openOrders') + toLocale('spot.page.title');
     this.onSearch();
   }
+
   componentWillReceiveProps(nextProps) {}
 
   componentWillUnmount() {
@@ -115,77 +118,79 @@ class OpenList extends RouterCredential {
     orderActions.resetData();
   }
 
-  onCancelOrder = (order) => {
-    return (e) => {
-      e.persist();
-      if (!util.isLogined()) {
-        window.location.reload();
-      }
-      const order_id = order.order_id;
-      let title = toLocale('spot.myOrder.cancelPartDealTip');
-      if (order.quantity - order.remain_quantity === 0) {
-        title = toLocale('spot.myOrder.cancelNoDealTip');
-      }
-      const _this = this;
-      const dialog = Dialog.confirm({
-        title,
-        confirmText: toLocale('ensure'),
-        cancelText: toLocale('cancel'),
-        theme: 'dark',
-        dialogId: 'okdex-confirm',
-        windowStyle: {
-          background: '#112F62',
-        },
-        onConfirm: () => {
-          dialog.destroy();
-          if (Number(e.target.getAttribute('canceling'))) {
-            return;
-          }
-          e.target.setAttribute('canceling', 1);
-          this.targetNode = e.target;
+  onCancelOrder = (order) => (e) => {
+    e.persist();
+    if (!util.isLogined()) {
+      window.location.reload();
+    }
+    const { order_id } = order;
+    let title = toLocale('spot.myOrder.cancelPartDealTip');
+    if (order.quantity - order.remain_quantity === 0) {
+      title = toLocale('spot.myOrder.cancelNoDealTip');
+    }
+    const _this = this;
+    const dialog = Dialog.confirm({
+      title,
+      confirmText: toLocale('ensure'),
+      cancelText: toLocale('cancel'),
+      theme: 'dark',
+      dialogId: 'okdex-confirm',
+      windowStyle: {
+        background: '#112F62',
+      },
+      onConfirm: () => {
+        dialog.destroy();
+        if (Number(e.target.getAttribute('canceling'))) {
+          return;
+        }
+        e.target.setAttribute('canceling', 1);
+        this.targetNode = e.target;
+        this.formParam = {
+          order_id,
+          start: Math.floor(_this.state.start.valueOf() / 1000 - 86400),
+          end: Math.floor(_this.state.end.valueOf() / 1000),
+        };
+        if (_this.state.product !== 'all') {
           this.formParam = {
-            order_id,
-            start: Math.floor(_this.state.start.valueOf() / 1000 - 86400),
-            end: Math.floor(_this.state.end.valueOf() / 1000),
+            ...this.formParam,
+            product: _this.state.product,
           };
-          if (_this.state.product !== 'all') {
-            this.formParam = {
-              ...this.formParam,
-              product: _this.state.product,
-            };
-          }
-          if (_this.state.side !== 'all') {
-            this.formParam = { ...this.formParam, side: _this.state.side };
-          }
-          const expiredTime = window.localStorage.getItem('pExpiredTime') || 0;
-          if (util.isWalletConnect() || (new Date().getTime() < +expiredTime && this.props.privateKey)) {
-            const param = { ...this.formParam, pk: this.props.privateKey };
-            this.setState(
-              {
-                isShowPwdDialog: false,
-                cancelLoading: true,
-              },
-              () => {
-                e.target.setAttribute('canceling', 0);
-                this.props.orderActions.cancelOrder(
-                  param,
-                  this.successToast,
-                  this.onSubmitErr
-                );
-              }
-            );
-          } else {
-            e.target.setAttribute('canceling', 0);
-            this.onPwdOpen();
-          }
-        },
-      });
-    };
+        }
+        if (_this.state.side !== 'all') {
+          this.formParam = { ...this.formParam, side: _this.state.side };
+        }
+        const expiredTime = window.localStorage.getItem('pExpiredTime') || 0;
+        if (
+          util.isWalletConnect() ||
+          (new Date().getTime() < +expiredTime && this.props.privateKey)
+        ) {
+          const param = { ...this.formParam, pk: this.props.privateKey };
+          this.setState(
+            {
+              isShowPwdDialog: false,
+              cancelLoading: true,
+            },
+            () => {
+              e.target.setAttribute('canceling', 0);
+              this.props.orderActions.cancelOrder(
+                param,
+                this.successToast,
+                this.onSubmitErr
+              );
+            }
+          );
+        } else {
+          e.target.setAttribute('canceling', 0);
+          this.onPwdOpen();
+        }
+      },
+    });
   };
 
   onBtnSearch = () => {
     this.onSearch({ page: 1 });
   };
+
   onSearch = (param) => {
     const { orderActions } = this.props;
     const { start, end } = this.state;
@@ -207,7 +212,7 @@ class OpenList extends RouterCredential {
   };
 
   onProductsChange = (obj) => {
-    const value = obj.value;
+    const { value } = obj;
     if (value.length > 0) {
       this.setState(
         {
@@ -221,7 +226,7 @@ class OpenList extends RouterCredential {
   };
 
   onSideChange = (obj) => {
-    const value = obj.value;
+    const { value } = obj;
     let side = 'all';
     if (+value === 1) {
       side = 'BUY';
@@ -254,21 +259,20 @@ class OpenList extends RouterCredential {
   onPageChange = (page) => {
     this.onSearch({ page });
   };
+
   handleDateChangeRaw = (e) => {
     e.preventDefault();
   };
 
   renderQuery = () => {
     const { productList } = this.props;
-    const sortProductList = productList.sort((a, b) => {
-      return a.base_asset_symbol.localeCompare(b.base_asset_symbol);
-    });
-    const newProductList = sortProductList.map((obj) => {
-      return {
-        value: obj.product,
-        label: obj.product.replace('_', '/').toUpperCase(),
-      };
-    });
+    const sortProductList = productList.sort((a, b) =>
+      a.base_asset_symbol.localeCompare(b.base_asset_symbol)
+    );
+    const newProductList = sortProductList.map((obj) => ({
+      value: obj.product,
+      label: obj.product.replace('_', '/').toUpperCase(),
+    }));
     const { product, side, start, end } = this.state;
     newProductList.unshift({
       value: 'all',
@@ -458,6 +462,7 @@ class OpenList extends RouterCredential {
       />
     );
   };
+
   render() {
     const { theme, productObj, data } = this.props;
     const { orderList, isLoading, page } = data;

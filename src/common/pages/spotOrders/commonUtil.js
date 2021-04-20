@@ -12,180 +12,168 @@ import Enum from '../../utils/Enum';
 import Config from '../../constants/Config';
 
 const commonUtil = {
-  getCommonColumns: (onClickProduct) => {
-    return [
-      {
-        title: toLocale('spot.myOrder.hash'),
-        key: 'txhash',
-        render: (text) => {
-          const str = FormatNum.hashShort(text);
-          const href = `${Config.okexchain.browserUrl}/tx/${text}`;
-          return (
-            <a
-              title={text}
-              className="can-click"
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {str}
-            </a>
-          );
-        },
+  getCommonColumns: (onClickProduct) => [
+    {
+      title: toLocale('spot.myOrder.hash'),
+      key: 'txhash',
+      render: (text) => {
+        const str = FormatNum.hashShort(text);
+        const href = `${Config.okexchain.browserUrl}/tx/${text}`;
+        return (
+          <a
+            title={text}
+            className="can-click"
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {str}
+          </a>
+        );
       },
-      {
-        title: toLocale('spot.myOrder.date'),
-        key: 'timestamp',
-        render: (text) => {
-          const d = text.split(' ')[0];
-          const t = text.split(' ')[1];
-          return (
-            <span>
-              {d}
-              <br />
-              {t}
-            </span>
-          );
-        },
-      },
-      {
-        title: toLocale('spot.myOrder.product'),
-        key: 'product',
-        render: (text, data) => {
-          const isSame =
-            data.activeProduct &&
-            data.orginalProduct.toUpperCase() ===
-              data.activeProduct.toUpperCase();
-          return (
-            <span
-              onClick={() => {
-                onClickProduct && onClickProduct(data.orginalProduct);
-              }}
-              className={isSame || !onClickProduct ? '' : 'can-click'}
-            >
-              {text}
-            </span>
-          );
-        },
-      },
-      {
-        title: toLocale('spot.myOrder.direction'),
-        key: 'side',
-        render: (text, data) => {
-          return <div className={data.sideClass}>{text}</div>;
-        },
-      },
-      {
-        title: toLocale('spot.myOrder.filledPercentage'),
-        key: 'filledPercentage',
-        render: (text) => {
-          return <span>{text}</span>;
-        },
-      },
-      {
-        title: (
+    },
+    {
+      title: toLocale('spot.myOrder.date'),
+      key: 'timestamp',
+      render: (text) => {
+        const d = text.split(' ')[0];
+        const t = text.split(' ')[1];
+        return (
           <span>
-            {toLocale('spot.myOrder.filledAmount')} |{' '}
-            {toLocale('spot.myOrder.amount')}
+            {d}
+            <br />
+            {t}
           </span>
-        ),
-        key: 'quantity',
-        render: (text, data) => {
-          const baseSymbolShort = data.product.split('/')[0];
-          return (
-            <div>
-              {data.filledQuantity} | {text} {baseSymbolShort}
-            </div>
-          );
-        },
+        );
       },
-      {
-        title: (
-          <span>
-            {toLocale('spot.myOrder.filledPrice')} |{' '}
-            {toLocale('spot.myOrder.price')}
+    },
+    {
+      title: toLocale('spot.myOrder.product'),
+      key: 'product',
+      render: (text, data) => {
+        const isSame =
+          data.activeProduct &&
+          data.orginalProduct.toUpperCase() ===
+            data.activeProduct.toUpperCase();
+        return (
+          <span
+            onClick={() => {
+              onClickProduct && onClickProduct(data.orginalProduct);
+            }}
+            className={isSame || !onClickProduct ? '' : 'can-click'}
+          >
+            {text}
           </span>
-        ),
-        key: 'price',
-        render: (text, data) => {
-          const quoteSymbol = data.product.split('/')[1];
-          return (
-            <div>
-              {data.filled_avg_price} | {text} {quoteSymbol}
-            </div>
-          );
-        },
+        );
       },
-      {
-        title: toLocale('spot.orders.status'),
-        key: 'status',
-        render: (text) => {
-          return <span>{text}</span>;
-        },
+    },
+    {
+      title: toLocale('spot.myOrder.direction'),
+      key: 'side',
+      render: (text, data) => <div className={data.sideClass}>{text}</div>,
+    },
+    {
+      title: toLocale('spot.myOrder.filledPercentage'),
+      key: 'filledPercentage',
+      render: (text) => <span>{text}</span>,
+    },
+    {
+      title: (
+        <span>
+          {toLocale('spot.myOrder.filledAmount')} |{' '}
+          {toLocale('spot.myOrder.amount')}
+        </span>
+      ),
+      key: 'quantity',
+      render: (text, data) => {
+        const baseSymbolShort = data.product.split('/')[0];
+        return (
+          <div>
+            {data.filledQuantity} |{text} {baseSymbolShort}
+          </div>
+        );
       },
-    ];
-  },
-  getColumns: (onClickSymbol) => {
-    return [
-      {
-        title: toLocale('spot.orders.date'),
-        key: 'createTime',
-        render: (text) => {
-          const dateTime = util.timeStampToTime(
-            parseInt(text, 10),
-            'yyyy-MM-dd hh:mm:ss'
-          );
-          const date = dateTime.split(' ')[0];
-          const time = dateTime.split(' ')[1];
+    },
+    {
+      title: (
+        <span>
+          {toLocale('spot.myOrder.filledPrice')} |{' '}
+          {toLocale('spot.myOrder.price')}
+        </span>
+      ),
+      key: 'price',
+      render: (text, data) => {
+        const quoteSymbol = data.product.split('/')[1];
+        return (
+          <div>
+            {data.filled_avg_price} |{text} {quoteSymbol}
+          </div>
+        );
+      },
+    },
+    {
+      title: toLocale('spot.orders.status'),
+      key: 'status',
+      render: (text) => <span>{text}</span>,
+    },
+  ],
+  getColumns: (onClickSymbol) => [
+    {
+      title: toLocale('spot.orders.date'),
+      key: 'createTime',
+      render: (text) => {
+        const dateTime = util.timeStampToTime(
+          parseInt(text, 10),
+          'yyyy-MM-dd hh:mm:ss'
+        );
+        const date = dateTime.split(' ')[0];
+        const time = dateTime.split(' ')[1];
 
-          return (
-            <div className="flex-row">
-              <div>
-                <span style={{ display: 'inline-block' }}>{date}</span>
-                <br />
-                <span style={{ display: 'inline-block' }}>{time}</span>
-              </div>
+        return (
+          <div className="flex-row">
+            <div>
+              <span style={{ display: 'inline-block' }}>{date}</span>
+              <br />
+              <span style={{ display: 'inline-block' }}>{time}</span>
             </div>
-          );
-        },
+          </div>
+        );
       },
-      {
-        title: toLocale('spot.orders.symbol'),
-        key: 'symbol',
-        render: (text) => {
-          return (
-            <span
-              onClick={() => {
-                onClickSymbol(text);
-              }}
-              className="can-click"
-            >
-              {text.replace('_', '/').toUpperCase()}
-            </span>
-          );
-        },
+    },
+    {
+      title: toLocale('spot.orders.symbol'),
+      key: 'symbol',
+      render: (text) => (
+        <span
+          onClick={() => {
+            onClickSymbol(text);
+          }}
+          className="can-click"
+        >
+          {text.replace('_', '/').toUpperCase()}
+        </span>
+      ),
+    },
+    {
+      title: toLocale('spot.orders.type'),
+      key: 'systemType',
+      render: (text) => {
+        const intlId =
+          text === 1 ? 'spot.orders.side.spot' : 'spot.orders.side.margin';
+        return toLocale(intlId);
       },
-      {
-        title: toLocale('spot.orders.type'),
-        key: 'systemType',
-        render: (text) => {
-          const intlId =
-            text === 1 ? 'spot.orders.side.spot' : 'spot.orders.side.margin';
-          return toLocale(intlId);
-        },
+    },
+    {
+      title: toLocale('spot.orders.direction'),
+      key: 'side',
+      render: (text) => {
+        const side =
+          text === 1 ? 'spot.orders.actionBuy' : 'spot.orders.actionSell';
+        const classType = text === 1 ? 'buy' : 'sell';
+        return <div className={classType}>{toLocale(side)}</div>;
       },
-      {
-        title: toLocale('spot.orders.direction'),
-        key: 'side',
-        render: (text) => {
-          const side =
-            text === 1 ? 'spot.orders.actionBuy' : 'spot.orders.actionSell';
-          const classType = text === 1 ? 'buy' : 'sell';
-          return <div className={classType}>{toLocale(side)}</div>;
-        },
-      },
-    ];
-  },
+    },
+  ],
 
   getStatusColumns: (data) => {
     let explanation = null;
@@ -388,21 +376,19 @@ const commonUtil = {
     newOrder.sizeTruncate = sizeTruncate;
     return newOrder;
   },
-  formatOpenData: (orderList, productObj, activeProduct) => {
-    return orderList.map((order) => {
+  formatOpenData: (orderList, productObj, activeProduct) =>
+    orderList.map((order) => {
       const config = productObj[order.product] || {};
       return commonUtil.formatDataCommon({ ...order, activeProduct }, config);
-    });
-  },
-  formatClosedData: (orderList, productObj) => {
-    return orderList.map((order) => {
+    }),
+  formatClosedData: (orderList, productObj) =>
+    orderList.map((order) => {
       const config = productObj[order.product] || {};
       const o = commonUtil.formatDataCommon(order, config);
       return o;
-    });
-  },
-  formatDealsData: (orderList, productObj) => {
-    return orderList.map((order) => {
+    }),
+  formatDealsData: (orderList, productObj) =>
+    orderList.map((order) => {
       const config = productObj[order.product] || {};
       const priceTruncate =
         'max_price_digit' in config ? config.max_price_digit : 4;
@@ -426,7 +412,6 @@ const commonUtil = {
       newOrder.price = calc.showFloorTruncation(newOrder.price, priceTruncate);
       newOrder.volume = calc.showFloorTruncation(newOrder.volume, sizeTruncate);
       return newOrder;
-    });
-  },
+    }),
 };
 export default commonUtil;

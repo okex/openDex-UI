@@ -24,7 +24,7 @@ const scope = {
   get(k) {
     this.init();
     return _globalThis.okd[k];
-  }
+  },
 };
 
 export const zIndexFlag = 'zIndexFlag';

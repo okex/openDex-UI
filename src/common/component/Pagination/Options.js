@@ -26,9 +26,7 @@ class Options extends React.Component {
     };
   }
 
-  buildOptionText = (value) => {
-    return `${value} ${this.props.locale.items_per_page}`;
-  };
+  buildOptionText = (value) => `${value} ${this.props.locale.items_per_page}`;
 
   changeSize = (value) => {
     this.props.changeSize(Number(value));
@@ -55,13 +53,13 @@ class Options extends React.Component {
   };
 
   render() {
-    const props = this.props;
-    const state = this.state;
-    const locale = props.locale;
+    const { props } = this;
+    const { state } = this;
+    const { locale } = props;
     const prefixCls = `${props.rootPrefixCls}-options`;
-    const changeSize = props.changeSize;
-    const quickGo = props.quickGo;
-    const goButton = props.goButton;
+    const { changeSize } = props;
+    const { quickGo } = props;
+    const { goButton } = props;
     const buildOptionText = props.buildOptionText || this.buildOptionText;
     const Select = props.selectComponentClass;
     let changeSelect = null;
@@ -73,7 +71,7 @@ class Options extends React.Component {
     }
 
     if (changeSize && Select) {
-      const Option = Select.Option;
+      const { Option } = Select;
       const pageSize = props.pageSize || props.pageSizeOptions[0];
       const options = props.pageSizeOptions.map((opt, i) => (
         <Option key={i} value={opt}>

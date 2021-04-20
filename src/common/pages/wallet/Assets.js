@@ -37,24 +37,22 @@ class Assets extends Component {
       this.props.history.replace(PageURL.walletImport);
     }
   }
+
   componentDidMount() {}
-  onChangeTab = (current) => {
-    return () => {
-      if (this.state.loading) return;
-      this.props.history.replace(
-        current === 1 ? PageURL.walletAssets : PageURL.walletTransactions
-      );
-      if (
-        (current === 1 && this.isAssets) ||
-        (current === 2 && !this.isAssets)
-      ) {
-        this.setState({ loading: true });
-        setTimeout(() => {
-          this.setState({ loading: false });
-        }, 100);
-      }
-    };
+
+  onChangeTab = (current) => () => {
+    if (this.state.loading) return;
+    this.props.history.replace(
+      current === 1 ? PageURL.walletAssets : PageURL.walletTransactions
+    );
+    if ((current === 1 && this.isAssets) || (current === 2 && !this.isAssets)) {
+      this.setState({ loading: true });
+      setTimeout(() => {
+        this.setState({ loading: false });
+      }, 100);
+    }
   };
+
   onCopy = () => {
     if (this.state.copySuccess) return;
     this.setState({ copySuccess: true });
@@ -63,6 +61,7 @@ class Assets extends Component {
       this.setState({ copySuccess: false });
     }, 1000);
   };
+
   render() {
     const { loading } = this.state;
     return (

@@ -51,6 +51,7 @@ class AssetsAccounts extends Component {
     this.symbolSearch = '';
     this.addr = window.OK_GLOBAL.senderAddr;
   }
+
   componentDidMount() {
     this.props.commonAction.initOKExChainClient();
     document.title =
@@ -71,11 +72,13 @@ class AssetsAccounts extends Component {
           params: { show: this.state.hideZero ? undefined : 'all' },
         })
         .then(({ data }) => {
-          const { currencies=[] } = data;
-          resolve(currencies.filter(d => {
-            if(!this.state.hideZero) return true;
-            return !!Number(util.precisionInput(d.available,8,false));
-          }));
+          const { currencies = [] } = data;
+          resolve(
+            currencies.filter((d) => {
+              if (!this.state.hideZero) return true;
+              return !!Number(util.precisionInput(d.available, 8, false));
+            })
+          );
         })
         .catch(() => {
           resolve([]);
@@ -152,46 +155,50 @@ class AssetsAccounts extends Component {
         this.setState({ loading: false });
       });
   };
-  openTransfer = (symbol) => {
-    return () => {
-      this.setState({
-        transferSymbol: symbol,
-        showTransfer: true,
-      });
-    };
+
+  openTransfer = (symbol) => () => {
+    this.setState({
+      transferSymbol: symbol,
+      showTransfer: true,
+    });
   };
+
   closeTransfer = () => {
     this.setState({
       showTransfer: false,
     });
   };
+
   transferSuccess = () => {
     this.fetchAccounts();
   };
+
   filterList = (e) => {
     const symbol = e.target.value.trim().toLowerCase();
     this.symbolSearch = symbol;
     const { legalObj } = this.props;
     this.setFilteredList(legalObj);
   };
+
   toggleHideZero = (e) => {
     this.setState({ hideZero: e.target.checked }, this.fetchAccounts);
   };
+
   setFilteredList = (legalObj = {}) => {
     let filterList = this.allCurrencies;
     const symbol = this.symbolSearch;
     if (symbol) {
-      filterList = this.allCurrencies.filter((c) => {
-        return (
+      filterList = this.allCurrencies.filter(
+        (c) =>
           (c.assetToken && c.assetToken.toLowerCase().includes(symbol)) ||
           (c.whole_name && c.whole_name.toLowerCase().includes(symbol))
-        );
-      });
+      );
     }
     this.setState({
       currencies: filterList,
     });
   };
+
   render() {
     const {
       currencies,

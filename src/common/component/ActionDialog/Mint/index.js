@@ -38,7 +38,7 @@ class MintDialog extends Component {
     const { okexchainClient, token, beforeMint, afterMint } = this.props;
     isFunction(beforeMint) && beforeMint();
     const { value } = this.state;
-    const amount = util.precisionInput(value).replace(/,/g,'');
+    const amount = util.precisionInput(value).replace(/,/g, '');
     okexchainClient
       .sendTokenMintTransaction(token, amount)
       .then((res) => {
@@ -82,7 +82,7 @@ class MintDialog extends Component {
     const { value } = this.state;
 
     return (
-      <Fragment>
+      <>
         <SingleInputDialog
           value={value}
           onChange={this.onChange}
@@ -91,7 +91,7 @@ class MintDialog extends Component {
           onClose={this.onClose}
           onConfirm={this.handleMint}
         />
-      </Fragment>
+      </>
     );
   }
 }

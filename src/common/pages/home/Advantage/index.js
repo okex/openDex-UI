@@ -35,19 +35,17 @@ const itemList = [
   },
 ];
 
-const Advantage = () => {
-  return (
-    <article className="advantage-container">
-      <div className="advantage-grid">
-        <h2 className="advantage-title">{toLocale('home_adv_title')}</h2>
-        <div className="advantage-list">
-          {itemList.map((item) => {
-            return <AdvantageItem data={item} key={item.title} />;
-          })}
-        </div>
+const Advantage = () => (
+  <article className="advantage-container">
+    <div className="advantage-grid">
+      <h2 className="advantage-title">{toLocale('home_adv_title')}</h2>
+      <div className="advantage-list">
+        {itemList.map((item) => (
+          <AdvantageItem data={item} key={item.title} />
+        ))}
       </div>
-    </article>
-  );
-};
+    </div>
+  </article>
+);
 
 export default Advantage;

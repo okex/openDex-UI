@@ -108,9 +108,11 @@ export default class DashboardPanel extends React.Component {
         </div>
       ) : (
         <div className="panel panel-connect">
-          <div className="connect-wallet-tip">
-          </div>
-          <div className="farm-btn" onClick={() => this.props.history.push(PageURL.farmPage)}>
+          <div className="connect-wallet-tip"></div>
+          <div
+            className="farm-btn"
+            onClick={() => this.props.history.push(PageURL.farmPage)}
+          >
             {toLocale('Go stake')}
           </div>
         </div>

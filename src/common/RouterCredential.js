@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import util from './utils/util';
-import env from '../common/constants/env';
+import env from './constants/env';
 
 export default class RouterCredential extends Component {
   requireCredential() {
@@ -14,6 +14,7 @@ export default class RouterCredential extends Component {
       util.logRecord();
     }
   }
+
   subAccountEmailCheck = () => {
     const { location, localStorage } = window;
     const subAccountUnBindEmail =

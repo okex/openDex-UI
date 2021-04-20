@@ -1,8 +1,8 @@
 const DepthBar = {
   sort(depth) {
-    depth.sort((a, b) => {
-      return a.amount.replace(/,/g, '') - b.amount.replace(/,/g, '');
-    });
+    depth.sort(
+      (a, b) => a.amount.replace(/,/g, '') - b.amount.replace(/,/g, '')
+    );
     return depth;
   },
 

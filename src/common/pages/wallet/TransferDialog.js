@@ -62,14 +62,13 @@ class TransferDialog extends Component {
     this.feeLeft = 0;
     this.addr = window.OK_GLOBAL.senderAddr;
   }
+
   componentWillReceiveProps(nextProps) {
     if (this.addr) {
       const { show, symbol } = nextProps;
       if (show !== this.props.show) {
         if (show) {
-          const idx = this.props.tokenList.findIndex((t) => {
-            return t.value === symbol;
-          });
+          const idx = this.props.tokenList.findIndex((t) => t.value === symbol);
           this.fetchFeeTokenAsset(symbol);
           if (idx > -1) {
             this.setSymbol(symbol, false);
@@ -85,6 +84,7 @@ class TransferDialog extends Component {
       }
     }
   }
+
   fetchFeeTokenAsset = (symbol) => {
     ont
       .get(`${URL.GET_ACCOUNTS}/${this.addr}`, {
@@ -101,16 +101,20 @@ class TransferDialog extends Component {
         }
       });
   };
+
   calAvaIsFeeToken = () => {
     const { fee } = this.state;
     if (this.feeLeft > fee) {
       this.setState({
-        available: util.precisionInput(calc.sub(this.feeLeft, fee, false)).replace(/,/g,''),
+        available: util
+          .precisionInput(calc.sub(this.feeLeft, fee, false))
+          .replace(/,/g, ''),
       });
     } else {
       this.setState({ available: 0 });
     }
   };
+
   fetchAsset = (symbol) => {
     ont
       .get(`${URL.GET_ACCOUNTS}/${this.addr}`, { params: { symbol } })
@@ -122,90 +126,91 @@ class TransferDialog extends Component {
         }
       });
   };
-  onChange = (type) => {
-    return (v) => {
-      let value = v.target ? v.target.value : v;
+
+  onChange = (type) => (v) => {
+    let value = v.target ? v.target.value : v;
+    this.setState({
+      [type]: value,
+      [`${type}Err`]: false,
+    });
+    if (type === 'amount') {
+      value = FormatNum.CheckInputNumber(value, 8);
       this.setState({
         [type]: value,
-        [`${type}Err`]: false,
+        feeErr: false,
       });
-      if (type === 'amount') {
-        value = FormatNum.CheckInputNumber(value, 8);
+    }
+  };
+
+  onBlur = (type) => (v) => {
+    const value = v.target ? v.target.value : v;
+    let err = false;
+    const { available, fee } = this.state;
+    if (type === 'address') {
+      if (value.trim() && !this.addrReg.test(value)) {
         this.setState({
-          [type]: value,
+          addressErrType: 'format',
+        });
+        err = true;
+      }
+      if (value.trim().toLowerCase() === this.addr.toLowerCase()) {
+        this.setState({
+          addressErrType: 'same',
+        });
+        err = true;
+      }
+    }
+    if (type === 'amount') {
+      err = util.compareNumber(available, value);
+      if (!err && util.compareNumber(this.feeLeft, fee)) {
+        this.setState({
+          feeErr: true,
+        });
+      } else {
+        this.setState({
           feeErr: false,
         });
       }
-    };
+    }
+    this.setState({
+      [`${type}Err`]: err,
+    });
   };
-  onBlur = (type) => {
-    return (v) => {
-      const value = v.target ? v.target.value : v;
-      let err = false;
-      const { available, fee } = this.state;
-      if (type === 'address') {
-        if (value.trim() && !this.addrReg.test(value)) {
-          this.setState({
-            addressErrType: 'format',
-          });
-          err = true;
-        }
-        if (value.trim().toLowerCase() === this.addr.toLowerCase()) {
-          this.setState({
-            addressErrType: 'same',
-          });
-          err = true;
-        }
-      }
-      if (type === 'amount') {
-        err = util.compareNumber(available, value);
-        if (!err && util.compareNumber(this.feeLeft, fee)) {
-          this.setState({
-            feeErr: true,
-          });
-        } else {
-          this.setState({
-            feeErr: false,
-          });
-        }
-      }
-      this.setState({
-        [`${type}Err`]: err,
-      });
-    };
-  };
+
   allIn = () => {
     const { available } = this.state;
     this.setState({ amount: util.precisionInput(available, 8, false) });
   };
+
   setSymbol = (symbol, checkFee = true) => {
-    this.setState({ symbol,
-      check: !isLpToken(symbol),
-      hideCheck: !isLpToken(symbol)
-    }, () => {
-      if (symbol) {
-        this.setState(
-          {
-            available: 0,
-            amount: '',
-            amountErr: false,
-            feeErr: false,
-          },
-          () => {
-            if (symbol === this.feeToken) {
-              if (checkFee) {
-                this.calAvaIsFeeToken();
+    this.setState(
+      { symbol, check: !isLpToken(symbol), hideCheck: !isLpToken(symbol) },
+      () => {
+        if (symbol) {
+          this.setState(
+            {
+              available: 0,
+              amount: '',
+              amountErr: false,
+              feeErr: false,
+            },
+            () => {
+              if (symbol === this.feeToken) {
+                if (checkFee) {
+                  this.calAvaIsFeeToken();
+                }
+              } else {
+                this.fetchAsset(symbol);
               }
-            } else {
-              this.fetchAsset(symbol);
             }
-          }
-        );
+          );
+        }
       }
-    });
+    );
   };
+
   canProceed = () => {
-    const { fee, symbol, address, amount, available,check } = this.state;
+    const { fee, symbol, address, amount, available, check } = this.state;
     return (
       this.props.tokenList.length &&
       symbol &&
@@ -219,9 +224,11 @@ class TransferDialog extends Component {
       check
     );
   };
+
   onTypeChange = ({ value }) => {
     this.setSymbol(value);
   };
+
   transfer = (pwd) => {
     if (!util.isLogined()) {
       window.location.reload();
@@ -250,22 +257,20 @@ class TransferDialog extends Component {
       }
     );
   };
-  _transfer = (privateKey='') => {
+
+  _transfer = (privateKey = '') => {
     const { onClose, onSuccess, okexchainClient } = this.props;
     const { symbol, address, amount, note, available } = this.state;
     onClose();
     setTimeout(() => {
       this.setState({ transferring: true });
-    },0);
-    let amountStr = util.precisionInput(amount).replace(/,/g,'');
-    if (
-      util.precisionInput(amount, 8) ===
-      util.precisionInput(available, 8)
-    ) {
+    }, 0);
+    let amountStr = util.precisionInput(amount).replace(/,/g, '');
+    if (util.precisionInput(amount, 8) === util.precisionInput(available, 8)) {
       amountStr = available;
     }
     okexchainClient.setAccountInfo(privateKey).then(() => {
-      console.log('发起交易')
+      console.log('发起交易');
       okexchainClient
         .sendSendTransaction(address, amountStr, symbol, note)
         .then((res) => {
@@ -308,7 +313,7 @@ class TransferDialog extends Component {
           }
         })
         .catch((err) => {
-          console.log(err)
+          console.log(err);
           setTimeout(() => {
             this.setState({ transferring: false });
             const dialog = Dialog.show({
@@ -328,17 +333,18 @@ class TransferDialog extends Component {
         });
     });
   };
+
   toggleCheck = (e) => {
     this.setState({ check: e.target.checked });
-  }
+  };
 
   submit = () => {
-    if(util.isWalletConnect()) {
+    if (util.isWalletConnect()) {
       this._transfer();
     } else {
       this.setState({ step: 3 }, this.clearPwd);
     }
-  }
+  };
 
   render() {
     const { state, props } = this;
@@ -458,7 +464,7 @@ class TransferDialog extends Component {
                 </tr>
               </tbody>
             </table>
-            {!hideCheck && 
+            {!hideCheck && (
               <label className="cursor-pointer lp-checkbox">
                 <Checkbox
                   onChange={this.toggleCheck}
@@ -467,7 +473,7 @@ class TransferDialog extends Component {
                 />
                 {toLocale('lp token transfer')}
               </label>
-            }
+            )}
             <Button
               block
               type={Button.btnType.primary}
@@ -520,10 +526,7 @@ class TransferDialog extends Component {
               >
                 {toLocale('go_back')}
               </Button>
-              <Button
-                type={Button.btnType.primary}
-                onClick={this.submit}
-              >
+              <Button type={Button.btnType.primary} onClick={this.submit}>
                 {toLocale('ensure')}
               </Button>
             </div>

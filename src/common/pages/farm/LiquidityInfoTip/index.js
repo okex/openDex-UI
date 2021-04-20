@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link,withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as CommonAction from '_src/redux/actions/CommonAction';
 import { bindActionCreators } from 'redux';
@@ -29,11 +29,13 @@ export default class LiquidityInfoTip extends React.Component {
 
   render() {
     const { onClose, data } = this.props;
-    const {lock_symbol_info:{symbols}} = data;
+    const {
+      lock_symbol_info: { symbols },
+    } = data;
     const base = symbols[0];
-    const quote =symbols[1];
+    const quote = symbols[1];
     let url = PageURL.addLiquidityPage;
-    if(base && quote) url = `${url}/${base}/${quote}`;
+    if (base && quote) url = `${url}/${base}/${quote}`;
     return (
       <div className="stake-panel" style={{ width: '496px' }}>
         <div className="stake-panel-title no-title">

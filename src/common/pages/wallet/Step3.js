@@ -5,10 +5,10 @@ import { Button } from '_component/Button';
 import WalletLeft from '_component/WalletLeft';
 import WalletRight from '_component/WalletRight';
 import * as walletActions from '_src/redux/actions/WalletAction';
+import { toLocale } from '_src/locale/react-locale';
 import questionGenerator from './questionGenerator';
 import './Step.less';
 import './Step3.less';
-import { toLocale } from '_src/locale/react-locale';
 
 function mapStateToProps(state) {
   const { mnemonic } = state.WalletStore;
@@ -30,28 +30,29 @@ class Step3 extends Component {
       selectArr: [],
     };
   }
-  selectOption = (questionNo, selectedIndex) => {
-    return () => {
-      const { selectArr } = this.state;
-      const selectArrTemp = [...selectArr];
-      selectArrTemp[questionNo] = selectedIndex;
-      this.setState({
-        selectArr: selectArrTemp,
-      });
-    };
+
+  selectOption = (questionNo, selectedIndex) => () => {
+    const { selectArr } = this.state;
+    const selectArrTemp = [...selectArr];
+    selectArrTemp[questionNo] = selectedIndex;
+    this.setState({
+      selectArr: selectArrTemp,
+    });
   };
+
   handlePrevStep = () => {
     const { walletAction } = this.props;
     walletAction.updateIsPass(true);
     walletAction.updateCreateStep(2);
   };
+
   handleEnsure = () => {
     const { selectArr } = this.state;
     const { questions } = this;
     const { walletAction } = this.props;
-    const isPass = questions.every((item, index) => {
-      return item.answer === selectArr[index];
-    });
+    const isPass = questions.every(
+      (item, index) => item.answer === selectArr[index]
+    );
     if (!isPass) {
       walletAction.updateIsPass(false);
       walletAction.updateCreateStep(2);
@@ -59,6 +60,7 @@ class Step3 extends Component {
       walletAction.updateCreateStep(4);
     }
   };
+
   renderQuestion = (question, selectedOption) => {
     const { no, title } = question;
     return (
@@ -99,12 +101,9 @@ class Step3 extends Component {
           />
           <WalletRight>
             <div className="questions-container">
-              {this.questions.map((questionItem, questionIndex) => {
-                return this.renderQuestion(
-                  questionItem,
-                  selectArr[questionIndex]
-                );
-              })}
+              {this.questions.map((questionItem, questionIndex) =>
+                this.renderQuestion(questionItem, selectArr[questionIndex])
+              )}
             </div>
             <div className="next-row">
               <Button

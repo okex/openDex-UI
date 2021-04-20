@@ -17,7 +17,7 @@ class DexUpload extends Component {
 
   showOpenDialog = async (e) => {
     const { onUpload, directory } = this.props;
-    const dialog = window.require('electron').remote.dialog;
+    const { dialog } = window.require('electron').remote;
     e.preventDefault();
     const pathType = directory ? 'directory' : 'file';
     const options = {

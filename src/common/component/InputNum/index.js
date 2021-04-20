@@ -8,7 +8,7 @@ export default class InputNum extends React.Component {
 
   onBlur = (e) => {
     const { onBlur } = this.props;
-    let inpNumber = this.checkInpNumber(e.target.value);
+    const inpNumber = this.checkInpNumber(e.target.value);
     if (typeof onBlur !== 'undefined') {
       onBlur(inpNumber, e);
     }
@@ -16,7 +16,7 @@ export default class InputNum extends React.Component {
 
   onClick = (e) => {
     const { onClick } = this.props;
-    let inpNumber = this.checkInpNumber(e.target.value);
+    const inpNumber = this.checkInpNumber(e.target.value);
     if (typeof onClick !== 'undefined') {
       onClick(inpNumber, e);
     }
@@ -24,7 +24,7 @@ export default class InputNum extends React.Component {
 
   onCut = (e) => {
     const { onCut } = this.props;
-    let inpNumber = this.checkInpNumber(e.target.value);
+    const inpNumber = this.checkInpNumber(e.target.value);
     if (typeof onCut !== 'undefined') {
       onCut(inpNumber, e);
     }
@@ -32,7 +32,7 @@ export default class InputNum extends React.Component {
 
   onCopy = (e) => {
     const { onCopy } = this.props;
-    let inpNumber = this.checkInpNumber(e.target.value);
+    const inpNumber = this.checkInpNumber(e.target.value);
     if (typeof onCopy !== 'undefined') {
       onCopy(inpNumber, e);
     }
@@ -40,7 +40,7 @@ export default class InputNum extends React.Component {
 
   onDoubleClick = (e) => {
     const { onDoubleClick } = this.props;
-    let inpNumber = this.checkInpNumber(e.target.value);
+    const inpNumber = this.checkInpNumber(e.target.value);
     if (typeof onDoubleClick !== 'undefined') {
       onDoubleClick(inpNumber, e);
     }
@@ -48,7 +48,7 @@ export default class InputNum extends React.Component {
 
   onFocus = (e) => {
     const { onFocus } = this.props;
-    let inpNumber = this.checkInpNumber(e.target.value);
+    const inpNumber = this.checkInpNumber(e.target.value);
     if (typeof onFocus !== 'undefined') {
       onFocus(inpNumber, e);
     }
@@ -57,7 +57,7 @@ export default class InputNum extends React.Component {
   onKeyDown = (e) => {
     this.cusorStart = this.input.current.selectionStart;
     const { onKeyDown } = this.props;
-    let inpNumber = this.checkInpNumber(e.target.value);
+    const inpNumber = this.checkInpNumber(e.target.value);
     if (typeof onKeyDown !== 'undefined') {
       onKeyDown(inpNumber, e);
     }
@@ -65,7 +65,7 @@ export default class InputNum extends React.Component {
 
   onChange = (e) => {
     const { onChange } = this.props;
-    let inpNumber = this.checkInpNumber(e.target.value);
+    const inpNumber = this.checkInpNumber(e.target.value);
     if (typeof onChange !== 'undefined') {
       onChange(inpNumber, e);
     }
@@ -73,7 +73,7 @@ export default class InputNum extends React.Component {
 
   onKeyUp = (e) => {
     const { onKeyUp } = this.props;
-    let inpNumber = this.checkInpNumber(e.target.value);
+    const inpNumber = this.checkInpNumber(e.target.value);
     if (typeof onKeyUp !== 'undefined') {
       onKeyUp(inpNumber, e);
     }
@@ -82,25 +82,26 @@ export default class InputNum extends React.Component {
   onKeyPress = (e) => {
     this.cusorStart = this.input.current.selectionStart;
     const { onKeyPress } = this.props;
-    let inpNumber = this.checkInpNumber(e.target.value);
+    const inpNumber = this.checkInpNumber(e.target.value);
     if (typeof onKeyPress !== 'undefined') {
       onKeyPress(inpNumber, e);
     }
   };
 
   checkInpNumber = (inputValue, num) => {
-    if(inputValue === '.') inputValue = '0.';
-    let inps = inputValue.replace('。', '.').split('.');
+    if (inputValue === '.') inputValue = '0.';
+    const inps = inputValue.replace('。', '.').split('.');
     let inpNumber = '';
     if (inps.length > 1) {
-      if (typeof num != 'undefined' || num === -1) {
-        inpNumber =
-          inps[0].replace(/\D/g, '') + '.' + inps[1].replace(/\D/g, '');
+      if (typeof num !== 'undefined' || num === -1) {
+        inpNumber = `${inps[0].replace(/\D/g, '')}.${inps[1].replace(
+          /\D/g,
+          ''
+        )}`;
       } else {
-        inpNumber =
-          inps[0].replace(/\D/g, '') +
-          '.' +
-          inps[1].replace(/\D/g, '').slice(0, num);
+        inpNumber = `${inps[0].replace(/\D/g, '')}.${inps[1]
+          .replace(/\D/g, '')
+          .slice(0, num)}`;
       }
     } else {
       inpNumber = inps[0].replace(/\D/g, '').replace(/0*(\d+)/, '$1');
@@ -110,43 +111,42 @@ export default class InputNum extends React.Component {
 
   _precision(inpNumber) {
     if (this.props.precision) {
-      const inpNumbers = ('' + inpNumber).split('.');
+      const inpNumbers = `${inpNumber}`.split('.');
       if (inpNumbers[1]) {
         inpNumbers[1] = inpNumbers[1].substring(0, this.props.precision);
-        inpNumber = inpNumbers[0] + '.' + inpNumbers[1];
+        inpNumber = `${inpNumbers[0]}.${inpNumbers[1]}`;
       }
     }
     return inpNumber;
   }
 
   removeDot = (value) => {
-    if (typeof value != 'number' && typeof value != 'string') {
+    if (typeof value !== 'number' && typeof value !== 'string') {
       return value;
     }
-    let newValue = String(value).replace(/,/g, '');
+    const newValue = String(value).replace(/,/g, '');
     return newValue;
   };
 
   addDot = (value) => {
-    if (typeof value != 'number' && typeof value != 'string') {
+    if (typeof value !== 'number' && typeof value !== 'string') {
       return value;
     }
     if (Math.abs(value) < 1000) {
       return value;
     }
-    let newValue = String(value).replace(/,/g, '');
-    let inpArr = newValue.split('.');
+    const newValue = String(value).replace(/,/g, '');
+    const inpArr = newValue.split('.');
 
-    let l = inpArr[0].split('').reverse(),
-      t = '';
+    const l = inpArr[0].split('').reverse();
+    let t = '';
     for (let i = 0; i < l.length; i++) {
       t += l[i] + ((i + 1) % 3 == 0 && i + 1 != l.length ? ',' : '');
     }
     if (inpArr.length == 2) {
-      return t.split('').reverse().join('') + '.' + inpArr[1];
-    } else {
-      return t.split('').reverse().join('');
+      return `${t.split('').reverse().join('')}.${inpArr[1]}`;
     }
+    return t.split('').reverse().join('');
   };
 
   shouldComponentUpdate(nextProps) {

@@ -70,13 +70,14 @@ const SwapPushWrapper = (Component) => {
             Number(errorCode) === 30008 ||
             Number(errorCode) === 30006)
         ) {
-          if(env.envConfig.isMainnet) {
+          if (env.envConfig.isMainnet) {
             util.doLogout();
           }
         }
       });
       wsV3.connect();
     };
+
     render() {
       return <Component {...this.props} wsV3={this.wsV3Instance} />;
     }

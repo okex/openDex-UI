@@ -44,7 +44,9 @@ export default class ReduceLiquidity extends React.Component {
       active: true,
     };
     this.trading = false;
-    this.debounceUpdateCoins4RealTime = util.debounce(this.updateCoins4RealTime);
+    this.debounceUpdateCoins4RealTime = util.debounce(
+      this.updateCoins4RealTime
+    );
   }
 
   _process(liquidity) {
@@ -73,7 +75,7 @@ export default class ReduceLiquidity extends React.Component {
   _getValueByRatio(ratio) {
     if (!ratio) ratio = this.state.ratio;
     if (!ratio) return this.state.value;
-    const max = this.getAvailable(true).replace(/,/g,'');
+    const max = this.getAvailable(true).replace(/,/g, '');
     const value = calc.mul(max, ratio.value, false);
     return util.precisionInput(value);
   }
@@ -92,7 +94,7 @@ export default class ReduceLiquidity extends React.Component {
           this.setState(temp);
         }, time));
     });
-  }
+  };
 
   change = async (ratio) => {
     const value = this._getValueByRatio(ratio);
@@ -102,7 +104,7 @@ export default class ReduceLiquidity extends React.Component {
   };
 
   onInputChange = async (value) => {
-    const max = this.getAvailable().replace(/,/g,'');
+    const max = this.getAvailable().replace(/,/g, '');
     const error = util.compareNumber(max, value);
     this.setState({ value, ratio: null, error }, () => {
       this.debounceUpdateCoins4RealTime({ ...this.state });
@@ -116,7 +118,7 @@ export default class ReduceLiquidity extends React.Component {
     }
     const { liquidity } = this.props;
     data.coins = await api.redeemableAssets({
-      liquidity: util.precisionInput(data.value).replace(/,/g,''),
+      liquidity: util.precisionInput(data.value).replace(/,/g, ''),
       base_token: liquidity.base_pooled_coin.denom,
       quote_token: liquidity.quote_pooled_coin.denom,
     });
@@ -148,10 +150,10 @@ export default class ReduceLiquidity extends React.Component {
     const { baseToken, targetToken } = this._exchangeTokenData();
     const { value } = this.state;
     const params = [
-      util.precisionInput(value).replace(/,/g,''),
-      this.getMinimumReceived(baseToken.amount).replace(/,/g,''),
+      util.precisionInput(value).replace(/,/g, ''),
+      this.getMinimumReceived(baseToken.amount).replace(/,/g, ''),
       baseToken.denom,
-      this.getMinimumReceived(targetToken.amount).replace(/,/g,''),
+      this.getMinimumReceived(targetToken.amount).replace(/,/g, ''),
       targetToken.denom,
       getDeadLine4sdk(),
       '',
@@ -176,7 +178,7 @@ export default class ReduceLiquidity extends React.Component {
 
   cancel = () => {
     this.trading = false;
-  }
+  };
 
   getAvailable(original) {
     const { liquidity, account4Swap } = this.props;
@@ -207,7 +209,9 @@ export default class ReduceLiquidity extends React.Component {
 
   getBtn = (value, available) => {
     if (!Number(value))
-      return <div className="btn disabled">{toLocale('Confirm Reduce btn')}</div>;
+      return (
+        <div className="btn disabled">{toLocale('Confirm Reduce btn')}</div>
+      );
     if (util.compareNumber(available, value)) {
       return (
         <div className="btn disabled">{toLocale('insufficient lp token')}</div>
@@ -247,7 +251,10 @@ export default class ReduceLiquidity extends React.Component {
     return (
       <div className="panel">
         <div className="panel-header">
-          <i className="iconfont before" onClick={() => this.props.history.goBack()}></i>
+          <i
+            className="iconfont before"
+            onClick={() => this.props.history.goBack()}
+          ></i>
           {toLocale('Reduce Liquidity')}
         </div>
         <div className="add-liquidity-content">
@@ -289,8 +296,7 @@ export default class ReduceLiquidity extends React.Component {
                 {getDisplaySymbol(d.denom)}
               </div>
               <div className="right">
-                {util.precisionInput(d.amount, 8)}{' '}
-                {getDisplaySymbol(d.denom)}
+                {util.precisionInput(d.amount, 8)} {getDisplaySymbol(d.denom)}
               </div>
             </div>
           ))}

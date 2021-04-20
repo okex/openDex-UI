@@ -17,6 +17,7 @@ const FullLeftMenu = class LeftMenu extends React.Component {
     theme: PropTypes.string,
     canStar: PropTypes.bool,
   };
+
   static defaultProps = {
     searchBar: true,
     theme: '',
@@ -32,22 +33,17 @@ const FullLeftMenu = class LeftMenu extends React.Component {
     };
     this.addr = window.OK_GLOBAL.senderAddr;
   }
+
   componentWillReceiveProps(nextProps) {
     const { sortType } = this.state;
     const { dataSource, activeId } = nextProps;
     const newList = [...dataSource];
     if (sortType === SortTypes.noSort) {
-      newList.sort((a, b) => {
-        return a.text.localeCompare(b.text);
-      });
+      newList.sort((a, b) => a.text.localeCompare(b.text));
     } else if (sortType === SortTypes.asc) {
-      newList.sort((a, b) => {
-        return parseFloat(a.change) - parseFloat(b.change);
-      });
+      newList.sort((a, b) => parseFloat(a.change) - parseFloat(b.change));
     } else if (sortType === SortTypes.des) {
-      newList.sort((a, b) => {
-        return parseFloat(b.change) - parseFloat(a.change);
-      });
+      newList.sort((a, b) => parseFloat(b.change) - parseFloat(a.change));
     }
     this.setState({
       menuList: newList,
@@ -62,9 +58,9 @@ const FullLeftMenu = class LeftMenu extends React.Component {
       return false;
     }
     const allList = this.props.dataSource;
-    const filterList = allList.filter((item) => {
-      return [args.toLowerCase(), args.toUpperCase()].includes(item.text);
-    });
+    const filterList = allList.filter((item) =>
+      [args.toLowerCase(), args.toUpperCase()].includes(item.text)
+    );
     this.setState({
       menuList: filterList,
     });
@@ -76,19 +72,13 @@ const FullLeftMenu = class LeftMenu extends React.Component {
     const newList = [...menuList];
     let newSortType = SortTypes.noSort;
     if (sortType === SortTypes.asc) {
-      newList.sort((a, b) => {
-        return parseFloat(b.change) - parseFloat(a.change);
-      });
+      newList.sort((a, b) => parseFloat(b.change) - parseFloat(a.change));
       newSortType = SortTypes.des;
     } else if (sortType === SortTypes.des) {
-      newList.sort((a, b) => {
-        return a.text.localeCompare(b.text);
-      });
+      newList.sort((a, b) => a.text.localeCompare(b.text));
       newSortType = SortTypes.noSort;
     } else {
-      newList.sort((a, b) => {
-        return parseFloat(a.change) - parseFloat(b.change);
-      });
+      newList.sort((a, b) => parseFloat(a.change) - parseFloat(b.change));
       newSortType = SortTypes.asc;
     }
     this.setState({
@@ -97,24 +87,20 @@ const FullLeftMenu = class LeftMenu extends React.Component {
     });
   };
 
-  handleStar = (item) => {
-    return (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      const { onClickStar } = this.props;
-      if (onClickStar) {
-        onClickStar(!item.stared, item);
-      }
-    };
+  handleStar = (item) => (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const { onClickStar } = this.props;
+    if (onClickStar) {
+      onClickStar(!item.stared, item);
+    }
   };
 
-  handleSelect = (item) => {
-    return () => {
-      const { onSelect } = this.props;
-      if (onSelect) {
-        onSelect(item);
-      }
-    };
+  handleSelect = (item) => () => {
+    const { onSelect } = this.props;
+    if (onSelect) {
+      onSelect(item);
+    }
   };
 
   renderList = (menuList) => {
@@ -153,6 +139,7 @@ const FullLeftMenu = class LeftMenu extends React.Component {
       </div>
     );
   };
+
   renderEmpty = () => {
     const listEmpty = toLocale('spot.noData');
     return <div className="empty-container">{listEmpty}</div>;

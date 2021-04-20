@@ -5,7 +5,6 @@ import DesktopNetMenu from '_component/DesktopNetMenu';
 import Config from '_src/constants/Config';
 import PageURL from '_src/constants/PageURL';
 import FullTradeTicker from '_src/pages/fullTrade/FullTradeTicker';
-import FullTradeProductList from './FullTradeProductList';
 import util from '_src/utils/util';
 import SwapSetting from '_src/pages/swap/SwapSetting';
 import * as SpotActions from '_src/redux/actions/SpotAction';
@@ -15,6 +14,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toLocale } from '_src/locale/react-locale';
 import { LoggedMenu, LoginMenu, DocMenu } from '_src/component/DexMenu';
+import FullTradeProductList from './FullTradeProductList';
 import './FullTradeHead.less';
 
 function mapStateToProps(state) {
@@ -41,12 +41,12 @@ function mapDispatchToProps(dispatch) {
 @withRouter
 @connect(mapStateToProps, mapDispatchToProps)
 class FullTradeHead extends React.Component {
-
   componentDidMount() {
     const { commonAction } = this.props;
     commonAction.fetchChargeUnit();
     commonAction.initOKExChainClient();
   }
+
   componentWillReceiveProps(nextProps) {
     const { legalList, legalId } = nextProps;
     const { legalList: oldCurrencyList, legalId: oldCurrencyId } = this.props;
@@ -57,11 +57,10 @@ class FullTradeHead extends React.Component {
       this.resetCurrencyObj(legalList, legalId);
     }
   }
+
   resetCurrencyObj(legalList, legalId) {
     if (legalList.length && legalId >= 0) {
-      const legalObj = legalList.find((curr) => {
-        return legalId === curr.legalId;
-      });
+      const legalObj = legalList.find((curr) => legalId === curr.legalId);
       if (legalObj) {
         this.props.commonAction.setChargeUnitObj(legalObj);
       }
@@ -107,7 +106,7 @@ class FullTradeHead extends React.Component {
     return (
       <div className="full-top-info-box">
         <a className="logo-wrap" href="/">
-          <img src={Config.okexLogo}/>
+          <img src={Config.okexLogo} />
         </a>
         <DesktopNetMenu />
         <DesktopTypeMenu current={current} />

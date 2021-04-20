@@ -5,11 +5,11 @@ import Tooltip from '_src/component/Tooltip';
 import { calc } from '_component/okit';
 import { Button } from '_component/Button';
 import { toLocale } from '_src/locale/react-locale';
+import DesktopTypeMenu from '_component/DesktopTypeMenu';
+import PageURL from '_constants/PageURL';
 import utils from '../../utils/util';
 import { getLpTokenInfo } from '../../utils/lpTokenUtil';
 import Config from '../../constants/Config';
-import DesktopTypeMenu from '_component/DesktopTypeMenu';
-import PageURL from '_constants/PageURL';
 
 const util = {
   get tabs() {
@@ -45,14 +45,13 @@ const util = {
       {
         title: toLocale('trade_column_hash'),
         key: 'txhash',
-        render: (text) => {
-          return (
-            <Tooltip
-              placement="bottomLeft"
-              overlay={<div style={{"wordBreak":"break-all"}}>{text}</div>}
-              maxWidth={300}
-              noUnderline
-            >
+        render: (text) => (
+          <Tooltip
+            placement="bottomLeft"
+            overlay={<div style={{ wordBreak: 'break-all' }}>{text}</div>}
+            maxWidth={300}
+            noUnderline
+          >
             <a
               href={`${Config.okexchain.browserUrl}/tx/${text}`}
               target="_blank"
@@ -60,17 +59,14 @@ const util = {
             >
               {FormatNum.hashShort(text)}
             </a>
-            </Tooltip>
-          );
-        },
+          </Tooltip>
+        ),
       },
       {
         title: toLocale('trade_column_time'),
         key: 'timestamp',
         alignRight: true,
-        render: (text) => {
-          return moment(Number(`${text}000`)).format('MM-DD HH:mm:ss');
-        },
+        render: (text) => moment(Number(`${text}000`)).format('MM-DD HH:mm:ss'),
       },
       {
         title: toLocale('trade_column_assets'),
@@ -88,9 +84,7 @@ const util = {
         title: toLocale('trade_column_type'),
         alignRight: true,
         key: 'type',
-        render: (text) => {
-          return util.transactionsTypesMap[text] || '';
-        },
+        render: (text) => util.transactionsTypesMap[text] || '',
       },
       {
         title: toLocale('trade_column_direction'),
@@ -124,18 +118,16 @@ const util = {
         title: toLocale('trade_column_amount'),
         alignRight: true,
         key: 'quantity',
-        render: (text) => {
-          return utils.precisionInput(text, 8);
-        },
+        render: (text) => utils.precisionInput(text, 8),
       },
       {
         title: `${toLocale('trade_column_fee')}`,
         key: 'fee',
         render: (text) => {
           text = String(text.split('-')[0]).toUpperCase();
-          text = text.replace(/(\d{1,}\.?\d*)/, function ($1) {
-            return utils.precisionInput($1, 8);
-          });
+          text = text.replace(/(\d{1,}\.?\d*)/, ($1) =>
+            utils.precisionInput($1, 8)
+          );
           return text;
         },
       },
@@ -143,69 +135,59 @@ const util = {
   },
 };
 
-util.accountsCols = ({ transfer }, { valuationUnit }) => {
-  return [
-    {
-      title: toLocale('assets_column_assets'),
-      key: 'assetToken',
-      render: (text, data) => {
-        const { symbol } = data;
-        const lpTokenInfo = getLpTokenInfo(symbol, false);
-        const textLpTokenInfo = getLpTokenInfo(text);
-        const whole_nameString = symbol
-          ? ` (${lpTokenInfo ? lpTokenInfo.name : symbol})`
-          : '';
-        if (textLpTokenInfo) text = textLpTokenInfo.name;
-        return (
-          <div className="symbol-line">
-            <Tooltip
-              placement="bottomLeft"
-              overlayClassName="symbol-tooltip"
-              overlay={symbol}
-              maxWidth={400}
-              noUnderline
-            >
-              {text + whole_nameString}
-            </Tooltip>
-          </div>
-        );
-      },
+util.accountsCols = ({ transfer }, { valuationUnit }) => [
+  {
+    title: toLocale('assets_column_assets'),
+    key: 'assetToken',
+    render: (text, data) => {
+      const { symbol } = data;
+      const lpTokenInfo = getLpTokenInfo(symbol, false);
+      const textLpTokenInfo = getLpTokenInfo(text);
+      const whole_nameString = symbol
+        ? ` (${lpTokenInfo ? lpTokenInfo.name : symbol})`
+        : '';
+      if (textLpTokenInfo) text = textLpTokenInfo.name;
+      return (
+        <div className="symbol-line">
+          <Tooltip
+            placement="bottomLeft"
+            overlayClassName="symbol-tooltip"
+            overlay={symbol}
+            maxWidth={400}
+            noUnderline
+          >
+            {text + whole_nameString}
+          </Tooltip>
+        </div>
+      );
     },
-    {
-      title: toLocale('assets_column_total'),
-      key: 'total',
-      alignRight: true,
-      render: (text) => {
-        return text;
-      },
-    },
-    {
-      title: toLocale('assets_column_balance'),
-      key: 'available',
-      alignRight: true,
-      render: (text) => {
-        return calc.showFloorTruncation(text, 8, true);
-      },
-    },
-    {
-      title: toLocale('assets_column_list'),
-      key: 'locked',
-      alignRight: true,
-      render: (text) => {
-        return calc.showFloorTruncation(text, 8, true);
-      },
-    },
-    {
-      title: '',
-      key: 'transfer',
-      render: (text, { symbol }) => {
-        return (
-          <Button size={Button.size.mini} onClick={transfer(symbol)}>
-            {toLocale('assets_trans_btn')}
-          </Button>
-        );
-      },
-    },
-  ];
-};
+  },
+  {
+    title: toLocale('assets_column_total'),
+    key: 'total',
+    alignRight: true,
+    render: (text) => text,
+  },
+  {
+    title: toLocale('assets_column_balance'),
+    key: 'available',
+    alignRight: true,
+    render: (text) => calc.showFloorTruncation(text, 8, true),
+  },
+  {
+    title: toLocale('assets_column_list'),
+    key: 'locked',
+    alignRight: true,
+    render: (text) => calc.showFloorTruncation(text, 8, true),
+  },
+  {
+    title: '',
+    key: 'transfer',
+    render: (text, { symbol }) => (
+      <Button size={Button.size.mini} onClick={transfer(symbol)}>
+        {toLocale('assets_trans_btn')}
+      </Button>
+    ),
+  },
+];
 export default util;

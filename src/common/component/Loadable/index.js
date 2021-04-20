@@ -41,15 +41,10 @@ function loading(props) {
   }
   return loadingPart;
 }
-export default (loader, showLoading = true) => {
-  return Loadable({
+export default (loader, showLoading = true) =>
+  Loadable({
     loader,
     delay,
     timeout,
-    loading: showLoading
-      ? loading
-      : () => {
-          return null;
-        },
+    loading: showLoading ? loading : () => null,
   });
-};

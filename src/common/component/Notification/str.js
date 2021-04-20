@@ -39,5 +39,5 @@ function reverseCase(target) {
 export default {
   firstLettersUppercase,
   firstLettersLowercase,
-  reverseCase
+  reverseCase,
 };

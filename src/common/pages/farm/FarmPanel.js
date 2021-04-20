@@ -64,7 +64,7 @@ export default class FarmPanel extends React.Component {
     this.init();
   };
 
-  renderHelp = (title,desc) => {
+  renderHelp = (title, desc) => {
     return (
       <div className="stake-help-info">
         <div className="help-title">{title}</div>
@@ -73,10 +73,10 @@ export default class FarmPanel extends React.Component {
     );
   };
 
-  showHelp = (title,desc) => {
+  showHelp = (title, desc) => {
     Dialog.show({
       width: '440px',
-      children: this.renderHelp(title,desc),
+      children: this.renderHelp(title, desc),
     });
   };
 
@@ -102,7 +102,15 @@ export default class FarmPanel extends React.Component {
         )}
         <div className="title-wrap">
           {toLocale('White listed')}
-          <i className="help" onClick={() => this.showHelp(toLocale('White listed help'),toLocale('White listed help desc'))} />
+          <i
+            className="help"
+            onClick={() =>
+              this.showHelp(
+                toLocale('White listed help'),
+                toLocale('White listed help desc')
+              )
+            }
+          />
         </div>
         <div className="info-items">
           {data.map((d, index) => (
@@ -133,7 +141,11 @@ export default class FarmPanel extends React.Component {
               </div>
               <SimpleBtnDialog
                 component={() =>
-                  Stake.getStake({ data: d, onSuccess: () => this.props.history.push(PageURL.myfarmingsPage) })
+                  Stake.getStake({
+                    data: d,
+                    onSuccess: () =>
+                      this.props.history.push(PageURL.myfarmingsPage),
+                  })
                 }
               >
                 <div className={classNames('farm-btn')}>
@@ -148,12 +160,21 @@ export default class FarmPanel extends React.Component {
         </div>
         <div className="title-wrap">
           <div className="space-between">
-            <div className="left">{toLocale('Other pools')}
-            <i className="help" onClick={() => this.showHelp(toLocale('Other pools help'),toLocale('Other pools help desc'))}></i>
+            <div className="left">
+              {toLocale('Other pools')}
+              <i
+                className="help"
+                onClick={() =>
+                  this.showHelp(
+                    toLocale('Other pools help'),
+                    toLocale('Other pools help desc')
+                  )
+                }
+              ></i>
             </div>
           </div>
         </div>
-        <WatchlistPanel/>
+        <WatchlistPanel />
       </div>
     );
   }

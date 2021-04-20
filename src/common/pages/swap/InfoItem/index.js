@@ -1,14 +1,14 @@
 import React from 'react';
 import { toLocale } from '_src/locale/react-locale';
-import { getCoinIcon, getDisplaySymbol } from '../../../utils/coinIcon';
-import Tooltip from '../../../component/Tooltip';
 import calc from '_src/utils/calc';
 import util from '_src/utils/util';
+import { getCoinIcon, getDisplaySymbol } from '../../../utils/coinIcon';
+import Tooltip from '../../../component/Tooltip';
 
 export default class InfoItem extends React.Component {
   render() {
     const { data, add, reduce } = this.props;
-    let available = data.pool_token_coin.amount;
+    const available = data.pool_token_coin.amount;
     return (
       <div className="poll-item">
         <div className="space-between poll-item-title">

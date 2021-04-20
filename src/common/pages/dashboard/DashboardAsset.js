@@ -18,13 +18,11 @@ class DashboardAsset extends Component {
     this.addr = window.OK_GLOBAL.senderAddr;
   }
 
-  openTransfer = (symbol) => {
-    return () => {
-      this.setState({
-        transferSymbol: symbol,
-        showTransfer: true,
-      });
-    };
+  openTransfer = (symbol) => () => {
+    this.setState({
+      transferSymbol: symbol,
+      showTransfer: true,
+    });
   };
 
   closeTransfer = () => {
@@ -93,7 +91,7 @@ class DashboardAsset extends Component {
     const fCurrencies = allCurrencies.slice(0, 3);
 
     return (
-      <Fragment>
+      <>
         <DashboardSection
           title={toLocale('dashboard_asset_title')}
           columns={getAccountsCols(
@@ -114,7 +112,7 @@ class DashboardAsset extends Component {
           onClose={this.closeTransfer}
           onSuccess={this.transferSuccess}
         />
-      </Fragment>
+      </>
     );
   }
 }

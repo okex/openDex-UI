@@ -13,7 +13,6 @@ const DASHBOARD = '2';
 @withRouter
 @SwapPushWrapper
 export default class Farm extends React.Component {
-
   onChange = (activekey) => {
     let route = PageURL.farmPage;
     if (activekey === DASHBOARD) {
@@ -21,7 +20,7 @@ export default class Farm extends React.Component {
     }
     this.props.history.push(route);
   };
-  
+
   componentDidMount() {
     this.preSeoTitle = document.title;
     document.title = toLocale('seoFarmTitle');
@@ -32,7 +31,7 @@ export default class Farm extends React.Component {
   }
 
   render() {
-    const { wsV3,activekey=FARM,children } = this.props;
+    const { wsV3, activekey = FARM, children } = this.props;
     return (
       <>
         <FarmContext.Provider value={wsV3}>

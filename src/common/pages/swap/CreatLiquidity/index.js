@@ -109,7 +109,9 @@ export default class CreatLiquidity extends React.Component {
 
   addLiquidity = (liquidity) => {
     if (!liquidity) liquidity = this.state.error;
-    this.props.history.push(`${PageURL.addLiquidityPage}/${liquidity.base_pooled_coin.denom}/${liquidity.quote_pooled_coin.denom}`);
+    this.props.history.push(
+      `${PageURL.addLiquidityPage}/${liquidity.base_pooled_coin.denom}/${liquidity.quote_pooled_coin.denom}`
+    );
   };
 
   getBtn() {
@@ -143,7 +145,10 @@ export default class CreatLiquidity extends React.Component {
     return (
       <div className="panel">
         <div className="panel-header">
-          <i className="iconfont before" onClick={() => this.props.history.goBack()}></i>
+          <i
+            className="iconfont before"
+            onClick={() => this.props.history.goBack()}
+          ></i>
           {toLocale('Input Pool')}
         </div>
         <div className="add-liquidity-content">

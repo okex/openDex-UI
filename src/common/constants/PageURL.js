@@ -1,5 +1,6 @@
 import env from './env';
 import { getPathAndHash } from '../utils/pathUtil';
+
 const { okGlobal = {} } = window;
 const { langPath = '' } = okGlobal;
 const contentPath = `${langPath}/${env.envConfig.pagePath}`;
@@ -38,13 +39,13 @@ const paths = {
 export default {
   ...paths,
   getCurrent() {
-    let { pathname, hash } = getPathAndHash();
+    const { pathname, hash } = getPathAndHash();
     let result = '';
     for (name in paths) {
       const temp = paths[name];
       if (pathname.startsWith(temp) || hash.startsWith(temp)) {
-        if(temp.length > result.length) result = temp;
-      };
+        if (temp.length > result.length) result = temp;
+      }
     }
     return result;
   },

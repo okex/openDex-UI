@@ -792,7 +792,8 @@ const zhCN = {
   wallet_connect: 'WalletConnect',
   wallet_connect_title: '连接到WalletConnect',
   wallet_connect_title_tip: '允许OKExChain DEX 连接WalletConnect',
-  wallet_connect_error: 'Failed to connect：Already processing requestAccounts. Please wait.',
+  wallet_connect_error:
+    'Failed to connect：Already processing requestAccounts. Please wait.',
   wallet_connect_ensure: '连接',
   wallet_connect_ensureing: '连接中',
   wallet_connect_qrcode: 'WalletConnect',
@@ -1114,7 +1115,8 @@ const zhCN = {
   s: '秒',
   'Other pools': '普通池',
   'Other pools help': '什么是普通池',
-  'Other pools help desc': '任何人都可以通过OKEx Farm创建普通池成为Farm owner，无需审核和批准，在创建时注入可以挖的币，通过普通池参与质押挖矿的用户可以获得Farm owner注入的币，从而获取挖矿收益。',
+  'Other pools help desc':
+    '任何人都可以通过OKEx Farm创建普通池成为Farm owner，无需审核和批准，在创建时注入可以挖的币，通过普通池参与质押挖矿的用户可以获得Farm owner注入的币，从而获取挖矿收益。',
   'Farm pool': 'Farm池',
   'Total staked': '总质押',
   'Pool rate(1Day)': '挖矿速率：(1天)',
@@ -1160,7 +1162,7 @@ const zhCN = {
   'stake tip': '本次质押操作同时也会触发领取挖矿收益。',
   'unstake tip': '本次赎回操作同时也会触发领取挖矿收益。',
   info: '提示',
-  'info desc': `我已了解AMM自动做市相关知识并接受其风险。`,
+  'info desc': '我已了解AMM自动做市相关知识并接受其风险。',
   home_receive_swap: 'Swap教程',
   home_receive_farm: 'Farm教程',
   'lp introduce': '添加流动性之后会获得LP Token，它是你的做市凭证。',

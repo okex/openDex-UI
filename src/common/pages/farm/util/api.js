@@ -6,12 +6,12 @@ import { getLpTokenInfo, getLpTokenStr } from '_src/utils/lpTokenUtil';
 import { toLocale } from '_src/locale/react-locale';
 import env from '../../../constants/env';
 
-const firstPoolConf = env.envConfig.firstPoolConf;
+const { firstPoolConf } = env.envConfig;
 
 function ajax(method, url, params) {
   return ont[method](url, params || undefined).then((data) => {
     if (data.code === 0) return data.data;
-    else throw new Error(toLocale(`error.code.${data.code}`) || data.msg);
+    throw new Error(toLocale(`error.code.${data.code}`) || data.msg);
   });
 }
 
@@ -23,9 +23,9 @@ function get(url, params = {}) {
 function _proccessData(data) {
   if (Array.isArray(data)) {
     data.forEach((d) => {
-      let total_apy = 0,
-        farm_apy = [],
-        pool_rate = [];
+      let total_apy = 0;
+      const farm_apy = [];
+      const pool_rate = [];
       d.lock_symbol_dis = getLpTokenStr(d.lock_symbol);
       d.yield_symbol_dis = getLpTokenStr(d.yield_symbol);
       d.lock_symbol_info = _getLockSymbolInfos(d.lock_symbol);
@@ -38,8 +38,8 @@ function _proccessData(data) {
           `${util.precisionInput(calc.mul(dd.amount, 100), 2)}%${dd.denom_dis}`
         );
       });
-      d.total_apy = util.precisionInput(calc.mul(total_apy, 100), 2) + '%';
-      d.total_apy_4 = util.precisionInput(calc.mul(total_apy, 100), 4) + '%';
+      d.total_apy = `${util.precisionInput(calc.mul(total_apy, 100), 2)}%`;
+      d.total_apy_4 = `${util.precisionInput(calc.mul(total_apy, 100), 4)}%`;
       d.farm_apy_dis = farm_apy.join('+');
       d.pool_rate.forEach((dd) => {
         dd.denom_dis = getLpTokenStr(dd.denom);
@@ -50,7 +50,7 @@ function _proccessData(data) {
       d.total_staked_dis =
         Number(d.total_staked) === 0
           ? '$0'
-          : '$' + util.precisionInput(d.total_staked, 2);
+          : `$${util.precisionInput(d.total_staked, 2)}`;
       d.total_staked_dashbord_dis =
         Number(d.total_staked) === 0
           ? '--'
@@ -59,10 +59,14 @@ function _proccessData(data) {
         Number(d.user_staked) === 0
           ? '--'
           : util.precisionInput(d.user_staked, 8);
-      d.pool_ratio_dis =
-        util.precisionInput(calc.mul(d.pool_ratio, 100), 2) + '%';
-      d.pool_ratio_dis_4 =
-        util.precisionInput(calc.mul(d.pool_ratio, 100), 4) + '%';
+      d.pool_ratio_dis = `${util.precisionInput(
+        calc.mul(d.pool_ratio, 100),
+        2
+      )}%`;
+      d.pool_ratio_dis_4 = `${util.precisionInput(
+        calc.mul(d.pool_ratio, 100),
+        4
+      )}%`;
       d.start_at_dis = calc.mul(d.start_at, 1000);
       d.finish_at_dis = calc.mul(d.finish_at, 1000);
       d.total_farmed_dis = util.precisionInput(d.total_farmed, 2);
@@ -107,12 +111,12 @@ function _proccessTimer4First(data) {
 }
 
 function _getTimerByCount(count = 0) {
-  let d = 0,
-    d_mod = 0,
-    h = 0,
-    h_mod = 0,
-    m = 0,
-    s = 0;
+  let d = 0;
+  let d_mod = 0;
+  let h = 0;
+  let h_mod = 0;
+  let m = 0;
+  let s = 0;
   if (count > 0) {
     d = parseInt(count / (24 * 3600), 10);
     d_mod = count % (24 * 3600);
@@ -121,10 +125,10 @@ function _getTimerByCount(count = 0) {
     m = parseInt(h_mod / 60, 10);
     s = h_mod % 60;
   }
-  const d_dis = d > 0 ? (d >= 10 ? d + '' : '0' + d) : '00';
-  const h_dis = h > 0 ? (h >= 10 ? h + '' : '0' + h) : '00';
-  const m_dis = m > 0 ? (m >= 10 ? m + '' : '0' + m) : '00';
-  const s_dis = s > 0 ? (s >= 10 ? s + '' : '0' + s) : '00';
+  const d_dis = d > 0 ? (d >= 10 ? `${d}` : `0${d}`) : '00';
+  const h_dis = h > 0 ? (h >= 10 ? `${h}` : `0${h}`) : '00';
+  const m_dis = m > 0 ? (m >= 10 ? `${m}` : `0${m}`) : '00';
+  const s_dis = s > 0 ? (s >= 10 ? `${s}` : `0${s}`) : '00';
   return `${d_dis}${toLocale('d')} ${h_dis}${toLocale('h')} ${m_dis}${toLocale(
     'm'
   )} ${s_dis}${toLocale('s')}`;
@@ -143,9 +147,9 @@ function _getLockSymbolInfos(lock_symbol) {
   return result;
 }
 
-//@mock let mocker = require('./mock');
+// @mock let mocker = require('./mock');
 export function whitelist() {
-  //@mock mocker.whitelist(URL.GET_FARM_POOLS_WHITELIST);
+  // @mock mocker.whitelist(URL.GET_FARM_POOLS_WHITELIST);
   return get(URL.GET_FARM_POOLS_WHITELIST).then((data) => {
     if (!Array.isArray(data.data)) data.data = [];
     _proccessData(data.data);
@@ -154,7 +158,7 @@ export function whitelist() {
 }
 
 export function normal(param = {}) {
-  //@mock mocker.normal(URL.GET_FARM_POOLS_NORMAL);
+  // @mock mocker.normal(URL.GET_FARM_POOLS_NORMAL);
   return get(URL.GET_FARM_POOLS_NORMAL, param).then((data) => {
     if (!Array.isArray(data.data)) data.data = [];
     data.data = data.data.filter((d) => {
@@ -169,7 +173,7 @@ export function normal(param = {}) {
 
 export function dashboard(param = {}) {
   const address = util.getMyAddr();
-  //@mock mocker.dashboard(`${URL.GET_FARM_DASHBOARD}/${address}`);
+  // @mock mocker.dashboard(`${URL.GET_FARM_DASHBOARD}/${address}`);
   return get(`${URL.GET_FARM_DASHBOARD}/${address}`, param).then((data) => {
     if (!Array.isArray(data.data)) data.data = [];
     data.data = data.data.filter((d) => {
@@ -186,19 +190,17 @@ export function dashboard(param = {}) {
 }
 
 export function maxApy() {
-  //@mock mocker.maxAPY(`${URL.GET_FARM_MAX_APY}`);
-  return get(`${URL.GET_FARM_MAX_APY}`).then((data) => {
-    return {
-      data_dis: Number(data)
-        ? util.precisionInput(calc.mul(data, 100), 2) + '%'
-        : '300.00%',
-      data,
-    };
-  });
+  // @mock mocker.maxAPY(`${URL.GET_FARM_MAX_APY}`);
+  return get(`${URL.GET_FARM_MAX_APY}`).then((data) => ({
+    data_dis: Number(data)
+      ? `${util.precisionInput(calc.mul(data, 100), 2)}%`
+      : '300.00%',
+    data,
+  }));
 }
 
 export function stakedInfo({ poolName }) {
-  //@mock mocker.stakedInfo(`${URL.GET_FARM_STAKED_INFO.replace('{poolName}',poolName)}`);
+  // @mock mocker.stakedInfo(`${URL.GET_FARM_STAKED_INFO.replace('{poolName}',poolName)}`);
   const address = util.getMyAddr();
   return get(`${URL.GET_FARM_STAKED_INFO.replace('{poolName}', poolName)}`, {
     address,
@@ -212,7 +214,7 @@ export function stakedInfo({ poolName }) {
 }
 
 export function first(params = {}) {
-  //@mock mocker.first(URL.GET_FARM_FIRST);
+  // @mock mocker.first(URL.GET_FARM_FIRST);
   const address = util.getMyAddr();
   params.stake_at = firstPoolConf.stake_at;
   params.pool_name = firstPoolConf.pool_name;
@@ -234,10 +236,12 @@ export function processFirst(data) {
   data.pool_name = firstPoolConf.pool_name;
   data.isLpToken = data.lock_symbol_info.symbols.length > 1;
   data.pool_name_dis = data.lock_symbol_info.name;
-  data.farm_apy_dis =
-    util.precisionInput(calc.mul(data.farm_apy, 100), 2) + '%';
+  data.farm_apy_dis = `${util.precisionInput(
+    calc.mul(data.farm_apy, 100),
+    2
+  )}%`;
   data.farm_amount_dis = util.precisionInput(data.farm_amount, 8);
-  data.total_staked_dis = '$' + util.precisionInput(data.total_staked, 8);
+  data.total_staked_dis = `$${util.precisionInput(data.total_staked, 8)}`;
   _proccessTimer4First(data);
   data.account_staked_dis = util.precisionInput(data.account_staked, 8);
   data.estimated_farm_dis = util.precisionInput(data.estimated_farm, 8);

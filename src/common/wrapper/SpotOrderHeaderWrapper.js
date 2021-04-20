@@ -26,13 +26,12 @@ function mapDispatchToProps(dispatch) {
 const OrderHeaderWrapper = (Component) => {
   @connect(mapStateToProps, mapDispatchToProps)
   class OrderHeader extends React.Component {
-    onTabChange = (checkTab) => {
-      return () => {
-        const { orderAction } = this.props;
-        orderAction.resetData();
-        orderAction.updateType(checkTab);
-      };
+    onTabChange = (checkTab) => () => {
+      const { orderAction } = this.props;
+      orderAction.resetData();
+      orderAction.updateType(checkTab);
     };
+
     getOrderPageLink = () => {
       const { type } = this.props;
       let path = 'open';
@@ -47,25 +46,27 @@ const OrderHeaderWrapper = (Component) => {
         </Link>
       );
     };
-    getHeaderList = () => {
-      return [
-        {
-          type: Enum.order.type.noDeal,
-          name: toLocale('spot.orders.openOrders'),
-        },
-        {
-          type: Enum.order.type.history,
-          name: toLocale('spot.orders.orderHistory'),
-        },
-        { type: Enum.order.type.detail, name: toLocale('spot.myOrder.detail') },
-      ];
-    };
+
+    getHeaderList = () => [
+      {
+        type: Enum.order.type.noDeal,
+        name: toLocale('spot.orders.openOrders'),
+      },
+      {
+        type: Enum.order.type.history,
+        name: toLocale('spot.orders.orderHistory'),
+      },
+      { type: Enum.order.type.detail, name: toLocale('spot.myOrder.detail') },
+    ];
+
     updateHideCanceledOrders = (e) => {
       this.props.orderAction.updateHideOrders(e.target.checked);
     };
+
     updateHideOthers = (e) => {
       this.props.orderAction.updateHideOthers(e.target.checked);
     };
+
     extraOperations = () => {
       const { props } = this;
       const { type, isHideOthers, isHideOrders } = props;
@@ -82,7 +83,8 @@ const OrderHeaderWrapper = (Component) => {
                 checked={isHideOthers}
               />
               <span className="mar-left8">
-                {toLocale('spot.orders.historyRecord')}&nbsp;&nbsp;
+                {toLocale('spot.orders.historyRecord')}
+                &nbsp;&nbsp;
               </span>
             </label>
           </div>
@@ -108,6 +110,7 @@ const OrderHeaderWrapper = (Component) => {
       }
       return null;
     };
+
     render() {
       const { type } = this.props;
       return (

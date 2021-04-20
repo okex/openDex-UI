@@ -32,28 +32,24 @@ class NodeList extends Component {
     this.state = {};
   }
 
-  handleChange = (node) => {
-    return () => {
-      const { nodeActions, isLocalNodeStarted } = this.props;
-      nodeActions.updateCurrentNode(node);
-      if (node.type === NODE_TYPE.NONE && !isLocalNodeStarted) {
-        Message.error({
-          content: 'Local node not started',
-        });
-      }
-    };
+  handleChange = (node) => () => {
+    const { nodeActions, isLocalNodeStarted } = this.props;
+    nodeActions.updateCurrentNode(node);
+    if (node.type === NODE_TYPE.NONE && !isLocalNodeStarted) {
+      Message.error({
+        content: 'Local node not started',
+      });
+    }
   };
 
   render() {
     const { remoteList, currentNode, isSync } = this.props;
-    const notCurrentList = remoteList.filter((node) => {
-      return currentNode.id !== node.id;
-    });
+    const notCurrentList = remoteList.filter(
+      (node) => currentNode.id !== node.id
+    );
     const showList = !(isSync && currentNode.type === NODE_TYPE.LOCAL)
       ? notCurrentList
-      : notCurrentList.filter((node) => {
-          return node.type !== NODE_TYPE.NONE;
-        });
+      : notCurrentList.filter((node) => node.type !== NODE_TYPE.NONE);
 
     return (
       <ul className="node-set-list">

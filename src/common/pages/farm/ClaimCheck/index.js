@@ -1,5 +1,6 @@
 import React from 'react';
 import { toLocale } from '_src/locale/react-locale';
+
 export default class ClaimCheck extends React.Component {
   onSuccess = () => {
     const { onClose, onSuccess } = this.props;

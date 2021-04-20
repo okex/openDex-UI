@@ -140,7 +140,6 @@ class NodeSetting extends Component {
     if (!isStarted) return;
     if (key === '2') localNodeAction.startTerminal();
     else localNodeAction.stopTerminal();
-    return;
   };
 
   componentWillUnmount() {

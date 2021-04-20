@@ -6,7 +6,6 @@ import DesktopNetMenu from '_component/DesktopNetMenu';
 import Config from '_src/constants/Config';
 import PageURL from '_src/constants/PageURL';
 import FullTradeTicker from '_src/pages/fullTrade/FullTradeTicker';
-import FullTradeProductList from './FullTradeProductList';
 import util from '_src/utils/util';
 import SwapSetting from '_src/pages/swap/SwapSetting';
 import * as CommonAction from '_src/redux/actions/CommonAction';
@@ -14,6 +13,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { LoggedMenu, LoginMenu, DocMenu } from '_src/component/DexMenu';
+import FullTradeProductList from './FullTradeProductList';
 import './FullTradeHead.less';
 
 function mapStateToProps(state) {
@@ -32,7 +32,6 @@ function mapDispatchToProps(dispatch) {
 @withRouter
 @connect(mapStateToProps, mapDispatchToProps)
 class FullTradeHead extends React.Component {
-
   componentDidMount() {
     this.props.commonAction.initOKExChainClient();
   }
@@ -57,10 +56,10 @@ class FullTradeHead extends React.Component {
           target="_blank"
           href={Config.okexchain.homeUrl}
         >
-          <img src={Config.okexLogo}/>
+          <img src={Config.okexLogo} />
         </a>
         <DesktopNetMenu />
-        <DesktopTypeMenu isDexDesk={true} current={current} />
+        <DesktopTypeMenu isDexDesk current={current} />
         {this.isTradePage() && <DesktopNodeMenu />}
         {this.isTradePage() && <FullTradeProductList />}
         {this.isTradePage() && <FullTradeTicker />}

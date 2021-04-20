@@ -58,6 +58,7 @@ class DealsList extends RouterCredential {
       end: this.todayAgo,
     };
   }
+
   componentWillMount() {
     const { orderActions } = this.props;
     orderActions.resetData();
@@ -68,7 +69,7 @@ class DealsList extends RouterCredential {
     }
     if (this.props.location.state && this.props.location.state.period) {
       let interval = 1;
-      const period = this.props.location.state.period;
+      const { period } = this.props.location.state;
       if (period === 'oneWeek') {
         interval = 7;
       } else if (period === 'oneMonth') {
@@ -93,6 +94,7 @@ class DealsList extends RouterCredential {
       toLocale('spot.myOrder.detail') + toLocale('spot.page.title');
     this.onSearch();
   }
+
   componentWillReceiveProps(nextProps) {}
 
   componentWillUnmount() {
@@ -122,7 +124,7 @@ class DealsList extends RouterCredential {
   };
 
   onProductsChange = (obj) => {
-    const value = obj.value;
+    const { value } = obj;
     if (value.length > 0) {
       this.setState(
         {
@@ -136,7 +138,7 @@ class DealsList extends RouterCredential {
   };
 
   onSideChange = (obj) => {
-    const value = obj.value;
+    const { value } = obj;
     let side = 'all';
     if (+value === 1) {
       side = 'BUY';
@@ -169,21 +171,20 @@ class DealsList extends RouterCredential {
   onPageChange = (page) => {
     this.onSearch({ page });
   };
+
   handleDateChangeRaw = (e) => {
     e.preventDefault();
   };
 
   renderQuery = () => {
     const { productList } = this.props;
-    const sortProductList = productList.sort((a, b) => {
-      return a.base_asset_symbol.localeCompare(b.base_asset_symbol);
-    });
-    const newProductList = sortProductList.map((obj) => {
-      return {
-        value: obj.product,
-        label: obj.product.replace('_', '/').toUpperCase(),
-      };
-    });
+    const sortProductList = productList.sort((a, b) =>
+      a.base_asset_symbol.localeCompare(b.base_asset_symbol)
+    );
+    const newProductList = sortProductList.map((obj) => ({
+      value: obj.product,
+      label: obj.product.replace('_', '/').toUpperCase(),
+    }));
     const { product, side, start, end } = this.state;
     newProductList.unshift({
       value: 'all',
@@ -264,6 +265,7 @@ class DealsList extends RouterCredential {
       </div>
     );
   };
+
   render() {
     const { theme, productObj, data } = this.props;
     const { orderList, isLoading, page } = data;

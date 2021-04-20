@@ -4,6 +4,7 @@ import { storage } from '_component/okit';
 import PageURL from '../constants/PageURL';
 import history from './history';
 import env from '../constants/env';
+
 const reqTimeout = 10000;
 
 axios.defaults.headers.common.timeout = reqTimeout;
@@ -18,7 +19,7 @@ axios.interceptors.request.use(
     const queryMark = url.indexOf('?') > -1 ? '&' : '?';
 
     request.url += `${queryMark}t=${time}`;
-    //@mock request.url = url;
+    // @mock request.url = url;
 
     const currentNode = storage.get('currentNode') || DEFAULT_NODE;
     const { httpUrl = '' } = currentNode;
@@ -32,9 +33,7 @@ axios.interceptors.request.use(
     }
     return request;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 function toLogin() {
@@ -79,9 +78,7 @@ function checkStatus(response) {
 }
 
 axios.interceptors.response.use(
-  (response) => {
-    return checkStatus(response);
-  },
+  (response) => checkStatus(response),
   (err) => {
     if (err.response) {
       return checkStatus(err.response);

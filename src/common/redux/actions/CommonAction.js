@@ -1,12 +1,11 @@
-
 import OKExChainClient, { crypto, wallet } from '@okexchain/javascript-sdk';
 import { toLocale } from '_src/locale/react-locale';
+import util from '_src/utils/util';
 import CommonActionType from '../actionTypes/CommonActionType';
 import Config from '../../constants/Config';
 import FormActionType from '../actionTypes/FormActionType';
 import ont from '../../utils/dataProxy';
 import URL from '../../constants/URL';
-import util from '_src/utils/util';
 import env from '../../constants/env';
 
 const legalCurrencyId = 'dex_legalCurrencyId';
@@ -18,12 +17,12 @@ export function initOKExChainClient() {
       relativePath: `/${env.envConfig.apiPath}`,
       isMainnet: env.envConfig.isMainnet,
     });
-    if(util.isWalletConnect()) {
+    if (util.isWalletConnect()) {
       wallet.getSession({
-        sessionCancel:() => {
+        sessionCancel: () => {
           util.doLogout();
           window.location.reload();
-        }
+        },
       });
     }
     dispatch({
@@ -149,9 +148,21 @@ export function fetchCurrency2LegalRate(legalObj) {
   };
 }
 
-export function getWalletConnectQrcode({sessionSuccess,sessionFail,sessionCancel,success,error}) {
+export function getWalletConnectQrcode({
+  sessionSuccess,
+  sessionFail,
+  sessionCancel,
+  success,
+  error,
+}) {
   return async (dispatch) => {
-    const session = await wallet.getSession({sessionSuccess,sessionFail,sessionCancel,success,error});
+    const session = await wallet.getSession({
+      sessionSuccess,
+      sessionFail,
+      sessionCancel,
+      success,
+      error,
+    });
     dispatch({
       type: CommonActionType.WALLET_CONNECT_QRCODE,
       data: session,
@@ -166,7 +177,7 @@ export function clearWalletConnectQrcode() {
       type: CommonActionType.WALLET_CONNECT_QRCODE,
       data: '',
     });
-  }
+  };
 }
 
 export function setActivedMenu(activedMenu) {

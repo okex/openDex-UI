@@ -69,16 +69,15 @@ class SpotPlaceOrder extends React.Component {
     }
   }
 
-  onChangeType = (type) => {
-    return () => {
-      this.setState({
-        type,
-      });
-      const { formAction } = this.props;
-      formAction.updateType(type);
-      formAction.updateWarning();
-    };
+  onChangeType = (type) => () => {
+    this.setState({
+      type,
+    });
+    const { formAction } = this.props;
+    formAction.updateType(type);
+    formAction.updateWarning();
   };
+
   onPwdEnter = (password) => {
     const { formAction, commonAction } = this.props;
     if (password.trim() === '') {
@@ -115,6 +114,7 @@ class SpotPlaceOrder extends React.Component {
     );
     return false;
   };
+
   onPwdOpen = () => {
     this.setState(
       {
@@ -128,6 +128,7 @@ class SpotPlaceOrder extends React.Component {
       }
     );
   };
+
   onPwdClose = () => {
     this.setState(
       {
@@ -139,6 +140,7 @@ class SpotPlaceOrder extends React.Component {
       }
     );
   };
+
   onSubmitErr = (err) => {
     this.onPwdClose();
     const { type } = this.state;
@@ -148,10 +150,12 @@ class SpotPlaceOrder extends React.Component {
         : toLocale('spot.orders.sellFail');
     Message.error({ content: err.msg || msg, duration: 3 });
   };
+
   onTransfer = () => {
     const { spotAction } = this.props;
     spotAction.updateMarginTransfer(true);
   };
+
   getAvailables = () => {
     const { product, account } = this.props;
     const tradeCurr =
@@ -173,6 +177,7 @@ class SpotPlaceOrder extends React.Component {
       tradeAvailable,
     };
   };
+
   getStrategyForm = (strategyType) => {
     const { asset } = this;
     const { isShowPwdDialog, type } = this.state;
@@ -189,6 +194,7 @@ class SpotPlaceOrder extends React.Component {
         return <LimitForm {...commonProps} />;
     }
   };
+
   successToast = () => {
     const { formAction } = this.props;
     formAction.clearForm();
@@ -200,6 +206,7 @@ class SpotPlaceOrder extends React.Component {
         : toLocale('spot.orders.sellSuccess');
     Message.success({ content: msg, duration: 2 });
   };
+
   handleSubmit = (formParam, successCallback, errorCallback) => {
     this.successCallback = successCallback;
     this.errorCallback = errorCallback;
@@ -210,12 +217,16 @@ class SpotPlaceOrder extends React.Component {
     }
     this.formParam = { ...formParam, product: this.props.product };
     const expiredTime = window.localStorage.getItem('pExpiredTime') || 0;
-    if (util.isWalletConnect() || (new Date().getTime() < +expiredTime && this.props.privateKey)) {
+    if (
+      util.isWalletConnect() ||
+      (new Date().getTime() < +expiredTime && this.props.privateKey)
+    ) {
       const param = { ...this.formParam, pk: this.props.privateKey };
       return formAction.submitOrder(param, this.successToast, this.onSubmitErr);
     }
     return this.onPwdOpen();
   };
+
   renderTitle = () => {
     const { product } = this.props;
     const { type } = this.state;
@@ -241,6 +252,7 @@ class SpotPlaceOrder extends React.Component {
       </ul>
     );
   };
+
   renderPwdDialog = () => {
     const { isShowPwdDialog, isLoading } = this.state;
     const { formAction, FormStore } = this.props;

@@ -50,7 +50,7 @@ class ListTokenpair extends Component {
     const { okexchainClient } = this.props;
     const fBase = baseAsset.toLowerCase();
     const fQuote = quoteAsset.toLowerCase();
-    const fInitPrice = util.precisionInput(initPrice).replace(/,/g,'');;
+    const fInitPrice = util.precisionInput(initPrice).replace(/,/g, '');
     okexchainClient
       .sendListTokenPairTransaction(fBase, fQuote, fInitPrice)
       .then((res) => {

@@ -5,13 +5,9 @@ import classNames from 'classnames';
 import Icon from '../IconLite';
 import './index.less';
 
-const arrowRenderer = ({ isOpen }) => {
-  return (
-    <Icon
-      className={classNames({ 'icon-Unfold': true, 'arrow-open': isOpen })}
-    />
-  );
-};
+const arrowRenderer = ({ isOpen }) => (
+  <Icon className={classNames({ 'icon-Unfold': true, 'arrow-open': isOpen })} />
+);
 
 export default class ReactSelect extends React.PureComponent {
   static propTypes = {
@@ -19,11 +15,13 @@ export default class ReactSelect extends React.PureComponent {
     small: PropTypes.bool,
     theme: PropTypes.string,
   };
+
   static defaultProps = {
     hasSearch: false,
     small: false,
     theme: '',
   };
+
   render() {
     const { className, small, theme, hasSearch, ...props } = this.props;
     const selectEle = (

@@ -36,20 +36,24 @@ export default class SwapPanel extends React.Component {
     isReverse: false,
   };
 
-  static getDefaultToken(symbol='') {
+  static getDefaultToken(symbol = '') {
     return {
       available: '',
       value: '',
       symbol,
       error: false,
-    }
+    };
   }
 
   constructor(props) {
     super(props);
-    const {match:{params:{base,target}}} = props;
+    const {
+      match: {
+        params: { base, target },
+      },
+    } = props;
     this.state = {
-      baseToken: SwapPanel.getDefaultToken(base||env.envConfig.token.base),
+      baseToken: SwapPanel.getDefaultToken(base || env.envConfig.token.base),
       targetToken: SwapPanel.getDefaultToken(target),
       exchangeInfo: { ...SwapPanel.exchangeInfo },
       isPoolEmpty: false,
@@ -57,7 +61,9 @@ export default class SwapPanel extends React.Component {
       active: false,
     };
     this.trading = false;
-    this.debounceUpdateSwapInfo4RealTime = util.debounce(this.updateSwapInfo4RealTime);
+    this.debounceUpdateSwapInfo4RealTime = util.debounce(
+      this.updateSwapInfo4RealTime
+    );
   }
 
   exchange = async () => {
@@ -87,7 +93,13 @@ export default class SwapPanel extends React.Component {
           sell_token_amount: `${value}${symbol}`,
           token: target.symbol,
         });
-        data.exchangeInfo = { ...data.exchangeInfo, price, price_impact, fee, route };
+        data.exchangeInfo = {
+          ...data.exchangeInfo,
+          price,
+          price_impact,
+          fee,
+          route,
+        };
         target.value = buy_amount;
       } catch (e) {
         if (errTip) {
@@ -110,11 +122,11 @@ export default class SwapPanel extends React.Component {
     const { showConfirmDialog, targetToken } = this.state;
     if (showConfirmDialog && targetToken.value !== data.targetToken.value)
       data.active = true;
-  }
+  };
 
   changeBase = (token, inputChanged) => {
     let baseToken = { ...this.state.baseToken, ...token };
-    let targetToken = { ...this.state.targetToken};
+    let targetToken = { ...this.state.targetToken };
     const data = { ...this.state, baseToken, targetToken, isPoolEmpty: false };
     this.setState(data, () => {
       const temp = {
@@ -122,7 +134,7 @@ export default class SwapPanel extends React.Component {
         targetToken: { ...this.state.targetToken },
         exchangeInfo: { ...this.state.exchangeInfo },
       };
-      if(inputChanged) this.debounceUpdateSwapInfo4RealTime(temp, 'baseToken');
+      if (inputChanged) this.debounceUpdateSwapInfo4RealTime(temp, 'baseToken');
       else this.updateSwapInfo4RealTime(temp, 'baseToken');
     });
   };
@@ -151,7 +163,7 @@ export default class SwapPanel extends React.Component {
           this.setState(temp);
         }, time));
     });
-  }
+  };
 
   changeTarget = (token) => {
     let baseToken = { ...this.state.baseToken };
@@ -224,14 +236,14 @@ export default class SwapPanel extends React.Component {
 
   async init() {
     const data = this.state;
-    if(!data.baseToken.symbol) return this.initBaseToken();
+    if (!data.baseToken.symbol) return this.initBaseToken();
     const tokens = await api.swapTokens();
     let baseToken = await this.searchToken(tokens, data.baseToken.symbol);
     let targetToken = await this.searchToken(tokens, data.targetToken.symbol);
-    if(baseToken) baseToken.value = '';
-    else baseToken = {...data.baseToken,symbol:''};
-    if(targetToken) targetToken.value = '';
-    else targetToken = {...data.targetToken,symbol:''};
+    if (baseToken) baseToken.value = '';
+    else baseToken = { ...data.baseToken, symbol: '' };
+    if (targetToken) targetToken.value = '';
+    else targetToken = { ...data.targetToken, symbol: '' };
     this.updateSwapInfo4RealTime({ baseToken, targetToken }, 'baseToken');
   }
 
@@ -299,7 +311,7 @@ export default class SwapPanel extends React.Component {
               </div>
             </div>
             <div className="info">
-              <div className={classNames('info-name',{red: hasWarn})}>
+              <div className={classNames('info-name', { red: hasWarn })}>
                 {toLocale('Price Impact')}
                 {!isConfirm && (
                   <Tooltip
@@ -310,7 +322,9 @@ export default class SwapPanel extends React.Component {
                   </Tooltip>
                 )}
               </div>
-              <div className={classNames('info-value',{red: hasWarn})}>{this.priceImpact(exchangeInfo)}</div>
+              <div className={classNames('info-value', { red: hasWarn })}>
+                {this.priceImpact(exchangeInfo)}
+              </div>
             </div>
             <div className="info">
               <div className="info-name">
@@ -334,14 +348,16 @@ export default class SwapPanel extends React.Component {
               <div className="info">
                 <div className="info-name">
                   {toLocale('Route')}
-                  {!isConfirm && (<Tooltip
-                    placement="right"
-                    overlay={toLocale(
-                      "Current pair can only swap through OKT, there's no direct pair for the 2 tokens."
-                    )}
-                  >
-                    <i className="help" />
-                  </Tooltip>)}
+                  {!isConfirm && (
+                    <Tooltip
+                      placement="right"
+                      overlay={toLocale(
+                        "Current pair can only swap through OKT, there's no direct pair for the 2 tokens."
+                      )}
+                    >
+                      <i className="help" />
+                    </Tooltip>
+                  )}
                 </div>
                 <div className="info-value">
                   <img className="coin" src={getCoinIcon(baseToken.symbol)} />
@@ -408,9 +424,9 @@ export default class SwapPanel extends React.Component {
     const { okexchainClient } = this.props;
     const { baseToken, targetToken } = this.state;
     const params = [
-      util.precisionInput(baseToken.value).replace(/,/g,''),
+      util.precisionInput(baseToken.value).replace(/,/g, ''),
       baseToken.symbol,
-      this.getMinimumReceived().replace(/,/g,''),
+      this.getMinimumReceived().replace(/,/g, ''),
       targetToken.symbol,
       getDeadLine4sdk(),
       util.getMyAddr(),
@@ -436,7 +452,7 @@ export default class SwapPanel extends React.Component {
 
   cancel = () => {
     this.trading = false;
-  }
+  };
 
   hasWarn() {
     const { exchangeInfo } = this.state;

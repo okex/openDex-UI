@@ -17,6 +17,7 @@ export default class Table extends React.Component {
     onPageChange: PropTypes.func,
     hideOnSinglePage: PropTypes.bool,
   };
+
   static defaultProps = {
     style: {},
     dataSource: [],
@@ -38,34 +39,33 @@ export default class Table extends React.Component {
     const { columns, dataSource, rowKey } = this.props;
     return (
       <tbody>
-        {dataSource.map((data, index) => {
-          return (
-            <tr key={data[rowKey]}>
-              {columns.map((column) => {
-                const { render, key, alignRight } = column;
-                const tdStyle = {};
-                if (alignRight) {
-                  tdStyle.textAlign = 'right';
-                }
-                if (render && typeof render === 'function') {
-                  return (
-                    <td key={key} style={tdStyle}>
-                      {column.render(data[key], data, index)}
-                    </td>
-                  );
-                }
+        {dataSource.map((data, index) => (
+          <tr key={data[rowKey]}>
+            {columns.map((column) => {
+              const { render, key, alignRight } = column;
+              const tdStyle = {};
+              if (alignRight) {
+                tdStyle.textAlign = 'right';
+              }
+              if (render && typeof render === 'function') {
                 return (
                   <td key={key} style={tdStyle}>
-                    {data[key]}
+                    {column.render(data[key], data, index)}
                   </td>
                 );
-              })}
-            </tr>
-          );
-        })}
+              }
+              return (
+                <td key={key} style={tdStyle}>
+                  {data[key]}
+                </td>
+              );
+            })}
+          </tr>
+        ))}
       </tbody>
     );
   };
+
   renderEmpty = () => {
     const { empty, style } = this.props;
     return (

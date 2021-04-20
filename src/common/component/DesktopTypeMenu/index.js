@@ -143,7 +143,7 @@ class DesktopTypeMenu extends Component {
 }
 
 Object.defineProperty(DesktopTypeMenu, 'current', {
-  get: function () {
+  get() {
     return activedMenu || getDefaultActivedMenu(PageURL.getCurrent());
   },
 });

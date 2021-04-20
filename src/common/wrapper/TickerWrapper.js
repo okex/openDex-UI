@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import util from '../utils/util';
 import { calc } from '_component/okit';
 import Cookies from 'js-cookie';
+import util from '../utils/util';
 
 function mapStateToProps(state) {
   const { tickers } = state.Spot;

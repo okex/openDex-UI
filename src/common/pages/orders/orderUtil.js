@@ -6,175 +6,148 @@ import { toLocale } from '_src/locale/react-locale';
 import { OrderStatus, OrderType } from '../../constants/OrderStatus';
 
 const orderUtil = {
-  sideType: () => {
-    return {
-      1: toLocale('spot.buy'),
-      2: toLocale('spot.sell'),
-    };
-  },
-  sideList: () => {
-    return [
-      {
-        value: 0,
-        label: toLocale('spot.buyAndSell'),
+  sideType: () => ({
+    1: toLocale('spot.buy'),
+    2: toLocale('spot.sell'),
+  }),
+  sideList: () => [
+    {
+      value: 0,
+      label: toLocale('spot.buyAndSell'),
+    },
+    {
+      value: 1,
+      label: toLocale('spot.buy'),
+    },
+    {
+      value: 2,
+      label: toLocale('spot.sell'),
+    },
+  ],
+  getEmptyContent: () => (
+    <div
+      className="flex-column"
+      style={{ alignItems: 'center', color: 'rgba(255, 255, 255, 0.45)' }}
+    >
+      <Icon
+        className="icon-Nodeallist"
+        isColor
+        style={{ width: '48px', height: '48px' }}
+      />
+      <div className="mar-top10">{toLocale('spot.orders.noData')}</div>
+    </div>
+  ),
+  getColumns: (productObj, cancelHandler) => [
+    {
+      title: toLocale('spot.orders.date'),
+      key: 'createTime',
+      render: (text) => (
+        <div className="date-str">
+          {moment(text).format('YYYY-MM-DD HH:mm:ss')}
+        </div>
+      ),
+    },
+    {
+      title: toLocale('spot.orders.symbol'),
+      key: 'symbol',
+      render: (text) => text.toString().replace('_', '/').toUpperCase(),
+    },
+    {
+      title: toLocale('spot.orders.type'),
+      key: 'systemType',
+      render: (text) => {
+        const intlId =
+          Number(text) === 1
+            ? 'spot.orders.side.spot'
+            : 'spot.orders.side.margin';
+        return <div style={{ minWidth: '45px' }}>{toLocale(intlId)}</div>;
       },
-      {
-        value: 1,
-        label: toLocale('spot.buy'),
+    },
+    {
+      title: (
+        <div style={{ minWidth: '30px' }}>{toLocale('spot.orders.side2')}</div>
+      ),
+      key: 'side',
+      render: (text) => {
+        const colorClass = Number(text) === 1 ? 'primary-green' : 'primary-red';
+        return (
+          <label className={colorClass}>{orderUtil.sideType()[text]}</label>
+        );
       },
-      {
-        value: 2,
-        label: toLocale('spot.sell'),
+    },
+    {
+      title: toLocale('spot.orders.entrustMount'),
+      key: 'size',
+      render: (text) => <div className="digits-str">{text}</div>,
+    },
+    {
+      title: toLocale('spot.orders.orderType'),
+      key: 'orderType',
+      render: (text) => (
+        <div className="order-option-str one-line">
+          {toLocale(OrderType[text] || '')}
+        </div>
+      ),
+    },
+    {
+      title: toLocale('spot.orders.entrustPrice'),
+      key: 'price',
+      render: (text, record) => {
+        if (Number(record.orderType) === 1) {
+          return toLocale('spot.market');
+        }
+        return <div className="digits-str">{text}</div>;
       },
-    ];
-  },
-  getEmptyContent: () => {
-    return (
-      <div
-        className="flex-column"
-        style={{ alignItems: 'center', color: 'rgba(255, 255, 255, 0.45)' }}
-      >
-        <Icon
-          className="icon-Nodeallist"
-          isColor
-          style={{ width: '48px', height: '48px' }}
-        />
-        <div className="mar-top10">{toLocale('spot.orders.noData')}</div>
-      </div>
-    );
-  },
-  getColumns: (productObj, cancelHandler) => {
-    return [
-      {
-        title: toLocale('spot.orders.date'),
-        key: 'createTime',
-        render: (text) => {
-          return (
-            <div className="date-str">
-              {moment(text).format('YYYY-MM-DD HH:mm:ss')}
-            </div>
-          );
-        },
-      },
-      {
-        title: toLocale('spot.orders.symbol'),
-        key: 'symbol',
-        render: (text) => {
-          return text.toString().replace('_', '/').toUpperCase();
-        },
-      },
-      {
-        title: toLocale('spot.orders.type'),
-        key: 'systemType',
-        render: (text) => {
-          const intlId =
-            Number(text) === 1
-              ? 'spot.orders.side.spot'
-              : 'spot.orders.side.margin';
-          return <div style={{ minWidth: '45px' }}>{toLocale(intlId)}</div>;
-        },
-      },
-      {
-        title: (
-          <div style={{ minWidth: '30px' }}>
-            {toLocale('spot.orders.side2')}
+    },
+    {
+      title: toLocale('spot.orders.entrustMoney'),
+      key: 'total',
+      render: (text) => <div className="digits-str">{text}</div>,
+    },
+    {
+      title: toLocale('spot.orders.dealt'),
+      key: 'filledSize',
+      render: (text) => <div className="digits-str">{text}</div>,
+    },
+    {
+      title: toLocale('spot.orders.dealAveragePrice'),
+      key: 'avgPrice',
+      render: (text) => <div className="digits-str">{text}</div>,
+    },
+    {
+      title: toLocale('spot.orders.status'),
+      key: 'status',
+      render: (text, record) => {
+        const { CANCELING, CANCELLED, COMPLETE_FILLED } = OrderStatus;
+        const { FAK, FOK } = OrderType;
+        return (
+          <div style={{ minWidth: '90px' }}>
+            {toLocale(`spot.orders.${OrderStatus[text]}`)}
+            &nbsp;&nbsp;
+            {[CANCELING, CANCELLED, COMPLETE_FILLED].indexOf(
+              record.status.toString()
+            ) > -1 ||
+            (productObj[record.symbol] &&
+              Number(productObj[record.symbol].tradingMode) === 2) ||
+            [FAK, FOK].includes(record.orderType.toString()) ? null : (
+              <a
+                className="order-cancel"
+                onClick={cancelHandler(record.id, record.symbol)}
+              >
+                {toLocale('spot.orders.cancel')}
+              </a>
+            )}
           </div>
-        ),
-        key: 'side',
-        render: (text) => {
-          const colorClass =
-            Number(text) === 1 ? 'primary-green' : 'primary-red';
-          return (
-            <label className={colorClass}>{orderUtil.sideType()[text]}</label>
-          );
-        },
+        );
       },
-      {
-        title: toLocale('spot.orders.entrustMount'),
-        key: 'size',
-        render: (text) => {
-          return <div className="digits-str">{text}</div>;
-        },
-      },
-      {
-        title: toLocale('spot.orders.orderType'),
-        key: 'orderType',
-        render: (text) => {
-          return (
-            <div className="order-option-str one-line">
-              {toLocale(OrderType[text] || '')}
-            </div>
-          );
-        },
-      },
-      {
-        title: toLocale('spot.orders.entrustPrice'),
-        key: 'price',
-        render: (text, record) => {
-          if (Number(record.orderType) === 1) {
-            return toLocale('spot.market');
-          }
-          return <div className="digits-str">{text}</div>;
-        },
-      },
-      {
-        title: toLocale('spot.orders.entrustMoney'),
-        key: 'total',
-        render: (text) => {
-          return <div className="digits-str">{text}</div>;
-        },
-      },
-      {
-        title: toLocale('spot.orders.dealt'),
-        key: 'filledSize',
-        render: (text) => {
-          return <div className="digits-str">{text}</div>;
-        },
-      },
-      {
-        title: toLocale('spot.orders.dealAveragePrice'),
-        key: 'avgPrice',
-        render: (text) => {
-          return <div className="digits-str">{text}</div>;
-        },
-      },
-      {
-        title: toLocale('spot.orders.status'),
-        key: 'status',
-        render: (text, record) => {
-          const { CANCELING, CANCELLED, COMPLETE_FILLED } = OrderStatus;
-          const { FAK, FOK } = OrderType;
-          return (
-            <div style={{ minWidth: '90px' }}>
-              {toLocale(`spot.orders.${OrderStatus[text]}`)}
-              &nbsp;&nbsp;
-              {[CANCELING, CANCELLED, COMPLETE_FILLED].indexOf(
-                record.status.toString()
-              ) > -1 ||
-              (productObj[record.symbol] &&
-                Number(productObj[record.symbol].tradingMode) === 2) ||
-              [FAK, FOK].includes(record.orderType.toString()) ? null : (
-                <a
-                  className="order-cancel"
-                  onClick={cancelHandler(record.id, record.symbol)}
-                >
-                  {toLocale('spot.orders.cancel')}
-                </a>
-              )}
-            </div>
-          );
-        },
-      },
-    ];
-  },
-  formatOrders: (orders, productList) => {
-    return orders.map((oriOrder) => {
+    },
+  ],
+  formatOrders: (orders, productList) =>
+    orders.map((oriOrder) => {
       const order = { ...oriOrder };
       const { orderType, side, symbol } = order;
       const currProduct =
-        productList.filter((product) => {
-          return product.symbol === symbol;
-        })[0] || {};
+        productList.filter((product) => product.symbol === symbol)[0] || {};
       const priceTruncate = currProduct.max_price_digit
         ? currProduct.max_price_digit
         : 2;
@@ -230,7 +203,6 @@ const orderUtil = {
         sizeTruncate
       )} ${tradeCurr}`;
       return order;
-    });
-  },
+    }),
 };
 export default orderUtil;

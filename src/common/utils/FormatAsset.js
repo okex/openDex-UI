@@ -1,6 +1,6 @@
 import { toLocale } from '_src/locale/react-locale';
 import { calc } from '_component/okit';
-import util from '../utils/util';
+import util from './util';
 
 import Enum from './Enum';
 

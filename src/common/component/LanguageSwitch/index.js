@@ -36,28 +36,30 @@ export default class LanguageSwitch extends React.Component {
     isShowArrow: true,
     trigger: ['hover'],
   };
+
   constructor(props) {
     super(props);
     const { usable, defaultValue } = props;
     this.state = {
       currentLanguage: defaultValue,
     };
-    this.languageList = usable.map((item) => {
-      return typeof item === 'string' ? LanguageDataList[item] : item;
-    });
+    this.languageList = usable.map((item) =>
+      typeof item === 'string' ? LanguageDataList[item] : item
+    );
   }
+
   getTitleDom = (currentItem) => {
     const { titleMode, titleRender } = this.props;
     const titleDom = {
       all: (
-        <React.Fragment>
+        <>
           <Icon
             className={currentItem.icon}
             isColor
             style={{ width: '20px', height: '18px', flexShrink: 0 }}
           />
           <span className="text-hidden">{currentItem.name}</span>
-        </React.Fragment>
+        </>
       ),
       icon: (
         <Icon
@@ -69,14 +71,14 @@ export default class LanguageSwitch extends React.Component {
     };
     return titleRender ? titleRender(currentItem) : titleDom[titleMode];
   };
+
   handlePhoneListSelect = (item) => {
     const { onSelect } = this.props;
     this.setState({ currentLanguage: item.key });
-    const result = this.languageList.filter((data) => {
-      return data.rel === item.key;
-    });
+    const result = this.languageList.filter((data) => data.rel === item.key);
     onSelect && onSelect(result.length > 0 ? result[0] : item.key);
   };
+
   render() {
     let currentItem = {};
 

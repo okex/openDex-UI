@@ -340,15 +340,13 @@ export function wsUpdateList(noDealObj) {
         }
       });
     } else {
-      currentData = wsData.filter((wsItem) => {
-        return [Open].includes(wsItem.status.toString());
-      });
+      currentData = wsData.filter((wsItem) =>
+        [Open].includes(wsItem.status.toString())
+      );
     }
     if (isHideOthers) {
       const { product } = store.SpotTrade;
-      currentData = currentData.filter((item) => {
-        return item.product === product;
-      });
+      currentData = currentData.filter((item) => item.product === product);
     }
     return dispatch({
       type: OrderActionType.UPDATE_DATA,

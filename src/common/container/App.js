@@ -14,6 +14,7 @@ class App extends React.Component {
     window.OK_GLOBAL.senderAddr = util.getMyAddr();
     document.title = toLocale('seoTitle');
   }
+
   componentDidMount() {
     const theme = localStorage.getItem('theme');
     if (theme === null) {
@@ -25,13 +26,11 @@ class App extends React.Component {
   }
 
   render() {
-    const routes = routerConfig.getRoute({FullTradeHead});
+    const routes = routerConfig.getRoute({ FullTradeHead });
     return (
       <Router basename={window.okGlobal.langPath} history={history}>
         <div className="main-container">
-          <Switch>
-            {routes}
-          </Switch>
+          <Switch>{routes}</Switch>
         </div>
       </Router>
     );

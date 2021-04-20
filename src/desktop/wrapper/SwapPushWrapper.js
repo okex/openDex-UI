@@ -80,6 +80,7 @@ const SwapPushWrapper = (Component) => {
       });
       wsV3.connect();
     };
+
     render() {
       return <Component {...this.props} wsV3={this.wsV3Instance} />;
     }

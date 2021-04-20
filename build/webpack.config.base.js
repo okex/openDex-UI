@@ -2,6 +2,7 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+
 const src = path.resolve(__dirname, '../src');
 const client = process.env.CLIENT || 'web';
 const base = {
@@ -104,10 +105,11 @@ if (process.env.NODE_ENV === 'production') {
       new UglifyJsPlugin({
         cache: true,
         parallel: true,
+        extractComments: true,
         uglifyOptions: {
           compress: {
             warnings: false,
-            drop_console: false,
+            drop_console: true,
             collapse_vars: true,
             reduce_vars: true,
           },

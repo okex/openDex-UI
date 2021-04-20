@@ -73,6 +73,7 @@ const InitWrapper = (Component) => {
       spotActions.fetchTickers();
       spotActions.fetchCurrency();
     };
+
     wsHandler = (table) => {
       const { orderAction, spotTradeActions, spotActions } = this.props;
       const fns = {
@@ -97,9 +98,10 @@ const InitWrapper = (Component) => {
       };
       return fns[table.split(':')[0]];
     };
+
     startInitWebSocket = (wsUrl) => {
       if (!window.WebSocketCore) return;
-      const OK_GLOBAL = window.OK_GLOBAL;
+      const { OK_GLOBAL } = window;
       if (!OK_GLOBAL.ws_v3) {
         const { spotActions, nodeActions } = this.props;
         OK_GLOBAL.ws_v3 = new window.WebSocketCore({ connectUrl: wsUrl });
@@ -153,6 +155,7 @@ const InitWrapper = (Component) => {
         wsV3.login(util.getMyAddr());
       }
     };
+
     render() {
       const { currencyList, productList } = this.props;
       if (

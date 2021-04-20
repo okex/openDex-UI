@@ -72,10 +72,7 @@ const DepthWrapper = (Component) => {
       const FormStoreObj = FormStore ? util.cloneDeep(FormStore) : {};
       const input = FormStoreObj.inputObjFromDepth;
       let currConfig =
-        productList &&
-        productList.filter((x) => {
-          return x.product === product;
-        });
+        productList && productList.filter((x) => x.product === product);
       currConfig = Object.keys(currConfig).length > 0 ? currConfig[0] : {};
 
       const priceTruncate = currConfig.max_price_digit || 4;
@@ -129,6 +126,7 @@ const DepthWrapper = (Component) => {
       formActions.updateInput(input);
       formActions.updateDepthInput({ ...input, type });
     };
+
     getAvg = (value, type) => {
       const { mergeType: ladder } = this.props;
       const ladderDigits = calc.digitLength(ladder);
@@ -147,6 +145,7 @@ const DepthWrapper = (Component) => {
       }
       return ladderValue;
     };
+
     getListSource = () => {
       const { depth } = this.props;
       const { productConfig } = window.OK_GLOBAL;
@@ -186,10 +185,8 @@ const DepthWrapper = (Component) => {
           tooltipAvg,
         };
       };
-      const buyList = depth.bids.map(
-        ([priceValue, amountValue, totalValue]) => {
-          return getDepthItem(priceValue, amountValue, totalValue, 'buy');
-        }
+      const buyList = depth.bids.map(([priceValue, amountValue, totalValue]) =>
+        getDepthItem(priceValue, amountValue, totalValue, 'buy')
       );
       sum = '0';
       sumValue = 0;
@@ -211,6 +208,7 @@ const DepthWrapper = (Component) => {
         buyList,
       };
     };
+
     getTickerSource = () => {
       const { currencyTicker } = this.props;
       const { productConfig } = window.OK_GLOBAL;
