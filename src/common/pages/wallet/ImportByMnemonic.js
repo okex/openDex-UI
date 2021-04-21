@@ -70,13 +70,20 @@ class ImportByMnemonic extends Component {
   };
   handleEnsure = () => {
     if (!this.state.pathType) return
-    const { pathType, newPrivateKey, oldPrivateKey, password} = this.state
-    const privateKey = pathType === 'old' ? oldPrivateKey : newPrivateKey
-    const keyStore = crypto.generateKeyStore(privateKey, password);
-    window.localStorage.setItem(env.envConfig.mnemonicPathType, pathType)
-    walletUtil.setUserInSessionStroage(privateKey, keyStore);
-    this.props.commonAction.setPrivateKey(privateKey);
-    util.go(DesktopTypeMenu.current ? DesktopTypeMenu.current.url : void 0);
+    const generateKey = () => {
+      const { pathType, newPrivateKey, oldPrivateKey, password} = this.state
+      const privateKey = pathType === 'old' ? oldPrivateKey : newPrivateKey
+      const keyStore = crypto.generateKeyStore(privateKey, password);
+      window.localStorage.setItem(env.envConfig.mnemonicPathType, pathType)
+      walletUtil.setUserInSessionStroage(privateKey, keyStore);
+      this.props.commonAction.setPrivateKey(privateKey);
+      util.go(DesktopTypeMenu.current ? DesktopTypeMenu.current.url : void 0);
+    }
+    this.setState({
+      buttonLoading: true,
+    }, () => {
+      setTimeout(generateKey, 10);
+    });
   }
   prevStep = () => {
     this.setState({
@@ -264,7 +271,7 @@ class ImportByMnemonic extends Component {
             <p className="mnemonic-path-tip">{toLocale('import_mnemonic_path_tip')}</p>
           </div>
           <div className="mnemonic-footer">
-          <Button
+            <Button
               className="prev-btn"
               onClick={this.prevStep}
             >
@@ -272,6 +279,7 @@ class ImportByMnemonic extends Component {
             </Button>
             <Button
               type="primary"
+              loading={buttonLoading}
               onClick={this.handleEnsure}
               disabled={!pathType}
             >

@@ -154,6 +154,9 @@
     }
   }
   .dex-table {
+    .assets-container {
+      position: relative;
+    }
     button {
       height: 24px;
       background: @bg-btn-color;
@@ -176,19 +179,19 @@
           vertical-align: middle;
           transition: transform 0.3s, -webkit-transform 0.3s;
         }
-        > div.more-box {
-          width: 86px;
+        &~div.more-box {
+          min-width: 86px;
           position: absolute;
           display: none;
           z-index: 10;
           height: 50px;
           line-height: 50px;
           top: 24px;
-          left: -2px;
+          right: 0;
           padding-top: 5px;
         }
         &.active {
-          > div.more-box {
+          ~div.more-box {
             display: block;
           }
           &::after {

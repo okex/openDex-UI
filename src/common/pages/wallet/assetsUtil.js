@@ -208,24 +208,31 @@ util.accountsCols = ({ transfer, moreOperationsChange }, { valuationUnit }) => {
             const active = this.state.active
             e.target.focus()
             this.setState({active: !active})
+            
+          }
+          moreBtnBlur = () => {
+            setTimeout(() => {
+              this.setState({active: false})
+            }, 100)
           }
           render = () => {
             const active = this.state.active
             let boxConfig = moreBoxConf
             if (assetsType !== 'KIP 20') boxConfig = moreBoxConf.filter(({type}) => type !== 'hidden')
             else boxConfig = moreBoxConf.filter(({type}) => type !== 'migration')
-            return (<>
+            return (<div className="assets-container">
               <Button size={Button.size.mini} onClick={transfer(symbol, assetsType)}>
                 {toLocale('assets_trans_btn')}
               </Button>
               <Button
                 className={"assets-more-bth" + (active ? ' active' : '')}
-                onBlur={() => this.setState({active: false})}
+                onBlur={this.moreBtnBlur}
                 onClick={this.moreClick}
                 size={Button.size.mini}
               >
                 {toLocale('assets_more_btn')}
-                <div className="more-box">
+              </Button>
+              <div className="more-box">
                   <ComboBox
                     current={{}}
                     data={{symbol}}
@@ -233,8 +240,7 @@ util.accountsCols = ({ transfer, moreOperationsChange }, { valuationUnit }) => {
                     onChange={moreOperationsChange}
                   />
                 </div>
-              </Button>
-            </>);
+            </div>);
           }
         }
         return <Operation />
