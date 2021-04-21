@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { crypto } from '@okexchain/javascript-sdk';
 import * as CommonAction from '_src/redux/actions/CommonAction';
 import Icon from '_src/component/IconLite';
 import { toLocale } from '_src/locale/react-locale';
@@ -261,10 +262,11 @@ class TransferDialog extends Component {
       }
     );
   };
-  _transfer = (privateKey='') => {
+  _transfer = (privateKey = '') => {
     const { onClose, onSuccess, okexchainClient, assetsType } = this.props;
     const { symbol, address, amount, note, available } = this.state;
     onClose();
+    debugger
     setTimeout(() => {
       this.setState({ transferring: true });
     },0);
@@ -276,7 +278,7 @@ class TransferDialog extends Component {
       amountStr = available;
     }
     if (assetsType === 'KIP 20') {
-      const toAddress = address
+      let toAddress = address
       if (/^ex/i.test(address)) {
         toAddress = crypto.convertBech32ToHex(address)[0]
       }

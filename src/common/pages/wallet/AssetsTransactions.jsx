@@ -26,6 +26,7 @@ class AssetsTransactions extends Component {
       param_page: this.defaultPage,
     };
     this.addr = window.OK_GLOBAL.senderAddr;
+    this.generalAddr = window.OK_GLOBAL.generalAddr;
   }
   componentDidMount() {
     document.title =
@@ -77,7 +78,7 @@ class AssetsTransactions extends Component {
       offset: (page - 1) * this.state.param_page.per_page
     };
     this.setState({ loading: true });
-    ont.get(URL.GET_TRANSACTIONS20.replace('{address}', this.addr), { params })
+    ont.get(URL.GET_TRANSACTIONS20.replace('{address}', this.generalAddr), { params })
     .then(({ data }) => {
       const list = data.hits.map((item) => {
         return {

@@ -21,7 +21,7 @@ export default class ComboBox extends React.Component {
                 className={current === item.type ? 'active' : ''}
                 onClick={() => this.change(item)}
               >
-                {item.noLink ? <span>{item.label}</span> :
+                {item.noLink ? item.label :
                 !item.isRoute ? (
                   <a href={item.url}>{item.label}</a>
                 ) : (
