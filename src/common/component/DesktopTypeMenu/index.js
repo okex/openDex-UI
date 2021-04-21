@@ -81,7 +81,7 @@ let activedMenu = getDefaultActivedMenu(PageURL.getCurrent());
 
 export function getDefaultActivedMenu(current) {
   return (
-    headTypeList.filter((d) => current.startsWith(d.url))[0] || headTypeList[5]
+    headTypeList.filter((d) => current.startsWith(d.url))[0] || headTypeList[6]
   );
 }
 
@@ -99,7 +99,7 @@ function mapDispatchToProps(dispatch) {
 class DesktopTypeMenu extends Component {
   constructor(props) {
     super(props);
-    this.headTypeList = headTypeList.slice(5);
+    this.headTypeList = headTypeList.slice(6);
   }
 
   change = (item) => {

@@ -9,7 +9,7 @@ export const getLangURL = (url) => {
 };
 
 export default {
-  login: (forward = PageURL.spotFullPage) => {
+  login: (forward = PageURL.indexPage) => {
     history.push(PageURL.loginPage.replace('{0}', forward));
   },
   import: () => {

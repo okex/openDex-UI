@@ -57,6 +57,11 @@ module.exports = {
     'no-return-assign': 'off',
     'no-continue': 'off',
     'func-names': 'off',
+    'operator-linebreak': 'off',
+    'comma-dangle': 'off',
+    indent: 'off',
+    'object-curly-newline': 'off',
+    'react/jsx-one-expression-per-line': 'off',
   },
   env: {
     browser: true,

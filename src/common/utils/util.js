@@ -290,7 +290,7 @@ const util = {
     if (!b) b = 0;
     return calc.div(a, 1) < calc.div(b, 1);
   },
-  go(path = PageURL.spotFullPage) {
+  go(path = PageURL.indexPage) {
     const url = window.location.href.split('#')[0];
     if (/^file/i.test(url)) {
       window.location.href = `${url}#${path}`;

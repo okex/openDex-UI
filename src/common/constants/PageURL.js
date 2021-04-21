@@ -38,6 +38,7 @@ const paths = {
 
 export default {
   ...paths,
+  indexPage: paths.swapPage,
   getCurrent() {
     const { pathname, hash } = getPathAndHash();
     let result = '';
