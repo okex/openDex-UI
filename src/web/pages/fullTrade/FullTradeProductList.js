@@ -68,7 +68,7 @@ class FullTradeProductList extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { spotActions } = this.props;
     const newWsIsOnline = nextProps.wsIsOnlineV3;
     const oldWsIsOnline = this.props.wsIsOnlineV3;
@@ -267,14 +267,14 @@ class FullTradeProductList extends React.Component {
           change,
           changePercentage,
           shortToken,
-          stared: Number(collect) == 1,
+          stared: Number(collect) === 1,
           lever: isMarginOpen ? maxMarginLeverage : false,
           listDisplay: item.listDisplay,
         };
       })
       .filter((item) => {
         let filterTag = true;
-        if (item.listDisplay == 1) {
+        if (item.listDisplay === 1) {
           filterTag = false;
         }
         if (activeMarket.groupId === -1) {

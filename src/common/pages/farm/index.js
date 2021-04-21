@@ -2,9 +2,9 @@ import React from 'react';
 import Tabs, { TabPane } from 'rc-tabs';
 import { withRouter } from 'react-router-dom';
 import PageURL from '_constants/PageURL';
-import FarmContext from './FarmContext';
 import { toLocale } from '_src/locale/react-locale';
 import SwapPushWrapper from '_app/wrapper/SwapPushWrapper';
+import FarmContext from './FarmContext';
 import './index.less';
 
 const FARM = '1';

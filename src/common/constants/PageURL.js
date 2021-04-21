@@ -41,12 +41,13 @@ export default {
   getCurrent() {
     const { pathname, hash } = getPathAndHash();
     let result = '';
-    for (name in paths) {
+    const names = Object.keys(paths);
+    names.forEach((name) => {
       const temp = paths[name];
       if (pathname.startsWith(temp) || hash.startsWith(temp)) {
         if (temp.length > result.length) result = temp;
       }
-    }
+    });
     return result;
   },
 };

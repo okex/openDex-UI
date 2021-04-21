@@ -70,7 +70,7 @@ const OrderHeaderWrapper = (Component) => {
     extraOperations = () => {
       const { props } = this;
       const { type, isHideOthers, isHideOrders } = props;
-      const { noDeal, history } = Enum.order.type;
+      const { noDeal } = Enum.order.type;
       if (type === noDeal) {
         return (
           <div className="hide-others flex-row flex-center fz12">

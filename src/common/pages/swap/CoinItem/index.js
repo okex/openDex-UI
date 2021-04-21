@@ -2,13 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { toLocale } from '_src/locale/react-locale';
 import InputNum from '_component/InputNum';
-import SelectCoin from '../SelectCoin';
-import { getCoinIcon, getDisplaySymbol } from '../../../utils/coinIcon';
 import classNames from 'classnames';
-import { channelsV3 } from '../../../utils/websocket';
-import SwapContext from '../SwapContext';
 import util from '_src/utils/util';
 import calc from '_src/utils/calc';
+import SelectCoin from '../SelectCoin';
+import { getCoinIcon, getDisplaySymbol } from '../../../utils/coinIcon';
+import { channelsV3 } from '../../../utils/websocket';
+import SwapContext from '../SwapContext';
 import env from '../../../constants/env';
 
 function mapStateToProps(state) {
@@ -39,7 +39,7 @@ export default class CoinItem extends React.Component {
       const max = this.getAvailable(true).replace(/,/g, '');
       if (util.compareNumber(max, value)) error = true;
     }
-    this.props.onChange({ ...token, value: '' + value, error }, true);
+    this.props.onChange({ ...token, value: `${value}`, error }, true);
   };
 
   setMaxValue = () => {
@@ -120,7 +120,7 @@ export default class CoinItem extends React.Component {
   }
 
   render() {
-    let {
+    const {
       label,
       token: { symbol, value },
       loadCoinList,
@@ -128,7 +128,7 @@ export default class CoinItem extends React.Component {
       disabledChangeCoin,
       max,
     } = this.props;
-    let available = this.getAvailable();
+    const available = this.getAvailable();
     this.props.token.error = false;
     if (
       max &&
@@ -142,7 +142,7 @@ export default class CoinItem extends React.Component {
         <div className="coin-item-title">
           <div>{label}</div>
           <div className="txt">
-            {toLocale('Balance')}: {available || '0.00000000'}
+            {toLocale('Balance')}:{available || '0.00000000'}
             {available && !disabled && (
               <span className="max" onClick={this.setMaxValue}>
                 MAX

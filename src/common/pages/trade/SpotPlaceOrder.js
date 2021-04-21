@@ -57,7 +57,7 @@ class SpotPlaceOrder extends React.Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { product, currencyTicker } = nextProps;
     if (this.props.product !== product) {
       const { formAction } = this.props;

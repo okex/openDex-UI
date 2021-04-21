@@ -175,8 +175,8 @@ function setSeeds(configDir) {
   return new Promise((resolve, reject) => {
     try {
       shell.cd(configDir);
-      shell.exec('cat seeds.txt', (code, stdout, stderr) => {
-        const seeds = commaLineBreak(stdout).replace(/,$/, '');
+      shell.exec('cat seeds.txt', (...args) => {
+        const seeds = commaLineBreak(args[1]).replace(/,$/, '');
         shell.exec(
           `sed -i.bak 's/seeds = ""/seeds = "${seeds}"/g' config.toml`
         );
@@ -194,12 +194,9 @@ function initData(datadir) {
   return new Promise((resolve, reject) => {
     try {
       shell.cd(okexchaindDir);
-      shell.exec(
-        `./okexchaind init desktop --home ${datadir}`,
-        (code, stdout, stderr) => {
-          resolve(true);
-        }
-      );
+      shell.exec(`./okexchaind init desktop --home ${datadir}`, () => {
+        resolve(true);
+      });
     } catch (err) {
       reject(err);
     }

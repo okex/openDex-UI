@@ -37,7 +37,7 @@ class Index extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.isShow !== nextProps.isShow) {
       if (nextProps.isShow) {
         setTimeout(() => {

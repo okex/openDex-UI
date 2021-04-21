@@ -136,7 +136,7 @@ function toLocale(key, values, extra) {
   return content.replace(RE, (match, holder, one, other) => {
     const value = values[holder];
 
-    if (value == undefined) {
+    if (value === undefined) {
       return match;
     }
 

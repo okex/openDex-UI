@@ -1,8 +1,4 @@
-import { toLocale } from '_src/locale/react-locale';
 import { calc } from '_component/okit';
-import util from './util';
-
-import Enum from './Enum';
 
 const FormatAsset = {
   getSpotData(product, account, productConfig) {

@@ -125,16 +125,17 @@ export default class Confirm extends React.Component {
               toLocale(`error.code.${res.result.code}`) || res.result.msg
             );
           }
-          if (successTxt)
+          if (successTxt) {
             loadingToast &&
               loadingToast.update({
                 content: successTxt,
                 type: Message.TYPE.success,
               });
+          }
           this.loading = false;
         } catch (e) {
-          let typeErr = e instanceof TypeError;
-          let content =
+          const typeErr = e instanceof TypeError;
+          const content =
             typeErr || e.message.includes('timing out')
               ? toLocale('network error')
               : e.message || toLocale('sysError');

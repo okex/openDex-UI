@@ -61,7 +61,7 @@ function checkStatus(response) {
     response.data = { msg: 'No Response Data' };
   }
 
-  const { status, data, config } = response;
+  const { status, data } = response;
 
   if (status >= 200 && status < 300) {
     if (data.code === 800) {

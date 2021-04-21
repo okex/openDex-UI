@@ -4,7 +4,7 @@ import { toLocale } from '_src/locale/react-locale';
 import util from '../../utils/util';
 
 const AssetSpot = (props) => {
-  const { dataSource, onTransfer } = props;
+  const { dataSource } = props;
   return (
     <div>
       <div className="ok-asset spot">

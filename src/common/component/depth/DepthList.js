@@ -20,7 +20,6 @@ export default class DepthList extends React.Component {
     this.state = {
       sellIndex: -1,
       buyIndex: -1,
-      isShowMergeList: false,
     };
   }
 
@@ -41,28 +40,10 @@ export default class DepthList extends React.Component {
           this.toCenter();
         }
       }
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   }
-
-  onMergeTypeOver = () => {
-    this.setState({
-      isShowMergeList: true,
-    });
-  };
-
-  onMergeTypeOut = () => {
-    this.setState({
-      isShowMergeList: false,
-    });
-  };
-
-  setChooseMergeType = (key) => () => {
-    this.setState({
-      isShowMergeList: false,
-    });
-    const { onChooseMergeType } = this.props;
-    onChooseMergeType && onChooseMergeType(key);
-  };
 
   floatToXDecimal = (originFloat) => {
     const tempStr = originFloat.toString();

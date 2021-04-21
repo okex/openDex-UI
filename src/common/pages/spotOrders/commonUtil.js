@@ -298,8 +298,8 @@ const commonUtil = {
     );
     return isLogin ? NoData : NotLogin;
   },
-  renderPagination: (pagination, type, onPageChange, theme) => {
-    const { page, per_page, total } = pagination;
+  renderPagination: (pagination, type) => {
+    const { per_page, total } = pagination;
     const tblContainer = document.querySelector('.ok-table-container');
     const totalPage = Math.ceil((total || 0) / per_page);
     let path = 'open';

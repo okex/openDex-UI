@@ -17,7 +17,7 @@ export default class CurrencySelector extends React.Component {
     this.setActiveId(this.props.legalId);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.legalId !== this.props.legalId) {
       this.setActiveId(nextProps.legalId);
     }

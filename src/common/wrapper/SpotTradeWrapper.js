@@ -81,7 +81,7 @@ const SpotTradeWrapper = (Component) => {
       document.body.classList.remove('full-body');
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
       const { spotTradeActions, orderActions } = this.props;
 
       const oldProduct = this.props.product;

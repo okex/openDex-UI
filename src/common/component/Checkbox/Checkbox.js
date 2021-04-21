@@ -15,6 +15,7 @@ export default class Checkbox extends React.Component {
   };
 
   static defaultProps = {
+    checked: false,
     defaultChecked: false,
     disabled: false,
     onChange: null,
@@ -29,7 +30,7 @@ export default class Checkbox extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if ('checked' in nextProps) {
       this.setState({
         checked: nextProps.checked,

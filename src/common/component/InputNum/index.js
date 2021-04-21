@@ -141,9 +141,9 @@ export default class InputNum extends React.Component {
     const l = inpArr[0].split('').reverse();
     let t = '';
     for (let i = 0; i < l.length; i++) {
-      t += l[i] + ((i + 1) % 3 == 0 && i + 1 != l.length ? ',' : '');
+      t += l[i] + ((i + 1) % 3 === 0 && i + 1 !== l.length ? ',' : '');
     }
-    if (inpArr.length == 2) {
+    if (inpArr.length === 2) {
       return `${t.split('').reverse().join('')}.${inpArr[1]}`;
     }
     return t.split('').reverse().join('');

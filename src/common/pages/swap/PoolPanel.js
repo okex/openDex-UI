@@ -5,6 +5,7 @@ import PageURL from '_constants/PageURL';
 import * as api from './util/api';
 import InfoItem from './InfoItem';
 import Tooltip from '../../component/Tooltip';
+
 @withRouter
 export default class PoolPanel extends React.Component {
   constructor() {

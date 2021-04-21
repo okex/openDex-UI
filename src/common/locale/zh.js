@@ -1166,8 +1166,6 @@ const zhCN = {
   home_receive_swap: 'Swap教程',
   home_receive_farm: 'Farm教程',
   'lp introduce': '添加流动性之后会获得LP Token，它是你的做市凭证。',
-  'unstake confirm info':
-    '1st pool rewards will be released at 2021/1/26  18:00（UTC+8）. You won’t get any rewards if you have no LP tokens staked at that time.',
   'pool warn tip': '请准备同等资金价值的{base}和{quote}来添加流动性。',
   'go detail': '查看详情>',
   'check protocol': '确认',

@@ -15,7 +15,7 @@ class index extends Component {
       });
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const headerContainer = document.getElementById('headerContainer');
     const footerContainer = document.getElementById('footerContainer');
     if (headerContainer)

@@ -12,7 +12,6 @@ import * as CommonAction from '_src/redux/actions/CommonAction';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { toLocale } from '_src/locale/react-locale';
 import { LoggedMenu, LoginMenu, DocMenu } from '_src/component/DexMenu';
 import FullTradeProductList from './FullTradeProductList';
 import './FullTradeHead.less';
@@ -47,7 +46,7 @@ class FullTradeHead extends React.Component {
     commonAction.initOKExChainClient();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { legalList, legalId } = nextProps;
     const { legalList: oldCurrencyList, legalId: oldCurrencyId } = this.props;
     if (
@@ -86,23 +85,7 @@ class FullTradeHead extends React.Component {
   }
 
   render() {
-    const { productObj, product, callMarketObj } = this.props;
     const current = PageURL.getCurrent();
-    const tradingMode = productObj[product]
-      ? Number(productObj[product].tradingMode)
-      : 0;
-    if (tradingMode > 0 && tradingMode < 3) {
-      if (
-        callMarketObj[product] &&
-        callMarketObj[product].nowDate >= callMarketObj[product].startTime
-      ) {
-        callMarketName = toLocale('spot.callmarket.title.all.withStep', {
-          step: tradingMode,
-        });
-      } else {
-        callMarketName = toLocale('spot.callmarket.startingsoon');
-      }
-    }
     return (
       <div className="full-top-info-box">
         <a className="logo-wrap" href="/">

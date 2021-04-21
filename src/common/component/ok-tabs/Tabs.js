@@ -18,7 +18,7 @@ class Tabs extends React.Component {
     this.tabsk = [];
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const active = this.props.active || this.props.defaultIndexKey;
     const { tabBarExtraContent } = this.props;
 
@@ -49,7 +49,7 @@ class Tabs extends React.Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.setState({
       tabBarExtraContent: [<span key="1">{nextProps.tabBarExtraContent}</span>],
     });

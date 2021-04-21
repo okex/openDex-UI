@@ -59,7 +59,7 @@ const ProductListWrapper = (Component) => {
       }
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
       const { spotActions } = this.props;
       const newWsIsOnline = nextProps.wsIsOnlineV3;
       const oldWsIsOnline = this.props.wsIsOnlineV3;
@@ -85,7 +85,7 @@ const ProductListWrapper = (Component) => {
       const { groupId } = activeMarket;
       if (+groupId === 1) {
         currList = productList
-          .filter((product) => `${product}` == product)
+          .filter((product) => `${product}` === product)
           .sort((a, b) => b.order - a.order);
       } else {
         currList = productList.filter(
@@ -198,7 +198,6 @@ const ProductListWrapper = (Component) => {
             volume = currTicker.volume;
           }
           const { productId, collect } = item;
-          const { productConfig } = window.OK_GLOBAL;
           const max_price_digit = item.max_price_digit || 4;
           const [symbol] = productIterative.split('_');
           const [shortToken] = symbol.split('-');

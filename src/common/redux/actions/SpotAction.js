@@ -57,7 +57,7 @@ export function fetchProducts() {
     ont.get(URL.GET_PRODUCTS).then((res) => {
       const { productList, productObj } = getState().SpotTrade;
       if (res.data.data) {
-        res.data.data.forEach((item, index) => {
+        res.data.data.forEach((item) => {
           const product = `${item.base_asset_symbol}_${item.quote_asset_symbol}`;
           let newItem = productObj[product];
           if (!newItem) {

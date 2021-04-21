@@ -95,9 +95,6 @@ const URL = {
   get GET_SWAP_WATCHLIST() {
     return `${BASEURL.SWAP}/watchlist`;
   },
-  get GET_SWAP_WATCHLIST() {
-    return `${BASEURL.SWAP}/watchlist`;
-  },
   get GET_FARM_POOLS_WHITELIST() {
     return `${BASEURL.FARM}/pools/whitelist`;
   },

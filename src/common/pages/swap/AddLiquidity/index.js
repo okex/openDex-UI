@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import AddLiquidity from './AddLiquidity';
 import * as api from '../util/api';
+
 @withRouter
 export default class AddLiquidityWrap extends React.Component {
   constructor(props) {
@@ -22,7 +23,7 @@ export default class AddLiquidityWrap extends React.Component {
       },
     } = this.props;
     if (!base || !target) return this.setState({});
-    let { liquidity, userLiquidity } = await api.getLiquidity(base, target);
+    const { liquidity, userLiquidity } = await api.getLiquidity(base, target);
     this.setState({
       liquidity,
       userLiquidity,

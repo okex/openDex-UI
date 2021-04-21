@@ -1,10 +1,10 @@
 import React from 'react';
-import { Dialog } from '../../../component/Dialog';
 import { connect } from 'react-redux';
-import Confirm from '../../../component/Confirm';
 import { validateTxs } from '_src/utils/client';
 import { toLocale } from '_src/locale/react-locale';
 import util from '_src/utils/util';
+import Confirm from '../../../component/Confirm';
+import { Dialog } from '../../../component/Dialog';
 import ConnectInfoTip from '../ConnectInfoTip';
 
 function mapStateToProps(state) {
@@ -69,13 +69,14 @@ export default class ClaimBtn extends React.Component {
     const { data } = this.props;
     const { show, triggerClick } = this.state;
     if (!triggerClick) return null;
-    if (!util.isLogined())
+    if (!util.isLogined()) {
       return (
         <Dialog visible hideCloseBtn>
           <ConnectInfoTip onClose={this.onClose} />
         </Dialog>
       );
-    if (show)
+    }
+    if (show) {
       return (
         <Dialog visible hideCloseBtn>
           <div className="stake-panel" style={{ width: '496px' }}>
@@ -105,6 +106,7 @@ export default class ClaimBtn extends React.Component {
           </div>
         </Dialog>
       );
+    }
     return null;
   };
 
@@ -118,7 +120,7 @@ export default class ClaimBtn extends React.Component {
           loadingTxt={toLocale('pending transactions')}
           successTxt={toLocale('transaction confirmed')}
           getRef={(instance) => (this.confirmInstance = instance)}
-        ></Confirm>
+        />
       </>
     );
   }

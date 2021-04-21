@@ -6,7 +6,7 @@ export default class Loading extends React.Component {
     const { when, small, isOKEX, theme } = this.props;
 
     const isOKEXSite =
-      isOKEX || location.host.toLowerCase().indexOf('okex') !== -1;
+      isOKEX || window.location.host.toLowerCase().indexOf('okex') !== -1;
 
     const loadingClass = isOKEXSite
       ? small

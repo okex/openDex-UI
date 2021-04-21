@@ -30,7 +30,7 @@ class index extends Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (
       !(this.state.lengthCheck === 'right') &&
       !(this.state.chartCheck === 'right')

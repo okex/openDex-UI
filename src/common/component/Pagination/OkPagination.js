@@ -115,7 +115,7 @@ export default class OkPagination extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if ('current' in nextProps) {
       this.setState({
         current: nextProps.current,

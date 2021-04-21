@@ -129,7 +129,7 @@ const util = {
   },
 };
 
-util.accountsCols = ({ transfer }, { valuationUnit }) => [
+util.accountsCols = ({ transfer }) => [
   {
     title: toLocale('assets_column_assets'),
     key: 'assetToken',

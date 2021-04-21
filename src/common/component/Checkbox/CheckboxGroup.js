@@ -7,8 +7,6 @@ const prefixCls = 'ok-ui-checkbox';
 
 export default class CheckboxGroup extends React.Component {
   static propTypes = {
-    name: PropTypes.string,
-    className: PropTypes.string,
     disabled: PropTypes.bool,
     onChange: PropTypes.func,
     value: PropTypes.array,
@@ -17,8 +15,8 @@ export default class CheckboxGroup extends React.Component {
   };
 
   static defaultProps = {
-    className: 'ok-ui-checkbox',
     value: '',
+    options: [],
     defaultValue: [],
     disabled: false,
     onChange: null,
@@ -71,45 +69,43 @@ export default class CheckboxGroup extends React.Component {
   };
 
   render() {
-    const { disabled, options } = this.props;
+    const { disabled } = this.props;
     const { value } = this.state;
     return (
       <div className={`${prefixCls}`}>
-        {options &&
-          options.length > 0 &&
-          this.getOptions().map((item) => (
-            <label
-              key={item.value}
+        {this.getOptions().map((item) => (
+          <label
+            key={item.value}
+            className={classnames({
+              'checkbox-wrapper': true,
+              'checkbox-wrapper-checked': value.indexOf(item.value) !== -1,
+              'checkbox-wrapper-disabled': item.disabled
+                ? item.disabled
+                : disabled,
+            })}
+          >
+            <span
               className={classnames({
-                'checkbox-wrapper': true,
-                'checkbox-wrapper-checked': value.indexOf(item.value) !== -1,
-                'checkbox-wrapper-disabled': item.disabled
-                  ? item.disabled
-                  : disabled,
+                checkbox: true,
+                'checkbox-checked': value.indexOf(item.value) !== -1,
+                'checkbox-disabled': item.disabled ? item.disabled : disabled,
               })}
             >
-              <span
-                className={classnames({
-                  checkbox: true,
-                  'checkbox-checked': value.indexOf(item.value) !== -1,
-                  'checkbox-disabled': item.disabled ? item.disabled : disabled,
-                })}
-              >
-                <input
-                  type="checkbox"
-                  placeholder=""
-                  checked={value.indexOf(item.value) !== -1}
-                  onChange={() => {
-                    this.toggleOption(item);
-                  }}
-                  className="check-input"
-                  disabled={item.disabled ? item.disabled : disabled}
-                />
-                <span className="checkbox-inner" />
-              </span>
-              <span className="check-des">{item.label}</span>
-            </label>
-          ))}
+              <input
+                type="checkbox"
+                placeholder=""
+                checked={value.indexOf(item.value) !== -1}
+                onChange={() => {
+                  this.toggleOption(item);
+                }}
+                className="check-input"
+                disabled={item.disabled ? item.disabled : disabled}
+              />
+              <span className="checkbox-inner" />
+            </span>
+            <span className="check-des">{item.label}</span>
+          </label>
+        ))}
       </div>
     );
   }

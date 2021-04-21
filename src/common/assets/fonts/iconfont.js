@@ -64,6 +64,6 @@
           o();
         })(),
         (p.onreadystatechange = function () {
-          'complete' == p.readyState && ((p.onreadystatechange = null), o());
+          'complete' === p.readyState && ((p.onreadystatechange = null), o());
         }));
 })(window);

@@ -4,12 +4,12 @@ import { toLocale } from '_src/locale/react-locale';
 import { getLangURL } from '_src/utils/navigation';
 import PageURL from '_constants/PageURL';
 import { withRouter, Link } from 'react-router-dom';
+import { validateTxs } from '_src/utils/client';
+import util from '_src/utils/util';
 import * as api from '../util/api';
 import CoinDropdown from './CoinDropdown';
 import Confirm from '../../../component/Confirm';
-import { validateTxs } from '_src/utils/client';
 import env from '../../../constants/env';
-import util from '_src/utils/util';
 
 function mapStateToProps(state) {
   const { okexchainClient } = state.Common;
@@ -148,7 +148,7 @@ export default class CreatLiquidity extends React.Component {
           <i
             className="iconfont before"
             onClick={() => this.props.history.goBack()}
-          ></i>
+          />
           {toLocale('Input Pool')}
         </div>
         <div className="add-liquidity-content">
@@ -157,7 +157,7 @@ export default class CreatLiquidity extends React.Component {
             onChange={this.changeBase}
             loadCoinList={() => this.getTokens(targetToken)}
           />
-          <div className="sep add-sep"></div>
+          <div className="sep add-sep" />
           <CoinDropdown
             token={targetToken}
             onChange={this.changeTarget}

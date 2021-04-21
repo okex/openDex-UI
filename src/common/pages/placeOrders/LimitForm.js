@@ -93,7 +93,7 @@ class LimitForm extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const {
       product,
       productObj,

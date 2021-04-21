@@ -72,7 +72,7 @@ class Step1 extends Component {
     const { isSamePwd, pwdTwice, knowCheck } = this.state;
     this.setState({
       canNext:
-        this.isValidatedPassword && isSamePwd && pwdTwice != '' && knowCheck,
+        this.isValidatedPassword && isSamePwd && pwdTwice !== '' && knowCheck,
     });
   };
 
@@ -102,7 +102,7 @@ class Step1 extends Component {
     this.setState(
       {
         pwdTwice,
-        isSamePwd: pwdTwice != '' && pwdFirst === pwdTwice,
+        isSamePwd: pwdTwice !== '' && pwdFirst === pwdTwice,
       },
       this.validateCanNext
     );

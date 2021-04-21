@@ -51,7 +51,7 @@ export default class LeftMenu extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { menuList, activeId } = nextProps;
     this.setState({
       menuList: menuList.map((d) => d),

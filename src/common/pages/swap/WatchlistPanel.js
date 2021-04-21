@@ -2,13 +2,14 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import Pagination from '_component/Pagination';
 import PageURL from '_constants/PageURL';
-import { getCoinIcon, getDisplaySymbol } from '../../utils/coinIcon';
 import { toLocale } from '_src/locale/react-locale';
+import calc from '_src/utils/calc';
+import util from '_src/utils/util';
+import { getCoinIcon, getDisplaySymbol } from '../../utils/coinIcon';
 import WatchList from './Watchlist';
 import * as api from './util/api';
-import calc from '_src/utils/calc';
 import Tooltip from '../../component/Tooltip';
-import util from '_src/utils/util';
+
 @withRouter
 export default class WatchlistPanel extends React.Component {
   constructor() {
@@ -21,8 +22,8 @@ export default class WatchlistPanel extends React.Component {
         component: ({ row, data }) => {
           const tokens = data.split('_');
           if (row.isRevert) tokens.reverse();
-          let baseSymbol = tokens[0];
-          let targetSymbol = tokens[1];
+          const baseSymbol = tokens[0];
+          const targetSymbol = tokens[1];
           return (
             <div className="coin2coin">
               <span className="exchange" onClick={() => this.exchange(row)} />
@@ -43,7 +44,7 @@ export default class WatchlistPanel extends React.Component {
         component(props) {
           return Number(props.data) === 0
             ? '--'
-            : '$' + util.precisionInput(props.data, 2);
+            : `$${util.precisionInput(props.data, 2)}`;
         },
       },
       {
@@ -54,14 +55,14 @@ export default class WatchlistPanel extends React.Component {
         component(props) {
           return Number(props.data) === 0
             ? '--'
-            : '$' + util.precisionInput(props.data, 2);
+            : `$${util.precisionInput(props.data, 2)}`;
         },
       },
       {
         field: 'fee_apy',
         name() {
           return (
-            <React.Fragment>
+            <>
               <Tooltip
                 placement="right"
                 overlay={toLocale('based on 24hr volume annualized')}
@@ -69,7 +70,7 @@ export default class WatchlistPanel extends React.Component {
                 <i className="help" />
               </Tooltip>
               {toLocale('Fee APY')}
-            </React.Fragment>
+            </>
           );
         },
         canSort: true,
@@ -77,7 +78,7 @@ export default class WatchlistPanel extends React.Component {
         component(props) {
           return Number(props.data) === 0
             ? '--'
-            : util.precisionInput(calc.mul(props.data, 100), 2) + '%';
+            : `${util.precisionInput(calc.mul(props.data, 100), 2)}%`;
         },
       },
       {
@@ -93,8 +94,8 @@ export default class WatchlistPanel extends React.Component {
           } else {
             tokens.reverse();
           }
-          let baseSymbol = tokens[0];
-          let targetSymbol = tokens[1];
+          const baseSymbol = tokens[0];
+          const targetSymbol = tokens[1];
           return (
             <div>
               1 {getDisplaySymbol(baseSymbol)}≈
@@ -115,25 +116,27 @@ export default class WatchlistPanel extends React.Component {
           let change = calc.add(data, 0);
           if (!row.isRevert) change = calc.div(1, calc.add(data, 1)) - 1;
           if (!Number.isFinite(change)) return '--';
-          if (change > 0)
+          if (change > 0) {
             return (
               <span className="green">
-                {util.precisionInput(calc.mul(change, 100), 2) + '%'}
+                {`${util.precisionInput(calc.mul(change, 100), 2)}%`}
               </span>
             );
-          else if (change < 0)
+          }
+          if (change < 0) {
             return (
               <span className="red">
-                {util.precisionInput(calc.mul(change, 100), 2) + '%'}
+                {`${util.precisionInput(calc.mul(change, 100), 2)}%`}
               </span>
             );
-          return util.precisionInput(calc.mul(change, 100), 2) + '%';
+          }
+          return `${util.precisionInput(calc.mul(change, 100), 2)}%`;
         },
       },
       {
         name: '',
         component: ({ row }) => {
-          let price = row.last_price;
+          const price = row.last_price;
           return (
             <div className="action-opt-wrap">
               <div
@@ -142,7 +145,7 @@ export default class WatchlistPanel extends React.Component {
               >
                 + {toLocale('Add Liquidity')}
               </div>
-              <div className="action-sep"></div>
+              <div className="action-sep" />
               {Number(price) === 0 || Number(price) === Infinity ? (
                 <div className="action-opt disabled">{toLocale('Trade')}</div>
               ) : (
@@ -183,8 +186,8 @@ export default class WatchlistPanel extends React.Component {
   goTrade(row) {
     const tokens = row.swap_pair.split('_');
     if (row.isRevert) tokens.reverse();
-    let baseSymbol = tokens[0];
-    let targetSymbol = tokens[1];
+    const baseSymbol = tokens[0];
+    const targetSymbol = tokens[1];
     this.props.history.push(
       `${PageURL.swapPage}/${baseSymbol}/${targetSymbol}`
     );
@@ -194,7 +197,7 @@ export default class WatchlistPanel extends React.Component {
     const { pageSize } = this.state;
     if (!current) current = this.state.current;
     if (!sort) sort = this.state.sort;
-    let params = { page: current, per_page: pageSize };
+    const params = { page: current, per_page: pageSize };
     if (sort) {
       params.sort_column = sort.field;
       params.sort_direction = sort.sort;

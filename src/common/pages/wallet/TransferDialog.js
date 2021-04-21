@@ -63,7 +63,7 @@ class TransferDialog extends Component {
     this.addr = window.OK_GLOBAL.senderAddr;
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.addr) {
       const { show, symbol } = nextProps;
       if (show !== this.props.show) {

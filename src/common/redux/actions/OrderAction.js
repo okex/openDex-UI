@@ -39,7 +39,7 @@ export function handleRequestCommon(params, url) {
   return (dispatch, getState) => {
     const store = getState();
     const { product } = store.SpotTrade;
-    const { isHideOthers, periodIntervalType } = store.OrderStore;
+    const { isHideOthers } = store.OrderStore;
     const { senderAddr } = window.OK_GLOBAL;
     const newParams = {
       ...defaultPage,
@@ -124,7 +124,7 @@ export function getNoDealList(params = {}) {
   return (dispatch, getState) => {
     const store = getState();
     const { product } = store.SpotTrade;
-    const { isHideOthers, periodIntervalType } = store.OrderStore;
+    const { isHideOthers } = store.OrderStore;
     const { senderAddr } = window.OK_GLOBAL;
     const newParams = {
       ...defaultPage,

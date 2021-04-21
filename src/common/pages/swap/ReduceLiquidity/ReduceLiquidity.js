@@ -2,17 +2,17 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { toLocale } from '_src/locale/react-locale';
-import { getCoinIcon, getDisplaySymbol } from '../../../utils/coinIcon';
-import * as api from '../util/api';
 import InputNum from '_component/InputNum';
 import calc from '_src/utils/calc';
-import Confirm from '../../../component/Confirm';
 import util from '_src/utils/util';
+import { validateTxs } from '_src/utils/client';
+import classNames from 'classnames';
+import { getCoinIcon, getDisplaySymbol } from '../../../utils/coinIcon';
+import * as api from '../util/api';
+import Confirm from '../../../component/Confirm';
 import { channelsV3 } from '../../../utils/websocket';
 import { getDeadLine4sdk } from '../util';
 import SwapContext from '../SwapContext';
-import { validateTxs } from '_src/utils/client';
-import classNames from 'classnames';
 import { Dialog } from '../../../component/Dialog';
 
 function mapStateToProps(state) {
@@ -129,12 +129,11 @@ export default class ReduceLiquidity extends React.Component {
         coins[1].amount !== data.coins[1].amount)
     )
       data.active = true;
-    return;
   };
 
   _exchangeTokenData() {
-    let baseToken = this.state.coins[0],
-      targetToken = this.state.coins[1];
+    let baseToken = this.state.coins[0];
+    let targetToken = this.state.coins[1];
     if (baseToken.denom && targetToken.denom) {
       const temp = baseToken;
       if (baseToken.denom > targetToken.denom) {
@@ -208,10 +207,11 @@ export default class ReduceLiquidity extends React.Component {
   }
 
   getBtn = (value, available) => {
-    if (!Number(value))
+    if (!Number(value)) {
       return (
         <div className="btn disabled">{toLocale('Confirm Reduce btn')}</div>
       );
+    }
     if (util.compareNumber(available, value)) {
       return (
         <div className="btn disabled">{toLocale('insufficient lp token')}</div>
@@ -243,7 +243,7 @@ export default class ReduceLiquidity extends React.Component {
       showConfirmDialog,
       active,
     } = this.state;
-    let available = this.getAvailable();
+    const available = this.getAvailable();
     const btn = this.getBtn(value, this._getValueByRatio({ value: 1 }));
     const {
       setting: { slippageTolerance },
@@ -254,7 +254,7 @@ export default class ReduceLiquidity extends React.Component {
           <i
             className="iconfont before"
             onClick={() => this.props.history.goBack()}
-          ></i>
+          />
           {toLocale('Reduce Liquidity')}
         </div>
         <div className="add-liquidity-content">
@@ -262,7 +262,7 @@ export default class ReduceLiquidity extends React.Component {
             <div className="coin-item-title">
               <div>{toLocale('Input')}</div>
               <div className="txt">
-                {toLocale('Balance')}: {available}
+                {toLocale('Balance')}:{available}
               </div>
             </div>
             <div className="coin-item-content">
@@ -278,7 +278,7 @@ export default class ReduceLiquidity extends React.Component {
               <div className="coin-rate-select">
                 {ratios.map((d, index) => (
                   <div
-                    className={'check-btn' + (ratio === d ? ' active' : '')}
+                    className={`check-btn${ratio === d ? ' active' : ''}`}
                     key={index}
                     onClick={() => this.change(d)}
                   >
@@ -368,7 +368,8 @@ export default class ReduceLiquidity extends React.Component {
                           src={getCoinIcon(coins[1].denom)}
                           className="min-coin"
                         />
-                        &nbsp;{util.precisionInput(value, 8)}
+                        &nbsp;
+                        {util.precisionInput(value, 8)}
                       </div>
                     </div>
                   </div>
@@ -396,7 +397,7 @@ export default class ReduceLiquidity extends React.Component {
             loadingTxt={toLocale('pending transactions')}
             successTxt={toLocale('transaction confirmed')}
             getRef={(instance) => (this.confirmInstance = instance)}
-          ></Confirm>
+          />
         </div>
       </div>
     );

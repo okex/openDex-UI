@@ -23,7 +23,7 @@ function mapDispatchToProps() {
 const TickerWrapper = (Component) => {
   @connect(mapStateToProps, mapDispatchToProps)
   class Ticker extends React.Component {
-    calcLegal = (baseCurr) => {
+    calcLegal = () => {
       const { currencyTicker, legalObj } = this.props;
       const baseTicker = 1;
 

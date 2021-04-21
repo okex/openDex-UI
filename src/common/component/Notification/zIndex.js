@@ -1,5 +1,6 @@
 const _globalThis = (function getGlobalThis() {
   let res;
+  const globalThis = window.globalThis;
   if (typeof globalThis !== 'undefined') {
     res = globalThis;
   } else if (typeof window !== 'undefined') {

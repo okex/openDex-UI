@@ -7,6 +7,7 @@ import Select from '_component/ReactSelect';
 import 'react-datepicker/dist/react-datepicker.css';
 import { toLocale } from '_src/locale/react-locale';
 import Message from '_src/component/Message';
+import { Button } from '_component/Button';
 import moment from 'moment';
 import Cookies from 'js-cookie';
 import RouterCredential from '../../RouterCredential';
@@ -15,12 +16,10 @@ import * as SpotActions from '../../redux/actions/SpotAction';
 import * as OrderActions from '../../redux/actions/OrderAction';
 import Enum from '../../utils/Enum';
 import orderUtil from './orderUtil';
-
-import './OrderList.less';
-import { Button } from '_component/Button';
 import normalColumns from '../spotOrders/normalColumns';
 import commonUtil from '../spotOrders/commonUtil';
 import util from '../../utils/util';
+import './OrderList.less';
 
 function mapStateToProps(state) {
   const { product, productList, productObj } = state.SpotTrade;
@@ -89,13 +88,10 @@ class DealsList extends RouterCredential {
   componentDidMount() {
     const { spotActions } = this.props;
     spotActions.fetchProducts();
-    const { webType } = window.OK_GLOBAL;
     document.title =
       toLocale('spot.myOrder.detail') + toLocale('spot.page.title');
     this.onSearch();
   }
-
-  componentWillReceiveProps(nextProps) {}
 
   componentWillUnmount() {
     const { orderActions } = this.props;

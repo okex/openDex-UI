@@ -38,7 +38,7 @@ const LastestDealWrapper = (Component) => {
       }
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
       const oldproduct = this.props.product;
       const newproduct = nextProps.product;
       const { spotTradeActions } = nextProps;

@@ -131,8 +131,8 @@ class Depth {
         }
       }
 
-      if (ladderValueFlag != ladderValue) {
-        if (resultList.length == size) {
+      if (ladderValueFlag !== ladderValue) {
+        if (resultList.length === size) {
           break;
         }
         if (depthItemAmount < this.config.minAmount) {

@@ -34,7 +34,7 @@ const FullLeftMenu = class LeftMenu extends React.Component {
     this.addr = window.OK_GLOBAL.senderAddr;
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { sortType } = this.state;
     const { dataSource, activeId } = nextProps;
     const newList = [...dataSource];
@@ -104,16 +104,13 @@ const FullLeftMenu = class LeftMenu extends React.Component {
   };
 
   renderList = (menuList) => {
-    const { canStar } = this.props;
     const { activeId } = this.state;
     return (
       <div>
         {menuList.map((item, index) => {
           const { id, text, change, changePercentage, price } = item;
-          let { stared, lever } = item;
+          let { lever } = item;
           lever = null;
-          stared = false;
-
           const color = change.toString().indexOf('-') > -1 ? 'red' : 'green';
           return (
             <li

@@ -9,6 +9,7 @@ import { toLocale } from '_src/locale/react-locale';
 import Message from '_src/component/Message';
 import { Dialog } from '_component/Dialog';
 import Icon from '_src/component/IconLite';
+import { Button } from '_component/Button';
 import moment from 'moment';
 import Cookies from 'js-cookie';
 import RouterCredential from '../../RouterCredential';
@@ -18,14 +19,13 @@ import * as OrderActions from '../../redux/actions/OrderAction';
 import Enum from '../../utils/Enum';
 import orderUtil from './orderUtil';
 import PasswordDialog from '../../component/PasswordDialog';
-import './OrderList.less';
-import { Button } from '_component/Button';
 import normalColumns from '../spotOrders/normalColumns';
 import commonUtil from '../spotOrders/commonUtil';
 import * as CommonAction from '../../redux/actions/CommonAction';
 import * as FormAction from '../../redux/actions/FormAction';
 import Config from '../../constants/Config';
 import util from '../../utils/util';
+import './OrderList.less';
 
 function mapStateToProps(state) {
   const { product, productList, productObj } = state.SpotTrade;
@@ -103,15 +103,12 @@ class OpenList extends RouterCredential {
 
   componentDidMount() {
     this.props.commonAction.initOKExChainClient();
-    const { spotActions, orderActions } = this.props;
+    const { spotActions } = this.props;
     spotActions.fetchProducts();
-    const { webType } = window.OK_GLOBAL;
     document.title =
       toLocale('spot.orders.openOrders') + toLocale('spot.page.title');
     this.onSearch();
   }
-
-  componentWillReceiveProps(nextProps) {}
 
   componentWillUnmount() {
     const { orderActions } = this.props;

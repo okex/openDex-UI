@@ -184,7 +184,7 @@ class AssetsAccounts extends Component {
     this.setState({ hideZero: e.target.checked }, this.fetchAccounts);
   };
 
-  setFilteredList = (legalObj = {}) => {
+  setFilteredList = () => {
     let filterList = this.allCurrencies;
     const symbol = this.symbolSearch;
     if (symbol) {

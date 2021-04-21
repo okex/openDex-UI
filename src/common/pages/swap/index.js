@@ -1,10 +1,10 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import Tabs, { TabPane } from 'rc-tabs';
-import SwapContext from './SwapContext';
 import PageURL from '_constants/PageURL';
 import { toLocale } from '_src/locale/react-locale';
 import SwapPushWrapper from '_app/wrapper/SwapPushWrapper';
+import SwapContext from './SwapContext';
 import './index.less';
 
 const SWAP = '1';

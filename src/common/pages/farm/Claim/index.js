@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { toLocale } from '_src/locale/react-locale';
-import Confirm from '../../../component/Confirm';
 import { validateTxs } from '_src/utils/client';
+import Confirm from '../../../component/Confirm';
 import env from '../../../constants/env';
 
 function mapStateToProps(state) {

@@ -26,7 +26,7 @@ class LegalPrice extends React.Component {
   };
 
   render() {
-    const { tickers, currency, value, legalObj } = this.props;
+    const { tickers, value, legalObj } = this.props;
     let legalPrice = '';
     if (tickers) {
       const { rate, symbol, precision } = legalObj;
