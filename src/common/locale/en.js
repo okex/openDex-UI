@@ -897,7 +897,7 @@ Immediate or Cancel requires all or part of the order to be executed immediately
 
   assets_tab_accounts: 'Asset balance',
   assets_tab_transactions: 'Transaction record',
-  assets_address: 'Address',
+  assets_address: 'Address：',
   assets_product_search: 'Search asset',
   assets_hide_zero: 'Hide small balances',
   assets_empty: 'No assets',
