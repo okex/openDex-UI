@@ -197,7 +197,7 @@ export default class WatchlistPanel extends React.Component {
     const { pageSize } = this.state;
     if (!current) current = this.state.current;
     if (!sort) sort = this.state.sort;
-    const params = { page: current, per_page: pageSize };
+    let params = { page: current, per_page: pageSize };
     if (sort) {
       params.sort_column = sort.field;
       params.sort_direction = sort.sort;
