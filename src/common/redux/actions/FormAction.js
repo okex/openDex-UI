@@ -3,6 +3,7 @@ import Enum from '../../utils/Enum';
 import FormatNum from '../../utils/FormatNum';
 import Message from '_src/component/Message';
 import { toLocale } from '../../locale/react-locale';
+import env from '../../constants/env';
 
 export function clearForm() {
   return (dispatch) => {
@@ -114,7 +115,7 @@ export function submitOrder(params, callback, errCallback) {
       data: {},
     });
     return okexchainClient
-      .setAccountInfo(params.pk)
+      .setAccountInfo(params.pk, env.envConfig.addressPrefix)
       .then(() => {
         okexchainClient
           .sendPlaceOrderTransaction(

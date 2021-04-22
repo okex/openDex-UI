@@ -6,6 +6,7 @@ import Config from '_constants/Config';
 import PasswordDialog from '_component/PasswordDialog';
 import { toLocale } from '_src/locale/react-locale';
 import util from '_src/utils/util';
+import env from '../constants/env';
 
 function mapStateToProps(state) {
   const { okexchainClient, privateKey } = state.Common;
@@ -93,7 +94,7 @@ const ClientWrapper = (Com) => {
 
     setAccountInfo = (success) => {
       const { okexchainClient, privateKey } = this.props;
-      okexchainClient.setAccountInfo(privateKey).then(() => {
+      okexchainClient.setAccountInfo(privateKey, env.envConfig.addressPrefix).then(() => {
         success && success();
       });
     };
