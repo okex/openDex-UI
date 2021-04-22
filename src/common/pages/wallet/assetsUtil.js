@@ -213,7 +213,7 @@ util.accountsCols = ({ transfer, moreOperationsChange }, { valuationUnit }) => {
           moreBtnBlur = () => {
             setTimeout(() => {
               this.setState({active: false})
-            }, 100)
+            }, 200)
           }
           render = () => {
             const active = this.state.active
