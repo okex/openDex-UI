@@ -205,14 +205,16 @@ util.accountsCols = ({ transfer, moreOperationsChange }, { valuationUnit }) => {
             }
           }
           moreClick = (e) => {
-            const active = this.state.active
             e.target.focus()
-            this.setState({active: !active})
+            this.setState({ active: true })
             
           }
           moreBtnBlur = () => {
-            setTimeout(() => {
-              this.setState({active: false})
+            let timer = null
+            timer = setTimeout(() => {
+              this.setState({ active: false })
+              clearTimeout(timer)
+              timer = null
             }, 200)
           }
           render = () => {
