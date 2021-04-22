@@ -58,7 +58,6 @@ const SwapPushWrapper = (Component) => {
         wsV3.sendChannel('ping');
       });
       wsV3.setPushDataResolver((pushData) => {
-        console.log(pushData);
         const { table, data, event, errorCode } = pushData;
         if (table && data) {
           const handler = this.wsHandler(table);

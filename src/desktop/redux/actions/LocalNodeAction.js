@@ -144,7 +144,6 @@ function baseDownload(dir, name, url) {
         directory,
       });
     } catch (err) {
-      console.log('doDownload error：', err);
       reject(err);
       emitter.emit(`downloadError@${name}`, err);
     }
@@ -252,61 +251,56 @@ export function restartTempBreakTimer() {
 function startPoll(dispatch, getState) {
   stopPoll();
   timer = setInterval(() => {
-    ont
-      .get(`${LOCAL_PREFIX}26657/status?`)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((rpcRes) => {
-        const { result = {} } = rpcRes;
-        const info = result.sync_info || {};
-        const oldLocalHeight = getState().LocalNodeStore.localHeight;
-        const localHeight = info.latest_block_height - 0;
-        const diffLocalHeight = localHeight - oldLocalHeight;
-        if (localHeight) {
+    ont.get(`${LOCAL_PREFIX}26657/status?`).catch((rpcRes) => {
+      const { result = {} } = rpcRes;
+      const info = result.sync_info || {};
+      const oldLocalHeight = getState().LocalNodeStore.localHeight;
+      const localHeight = info.latest_block_height - 0;
+      const diffLocalHeight = localHeight - oldLocalHeight;
+      if (localHeight) {
+        dispatch({
+          type: LocalNodeActionType.UPDATE_LOCAL_HEIGHT,
+          data: localHeight,
+        });
+      }
+      oldLocalHeight > 0 &&
+        updateEstimatedTime(dispatch, getState, info, diffLocalHeight);
+      const nowSync = !info.catching_up;
+      const oldSync = getState().LocalNodeStore.isSync;
+      if (oldSync !== nowSync) {
+        if (nowSync) {
+          breakTimer && clearInterval(breakTimer);
+          tempBreakTimer && clearInterval(tempBreakTimer);
           dispatch({
-            type: LocalNodeActionType.UPDATE_LOCAL_HEIGHT,
-            data: localHeight,
+            type: LocalNodeActionType.UPDATE_BREAK_TIME,
+            data: 0,
           });
-        }
-        oldLocalHeight > 0 &&
-          updateEstimatedTime(dispatch, getState, info, diffLocalHeight);
-        const nowSync = !info.catching_up;
-        const oldSync = getState().LocalNodeStore.isSync;
-        if (oldSync !== nowSync) {
-          if (nowSync) {
-            breakTimer && clearInterval(breakTimer);
-            tempBreakTimer && clearInterval(tempBreakTimer);
-            dispatch({
-              type: LocalNodeActionType.UPDATE_BREAK_TIME,
-              data: 0,
-            });
-            dispatch({
-              type: LocalNodeActionType.UPDATE_TEMP_BREAK_TIME,
-              data: 0,
-            });
-            dispatch({
-              type: LocalNodeActionType.UPDATE_IS_SYNC,
-              data: true,
-            });
-          } else {
-            dispatch({
-              type: LocalNodeActionType.UPDATE_IS_SYNC,
-              data: false,
-            });
-            if (!breakTimer) {
-              breakTimer = setInterval(() => {
-                updateBreakTime(dispatch, getState);
-              }, 1000);
-            }
-            if (!tempBreakTimer) {
-              tempBreakTimer = setInterval(() => {
-                updateTempBreakTime(dispatch, getState);
-              }, 1000);
-            }
+          dispatch({
+            type: LocalNodeActionType.UPDATE_TEMP_BREAK_TIME,
+            data: 0,
+          });
+          dispatch({
+            type: LocalNodeActionType.UPDATE_IS_SYNC,
+            data: true,
+          });
+        } else {
+          dispatch({
+            type: LocalNodeActionType.UPDATE_IS_SYNC,
+            data: false,
+          });
+          if (!breakTimer) {
+            breakTimer = setInterval(() => {
+              updateBreakTime(dispatch, getState);
+            }, 1000);
+          }
+          if (!tempBreakTimer) {
+            tempBreakTimer = setInterval(() => {
+              updateTempBreakTime(dispatch, getState);
+            }, 1000);
           }
         }
-      });
+      }
+    });
   }, pollInterval);
 }
 

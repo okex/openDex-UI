@@ -91,9 +91,7 @@ export default class FullTradeKLine extends React.Component {
       showIndics: false,
       logo,
       screenshotIcon,
-      onReady: () => {
-        console.log('ready');
-      },
+      onReady: () => {},
     });
   };
 

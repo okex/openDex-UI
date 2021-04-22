@@ -64,9 +64,6 @@ class ImportByWalletConnect extends Component {
       success: ({ address }) => {
         this.validateWalletConnect(address);
       },
-      error: () => {
-        console.log(1);
-      },
     });
   };
 
