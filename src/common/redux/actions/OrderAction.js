@@ -6,6 +6,7 @@ import Enum from '../../utils/Enum';
 import util from '../../utils/util';
 import { OrderStatus } from '../../constants/OrderStatus';
 import { toLocale } from '../../locale/react-locale';
+import env from '../../constants/env';
 
 const defaultPage = {
   page: 1,
@@ -258,7 +259,7 @@ export function cancelOrder(params, successCallback, errCallback) {
   return (dispatch, getState) => {
     const { okexchainClient } = getState().Common;
     okexchainClient
-      .setAccountInfo(params.pk)
+      .setAccountInfo(params.pk, env.envConfig.addressPrefix)
       .then(() => {
         okexchainClient.sendCancelOrderTransaction(params.order_id).then(
           (r) => {

@@ -9,6 +9,7 @@ import * as CommonAction from '_src/redux/actions/CommonAction';
 import { validateTxs } from '_src/utils/client';
 import Config from '../../constants/Config';
 import getRef from '../getRef';
+import env from '../../constants/env';
 
 function mapStateToProps(state) {
   const { okexchainClient, privateKey } = state.Common;
@@ -87,7 +88,7 @@ export default class Confirm extends React.Component {
     this.setState({ loading: true });
     privateKey = privateKey || this.props.privateKey;
     okexchainClient
-      .setAccountInfo(privateKey || this.props.privateKey)
+      .setAccountInfo(privateKey || this.props.privateKey, env.envConfig.addressPrefix)
       .then(async () => {
         let loadingToast;
         try {
