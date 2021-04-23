@@ -5,6 +5,20 @@
 @bg-btn-color: #121F37;
 @btn-text-color: #2676FF;
 
+.ok-menu-submenu .ok-menu-vertical.ok-menu-sub {
+  min-width: 90px;
+  border-radius: 4px;
+  .ok-menu-item {
+    height: 28px;
+    line-height: 28px;
+    &:hover {
+      background-color: #253146;
+    }
+  }
+}
+.ok-menu-submenu.ok-menu-submenu-popup > ul[id^="help"] {
+  margin-top: 0;
+}
 .wallet-main {
   width: 1016px;
   margin: 0 auto;
@@ -156,6 +170,55 @@
   .dex-table {
     .assets-container {
       position: relative;
+      display: flex;
+      align-items: center;
+      .okdex-menu-assets {
+        line-height: 1;
+        background-color: transparent;
+        height: 24px;
+        line-height: 24px;
+        text-align: center;
+        .ok-menu-submenu-title {
+          padding: 0;
+          width: 90px;
+          height: 22px;
+          line-height: 22px;
+          color: rgba(255, 255, 255, 0.65);
+          border: 1px solid rgba(255, 255, 255, 0.65);
+          border-radius: 4px;
+          font-size: 12px;
+          font-weight: 500;
+          cursor: pointer;
+          &::after {
+            content: "";
+            border-style: solid;
+            border-width: 5px 4px 0;
+            border-color: rgba(255, 255, 255, 0.65) transparent transparent;
+            display: inline-block;
+            margin-left: 8px;
+            margin-top: -2px;
+            vertical-align: middle;
+            transition: transform 0.3s, -webkit-transform 0.3s;
+          }
+        }
+        .ok-menu-submenu-open .ok-menu-submenu-title::after {
+          transform: rotate(180deg);
+          transform-origin: center;
+        }
+        .ok-menu-submenu-active {
+          .ok-menu-submenu-title {
+            border-color: @brand-1;
+            color: @brand-1;
+            &::after {
+              border-top-color: @brand-1;
+            }
+          }
+        }
+        .ok-menu-submenu {
+          display: block;
+          border: 0;
+        }
+      }
     }
     button {
       height: 24px;

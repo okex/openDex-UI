@@ -227,7 +227,7 @@ class AssetsAccounts extends Component {
   addAssetsSuccess = () => {
     this.fetchAccounts();
   };
-  moreOperationsChange = ({type}, {symbol}) => {
+  moreOperationsChange = (type, symbol) => {
     switch(type) {
       case 'detail':
         return this.detail(symbol)
@@ -330,7 +330,6 @@ class AssetsAccounts extends Component {
         />
         <AddAssetsDialog
           show={showAddAssets}
-          // symbol={transferSymbol}
           tokenList={tokenList}
           tokenMap={tokenMap}
           onClose={this.closeAddAssets}

@@ -11,7 +11,8 @@ import { getLpTokenInfo } from '../../utils/lpTokenUtil';
 import Config from '../../constants/Config';
 import DesktopTypeMenu from '_component/DesktopTypeMenu';
 import PageURL from '_constants/PageURL';
-import ComboBox from '_src/component/ComboBox/ComboBox';
+import Menu from '_src/component/Menu';
+const SubMenu = Menu.SubMenu;
 
 const util = {
   get tabs() {
@@ -196,57 +197,31 @@ util.accountsCols = ({ transfer, moreOperationsChange }, { valuationUnit }) => {
     {
       title: '',
       key: 'operation',
-      render: (text, { symbol, assetsType }) => {
-        class Operation extends Component {
-          constructor () {
-            super()
-            this.state = {
-              active: false
-            }
-          }
-          moreClick = (e) => {
-            const active = this.state.active
-            e.target.focus()
-            this.setState({ active: !active })
-            
-          }
-          moreBtnBlur = () => {
-            let timer = null
-            timer = setTimeout(() => {
-              this.setState({ active: false })
-              clearTimeout(timer)
-              timer = null
-            }, 200)
-          }
-          render = () => {
-            const active = this.state.active
-            let boxConfig = moreBoxConf
-            if (assetsType !== 'KIP 20') boxConfig = moreBoxConf.filter(({type}) => type !== 'hidden')
-            else boxConfig = moreBoxConf.filter(({type}) => type !== 'migration')
-            return (<div className="assets-container">
-              <Button size={Button.size.mini} onClick={transfer(symbol, assetsType)}>
-                {toLocale('assets_trans_btn')}
-              </Button>
-              <Button
-                className={"assets-more-bth" + (active ? ' active' : '')}
-                onBlur={this.moreBtnBlur}
-                onClick={this.moreClick}
-                size={Button.size.mini}
-              >
-                {toLocale('assets_more_btn')}
-              </Button>
-              <div className="more-box">
-                  <ComboBox
-                    current={{}}
-                    data={{symbol}}
-                    comboBoxDataSource={boxConfig}
-                    onChange={moreOperationsChange}
-                  />
-                </div>
-            </div>);
-          }
-        }
-        return <Operation />
+      render: (_text, { symbol, assetsType }) => {
+        const menuSelect = (({key}) => {
+          moreOperationsChange( key, symbol )
+        })
+        let boxConfig = moreBoxConf
+        if (assetsType !== 'KIP 20') boxConfig = moreBoxConf.filter(({type}) => type !== 'hidden')
+        else boxConfig = moreBoxConf.filter(({type}) => type !== 'migration')
+
+        return (<div className="assets-container">
+          <Button size={Button.size.mini} onClick={transfer(symbol, assetsType)}>
+            {toLocale('assets_trans_btn')}
+          </Button>
+          <Menu mode="horizontal" onClick={menuSelect} selectable={false} className="okdex-menu-assets">
+            <SubMenu
+              key="help"
+              title={toLocale('assets_more_btn')}
+            >
+              {
+                boxConfig.map(item => {
+                  return <Menu.Item key={item.type}>{item.label}</Menu.Item>
+                })
+              }
+            </SubMenu>
+          </Menu>
+        </div>);
       },
     },
   ];
