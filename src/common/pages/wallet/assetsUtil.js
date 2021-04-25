@@ -110,7 +110,7 @@ const util = {
           if (address === userAddr) {
             address = crypto.toChecksumAddress(text)
           }
-          let drawText = `${address.slice(0 ,5)}******${address.slice(address.length - 5, address.length)}`;
+          let drawText = `${address.slice(0 ,5)}...${address.slice(address.length - 5, address.length)}`;
 
           return (
             <Tooltip

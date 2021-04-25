@@ -128,15 +128,6 @@ class AssetsTransactions extends Component {
             <span onClick={() => this.switchtab('20')} className={'records-tab' + (currentTab === '20' ? ' switch' : '')}>
               {toLocale('wallet_transaction_records_tab20')}
             </span>
-            <Button
-              size={Button.size.small}
-              type={Button.btnType.primary}
-              onClick={() => {
-                this.fetchTransactions();
-              }}
-            >
-              {toLocale('trade_query_search')}
-            </Button>
           </div>
           <a
             href={Config.okexchain.browserUrl}
