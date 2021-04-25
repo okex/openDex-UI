@@ -21,7 +21,7 @@ const testnet = {
   },
   apiPath: 'okexchain-test/v1',
   pagePath: 'dex-test',
-  chainId: 'okexchain-65',
+  chainId: 'exchain-65',
   kId: 'okex-dex-test',
   swapSetting: 'swap_setting_config_test',
   liquidityCheck: 'liquidity_check_test',

@@ -22,7 +22,7 @@ class App extends React.Component {
       localStorage.setItem('theme', 'theme-1');
       document.body.classList.add('theme-1');
     } else {
-      document.body.classList.add(theme);crypto
+      document.body.classList.add(theme);
     }
   }
   render() {

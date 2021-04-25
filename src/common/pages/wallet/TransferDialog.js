@@ -266,7 +266,6 @@ class TransferDialog extends Component {
     const { onClose, onSuccess, okexchainClient, assetsType } = this.props;
     const { symbol, address, amount, note, available } = this.state;
     onClose();
-    debugger
     setTimeout(() => {
       this.setState({ transferring: true });
     },0);

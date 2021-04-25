@@ -177,7 +177,7 @@ class ImportByMnemonic extends Component {
 
   omit = (addr) => {
     if (!addr) return ''
-    return addr.slice(0, 5) + '...' + addr.slice(addr.length - 1 - 5, addr.length - 1)
+    return addr.slice(0, 5) + '...' + addr.slice(addr.length - 5, addr.length)
   }
   render() {
     const {
