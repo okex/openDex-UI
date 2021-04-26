@@ -271,7 +271,11 @@ class DexLoggedMenu extends React.Component {
                 display: expanded ? '' : 'none',
               }}
             >
-              <WalletMenuTool address={addr} addressType="okexchain" addressLabel={toLocale('assets_address_OKExChain')} />
+              <WalletMenuTool
+                address={addr}
+                addressType="okexchain"
+                addressLabel={toLocale('assets_address_OKExChain')}
+              />
             </Menu.Item>
             <Menu.Item style={{ height: 20, lineHeight: '20px' }}>
               <span

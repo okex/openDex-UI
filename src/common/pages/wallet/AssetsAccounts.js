@@ -268,11 +268,13 @@ class AssetsAccounts extends Component {
   };
 
   detail = (symbol) => {
-    window.open(`${Config.okexchain.detailUrl}/${symbol}`)
-  }
+    window.open(`${Config.okexchain.detailUrl}/${symbol}`);
+  };
+
   migration = () => {
-    window.open(Config.okexchain.migration)
-  }
+    window.open(Config.okexchain.migration);
+  };
+
   hidden = (symbol) => {
     operationContract.delete(symbol);
     this.fetchAccounts();
