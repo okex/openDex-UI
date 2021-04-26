@@ -1,4 +1,5 @@
 import React from 'react';
+
 export default class DataRow extends React.Component {
   render() {
     const { data, columns } = this.props;

@@ -19,7 +19,7 @@ const baseInitState = {
 };
 
 const localeState = {
-  main: Object.assign({}, baseInitState),
+  main: { ...baseInitState },
   fetchModules: ['main'],
   fetchConfigs: [],
   urlTestLocale: '',
@@ -46,7 +46,7 @@ function fetchLocale(config) {
   const projectLower = project.toLowerCase();
   const localeLower = locale.toLowerCase();
   const fetchUrl = `${PRE_URL}/${siteLower}/${projectLower}/${localeLower}/${siteLower}_${projectLower}_${localeLower}.js${
-    version ? '?v=' + version : ''
+    version ? `?v=${version}` : ''
   }`;
 
   const onError = () => {
@@ -62,7 +62,7 @@ function fetchLocale(config) {
     }
 
     if (errorTimes !== 2) {
-      fetchLocale(Object.assign({}, config));
+      fetchLocale({ ...config });
       return;
     }
 
@@ -136,7 +136,7 @@ function toLocale(key, values, extra) {
   return content.replace(RE, (match, holder, one, other) => {
     const value = values[holder];
 
-    if (value == undefined) {
+    if (value === undefined) {
       return match;
     }
 
@@ -154,9 +154,7 @@ function toLocale(key, values, extra) {
   });
 }
 
-const ComponentWrapper = ({ component }) => {
-  return React.Children.only(component);
-};
+const ComponentWrapper = ({ component }) => React.Children.only(component);
 
 class LocaleProvider extends React.Component {
   constructor(props) {
@@ -181,7 +179,7 @@ class LocaleProvider extends React.Component {
       if (needParts) {
         needParts.forEach((part) => {
           localeStore[part] = {};
-          localeState[part] = Object.assign({}, baseInitState);
+          localeState[part] = { ...baseInitState };
 
           toLocale[part] = (key, values) => toLocale(key, values, part);
         });
@@ -195,9 +193,7 @@ class LocaleProvider extends React.Component {
 
       needParts &&
         needParts.forEach((partItem) => {
-          localeState.fetchConfigs.push(
-            Object.assign({}, fetchConfig, { project: partItem })
-          );
+          localeState.fetchConfigs.push({ ...fetchConfig, project: partItem });
         });
 
       fetchAllLocales();

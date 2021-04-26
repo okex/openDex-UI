@@ -4,9 +4,7 @@ const TYPE_ASK = 0;
 const TYPE_BID = 1;
 
 const sortByPriceDesc = (list) => {
-  list.sort((a, b) => {
-    return b[0] - a[0];
-  });
+  list.sort((a, b) => b[0] - a[0]);
 };
 
 const defaultConfig = {
@@ -25,6 +23,7 @@ class Depth {
     this.askDepthCache = [];
     this.bidDepthCache = [];
   }
+
   spliceMoreThanMaxInternal({ data, type }) {
     const { maxSize } = this.config;
     if (data.length > maxSize) {
@@ -35,6 +34,7 @@ class Depth {
       }
     }
   }
+
   convertInternal(depthItem) {
     const { convertPrice, convertAmount, minAmount } = this.config;
     const price = depthItem[0];
@@ -49,6 +49,7 @@ class Depth {
       }
     }
   }
+
   addDataInternal({ data, type }) {
     const isAsk = type === TYPE_ASK;
     const cacheData = isAsk ? this.askDepthCache : this.bidDepthCache;
@@ -76,9 +77,7 @@ class Depth {
       }
       const price = depthItem[0];
       const amount = depthItem[1];
-      const index = cacheData.findIndex((item) => {
-        return item[0] === price;
-      });
+      const index = cacheData.findIndex((item) => item[0] === price);
       if (index !== -1) {
         if (amount > 0) {
           cacheData[index] = depthItem;
@@ -93,6 +92,7 @@ class Depth {
     this.spliceMoreThanMaxInternal({ data: cacheData, type });
     return cacheData;
   }
+
   getDepthInternal({ type, ladder, size }) {
     const isAsk = type === TYPE_ASK;
     const cacheDepth = isAsk ? this.askDepthCache : this.bidDepthCache;
@@ -131,8 +131,8 @@ class Depth {
         }
       }
 
-      if (ladderValueFlag != ladderValue) {
-        if (resultList.length == size) {
+      if (ladderValueFlag !== ladderValue) {
+        if (resultList.length === size) {
           break;
         }
         if (depthItemAmount < this.config.minAmount) {
@@ -162,6 +162,7 @@ class Depth {
     }
     return resultList;
   }
+
   addData(pushData) {
     return {
       asks: this.addDataInternal({ data: pushData.asks || [], type: TYPE_ASK }),

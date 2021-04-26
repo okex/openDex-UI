@@ -10,6 +10,7 @@ import FILK from '_src/assets/images/FILK.png';
 import USDC from '_src/assets/images/USDC.png';
 import USDK from '_src/assets/images/USDK.png';
 import OKB from '_src/assets/images/OKB.png';
+
 const icons = {
   OKT: coinOkt,
   'BTCK-BA9': BTCK,

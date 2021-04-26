@@ -1,25 +1,30 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import ReduceLiquidity from './ReduceLiquidity';
 import PageURL from '_constants/PageURL';
+import ReduceLiquidity from './ReduceLiquidity';
 import * as api from '../util/api';
+
 @withRouter
 export default class ReduceLiquidityWrap extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.init = false;
     this.state = {
-      userLiquidity:null
-    }
+      userLiquidity: null,
+    };
   }
 
   async componentDidMount() {
     this.init = true;
-    const {match:{params:{base,target}}} = this.props;
-    let {userLiquidity} = await api.getLiquidity(base,target);
-    if(userLiquidity) {
+    const {
+      match: {
+        params: { base, target },
+      },
+    } = this.props;
+    let { userLiquidity } = await api.getLiquidity(base, target);
+    if (userLiquidity) {
       this.setState({
-        userLiquidity
+        userLiquidity,
       });
     } else {
       this.props.history.replace(PageURL.liquidityPage);
@@ -27,7 +32,7 @@ export default class ReduceLiquidityWrap extends React.Component {
   }
 
   render() {
-    if(!this.init) return null;
-    return <ReduceLiquidity liquidity={this.state.userLiquidity}/>
+    if (!this.init) return null;
+    return <ReduceLiquidity liquidity={this.state.userLiquidity} />;
   }
 }

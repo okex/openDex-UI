@@ -17,6 +17,7 @@ export default class TradeSliderBar extends React.Component {
     onChange: () => {},
     theme: 'light',
   };
+
   constructor(props) {
     super(props);
     const { value } = this.props;
@@ -44,11 +45,11 @@ export default class TradeSliderBar extends React.Component {
     this.viewData.startX = e.pageX;
     this.viewData.currValue = this.props.value;
   };
-  onDotClick = (num) => {
-    return () => {
-      this.changePercent(num);
-    };
+
+  onDotClick = (num) => () => {
+    this.changePercent(num);
   };
+
   getLegalPercentValue = (newValue) => {
     let result = newValue;
     if (newValue < 0) {
@@ -58,14 +59,17 @@ export default class TradeSliderBar extends React.Component {
     }
     return result;
   };
+
   removeEvents = () => {
     document.removeEventListener('mouseup', this.handleMouseUp);
     document.removeEventListener('mousemove', this.handleMouseMouve);
   };
+
   addEvents = () => {
     document.addEventListener('mouseup', this.handleMouseUp);
     document.addEventListener('mousemove', this.handleMouseMouve);
   };
+
   handleMouseMouve = (e) => {
     if (!this.viewData.dragging) {
       return;
@@ -78,6 +82,7 @@ export default class TradeSliderBar extends React.Component {
     newValue = this.getLegalPercentValue(newValue);
     this.changePercent(newValue);
   };
+
   handleMouseUp = () => {
     if (this.viewData.dragging) {
       this.viewData.dragging = false;

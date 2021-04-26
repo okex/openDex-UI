@@ -89,18 +89,19 @@ export default class InputNum extends React.Component {
   };
 
   checkInpNumber = (inputValue, num) => {
-    if(inputValue === '.') inputValue = '0.';
+    if (inputValue === '.') inputValue = '0.';
     let inps = inputValue.replace('。', '.').split('.');
     let inpNumber = '';
     if (inps.length > 1) {
-      if (typeof num != 'undefined' || num === -1) {
-        inpNumber =
-          inps[0].replace(/\D/g, '') + '.' + inps[1].replace(/\D/g, '');
+      if (typeof num !== 'undefined' || num === -1) {
+        inpNumber = `${inps[0].replace(/\D/g, '')}.${inps[1].replace(
+          /\D/g,
+          ''
+        )}`;
       } else {
-        inpNumber =
-          inps[0].replace(/\D/g, '') +
-          '.' +
-          inps[1].replace(/\D/g, '').slice(0, num);
+        inpNumber = `${inps[0].replace(/\D/g, '')}.${inps[1]
+          .replace(/\D/g, '')
+          .slice(0, num)}`;
       }
     } else {
       inpNumber = inps[0].replace(/\D/g, '').replace(/0*(\d+)/, '$1');
@@ -109,20 +110,20 @@ export default class InputNum extends React.Component {
   };
 
   _precision(inpNumber) {
-    const inpNumbers = ('' + inpNumber).split('.');
+    const inpNumbers = `${inpNumber}`.split('.');
     if (this.props.precision) {
       if (inpNumbers[1]) {
         inpNumbers[1] = inpNumbers[1].substring(0, this.props.precision);
-        inpNumber = inpNumbers[0] + '.' + inpNumbers[1];
+        inpNumber = `${inpNumbers[0]}.${inpNumbers[1]}`;
       }
-    } else if(this.props.precision === 0) {
+    } else if (this.props.precision === 0) {
       return inpNumbers[0];
     }
     return inpNumber;
   }
 
   removeDot = (value) => {
-    if (typeof value != 'number' && typeof value != 'string') {
+    if (typeof value !== 'number' && typeof value !== 'string') {
       return value;
     }
     let newValue = String(value).replace(/,/g, '');
@@ -130,7 +131,7 @@ export default class InputNum extends React.Component {
   };
 
   addDot = (value) => {
-    if (typeof value != 'number' && typeof value != 'string') {
+    if (typeof value !== 'number' && typeof value !== 'string') {
       return value;
     }
     if (Math.abs(value) < 1000) {
@@ -139,16 +140,15 @@ export default class InputNum extends React.Component {
     let newValue = String(value).replace(/,/g, '');
     let inpArr = newValue.split('.');
 
-    let l = inpArr[0].split('').reverse(),
-      t = '';
+    let l = inpArr[0].split('').reverse();
+    let t = '';
     for (let i = 0; i < l.length; i++) {
-      t += l[i] + ((i + 1) % 3 == 0 && i + 1 != l.length ? ',' : '');
+      t += l[i] + ((i + 1) % 3 === 0 && i + 1 !== l.length ? ',' : '');
     }
-    if (inpArr.length == 2) {
-      return t.split('').reverse().join('') + '.' + inpArr[1];
-    } else {
-      return t.split('').reverse().join('');
+    if (inpArr.length === 2) {
+      return `${t.split('').reverse().join('')}.${inpArr[1]}`;
     }
+    return t.split('').reverse().join('');
   };
 
   shouldComponentUpdate(nextProps) {

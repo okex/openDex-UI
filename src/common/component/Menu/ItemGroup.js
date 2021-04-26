@@ -7,10 +7,12 @@ class ItemGroup extends Component {
     title: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
     children: PropTypes.array,
   };
+
   static defaultProps = {
     title: '',
     children: [],
   };
+
   render() {
     return <RcItemGroup {...this.props} />;
   }

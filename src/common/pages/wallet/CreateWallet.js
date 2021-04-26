@@ -39,6 +39,7 @@ class CreateWallet extends Component {
     }
     return component;
   };
+
   render() {
     const { step } = this.props;
     return (

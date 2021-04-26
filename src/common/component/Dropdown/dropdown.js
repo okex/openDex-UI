@@ -21,9 +21,7 @@ class DropDown extends React.Component {
   };
 
   static defaultProps = {
-    getPopupContainer: () => {
-      return document.body;
-    },
+    getPopupContainer: () => document.body,
     placement: 'bottomLeft',
     trigger: ['hover'],
     onVisibleChange: () => {},
@@ -36,10 +34,12 @@ class DropDown extends React.Component {
     onOverlayClick: () => {},
     overlay: () => {},
   };
+
   constructor(props) {
     super(props);
     this.state = {};
   }
+
   render() {
     const fixedProps = {
       prefixCls: 'ok-ui-dropdown',

@@ -1,10 +1,10 @@
 import React from 'react';
 import { toLocale } from '_src/locale/react-locale';
 import util from '_src/utils/util';
+import classNames from 'classnames';
 import { getCoinIcon } from '../../utils/coinIcon';
 import SimpleBtnDialog from './SimpleBtnDialog';
 import { Dialog } from '../../component/Dialog';
-import classNames from 'classnames';
 import Stake from './Stake';
 import ClaimBtn from './ClaimBtn';
 import ClaimCheck from './ClaimCheck';
@@ -106,7 +106,7 @@ export default class FarmPanel extends React.Component {
                 {data.lock_symbol_info.symbols.map((symbol, symbolIndex) => (
                   <img src={getCoinIcon(symbol)} key={symbolIndex} />
                 ))}
-                <span></span>
+                <span />
               </div>
             </div>
           </div>

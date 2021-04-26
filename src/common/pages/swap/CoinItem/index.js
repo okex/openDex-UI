@@ -2,13 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { toLocale } from '_src/locale/react-locale';
 import InputNum from '_component/InputNum';
-import SelectCoin from '../SelectCoin';
-import { getCoinIcon, getDisplaySymbol } from '../../../utils/coinIcon';
 import classNames from 'classnames';
-import { channelsV3 } from '../../../utils/websocket';
-import SwapContext from '../SwapContext';
 import util from '_src/utils/util';
 import calc from '_src/utils/calc';
+import SelectCoin from '../SelectCoin';
+import { getCoinIcon, getDisplaySymbol } from '../../../utils/coinIcon';
+import { channelsV3 } from '../../../utils/websocket';
+import SwapContext from '../SwapContext';
 import env from '../../../constants/env';
 
 function mapStateToProps(state) {
@@ -36,15 +36,15 @@ export default class CoinItem extends React.Component {
     const { token } = this.props;
     let error = false;
     if (this.props.max) {
-      const max = this.getAvailable(true).replace(/,/g,'');
+      const max = this.getAvailable(true).replace(/,/g, '');
       if (util.compareNumber(max, value)) error = true;
     }
-    this.props.onChange({ ...token, value: '' + value, error }, true);
+    this.props.onChange({ ...token, value: `${value}`, error }, true);
   };
 
   setMaxValue = () => {
     const { token } = this.props;
-    const max = this.getAvailable(true).replace(/,/g,'');
+    const max = this.getAvailable(true).replace(/,/g, '');
     if (token.symbol.toLowerCase() === env.envConfig.token.base) {
       let value = calc.sub(max, env.envConfig.fee * 10, false);
       if (+value < 0) value = util.precisionInput(0, 8, false);
@@ -72,7 +72,6 @@ export default class CoinItem extends React.Component {
       this.context.send(channelsV3.getBalance(symbol));
       if (this.currentSubscribe)
         this.context.stop(channelsV3.getBalance(this.currentSubscribe));
-      console.log('subscribe', symbol, 'unsubscribe', this.currentSubscribe);
       this.currentSubscribe = symbol;
     }
   }
@@ -87,7 +86,6 @@ export default class CoinItem extends React.Component {
     if (!this.context) return;
     if (this.currentSubscribe) {
       this.context.stop(channelsV3.getBalance(this.currentSubscribe));
-      console.log('unsubscribe', this.currentSubscribe);
       this.currentSubscribe = null;
     }
   }
@@ -132,7 +130,10 @@ export default class CoinItem extends React.Component {
     } = this.props;
     let available = this.getAvailable();
     this.props.token.error = false;
-    if (max && util.compareNumber(this.getAvailable(true).replace(/,/g,''), value)) {
+    if (
+      max &&
+      util.compareNumber(this.getAvailable(true).replace(/,/g, ''), value)
+    ) {
       this.props.token.error = true;
     }
     const { show } = this.state;

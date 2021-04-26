@@ -77,9 +77,7 @@ const formatProduct = (product) => {
 };
 
 export const channelsV3 = {
-  getBalance: (token) => {
-    return `dex_spot/account:${token}`;
-  },
+  getBalance: (token) => `dex_spot/account:${token}`,
   getBaseBalance: (product) => {
     const base = product && product.split('_')[0];
     return channelsV3.getBalance(base);
@@ -88,15 +86,11 @@ export const channelsV3 = {
     const quote = product && product.split('_')[1];
     return channelsV3.getBalance(quote);
   },
-  getOpenOrder: () => {
-    return 'dex_spot/order:*';
-  },
+  getOpenOrder: () => 'dex_spot/order:*',
   getTicker(product) {
     return `dex_spot/ticker:${formatProduct(product)}`;
   },
-  getAllMarketTickers: () => {
-    return 'dex_spot/all_ticker_3s';
-  },
+  getAllMarketTickers: () => 'dex_spot/all_ticker_3s',
   getDepth(product) {
     return `dex_spot/optimized_depth:${formatProduct(product)}`;
   },
@@ -138,8 +132,6 @@ export const getWsUrl = () => {
   return url || DEFAULT_NODE;
 };
 
-export const getConnectCfg = () => {
-  return {
-    connectUrl: getWsUrl(),
-  };
-};
+export const getConnectCfg = () => ({
+  connectUrl: getWsUrl(),
+});

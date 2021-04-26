@@ -1,18 +1,19 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import Pagination from '_component/Pagination';
-import { getCoinIcon } from '../../utils/coinIcon';
 import { toLocale } from '_src/locale/react-locale';
 import PageURL from '_constants/PageURL';
-import WatchList from './Watchlist';
-import * as api from './util/api';
 import calc from '_src/utils/calc';
 import util from '_src/utils/util';
 import { dateFns } from '_component/okit';
+import classNames from 'classnames';
+import WatchList from './Watchlist';
+import * as api from './util/api';
 import Tooltip from '../../component/Tooltip';
 import SimpleBtnDialog from './SimpleBtnDialog';
-import classNames from 'classnames';
+import { getCoinIcon } from '../../utils/coinIcon';
 import Stake from './Stake';
+
 @withRouter
 export default class WatchlistPanel extends React.Component {
   constructor() {
@@ -21,18 +22,16 @@ export default class WatchlistPanel extends React.Component {
       {
         name: toLocale('Farm pool'),
         width: '200',
-        component: ({ row }) => {
-          return (
-            <div className="coin2coin">
-              {row.lock_symbol_info.symbols.map((symbol, symbolIndex) => (
-                <img src={getCoinIcon(symbol)} key={symbolIndex} />
-              ))}
-              <Tooltip placement="right" overlay={row.pool_name}>
-                <span>{row.lock_symbol_info.name}</span>
-              </Tooltip>
-            </div>
-          );
-        },
+        component: ({ row }) => (
+          <div className="coin2coin">
+            {row.lock_symbol_info.symbols.map((symbol, symbolIndex) => (
+              <img src={getCoinIcon(symbol)} key={symbolIndex} />
+            ))}
+            <Tooltip placement="right" overlay={row.pool_name}>
+              <span>{row.lock_symbol_info.name}</span>
+            </Tooltip>
+          </div>
+        ),
       },
       {
         field: 'total_staked',
@@ -42,7 +41,7 @@ export default class WatchlistPanel extends React.Component {
         component(props) {
           return Number(props.data) === 0
             ? '--'
-            : '$' + util.precisionInput(calc.mul(props.data, 1), 2);
+            : `$${util.precisionInput(calc.mul(props.data, 1), 2)}`;
         },
       },
       {
@@ -91,21 +90,23 @@ export default class WatchlistPanel extends React.Component {
       {
         name: toLocale('Action'),
         width: '80',
-        component: ({ row }) => {
-          return (
-            <SimpleBtnDialog
-              component={() =>
-                Stake.getStake({ data: row, onSuccess: () => this.props.history.push(PageURL.myfarmingsPage)})
-              }
-            >
-              <div className="action-opt-wrap">
-                <div className={classNames('action-opt')}>
-                  {toLocale('Stake')}
-                </div>
+        component: ({ row }) => (
+          <SimpleBtnDialog
+            component={() =>
+              Stake.getStake({
+                data: row,
+                onSuccess: () =>
+                  this.props.history.push(PageURL.myfarmingsPage),
+              })
+            }
+          >
+            <div className="action-opt-wrap">
+              <div className={classNames('action-opt')}>
+                {toLocale('Stake')}
               </div>
-            </SimpleBtnDialog>
-          );
-        },
+            </div>
+          </SimpleBtnDialog>
+        ),
       },
     ];
     this.state = {

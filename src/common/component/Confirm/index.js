@@ -9,7 +9,6 @@ import * as CommonAction from '_src/redux/actions/CommonAction';
 import { validateTxs } from '_src/utils/client';
 import Config from '../../constants/Config';
 import getRef from '../getRef';
-import env from '../../constants/env';
 
 function mapStateToProps(state) {
   const { okexchainClient, privateKey } = state.Common;
@@ -36,7 +35,7 @@ export default class Confirm extends React.Component {
   }
 
   onClose = () => {
-    this.setState({ isShow: false,pwdErr:'' });
+    this.setState({ isShow: false, pwdErr: '' });
   };
 
   onEnter = (pwd) => {
@@ -63,7 +62,7 @@ export default class Confirm extends React.Component {
 
   checkPwd() {
     if (!util.isLogined()) return window.location.reload();
-    if(util.isWalletConnect()) return true;
+    if (util.isWalletConnect()) return true;
     const expiredTime = window.localStorage.getItem('pExpiredTime') || 0;
     if (new Date().getTime() >= +expiredTime || !this.props.privateKey) {
       this.setState({ isShow: true });
@@ -82,7 +81,13 @@ export default class Confirm extends React.Component {
   }
 
   onClick = (privateKey, checkPwd = true) => {
-    const { loadingTxt, successTxt, onClick, okexchainClient, onCancel } = this.props;
+    const {
+      loadingTxt,
+      successTxt,
+      onClick,
+      okexchainClient,
+      onCancel,
+    } = this.props;
     if (!onClick || this.loading) return;
     if (checkPwd && !this.checkPwd()) return;
     this.setState({ loading: true });
@@ -96,22 +101,22 @@ export default class Confirm extends React.Component {
           loadingToast = loadingTxt
             ? Message.loading({
                 content: loadingTxt,
-                desc:(
+                desc: (
                   <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={`${
-                    Config.okexchain.browserAddressUrl
-                  }/${util.getMyAddr()}`}
-                >
-                  {toLocale('pending transactions link')}
-                </a>
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={`${
+                      Config.okexchain.browserAddressUrl
+                    }/${util.getMyAddr()}`}
+                  >
+                    {toLocale('pending transactions link')}
+                  </a>
                 ),
                 duration: 0,
                 onClose: () => {
                   this.loading = false;
-                  if(onCancel) onCancel();
-                }
+                  if (onCancel) onCancel();
+                },
               })
             : null;
           const res = await onClick();
@@ -121,18 +126,23 @@ export default class Confirm extends React.Component {
             );
           }
           if (successTxt)
-          loadingToast && loadingToast.update({
-              content: successTxt,
-              type: Message.TYPE.success,
-            });
+            loadingToast &&
+              loadingToast.update({
+                content: successTxt,
+                type: Message.TYPE.success,
+              });
           this.loading = false;
         } catch (e) {
           let typeErr = e instanceof TypeError;
-          let content = typeErr || e.message.includes('timing out') ? toLocale('network error') :(e.message || toLocale('sysError'));
-          loadingToast && loadingToast.update({
-            content,
-            type: Message.TYPE.error,
-          });
+          let content =
+            typeErr || e.message.includes('timing out')
+              ? toLocale('network error')
+              : e.message || toLocale('sysError');
+          loadingToast &&
+            loadingToast.update({
+              content,
+              type: Message.TYPE.error,
+            });
         } finally {
           if (loadingToast) {
             setTimeout(() => {

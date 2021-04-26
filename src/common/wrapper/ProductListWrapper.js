@@ -59,7 +59,7 @@ const ProductListWrapper = (Component) => {
       }
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
       const { spotActions } = this.props;
       const newWsIsOnline = nextProps.wsIsOnlineV3;
       const oldWsIsOnline = this.props.wsIsOnlineV3;
@@ -85,29 +85,29 @@ const ProductListWrapper = (Component) => {
       const { groupId } = activeMarket;
       if (+groupId === 1) {
         currList = productList
-          .filter((product) => {
-            return `${product}` == product;
-          })
-          .sort((a, b) => {
-            return b.order - a.order;
-          });
+          .filter((product) => `${product}` === product)
+          .sort((a, b) => b.order - a.order);
       } else {
-        currList = productList.filter((product) => {
-          return product.product.split('_')[1] === groupId;
-        });
+        currList = productList.filter(
+          (product) => product.product.split('_')[1] === groupId
+        );
       }
       return currList;
     };
+
     startWs = () => {
       wsV3.send(channelsV3.getAllMarketTickers());
     };
+
     stopWs = () => {
       wsV3.stop(channelsV3.getAllMarketTickers());
     };
+
     handleSearch = (text) => {
       const { spotActions } = this.props;
       spotActions.updateSearch(text);
     };
+
     handleSelectMenu = (item) => {
       const { tradeType } = window.OK_GLOBAL;
       const { spotActions } = this.props;
@@ -198,7 +198,6 @@ const ProductListWrapper = (Component) => {
             volume = currTicker.volume;
           }
           const { productId, collect } = item;
-          const { productConfig } = window.OK_GLOBAL;
           const max_price_digit = item.max_price_digit || 4;
           const [symbol] = productIterative.split('_');
           const [shortToken] = symbol.split('-');

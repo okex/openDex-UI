@@ -8,7 +8,6 @@ import * as SpotActions from '_src/redux/actions/SpotAction';
 import * as SpotTradeActions from '_src/redux/actions/SpotTradeAction';
 import * as OrderAction from '_src/redux/actions/OrderAction';
 import util from '_src/utils/util';
-import PageURL from '_src/constants/PageURL';
 import env from '_src/constants/env';
 
 function mapStateToProps(state) {
@@ -61,6 +60,7 @@ const InitWrapper = (Component) => {
       spotActions.fetchTickers();
       spotActions.fetchCurrency();
     };
+
     wsHandler = (table) => {
       const { orderAction, spotTradeActions, spotActions } = this.props;
       const fns = {
@@ -85,6 +85,7 @@ const InitWrapper = (Component) => {
       };
       return fns[table.split(':')[0]];
     };
+
     startInitWebSocket = () => {
       if (!window.WebSocketCore || !env.envConfig.isMainnet) return;
       const OK_GLOBAL = window.OK_GLOBAL;
@@ -107,7 +108,7 @@ const InitWrapper = (Component) => {
           v3.sendChannel('ping');
         });
         v3.setPushDataResolver((pushData) => {
-          const { table, data, event, success, errorCode } = pushData;
+          const { table, data, event, success } = pushData;
           if (table && data) {
             const handler = this.wsHandler(table);
             handler && handler(data, pushData);
@@ -127,8 +128,9 @@ const InitWrapper = (Component) => {
         wsV3.login(util.getMyAddr());
       }
     };
+
     render() {
-      const { currencyList, productList, tickers } = this.props;
+      const { currencyList, productList } = this.props;
       if (
         currencyList &&
         currencyList.length &&

@@ -4,21 +4,21 @@ import { toLocale } from '_src/locale/react-locale';
 import { getLangURL } from '_src/utils/navigation';
 import PageURL from '_constants/PageURL';
 import { withRouter, Link } from 'react-router-dom';
-import CoinItem from '../CoinItem';
 import calc from '_src/utils/calc';
+import util from '_src/utils/util';
+import Message from '_src/component/Notification';
+import { validateTxs } from '_src/utils/client';
+import classNames from 'classnames';
+import CoinItem from '../CoinItem';
 import * as api from '../util/api';
 import InfoItem from '../InfoItem';
 import Confirm from '../../../component/Confirm';
-import util from '_src/utils/util';
-import { getLiquidityCheck, liquidityCheck } from '../util';
+import { getLiquidityCheck, liquidityCheck, getDeadLine4sdk } from '../util';
 import Config from '../../../constants/Config';
-import { getDeadLine4sdk } from '../util';
-import Message from '_src/component/Notification';
+
 import Tooltip from '../../../component/Tooltip';
-import { validateTxs } from '_src/utils/client';
 import { getDisplaySymbol } from '../../../utils/coinIcon';
 import { Dialog } from '../../../component/Dialog';
-import classNames from 'classnames';
 import env from '../../../constants/env';
 
 function mapStateToProps(state) {
@@ -35,7 +35,9 @@ export default class AddLiquidity extends React.Component {
     this.confirmRef = React.createRef();
     this.state = this._getDefaultState(props);
     this.trading = false;
-    this.debounceUpdateLiquidInfo4RealTime = util.debounce(this.updateLiquidInfo4RealTime);
+    this.debounceUpdateLiquidInfo4RealTime = util.debounce(
+      this.updateLiquidInfo4RealTime
+    );
   }
 
   _getDefaultState(props) {
@@ -66,14 +68,14 @@ export default class AddLiquidity extends React.Component {
       isEmptyPool,
       showConfirmDialog: false,
       active: false,
-      check: getLiquidityCheck()
+      check: getLiquidityCheck(),
     };
   }
 
   _process(liquidity) {
-    let baseSymbol = env.envConfig.token.base,
-      targetSymbol = '',
-      isEmptyPool = false;
+    let baseSymbol = env.envConfig.token.base;
+    let targetSymbol = '';
+    let isEmptyPool = false;
     if (liquidity) {
       baseSymbol = liquidity.base_pooled_coin.denom;
       targetSymbol = liquidity.quote_pooled_coin.denom;
@@ -111,8 +113,9 @@ export default class AddLiquidity extends React.Component {
         targetToken: { ...this.state.targetToken },
         exchangeInfo: { ...this.state.exchangeInfo },
       };
-      if(inputChanged) this.debounceUpdateLiquidInfo4RealTime({ data:temp, inputChanged });
-      else this.updateLiquidInfo4RealTime({ data:temp, inputChanged });
+      if (inputChanged)
+        this.debounceUpdateLiquidInfo4RealTime({ data: temp, inputChanged });
+      else this.updateLiquidInfo4RealTime({ data: temp, inputChanged });
     });
   };
 
@@ -129,10 +132,19 @@ export default class AddLiquidity extends React.Component {
         targetToken: { ...this.state.targetToken },
         exchangeInfo: { ...this.state.exchangeInfo },
       };
-      if(inputChanged) this.debounceUpdateLiquidInfo4RealTime({ data:temp, key: 'targetToken', inputChanged });
-      else this.updateLiquidInfo4RealTime({ data:temp, key: 'targetToken', inputChanged });
+      if (inputChanged)
+        this.debounceUpdateLiquidInfo4RealTime({
+          data: temp,
+          key: 'targetToken',
+          inputChanged,
+        });
+      else
+        this.updateLiquidInfo4RealTime({
+          data: temp,
+          key: 'targetToken',
+          inputChanged,
+        });
     });
-    
   };
 
   _clearTimer() {
@@ -147,7 +159,7 @@ export default class AddLiquidity extends React.Component {
     key = 'baseToken',
     time = 3000,
     inputChanged = true,
-    check = true
+    check = true,
   }) => {
     this._clearTimer();
     await this.updateInfo(data, key, true, inputChanged, check);
@@ -165,7 +177,7 @@ export default class AddLiquidity extends React.Component {
           this.setState(temp);
         }, time));
     });
-  }
+  };
 
   init = async (state) => {
     const { baseToken, targetToken } = state;
@@ -178,15 +190,19 @@ export default class AddLiquidity extends React.Component {
     const data = { ...state };
     if (base) data.baseToken = { ...baseToken, ...base };
     if (targetToken.symbol) {
-      const target = tokens.filter(
-        (d) => d.symbol === targetToken.symbol
-      )[0];
+      const target = tokens.filter((d) => d.symbol === targetToken.symbol)[0];
       if (target) data.targetToken = { ...targetToken, ...target };
     }
     this.updateLiquidInfo4RealTime({ data, check: false });
   };
 
-  async updateInfo(data, key, errTip = false, inputChanged = true, check = true) {
+  async updateInfo(
+    data,
+    key,
+    errTip = false,
+    inputChanged = true,
+    check = true
+  ) {
     try {
       await this._check(data, check);
       await this._updateExchangePrice(data);
@@ -209,9 +225,12 @@ export default class AddLiquidity extends React.Component {
   }
 
   async _check(data, check) {
-    if(!check) return;
+    if (!check) return;
     const { baseToken, targetToken } = data;
-    let {liquidity, userLiquidity} = await api.getLiquidity(baseToken.symbol,targetToken.symbol);
+    let { liquidity, userLiquidity } = await api.getLiquidity(
+      baseToken.symbol,
+      targetToken.symbol
+    );
     const { isEmptyPool } = this._process(liquidity);
     data.liquidity = liquidity;
     data.userLiquidity = userLiquidity;
@@ -243,8 +262,8 @@ export default class AddLiquidity extends React.Component {
 
   async _updateExchange(data, key, inputChanged) {
     const { baseToken, targetToken, exchangeInfo } = data;
-    let _baseToken = baseToken,
-      _targetToken = targetToken;
+    let _baseToken = baseToken;
+    let _targetToken = targetToken;
     if (
       (key === 'targetToken' && (targetToken.value || inputChanged)) ||
       (targetToken.value && !baseToken.value)
@@ -336,8 +355,8 @@ export default class AddLiquidity extends React.Component {
 
   _getExchangeData() {
     let { baseToken, targetToken, exchangeInfo, isEmptyPool } = this.state;
-    let priceInfo,
-      price = exchangeInfo.price;
+    let priceInfo;
+    let price = exchangeInfo.price;
     if (exchangeInfo.isReverse) {
       const temp = baseToken;
       baseToken = targetToken;
@@ -449,10 +468,10 @@ export default class AddLiquidity extends React.Component {
     let { baseToken, targetToken } = this._exchangeTokenData();
     const { okexchainClient } = this.props;
     const params = [
-      this.getMinimumReceived(exchangeInfo.liquidity).replace(/,/g,''),
-      util.precisionInput(baseToken.value).replace(/,/g,''),
+      this.getMinimumReceived(exchangeInfo.liquidity).replace(/,/g, ''),
+      util.precisionInput(baseToken.value).replace(/,/g, ''),
       baseToken.symbol,
-      util.precisionInput(targetToken.value).replace(/,/g,''),
+      util.precisionInput(targetToken.value).replace(/,/g, ''),
       targetToken.symbol,
       getDeadLine4sdk(),
       '',
@@ -483,7 +502,7 @@ export default class AddLiquidity extends React.Component {
 
   cancel = () => {
     this.trading = false;
-  }
+  };
 
   triggerConfirm = () => {
     this.confirmDialog(false);
@@ -499,7 +518,9 @@ export default class AddLiquidity extends React.Component {
   }
 
   reduce = (liquidity) => {
-    this.props.history.push(`${PageURL.reduceLiquidityPage}/${liquidity.base_pooled_coin.denom}/${liquidity.quote_pooled_coin.denom}`);
+    this.props.history.push(
+      `${PageURL.reduceLiquidityPage}/${liquidity.base_pooled_coin.denom}/${liquidity.quote_pooled_coin.denom}`
+    );
   };
 
   render() {
@@ -521,8 +542,9 @@ export default class AddLiquidity extends React.Component {
     const {
       setting: { slippageTolerance },
     } = this.props;
-    let lpBaseSymbol = baseToken.symbol, lpTargetSymbol = targetToken.symbol;
-    if(baseToken.symbol > targetToken.symbol) {
+    let lpBaseSymbol = baseToken.symbol;
+    let lpTargetSymbol = targetToken.symbol;
+    if (baseToken.symbol > targetToken.symbol) {
       lpBaseSymbol = lpTargetSymbol;
       lpTargetSymbol = baseToken.symbol;
     }
@@ -530,7 +552,10 @@ export default class AddLiquidity extends React.Component {
       <>
         <div className="panel">
           <div className="panel-header">
-            <i className="iconfont before" onClick={() => this.props.history.goBack()}></i>
+            <i
+              className="iconfont before"
+              onClick={() => this.props.history.goBack()}
+            />
             {toLocale('Add Liquidity')}
           </div>
           <div className="add-liquidity-content">
@@ -553,26 +578,26 @@ export default class AddLiquidity extends React.Component {
               onChange={this.changeBase}
               loadCoinList={this.loadBaseCoinList}
               disabledChangeCoin={disabledChangeCoin}
-              max={true}
+              max
             />
-            <div className="sep add-sep"></div>
+            <div className="sep add-sep" />
             <CoinItem
               label={toLocale('Input')}
               token={targetToken}
               onChange={this.changeTarget}
               loadCoinList={this.loadTargetCoinList}
               disabledChangeCoin={disabledChangeCoin}
-              max={true}
+              max
             />
             {exchangeInfo}
             <div className="tip-liquidity-check">
               <span
                 className={classNames('check', { active: check })}
                 onClick={this.checkProtocol}
-              ></span>
+              />
               <div className="protocol">
                 {toLocale('info desc')}
-                {Config.okexchain.liquidity && 
+                {Config.okexchain.liquidity && (
                   <a
                     href={Config.okexchain.liquidity}
                     target="_blank"
@@ -580,7 +605,7 @@ export default class AddLiquidity extends React.Component {
                   >
                     {toLocale('go detail')}
                   </a>
-                }
+                )}
               </div>
             </div>
             <div className="btn-wrap">{btn}</div>
@@ -664,7 +689,7 @@ export default class AddLiquidity extends React.Component {
           loadingTxt={toLocale('pending transactions')}
           successTxt={toLocale('transaction confirmed')}
           getRef={(instance) => (this.confirmInstance = instance)}
-        ></Confirm>
+        />
       </>
     );
   }

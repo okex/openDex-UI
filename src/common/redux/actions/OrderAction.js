@@ -6,7 +6,6 @@ import Enum from '../../utils/Enum';
 import util from '../../utils/util';
 import { OrderStatus } from '../../constants/OrderStatus';
 import { toLocale } from '../../locale/react-locale';
-import env from '../../constants/env';
 
 const defaultPage = {
   page: 1,
@@ -40,7 +39,7 @@ export function handleRequestCommon(params, url) {
   return (dispatch, getState) => {
     const store = getState();
     const { product } = store.SpotTrade;
-    const { isHideOthers, periodIntervalType } = store.OrderStore;
+    const { isHideOthers } = store.OrderStore;
     const { senderAddr } = window.OK_GLOBAL;
     const newParams = {
       ...defaultPage,
@@ -125,7 +124,7 @@ export function getNoDealList(params = {}) {
   return (dispatch, getState) => {
     const store = getState();
     const { product } = store.SpotTrade;
-    const { isHideOthers, periodIntervalType } = store.OrderStore;
+    const { isHideOthers } = store.OrderStore;
     const { senderAddr } = window.OK_GLOBAL;
     const newParams = {
       ...defaultPage,
@@ -341,15 +340,13 @@ export function wsUpdateList(noDealObj) {
         }
       });
     } else {
-      currentData = wsData.filter((wsItem) => {
-        return [Open].includes(wsItem.status.toString());
-      });
+      currentData = wsData.filter((wsItem) =>
+        [Open].includes(wsItem.status.toString())
+      );
     }
     if (isHideOthers) {
       const { product } = store.SpotTrade;
-      currentData = currentData.filter((item) => {
-        return item.product === product;
-      });
+      currentData = currentData.filter((item) => item.product === product);
     }
     return dispatch({
       type: OrderActionType.UPDATE_DATA,

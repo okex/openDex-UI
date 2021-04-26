@@ -40,8 +40,8 @@ export const getDelayType = (delayTime) => {
   return delayType;
 };
 
-export const getNodeLatency = (node) => {
-  return new Promise((resolve) => {
+export const getNodeLatency = (node) =>
+  new Promise((resolve) => {
     setTimeout(() => {
       resolve(MAX_LATENCY);
     }, TIMEOUT);
@@ -67,7 +67,6 @@ export const getNodeLatency = (node) => {
       resolve(MAX_LATENCY);
     }
   });
-};
 
 export const getNodeRenderName = (node) => {
   let renderName = '';

@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import Icon from '_src/component/IconLite';
 import { toLocale } from '_src/locale/react-locale';
 import { calc } from '_component/okit';
+import { getDisplaySymbol } from '_src/utils/coinIcon';
 import Fee from './Fee';
 import Enum from '../../utils/Enum';
 import util from '../../utils/util';
-import { getDisplaySymbol } from '_src/utils/coinIcon';
 
 function mapStateToProps(state) {
   const { FormStore, SpotTrade } = state;
@@ -25,12 +25,14 @@ class Available extends React.Component {
     asset: PropTypes.object,
     currencyTicker: PropTypes.object,
   };
+
   static defaultProps = {
     asset: {},
     currencyTicker: {
       price: 0,
     },
   };
+
   renderFees = () => {
     if (window.isBroker) {
       return <Fee />;
@@ -111,7 +113,8 @@ class Available extends React.Component {
           </span>
         </div>
       );
-    } else if (tradeType === Enum.tradeType.fullTrade) {
+    }
+    if (tradeType === Enum.tradeType.fullTrade) {
       if (type === Enum.placeOrder.type.buy) {
         return (
           <div className="spot-availadle">

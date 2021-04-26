@@ -4,7 +4,7 @@ import env from '../../constants/env';
 const walletUtil = {
   setUserInSessionStroageByWalletConnect(addr) {
     const user = {
-      addr
+      addr,
     };
     window.localStorage.setItem(env.envConfig.dexUser, JSON.stringify(user));
     window.OK_GLOBAL.senderAddr = addr;
@@ -18,7 +18,7 @@ const walletUtil = {
     };
     window.localStorage.setItem(env.envConfig.dexUser, JSON.stringify(user));
     window.OK_GLOBAL.senderAddr = addr;
-    window.OK_GLOBAL.generalAddr = crypto.convertBech32ToHex(addr)[0]
+    window.OK_GLOBAL.generalAddr = crypto.convertBech32ToHex(addr)[0];
     window.OK_GLOBAL.isLogin = true;
   },
   getPasswordInputType() {

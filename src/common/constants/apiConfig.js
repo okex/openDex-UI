@@ -1,5 +1,6 @@
 import { NODE_TYPE, MAX_LATENCY } from './Node';
 import { getApiUrl } from './getApiUrl';
+
 const httpUrl = getApiUrl();
 const wsUrl = 'wss://dexcomreal.bafang.com:8443/ws/v3';
 

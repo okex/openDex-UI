@@ -29,7 +29,7 @@ export default class Checkbox extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if ('checked' in nextProps) {
       this.setState({
         checked: nextProps.checked,
@@ -43,9 +43,7 @@ export default class Checkbox extends React.Component {
       checked,
     });
     this.props.onChange(checked, {
-      target: Object.assign({}, this.props, {
-        checked,
-      }),
+      target: { ...this.props, checked },
     });
   };
 

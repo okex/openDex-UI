@@ -5,8 +5,8 @@ const BASEURL = {
   get BASE_URL() {
     return getCurrentApiUrl();
   },
-  get BASE_URL_LINK () {
-    return `${this.BASE_URL}/api/explorer/v1/${env.envConfig.oklinkApiPath}`
+  get BASE_URL_LINK() {
+    return `${this.BASE_URL}/api/explorer/v1/${env.envConfig.oklinkApiPath}`;
   },
   get DEFAULT_BASE_URL() {
     return `${DEFAULT}/${env.envConfig.apiPath}`;
@@ -100,9 +100,6 @@ const URL = {
   },
   get GET_SWAP_TOKEN_PAIR() {
     return `${BASEURL.SWAP}/token_pair`;
-  },
-  get GET_SWAP_WATCHLIST() {
-    return `${BASEURL.SWAP}/watchlist`;
   },
   get GET_SWAP_WATCHLIST() {
     return `${BASEURL.SWAP}/watchlist`;

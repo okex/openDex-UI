@@ -1,8 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
+import { toLocale } from '_src/locale/react-locale';
 import SelectCoin from '../SelectCoin';
 import { getCoinIcon, getDisplaySymbol } from '../../../utils/coinIcon';
-import { toLocale } from '_src/locale/react-locale';
 
 export default class CoinDropdown extends React.Component {
   static _cache = null;

@@ -19,7 +19,7 @@ function mapDispatchToProps(dispatch) {
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class OrderList extends React.Component {
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.product !== nextProps.product) {
       if (nextProps.type === Enum.order.type.noDeal) {
         this.props.orderAction.getNoDealList({ page: 1 });
@@ -28,6 +28,7 @@ export default class OrderList extends React.Component {
       }
     }
   }
+
   render() {
     switch (this.props.entrustType) {
       case Enum.order.entrustType.normal:

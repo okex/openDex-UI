@@ -11,6 +11,7 @@ export default class ReactDatepicker extends React.PureComponent {
     theme: PropTypes.string,
     hideIcon: PropTypes.bool,
   };
+
   static defaultProps = {
     small: false,
     theme: '',

@@ -7,6 +7,7 @@ import Select from '_component/ReactSelect';
 import 'react-datepicker/dist/react-datepicker.css';
 import { toLocale } from '_src/locale/react-locale';
 import Message from '_src/component/Message';
+import { Button } from '_component/Button';
 import moment from 'moment';
 import Cookies from 'js-cookie';
 import RouterCredential from '../../RouterCredential';
@@ -15,12 +16,10 @@ import * as SpotActions from '../../redux/actions/SpotAction';
 import * as OrderActions from '../../redux/actions/OrderAction';
 import Enum from '../../utils/Enum';
 import orderUtil from './orderUtil';
-
-import './OrderList.less';
-import { Button } from '_component/Button';
 import normalColumns from '../spotOrders/normalColumns';
 import commonUtil from '../spotOrders/commonUtil';
 import util from '../../utils/util';
+import './OrderList.less';
 
 function mapStateToProps(state) {
   const { product, productList, productObj } = state.SpotTrade;
@@ -58,6 +57,7 @@ class DealsList extends RouterCredential {
       end: this.todayAgo,
     };
   }
+
   componentWillMount() {
     const { orderActions } = this.props;
     orderActions.resetData();
@@ -88,12 +88,10 @@ class DealsList extends RouterCredential {
   componentDidMount() {
     const { spotActions } = this.props;
     spotActions.fetchProducts();
-    const { webType } = window.OK_GLOBAL;
     document.title =
       toLocale('spot.myOrder.detail') + toLocale('spot.page.title');
     this.onSearch();
   }
-  componentWillReceiveProps(nextProps) {}
 
   componentWillUnmount() {
     const { orderActions } = this.props;
@@ -169,21 +167,20 @@ class DealsList extends RouterCredential {
   onPageChange = (page) => {
     this.onSearch({ page });
   };
+
   handleDateChangeRaw = (e) => {
     e.preventDefault();
   };
 
   renderQuery = () => {
     const { productList } = this.props;
-    const sortProductList = productList.sort((a, b) => {
-      return a.base_asset_symbol.localeCompare(b.base_asset_symbol);
-    });
-    const newProductList = sortProductList.map((obj) => {
-      return {
-        value: obj.product,
-        label: obj.product.replace('_', '/').toUpperCase(),
-      };
-    });
+    const sortProductList = productList.sort((a, b) =>
+      a.base_asset_symbol.localeCompare(b.base_asset_symbol)
+    );
+    const newProductList = sortProductList.map((obj) => ({
+      value: obj.product,
+      label: obj.product.replace('_', '/').toUpperCase(),
+    }));
     const { product, side, start, end } = this.state;
     newProductList.unshift({
       value: 'all',
@@ -264,6 +261,7 @@ class DealsList extends RouterCredential {
       </div>
     );
   };
+
   render() {
     const { theme, productObj, data } = this.props;
     const { orderList, isLoading, page } = data;

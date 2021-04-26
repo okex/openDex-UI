@@ -18,13 +18,11 @@ class DashboardIssue extends Component {
     this.addr = window.OK_GLOBAL.senderAddr;
   }
 
-  onMintOpen = (token) => {
-    return () => {
-      this.setState({
-        isShowMintDialog: true,
-        currentToken: token,
-      });
-    };
+  onMintOpen = (token) => () => {
+    this.setState({
+      isShowMintDialog: true,
+      currentToken: token,
+    });
   };
 
   onMintClose = () => {
@@ -33,13 +31,11 @@ class DashboardIssue extends Component {
     });
   };
 
-  onBurnOpen = (token) => {
-    return () => {
-      this.setState({
-        isShowBurnDialog: true,
-        currentToken: token,
-      });
-    };
+  onBurnOpen = (token) => () => {
+    this.setState({
+      isShowBurnDialog: true,
+      currentToken: token,
+    });
   };
 
   onBurnClose = () => {
@@ -62,11 +58,11 @@ class DashboardIssue extends Component {
   render() {
     const { loading, tokens, beforeMintOrBurn } = this.props;
     const { isShowMintDialog, isShowBurnDialog, currentToken } = this.state;
-    const fTokens = tokens.slice(0, 3).filter((token) => {
-      return token.owner === this.addr;
-    });
+    const fTokens = tokens
+      .slice(0, 3)
+      .filter((token) => token.owner === this.addr);
     return (
-      <Fragment>
+      <>
         <DashboardSection
           title={toLocale('dashboard_issue_title')}
           columns={getIssueCols({
@@ -93,7 +89,7 @@ class DashboardIssue extends Component {
           beforeBurn={beforeMintOrBurn}
           afterBurn={this.afterMintOrBurn}
         />
-      </Fragment>
+      </>
     );
   }
 }

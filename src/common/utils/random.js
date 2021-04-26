@@ -1,6 +1,5 @@
-export const randomNumber = (m, n) => {
-  return Math.floor(m + Math.random() * (n - m + 1));
-};
+export const randomNumber = (m, n) =>
+  Math.floor(m + Math.random() * (n - m + 1));
 
 export const randomStrNumber = (l) => {
   let ret = '';

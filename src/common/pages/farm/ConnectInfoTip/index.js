@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { getLangURL } from '_src/utils/navigation';
 import PageURL from '_constants/PageURL';
 import { toLocale } from '_src/locale/react-locale';
+
 export default class ConnectInfoTip extends React.Component {
   render() {
     const { onClose } = this.props;

@@ -1,9 +1,11 @@
 import env from './env';
+
 export default {
   DEX: {
     get PROD() {
       if (env.envConfig.isTest) {
-        if(window.okGlobal.ipRegion === 'CN') return 'wss://wsdexpap.coinall.ltd:8443/ws/v3';
+        if (window.okGlobal.ipRegion === 'CN')
+          return 'wss://wsdexpap.coinall.ltd:8443/ws/v3';
         return 'wss://wsdexpap.okex.com:8443/ws/v3';
       }
       if (window.okGlobal.ipRegion === 'CN')

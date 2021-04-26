@@ -10,10 +10,10 @@ import { Dialog } from '_component/Dialog';
 import WalletLeft from '_component/WalletLeft';
 import WalletRight from '_component/WalletRight';
 import * as commonActions from '_src/redux/actions/CommonAction';
-import questionGenerator from './questionGenerator';
-import walletUtil from './walletUtil';
 import util from '_src/utils/util';
 import DesktopTypeMenu from '_component/DesktopTypeMenu';
+import questionGenerator from './questionGenerator';
+import walletUtil from './walletUtil';
 import './Step.less';
 import './Step4.less';
 
@@ -35,30 +35,33 @@ class Step4 extends Component {
     super(props);
     this.questions = questionGenerator.getQuestions(props.mnemonic);
   }
+
   componentDidMount() {
     const { keyStore, privateKey } = this.props;
     walletUtil.setUserInSessionStroage(privateKey, keyStore);
     this.props.commonAction.setPrivateKey(privateKey);
   }
-  selectOption = (questionNo, selectedIndex) => {
-    return () => {
-      const { selectArr } = this.state;
-      const selectArrTemp = [...selectArr];
-      selectArrTemp[questionNo] = selectedIndex;
-      this.setState({
-        selectArr: selectArrTemp,
-      });
-    };
+
+  selectOption = (questionNo, selectedIndex) => () => {
+    const { selectArr } = this.state;
+    const selectArrTemp = [...selectArr];
+    selectArrTemp[questionNo] = selectedIndex;
+    this.setState({
+      selectArr: selectArrTemp,
+    });
   };
+
   showPrivate = () => {
     this.privateDialog = Dialog.show({
       windowStyle: { backgroundColor: '#112F62' },
       children: this.renderPrivateDialog(),
     });
   };
+
   hidePrivate = () => {
     this.privateDialog.destroy();
   };
+
   handleCopy = () => {
     this.privateDialog.update({
       children: this.renderPrivateDialog(true),
@@ -70,6 +73,7 @@ class Step4 extends Component {
       });
     }, 1000);
   };
+
   onRedirctToTradePage = () => {
     const { privateKey } = this.props;
     return () => {
@@ -77,6 +81,7 @@ class Step4 extends Component {
       util.go(DesktopTypeMenu.current ? DesktopTypeMenu.current.url : void 0);
     };
   };
+
   renderPrivateDialog = (copySuccess = false) => {
     const { privateKey } = this.props;
     return (
@@ -105,6 +110,7 @@ class Step4 extends Component {
       </div>
     );
   };
+
   render() {
     return (
       <div>

@@ -1,4 +1,5 @@
 import { getPathAndHash } from '../utils/pathUtil';
+
 const { okGlobal = {} } = window;
 const { langPath = '' } = okGlobal;
 
@@ -42,7 +43,7 @@ const testnet = {
   contract: 'contract-test',
   know: 'know_test',
   mnemonicPathType: 'mnemonic_path_type_test',
-  web3Provider:'https://exchaintestrpc.okex.org'
+  web3Provider: 'https://exchaintestrpc.okex.org',
 };
 
 const mainnet = {
@@ -85,14 +86,13 @@ const mainnet = {
   contract: 'contract',
   know: 'know',
   mnemonicPathType: 'mnemonic_path_type',
-  web3Provider:'https://exchaintestrpc.okex.org'
+  web3Provider: 'https://exchaintestrpc.okex.org',
 };
 
 function envConfig() {
   let { pathname, hash } = getPathAndHash();
   const regexp = new RegExp(`^${langPath}\/dex\-test`);
-  if (regexp.test(pathname) || regexp.test(hash))
-    return testnet;
+  if (regexp.test(pathname) || regexp.test(hash)) return testnet;
   return mainnet;
 }
 

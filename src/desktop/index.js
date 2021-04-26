@@ -5,11 +5,11 @@ import { LocaleProvider } from '_src/locale/react-locale';
 import Cookies from 'js-cookie';
 
 import configureStore from '_src/redux/store';
+import util from '_src/utils/util';
 import App from './container/App';
 import './index.less';
 import '_src/assets/fonts/iconfont.css';
 import '_src/assets/fonts/iconfont';
-import util from '_src/utils/util';
 
 window.OK_GLOBAL = {
   webTypes: { OKEx: 'OKEx', DEX: 'DEX' },

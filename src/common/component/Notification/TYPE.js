@@ -8,7 +8,6 @@ const TYPE = {
   red: 'red',
   green: 'green',
 
-
   // dialog message alert 可能会用到的几种类型
   success: 'success',
   info: 'info',

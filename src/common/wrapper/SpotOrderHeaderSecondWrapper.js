@@ -41,32 +41,34 @@ const SpotOrderHeaderSecondWrapper = (Component) => {
         orderAction.updatePeriodInterval(checkTab);
       };
     };
+
     onCancelAllOrder = () => {
       this.props.orderAction.cancelAll();
     };
-    getHeaderSecondList = () => {
-      return [
-        {
-          type: Enum.order.periodInterval.oneDay,
-          name: toLocale('spot.orders.oneDay'),
-        },
-        {
-          type: Enum.order.periodInterval.oneWeek,
-          name: toLocale('spot.orders.oneWeek'),
-        },
-        {
-          type: Enum.order.periodInterval.oneMonth,
-          name: toLocale('spot.orders.oneMonth'),
-        },
-        {
-          type: Enum.order.periodInterval.threeMonth,
-          name: toLocale('spot.orders.threeMonth'),
-        },
-      ];
-    };
+
+    getHeaderSecondList = () => [
+      {
+        type: Enum.order.periodInterval.oneDay,
+        name: toLocale('spot.orders.oneDay'),
+      },
+      {
+        type: Enum.order.periodInterval.oneWeek,
+        name: toLocale('spot.orders.oneWeek'),
+      },
+      {
+        type: Enum.order.periodInterval.oneMonth,
+        name: toLocale('spot.orders.oneMonth'),
+      },
+      {
+        type: Enum.order.periodInterval.threeMonth,
+        name: toLocale('spot.orders.threeMonth'),
+      },
+    ];
+
     updateHideOthers = (e) => {
       this.props.orderAction.updateHideOthers(e.target.checked);
     };
+
     hideOtherProductOp = () => {
       const { isHideOthers } = this.props;
       return (
@@ -82,6 +84,7 @@ const SpotOrderHeaderSecondWrapper = (Component) => {
         </div>
       );
     };
+
     render() {
       const { periodIntervalType } = this.props;
       return (

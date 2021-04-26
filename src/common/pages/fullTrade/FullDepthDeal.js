@@ -23,12 +23,10 @@ export default class FullDepthDeal extends React.Component {
     };
   }
 
-  onChangeType = (type) => {
-    return () => {
-      this.setState({
-        type,
-      });
-    };
+  onChangeType = (type) => () => {
+    this.setState({
+      type,
+    });
   };
 
   render() {

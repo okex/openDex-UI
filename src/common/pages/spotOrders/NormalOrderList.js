@@ -5,6 +5,8 @@ import { toLocale } from '_src/locale/react-locale';
 import { Dialog } from '_component/Dialog';
 import Icon from '_src/component/IconLite';
 import PageURL from '_constants/PageURL';
+import Message from '_src/component/Message';
+import { Link } from 'react-router-dom';
 import Table from '../../component/ok-table';
 import commonUtil from './commonUtil';
 import normalColumns from './normalColumns';
@@ -13,10 +15,8 @@ import * as OrderAction from '../../redux/actions/OrderAction';
 import * as SpotAction from '../../redux/actions/SpotAction';
 import * as CommonAction from '../../redux/actions/CommonAction';
 import PasswordDialog from '../../component/PasswordDialog';
-import Message from '_src/component/Message';
 import * as FormAction from '../../redux/actions/FormAction';
 import Config from '../../constants/Config';
-import { Link } from 'react-router-dom';
 import util from '../../utils/util';
 
 function mapStateToProps(state) {
@@ -86,72 +86,75 @@ export default class NormalOrderList extends React.Component {
     };
   }
 
-  onCancelOrder = (order) => {
-    return (e) => {
-      e.persist();
-      if (!util.isLogined()) {
-        window.location.reload();
-      }
+  onCancelOrder = (order) => (e) => {
+    e.persist();
+    if (!util.isLogined()) {
+      window.location.reload();
+    }
 
-      const order_id = order.order_id;
-      let title = toLocale('spot.myOrder.cancelPartDealTip');
-      if (order.quantity - order.remain_quantity === 0) {
-        title = toLocale('spot.myOrder.cancelNoDealTip');
-      }
-      const dialog = Dialog.confirm({
-        title: title,
-        confirmText: toLocale('ensure'),
-        cancelText: toLocale('cancel'),
-        theme: 'dark',
-        dialogId: 'okdex-confirm',
-        windowStyle: {
-          background: '#112F62',
-        },
-        onConfirm: () => {
-          dialog.destroy();
-          if (Number(e.target.getAttribute('canceling'))) {
-            return;
-          }
-          e.target.setAttribute('canceling', 1);
-          this.targetNode = e.target;
-          this.formParam = { order_id };
-          if (this.props.isHideOthers && this.props.product) {
-            this.formParam = { ...this.formParam, product: this.props.product };
-          }
-          const expiredTime = window.localStorage.getItem('pExpiredTime') || 0;
-          if (util.isWalletConnect() || (new Date().getTime() < +expiredTime && this.props.privateKey)) {
-            const param = { ...this.formParam, pk: this.props.privateKey };
-            this.setState(
-              {
-                isShowPwdDialog: false,
-                cancelLoading: true,
-              },
-              () => {
-                e.target.setAttribute('canceling', 0);
-                this.props.orderAction.cancelOrder(
-                  param,
-                  this.successToast,
-                  this.onSubmitErr
-                );
-              }
-            );
-          } else {
-            e.target.setAttribute('canceling', 0);
-            this.onPwdOpen();
-          }
-        },
-      });
-    };
+    const order_id = order.order_id;
+    let title = toLocale('spot.myOrder.cancelPartDealTip');
+    if (order.quantity - order.remain_quantity === 0) {
+      title = toLocale('spot.myOrder.cancelNoDealTip');
+    }
+    const dialog = Dialog.confirm({
+      title,
+      confirmText: toLocale('ensure'),
+      cancelText: toLocale('cancel'),
+      theme: 'dark',
+      dialogId: 'okdex-confirm',
+      windowStyle: {
+        background: '#112F62',
+      },
+      onConfirm: () => {
+        dialog.destroy();
+        if (Number(e.target.getAttribute('canceling'))) {
+          return;
+        }
+        e.target.setAttribute('canceling', 1);
+        this.targetNode = e.target;
+        this.formParam = { order_id };
+        if (this.props.isHideOthers && this.props.product) {
+          this.formParam = { ...this.formParam, product: this.props.product };
+        }
+        const expiredTime = window.localStorage.getItem('pExpiredTime') || 0;
+        if (
+          util.isWalletConnect() ||
+          (new Date().getTime() < +expiredTime && this.props.privateKey)
+        ) {
+          const param = { ...this.formParam, pk: this.props.privateKey };
+          this.setState(
+            {
+              isShowPwdDialog: false,
+              cancelLoading: true,
+            },
+            () => {
+              e.target.setAttribute('canceling', 0);
+              this.props.orderAction.cancelOrder(
+                param,
+                this.successToast,
+                this.onSubmitErr
+              );
+            }
+          );
+        } else {
+          e.target.setAttribute('canceling', 0);
+          this.onPwdOpen();
+        }
+      },
+    });
   };
+
   onPageChange = (page) => {
     this.props.orderAction.getOrderList({ page });
   };
 
   renderPagination = (theme) => {
-    const { entrustType, type, data } = this.props;
+    const { type, data } = this.props;
     const { page } = data;
     return commonUtil.renderPagination(page, type, this.onPageChange, theme);
   };
+
   successToast = () => {
     this.successCallback && this.successCallback();
     this.setState({ cancelLoading: false });
@@ -160,6 +163,7 @@ export default class NormalOrderList extends React.Component {
       duration: 3,
     });
   };
+
   onSubmitErr = (err) => {
     this.onPwdClose();
     this.targetNode.removeAttribute('canceling');
@@ -170,6 +174,7 @@ export default class NormalOrderList extends React.Component {
       duration: 3,
     });
   };
+
   onPwdOpen = () => {
     this.setState(
       {
@@ -183,6 +188,7 @@ export default class NormalOrderList extends React.Component {
       }
     );
   };
+
   onPwdClose = () => {
     this.setState(
       {
@@ -194,6 +200,7 @@ export default class NormalOrderList extends React.Component {
       }
     );
   };
+
   onPwdEnter = (password) => {
     const { formAction, orderAction, commonAction } = this.props;
     if (password.trim() === '') {
@@ -238,6 +245,7 @@ export default class NormalOrderList extends React.Component {
     );
     return false;
   };
+
   renderPwdDialog = () => {
     const { isLoading, isShowPwdDialog } = this.state;
     const { warning } = this.props.FormStore;
@@ -254,21 +262,12 @@ export default class NormalOrderList extends React.Component {
       />
     );
   };
+
   render() {
     const { tradeType } = window.OK_GLOBAL;
     const tableTheme = tradeType === Enum.tradeType.fullTrade ? 'dark' : '';
-    const {
-      data,
-      theme,
-      type,
-      product,
-      productObj,
-      isHideOthers,
-      spotAction,
-    } = this.props;
-    const { isLoading, orderList, page } = data;
-    const { total } = page;
-    const pageTheme = theme === Enum.themes.theme2 ? 'dark' : '';
+    const { data, type, product, productObj, spotAction } = this.props;
+    const { isLoading, orderList } = data;
     let columns = [];
     let dataSource = [];
     let path = 'open';
@@ -291,10 +290,6 @@ export default class NormalOrderList extends React.Component {
       dataSource = commonUtil.formatDealsData(orderList, productObj);
       columns = normalColumns.detailColumns();
       path = 'deals';
-    }
-    let queryProduct = 'all';
-    if (isHideOthers && product) {
-      queryProduct = product;
     }
     return (
       <div>

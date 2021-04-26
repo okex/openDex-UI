@@ -82,17 +82,12 @@ class DesktopNodeMenu extends Component {
     const { isStarted, localNodeAction } = this.props;
     if (isStarted) localNodeAction.startListen();
     this.heightTimer = setInterval(() => {
-      ont
-        .get(URL.GET_LATEST_HEIGHT_MASTER)
-        .then((res) => {
-          if (res.data) {
-            const { commonAction } = this.props;
-            commonAction.updateLatestHeight(res.data);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      ont.get(URL.GET_LATEST_HEIGHT_MASTER).then((res) => {
+        if (res.data) {
+          const { commonAction } = this.props;
+          commonAction.updateLatestHeight(res.data);
+        }
+      });
     }, 3000);
   }
 
@@ -100,11 +95,9 @@ class DesktopNodeMenu extends Component {
     this.heightTimer && clearInterval(this.heightTimer);
   }
 
-  onNodeClick = (node) => {
-    return () => {
-      const { nodeActions } = this.props;
-      nodeActions.updateCurrentNode(node);
-    };
+  onNodeClick = (node) => () => {
+    const { nodeActions } = this.props;
+    nodeActions.updateCurrentNode(node);
   };
 
   onSwitchChange = (checked) => {
@@ -197,14 +190,14 @@ class DesktopNodeMenu extends Component {
             {isNoneOrLocalNode ? (
               <div className="node-assist">None</div>
             ) : (
-              <Fragment>
+              <>
                 <div className="node-assist">
                   {toLocale('nodeMenu.block')} #{latestHeight}
                 </div>
                 <div className={`node-assist color-${currentDelayType}`}>
                   {toLocale('nodeMenu.latency')} {timeUnit(latency)}
                 </div>
-              </Fragment>
+              </>
             )}
             <div className="node-sub-menu remote-node-submenu">
               {settingsNodeList.map((node, index) => {
@@ -246,7 +239,7 @@ class DesktopNodeMenu extends Component {
               <Icon className="icon-retract" />
             </div>
             {isStarted ? (
-              <Fragment>
+              <>
                 <div className="node-assist">
                   {toLocale('nodeMenu.block')} #{localHeight}
                 </div>
@@ -255,7 +248,7 @@ class DesktopNodeMenu extends Component {
                     Estimated time {fEstimatedTime}
                   </div>
                 )}
-              </Fragment>
+              </>
             ) : (
               <div className="node-assist">{toLocale('node.stopped')}</div>
             )}

@@ -29,8 +29,6 @@ Dialog.confirm = (props) => {
   return PromptDialog.create(config);
 };
 
-Dialog.show = (props) => {
-  return Dialog.create(props);
-};
+Dialog.show = (props) => Dialog.create(props);
 
 export { Dialog, DialogOneBtn, DialogTwoBtn, PromptDialog };

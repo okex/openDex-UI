@@ -10,9 +10,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as commonActions from '_src/redux/actions/CommonAction';
 import ValidateCheckbox from '_component/ValidateCheckbox';
-import walletUtil from './walletUtil';
 import util from '_src/utils/util';
 import DesktopTypeMenu from '_component/DesktopTypeMenu';
+import walletUtil from './walletUtil';
 import './ImportByKeystore.less';
 
 const fileStatusEnum = {
@@ -47,6 +47,7 @@ class ImportByKeystore extends Component {
     };
     this.keyStore = null;
   }
+
   handleUpload = (files) => {
     const file = files[0];
     if (file.type !== 'text/plain') {
@@ -84,6 +85,7 @@ class ImportByKeystore extends Component {
     };
     fileReader.readAsText(file);
   };
+
   changePwd = (e) => {
     const password = e.target.value;
     this.setState({
@@ -91,6 +93,7 @@ class ImportByKeystore extends Component {
       pwdError: '',
     });
   };
+
   handleEnsure = () => {
     const { fileStatus, fileError } = this.state;
     if (fileStatus !== fileStatusEnum.done || fileError) {
@@ -109,6 +112,7 @@ class ImportByKeystore extends Component {
       }
     );
   };
+
   validateKeyStore = () => {
     try {
       const { keyStore } = this;
@@ -127,6 +131,7 @@ class ImportByKeystore extends Component {
       });
     }
   };
+
   renderUploadIcon = () => {
     const { fileStatus, fileName } = this.state;
     const iconStyle = { width: 34, height: 34 };
@@ -177,11 +182,13 @@ class ImportByKeystore extends Component {
     }
     return dom;
   };
+
   clearPwdInput = () => {
     this.setState({
       password: '',
     });
   };
+
   render() {
     const { fileError, password, pwdError, buttonLoading } = this.state;
     return (
@@ -199,7 +206,11 @@ class ImportByKeystore extends Component {
           <span>
             <Input
               value={password}
-              type={!window.navigator.userAgent.match(/webkit/i) ? 'password' : 'text'}
+              type={
+                !window.navigator.userAgent.match(/webkit/i)
+                  ? 'password'
+                  : 'text'
+              }
               autoComplete="new-password"
               placeholder={toLocale('wallet_import_enterPassword')}
               onChange={this.changePwd}

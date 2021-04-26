@@ -1,5 +1,5 @@
-import { calc } from '_component/okit';
-import { storage } from '_component/okit';
+import { calc, storage } from '_component/okit';
+
 import Cookies from 'js-cookie';
 import Enum from '../../utils/Enum';
 import ont from '../../utils/dataProxy';
@@ -11,9 +11,7 @@ import env from '../../constants/env';
 
 function resetProductConfig(product, productList) {
   if (!product) return;
-  const currProduct = productList.filter((item) => {
-    return item.product === product;
-  })[0];
+  const currProduct = productList.filter((item) => item.product === product)[0];
   if (currProduct) {
     let defaultMerge = Enum.defaultMergeType;
     if (currProduct.mergeTypes && currProduct.mergeTypes.split) {
@@ -59,7 +57,7 @@ export function fetchProducts() {
     ont.get(URL.GET_PRODUCTS).then((res) => {
       const { productList, productObj } = getState().SpotTrade;
       if (res.data.data) {
-        res.data.data.forEach((item, index) => {
+        res.data.data.forEach((item) => {
           const product = `${item.base_asset_symbol}_${item.quote_asset_symbol}`;
           let newItem = productObj[product];
           if (!newItem) {
@@ -296,9 +294,7 @@ export function fetchCnyRate() {
       method: 'GET',
     };
     fetch(URL.GET_CNY_RATE, fetchParam)
-      .then((response) => {
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((response) => {
         const cnyRate = response.usd_cny_rate;
         dispatch({

@@ -1,8 +1,6 @@
 const _globalThis = (function getGlobalThis() {
   let res;
-  if (typeof globalThis !== 'undefined') {
-    res = globalThis;
-  } else if (typeof window !== 'undefined') {
+  if (typeof window !== 'undefined') {
     res = window;
   } else if (typeof global !== 'undefined') {
     res = global;
@@ -24,7 +22,7 @@ const scope = {
   get(k) {
     this.init();
     return _globalThis.okd[k];
-  }
+  },
 };
 
 export const zIndexFlag = 'zIndexFlag';

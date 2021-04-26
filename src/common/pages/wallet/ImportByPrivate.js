@@ -8,9 +8,9 @@ import { connect } from 'react-redux';
 import * as commonActions from '_src/redux/actions/CommonAction';
 import WalletPassword from '_component/WalletPassword';
 import ValidateCheckbox from '_component/ValidateCheckbox';
-import walletUtil from './walletUtil';
 import util from '_src/utils/util';
 import DesktopTypeMenu from '_component/DesktopTypeMenu';
+import walletUtil from './walletUtil';
 import './ImportByPrivateKey.less';
 
 function mapStateToProps() {
@@ -37,6 +37,7 @@ class ImportByprivateKey extends Component {
     };
     this.isValidatedPassword = false;
   }
+
   changePrivateKey = (e) => {
     const privateKey = e.target.value.trim();
     this.setState({
@@ -45,6 +46,7 @@ class ImportByprivateKey extends Component {
       isNone: false,
     });
   };
+
   changePassword = ({ value, lengthCheck, chartCheck }) => {
     this.isValidatedPassword =
       lengthCheck === 'right' && chartCheck === 'right';
@@ -52,6 +54,7 @@ class ImportByprivateKey extends Component {
       password: value,
     });
   };
+
   handleEnsure = () => {
     if (this.state.privateKey.length === 0) {
       this.setState({
@@ -75,6 +78,7 @@ class ImportByprivateKey extends Component {
       }
     );
   };
+
   validatePrivateKey = () => {
     try {
       let { privateKey, password } = this.state;
@@ -99,6 +103,7 @@ class ImportByprivateKey extends Component {
       });
     }
   };
+
   render() {
     const {
       privateKey,

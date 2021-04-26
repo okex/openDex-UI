@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const base = require('./webpack.config.base');
+
 const client = process.env.CLIENT || 'web';
 const baseSrc = path.resolve(__dirname, `../src/${client}`);
 const address = '127.0.0.1';
@@ -30,7 +31,7 @@ module.exports = Object.assign(base, {
         target: 'http://okcombeta.bafang.com/',
         changeOrigin: true,
         secure: true,
-      }
+      },
     },
     disableHostCheck: true,
     historyApiFallback: {

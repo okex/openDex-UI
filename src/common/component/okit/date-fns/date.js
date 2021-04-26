@@ -110,12 +110,11 @@ const get = (unit) => {
   };
 
   const keys = Object.keys(dateMap);
-  const dateKey = keys.find((key) => {
-    return (
+  const dateKey = keys.find(
+    (key) =>
       (/y\+|d\+|h\+/.test(key) && new RegExp(`${key}`, 'i').test(unit)) ||
       new RegExp(`${key}`).test(unit)
-    );
-  });
+  );
 
   return dateMap[dateKey] || '';
 };
@@ -139,9 +138,7 @@ const set = (options) => {
 
   const keys = Object.keys(dateMap);
   Object.entries(options).forEach((option) => {
-    const dateKey = keys.find((key) => {
-      return new RegExp(`${key}`).test(option[0]);
-    });
+    const dateKey = keys.find((key) => new RegExp(`${key}`).test(option[0]));
 
     if (dateMap[dateKey]) {
       if ('M+'.includes(dateKey)) {
@@ -158,9 +155,7 @@ const set = (options) => {
 /**
  * 转换为json
  */
-const toObject = () => {
-  return getDateDetail();
-};
+const toObject = () => getDateDetail();
 
 const toDate = (value) => {
   const realValue = convertToNumber(value);
@@ -177,9 +172,7 @@ const startOf = (value, unit = 'd') => {
     'm+': 'yyyy-MM-dd hh:mm:00',
   };
   const keys = Object.keys(dateMap);
-  const dateKey = keys.find((key) => {
-    return new RegExp(`${key}`).test(unit);
-  });
+  const dateKey = keys.find((key) => new RegExp(`${key}`).test(unit));
 
   let date = format(realValue, dateMap[dateKey]);
 
@@ -203,9 +196,7 @@ const endOf = (value, unit = 'd') => {
   };
 
   const keys = Object.keys(dateMap);
-  const dateKey = keys.find((key) => {
-    return new RegExp(`${key}`).test(unit);
-  });
+  const dateKey = keys.find((key) => new RegExp(`${key}`).test(unit));
 
   let date = format(realValue, dateMap[dateKey]);
 
@@ -224,9 +215,7 @@ const endOf = (value, unit = 'd') => {
   return date ? new Date(date) : '';
 };
 
-const valueOf = () => {
-  return new Date().valueOf();
-};
+const valueOf = () => new Date().valueOf();
 
 export default {
   format,

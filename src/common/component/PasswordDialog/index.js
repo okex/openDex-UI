@@ -16,6 +16,7 @@ class Index extends React.Component {
     onClose: PropTypes.func,
     updateWarning: PropTypes.func,
   };
+
   static defaultProps = {
     isShow: false,
     btnLoading: false,
@@ -36,7 +37,7 @@ class Index extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.isShow !== nextProps.isShow) {
       if (nextProps.isShow) {
         setTimeout(() => {
@@ -50,11 +51,13 @@ class Index extends React.Component {
       }
     }
   }
+
   clearPwd = () => {
     this.setState({ password: '' }, () => {
       this.pwdInput.focus();
     });
   };
+
   onChangePwd = (e) => {
     const password = e.target.value;
     let localWarning = '';
@@ -69,6 +72,7 @@ class Index extends React.Component {
     }
     this.props.updateWarning(localWarning);
   };
+
   isDisabled = () => {
     const { lengthReg, chartReg } = Config.pwdValidate;
     const { password } = this.state;
@@ -76,6 +80,7 @@ class Index extends React.Component {
     const chartCheck = chartReg.test(password);
     return password === '' || !lengthCheck || !chartCheck;
   };
+
   render() {
     const { btnLoading, isShow, onEnter, onClose, warning } = this.props;
     const { password } = this.state;

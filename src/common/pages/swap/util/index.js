@@ -1,4 +1,5 @@
 import env from '../../../constants/env';
+
 const SWAP_SITTING_STOREKEY = env.envConfig.swapSetting;
 const SWAP_LIQUIDITY_STOREKEY = env.envConfig.liquidityCheck;
 const SWSWAP_SETTING_Default = {
@@ -11,9 +12,7 @@ export function getSetting() {
   try {
     const data = JSON.parse(store);
     return { ...SWSWAP_SETTING_Default, ...data };
-  } catch (e) {
-    console.log(e);
-  }
+  } catch (e) {}
   return SWSWAP_SETTING_Default;
 }
 
@@ -22,7 +21,7 @@ export function setting(data) {
 }
 
 export function getDeadLine4sdk() {
-  return parseInt(Date.now() / 1000) + 94608000000 + '';
+  return `${parseInt(Date.now() / 1000) + 94608000000}`;
 }
 
 export function getLiquidityCheck() {

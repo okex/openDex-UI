@@ -85,7 +85,7 @@ class FeesPage extends Component {
             pagination: data.param_page || DEFAULT_PAGINATION,
           });
         })
-        .catch((err) => {
+        .catch(() => {
           this.setState({ loading: false });
         });
     }

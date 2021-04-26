@@ -7,9 +7,10 @@ export default class FormatNum {
       newN = newN.substring(1);
     }
     const re = /\d{1,3}(?=(\d{3})+$)/g;
-    const n1 = newN.replace(/^(\d+)((\.\d+)?)$/, (s, s1, s2) => {
-      return s1.replace(re, '$&,') + s2;
-    });
+    const n1 = newN.replace(
+      /^(\d+)((\.\d+)?)$/,
+      (s, s1, s2) => s1.replace(re, '$&,') + s2
+    );
     return lessThan0 ? `-${n1}` : n1;
   }
 
@@ -22,6 +23,7 @@ export default class FormatNum {
     }
     return valueArray[0].replace(/\D/g, '');
   };
+
   static formatNumber2String = (num) => {
     const str = String(num);
     let retStr = '';
@@ -38,9 +40,9 @@ export default class FormatNum {
     return retStr;
   };
 
-  static hashShort = (hash = '') => {
-    return hash.replace(/^(.{10}).*(.{6})$/, '$1...$2');
-  };
+  static hashShort = (hash = '') =>
+    hash.replace(/^(.{10}).*(.{6})$/, '$1...$2');
+
   static formatFeeStr = (feeStr = '') => {
     if (!feeStr) {
       return '';

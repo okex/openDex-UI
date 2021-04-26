@@ -32,6 +32,7 @@ class StrategyTypeSelect extends React.Component {
       typeDesc: props.strategyType,
     };
   }
+
   getTypeDescDom = (strategyType) => {
     const tips = {
       [limit]: <div>{toLocale('spot.orders.triggerPopLimitOrder')}</div>,
@@ -84,9 +85,11 @@ class StrategyTypeSelect extends React.Component {
       </a>
     );
   };
+
   handleOnOpen = () => {
     this.setState({ isShowTypeDesc: true, isMouseEnterTypeDesc: false });
   };
+
   handleOnClose = () => {
     const { isMouseEnterTypeDesc } = this.state;
     if (isMouseEnterTypeDesc) {
@@ -103,10 +106,9 @@ class StrategyTypeSelect extends React.Component {
       });
     }
   };
-  handleOnMouseEnter = (typeDesc) => {
-    return () => {
-      this.setState({ typeDesc });
-    };
+
+  handleOnMouseEnter = (typeDesc) => () => {
+    this.setState({ typeDesc });
   };
 
   handleTypeDescOnMouseEnter = () => {
@@ -116,20 +118,20 @@ class StrategyTypeSelect extends React.Component {
   handleTypeDescOnMouseLeave = () => {
     this.setState({ isMouseEnterTypeDesc: false });
   };
-  renderOption = (options) => {
-    return (
-      <div
-        style={{
-          width: '100%',
-          padding: '0 10px',
-        }}
-        value={options.value}
-        onMouseEnter={this.handleOnMouseEnter(options.value)}
-      >
-        {options.label}
-      </div>
-    );
-  };
+
+  renderOption = (options) => (
+    <div
+      style={{
+        width: '100%',
+        padding: '0 10px',
+      }}
+      value={options.value}
+      onMouseEnter={this.handleOnMouseEnter(options.value)}
+    >
+      {options.label}
+    </div>
+  );
+
   render() {
     const { strategyType, onChangeStrategyType, options, theme } = this.props;
     const { isShowTypeDesc, typeDesc } = this.state;
