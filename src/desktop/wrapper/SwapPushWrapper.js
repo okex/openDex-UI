@@ -63,23 +63,15 @@ const SwapPushWrapper = (Component) => {
         wsV3.sendChannel('ping');
       });
       wsV3.setPushDataResolver((pushData) => {
-        console.log(pushData);
-        const { table, data, event, errorCode } = pushData;
+        const { table, data } = pushData;
         if (table && data) {
           const handler = this.wsHandler(table);
           handler && handler(data, pushData);
         }
-        if (
-          event === 'error' &&
-          (Number(errorCode) === 30043 ||
-            Number(errorCode) === 30008 ||
-            Number(errorCode) === 30006)
-        ) {
-          util.doLogout();
-        }
       });
       wsV3.connect();
     };
+
     render() {
       return <Component {...this.props} wsV3={this.wsV3Instance} />;
     }

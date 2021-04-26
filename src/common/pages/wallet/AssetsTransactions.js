@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Button } from '_component/Button';
 import URL from '_src/constants/URL';
 import { toLocale } from '_src/locale/react-locale';
 import Config from '_constants/Config';
@@ -17,7 +16,7 @@ class AssetsTransactions extends Component {
     this.defaultPage = {
       page: 1,
       per_page: 20,
-      total: 0
+      total: 0,
     };
     this.state = {
       transactions: [],
@@ -28,6 +27,7 @@ class AssetsTransactions extends Component {
     this.addr = window.OK_GLOBAL.senderAddr;
     this.generalAddr = window.OK_GLOBAL.generalAddr;
   }
+
   componentDidMount() {
     document.title =
       toLocale('assets_tab_transactions') + toLocale('spot.page.title');
@@ -35,32 +35,64 @@ class AssetsTransactions extends Component {
       this.fetchTransactions();
     }
   }
+
   fetchTransactions = (page = 1) => {
     const { currentTab } = this.state;
     if (currentTab === '10') {
       const params = {
         type: 'okexchain/token/MsgTransfer',
         limit: this.state.param_page.per_page,
-        offset: (page - 1) * this.state.param_page.per_page
+        offset: (page - 1) * this.state.param_page.per_page,
       };
       this.setState({ loading: true });
-      ont.get(URL.GET_TRANSACTIONS10.replace('{address}', this.addr), { params })
-      .then(({ data }) => {
-        const list = data.hits.map((item) => {
-          return {
+      ont
+        .get(URL.GET_TRANSACTIONS10.replace('{address}', this.addr), { params })
+        .then(({ data }) => {
+          const list = data.hits.map((item) => ({
             ...item,
             uniqueKey: item.hash + item.blocktime,
             txhash: item.hash,
             from: item.from[0],
             to: item.to[0].address,
             symbol: item.to[0].coins[0].symbol,
-            numberValue: item.to[0].coins[0].value
+            numberValue: item.to[0].coins[0].value,
+          }));
+          const param_page = {
+            total: data.total,
+            page,
           };
+          this.setState({
+            transactions: list || [],
+            param_page: { ...this.state.param_page, ...param_page },
+          });
+        })
+        .catch()
+        .then(() => {
+          this.setState({ loading: false });
         });
+      return;
+    }
+    const params = {
+      tokenType: 'OIP20',
+      limit: this.state.param_page.per_page,
+      offset: (page - 1) * this.state.param_page.per_page,
+    };
+    this.setState({ loading: true });
+    ont
+      .get(URL.GET_TRANSACTIONS20.replace('{address}', this.generalAddr), {
+        params,
+      })
+      .then(({ data }) => {
+        const list = data.hits.map((item) => ({
+          ...item,
+          numberValue: item.value,
+          uniqueKey: item.txhash + item.blocktime,
+        }));
+
         const param_page = {
           total: data.total,
-          page: page
-        }
+          page,
+        };
         this.setState({
           transactions: list || [],
           param_page: { ...this.state.param_page, ...param_page },
@@ -70,62 +102,38 @@ class AssetsTransactions extends Component {
       .then(() => {
         this.setState({ loading: false });
       });
-      return
-    }
-    const params = {
-      tokenType: 'OIP20',
-      limit: this.state.param_page.per_page,
-      offset: (page - 1) * this.state.param_page.per_page
-    };
-    this.setState({ loading: true });
-    ont.get(URL.GET_TRANSACTIONS20.replace('{address}', this.generalAddr), { params })
-    .then(({ data }) => {
-      const list = data.hits.map((item) => {
-        return {
-          ...item,
-          numberValue: item.value,
-          uniqueKey: item.txhash + item.blocktime
-        };
-      });
-      
-      const param_page = {
-        total: data.total,
-        page: page
-      }
-      this.setState({
-        transactions: list || [],
-        param_page: { ...this.state.param_page, ...param_page },
-      });
-    })
-    .catch()
-    .then(() => {
-      this.setState({ loading: false });
-    });
   };
+
   switchtab = (type) => {
-    this.setState({
-      currentTab: type,
-      page: 1
-    }, () => this.fetchTransactions())
-  }
+    this.setState(
+      {
+        currentTab: type,
+        page: 1,
+      },
+      () => this.fetchTransactions()
+    );
+  };
+
   handleDateChangeRaw = (e) => {
     e.preventDefault();
   };
+
   render() {
-    const {
-      transactions,
-      currentTab,
-      loading,
-      param_page,
-    } = this.state;
+    const { transactions, currentTab, loading, param_page } = this.state;
     return (
       <div>
         <div className="query-container">
           <div className="sub-query">
-            <span onClick={() => this.switchtab('10')} className={'records-tab' + (currentTab === '10' ? ' switch' : '')}>
+            <span
+              onClick={() => this.switchtab('10')}
+              className={`records-tab${currentTab === '10' ? ' switch' : ''}`}
+            >
               {toLocale('wallet_transaction_records_tab10')}
             </span>
-            <span onClick={() => this.switchtab('20')} className={'records-tab' + (currentTab === '20' ? ' switch' : '')}>
+            <span
+              onClick={() => this.switchtab('20')}
+              className={`records-tab${currentTab === '20' ? ' switch' : ''}`}
+            >
               {toLocale('wallet_transaction_records_tab20')}
             </span>
           </div>

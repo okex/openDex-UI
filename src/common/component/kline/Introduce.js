@@ -32,7 +32,7 @@ class Introduce extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const product = nextProps.product;
     if (product) {
       this.getIntroduceBySymbol(product.split('_')[0]);
@@ -62,16 +62,6 @@ class Introduce extends React.Component {
     if (util.isEmpty(introduceObj)) {
       return <div>{toLocale('spot.kline.noInfo')}</div>;
     }
-    const moreLink = introduceObj.connect ? (
-      <a
-        href={introduceObj.connect}
-        style={{ marginLeft: '10px' }}
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        {toLocale('spot.place.kline.more')}
-      </a>
-    ) : null;
 
     return (
       <div className="introduce-container">

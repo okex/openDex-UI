@@ -39,9 +39,11 @@ export default class Input extends React.Component {
     type: 'text',
     onChange: null,
   };
+
   handleClearInput = () => {
     this.props.onChange({ target: { value: '' } });
   };
+
   renderInput = () => {
     const extraProps = ['suffix', 'error', 'theme', 'allowClear'];
 
@@ -79,6 +81,7 @@ export default class Input extends React.Component {
     }
     return <span className={`${prefixCls}-error`}>{error()}</span>;
   };
+
   render() {
     const { theme, style, disabled, error } = this.props;
     const clsName = classnames(

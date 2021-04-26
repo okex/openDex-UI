@@ -57,9 +57,7 @@ class TabCustomerlize extends Component {
     let id = '';
     const { customList } = this.props;
     let isExist = true;
-    const checkExist = (node) => {
-      return node.id === id;
-    };
+    const checkExist = (node) => node.id === id;
     while (isExist) {
       id = randomStrNumber(8);
       isExist = customList.some(checkExist);
@@ -96,35 +94,27 @@ class TabCustomerlize extends Component {
     });
   };
 
-  handleChange = (node) => {
-    return () => {
-      const { nodeActions } = this.props;
-      nodeActions.updateCurrentNode(node);
-    };
+  handleChange = (node) => () => {
+    const { nodeActions } = this.props;
+    nodeActions.updateCurrentNode(node);
   };
 
-  handleDelete = (node) => {
-    return (e) => {
-      e.stopPropagation();
-      const { customList } = this.props;
-      const newList = customList.slice();
-      const idx = newList.findIndex((n) => {
-        return n.id === node.id;
-      });
-      if (idx > -1) {
-        newList.splice(idx, 1);
-        const { nodeActions } = this.props;
-        nodeActions.updateCustomList(newList);
-      }
-    };
+  handleDelete = (node) => (e) => {
+    e.stopPropagation();
+    const { customList } = this.props;
+    const newList = customList.slice();
+    const idx = newList.findIndex((n) => n.id === node.id);
+    if (idx > -1) {
+      newList.splice(idx, 1);
+      const { nodeActions } = this.props;
+      nodeActions.updateCustomList(newList);
+    }
   };
 
   render() {
     const { isDialogShow, valueName, valueWs, valueHttp } = this.state;
     const { customList, currentNode } = this.props;
-    const showList = customList.filter((node) => {
-      return currentNode.id !== node.id;
-    });
+    const showList = customList.filter((node) => currentNode.id !== node.id);
 
     return (
       <div className="node-customerlize-container">

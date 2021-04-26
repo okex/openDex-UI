@@ -81,7 +81,7 @@ const SpotTradeWrapper = (Component) => {
       document.body.classList.remove('full-body');
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
       const { spotTradeActions, orderActions } = this.props;
 
       const oldProduct = this.props.product;
@@ -151,6 +151,7 @@ const SpotTradeWrapper = (Component) => {
       wsV3.stop(unsubChannels);
       wsV3.send(subChannels);
     };
+
     startWs = (product) => {
       const { spotTradeActions } = this.props;
       const v3ChannelArr = [];
@@ -159,6 +160,7 @@ const SpotTradeWrapper = (Component) => {
       v3ChannelArr.push(channelsV3.getDepth(product));
       wsV3.send(v3ChannelArr);
     };
+
     stopWs = () => {
       const { product } = this.props;
       if (!product) {

@@ -13,6 +13,7 @@ export default class Table extends React.Component {
     isLoading: PropTypes.bool,
     theme: PropTypes.string,
   };
+
   static defaultProps = {
     style: {},
     dataSource: [],
@@ -22,29 +23,29 @@ export default class Table extends React.Component {
     isLoading: false,
     theme: '',
   };
+
   renderTbody = () => {
     const { columns, dataSource, rowKey } = this.props;
     return (
       <tbody>
-        {dataSource.map((data, index) => {
-          return (
-            <tr key={data[rowKey]}>
-              {columns.map((column) => {
-                if (column.render && typeof column.render === 'function') {
-                  return (
-                    <td key={column.key}>
-                      {column.render(data[column.key], data, index)}
-                    </td>
-                  );
-                }
-                return <td key={column.key}>{data[column.key]}</td>;
-              })}
-            </tr>
-          );
-        })}
+        {dataSource.map((data, index) => (
+          <tr key={data[rowKey]}>
+            {columns.map((column) => {
+              if (column.render && typeof column.render === 'function') {
+                return (
+                  <td key={column.key}>
+                    {column.render(data[column.key], data, index)}
+                  </td>
+                );
+              }
+              return <td key={column.key}>{data[column.key]}</td>;
+            })}
+          </tr>
+        ))}
       </tbody>
     );
   };
+
   renderEmpty = () => {
     const { empty, style } = this.props;
     return (
@@ -57,6 +58,7 @@ export default class Table extends React.Component {
       </div>
     );
   };
+
   render() {
     const { columns, dataSource, style, isLoading, theme } = this.props;
     const { isLogin } = window.OK_GLOBAL;

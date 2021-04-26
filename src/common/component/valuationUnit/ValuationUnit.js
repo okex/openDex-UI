@@ -90,21 +90,18 @@ class ValuationUnit extends React.Component {
 
   renderValuationRows(valuationItems) {
     const { valuationUnit } = this.state;
-    return valuationItems.map((item, index) => {
-      return (
-        <span
-          className={[
-            'item',
-            item.label === valuationUnit ? 'active' : '',
-          ].join(' ')}
-          key={index}
-          onClick={this.onChangeValua}
-          data-index={index}
-        >
-          {item.label}
-        </span>
-      );
-    });
+    return valuationItems.map((item, index) => (
+      <span
+        className={['item', item.label === valuationUnit ? 'active' : ''].join(
+          ' '
+        )}
+        key={index}
+        onClick={this.onChangeValua}
+        data-index={index}
+      >
+        {item.label}
+      </span>
+    ));
   }
 
   render() {

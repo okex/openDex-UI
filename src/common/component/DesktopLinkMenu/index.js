@@ -23,11 +23,9 @@ class DesktopLinkMenu extends Component {
     this.setState({ isMenuShow: false });
   };
 
-  toRoute = (route) => {
-    return () => {
-      this.props.history.push(route);
-      this.hideMenu();
-    };
+  toRoute = (route) => () => {
+    this.props.history.push(route);
+    this.hideMenu();
   };
 
   render() {

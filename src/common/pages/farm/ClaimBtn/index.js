@@ -1,10 +1,10 @@
 import React from 'react';
-import { Dialog } from '../../../component/Dialog';
 import { connect } from 'react-redux';
-import Confirm from '../../../component/Confirm';
 import { validateTxs } from '_src/utils/client';
 import { toLocale } from '_src/locale/react-locale';
 import util from '_src/utils/util';
+import Confirm from '../../../component/Confirm';
+import { Dialog } from '../../../component/Dialog';
 import ConnectInfoTip from '../ConnectInfoTip';
 
 function mapStateToProps(state) {
@@ -118,7 +118,7 @@ export default class ClaimBtn extends React.Component {
           loadingTxt={toLocale('pending transactions')}
           successTxt={toLocale('transaction confirmed')}
           getRef={(instance) => (this.confirmInstance = instance)}
-        ></Confirm>
+        />
       </>
     );
   }

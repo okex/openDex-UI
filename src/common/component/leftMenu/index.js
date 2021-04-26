@@ -25,6 +25,7 @@ export default class LeftMenu extends React.Component {
     onSelect: PropTypes.func,
     onClickStar: PropTypes.func,
   };
+
   static defaultProps = {
     menuList: [],
     listHeight: 'auto',
@@ -50,7 +51,7 @@ export default class LeftMenu extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { menuList, activeId } = nextProps;
     this.setState({
       menuList: menuList.map((d) => d),
@@ -65,32 +66,33 @@ export default class LeftMenu extends React.Component {
       return false;
     }
     const allList = this.props.menuList;
-    const filterList = allList.filter((item) => {
-      return [args.toLowerCase(), args.toUpperCase()].includes(item.text);
-    });
+    const filterList = allList.filter((item) =>
+      [args.toLowerCase(), args.toUpperCase()].includes(item.text)
+    );
     this.setState({
       menuList: filterList,
     });
     return false;
   };
+
   handleSort = () => {
     const { sortType, menuList } = this.state;
     const newList = [...menuList];
     let newSortType = SortTypes.noSort;
     if (sortType === SortTypes.asc) {
-      newList.sort((a, b) => {
-        return parseFloat(b.changePercentage) - parseFloat(a.changePercentage);
-      });
+      newList.sort(
+        (a, b) =>
+          parseFloat(b.changePercentage) - parseFloat(a.changePercentage)
+      );
       newSortType = SortTypes.des;
     } else if (sortType === SortTypes.des) {
-      newList.sort((a, b) => {
-        return a.text.localeCompare(b.text);
-      });
+      newList.sort((a, b) => a.text.localeCompare(b.text));
       newSortType = SortTypes.noSort;
     } else {
-      newList.sort((a, b) => {
-        return parseFloat(a.changePercentage) - parseFloat(b.changePercentage);
-      });
+      newList.sort(
+        (a, b) =>
+          parseFloat(a.changePercentage) - parseFloat(b.changePercentage)
+      );
       newSortType = SortTypes.asc;
     }
     this.setState({
@@ -98,24 +100,23 @@ export default class LeftMenu extends React.Component {
       menuList: newList,
     });
   };
-  handleStar = (item) => {
-    return (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      const { onClickStar } = this.props;
-      if (onClickStar) {
-        onClickStar(!item.stared, item);
-      }
-    };
+
+  handleStar = (item) => (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const { onClickStar } = this.props;
+    if (onClickStar) {
+      onClickStar(!item.stared, item);
+    }
   };
-  handleSelect = (item) => {
-    return () => {
-      const { onSelect } = this.props;
-      if (onSelect) {
-        onSelect(item);
-      }
-    };
+
+  handleSelect = (item) => () => {
+    const { onSelect } = this.props;
+    if (onSelect) {
+      onSelect(item);
+    }
   };
+
   renderList = (menuList) => {
     const { canStar } = this.props;
     const { activeId } = this.state;
@@ -152,6 +153,7 @@ export default class LeftMenu extends React.Component {
       </div>
     );
   };
+
   renderEmpty = () => {
     const { listEmpty } = this.props;
     return <div className="empty-container">{listEmpty}</div>;

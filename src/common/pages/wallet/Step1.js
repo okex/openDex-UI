@@ -41,6 +41,7 @@ class Step1 extends Component {
     };
     this.isValidatedPassword = false;
   }
+
   onNext = () => {
     if (this.state.nextLoading) {
       return false;
@@ -71,14 +72,16 @@ class Step1 extends Component {
     const { isSamePwd, pwdTwice, knowCheck } = this.state;
     this.setState({
       canNext:
-        this.isValidatedPassword && isSamePwd && pwdTwice != '' && knowCheck,
+        this.isValidatedPassword && isSamePwd && pwdTwice !== '' && knowCheck,
     });
   };
+
   tooglePwdTwiceType = () => {
     this.setState({
       showTwicePwd: !this.state.showTwicePwd,
     });
   };
+
   changePwdFirst = ({ value, lengthCheck, chartCheck }) => {
     this.isValidatedPassword =
       lengthCheck === 'right' && chartCheck === 'right';
@@ -92,17 +95,19 @@ class Step1 extends Component {
       this.validateCanNext
     );
   };
+
   changePwdTwice = (e) => {
     const pwdTwice = e.target.value;
     const { pwdFirst } = this.state;
     this.setState(
       {
         pwdTwice,
-        isSamePwd: pwdTwice != '' && pwdFirst === pwdTwice,
+        isSamePwd: pwdTwice !== '' && pwdFirst === pwdTwice,
       },
       this.validateCanNext
     );
   };
+
   changeKnow = (checked) => {
     this.setState(
       {
@@ -111,6 +116,7 @@ class Step1 extends Component {
       this.validateCanNext
     );
   };
+
   render() {
     const {
       showTwicePwd,
@@ -135,7 +141,11 @@ class Step1 extends Component {
             <div className="set-password-twice">
               <Input
                 value={pwdTwice}
-                type={!window.navigator.userAgent.match(/webkit/i) ? 'password' : 'text'}
+                type={
+                  !window.navigator.userAgent.match(/webkit/i)
+                    ? 'password'
+                    : 'text'
+                }
                 autoComplete="new-password"
                 placeholder={toLocale('wallet_twicePassword')}
                 onChange={this.changePwdTwice}

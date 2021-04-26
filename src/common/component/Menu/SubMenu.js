@@ -8,11 +8,13 @@ class SubMenu extends Component {
     onTitleClick: PropTypes.func,
     children: PropTypes.array,
   };
+
   static defaultProps = {
     title: '',
     onTitleClick: () => {},
     children: [],
   };
+
   render() {
     return <RcSubMenu {...this.props} />;
   }

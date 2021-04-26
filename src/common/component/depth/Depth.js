@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { toLocale } from '_src/locale/react-locale';
 import util from '_src/utils/util';
-import Enum from '../../utils/Enum';
-import DepthTitle from '../../component/depth/DepthTitle';
 import { getDisplaySymbol } from '_src/utils/coinIcon';
+import Enum from '../../utils/Enum';
+import DepthTitle from './DepthTitle';
 import DepthList from './DepthList';
 
 import './Depth.less';
@@ -41,6 +41,7 @@ export default class Depth extends React.Component {
   onDepthPosition = (position) => {
     this.depthList.scrollToPosition(position);
   };
+
   getListDataSource = () => {
     const { needSum, listSource, tickerSource, product } = this.props;
     const tradeCurr =

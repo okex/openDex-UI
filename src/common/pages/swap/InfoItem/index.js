@@ -1,9 +1,9 @@
 import React from 'react';
 import { toLocale } from '_src/locale/react-locale';
-import { getCoinIcon, getDisplaySymbol } from '../../../utils/coinIcon';
-import Tooltip from '../../../component/Tooltip';
 import calc from '_src/utils/calc';
 import util from '_src/utils/util';
+import { getCoinIcon, getDisplaySymbol } from '../../../utils/coinIcon';
+import Tooltip from '../../../component/Tooltip';
 
 export default class InfoItem extends React.Component {
   render() {

@@ -38,7 +38,7 @@ class BurnDialog extends Component {
     const { okexchainClient, token, beforeBurn, afterBurn } = this.props;
     isFunction(beforeBurn) && beforeBurn();
     const { value } = this.state;
-    const amount = util.precisionInput(value).replace(/,/g,'');
+    const amount = util.precisionInput(value).replace(/,/g, '');
     okexchainClient
       .sendTokenBurnTransaction(token, amount)
       .then((res) => {
@@ -82,7 +82,7 @@ class BurnDialog extends Component {
     const { value } = this.state;
 
     return (
-      <Fragment>
+      <>
         <SingleInputDialog
           value={value}
           onChange={this.onChange}
@@ -91,7 +91,7 @@ class BurnDialog extends Component {
           onClose={this.onClose}
           onConfirm={this.handleBurn}
         />
-      </Fragment>
+      </>
     );
   }
 }

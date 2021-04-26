@@ -6,7 +6,6 @@ import Config from '_constants/Config';
 import PasswordDialog from '_component/PasswordDialog';
 import { toLocale } from '_src/locale/react-locale';
 import util from '_src/utils/util';
-import env from '../constants/env';
 
 function mapStateToProps(state) {
   const { okexchainClient, privateKey } = state.Common;
@@ -107,7 +106,10 @@ const ClientWrapper = (Com) => {
 
     checkPK = (success) => {
       const expiredTime = window.localStorage.getItem('pExpiredTime') || 0;
-      if (util.isWalletConnect() || (new Date().getTime() < +expiredTime && this.props.privateKey)) {
+      if (
+        util.isWalletConnect() ||
+        (new Date().getTime() < +expiredTime && this.props.privateKey)
+      ) {
         this.setAccountInfo(success);
       } else {
         this.onPwdOpen();
@@ -117,7 +119,7 @@ const ClientWrapper = (Com) => {
     render() {
       const { isShowPwdDialog, isLoading, warning } = this.state;
       return (
-        <Fragment>
+        <>
           <Com
             {...this.props}
             checkPK={this.checkPK}
@@ -133,7 +135,7 @@ const ClientWrapper = (Com) => {
             onEnter={this.onPwdEnter}
             onClose={this.onPwdClose}
           />
-        </Fragment>
+        </>
       );
     }
   }

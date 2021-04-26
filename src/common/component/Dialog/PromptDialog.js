@@ -95,20 +95,16 @@ export default class PromptDialog extends React.PureComponent {
           <div className={`icon-bg ${infoType}-bg`}>
             <Icon className={`prompt-icon ${typeIcon[infoType]}`} />
           </div>
-          {newTitleList.map((item, index) => {
-            return (
-              <div className="prompt-title" key={`tip_title${index}`}>
-                {item}
-              </div>
-            );
-          })}
-          {newTextList.map((item, index) => {
-            return (
-              <div className="prompt-text" key={`tip_text${index}`}>
-                {item}
-              </div>
-            );
-          })}
+          {newTitleList.map((item, index) => (
+            <div className="prompt-title" key={`tip_title${index}`}>
+              {item}
+            </div>
+          ))}
+          {newTextList.map((item, index) => (
+            <div className="prompt-text" key={`tip_text${index}`}>
+              {item}
+            </div>
+          ))}
         </div>
       </Dialog>
     );

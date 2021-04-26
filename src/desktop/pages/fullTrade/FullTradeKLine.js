@@ -28,7 +28,8 @@ export default class FullTradeKLine extends React.Component {
     this.kline = null;
     window.addEventListener('resize', this.onResize);
   }
-  componentWillReceiveProps(nextProps) {
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const oldProduct = this.props.product;
     const newProduct = nextProps.product;
     const oldTicker = this.props.currencyTicker;
@@ -47,18 +48,16 @@ export default class FullTradeKLine extends React.Component {
       });
     }
     const depth = nextProps.depth200;
-    depth.asks = depth.asks.map((item) => {
-      return [Number(item[0]), Number(item[1])];
-    });
-    depth.bids = depth.bids.map((item) => {
-      return [Number(item[0]), Number(item[1])];
-    });
+    depth.asks = depth.asks.map((item) => [Number(item[0]), Number(item[1])]);
+    depth.bids = depth.bids.map((item) => [Number(item[0]), Number(item[1])]);
     this.kline && this.kline.setDepth(depth);
     this.onResize();
   }
+
   componentWillUnmount() {
     window.removeEventListener('resize', this.onResize);
   }
+
   onResize = () => {
     if (!this.kline) return;
     const winHeight = window.innerHeight;
@@ -70,6 +69,7 @@ export default class FullTradeKLine extends React.Component {
     const { offsetWidth } = this.klineDom;
     this.kline.resize(offsetWidth, height);
   };
+
   initKline = (product) => {
     const { httpUrl } = this.props.currentNode;
     let wsUrl = getWsUrl();
@@ -79,38 +79,32 @@ export default class FullTradeKLine extends React.Component {
     const Kline = window.okui.CombKline || window.okui.Kline;
     this.kline = new Kline({
       element: '#dex-full-kline-container',
-      klineUrl: httpUrl + '/' + env.envConfig.apiPath + '/candles/<symbol>',
+      klineUrl: `${httpUrl}/${env.envConfig.apiPath}/candles/<symbol>`,
       klineType: 'TradingView',
       showToggle: false,
       wsUrl,
       product: 'dex_spot',
       exchange: 'DEX',
       symbol: product.toLowerCase(),
-      convertName: (name) => {
-        return util.getShortName(name);
-      },
+      convertName: (name) => util.getShortName(name),
       language: util.getSupportLocale(Cookies.get('locale') || 'en_US'),
       showIndics: false,
       logo,
       screenshotIcon,
-      onReady: () => {
-        console.log('ready');
-      },
+      onReady: () => {},
     });
   };
+
   convertedDepthData = (datas) => {
     const { asks, bids } = datas;
-    const newAsks = asks.map((item) => {
-      return [+item[0], +item[1]];
-    });
-    const newBids = bids.map((item) => {
-      return [+item[0], +item[1]];
-    });
+    const newAsks = asks.map((item) => [+item[0], +item[1]]);
+    const newBids = bids.map((item) => [+item[0], +item[1]]);
     return {
       asks: newAsks,
       bids: newBids,
     };
   };
+
   render() {
     return (
       <div

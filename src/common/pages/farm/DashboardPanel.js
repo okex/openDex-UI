@@ -1,18 +1,19 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import Pagination from '_component/Pagination';
-import { getCoinIcon } from '../../utils/coinIcon';
 import { toLocale } from '_src/locale/react-locale';
 import util from '_src/utils/util';
 import { getLangURL } from '_src/utils/navigation';
 import PageURL from '_constants/PageURL';
-import { Link } from 'react-router-dom';
-import Tooltip from '../../component/Tooltip';
+
+import classNames from 'classnames';
 import * as api from './util/api';
 import SimpleBtnDialog from './SimpleBtnDialog';
-import classNames from 'classnames';
+import { getCoinIcon } from '../../utils/coinIcon';
+import Tooltip from '../../component/Tooltip';
 import Stake from './Stake';
 import Claim from './Claim';
+
 @withRouter
 export default class DashboardPanel extends React.Component {
   constructor() {
@@ -100,7 +101,7 @@ export default class DashboardPanel extends React.Component {
   };
 
   getPanel = () => {
-    const { maxApy, hasFirstPool } = this.state;
+    const { hasFirstPool } = this.state;
     if (this.initial && !this.state.total) {
       return hasFirstPool ? (
         <div className="panel-watchlist">
@@ -108,9 +109,11 @@ export default class DashboardPanel extends React.Component {
         </div>
       ) : (
         <div className="panel panel-connect">
-          <div className="connect-wallet-tip">
-          </div>
-          <div className="farm-btn" onClick={() => this.props.history.push(PageURL.farmPage)}>
+          <div className="connect-wallet-tip" />
+          <div
+            className="farm-btn"
+            onClick={() => this.props.history.push(PageURL.farmPage)}
+          >
             {toLocale('Go stake')}
           </div>
         </div>
@@ -119,18 +122,16 @@ export default class DashboardPanel extends React.Component {
     return null;
   };
 
-  getConnectPanel = () => {
-    return (
-      <div className="panel panel-connect">
-        <div className="connect-wallet-tip">
-          {toLocale('Connect wallet to check your farming')}
-        </div>
-        <Link to={getLangURL(PageURL.walletCreate)}>
-          <div className="farm-btn">{toLocale('Connect Wallet')}</div>
-        </Link>
+  getConnectPanel = () => (
+    <div className="panel panel-connect">
+      <div className="connect-wallet-tip">
+        {toLocale('Connect wallet to check your farming')}
       </div>
-    );
-  };
+      <Link to={getLangURL(PageURL.walletCreate)}>
+        <div className="farm-btn">{toLocale('Connect Wallet')}</div>
+      </Link>
+    </div>
+  );
 
   onChange = async (current) => {
     const data = await this.init({ current });
@@ -143,13 +144,13 @@ export default class DashboardPanel extends React.Component {
     if (!isLogined) return this.getConnectPanel();
     return (
       <>
-        {!!total ? (
+        {total ? (
           <div className="panel-farm">
             <div className="info-items info-dashboard-items">
               {data.map((d, index) => (
                 <div className="info-item" key={index}>
                   {d.in_whitelist && (
-                    <div className={classNames('tag', 'active')}></div>
+                    <div className={classNames('tag', 'active')} />
                   )}
                   <div className="info-item-title">
                     <div className="space-between">

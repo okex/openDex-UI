@@ -58,7 +58,6 @@ const SwapPushWrapper = (Component) => {
         wsV3.sendChannel('ping');
       });
       wsV3.setPushDataResolver((pushData) => {
-        console.log(pushData);
         const { table, data, event, errorCode } = pushData;
         if (table && data) {
           const handler = this.wsHandler(table);
@@ -70,13 +69,14 @@ const SwapPushWrapper = (Component) => {
             Number(errorCode) === 30008 ||
             Number(errorCode) === 30006)
         ) {
-          if(env.envConfig.isMainnet) {
+          if (env.envConfig.isMainnet) {
             util.doLogout();
           }
         }
       });
       wsV3.connect();
     };
+
     render() {
       return <Component {...this.props} wsV3={this.wsV3Instance} />;
     }

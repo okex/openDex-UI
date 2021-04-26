@@ -1,17 +1,17 @@
 import React from 'react';
 import { toLocale } from '_src/locale/react-locale';
-import { getCoinIcon } from '../../../utils/coinIcon';
 import classNames from 'classnames';
 import InputNum from '_component/InputNum';
-import LiquidityInfoTip from '../LiquidityInfoTip';
-import ConnectInfoTip from '../ConnectInfoTip';
 import util from '_src/utils/util';
 import calc from '_src/utils/calc';
 import { connect } from 'react-redux';
+import { validateTxs } from '_src/utils/client';
+import { getCoinIcon } from '../../../utils/coinIcon';
+import LiquidityInfoTip from '../LiquidityInfoTip';
+import ConnectInfoTip from '../ConnectInfoTip';
 import Confirm from '../../../component/Confirm';
 import { channelsV3 } from '../../../utils/websocket';
 import FarmContext from '../FarmContext';
-import { validateTxs } from '_src/utils/client';
 import * as api from '../util/api';
 
 function mapStateToProps(state) {
@@ -35,12 +35,12 @@ export default class Stake extends React.Component {
   }
 
   onInputChange = (value, selectMax = false) => {
-    if (selectMax) value = this.getAvailable(selectMax).replace(/,/g,'');
+    if (selectMax) value = this.getAvailable(selectMax).replace(/,/g, '');
     let poolRatio = '-';
     let error = !value || !Number(value);
     const { data, isStake = true } = this.props;
     if (value) {
-      const max = this.getAvailable(selectMax).replace(/,/g,'');
+      const max = this.getAvailable(selectMax).replace(/,/g, '');
       if (util.compareNumber(max, value))
         error = toLocale('balance not enough');
       else if (isStake && util.compareNumber(value, data.min_lock_amount))
@@ -48,14 +48,13 @@ export default class Stake extends React.Component {
           num: util.precisionInput(data.min_lock_amount, 8),
         });
       else if (isStake && Number(data.pool_total_staked)) {
-        poolRatio =
-          util.precisionInput(
-            calc.mul(
-              calc.div(value, calc.add(value, data.pool_total_staked)),
-              100
-            ),
-            2
-          ) + '%';
+        poolRatio = `${util.precisionInput(
+          calc.mul(
+            calc.div(value, calc.add(value, data.pool_total_staked)),
+            100
+          ),
+          2
+        )}%`;
       } else if (isStake && Number(value)) {
         poolRatio = '100.00%';
       } else {
@@ -66,7 +65,7 @@ export default class Stake extends React.Component {
   };
 
   setMaxValue = () => {
-    this.onInputChange(this.getAvailable().replace(/,/g,''), true);
+    this.onInputChange(this.getAvailable().replace(/,/g, ''), true);
   };
 
   confirm = () => {
@@ -76,7 +75,9 @@ export default class Stake extends React.Component {
     const params = [
       data.pool_name,
       data.lock_symbol,
-      selectMax ? this.getAvailable(true).replace(/,/g,''): util.precisionInput(value).replace(/,/g,''),
+      selectMax
+        ? this.getAvailable(true).replace(/,/g, '')
+        : util.precisionInput(value).replace(/,/g, ''),
       '',
       null,
     ];
@@ -103,7 +104,7 @@ export default class Stake extends React.Component {
     let { account4Swap } = this.props;
     const temp = account4Swap[pool_name];
     if (temp) {
-      balance = temp.available+'';
+      balance = `${temp.available}`;
       balance_dis = util.precisionInput(temp.available, 8);
     }
     if (origin) return balance;

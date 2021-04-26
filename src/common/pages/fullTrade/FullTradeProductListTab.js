@@ -25,24 +25,20 @@ class FullTradeProductListTab extends Component {
     };
   }
 
-  handleSelect = (item) => {
-    return () => {
-      const { onSelect } = this.props;
-      if (onSelect) {
-        onSelect(item);
-      }
-    };
+  handleSelect = (item) => () => {
+    const { onSelect } = this.props;
+    if (onSelect) {
+      onSelect(item);
+    }
   };
 
-  handleFavorite = (item) => {
-    return (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      const { onFavorite } = this.props;
-      if (onFavorite) {
-        onFavorite(item);
-      }
-    };
+  handleFavorite = (item) => (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const { onFavorite } = this.props;
+    if (onFavorite) {
+      onFavorite(item);
+    }
   };
 
   handleSearch = (e) => {
@@ -86,23 +82,23 @@ class FullTradeProductListTab extends Component {
             {toLocale('productList.item.pair')}
           </div>
           {isFavoriteType ? (
-            <Fragment>
+            <>
               <div className="product-item-change">
                 {toLocale('productList.item.change')}
               </div>
               <div className="product-item-owner">
                 {toLocale('productList.item.owner')}
               </div>
-            </Fragment>
+            </>
           ) : (
-            <Fragment>
+            <>
               <div className="product-item-owner">
                 {toLocale('productList.item.owner')}
               </div>
               <div className="product-item-deposit">
                 {toLocale('productList.item.deposit')}
               </div>
-            </Fragment>
+            </>
           )}
         </div>
         {showList.length ? (
@@ -136,7 +132,7 @@ class FullTradeProductListTab extends Component {
                     {util.getShortName(text)}
                   </div>
                   {isFavoriteType ? (
-                    <Fragment>
+                    <>
                       <div
                         className={`product-item-change product-item-change-${color}`}
                       >
@@ -145,18 +141,16 @@ class FullTradeProductListTab extends Component {
                       <div className="product-item-owner one-line">
                         {owner || '--'}
                       </div>
-                    </Fragment>
+                    </>
                   ) : (
-                    <Fragment>
+                    <>
                       <div className="product-item-owner one-line">
                         {owner || '--'}
                       </div>
-                      <div className="product-item-deposit">{`${calc.ceilTruncate(
-                        amount,
-                        0,
-                        false
-                      )} ${denom}`}</div>
-                    </Fragment>
+                      <div className="product-item-deposit">
+                        {`${calc.ceilTruncate(amount, 0, false)} ${denom}`}
+                      </div>
+                    </>
                   )}
                 </li>
               );

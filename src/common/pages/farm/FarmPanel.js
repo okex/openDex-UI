@@ -1,18 +1,19 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { toLocale } from '_src/locale/react-locale';
 import util from '_src/utils/util';
-import { getCoinIcon } from '../../utils/coinIcon';
 import { getLangURL } from '_src/utils/navigation';
-import Tooltip from '../../component/Tooltip';
 import PageURL from '_constants/PageURL';
-import { Link } from 'react-router-dom';
+import classNames from 'classnames';
+import { getCoinIcon } from '../../utils/coinIcon';
+import Tooltip from '../../component/Tooltip';
+
 import WatchlistPanel from './WatchlistPanel';
 import SimpleBtnDialog from './SimpleBtnDialog';
-import classNames from 'classnames';
 import Stake from './Stake';
 import { Dialog } from '../../component/Dialog';
 import * as api from './util/api';
+
 @withRouter
 export default class FarmPanel extends React.Component {
   constructor() {
@@ -64,19 +65,17 @@ export default class FarmPanel extends React.Component {
     this.init();
   };
 
-  renderHelp = (title,desc) => {
-    return (
-      <div className="stake-help-info">
-        <div className="help-title">{title}</div>
-        <div className="help-desc">{desc}</div>
-      </div>
-    );
-  };
+  renderHelp = (title, desc) => (
+    <div className="stake-help-info">
+      <div className="help-title">{title}</div>
+      <div className="help-desc">{desc}</div>
+    </div>
+  );
 
-  showHelp = (title,desc) => {
+  showHelp = (title, desc) => {
     Dialog.show({
       width: '440px',
-      children: this.renderHelp(title,desc),
+      children: this.renderHelp(title, desc),
     });
   };
 
@@ -102,12 +101,20 @@ export default class FarmPanel extends React.Component {
         )}
         <div className="title-wrap">
           {toLocale('White listed')}
-          <i className="help" onClick={() => this.showHelp(toLocale('White listed help'),toLocale('White listed help desc'))} />
+          <i
+            className="help"
+            onClick={() =>
+              this.showHelp(
+                toLocale('White listed help'),
+                toLocale('White listed help desc')
+              )
+            }
+          />
         </div>
         <div className="info-items">
           {data.map((d, index) => (
             <div className="info-item" key={index}>
-              <div className={classNames('tag', 'active')}></div>
+              <div className={classNames('tag', 'active')} />
               <div className="coin2coin">
                 {d.lock_symbol_info.symbols.map((symbol, symbolIndex) => (
                   <img src={getCoinIcon(symbol)} key={symbolIndex} />
@@ -133,7 +140,11 @@ export default class FarmPanel extends React.Component {
               </div>
               <SimpleBtnDialog
                 component={() =>
-                  Stake.getStake({ data: d, onSuccess: () => this.props.history.push(PageURL.myfarmingsPage) })
+                  Stake.getStake({
+                    data: d,
+                    onSuccess: () =>
+                      this.props.history.push(PageURL.myfarmingsPage),
+                  })
                 }
               >
                 <div className={classNames('farm-btn')}>
@@ -148,12 +159,21 @@ export default class FarmPanel extends React.Component {
         </div>
         <div className="title-wrap">
           <div className="space-between">
-            <div className="left">{toLocale('Other pools')}
-            <i className="help" onClick={() => this.showHelp(toLocale('Other pools help'),toLocale('Other pools help desc'))}></i>
+            <div className="left">
+              {toLocale('Other pools')}
+              <i
+                className="help"
+                onClick={() =>
+                  this.showHelp(
+                    toLocale('Other pools help'),
+                    toLocale('Other pools help desc')
+                  )
+                }
+              />
             </div>
           </div>
         </div>
-        <WatchlistPanel/>
+        <WatchlistPanel />
       </div>
     );
   }

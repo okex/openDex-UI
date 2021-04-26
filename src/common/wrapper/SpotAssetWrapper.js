@@ -35,6 +35,7 @@ const SpotAssetWrapper = (SpotAssetComponent) => {
         }
       };
     };
+
     checkLogin = () => {
       const { isLogin } = window.OK_GLOBAL;
       if (!isLogin) {
@@ -43,6 +44,7 @@ const SpotAssetWrapper = (SpotAssetComponent) => {
       }
       return true;
     };
+
     render() {
       const { isLogin } = window.OK_GLOBAL;
       const { spotAsset, product } = this.props;

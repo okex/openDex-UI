@@ -22,6 +22,7 @@ export default class Pagination extends React.Component {
     dark: PropTypes.bool,
     totalPage: PropTypes.number,
   };
+
   static defaultProps = {
     prefixCls: 'ok-ui-pagination',
     current: 1,
@@ -36,6 +37,7 @@ export default class Pagination extends React.Component {
     dark: false,
     size: '',
   };
+
   getIconsProps = () => {
     const { prefixCls } = this.props;
     const prevIcon = (

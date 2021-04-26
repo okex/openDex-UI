@@ -2,17 +2,17 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Enum from '_src/utils/Enum';
 import util from '_src/utils/util';
-import FullTradeHead from './FullTradeHead';
 import FullTradeData from '_src/pages/fullTrade/FullTradeData';
 import SpotAsset from '_src/pages/trade/SpotAsset';
 import SpotOrder from '_src/pages/trade/SpotOrder';
-import FullTradeKLine from './FullTradeKLine';
 import FullDepth from '_src/pages/fullTrade/FullDepth';
 import SpotPlaceOrder from '_src/pages/trade/SpotPlaceOrder';
 import FullTradeDeals from '_src/pages/fullTrade/FullTradeDeals';
 import './FullTrade.less';
 import { bindActionCreators } from 'redux';
 import * as CommonAction from '_src/redux/actions/CommonAction';
+import FullTradeKLine from './FullTradeKLine';
+import FullTradeHead from './FullTradeHead';
 
 function mapStateToProps(state) {
   const { product, productObj } = state.SpotTrade;

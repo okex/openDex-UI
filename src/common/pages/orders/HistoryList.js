@@ -9,21 +9,18 @@ import { toLocale } from '_src/locale/react-locale';
 import Message from '_src/component/Message';
 import Checkbox from 'rc-checkbox';
 import moment from 'moment';
+import { Button } from '_component/Button';
 import Cookies from 'js-cookie';
 import RouterCredential from '../../RouterCredential';
-import ont from '../../utils/dataProxy';
 import DexTable from '../../component/DexTable';
-import URL from '../../constants/URL';
 import * as SpotActions from '../../redux/actions/SpotAction';
 import * as OrderActions from '../../redux/actions/OrderAction';
 import Enum from '../../utils/Enum';
 import orderUtil from './orderUtil';
-
-import './OrderList.less';
-import { Button } from '_component/Button';
 import normalColumns from '../spotOrders/normalColumns';
 import commonUtil from '../spotOrders/commonUtil';
 import util from '../../utils/util';
+import './OrderList.less';
 
 function mapStateToProps(state) {
   const { product, productList, productObj } = state.SpotTrade;
@@ -62,6 +59,7 @@ export default class HistoryList extends RouterCredential {
       hiddenCancel: 0,
     };
   }
+
   componentWillMount() {
     const { orderActions } = this.props;
     orderActions.resetData();
@@ -88,15 +86,14 @@ export default class HistoryList extends RouterCredential {
       });
     }
   }
+
   componentDidMount() {
     const { spotActions } = this.props;
     spotActions.fetchProducts();
-    const { webType } = window.OK_GLOBAL;
     document.title =
       toLocale('spot.orders.orderHistory') + toLocale('spot.page.title');
     this.onSearch();
   }
-  componentWillReceiveProps(nextProps) {}
 
   componentWillUnmount() {
     const { orderActions } = this.props;
@@ -106,6 +103,7 @@ export default class HistoryList extends RouterCredential {
   onBtnSearch = () => {
     this.onSearch({ page: 1 });
   };
+
   onSearch = (param) => {
     const { orderActions } = this.props;
     const { start, end } = this.state;
@@ -124,6 +122,7 @@ export default class HistoryList extends RouterCredential {
 
     orderActions.getHistoryList(params);
   };
+
   onProductsChange = (obj) => {
     const value = obj.value;
     if (value.length > 0) {
@@ -137,6 +136,7 @@ export default class HistoryList extends RouterCredential {
       );
     }
   };
+
   onSideChange = (obj) => {
     const value = obj.value;
     let side = 'all';
@@ -147,13 +147,14 @@ export default class HistoryList extends RouterCredential {
     }
     this.setState(
       {
-        side: side,
+        side,
       },
       () => {
         this.onSearch({ page: 1 });
       }
     );
   };
+
   onDatePickerChange(key) {
     return (date) => {
       this.setState(
@@ -166,9 +167,11 @@ export default class HistoryList extends RouterCredential {
       );
     };
   }
+
   onPageChange = (page) => {
     this.onSearch({ page });
   };
+
   updateHideOrders = (e) => {
     this.setState(
       {
@@ -179,20 +182,20 @@ export default class HistoryList extends RouterCredential {
       }
     );
   };
+
   handleDateChangeRaw = (e) => {
     e.preventDefault();
   };
+
   renderQuery = () => {
     const { productList } = this.props;
-    const sortProductList = productList.sort((a, b) => {
-      return a.base_asset_symbol.localeCompare(b.base_asset_symbol);
-    });
-    const newProductList = sortProductList.map((obj) => {
-      return {
-        value: obj.product,
-        label: obj.product.replace('_', '/').toUpperCase(),
-      };
-    });
+    const sortProductList = productList.sort((a, b) =>
+      a.base_asset_symbol.localeCompare(b.base_asset_symbol)
+    );
+    const newProductList = sortProductList.map((obj) => ({
+      value: obj.product,
+      label: obj.product.replace('_', '/').toUpperCase(),
+    }));
     const { product, side, start, end, hiddenCancel } = this.state;
     newProductList.unshift({
       value: 'all',
@@ -226,7 +229,7 @@ export default class HistoryList extends RouterCredential {
             className="select-theme-controls mar-rig16 select-container"
             style={{ width: 160 }}
           />
-          <span></span>
+          <span />
           <DatePicker
             small
             selectsStart
@@ -288,6 +291,7 @@ export default class HistoryList extends RouterCredential {
       </div>
     );
   };
+
   render() {
     const { theme, productObj, data } = this.props;
     const { orderList, isLoading, page } = data;

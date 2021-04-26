@@ -1,4 +1,4 @@
-import Depth from './Depth.js';
+import Depth from './Depth';
 
 const depth = new Depth();
 

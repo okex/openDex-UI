@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import DataRow from './DataRow';
+
 const ASC = 'asc';
 const DESC = 'desc';
 export default class Watchlist extends React.Component {

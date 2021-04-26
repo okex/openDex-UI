@@ -64,14 +64,13 @@ class TransferDialog extends Component {
     this.feeLeft = 0;
     this.addr = window.OK_GLOBAL.senderAddr;
   }
-  componentWillReceiveProps(nextProps) {
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.addr) {
       const { show, symbol, assetsType } = nextProps;
       if (show !== this.props.show) {
         if (show) {
-          const idx = this.props.tokenList.findIndex((t) => {
-            return t.value === symbol;
-          });
+          const idx = this.props.tokenList.findIndex((t) => t.value === symbol);
           this.fetchFeeTokenAsset(symbol);
           if (idx > -1) {
             this.setSymbol(symbol, assetsType, false);
@@ -87,6 +86,7 @@ class TransferDialog extends Component {
       }
     }
   }
+
   fetchFeeTokenAsset = (symbol) => {
     ont
       .get(`${URL.GET_ACCOUNTS}/${this.addr}`, {
@@ -103,22 +103,26 @@ class TransferDialog extends Component {
         }
       });
   };
+
   calAvaIsFeeToken = () => {
     const { fee } = this.state;
     if (this.feeLeft > fee) {
       this.setState({
-        available: util.precisionInput(calc.sub(this.feeLeft, fee, false)).replace(/,/g,''),
+        available: util
+          .precisionInput(calc.sub(this.feeLeft, fee, false))
+          .replace(/,/g, ''),
       });
     } else {
       this.setState({ available: 0 });
     }
   };
+
   fetchAsset = (symbol) => {
-    if(this.isErc20(symbol)) {
-      return web3Util.getBalance(symbol).then(available => {
+    if (this.isErc20(symbol)) {
+      return web3Util.getBalance(symbol).then((available) => {
         this.setState({ available });
       });
-    } 
+    }
     ont
       .get(`${URL.GET_ACCOUNTS}/${this.addr}`, { params: { symbol } })
       .then(({ data }) => {
@@ -129,92 +133,95 @@ class TransferDialog extends Component {
         }
       });
   };
-  onChange = (type) => {
-    return (v) => {
-      let value = v.target ? v.target.value : v;
+
+  onChange = (type) => (v) => {
+    let value = v.target ? v.target.value : v;
+    this.setState({
+      [type]: value,
+      [`${type}Err`]: false,
+    });
+    if (type === 'amount') {
+      value = FormatNum.CheckInputNumber(value, 8);
       this.setState({
         [type]: value,
-        [`${type}Err`]: false,
+        feeErr: false,
       });
-      if (type === 'amount') {
-        value = FormatNum.CheckInputNumber(value, 8);
+    }
+  };
+
+  onBlur = (type) => (v) => {
+    const value = v.target ? v.target.value : v;
+    let err = false;
+    const { available, fee } = this.state;
+    if (type === 'address') {
+      if (value.trim() && !this.addrReg.test(value)) {
         this.setState({
-          [type]: value,
+          addressErrType: 'format',
+        });
+        err = true;
+      }
+      if (value.trim().toLowerCase() === this.addr.toLowerCase()) {
+        this.setState({
+          addressErrType: 'same',
+        });
+        err = true;
+      }
+    }
+    if (type === 'amount') {
+      err = util.compareNumber(available, value);
+      if (!err && util.compareNumber(this.feeLeft, fee)) {
+        this.setState({
+          feeErr: true,
+        });
+      } else {
+        this.setState({
           feeErr: false,
         });
       }
-    };
+    }
+    this.setState({
+      [`${type}Err`]: err,
+    });
   };
-  onBlur = (type) => {
-    return (v) => {
-      const value = v.target ? v.target.value : v;
-      let err = false;
-      const { available, fee } = this.state;
-      if (type === 'address') {
-        if (value.trim() && !this.addrReg.test(value)) {
-          this.setState({
-            addressErrType: 'format',
-          });
-          err = true;
-        }
-        if (value.trim().toLowerCase() === this.addr.toLowerCase()) {
-          this.setState({
-            addressErrType: 'same',
-          });
-          err = true;
-        }
-      }
-      if (type === 'amount') {
-        err = util.compareNumber(available, value);
-        if (!err && util.compareNumber(this.feeLeft, fee)) {
-          this.setState({
-            feeErr: true,
-          });
-        } else {
-          this.setState({
-            feeErr: false,
-          });
-        }
-      }
-      this.setState({
-        [`${type}Err`]: err,
-      });
-    };
-  };
+
   allIn = () => {
     const { available } = this.state;
     this.setState({ amount: util.precisionInput(available, 8, false) });
   };
+
   setSymbol = (symbol, assetsType, checkFee = true) => {
-    this.setState({ symbol,
-      check: !isLpToken(symbol),
-      hideCheck: !isLpToken(symbol)
-    }, () => {
-      if (symbol) {
-        this.setState(
-          {
-            available: 0,
-            amount: '',
-            amountErr: false,
-            feeErr: false,
-          },
-          () => {
-            if (symbol === this.feeToken) {
-              if (checkFee) {
-                this.calAvaIsFeeToken();
+    this.setState(
+      { symbol, check: !isLpToken(symbol), hideCheck: !isLpToken(symbol) },
+      () => {
+        if (symbol) {
+          this.setState(
+            {
+              available: 0,
+              amount: '',
+              amountErr: false,
+              feeErr: false,
+            },
+            () => {
+              if (symbol === this.feeToken) {
+                if (checkFee) {
+                  this.calAvaIsFeeToken();
+                }
+              } else if (assetsType === 'KIP 20') {
+                web3Util
+                  .getBalance(symbol)
+                  .then((balance) => this.setState({ available: balance }));
+              } else {
+                this.fetchAsset(symbol);
               }
-            } else if (assetsType === 'KIP 20') {
-              web3Util.getBalance(symbol).then(balance => this.setState({ available: balance }))
-            } else {
-              this.fetchAsset(symbol);
             }
-          }
-        );
+          );
+        }
       }
-    });
+    );
   };
+
   canProceed = () => {
-    const { fee, symbol, address, amount, available,check } = this.state;
+    const { fee, symbol, address, amount, available, check } = this.state;
     return (
       this.props.tokenList.length &&
       symbol &&
@@ -228,12 +235,15 @@ class TransferDialog extends Component {
       check
     );
   };
+
   isErc20(symbol) {
     return /^0x/i.test(symbol);
   }
+
   onTypeChange = ({ value }) => {
     this.setSymbol(value);
   };
+
   transfer = (pwd) => {
     if (!util.isLogined()) {
       window.location.reload();
@@ -262,31 +272,37 @@ class TransferDialog extends Component {
       }
     );
   };
+
   _transfer = (privateKey = '') => {
     const { onClose, onSuccess, okexchainClient, assetsType } = this.props;
     const { symbol, address, amount, note, available } = this.state;
     onClose();
     setTimeout(() => {
       this.setState({ transferring: true });
-    },0);
-    let amountStr = util.precisionInput(amount).replace(/,/g,'');
-    if (
-      util.precisionInput(amount, 8) ===
-      util.precisionInput(available, 8)
-    ) {
+    }, 0);
+    let amountStr = util.precisionInput(amount).replace(/,/g, '');
+    if (util.precisionInput(amount, 8) === util.precisionInput(available, 8)) {
       amountStr = available;
     }
     if (assetsType === 'KIP 20') {
-      let toAddress = address
+      let toAddress = address;
       if (/^ex/i.test(address)) {
-        toAddress = crypto.convertBech32ToHex(address)[0]
+        toAddress = crypto.convertBech32ToHex(address)[0];
       }
-      web3Util.transfer({contractAddress: symbol, privateKey,amount:amountStr, toAddress}).then(() => {
-        this._transferSuccess(onSuccess);
-      }).catch(() => {
-        this._transferErr(toLocale('trans_fail')); 
-      });
-      return
+      web3Util
+        .transfer({
+          contractAddress: symbol,
+          privateKey,
+          amount: amountStr,
+          toAddress,
+        })
+        .then(() => {
+          this._transferSuccess(onSuccess);
+        })
+        .catch(() => {
+          this._transferErr(toLocale('trans_fail'));
+        });
+      return;
     }
 
     okexchainClient.setAccountInfo(privateKey).then(() => {
@@ -294,18 +310,20 @@ class TransferDialog extends Component {
         .sendSendTransaction(address, amountStr, symbol, note)
         .then((res) => {
           if (res.result.code) {
-            this._transferErr(toLocale(`error.code.${res.result.code}`) ||
-            toLocale('trans_fail'))
+            this._transferErr(
+              toLocale(`error.code.${res.result.code}`) ||
+                toLocale('trans_fail')
+            );
           } else {
             this._transferSuccess(onSuccess);
           }
         })
-        .catch((err) => {
-          console.log(err)
+        .catch(() => {
           this._transferErr(toLocale('trans_fail'));
         });
     });
   };
+
   _transferErr = (msg) => {
     setTimeout(() => {
       this.setState({ transferring: false });
@@ -323,7 +341,8 @@ class TransferDialog extends Component {
         dialog.destroy();
       }, this.transDur);
     }, this.loadingDur);
-  }
+  };
+
   _transferSuccess = (onSuccess) => {
     setTimeout(() => {
       this.setState({ transferring: false });
@@ -342,19 +361,19 @@ class TransferDialog extends Component {
         onSuccess();
       }, this.transDur);
     }, this.loadingDur);
-  }
+  };
 
   toggleCheck = (e) => {
     this.setState({ check: e.target.checked });
-  }
+  };
 
   submit = () => {
-    if(util.isWalletConnect()) {
+    if (util.isWalletConnect()) {
       this._transfer();
     } else {
       this.setState({ step: 3 }, this.clearPwd);
     }
-  }
+  };
 
   render() {
     const { state, props } = this;
@@ -474,7 +493,7 @@ class TransferDialog extends Component {
                 </tr>
               </tbody>
             </table>
-            {!hideCheck && 
+            {!hideCheck && (
               <label className="cursor-pointer lp-checkbox">
                 <Checkbox
                   onChange={this.toggleCheck}
@@ -483,7 +502,7 @@ class TransferDialog extends Component {
                 />
                 {toLocale('lp token transfer')}
               </label>
-            }
+            )}
             <Button
               block
               type={Button.btnType.primary}
@@ -536,10 +555,7 @@ class TransferDialog extends Component {
               >
                 {toLocale('go_back')}
               </Button>
-              <Button
-                type={Button.btnType.primary}
-                onClick={this.submit}
-              >
+              <Button type={Button.btnType.primary} onClick={this.submit}>
                 {toLocale('ensure')}
               </Button>
             </div>

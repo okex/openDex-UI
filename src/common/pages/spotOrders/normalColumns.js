@@ -11,15 +11,13 @@ export default {
       {
         title: toLocale('spot.orders.operation'),
         key: 'operation',
-        render: (text, record) => {
-          return (
-            <div>
-              <a className="order-cancel" onClick={onCancelOrder(record)}>
-                {toLocale('spot.orders.cancel')}
-              </a>
-            </div>
-          );
-        },
+        render: (text, record) => (
+          <div>
+            <a className="order-cancel" onClick={onCancelOrder(record)}>
+              {toLocale('spot.orders.cancel')}
+            </a>
+          </div>
+        ),
       },
     ];
     return commonCols.concat(normalCols);
@@ -34,9 +32,7 @@ export default {
       {
         title: toLocale('spot.myOrder.height'),
         key: 'block_height',
-        render: (text) => {
-          return <span>{text}</span>;
-        },
+        render: (text) => <span>{text}</span>,
       },
       {
         title: toLocale('spot.myOrder.date'),
@@ -56,44 +52,32 @@ export default {
       {
         title: toLocale('spot.myOrder.id'),
         key: 'order_id',
-        render: (text) => {
-          return <span>{text}</span>;
-        },
+        render: (text) => <span>{text}</span>,
       },
       {
         title: toLocale('spot.myOrder.product'),
         key: 'product',
-        render: (text) => {
-          return <span>{text}</span>;
-        },
+        render: (text) => <span>{text}</span>,
       },
       {
         title: toLocale('spot.myOrder.direction'),
         key: 'side',
-        render: (text, data) => {
-          return <div className={data.sideClass}>{text}</div>;
-        },
+        render: (text, data) => <div className={data.sideClass}>{text}</div>,
       },
       {
         title: toLocale('spot.myOrder.filledPrice'),
         key: 'price',
-        render: (text) => {
-          return <div>{text}</div>;
-        },
+        render: (text) => <div>{text}</div>,
       },
       {
         title: toLocale('spot.myOrder.filledAmount'),
         key: 'volume',
-        render: (text) => {
-          return <div>{text}</div>;
-        },
+        render: (text) => <div>{text}</div>,
       },
       {
         title: toLocale('spot.myOrder.filledMoney'),
         key: 'total',
-        render: (text, data) => {
-          return <span>{data.money}</span>;
-        },
+        render: (text, data) => <span>{data.money}</span>,
       },
       {
         title: toLocale('spot.myOrder.fee'),
@@ -104,9 +88,9 @@ export default {
             txt = text.split('-')[0];
           }
           text = FormatNum.formatFeeStr(txt.toUpperCase());
-          text = text.replace(/(\d{1,}\.?\d*)/, function ($1) {
-            return util.precisionInput($1, 8);
-          });
+          text = text.replace(/(\d{1,}\.?\d*)/, ($1) =>
+            util.precisionInput($1, 8)
+          );
           return text;
         },
       },

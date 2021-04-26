@@ -52,32 +52,16 @@ export const calculateDate = (value, unit, now) => {
     date
   );
   const dateMap = {
-    'y+': () => {
-      return date.setFullYear(Number(year) + amount);
-    },
-    'M+': () => {
-      return date.setMonth(Number(month) - 1 + amount);
-    },
-    'd+': () => {
-      return date.setDate(Number(day) + amount);
-    },
-    'h+': () => {
-      return date.setHours(Number(hour) + amount);
-    },
-    'm+': () => {
-      return date.setMinutes(Number(minute) + amount);
-    },
-    's+': () => {
-      return date.setSeconds(Number(second) + amount);
-    },
-    ms: () => {
-      return date.setMilliseconds(Number(millisecond) + amount);
-    },
+    'y+': () => date.setFullYear(Number(year) + amount),
+    'M+': () => date.setMonth(Number(month) - 1 + amount),
+    'd+': () => date.setDate(Number(day) + amount),
+    'h+': () => date.setHours(Number(hour) + amount),
+    'm+': () => date.setMinutes(Number(minute) + amount),
+    's+': () => date.setSeconds(Number(second) + amount),
+    ms: () => date.setMilliseconds(Number(millisecond) + amount),
   };
   const keys = Object.keys(dateMap);
-  const dateKey = keys.find((key) => {
-    return new RegExp(`${key}`).test(unit);
-  });
+  const dateKey = keys.find((key) => new RegExp(`${key}`).test(unit));
 
   const handler = dateMap[dateKey];
 

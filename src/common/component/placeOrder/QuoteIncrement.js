@@ -2,8 +2,8 @@ import React from 'react';
 import { toLocale } from '_src/locale/react-locale';
 
 export default class QuoteIncrement extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this.state = {
       extra: '',
     };
@@ -12,7 +12,7 @@ export default class QuoteIncrement extends React.Component {
   render() {
     const { productConfig } = window.OK_GLOBAL;
     const { quoteIncrement } = productConfig;
-    if (quoteIncrement != 0) {
+    if (quoteIncrement !== 0) {
       return (
         <div className="tooltip-content">
           {toLocale('spot.place.tips.must') +

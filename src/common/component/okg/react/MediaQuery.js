@@ -19,9 +19,11 @@ class MediaQuery extends PureComponent {
       { runNow: false }
     );
   }
+
   componentWillUnmount() {
     this.watchMedia.destroy();
   }
+
   getCurrentComponent = () => {
     const { sm, md, lg, xl } = this.props;
     this.components = {
@@ -42,6 +44,7 @@ class MediaQuery extends PureComponent {
     const currentMedia = this.state.media;
     return this.components[currentMedia];
   };
+
   render() {
     const CurrentComponent = this.getCurrentComponent();
     return CurrentComponent;

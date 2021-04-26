@@ -122,9 +122,9 @@ const StepList = (props) => {
   ];
   return (
     <div className="step-list-container">
-      {list.map((item, index) => {
-        return <StepItem key={index} data={item} />;
-      })}
+      {list.map((item, index) => (
+        <StepItem key={index} data={item} />
+      ))}
     </div>
   );
 };
@@ -137,9 +137,11 @@ class Steps extends Component {
       circleTime: 4000,
     };
   }
+
   componentDidMount() {
     this.countDown();
   }
+
   countDown() {
     setInterval(() => {
       const { circleTime, imgNum } = this.state;
@@ -161,6 +163,7 @@ class Steps extends Component {
   componentWillUnmount() {
     clearInterval(this.countDown);
   }
+
   render() {
     const { imgNum, circleTime } = this.state;
     return (
@@ -168,16 +171,14 @@ class Steps extends Component {
         <article className="steps-grid">
           <h2 className="steps-title">{toLocale('home_steps_title')}</h2>
           <div className="steps-content">
-            {stepsImgList.map((img, index) => {
-              return (
-                <img
-                  key={index}
-                  className={index === imgNum ? `step-img${imgNum}` : 'non-dis'}
-                  src={toLocale(img) || Image[`step${imgNum}`]}
-                  alt={toLocale('home_steps_title')}
-                />
-              );
-            })}
+            {stepsImgList.map((img, index) => (
+              <img
+                key={index}
+                className={index === imgNum ? `step-img${imgNum}` : 'non-dis'}
+                src={toLocale(img) || Image[`step${imgNum}`]}
+                alt={toLocale('home_steps_title')}
+              />
+            ))}
             <StepList data={{ imgNum, circleTime }} />
           </div>
         </article>

@@ -6,7 +6,7 @@ import { calc } from '_component/okit';
 import Enum from '../../utils/Enum';
 import FormatNum from '../../utils/FormatNum';
 import util from '../../utils/util';
-import StrategyTypeSelect from '../placeOrders/StrategyTypeSelect';
+import StrategyTypeSelect from './StrategyTypeSelect';
 import TradeSliderBar from '../../component/TradeSliderBar';
 import Available from '../../component/placeOrder/Available';
 import SubmitButton from '../../component/placeOrder/SubmitButton';
@@ -43,6 +43,7 @@ export default class MarketForm extends React.Component {
     };
     this.formParam = {};
   }
+
   componentDidMount() {
     const { currencyPrice } = this.props;
     this.updateInput({
@@ -50,7 +51,7 @@ export default class MarketForm extends React.Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { symbol, currencyTicker, type, asset } = nextProps;
     if (
       this.props.symbol !== symbol ||
@@ -66,52 +67,51 @@ export default class MarketForm extends React.Component {
       this.clearForm();
     }
   }
-  onInputKeyUp = (key) => {
-    return (value, e) => {
-      const config = window.OK_GLOBAL.productConfig;
-      const { inputObj } = this.state;
-      const priceTruncate = config.max_price_digit;
-      const sizeTruncate = config.max_size_digit;
 
-      if (util.ctrlAorTab(e)) {
-        return;
-      }
-      const input = { ...inputObj };
+  onInputKeyUp = (key) => (value, e) => {
+    const config = window.OK_GLOBAL.productConfig;
+    const { inputObj } = this.state;
+    const priceTruncate = config.max_price_digit;
+    const sizeTruncate = config.max_size_digit;
 
-      let inputValue = value;
-      inputValue = inputValue.replace(/\s+/g, '');
-      if (!inputValue.length) {
-        input[key] = '';
-        this.updateInput(input);
-        return;
-      }
-      if (['total'].indexOf(key) > -1) {
-        inputValue = FormatNum.CheckInputNumber(inputValue, priceTruncate);
-      } else if (['amount'].indexOf(key) > -1) {
-        inputValue = FormatNum.CheckInputNumber(inputValue, sizeTruncate);
-      }
-      input[key] = inputValue;
+    if (util.ctrlAorTab(e)) {
+      return;
+    }
+    const input = { ...inputObj };
+
+    let inputValue = value;
+    inputValue = inputValue.replace(/\s+/g, '');
+    if (!inputValue.length) {
+      input[key] = '';
       this.updateInput(input);
-    };
+      return;
+    }
+    if (['total'].indexOf(key) > -1) {
+      inputValue = FormatNum.CheckInputNumber(inputValue, priceTruncate);
+    } else if (['amount'].indexOf(key) > -1) {
+      inputValue = FormatNum.CheckInputNumber(inputValue, sizeTruncate);
+    }
+    input[key] = inputValue;
+    this.updateInput(input);
   };
-  onInputChange = (key) => {
-    return (inputValue) => {
-      const { inputObj } = this.state;
-      const { productConfig } = window.OK_GLOBAL;
-      const input = { ...inputObj };
 
-      const priceTruncate = productConfig.max_price_digit;
-      const sizeTruncate = productConfig.max_size_digit;
-      const value = inputValue === '.' ? '' : inputValue;
-      if (key === 'total') {
-        input[key] = FormatNum.CheckInputNumber(value, priceTruncate);
-      } else if (key === 'amount') {
-        input[key] = FormatNum.CheckInputNumber(value, sizeTruncate);
-      }
-      this.updateWarning('');
-      this.updateInput(input);
-    };
+  onInputChange = (key) => (inputValue) => {
+    const { inputObj } = this.state;
+    const { productConfig } = window.OK_GLOBAL;
+    const input = { ...inputObj };
+
+    const priceTruncate = productConfig.max_price_digit;
+    const sizeTruncate = productConfig.max_size_digit;
+    const value = inputValue === '.' ? '' : inputValue;
+    if (key === 'total') {
+      input[key] = FormatNum.CheckInputNumber(value, priceTruncate);
+    } else if (key === 'amount') {
+      input[key] = FormatNum.CheckInputNumber(value, sizeTruncate);
+    }
+    this.updateWarning('');
+    this.updateInput(input);
   };
+
   onTradeSliderBarChange = (value) => {
     const { productConfig } = window.OK_GLOBAL;
     const { asset, type } = this.props;
@@ -145,6 +145,7 @@ export default class MarketForm extends React.Component {
     newInputObj.amount = newInputObj.amount > 0 ? newInputObj.amount : '';
     return this.updateInput(newInputObj);
   };
+
   onOrderSubmit = () => {
     const { type, asset, currencyPrice } = this.props;
     const { updateWarning } = this;
@@ -223,6 +224,7 @@ export default class MarketForm extends React.Component {
       }
     );
   };
+
   getPercent = (baseAvailable, tradeAvailable) => {
     let percent = 0;
     const { productConfig } = window.OK_GLOBAL;
@@ -253,15 +255,19 @@ export default class MarketForm extends React.Component {
     percent = percent > 1 ? 1 : percent;
     return Number((percent * 100).toFixed(2));
   };
+
   setLoading = (isLoading = false) => {
     this.setState({ isLoading });
   };
+
   updateInput = (inputObj) => {
     this.setState(Object.assign(this.state.inputObj, inputObj));
   };
+
   updateWarning = (warning = '') => {
     this.setState({ warning });
   };
+
   clearForm = () => {
     this.setState(
       Object.assign(this.state.inputObj, {
@@ -270,6 +276,7 @@ export default class MarketForm extends React.Component {
       })
     );
   };
+
   renderPrice = () => {
     const { tradeType } = window.OK_GLOBAL;
     if (tradeType === Enum.tradeType.normalTrade) {
@@ -287,6 +294,7 @@ export default class MarketForm extends React.Component {
       </span>
     );
   };
+
   renderSliderBar = () => {
     const { asset, type } = this.props;
     const { baseAvailable, tradeAvailable } = asset;
@@ -339,6 +347,7 @@ export default class MarketForm extends React.Component {
     }
     return null;
   };
+
   renderAmount = () => {
     const { tradeType, productConfig } = window.OK_GLOBAL;
     const { asset, type } = this.props;

@@ -33,12 +33,12 @@ export function fetchAccountAssets(callback) {
         });
         return callback && callback();
       })
-      .catch((res) => {
-        return dispatch({
+      .catch((res) =>
+        dispatch({
           type: SpotTradeActionType.FETCH_ERROR_ASSETS,
           data: res.msg,
-        });
-      });
+        })
+      );
   };
 }
 
@@ -48,22 +48,18 @@ const transferDepth = (data) => {
     asks: [],
   };
   if (data.bids) {
-    result.bids = data.bids.map((item) => {
-      return [
-        +item.price,
-        +item.quantity,
-        calc.mul(+item.price, +item.quantity),
-      ];
-    });
+    result.bids = data.bids.map((item) => [
+      +item.price,
+      +item.quantity,
+      calc.mul(+item.price, +item.quantity),
+    ]);
   }
   if (data.asks) {
-    result.asks = data.asks.map((item) => {
-      return [
-        +item.price,
-        +item.quantity,
-        calc.mul(+item.price, +item.quantity),
-      ];
-    });
+    result.asks = data.asks.map((item) => [
+      +item.price,
+      +item.quantity,
+      calc.mul(+item.price, +item.quantity),
+    ]);
   }
   return result;
 };
@@ -326,9 +322,7 @@ export function getDeals(product, callback) {
       })
       .then((res) => {
         const data = res.data.data || [];
-        data.sort((d1, d2) => {
-          return d2.timestamp - d1.timestamp;
-        });
+        data.sort((d1, d2) => d2.timestamp - d1.timestamp);
         const Finalist = data.length > 0 ? addColorToDeals(data) : [];
         dispatch({
           type: SpotTradeActionType.FETCH_SUCCESS_DEALS,
@@ -382,9 +376,7 @@ export function wsUpdateDeals(data = []) {
       if (newArr.length > 60) {
         newArr = newArr.slice(0, 60);
       }
-      newArr.sort((d1, d2) => {
-        return d2.timestamp - d1.timestamp;
-      });
+      newArr.sort((d1, d2) => d2.timestamp - d1.timestamp);
       const Finalist = data.length > 0 ? addColorToDeals(newArr) : [];
       dispatch({
         type: SpotTradeActionType.WS_UPDATE_DEALS,

@@ -16,17 +16,15 @@ const OrderHeader = (props) => {
   return (
     <div className={`clear-fix ${headerContainerCls}`}>
       <ul className="tabs clear-fix">
-        {dataSource.map(({ type: headerType, name }) => {
-          return (
-            <li
-              key={headerType}
-              className={type === headerType ? 'active' : ''}
-              onClick={onTabChange(headerType)}
-            >
-              {name}
-            </li>
-          );
-        })}
+        {dataSource.map(({ type: headerType, name }) => (
+          <li
+            key={headerType}
+            className={type === headerType ? 'active' : ''}
+            onClick={onTabChange(headerType)}
+          >
+            {name}
+          </li>
+        ))}
       </ul>
       {props.children}
     </div>

@@ -1,9 +1,8 @@
+import Message from '_src/component/Message';
 import FormActionType from '../actionTypes/FormActionType';
 import Enum from '../../utils/Enum';
 import FormatNum from '../../utils/FormatNum';
-import Message from '_src/component/Message';
 import { toLocale } from '../../locale/react-locale';
-import env from '../../constants/env';
 
 export function clearForm() {
   return (dispatch) => {

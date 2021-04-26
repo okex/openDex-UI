@@ -792,7 +792,8 @@ const zhCN = {
   wallet_connect: 'WalletConnect',
   wallet_connect_title: '连接到WalletConnect',
   wallet_connect_title_tip: '允许OKExChain DEX 连接WalletConnect',
-  wallet_connect_error: 'Failed to connect：Already processing requestAccounts. Please wait.',
+  wallet_connect_error:
+    'Failed to connect：Already processing requestAccounts. Please wait.',
   wallet_connect_ensure: '连接',
   wallet_connect_ensureing: '连接中',
   wallet_connect_qrcode: 'WalletConnect',
@@ -1120,7 +1121,8 @@ const zhCN = {
   s: '秒',
   'Other pools': '普通池',
   'Other pools help': '什么是普通池',
-  'Other pools help desc': '任何人都可以通过OKEx Farm创建普通池成为Farm owner，无需审核和批准，在创建时注入可以挖的币，通过普通池参与质押挖矿的用户可以获得Farm owner注入的币，从而获取挖矿收益。',
+  'Other pools help desc':
+    '任何人都可以通过OKEx Farm创建普通池成为Farm owner，无需审核和批准，在创建时注入可以挖的币，通过普通池参与质押挖矿的用户可以获得Farm owner注入的币，从而获取挖矿收益。',
   'Farm pool': 'Farm池',
   'Total staked': '总质押',
   'Pool rate(1Day)': '挖矿速率：(1天)',
@@ -1166,12 +1168,10 @@ const zhCN = {
   'stake tip': '本次质押操作同时也会触发领取挖矿收益。',
   'unstake tip': '本次赎回操作同时也会触发领取挖矿收益。',
   info: '提示',
-  'info desc': `我已了解AMM自动做市相关知识并接受其风险。`,
+  'info desc': '我已了解AMM自动做市相关知识并接受其风险。',
   home_receive_swap: 'Swap教程',
   home_receive_farm: 'Farm教程',
   'lp introduce': '添加流动性之后会获得LP Token，它是你的做市凭证。',
-  'unstake confirm info':
-    '1st pool rewards will be released at 2021/1/26  18:00（UTC+8）. You won’t get any rewards if you have no LP tokens staked at that time.',
   'pool warn tip': '请准备同等资金价值的{base}和{quote}来添加流动性。',
   'go detail': '查看详情>',
   'check protocol': '确认',
@@ -1225,14 +1225,21 @@ const zhCN = {
   import_mnemonic_know_button: '我知道了',
   wallet_transaction_records_tab10: 'KIP 10 交易',
   wallet_transaction_records_tab20: 'KIP 20 交易',
-  dex_top_tip: 'OKExChain 已经兼容以太坊地址格式，您可以在您的以太坊钱包（如：MetaMask）中使用与以太坊账户相同的地址，快来了解如何使用',
-  dex_popup_tip: 'OKExChain 地址与以太坊地址由同一个公钥采用不同地址算法生成，共享账户余额',
+  dex_top_tip:
+    'OKExChain 已经兼容以太坊地址格式，您可以在您的以太坊钱包（如：MetaMask）中使用与以太坊账户相同的地址，快来了解如何使用',
+  dex_popup_tip:
+    'OKExChain 地址与以太坊地址由同一个公钥采用不同地址算法生成，共享账户余额',
   dex_input_err_tip_contract_useraddr: '此地址是个人账户地址',
   import_mnemonic_article_title: 'OKExChain 地址升级啦',
-  import_mnemonic_article_content1: 'OKExChain 主网 EVM 升级后，兼容以太坊地址（0x），并支持使用一个地址同时管理 OKExChain 和以太坊的资产。',
-  import_mnemonic_article_content2: '如果您在主网升级（2021/3/1 12:00）前创建了钱包并且持有资产，请在输入助记词下一步选择 “老账户”，并妥善保管私钥，避免造成资产损失。',
-  import_mnemonic_article_content3: '如果您是新用户，或已经习惯于使用以太坊钱包（例如MetaMask），您可以选择 “新账户”。',
-  import_mnemonic_new_instructions: '使用一套助记词同时管理您的 OKExChain 账户和以太坊账户',
-  import_mnemonic_path_tip: '注意：如果您在 2021/3/1 12:00 前创建或导入了钱包，请选择老账户',
+  import_mnemonic_article_content1:
+    'OKExChain 主网 EVM 升级后，兼容以太坊地址（0x），并支持使用一个地址同时管理 OKExChain 和以太坊的资产。',
+  import_mnemonic_article_content2:
+    '如果您在主网升级（2021/3/1 12:00）前创建了钱包并且持有资产，请在输入助记词下一步选择 “老账户”，并妥善保管私钥，避免造成资产损失。',
+  import_mnemonic_article_content3:
+    '如果您是新用户，或已经习惯于使用以太坊钱包（例如MetaMask），您可以选择 “新账户”。',
+  import_mnemonic_new_instructions:
+    '使用一套助记词同时管理您的 OKExChain 账户和以太坊账户',
+  import_mnemonic_path_tip:
+    '注意：如果您在 2021/3/1 12:00 前创建或导入了钱包，请选择老账户',
 };
 export default zhCN;

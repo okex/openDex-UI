@@ -20,6 +20,7 @@ class Fee extends React.Component {
   static propTypes = {
     fee: PropTypes.object,
   };
+
   static defaultProps = {
     fee: {
       maker: '--',

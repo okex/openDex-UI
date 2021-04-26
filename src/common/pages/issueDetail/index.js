@@ -33,13 +33,11 @@ class IssueDetail extends Component {
     }
   }
 
-  onMintOpen = (token) => {
-    return () => {
-      this.setState({
-        isShowMintDialog: true,
-        currentToken: token,
-      });
-    };
+  onMintOpen = (token) => () => {
+    this.setState({
+      isShowMintDialog: true,
+      currentToken: token,
+    });
   };
 
   onMintClose = () => {
@@ -48,13 +46,11 @@ class IssueDetail extends Component {
     });
   };
 
-  onBurnOpen = (token) => {
-    return () => {
-      this.setState({
-        isShowBurnDialog: true,
-        currentToken: token,
-      });
-    };
+  onBurnOpen = (token) => () => {
+    this.setState({
+      isShowBurnDialog: true,
+      currentToken: token,
+    });
   };
 
   onBurnClose = () => {
@@ -113,11 +109,10 @@ class IssueDetail extends Component {
       searchText,
     } = this.state;
     const pageSize = defaultPageSize;
-    const filterTokens = issueTokens.filter((token) => {
-      return (
+    const filterTokens = issueTokens.filter(
+      (token) =>
         token.symbol.indexOf(searchText.trim().toLowerCase().toString()) > -1
-      );
-    });
+    );
     const total = filterTokens.length;
     const renderTokens = filterTokens.slice(
       (page - 1) * pageSize,
@@ -133,19 +128,17 @@ class IssueDetail extends Component {
       >
         <DexList
           title="Issue"
-          tool={() => {
-            return (
-              <div className="issue-search-container">
-                <Icon className="icon-enlarge" />
-                <input
-                  className="issue-search-input"
-                  placeholder="Search"
-                  value={searchText}
-                  onChange={this.onSearchChange}
-                />
-              </div>
-            );
-          }}
+          tool={() => (
+            <div className="issue-search-container">
+              <Icon className="icon-enlarge" />
+              <input
+                className="issue-search-input"
+                placeholder="Search"
+                value={searchText}
+                onChange={this.onSearchChange}
+              />
+            </div>
+          )}
           columns={getIssueCols({
             mint: this.onMintOpen,
             burn: this.onBurnOpen,

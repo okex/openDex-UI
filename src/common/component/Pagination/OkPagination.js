@@ -115,7 +115,7 @@ export default class OkPagination extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if ('current' in nextProps) {
       this.setState({
         current: nextProps.current,
@@ -164,9 +164,8 @@ export default class OkPagination extends React.Component {
     return Math.floor((this.props.total - 1) / pageSize) + 1;
   };
 
-  isValid = (page) => {
-    return isInteger(page) && page >= 1 && page !== this.state.current;
-  };
+  isValid = (page) =>
+    isInteger(page) && page >= 1 && page !== this.state.current;
 
   handleKeyDown = (e) => {
     if (e.keyCode === KEYCODE.ARROW_UP || e.keyCode === KEYCODE.ARROW_DOWN) {
@@ -271,17 +270,14 @@ export default class OkPagination extends React.Component {
   jumpPrev = () => {
     this.handleChange(this.getJumpPrevPage());
   };
+
   jumpNext = () => {
     this.handleChange(this.getJumpNextPage());
   };
 
-  hasPrev = () => {
-    return this.state.current > 1;
-  };
+  hasPrev = () => this.state.current > 1;
 
-  hasNext = () => {
-    return this.state.current < this.calculatePage();
-  };
+  hasNext = () => this.state.current < this.calculatePage();
 
   runIfEnter = (event, callback, ...restParams) => {
     if (event.key === 'Enter' || event.charCode === 13) {

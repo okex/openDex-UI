@@ -30,7 +30,8 @@ function handleStatus(response) {
 function handleError(response, errorCallback) {
   if (errorCallback) {
     return errorCallback(response);
-  } else if (response && response.msg) {
+  }
+  if (response && response.msg) {
     return Message.error({
       content: toLocale(`error.code.${response.code}`) || response.msg,
     });
@@ -55,24 +56,21 @@ export function doFetch(url, paramObj, successCallback, errorCallback) {
   };
   return fetch(url, fetchParam)
     .then(handleStatus)
-    .then((response) => {
-      return response.json();
-    })
+    .then((response) => response.json())
     .then((response) => {
       if (response && response.code === 0) {
         if (successCallback) {
           return successCallback(response);
         }
         return response;
-      } else if ([800].includes(response.code)) {
+      }
+      if ([800].includes(response.code)) {
         window.location.href = '/account/login?logout=true';
         return false;
       }
       return handleError(response, errorCallback);
     })
-    .catch((response) => {
-      return handleError(response, errorCallback);
-    });
+    .catch((response) => handleError(response, errorCallback));
 }
 
 export function getData(url, params, successCallback, errorCallback) {
@@ -129,7 +127,5 @@ export function download(url, data) {
     method: 'GET',
     headers: header,
     credentials: 'include',
-  }).then((response) => {
-    return response.blob();
-  });
+  }).then((response) => response.blob());
 }

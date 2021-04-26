@@ -14,29 +14,28 @@ export default class ComboBox extends React.Component {
     return (
       <div className="ok-combo-box">
         <ul>
-          {this.props.comboBoxDataSource.map((item, index) => {
-            return (
-              <li
-                key={index}
-                className={current === item.type ? 'active' : ''}
-                onClick={() => this.change(item)}
-              >
-                {item.noLink ? item.label :
-                !item.isRoute ? (
-                  <a href={item.url}>{item.label}</a>
-                ) : (
-                  <Link
-                    to={item.url}
-                    onClick={() => {
-                      this.change(item);
-                    }}
-                  >
-                    {item.label}
-                  </Link>
-                )}
-              </li>
-            );
-          })}
+          {this.props.comboBoxDataSource.map((item, index) => (
+            <li
+              key={index}
+              className={current === item.type ? 'active' : ''}
+              onClick={() => this.change(item)}
+            >
+              {item.noLink ? (
+                item.label
+              ) : !item.isRoute ? (
+                <a href={item.url}>{item.label}</a>
+              ) : (
+                <Link
+                  to={item.url}
+                  onClick={() => {
+                    this.change(item);
+                  }}
+                >
+                  {item.label}
+                </Link>
+              )}
+            </li>
+          ))}
         </ul>
       </div>
     );

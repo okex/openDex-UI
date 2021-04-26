@@ -30,13 +30,11 @@ class DashboardTokenpair extends Component {
     }
   }
 
-  onAddOpen = (project) => {
-    return () => {
-      this.setState({
-        isShowAddDialog: true,
-        project,
-      });
-    };
+  onAddOpen = (project) => () => {
+    this.setState({
+      isShowAddDialog: true,
+      project,
+    });
   };
 
   onAddClose = () => {
@@ -45,13 +43,11 @@ class DashboardTokenpair extends Component {
     });
   };
 
-  onWithdrawOpen = (project) => {
-    return () => {
-      this.setState({
-        isShowWithdrawDialog: true,
-        project,
-      });
-    };
+  onWithdrawOpen = (project) => () => {
+    this.setState({
+      isShowWithdrawDialog: true,
+      project,
+    });
   };
 
   onWithdrawClose = () => {
@@ -100,7 +96,7 @@ class DashboardTokenpair extends Component {
       project,
     } = this.state;
     return (
-      <Fragment>
+      <>
         <DashboardSection
           title={toLocale('dashboard_tokenPair_title')}
           columns={getDashboardTokenPairCols({
@@ -127,7 +123,7 @@ class DashboardTokenpair extends Component {
           beforeWithdraw={beforeAddOrWithdraw}
           afterWithdraw={this.afterAddOrWithdraw}
         />
-      </Fragment>
+      </>
     );
   }
 }

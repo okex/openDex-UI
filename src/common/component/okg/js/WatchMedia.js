@@ -17,18 +17,22 @@ class WatchMedia {
     this.lgWatcher = window.matchMedia(_lg.query);
     this.xlWatcher = window.matchMedia(_xl.query);
   }
+
   _mdListener = (mediaQueryEvent) => {
     const result = getResult('_md', mediaQueryEvent);
     this.fn(result);
   };
+
   _lgListener = (mediaQueryEvent) => {
     const result = getResult('_lg', mediaQueryEvent);
     this.fn(result);
   };
+
   _xlListener = (mediaQueryEvent) => {
     const result = getResult('_xl', mediaQueryEvent);
     this.fn(result);
   };
+
   watch(fn, { runNow = true } = {}) {
     this.fn = fn;
     this.mdWatcher.addListener(this._mdListener);
@@ -46,6 +50,7 @@ class WatchMedia {
       fn(result);
     }
   }
+
   destroy() {
     this.mdWatcher.removeListener(this._mdListener);
     this.lgWatcher.removeListener(this._lgListener);

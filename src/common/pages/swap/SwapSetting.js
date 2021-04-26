@@ -5,8 +5,8 @@ import classNames from 'classnames';
 import { toLocale } from '_src/locale/react-locale';
 import * as SwapAction from '_src/redux/actions/SwapAction';
 import InputNum from '_component/InputNum';
-import * as util from './util';
 import Message from '_src/component/Message';
+import * as util from './util';
 import Tooltip from '../../component/Tooltip';
 
 function mapStateToProps(state) {
@@ -50,7 +50,7 @@ export default class SwapSetting extends React.Component {
   };
 
   render() {
-    const ratios = this.ratios;
+    const { ratios } = this;
     const { setting } = this.props;
     return (
       <div className="swap-setting-container">
@@ -80,7 +80,7 @@ export default class SwapSetting extends React.Component {
                     <div
                       key={index}
                       className={classNames('check-btn-item', {
-                        active: d.value == setting.slippageTolerance,
+                        active: `${d.value}` === `${setting.slippageTolerance}`,
                       })}
                       onClick={() => this.change(d)}
                     >

@@ -1,21 +1,21 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { toLocale } from '_src/locale/react-locale';
 import util from '_src/utils/util';
 import calc from '_src/utils/calc';
 import { getLangURL } from '_src/utils/navigation';
 import PageURL from '_constants/PageURL';
-import { Link } from 'react-router-dom';
+
+import { validateTxs } from '_src/utils/client';
+import Message from '_src/component/Notification';
+import classNames from 'classnames';
 import CoinItem from './CoinItem';
 import { getCoinIcon, getDisplaySymbol } from '../../utils/coinIcon';
 import * as api from './util/api';
 import Confirm from '../../component/Confirm';
 import { getDeadLine4sdk } from './util';
 import Tooltip from '../../component/Tooltip';
-import { validateTxs } from '_src/utils/client';
-import Message from '_src/component/Notification';
-import classNames from 'classnames';
 import { Dialog } from '../../component/Dialog';
 import env from '../../constants/env';
 
@@ -36,20 +36,24 @@ export default class SwapPanel extends React.Component {
     isReverse: false,
   };
 
-  static getDefaultToken(symbol='') {
+  static getDefaultToken(symbol = '') {
     return {
       available: '',
       value: '',
       symbol,
       error: false,
-    }
+    };
   }
 
   constructor(props) {
     super(props);
-    const {match:{params:{base,target}}} = props;
+    const {
+      match: {
+        params: { base, target },
+      },
+    } = props;
     this.state = {
-      baseToken: SwapPanel.getDefaultToken(base||env.envConfig.token.base),
+      baseToken: SwapPanel.getDefaultToken(base || env.envConfig.token.base),
       targetToken: SwapPanel.getDefaultToken(target),
       exchangeInfo: { ...SwapPanel.exchangeInfo },
       isPoolEmpty: false,
@@ -57,7 +61,9 @@ export default class SwapPanel extends React.Component {
       active: false,
     };
     this.trading = false;
-    this.debounceUpdateSwapInfo4RealTime = util.debounce(this.updateSwapInfo4RealTime);
+    this.debounceUpdateSwapInfo4RealTime = util.debounce(
+      this.updateSwapInfo4RealTime
+    );
   }
 
   exchange = async () => {
@@ -87,7 +93,13 @@ export default class SwapPanel extends React.Component {
           sell_token_amount: `${value}${symbol}`,
           token: target.symbol,
         });
-        data.exchangeInfo = { ...data.exchangeInfo, price, price_impact, fee, route };
+        data.exchangeInfo = {
+          ...data.exchangeInfo,
+          price,
+          price_impact,
+          fee,
+          route,
+        };
         target.value = buy_amount;
       } catch (e) {
         if (errTip) {
@@ -110,11 +122,11 @@ export default class SwapPanel extends React.Component {
     const { showConfirmDialog, targetToken } = this.state;
     if (showConfirmDialog && targetToken.value !== data.targetToken.value)
       data.active = true;
-  }
+  };
 
   changeBase = (token, inputChanged) => {
     let baseToken = { ...this.state.baseToken, ...token };
-    let targetToken = { ...this.state.targetToken};
+    let targetToken = { ...this.state.targetToken };
     const data = { ...this.state, baseToken, targetToken, isPoolEmpty: false };
     this.setState(data, () => {
       const temp = {
@@ -122,7 +134,7 @@ export default class SwapPanel extends React.Component {
         targetToken: { ...this.state.targetToken },
         exchangeInfo: { ...this.state.exchangeInfo },
       };
-      if(inputChanged) this.debounceUpdateSwapInfo4RealTime(temp, 'baseToken');
+      if (inputChanged) this.debounceUpdateSwapInfo4RealTime(temp, 'baseToken');
       else this.updateSwapInfo4RealTime(temp, 'baseToken');
     });
   };
@@ -151,7 +163,7 @@ export default class SwapPanel extends React.Component {
           this.setState(temp);
         }, time));
     });
-  }
+  };
 
   changeTarget = (token) => {
     let baseToken = { ...this.state.baseToken };
@@ -224,20 +236,20 @@ export default class SwapPanel extends React.Component {
 
   async init() {
     const data = this.state;
-    if(!data.baseToken.symbol) return this.initBaseToken();
+    if (!data.baseToken.symbol) return this.initBaseToken();
     const tokens = await api.swapTokens();
     let baseToken = await this.searchToken(tokens, data.baseToken.symbol);
     let targetToken = await this.searchToken(tokens, data.targetToken.symbol);
-    if(baseToken) baseToken.value = '';
-    else baseToken = {...data.baseToken,symbol:''};
-    if(targetToken) targetToken.value = '';
-    else targetToken = {...data.targetToken,symbol:''};
+    if (baseToken) baseToken.value = '';
+    else baseToken = { ...data.baseToken, symbol: '' };
+    if (targetToken) targetToken.value = '';
+    else targetToken = { ...data.targetToken, symbol: '' };
     this.updateSwapInfo4RealTime({ baseToken, targetToken }, 'baseToken');
   }
 
   priceImpact() {
     const { exchangeInfo } = this.state;
-    return calc.mul(exchangeInfo.price_impact, 100).toFixed(2) + '%';
+    return `${calc.mul(exchangeInfo.price_impact, 100).toFixed(2)}%`;
   }
 
   getExchangeInfo(isConfirm) {
@@ -257,105 +269,107 @@ export default class SwapPanel extends React.Component {
             </div>
           </div>
         );
-      } else {
-        let priceInfo;
+      }
+      let priceInfo;
+      priceInfo = `1${getDisplaySymbol(
+        baseToken.symbol
+      )} ≈ ${util.precisionInput(exchangeInfo.price, 8)}${getDisplaySymbol(
+        targetToken.symbol
+      )}`;
+      if (exchangeInfo.isReverse)
         priceInfo = `1${getDisplaySymbol(
-          baseToken.symbol
-        )} ≈ ${util.precisionInput(exchangeInfo.price, 8)}${getDisplaySymbol(
           targetToken.symbol
-        )}`;
-        if (exchangeInfo.isReverse)
-          priceInfo = `1${getDisplaySymbol(
-            targetToken.symbol
-          )} ≈ ${util.precisionInput(
-            calc.div(1, exchangeInfo.price),
-            8
-          )}${getDisplaySymbol(baseToken.symbol)}`;
-        return (
-          <div className="coin-exchange-detail">
-            <div className="info">
-              <div className="info-name">{toLocale('Price')}</div>
-              <div className="info-value">
-                <i className="exchange" onClick={this.revert} />
-                {priceInfo}
-                <i />
-              </div>
+        )} ≈ ${util.precisionInput(
+          calc.div(1, exchangeInfo.price),
+          8
+        )}${getDisplaySymbol(baseToken.symbol)}`;
+      return (
+        <div className="coin-exchange-detail">
+          <div className="info">
+            <div className="info-name">{toLocale('Price')}</div>
+            <div className="info-value">
+              <i className="exchange" onClick={this.revert} />
+              {priceInfo}
+              <i />
             </div>
+          </div>
+          <div className="info">
+            <div className="info-name">
+              {toLocale('Minimum received')}
+              {!isConfirm && (
+                <Tooltip
+                  placement="right"
+                  overlay={toLocale('Minimum received help')}
+                >
+                  <i className="help" />
+                </Tooltip>
+              )}
+            </div>
+            <div className="info-value">
+              {this.getMinimumReceived(8)}{' '}
+              {getDisplaySymbol(targetToken.symbol)}
+            </div>
+          </div>
+          <div className="info">
+            <div className={classNames('info-name', { red: hasWarn })}>
+              {toLocale('Price Impact')}
+              {!isConfirm && (
+                <Tooltip
+                  placement="right"
+                  overlay={toLocale('Price Impact help')}
+                >
+                  <i className="help" />
+                </Tooltip>
+              )}
+            </div>
+            <div className={classNames('info-value', { red: hasWarn })}>
+              {this.priceImpact(exchangeInfo)}
+            </div>
+          </div>
+          <div className="info">
+            <div className="info-name">
+              {toLocale('Liquidity Provider Fee')}
+              {!isConfirm && (
+                <Tooltip
+                  placement="right"
+                  overlay={toLocale('Liquidity Provider Fee help')}
+                >
+                  <i className="help" />
+                </Tooltip>
+              )}
+            </div>
+            <div className="info-value">
+              {!fee && '≈'}
+              {util.precisionInput(fee, 8)} {getDisplaySymbol(baseToken.symbol)}
+            </div>
+          </div>
+          {exchangeInfo.route && (
             <div className="info">
               <div className="info-name">
-                {toLocale('Minimum received')}
+                {toLocale('Route')}
                 {!isConfirm && (
                   <Tooltip
-                    placement="right"
-                    overlay={toLocale('Minimum received help')}
-                  >
-                    <i className="help" />
-                  </Tooltip>
-                )}
-              </div>
-              <div className="info-value">
-                {this.getMinimumReceived(8)}{' '}
-                {getDisplaySymbol(targetToken.symbol)}
-              </div>
-            </div>
-            <div className="info">
-              <div className={classNames('info-name',{red: hasWarn})}>
-                {toLocale('Price Impact')}
-                {!isConfirm && (
-                  <Tooltip
-                    placement="right"
-                    overlay={toLocale('Price Impact help')}
-                  >
-                    <i className="help" />
-                  </Tooltip>
-                )}
-              </div>
-              <div className={classNames('info-value',{red: hasWarn})}>{this.priceImpact(exchangeInfo)}</div>
-            </div>
-            <div className="info">
-              <div className="info-name">
-                {toLocale('Liquidity Provider Fee')}
-                {!isConfirm && (
-                  <Tooltip
-                    placement="right"
-                    overlay={toLocale('Liquidity Provider Fee help')}
-                  >
-                    <i className="help" />
-                  </Tooltip>
-                )}
-              </div>
-              <div className="info-value">
-                {!fee && '≈'}
-                {util.precisionInput(fee, 8)}{' '}
-                {getDisplaySymbol(baseToken.symbol)}
-              </div>
-            </div>
-            {exchangeInfo.route && (
-              <div className="info">
-                <div className="info-name">
-                  {toLocale('Route')}
-                  {!isConfirm && (<Tooltip
                     placement="right"
                     overlay={toLocale(
                       "Current pair can only swap through OKT, there's no direct pair for the 2 tokens."
                     )}
                   >
                     <i className="help" />
-                  </Tooltip>)}
-                </div>
-                <div className="info-value">
-                  <img className="coin" src={getCoinIcon(baseToken.symbol)} />
-                  {getDisplaySymbol(baseToken.symbol)} &gt;{' '}
-                  <img className="coin" src={getCoinIcon(exchangeInfo.route)} />
-                  {getDisplaySymbol(exchangeInfo.route)} &gt;
-                  <img className="coin" src={getCoinIcon(targetToken.symbol)} />
-                  {getDisplaySymbol(targetToken.symbol)}
-                </div>
+                  </Tooltip>
+                )}
               </div>
-            )}
-          </div>
-        );
-      }
+              <div className="info-value">
+                <img className="coin" src={getCoinIcon(baseToken.symbol)} />
+                {getDisplaySymbol(baseToken.symbol)} &gt;{' '}
+                <img className="coin" src={getCoinIcon(exchangeInfo.route)} />
+                {getDisplaySymbol(exchangeInfo.route)} &gt;
+                <img className="coin" src={getCoinIcon(targetToken.symbol)} />
+                {getDisplaySymbol(targetToken.symbol)}
+              </div>
+            </div>
+          )}
+        </div>
+      );
     }
     return null;
   }
@@ -408,9 +422,9 @@ export default class SwapPanel extends React.Component {
     const { okexchainClient } = this.props;
     const { baseToken, targetToken } = this.state;
     const params = [
-      util.precisionInput(baseToken.value).replace(/,/g,''),
+      util.precisionInput(baseToken.value).replace(/,/g, ''),
       baseToken.symbol,
-      this.getMinimumReceived().replace(/,/g,''),
+      this.getMinimumReceived().replace(/,/g, ''),
       targetToken.symbol,
       getDeadLine4sdk(),
       util.getMyAddr(),
@@ -436,7 +450,7 @@ export default class SwapPanel extends React.Component {
 
   cancel = () => {
     this.trading = false;
-  }
+  };
 
   hasWarn() {
     const { exchangeInfo } = this.state;
@@ -457,14 +471,14 @@ export default class SwapPanel extends React.Component {
           token={baseToken}
           onChange={this.changeBase}
           loadCoinList={this.loadBaseCoinList}
-          max={true}
+          max
         />
         <div className="sep transformation-sep">
           <i onClick={this.exchange} />
         </div>
         <CoinItem
           label={toLocale('To(estimated)')}
-          disabled={true}
+          disabled
           token={targetToken}
           onChange={this.changeTarget}
           loadCoinList={this.loadTargetCoinList}
@@ -551,7 +565,7 @@ export default class SwapPanel extends React.Component {
           loadingTxt={toLocale('pending transactions')}
           successTxt={toLocale('transaction confirmed')}
           getRef={(instance) => (this.confirmInstance = instance)}
-        ></Confirm>
+        />
       </div>
     );
   }

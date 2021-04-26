@@ -7,16 +7,16 @@ import Tooltip from 'rc-tooltip';
 import { toLocale } from '_src/locale/react-locale';
 import { calc } from '_component/okit';
 import config from '_src/constants/Config';
+import { getDisplaySymbol } from '_src/utils/coinIcon';
 import navigation from '../../utils/navigation';
 import * as FormActions from '../../redux/actions/FormAction';
-import StrategyTypeSelect from '../placeOrders/StrategyTypeSelect';
+import StrategyTypeSelect from './StrategyTypeSelect';
 import FormatNum from '../../utils/FormatNum';
 import Available from '../../component/placeOrder/Available';
 import LegalPrice from '../../component/placeOrder/LegalPrice';
 import QuoteIncrement from '../../component/placeOrder/QuoteIncrement';
 import SubmitButton from '../../component/placeOrder/SubmitButton';
 import TradeSliderBar from '../../component/TradeSliderBar';
-import { getDisplaySymbol } from '_src/utils/coinIcon';
 import Enum from '../../utils/Enum';
 import util from '../../utils/util';
 
@@ -44,6 +44,7 @@ class LimitForm extends React.Component {
   static propTypes = {
     asset: PropTypes.object,
   };
+
   static defaultProps = {
     asset: {},
   };
@@ -92,7 +93,7 @@ class LimitForm extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const {
       product,
       productObj,
@@ -158,53 +159,28 @@ class LimitForm extends React.Component {
     }
     return this.updateInput(input);
   };
-  onInputChange = (key) => {
-    return (inputValue) => {
-      const { inputObj } = this.state;
-      const { productConfig } = window.OK_GLOBAL;
-      const input = { ...inputObj };
 
-      const priceTruncate = productConfig.max_price_digit || 4;
-      const sizeTruncate = productConfig.max_size_digit || 4;
+  onInputChange = (key) => (inputValue) => {
+    const { inputObj } = this.state;
+    const { productConfig } = window.OK_GLOBAL;
+    const input = { ...inputObj };
 
-      const value = inputValue === '.' ? '' : inputValue;
-      if (key === 'price') {
-        input[key] = FormatNum.CheckInputNumber(value, priceTruncate);
-        if (String(input.amount).trim() !== '') {
-          const total = calc.ceilMul(input.amount, input.price, priceTruncate);
-          if (total > 0) {
-            input.total = total;
-          } else {
-            input.total = '';
-          }
-        } else if (String(input.total).trim() !== '') {
-          if (Number(input.price) > 0) {
-            const amount = calc.floorDiv(
-              input.total,
-              input.price,
-              priceTruncate
-            );
-            if (amount > 0) {
-              input.amount = amount;
-            } else {
-              input.amount = '';
-            }
-          }
+    const priceTruncate = productConfig.max_price_digit || 4;
+    const sizeTruncate = productConfig.max_size_digit || 4;
+
+    const value = inputValue === '.' ? '' : inputValue;
+    if (key === 'price') {
+      input[key] = FormatNum.CheckInputNumber(value, priceTruncate);
+      if (String(input.amount).trim() !== '') {
+        const total = calc.ceilMul(input.amount, input.price, priceTruncate);
+        if (total > 0) {
+          input.total = total;
+        } else {
+          input.total = '';
         }
-      } else if (key === 'amount') {
-        input[key] = FormatNum.CheckInputNumber(value, sizeTruncate);
-        if (String(input.price).trim() !== '' && Number(input.price) !== 0) {
-          const total = calc.ceilMul(input.amount, input.price, priceTruncate);
-          if (total > 0) {
-            input.total = total;
-          } else {
-            input.total = '';
-          }
-        }
-      } else if (key === 'total') {
-        input[key] = FormatNum.CheckInputNumber(value, sizeTruncate);
-        if (String(input.price).trim() !== '' && Number(input.price) !== 0) {
-          const amount = calc.floorDiv(input.total, input.price, sizeTruncate);
+      } else if (String(input.total).trim() !== '') {
+        if (Number(input.price) > 0) {
+          const amount = calc.floorDiv(input.total, input.price, priceTruncate);
           if (amount > 0) {
             input.amount = amount;
           } else {
@@ -212,10 +188,31 @@ class LimitForm extends React.Component {
           }
         }
       }
-      this.updateWarning('');
-      this.updateInput(input);
-    };
+    } else if (key === 'amount') {
+      input[key] = FormatNum.CheckInputNumber(value, sizeTruncate);
+      if (String(input.price).trim() !== '' && Number(input.price) !== 0) {
+        const total = calc.ceilMul(input.amount, input.price, priceTruncate);
+        if (total > 0) {
+          input.total = total;
+        } else {
+          input.total = '';
+        }
+      }
+    } else if (key === 'total') {
+      input[key] = FormatNum.CheckInputNumber(value, sizeTruncate);
+      if (String(input.price).trim() !== '' && Number(input.price) !== 0) {
+        const amount = calc.floorDiv(input.total, input.price, sizeTruncate);
+        if (amount > 0) {
+          input.amount = amount;
+        } else {
+          input.amount = '';
+        }
+      }
+    }
+    this.updateWarning('');
+    this.updateInput(input);
   };
+
   onTradeSliderBarChange = (value) => {
     const { productConfig } = window.OK_GLOBAL;
     const { asset, type } = this.props;
@@ -261,6 +258,7 @@ class LimitForm extends React.Component {
     newInputObj.amount = newInputObj.amount > 0 ? newInputObj.amount : '';
     return this.updateInput(newInputObj);
   };
+
   onOrderSubmit = () => {
     const isLogin = util.isLogined();
     if (!isLogin) {
@@ -378,19 +376,24 @@ class LimitForm extends React.Component {
     percent = percent > 1 ? 1 : percent;
     return Number((percent * 100).toFixed(2));
   };
+
   setLoading = (isLoading = false) => {
     this.setState({ isLoading });
   };
+
   focus = (id = '') => {
     const ele = document.querySelector(`input.limit-${id}`);
     ele && ele.focus();
   };
+
   updateInput = (inputObj) => {
     this.setState(Object.assign(this.state.inputObj, inputObj));
   };
+
   updateWarning = (warning = '') => {
     this.setState({ warning });
   };
+
   clearForm = () => {
     this.setState(
       Object.assign(this.state.inputObj, {
@@ -400,6 +403,7 @@ class LimitForm extends React.Component {
       })
     );
   };
+
   renderPrice = () => {
     const { tradeType } = window.OK_GLOBAL;
     const { asset } = this.props;
@@ -437,6 +441,7 @@ class LimitForm extends React.Component {
       </div>
     );
   };
+
   renderAmount = () => {
     const { tradeType, productConfig } = window.OK_GLOBAL;
     const { asset } = this.props;
@@ -468,6 +473,7 @@ class LimitForm extends React.Component {
       </div>
     );
   };
+
   renderSliderBar = () => {
     const { asset, type } = this.props;
     const { baseAvailable, tradeAvailable } = asset;
@@ -483,6 +489,7 @@ class LimitForm extends React.Component {
       />
     );
   };
+
   renderTotal = () => {
     const { tradeType } = window.OK_GLOBAL;
     const { asset } = this.props;

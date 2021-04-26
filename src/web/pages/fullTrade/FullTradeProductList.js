@@ -68,7 +68,7 @@ class FullTradeProductList extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { spotActions } = this.props;
     const newWsIsOnline = nextProps.wsIsOnlineV3;
     const oldWsIsOnline = this.props.wsIsOnlineV3;
@@ -104,9 +104,9 @@ class FullTradeProductList extends React.Component {
   getCurrListByArea = (productList, activeMarket) => {
     const { groupName } = activeMarket;
     const quoteSymbol = groupName || env.envConfig.token.quoteName;
-    let currList = productList.filter((item) => {
-      return item.quote_asset_symbol.toUpperCase() === quoteSymbol;
-    });
+    let currList = productList.filter(
+      (item) => item.quote_asset_symbol.toUpperCase() === quoteSymbol
+    );
     return currList;
   };
 
@@ -134,13 +134,11 @@ class FullTradeProductList extends React.Component {
     });
   };
 
-  handleMarketChange = (market) => {
-    return () => {
-      this.setState({
-        searchText: '',
-        activeMarket: market,
-      });
-    };
+  handleMarketChange = (market) => () => {
+    this.setState({
+      searchText: '',
+      activeMarket: market,
+    });
   };
 
   handleSearch = (e) => {
@@ -199,6 +197,7 @@ class FullTradeProductList extends React.Component {
   stopWs = () => {
     wsV3.stop(channelsV3.getAllMarketTickers());
   };
+
   filterGroupList = () => {
     const { groupList } = this.props;
     return groupList;
@@ -268,14 +267,14 @@ class FullTradeProductList extends React.Component {
           change,
           changePercentage,
           shortToken,
-          stared: Number(collect) == 1,
+          stared: Number(collect) === 1,
           lever: isMarginOpen ? maxMarginLeverage : false,
           listDisplay: item.listDisplay,
         };
       })
       .filter((item) => {
         let filterTag = true;
-        if (item.listDisplay == 1) {
+        if (item.listDisplay === 1) {
           filterTag = false;
         }
         if (activeMarket.groupId === -1) {
@@ -292,13 +291,15 @@ class FullTradeProductList extends React.Component {
         return filterTag;
       });
     if (activeMarket.groupId === 2) {
-      menuList.sort(function (a, b) {
-        return parseFloat(a.changePercentage) - parseFloat(b.changePercentage);
-      });
+      menuList.sort(
+        (a, b) =>
+          parseFloat(a.changePercentage) - parseFloat(b.changePercentage)
+      );
     } else if (activeMarket.groupId === 3) {
-      menuList.sort(function (a, b) {
-        return parseFloat(b.changePercentage) - parseFloat(a.changePercentage);
-      });
+      menuList.sort(
+        (a, b) =>
+          parseFloat(b.changePercentage) - parseFloat(a.changePercentage)
+      );
     }
     const listEmpty = toLocale('spot.noData');
     return (

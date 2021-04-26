@@ -69,7 +69,7 @@ class FullTradeProductList extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { spotActions, nodeActions } = this.props;
     const newWsIsOnline = nextProps.wsIsOnlineV3;
     const oldWsIsOnline = this.props.wsIsOnlineV3;
@@ -97,9 +97,7 @@ class FullTradeProductList extends React.Component {
 
   getCurrListByArea = (productList, activeMarket) => {
     const { groupId } = activeMarket;
-    return productList.filter((item) => {
-      return item.groupIds.includes(groupId);
-    });
+    return productList.filter((item) => item.groupIds.includes(groupId));
   };
 
   showList = () => {
@@ -107,16 +105,19 @@ class FullTradeProductList extends React.Component {
       isShowList: true,
     });
   };
+
   hideList = () => {
     this.setState({
       isShowList: false,
     });
   };
+
   showProduction = () => {
     this.setState({
       isShowProduction: true,
     });
   };
+
   hideProduction = () => {
     this.setState({
       isShowProduction: false,
@@ -174,9 +175,7 @@ class FullTradeProductList extends React.Component {
       spotActions.updateFavoriteList([...favorites, product]);
     } else {
       const dList = util.cloneDeep(favorites);
-      const list = dList.filter((l) => {
-        return l !== product;
-      });
+      const list = dList.filter((l) => l !== product);
       spotActions.updateFavoriteList(list);
     }
   };
@@ -184,19 +183,20 @@ class FullTradeProductList extends React.Component {
   startWs = () => {
     wsV3.send(channelsV3.getAllMarketTickers());
   };
+
   stopWs = () => {
     wsV3.stop(channelsV3.getAllMarketTickers());
   };
+
   filterGroupList = () => {
     const { groupList, spotOrMargin } = this.props;
     const { webType } = window.OK_GLOBAL;
     if (webType !== (spotOrMargin === Enum.spotOrMargin.spot)) {
       return groupList;
     }
-    return groupList.filter((g) => {
-      return g.marginCount > 0;
-    });
+    return groupList.filter((g) => g.marginCount > 0);
   };
+
   renderMarginTip = () => {
     const { productConfig } = window.OK_GLOBAL;
     const { isMarginOpen } = this.props;
@@ -217,9 +217,7 @@ class FullTradeProductList extends React.Component {
     const tabList = productList.map((item) => {
       const productIterative = item.product;
       const pair = productIterative.toUpperCase().replace('_', '/');
-      const isFavorite = favorites.some((fav) => {
-        return fav === item.product;
-      });
+      const isFavorite = favorites.some((fav) => fav === item.product);
       if (!activeId) {
         activeId = pair;
       }
@@ -247,14 +245,8 @@ class FullTradeProductList extends React.Component {
       return exItem;
     });
     favoriteList = favorites
-      .map((fav) => {
-        return favoriteList.find((item) => {
-          return fav === item.product;
-        });
-      })
-      .filter((item) => {
-        return !!item;
-      });
+      .map((fav) => favoriteList.find((item) => fav === item.product))
+      .filter((item) => !!item);
     return (
       <div className="full-product-list">
         <span
