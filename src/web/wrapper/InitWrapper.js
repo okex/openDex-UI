@@ -8,7 +8,6 @@ import * as SpotActions from '_src/redux/actions/SpotAction';
 import * as SpotTradeActions from '_src/redux/actions/SpotTradeAction';
 import * as OrderAction from '_src/redux/actions/OrderAction';
 import util from '_src/utils/util';
-import env from '_src/constants/env';
 
 function mapStateToProps(state) {
   const { tickers } = state.Spot;
@@ -87,7 +86,7 @@ const InitWrapper = (Component) => {
     };
 
     startInitWebSocket = () => {
-      if (!window.WebSocketCore || !env.envConfig.isMainnet) return;
+      if (!window.WebSocketCore) return;
       const { OK_GLOBAL } = window;
       if (!OK_GLOBAL.ws_v3) {
         const { spotActions } = this.props;
