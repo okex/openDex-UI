@@ -1227,7 +1227,7 @@ const zhCN = {
   dex_top_tip:
     'OKExChain 已经兼容以太坊地址格式，您可以在您的以太坊钱包（如：MetaMask）中使用与以太坊账户相同的地址，快来了解如何使用',
   dex_popup_tip:
-    'OKExChain 地址与以太坊地址由同一个公钥采用不同地址算法生成，共享账户余额',
+    'ex 地址与以太坊地址由同一个公钥采用不同地址算法生成，共享账户余额',
   dex_input_err_tip_contract_useraddr: '此地址是个人账户地址',
   import_mnemonic_article_title: 'OKExChain 地址升级啦',
   import_mnemonic_article_content1: 'OKExChain 主网 EVM 升级后，兼容以太坊地址（0x），并支持使用一个地址同时管理 OKExChain 和以太坊的资产。',

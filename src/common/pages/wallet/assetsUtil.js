@@ -202,7 +202,10 @@ util.accountsCols = ({ transfer, moreOperationsChange }) => {
         };
         let boxConfig = moreBoxConf;
         if (assetsType !== 'KIP 20')
-          boxConfig = moreBoxConf.filter(({ type }) => type !== 'hidden');
+          boxConfig = moreBoxConf.filter(({ type }) => {
+            if (symbol === 'okt' && type === 'migration') return false
+            return type !== 'hidden'
+          });
         else boxConfig = moreBoxConf.filter(({ type }) => type !== 'migration');
 
         return (

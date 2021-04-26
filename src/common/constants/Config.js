@@ -33,7 +33,7 @@ const Config = {
       return '';
     },
     get migration() {
-      if (lang === 'zh_CN') return '/support/hc/articles/360060355371-关于OKExChain主网升级暂停OKT和K资产充提的公告';
+      if (lang === 'zh_CN') return '/support/hc/zh-cn/articles/360060355371-关于OKExChain主网升级暂停OKT和K资产充提的公告';
       return '/support/hc/en-us/articles/360060355371-OKT-and-k-tokens-deposits-and-withdrawals-to-be-suspended-during-OKExChain-mainnet-upgrade';
     },
     get doubleAddress() {
