@@ -8,7 +8,6 @@ import * as SpotActions from '_src/redux/actions/SpotAction';
 import * as SpotTradeActions from '_src/redux/actions/SpotTradeAction';
 import * as OrderAction from '_src/redux/actions/OrderAction';
 import util from '_src/utils/util';
-import PageURL from '_src/constants/PageURL';
 import env from '_src/constants/env';
 
 function mapStateToProps(state) {
@@ -109,24 +108,13 @@ const InitWrapper = (Component) => {
           v3.sendChannel('ping');
         });
         v3.setPushDataResolver((pushData) => {
-          const { table, data, event, success, errorCode } = pushData;
+          const { table, data, event, success } = pushData;
           if (table && data) {
             const handler = this.wsHandler(table);
             handler && handler(data, pushData);
           }
           if (event === 'dex_login' && success === true) {
             spotActions.updateWsIsDelay(true);
-          }
-          if (
-            event === 'error' &&
-            (Number(errorCode) === 30043 ||
-              Number(errorCode) === 30008 ||
-              Number(errorCode) === 30006)
-          ) {
-            if (env.envConfig.isMainnet) {
-              util.doLogout();
-              window.location.href = PageURL.homePage;
-            }
           }
         });
         v3.connect();
