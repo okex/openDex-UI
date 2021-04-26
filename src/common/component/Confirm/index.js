@@ -88,7 +88,7 @@ export default class Confirm extends React.Component {
     this.setState({ loading: true });
     privateKey = privateKey || this.props.privateKey;
     okexchainClient
-      .setAccountInfo(privateKey || this.props.privateKey, env.envConfig.addressPrefix)
+      .setAccountInfo(privateKey || this.props.privateKey)
       .then(async () => {
         let loadingToast;
         try {

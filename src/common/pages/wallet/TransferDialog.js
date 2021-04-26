@@ -289,7 +289,7 @@ class TransferDialog extends Component {
       return
     }
 
-    okexchainClient.setAccountInfo(privateKey, env.envConfig.addressPrefix).then(() => {
+    okexchainClient.setAccountInfo(privateKey).then(() => {
       okexchainClient
         .sendSendTransaction(address, amountStr, symbol, note)
         .then((res) => {

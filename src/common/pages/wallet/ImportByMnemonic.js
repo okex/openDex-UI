@@ -144,8 +144,8 @@ class ImportByMnemonic extends Component {
       const mnemonic = this.state.mnemonic.trim();
       const oldPrivateKey = crypto.getPrivateKeyFromMnemonic(mnemonic, 996);
       const newPrivateKey = crypto.getPrivateKeyFromMnemonic(mnemonic, 60);
-      const oldAddress = crypto.getAddressFromPrivateKey(oldPrivateKey, env.envConfig.addressPrefix);
-      const newAddress = crypto.getAddressFromPrivateKey(newPrivateKey, env.envConfig.addressPrefix);
+      const oldAddress = crypto.getAddressFromPrivateKey(oldPrivateKey);
+      const newAddress = crypto.getAddressFromPrivateKey(newPrivateKey);
       const oldBalance = await this.fetchAcount(oldAddress)
       const newBalance = await this.fetchAcount(newAddress)
       this.setState({

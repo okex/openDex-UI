@@ -115,7 +115,7 @@ export function submitOrder(params, callback, errCallback) {
       data: {},
     });
     return okexchainClient
-      .setAccountInfo(params.pk, env.envConfig.addressPrefix)
+      .setAccountInfo(params.pk)
       .then(() => {
         okexchainClient
           .sendPlaceOrderTransaction(

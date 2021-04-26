@@ -94,7 +94,7 @@ const ClientWrapper = (Com) => {
 
     setAccountInfo = (success) => {
       const { okexchainClient, privateKey } = this.props;
-      okexchainClient.setAccountInfo(privateKey, env.envConfig.addressPrefix).then(() => {
+      okexchainClient.setAccountInfo(privateKey).then(() => {
         success && success();
       });
     };

@@ -259,7 +259,7 @@ export function cancelOrder(params, successCallback, errCallback) {
   return (dispatch, getState) => {
     const { okexchainClient } = getState().Common;
     okexchainClient
-      .setAccountInfo(params.pk, env.envConfig.addressPrefix)
+      .setAccountInfo(params.pk)
       .then(() => {
         okexchainClient.sendCancelOrderTransaction(params.order_id).then(
           (r) => {

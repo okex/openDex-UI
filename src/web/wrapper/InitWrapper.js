@@ -115,17 +115,6 @@ const InitWrapper = (Component) => {
           if (event === 'dex_login' && success === true) {
             spotActions.updateWsIsDelay(true);
           }
-          if (
-            event === 'error' &&
-            (Number(errorCode) === 30043 ||
-              Number(errorCode) === 30008 ||
-              Number(errorCode) === 30006)
-          ) {
-            if(env.envConfig.isMainnet) {
-              util.doLogout();
-              window.location.href = PageURL.homePage;
-            }
-          }
         });
         v3.connect();
       }
