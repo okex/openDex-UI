@@ -20,8 +20,7 @@ class WalletMenuTool extends React.Component {
     }, 1000);
   };
   openInstructions = () => {
-    // TODO 双地址介绍
-    window.open('')
+    window.open(Config.okexchain.doubleAddress)
   }
   render() {
     const { addressLabel, address, addressType } = this.props;

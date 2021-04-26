@@ -13,6 +13,7 @@ import { toLocale } from '_src/locale/react-locale';
 import env from '_src/constants/env';
 import information from '_src/assets/images/Information.svg'
 import './Assets.less';
+import Config from '_src/constants/Config';
 
 function mapStateToProps() {
   return {
@@ -72,6 +73,9 @@ class Assets extends Component {
     const { expanded } = this.state
     this.setState({expanded: !expanded})
   }
+  forDetails = () => {
+    window.open(Config.okexchain.doubleAddress)
+  }
   render() {
     const { loading, pathType, expanded } = this.state;
     const tipStyle = pathType === 'old' ? {} : { display: 'none' }
@@ -80,7 +84,7 @@ class Assets extends Component {
         <div className="top-tip" style={tipStyle}>
           <img src={information} alt=""/>
           <p>{toLocale('dex_top_tip')}</p>
-          <a href="#">{toLocale('for_details')}</a>
+          <a onClick={this.forDetails}>{toLocale('for_details')}</a>
         </div>
         <div className="wallet-address-container">
           <WalletAddress addressType="universality" setExpanded={this.expanded} expanded={expanded} />
