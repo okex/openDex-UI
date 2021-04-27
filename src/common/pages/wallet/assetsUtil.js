@@ -6,8 +6,6 @@ import Tooltip from '_src/component/Tooltip';
 import calc from '_src/utils/calc';
 import { Button } from '_component/Button';
 import { toLocale } from '_src/locale/react-locale';
-import DesktopTypeMenu from '_component/DesktopTypeMenu';
-import PageURL from '_constants/PageURL';
 import Menu from '_src/component/Menu';
 import utils from '../../utils/util';
 import { getLpTokenInfo } from '../../utils/lpTokenUtil';
@@ -19,15 +17,7 @@ const util = {
   get tabs() {
     return [
       { id: 1, label: 'assets_tab_accounts' },
-      ...(function () {
-        const current = DesktopTypeMenu.current
-          ? DesktopTypeMenu.current.url
-          : null;
-        if (current !== PageURL.swapPage) {
-          return [{ id: 2, label: 'assets_tab_transactions' }];
-        }
-        return [];
-      })(),
+      { id: 2, label: 'assets_tab_transactions' },
     ];
   },
   get transactionsTypes() {
@@ -203,8 +193,8 @@ util.accountsCols = ({ transfer, moreOperationsChange }) => {
         let boxConfig = moreBoxConf;
         if (assetsType !== 'KIP 20')
           boxConfig = moreBoxConf.filter(({ type }) => {
-            if (symbol === 'okt' && type === 'migration') return false
-            return type !== 'hidden'
+            if (symbol === 'okt' && type === 'migration') return false;
+            return type !== 'hidden';
           });
         else boxConfig = moreBoxConf.filter(({ type }) => type !== 'migration');
 

@@ -9,11 +9,11 @@ import WalletAddress from '_component/WalletAddress';
 import { toLocale } from '_src/locale/react-locale';
 import env from '_src/constants/env';
 import information from '_src/assets/images/Information.svg';
+import Config from '_src/constants/Config';
 import AssetsAccounts from './AssetsAccounts';
 import AssetsTransactions from './AssetsTransactions';
 import assetsUtil from './assetsUtil';
 import './Assets.less';
-import Config from '_src/constants/Config';
 
 function mapStateToProps() {
   return {
@@ -69,12 +69,14 @@ class Assets extends Component {
   };
 
   expanded = () => {
-    const { expanded } = this.state
-    this.setState({expanded: !expanded})
-  }
+    const { expanded } = this.state;
+    this.setState({ expanded: !expanded });
+  };
+
   forDetails = () => {
-    window.open(Config.okexchain.doubleAddress)
-  }
+    window.open(Config.okexchain.doubleAddress);
+  };
+
   render() {
     const { loading, pathType, expanded } = this.state;
     const tipStyle = pathType === 'old' ? {} : { display: 'none' };

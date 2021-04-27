@@ -22,8 +22,9 @@ class WalletMenuTool extends React.Component {
   };
 
   openInstructions = () => {
-    window.open(Config.okexchain.doubleAddress)
-  }
+    window.open(Config.okexchain.doubleAddress);
+  };
+
   render() {
     const { addressLabel, address, addressType } = this.props;
     const { copySuccess } = this.state;
