@@ -7,8 +7,7 @@ import env from './env';
 const okbExplorePrefix = env.envConfig.oklinkPagePath;
 const exploreUrl = 'https://www.oklink.com';
 const lang = Cookies.get('locale') || '';
-const receiveCoinUrl =
-  lang === 'en_US' ? 'https://www.okex.com' : window.okGlobal.innerDomain;
+const receiveCoinUrl = window.okGlobal.mainDomain;
 const okexLogo = lang === 'zh_CN' ? okexznLogo : okexenLogo;
 const Config = {
   okexchain: {
@@ -21,11 +20,11 @@ const Config = {
     docUrl: 'https://okexchain-docs.readthedocs.io/en/latest/',
     get receiveSwapUrl() {
       if (lang === 'zh_CN') return 'https://sourl.cn/VfNTkc';
-      return 'https://www.okex.com/academy/en/how-to-use-okex-swap-farm-pools-okexchain';
+      return `${receiveCoinUrl}/academy/en/how-to-use-okex-swap-farm-pools-okexchain`;
     },
     get receiveFarmUrl() {
       if (lang === 'zh_CN') return 'https://sourl.cn/SQbtvR';
-      return 'https://www.okex.com/academy/en/how-to-use-okex-swap-farm-pools-okexchain';
+      return `${receiveCoinUrl}/academy/en/how-to-use-okex-swap-farm-pools-okexchain`;
     },
     get liquidity() {
       if (lang === 'zh_CN')

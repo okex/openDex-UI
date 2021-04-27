@@ -1,6 +1,6 @@
 import { storage } from '_component/okit';
 
-export const DEFAULT = 'https://www.okex.com';
+export const DEFAULT = window.okGlobal.mainDomain;
 
 export function getApiUrl(apiUrl = DEFAULT) {
   const protocol = window.location.protocol;
