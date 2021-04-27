@@ -86,7 +86,7 @@ const mainnet = {
   contract: 'contract',
   know: 'know',
   mnemonicPathType: 'mnemonic_path_type',
-  web3Provider: 'https://exchaintestrpc.okex.org',
+  web3Provider: 'https://exchainrpc.okex.org',
 };
 
 function envConfig() {
