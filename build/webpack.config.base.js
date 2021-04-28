@@ -1,7 +1,7 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-// const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const src = path.resolve(__dirname, '../src');
 const client = process.env.CLIENT || 'web';
@@ -20,7 +20,7 @@ const base = {
           {
             loader: 'babel-loader',
             options: {
-              presets: ['@babel/preset-react'],
+              presets: ['@babel/preset-env', '@babel/preset-react'],
               plugins: [
                 ['@babel/plugin-proposal-decorators', { legacy: true }],
                 ['@babel/plugin-proposal-class-properties', { loose: true }],
@@ -102,19 +102,19 @@ const base = {
 if (process.env.NODE_ENV === 'production') {
   base.optimization = {
     minimizer: [
-      // new UglifyJsPlugin({
-      //   cache: true,
-      //   parallel: true,
-      //   extractComments: true,
-      //   uglifyOptions: {
-      //     compress: {
-      //       warnings: false,
-      //       drop_console: true,
-      //       collapse_vars: true,
-      //       reduce_vars: true,
-      //     },
-      //   },
-      // }),
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        extractComments: true,
+        uglifyOptions: {
+          compress: {
+            warnings: false,
+            drop_console: true,
+            collapse_vars: true,
+            reduce_vars: true,
+          },
+        },
+      }),
       new OptimizeCSSAssetsPlugin({}),
     ],
   };
