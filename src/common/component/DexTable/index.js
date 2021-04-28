@@ -132,7 +132,7 @@ export default class Table extends React.Component {
               total={total || totalSize}
               onChange={onPageChange}
               hideOnSinglePage={hideOnSinglePage}
-              dark
+              dark={true}
             />
           </div>
         )}

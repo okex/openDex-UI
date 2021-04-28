@@ -28,20 +28,17 @@ export default class DepthList extends React.Component {
     let needToCenter = false;
     const prevData = prevProps.dataSource;
     const nowData = this.props.dataSource;
-
-    try {
-      if (!prevData.sellList.length && !prevData.buyList.length) {
-        if (nowData.sellList.length || nowData.buyList.length) {
-          needToCenter = true;
-        }
+    if (!prevData.sellList.length && !prevData.buyList.length) {
+      if (nowData.sellList.length || nowData.buyList.length) {
+        needToCenter = true;
       }
-      if (needToCenter) {
-        this.tickerCloneDom.style.visibility = 'hidden';
-        if (this.scrollDom.scrollHeight > this.scrollDom.clientHeight) {
-          this.toCenter();
-        }
+    }
+    if (needToCenter) {
+      this.tickerCloneDom.style.visibility = 'hidden';
+      if (this.scrollDom.scrollHeight > this.scrollDom.clientHeight) {
+        this.toCenter();
       }
-    } catch (e) {}
+    }
   }
 
   onMergeTypeOver = () => {

@@ -14,9 +14,9 @@ const WalletAddressTooltip = ({ children, ...props }) => {
   );
   return (
     <Tooltip
-      hasArrow
-      hasShadow
-      noWrapper
+      hasArrow={true}
+      hasShadow={true}
+      noWrapper={true}
       mouseLeaveDelay={0}
       placement="right"
       overlay={overlay}

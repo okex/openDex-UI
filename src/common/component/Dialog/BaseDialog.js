@@ -75,14 +75,18 @@ export default class BaseDialog extends React.PureComponent {
   componentDidMount() {
     const { visible, canDrag, dialogId } = this.props;
     if (visible && canDrag) {
-      this.state.dragInitialized = dragFunc(dialogId);
+      this.setState({
+        dragInitialized: dragFunc(dialogId),
+      });
     }
   }
 
   componentDidUpdate() {
     const { visible, canDrag, dialogId } = this.props;
     if (visible && canDrag) {
-      this.state.dragInitialized = dragFunc(dialogId);
+      this.setState({
+        dragInitialized: dragFunc(dialogId),
+      });
     }
   }
 

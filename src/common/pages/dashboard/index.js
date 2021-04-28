@@ -83,7 +83,11 @@ class Dashboard extends Component {
     } = this.state;
 
     return (
-      <DexDesktopContainer isShowAddress needLogin loading={isActionLoading}>
+      <DexDesktopContainer
+        isShowAddress={true}
+        needLogin={true}
+        loading={isActionLoading}
+      >
         <div className="dashboard-page-container">
           <DashboardAsset
             tokens={tokens}

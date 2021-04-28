@@ -42,7 +42,7 @@ export default class Swap extends React.Component {
             activeKey={activekey}
             prefixCls="swap"
             onChange={this.onChange}
-            destroyInactiveTabPane
+            destroyInactiveTabPane={true}
           >
             <TabPane tab={toLocale('Swap')} key={SWAP}>
               {children}

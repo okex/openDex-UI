@@ -471,21 +471,21 @@ export default class SwapPanel extends React.Component {
           token={baseToken}
           onChange={this.changeBase}
           loadCoinList={this.loadBaseCoinList}
-          max
+          max={true}
         />
         <div className="sep transformation-sep">
           <i onClick={this.exchange} />
         </div>
         <CoinItem
           label={toLocale('To(estimated)')}
-          disabled
+          disabled={true}
           token={targetToken}
           onChange={this.changeTarget}
           loadCoinList={this.loadTargetCoinList}
         />
         {exchangeInfo}
         {btn}
-        <Dialog visible={showConfirmDialog} hideCloseBtn>
+        <Dialog visible={showConfirmDialog} hideCloseBtn={true}>
           <div className="panel-dialog-info">
             <div className="panel-dialog-info-title">
               {toLocale('Confirm Swap')}

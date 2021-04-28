@@ -27,7 +27,7 @@ const Process = ({ percent = 0, text }) => (
 const DownResult = ({ icon, text }) => (
   <div className="success">
     <div className="icon">
-      <Icon className={icon} isColor />
+      <Icon className={icon} isColor={true} />
     </div>
     {text}
   </div>

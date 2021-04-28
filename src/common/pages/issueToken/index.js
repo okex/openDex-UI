@@ -119,9 +119,9 @@ class IssueToken extends Component {
     } = this.state;
     return (
       <DexDesktopContainer
-        isShowHelp
-        isShowAddress
-        needLogin
+        isShowHelp={true}
+        isShowAddress={true}
+        needLogin={true}
         loading={isActionLoading}
       >
         <div className="issue-token-container">
@@ -150,7 +150,7 @@ class IssueToken extends Component {
             label={toLocale('issueToken.desc.label')}
             value={desc}
             onChange={this.onDescChange}
-            multiple
+            multiple={true}
           />
           <button
             className="dex-desktop-btn issue-token-btn"

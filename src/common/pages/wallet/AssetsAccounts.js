@@ -358,7 +358,7 @@ class AssetsAccounts extends Component {
           dataSource={currencies}
           rowKey="symbol"
           style={{ clear: 'both', zIndex: 0 }}
-          hidePage
+          hidePage={true}
           empty={<p>{toLocale('assets_empty')}</p>}
         />
         <TransferDialog

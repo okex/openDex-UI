@@ -40,7 +40,7 @@ export default class Farm extends React.Component {
               activeKey={activekey}
               prefixCls="farm"
               onChange={this.onChange}
-              destroyInactiveTabPane
+              destroyInactiveTabPane={true}
             >
               <TabPane tab={toLocale('Farm')} key={FARM}>
                 {children}

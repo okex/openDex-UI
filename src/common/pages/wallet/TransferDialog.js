@@ -332,7 +332,7 @@ class TransferDialog extends Component {
         hideCloseBtn: true,
         children: (
           <div className="trans-msg">
-            <Icon className="icon-icon_fail" isColor />
+            <Icon className="icon-icon_fail" isColor={true} />
             {msg}
           </div>
         ),
@@ -351,7 +351,7 @@ class TransferDialog extends Component {
         hideCloseBtn: true,
         children: (
           <div className="trans-msg">
-            <Icon className="icon-icon_success" isColor />
+            <Icon className="icon-icon_success" isColor={true} />
             {toLocale('trans_success')}
           </div>
         ),
@@ -414,7 +414,7 @@ class TransferDialog extends Component {
                     <Select
                       placeholder={toLocale('please_select')}
                       clearable={false}
-                      searchable
+                      searchable={true}
                       theme="dark"
                       options={tokenList}
                       value={symbol}
@@ -504,7 +504,7 @@ class TransferDialog extends Component {
               </label>
             )}
             <Button
-              block
+              block={true}
               type={Button.btnType.primary}
               style={{ marginTop: 24 }}
               onClick={() => {
@@ -573,7 +573,7 @@ class TransferDialog extends Component {
         />
         <div className={`trans-loading ${transferring ? '' : 'hide'}`}>
           <div className="loading-icon">
-            <Icon className="icon-loadingCopy" isColor />
+            <Icon className="icon-loadingCopy" isColor={true} />
           </div>
         </div>
       </div>

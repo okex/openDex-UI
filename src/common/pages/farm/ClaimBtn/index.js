@@ -71,13 +71,13 @@ export default class ClaimBtn extends React.Component {
     if (!triggerClick) return null;
     if (!util.isLogined())
       return (
-        <Dialog visible hideCloseBtn>
+        <Dialog visible={true} hideCloseBtn={true}>
           <ConnectInfoTip onClose={this.onClose} />
         </Dialog>
       );
     if (show)
       return (
-        <Dialog visible hideCloseBtn>
+        <Dialog visible={true} hideCloseBtn={true}>
           <div className="stake-panel" style={{ width: '496px' }}>
             <div className="stake-panel-title no-title">
               <span className="close" onClick={this.onClose}>

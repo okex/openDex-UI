@@ -480,7 +480,7 @@ export default class OkPagination extends React.Component {
       lastPager = (
         <Pager
           locale={props.locale}
-          last
+          last={true}
           rootPrefixCls={prefixCls}
           onClick={this.handleChange}
           onKeyPress={this.runIfEnter}

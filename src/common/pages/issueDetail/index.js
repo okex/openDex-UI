@@ -122,8 +122,8 @@ class IssueDetail extends Component {
     return (
       <DexDesktopContainer
         className="issue-detail-page"
-        isShowAddress
-        needLogin
+        isShowAddress={true}
+        needLogin={true}
         loading={isActionLoading}
       >
         <DexList

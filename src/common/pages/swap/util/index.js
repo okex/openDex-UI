@@ -12,7 +12,9 @@ export function getSetting() {
   try {
     const data = JSON.parse(store);
     return { ...SWSWAP_SETTING_Default, ...data };
-  } catch (e) {}
+  } catch (e) {
+    console.error(e);
+  }
   return SWSWAP_SETTING_Default;
 }
 

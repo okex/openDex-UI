@@ -160,7 +160,7 @@ class DexLoggedMenu extends React.Component {
         <div className="private-title">{toLocale('wallet_privateKey')}</div>
         <Icon
           className="icon-icon_successfuzhi"
-          isColor
+          isColor={true}
           style={{ width: 60, height: 60, marginBottom: 30 }}
         />
         <div className="private-content">
@@ -169,7 +169,7 @@ class DexLoggedMenu extends React.Component {
             <CopyToClipboard text={privateKey} onCopy={this.handleCopy}>
               <Icon
                 className={copySuccess ? 'icon-icon_success' : 'icon-icon_copy'}
-                isColor
+                isColor={true}
                 style={{ width: 14, height: 14, cursor: 'pointer' }}
               />
             </CopyToClipboard>

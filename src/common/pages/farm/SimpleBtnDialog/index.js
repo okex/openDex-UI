@@ -38,7 +38,7 @@ export default class SimpleBtnDialog extends React.Component {
     return (
       <>
         {show && (
-          <Dialog visible hideCloseBtn>
+          <Dialog visible={true} hideCloseBtn={true}>
             {component}
           </Dialog>
         )}

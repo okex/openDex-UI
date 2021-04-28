@@ -25,7 +25,7 @@ export const getIssueCols = ({ mint, burn }) => [
             overlayClassName="symbol-tooltip"
             overlay={symbol}
             maxWidth={400}
-            noUnderline
+            noUnderline={true}
           >
             {text.toUpperCase() + whole_nameString}
           </Tooltip>
@@ -190,7 +190,7 @@ export const getAccountsCols = ({ transfer }) => [
             overlayClassName="symbol-tooltip"
             overlay={symbol}
             maxWidth={400}
-            noUnderline
+            noUnderline={true}
           >
             {text + whole_nameString}
           </Tooltip>

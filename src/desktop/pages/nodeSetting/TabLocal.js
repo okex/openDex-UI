@@ -162,7 +162,7 @@ class TabLocal extends Component {
               value={datadir}
               onChange={this.onDatadirChange}
               onUpload={this.onDatadirUpdate}
-              directory
+              directory={true}
             />
           </div>
           <div className="local-set-cell">

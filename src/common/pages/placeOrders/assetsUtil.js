@@ -146,7 +146,7 @@ util.accountsCols = ({ transfer }) => [
             overlayClassName="symbol-tooltip"
             overlay={symbol}
             maxWidth={400}
-            noUnderline
+            noUnderline={true}
           >
             {text + whole_nameString}
           </Tooltip>

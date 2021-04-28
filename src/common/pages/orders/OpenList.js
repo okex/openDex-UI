@@ -282,7 +282,7 @@ class OpenList extends RouterCredential {
           <Select
             clearable={false}
             searchable={false}
-            small
+            small={true}
             theme="dark"
             name="form-field-name"
             value={product}
@@ -294,7 +294,7 @@ class OpenList extends RouterCredential {
           <Select
             clearable={false}
             searchable={false}
-            small
+            small={true}
             theme="dark"
             name="form-field-name"
             value={side === 'all' ? 0 : side === 'BUY' ? 1 : 2}
@@ -305,8 +305,8 @@ class OpenList extends RouterCredential {
           />
           <span />
           <DatePicker
-            small
-            selectsStart
+            small={true}
+            selectsStart={true}
             theme="dark"
             placeholderText="起始时间"
             selected={start || null}
@@ -323,8 +323,8 @@ class OpenList extends RouterCredential {
           />
           <div className="dash" />
           <DatePicker
-            small
-            selectsEnd
+            small={true}
+            selectsEnd={true}
             theme="dark"
             placeholderText="截止时间"
             selected={end || null}
@@ -490,7 +490,7 @@ class OpenList extends RouterCredential {
           className={`wait-loading ${this.state.cancelLoading ? '' : 'hide'}`}
         >
           <div className="loading-icon">
-            <Icon className="icon-loadingCopy" isColor />
+            <Icon className="icon-loadingCopy" isColor={true} />
           </div>
         </div>
         {this.renderPwdDialog()}

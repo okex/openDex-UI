@@ -163,7 +163,7 @@ class NodeSetting extends Component {
             ws={wsUrl || '- -'}
             http={httpUrl || '- -'}
             delayTime={latency}
-            disabled
+            disabled={true}
           />
         </div>
         <div className="node-select-container">

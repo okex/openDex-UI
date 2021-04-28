@@ -34,18 +34,7 @@ export default class Button extends React.PureComponent {
   };
 
   render() {
-    const {
-      loading,
-      shape,
-      icon,
-      className,
-      size,
-      block,
-      href,
-      target,
-      children,
-      ...attr
-    } = this.props;
+    const { loading, icon, children, ...attr } = this.props;
     return (
       <BaseButton {...attr}>
         {icon && icon.length !== 0 && !loading && (

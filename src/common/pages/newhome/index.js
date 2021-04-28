@@ -217,7 +217,7 @@ const index = () => (
       </div>
     </div>
     <div className="okex-logo">
-      <Icon className="icon-testcoin" isColor />
+      <Icon className="icon-testcoin" isColor={true} />
       <a
         target="_blank"
         rel="noopener noreferrer"

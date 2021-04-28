@@ -99,9 +99,9 @@ class ListTokenpair extends Component {
     const { baseAsset, quoteAsset, initPrice, isActionLoading } = this.state;
     return (
       <DexDesktopContainer
-        isShowHelp
-        isShowAddress
-        needLogin
+        isShowHelp={true}
+        isShowAddress={true}
+        needLogin={true}
         loading={isActionLoading}
       >
         <div className="list-tokenpair-container">

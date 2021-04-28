@@ -300,7 +300,7 @@ export default class ReduceLiquidity extends React.Component {
             </div>
           ))}
           <div className="btn-wrap">{btn}</div>
-          <Dialog visible={showConfirmDialog} hideCloseBtn>
+          <Dialog visible={showConfirmDialog} hideCloseBtn={true}>
             <div className="panel-dialog-info">
               <div className="panel-dialog-info-title">
                 {toLocale('Confirm Reduce')}

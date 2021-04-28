@@ -20,7 +20,7 @@ export default () => {
           <Button
             type={Button.btnType.primary}
             size={Button.size.large}
-            circle
+            circle={true}
             onClick={() => {
               navigation.login();
             }}
@@ -30,7 +30,7 @@ export default () => {
           <Button
             type={Button.btnType.default}
             size={Button.size.large}
-            circle
+            circle={true}
             onClick={() => {
               navigation.register();
             }}

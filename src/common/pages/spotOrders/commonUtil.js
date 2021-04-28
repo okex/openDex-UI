@@ -274,7 +274,7 @@ const commonUtil = {
       <div className="flex-column" style={{ alignItems: 'center' }}>
         <Icon
           className="icon-Nodeallist"
-          isColor
+          isColor={true}
           style={{
             width: '48px',
             height: '48px',

@@ -69,7 +69,7 @@ class WalletAddress extends Component {
             <Icon
               style={{ display: copySuccess ? 'inline' : 'none' }}
               className="icon-icon_success"
-              isColor
+              isColor={true}
             />
             <img className={copySuccess ? 'hidden' : ''} src={copy} alt="" />
           </div>

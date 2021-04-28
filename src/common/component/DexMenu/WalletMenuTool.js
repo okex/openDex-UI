@@ -46,7 +46,7 @@ class WalletMenuTool extends React.Component {
             <div>
               <Icon
                 className="icon-icon_success"
-                isColor
+                isColor={true}
                 style={{
                   width: 14,
                   height: 14,

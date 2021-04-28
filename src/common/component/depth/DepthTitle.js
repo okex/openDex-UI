@@ -19,7 +19,7 @@ export default class DepthTitle extends React.Component {
           <Icon
             className={isDark ? 'icon-center' : 'icon-Buyandsell-L'}
             style={btnStyle}
-            isColor
+            isColor={true}
           />
         </div>
         <div
@@ -30,7 +30,7 @@ export default class DepthTitle extends React.Component {
           <Icon
             className={isDark ? 'icon-sell' : 'icon-sell-L'}
             style={btnStyle}
-            isColor
+            isColor={true}
           />
         </div>
         <div
@@ -41,7 +41,7 @@ export default class DepthTitle extends React.Component {
           <Icon
             className={isDark ? 'icon-buy' : 'icon-buy-L'}
             style={btnStyle}
-            isColor
+            isColor={true}
           />
         </div>
       </div>

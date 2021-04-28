@@ -331,7 +331,9 @@ export function startOkexchaind(datadir, func, terminal = false) {
       await start(datadir, dispatch, getState, func, terminal);
       switchIsStarted(true)(dispatch);
       startPoll(dispatch, getState);
-    } catch (e) {}
+    } catch (e) {
+      console.error(e);
+    }
   };
 }
 

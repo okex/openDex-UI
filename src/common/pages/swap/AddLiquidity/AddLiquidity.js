@@ -578,7 +578,7 @@ export default class AddLiquidity extends React.Component {
               onChange={this.changeBase}
               loadCoinList={this.loadBaseCoinList}
               disabledChangeCoin={disabledChangeCoin}
-              max
+              max={true}
             />
             <div className="sep add-sep" />
             <CoinItem
@@ -587,7 +587,7 @@ export default class AddLiquidity extends React.Component {
               onChange={this.changeTarget}
               loadCoinList={this.loadTargetCoinList}
               disabledChangeCoin={disabledChangeCoin}
-              max
+              max={true}
             />
             {exchangeInfo}
             <div className="tip-liquidity-check">
@@ -616,7 +616,7 @@ export default class AddLiquidity extends React.Component {
             <InfoItem data={userLiquidity} reduce={this.reduce} />
           </div>
         )}
-        <Dialog visible={showConfirmDialog} hideCloseBtn>
+        <Dialog visible={showConfirmDialog} hideCloseBtn={true}>
           <div className="panel-dialog-info">
             <div className="panel-dialog-info-title">
               {toLocale('Confirm Supply')}

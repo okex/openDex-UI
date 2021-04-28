@@ -140,7 +140,7 @@ class ImportByKeystore extends Component {
       case fileStatusEnum.todo:
         dom = (
           <div>
-            <Icon className="icon-txtx" isColor style={iconStyle} />
+            <Icon className="icon-txtx" isColor={true} style={iconStyle} />
             <div className="icon-desc">
               {toLocale('wallet_import_upload_todo')}
             </div>
@@ -150,7 +150,7 @@ class ImportByKeystore extends Component {
       case fileStatusEnum.retry:
         dom = (
           <div>
-            <Icon className="icon-txtCopyx" isColor style={iconStyle} />
+            <Icon className="icon-txtCopyx" isColor={true} style={iconStyle} />
             <div className="icon-desc">
               {toLocale('wallet_import_upload_retry')}
             </div>
@@ -160,7 +160,7 @@ class ImportByKeystore extends Component {
       case fileStatusEnum.done:
         dom = (
           <div>
-            <Icon className="icon-txtx" isColor style={iconStyle} />
+            <Icon className="icon-txtx" isColor={true} style={iconStyle} />
             <div className="icon-desc">{fileName}</div>
           </div>
         );
@@ -172,7 +172,7 @@ class ImportByKeystore extends Component {
               className="file-progress"
               style={{ width: `${fileStatus * 100}%` }}
             />
-            <Icon className="icon-txtx" isColor style={iconStyle} />
+            <Icon className="icon-txtx" isColor={true} style={iconStyle} />
             <div className="icon-desc">
               {toLocale('wallet_import_upload_doing')}
             </div>
@@ -219,7 +219,7 @@ class ImportByKeystore extends Component {
               }}
               error={pwdError}
               theme="dark"
-              allowClear
+              allowClear={true}
             />
           </span>
           <ValidateCheckbox type="warning" className="mar-top10">

@@ -181,7 +181,7 @@ class TabCustomerlize extends Component {
                     delayTime={latency}
                     disabled={false}
                     onClick={this.handleChange(node)}
-                    isRenderDelete
+                    isRenderDelete={true}
                     onDelete={this.handleDelete(node)}
                   />
                 </li>

@@ -55,7 +55,7 @@ export default class LanguageSwitch extends React.Component {
         <>
           <Icon
             className={currentItem.icon}
-            isColor
+            isColor={true}
             style={{ width: '20px', height: '18px', flexShrink: 0 }}
           />
           <span className="text-hidden">{currentItem.name}</span>
@@ -64,7 +64,7 @@ export default class LanguageSwitch extends React.Component {
       icon: (
         <Icon
           className={currentItem.icon}
-          isColor
+          isColor={true}
           style={{ width: '20px', height: '18px', flexShrink: 0 }}
         />
       ),
@@ -118,7 +118,7 @@ export default class LanguageSwitch extends React.Component {
                 >
                   <Icon
                     className={item.icon}
-                    isColor
+                    isColor={true}
                     style={{ width: '20px', height: '18px', flexShrink: 0 }}
                   />
                   <span style={{ marginLeft: '8px' }}>{item.name}</span>

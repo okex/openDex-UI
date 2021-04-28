@@ -54,7 +54,7 @@ class DexList extends Component {
               onChange={onChange}
               current={page}
               hideOnSinglePage={false}
-              dark
+              dark={true}
             />
           </div>
         )}

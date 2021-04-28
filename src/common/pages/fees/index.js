@@ -109,9 +109,9 @@ class FeesPage extends Component {
     return (
       <DexDesktopContainer
         className="fees-page"
-        isShowAddress
-        isShowHelp
-        needLogin
+        isShowAddress={true}
+        isShowHelp={true}
+        needLogin={true}
       >
         <div className="fees-container">
           <DexDesktopInput

@@ -31,7 +31,7 @@ const orderUtil = {
     >
       <Icon
         className="icon-Nodeallist"
-        isColor
+        isColor={true}
         style={{ width: '48px', height: '48px' }}
       />
       <div className="mar-top10">{toLocale('spot.orders.noData')}</div>

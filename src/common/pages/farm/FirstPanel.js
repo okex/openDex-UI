@@ -144,14 +144,14 @@ export default class FarmPanel extends React.Component {
           <div className="farm-btn stake-btn" onClick={this.unstake}>
             {toLocale('UNSTAKE')}
           </div>
-          <Dialog visible={showCheck} hideCloseBtn>
+          <Dialog visible={showCheck} hideCloseBtn={true}>
             <ClaimCheck
               onClose={() => this.setState({ showCheck: false })}
               onSuccess={this.onCheckSuccess}
             />
           </Dialog>
           {showUnstake && (
-            <Dialog visible hideCloseBtn>
+            <Dialog visible={true} hideCloseBtn={true}>
               {showUnstake}
             </Dialog>
           )}

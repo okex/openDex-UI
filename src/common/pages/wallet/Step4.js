@@ -89,7 +89,7 @@ class Step4 extends Component {
         <div className="private-title">{toLocale('wallet_privateKey')}</div>
         <Icon
           className="icon-icon_successfuzhi"
-          isColor
+          isColor={true}
           style={{ width: 60, height: 60, marginBottom: 30 }}
         />
         <div className="private-content">
@@ -98,7 +98,7 @@ class Step4 extends Component {
             <CopyToClipboard text={privateKey} onCopy={this.handleCopy}>
               <Icon
                 className={copySuccess ? 'icon-icon_success' : 'icon-icon_copy'}
-                isColor
+                isColor={true}
                 style={{ width: 14, height: 14, cursor: 'pointer' }}
               />
             </CopyToClipboard>
@@ -124,7 +124,7 @@ class Step4 extends Component {
             <div className="validate-success-container">
               <Icon
                 className="icon-icon_success"
-                isColor
+                isColor={true}
                 style={{ width: 60, height: 60 }}
               />
               <div className="validate-success-text">

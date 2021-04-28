@@ -378,7 +378,7 @@ class FullTradeProductList extends React.Component {
         >
           <Icon
             className="icon-annotation-night"
-            isColor
+            isColor={true}
             style={{ width: '16px', height: '16px', marginBottom: '-3px' }}
           />
           <div

@@ -106,6 +106,8 @@ export async function getLiquidity(base, quote) {
     liquidity = await tokenPair(params);
     _liquidityInfo = await liquidityInfo(params);
     userLiquidity = _liquidityInfo && _liquidityInfo[0];
-  } catch (e) {}
+  } catch (e) {
+    console.error(e);
+  }
   return { liquidity, liquidityInfo: _liquidityInfo, userLiquidity };
 }

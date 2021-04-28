@@ -59,7 +59,7 @@ class FullTradeHead extends React.Component {
           <img src={Config.okexLogo} />
         </a>
         <DesktopNetMenu />
-        <DesktopTypeMenu isDexDesk current={current} />
+        <DesktopTypeMenu isDexDesk={true} current={current} />
         {this.isTradePage() && <DesktopNodeMenu />}
         {this.isTradePage() && <FullTradeProductList />}
         {this.isTradePage() && <FullTradeTicker />}

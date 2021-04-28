@@ -32,9 +32,9 @@ const DepthTooltip = ({
   );
   return (
     <Tooltip
-      hasArrow
-      hasShadow
-      noWrapper
+      hasArrow={true}
+      hasShadow={true}
+      noWrapper={true}
       mouseLeaveDelay={0}
       placement="left"
       overlay={overlay}

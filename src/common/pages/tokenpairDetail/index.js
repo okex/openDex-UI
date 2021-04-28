@@ -157,9 +157,9 @@ class TokenpairDetail extends Component {
     return (
       <DexDesktopContainer
         className="tokenpair-detail-page"
-        isShowAddress
-        isShowHelp
-        needLogin
+        isShowAddress={true}
+        isShowHelp={true}
+        needLogin={true}
         loading={isActionLoading}
       >
         <div className="tokenpair-detail-container">

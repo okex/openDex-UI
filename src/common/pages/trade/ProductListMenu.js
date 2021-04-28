@@ -15,7 +15,7 @@ const ProductListMenu = (props) => {
   const listEmpty = toLocale('spot.noData');
   return (
     <LeftMenu
-      searchBar
+      searchBar={true}
       searchPlaceholder={toLocale('search')}
       searchText={searchText}
       subTitle={[toLocale('pair'), toLocale('change')]}
@@ -23,7 +23,7 @@ const ProductListMenu = (props) => {
       listHeight={324}
       listEmpty={listEmpty}
       activeId={activeId}
-      canStar
+      canStar={true}
       onSearch={onSearch}
       onSelect={onSelect}
       onClickStar={onClickStar}

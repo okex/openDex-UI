@@ -144,9 +144,9 @@ class Register extends Component {
     const { websiteValue, feeAddressValue, isActionLoading } = this.state;
     return (
       <DexDesktopContainer
-        isShowHelp
-        isShowAddress
-        needLogin
+        isShowHelp={true}
+        isShowAddress={true}
+        needLogin={true}
         loading={isActionLoading}
       >
         <div className="register-container">

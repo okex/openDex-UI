@@ -313,7 +313,7 @@ export default class NormalOrderList extends React.Component {
           className={`wait-loading ${this.state.cancelLoading ? '' : 'hide'}`}
         >
           <div className="loading-icon">
-            <Icon className="icon-loadingCopy" isColor />
+            <Icon className="icon-loadingCopy" isColor={true} />
           </div>
         </div>
         {this.renderPwdDialog()}

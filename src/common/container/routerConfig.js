@@ -190,7 +190,7 @@ function getRoute({ routerConfig = config, FullTradeHead }) {
       routes.push(
         <Route
           path={path}
-          exact
+          exact={true}
           component={() => (
             <>
               {containHead && (

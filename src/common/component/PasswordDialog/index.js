@@ -112,7 +112,7 @@ class Index extends React.Component {
           />
           <p className="pwd-error">{warning}</p>
           <Button
-            block
+            block={true}
             type={Button.btnType.primary}
             onClick={() => {
               onEnter(this.state.password);

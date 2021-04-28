@@ -44,7 +44,7 @@ const util = {
             placement="bottomLeft"
             overlay={<div style={{ wordBreak: 'break-all' }}>{text}</div>}
             maxWidth={300}
-            noUnderline
+            noUnderline={true}
           >
             <a
               href={`${Config.okexchain.browserUrl}/tx/${text}`}
@@ -107,7 +107,7 @@ const util = {
               placement="bottomLeft"
               overlay={<div style={{ wordBreak: 'break-all' }}>{address}</div>}
               maxWidth={300}
-              noUnderline
+              noUnderline={true}
             >
               {drawText}
             </Tooltip>
@@ -164,7 +164,7 @@ util.accountsCols = ({ transfer, moreOperationsChange }) => {
               overlayClassName="symbol-tooltip"
               overlay={symbol}
               maxWidth={400}
-              noUnderline
+              noUnderline={true}
             >
               {text + whole_nameString}
             </Tooltip>
