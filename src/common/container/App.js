@@ -5,8 +5,8 @@ import { toLocale } from '_src/locale/react-locale';
 import util from '_src/utils/util';
 import history from '_src/utils/history';
 import { crypto } from '@okexchain/javascript-sdk';
-import FullTradeHead from '../pages/fullTrade/FullTradeHead';
-import routerConfig from './routerConfig';
+import FullTradeHead from '_app/pages/fullTrade/FullTradeHead';
+import routerConfig from '_app/container/routerConfig';
 
 class App extends React.Component {
   constructor(props) {

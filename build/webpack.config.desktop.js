@@ -18,7 +18,7 @@ base.plugins = [
   new HtmlWebpackPlugin({
     template: path.resolve(
       path.resolve(__dirname, '../src/desktop'),
-      'desktop.html'
+      'index.html'
     ),
     filename: 'index.html',
   }),
