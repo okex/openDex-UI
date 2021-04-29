@@ -28,7 +28,7 @@ module.exports = Object.assign(base, {
     port,
     proxy: {
       '/tradingview/*': {
-        target: 'http://okcombeta.bafang.com/',
+        target: 'http://okexbeta.bafang.com/',
         changeOrigin: true,
         secure: true,
       },
