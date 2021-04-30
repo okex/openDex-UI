@@ -5,6 +5,6 @@ node_modules
 .vscode/
 .history/
 bundle
-bundle-web
+dist
 *.bak
 release
