@@ -5,11 +5,12 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
 const base = require('./webpack.config.base');
 
+const output = path.resolve(__dirname, '../app/bundle');
 base.output.publicPath = 'file:./';
-base.output.path = path.resolve(__dirname, '../bundle');
+base.output.path = output;
 base.mode = 'production';
 base.plugins = [
-  new CleanWebpackPlugin([path.resolve(__dirname, '../bundle')], {
+  new CleanWebpackPlugin([output], {
     root: path.resolve(__dirname, '../'),
   }),
   new webpack.DefinePlugin({
@@ -25,7 +26,7 @@ base.plugins = [
   new CopyWebpackPlugin([
     {
       from: path.resolve(__dirname, '../src/favicon-okex.ico'),
-      to: path.resolve(__dirname, '../bundle/favicon-okex.ico'),
+      to: path.resolve(output, 'favicon-okex.ico'),
     },
   ]),
 ];

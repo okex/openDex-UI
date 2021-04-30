@@ -55,10 +55,6 @@ function createWindow() {
     win = null;
   });
 
-  win.webContents.on('will-navigate', (event, a) => {
-    console.log('will-navigate', a);
-  });
-
   win.webContents.on('new-window', function (event, link) {
     event.preventDefault();
     const { protocol } = url.parse(link);
@@ -85,29 +81,28 @@ app.on('ready', () => {
 
     const isOklinePath = uri.includes('okline/');
     const bundlePath = path.resolve(__dirname, './bundle');
-    const isDexCommon = uri.includes('dex/spot');
+    const isDexCommon =
+      uri.includes('dex/spot') || uri.includes('dex-test/spot');
     const isAbsPath = pathname.includes(bundlePath.slice(1));
 
     let filePath = `/${uri}`;
-    console.log(filePath);
     if (isAbsPath) {
       pathname = pathname.replace(bundlePath.slice(1), '');
     }
 
     if (isOklinePath || isAbsPath) {
       pathname = pathname.startsWith('/') ? pathname.slice(1) : pathname;
-      filePath = path.resolve(bundlePath, pathname);
+      filePath = path.resolve(isOklinePath ? __dirname : bundlePath, pathname);
     }
 
     if (isDexCommon) {
-      const commonPath = pathname.replace('dex/spot/', '');
+      const commonPath = pathname.replace(/(dex(\-test)?\/spot\/)/, '');
       filePath = path.resolve(bundlePath, commonPath);
     }
 
     if (hash) {
       filePath = filePath.replace(hash, '');
     }
-
     callback({ path: filePath });
   });
 

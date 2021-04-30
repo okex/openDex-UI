@@ -7,7 +7,7 @@ import env from './env';
 const okbExplorePrefix = env.envConfig.oklinkPagePath;
 const exploreUrl = 'https://www.oklink.com';
 const lang = Cookies.get('locale') || '';
-const receiveCoinUrl = window.okGlobal.mainDomain;
+const receiveCoinUrl = window.okGlobal.mainDomain || 'https://www.okex.com';
 const okexLogo = lang === 'zh_CN' ? okexznLogo : okexenLogo;
 const Config = {
   okexchain: {

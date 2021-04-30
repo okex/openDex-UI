@@ -8,7 +8,6 @@ const localNodeDataStatus = require('./localNodeDataStatus');
 const nodePath = shell.which('node');
 if (nodePath) {
   shell.config.execPath = nodePath.toString();
-  console.log(shell.config.execPath);
 }
 
 const schema = {

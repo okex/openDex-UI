@@ -6,8 +6,8 @@ const emitter = require('./emitter');
 const { store, request, shell, download } = require('./utils');
 const RELEASE_URL =
   'https://api.github.com/repos/okex/okexchain/releases/latest';
-
 let isInitWindowReadyReceiveEvent = false;
+
 module.exports = () => {
   let isWindowReadyReceiveEvent = false;
   const asyncEventHandlers = [];
@@ -17,7 +17,6 @@ module.exports = () => {
         const handler = asyncEventHandlers.shift();
         handler();
       }
-      console.log('windowReadyReceiveEvent');
       isWindowReadyReceiveEvent = true;
     });
     isInitWindowReadyReceiveEvent = true;
@@ -41,7 +40,6 @@ module.exports = () => {
     const lastVersionDirectory = `${directory}/${data.tag_name}`;
 
     if (!Array.isArray(data.assets) || !data.assets.length) {
-      console.log('github release empty');
       emitter.emit('getReleaseInfoError@download', data);
       return;
     }
@@ -73,7 +71,7 @@ module.exports = () => {
     const downloadTimerObj = {
       timer: null,
       prePercent: 0,
-    }; // check the progress out of time.
+    };
 
     const couldTar = {};
 
@@ -93,7 +91,6 @@ module.exports = () => {
           downloadTimerObj.timer = null;
         }
       } catch (err) {
-        console.log('tar error', err);
         emitter.emit(`downloadError`, err);
       }
 
@@ -126,13 +123,6 @@ module.exports = () => {
       okexchaindNeedUpdate =
         okexchaindNeedUpdate || releaseTag !== data.tag_name;
       cliNeedUpdate = cliNeedUpdate || cliReleaseTag !== data.tag_name;
-      console.log(
-        okexchaindNeedUpdate,
-        cliNeedUpdate,
-        !isOKExChaindDownload,
-        !isOKExChaindDownload
-      );
-
       if (
         okexchaindNeedUpdate ||
         cliNeedUpdate ||
@@ -154,7 +144,6 @@ module.exports = () => {
 
         if (!isOKExChaindDownload || !isCliDownload) {
           doWhenWindowReadyRecevieEvent(() => {
-            console.log('emit notDownload@Download');
             emitter.emit('notDownload@Download', {
               isOKExChaindDownload,
               isCliDownload,
@@ -169,8 +158,6 @@ module.exports = () => {
           return async (res) => {
             state = res;
             emitter.emit(`downloadProgress@${name}`, res);
-            console.log(name, state);
-
             if (downloadTimerObj.timer === null) {
               downloadTimerObj.timer = setTimeout(() => {
                 if (downloadTimerObj.prePercent === state.percent) {
@@ -191,7 +178,6 @@ module.exports = () => {
 
         const doDownload = (name) => {
           const url = name === 'okexchaind' ? downloadUrl : cliDownloadUrl;
-          console.log(`${name} downloading...`);
           couldTar[name] = true;
 
           return new Promise((resolve, reject) => {
@@ -205,7 +191,6 @@ module.exports = () => {
                 },
               });
             } catch (err) {
-              console.log('doDownload error：', err);
               reject(err);
             }
           });
@@ -231,12 +216,9 @@ module.exports = () => {
             'downloadOkexchaincli@download',
             genHandler('okexchaincli')
           );
-
           emitter.on('redownload', (isRedownload = true) => {
-            console.log('redownload...');
             start(isRedownload);
           });
-
           isEmitterInit = true;
         }
       }

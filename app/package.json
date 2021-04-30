@@ -10,7 +10,7 @@
   "scripts": {
     "start-locale": "export NODE_ENV='locale' && electron .",
     "start-dev": "npm run build-test && export NODE_ENV='develope' && electron .",
-    "build-test": "rm -rf ./bundle && cp -r ../bundle ./ && cp -r ../okline ./bundle && rm -rf release && npm run build-mac",
+    "build-test": "rm -rf release && npm run build-mac",
     "build-mac": "electron-builder -c.productName='OpenDexMacDev' -c.extraMetadata.configEnv=develope",
     "build-win": "electron-builder --win -c.productName='OpenDexWinDev' -c.extraMetadata.configEnv=develope"
   },

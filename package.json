@@ -12,8 +12,8 @@
     "web": "cross-env NODE_ENV=production webpack --config build/webpack.config.web.js",
     "build": "npm run desktop && npm run web",
     "start-locale": "cd ./app && npm run start-locale",
-    "start-dev": "npm run desktop && cd ./app && npm run start-dev",
-    "build-test": "cd ./app && npm run build-test",
+    "start-dev": "cd ./app && npm run start-dev",
+    "build-test": "npm run desktop && cd ./app && npm run build-test",
     "lint": "eslint . --ext .js,.jsx --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -9,7 +9,7 @@ function getStatusJson(filename, initData) {
   try {
     return JSON.parse(str);
   } catch (e) {
-    console.log('not json');
+    console.error('not json', e);
   }
   return initData;
 }
@@ -19,7 +19,7 @@ function writeStatusJson(dataDir, statusDir, initData) {
   try {
     fs.writeFileSync(statusDir, JSON.stringify(initData));
   } catch (e) {
-    console.log('write data err');
+    console.error('write data err', e);
   }
   return;
 }

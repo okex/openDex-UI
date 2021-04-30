@@ -1,6 +1,6 @@
 node_modules/*
 iconfont.js
 bundle
-bundle-web
-release/*
-okline/*
+dist
+app/release/*
+app/okline/*
