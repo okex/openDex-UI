@@ -345,7 +345,7 @@ export default {
     let signedTx;
     if (privateKey)
       signedTx = await web3.eth.accounts.signTransaction(rawTx, privateKey);
-    else signedTx = await wallet.sign(rawTx);
+    else signedTx = await wallet.sign4Token(rawTx);
     return web3.eth.sendSignedTransaction(signedTx.rawTransaction);
   },
   async contract(contractAddress) {
