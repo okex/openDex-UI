@@ -797,7 +797,7 @@ const zhCN = {
   wallet_connect_ensure: '连接',
   wallet_connect_ensureing: '连接中',
   wallet_connect_qrcode: 'WalletConnect',
-  wallet_connect_qrcodedesc: '请使用 4.6.9版本以上的OKEx App钱包扫码登录',
+  wallet_connect_qrcodedesc: '请使用 4.8.8版本以上的OKEx App钱包扫码登录',
   wallet_import_mnemonic: '助记词导入',
   wallet_import_upload_todo: '上传Keystore文件，可直接拖动至此',
   wallet_import_upload_doing: '上传中',

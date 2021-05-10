@@ -803,7 +803,7 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   wallet_connect_ensureing: 'Connecting',
   wallet_connect_qrcode: 'WalletConnect',
   wallet_connect_qrcodedesc:
-    'Scan QR code with OKEx App above version of 4.6.9',
+    'Scan QR code with OKEx App above version of 4.8.8',
   wallet_import_mnemonic: 'Mnemonic phrase',
   wallet_import_upload_todo: 'Drag here to upload keystore documents',
   wallet_import_upload_doing: 'Uploading',
