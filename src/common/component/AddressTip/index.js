@@ -7,7 +7,7 @@ import './index.less';
 
 export default function AddressTip() {
   const pathType = window.localStorage.getItem(env.envConfig.mnemonicPathType);
-  if (pathType === 'old') return null;
+  if (pathType === 'new') return null;
   return (
     <div className="wallet-main">
       <div className="top-tip">
