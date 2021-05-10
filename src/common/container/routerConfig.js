@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import PageURL from '_constants/PageURL';
+import AddressTip from '_component/AddressTip';
 // import FullTrade from '_app/pages/fullTrade/FullTrade';
 // import Home from '../pages/home/index';
 // import OpenOrders from '../pages/orders/OpenList';
@@ -198,6 +199,7 @@ function getRoute({ routerConfig = config, FullTradeHead }) {
                   <FullTradeHead />
                 </div>
               )}
+              <AddressTip />
               {Page && <Page />}
             </>
           )}
