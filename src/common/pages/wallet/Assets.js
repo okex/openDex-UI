@@ -6,10 +6,6 @@ import { withRouter } from 'react-router-dom';
 import PageURL from '_src/constants/PageURL';
 import DexTab from '_component/DexTab';
 import WalletAddress from '_component/WalletAddress';
-import { toLocale } from '_src/locale/react-locale';
-import env from '_src/constants/env';
-import information from '_src/assets/images/Information.svg';
-import Config from '_src/constants/Config';
 import AssetsAccounts from './AssetsAccounts';
 import AssetsTransactions from './AssetsTransactions';
 import assetsUtil from './assetsUtil';
@@ -36,7 +32,6 @@ class Assets extends Component {
       loading: false,
       copySuccess: false,
       expanded: false,
-      pathType: window.localStorage.getItem(env.envConfig.mnemonicPathType),
     };
     this.isAssets = this.props.location.pathname.includes(PageURL.walletAssets);
     if (!window.OK_GLOBAL.senderAddr) {
@@ -73,20 +68,10 @@ class Assets extends Component {
     this.setState({ expanded: !expanded });
   };
 
-  forDetails = () => {
-    window.open(Config.okexchain.doubleAddress);
-  };
-
   render() {
-    const { loading, pathType, expanded } = this.state;
-    const tipStyle = pathType === 'old' ? {} : { display: 'none' };
+    const { loading, expanded } = this.state;
     return (
       <div className="wallet-main">
-        <div className="top-tip" style={tipStyle}>
-          <img src={information} alt="" />
-          <p>{toLocale('dex_top_tip')}</p>
-          <a onClick={this.forDetails}>{toLocale('for_details')}</a>
-        </div>
         <div className="wallet-address-container">
           <WalletAddress
             addressType="universality"
