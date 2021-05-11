@@ -292,12 +292,11 @@ const util = {
     return calc.div(a, 1) < calc.div(b, 1);
   },
   go(path = PageURL.indexPage) {
+    window.location.href = this.processPath(path);
+  },
+  processPath(path) {
     const url = window.location.href.split('#')[0];
-    if (/^file/i.test(url)) {
-      window.location.href = `${url}#${path}`;
-    } else {
-      window.location.href = path;
-    }
+    return /^file/i.test(url) ? `${url}#${path}` : path;
   },
   hasKeyStore() {
     let keyStore = false;

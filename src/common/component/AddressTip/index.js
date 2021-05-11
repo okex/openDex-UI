@@ -13,7 +13,10 @@ export default function AddressTip() {
       <div className="top-tip">
         <img src={information} alt="" />
         <p>{toLocale('dex_top_tip')}</p>
-        <a onClick={() => window.open(Config.okexchain.doubleAddress)}>
+        <a
+          onClick={() => window.open(Config.okexchain.doubleAddress)}
+          target="_blank"
+        >
           {toLocale('for_details')}
         </a>
       </div>

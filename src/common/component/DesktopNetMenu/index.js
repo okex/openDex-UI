@@ -3,6 +3,7 @@ import { toLocale } from '_src/locale/react-locale';
 import PageURL from '_constants/PageURL';
 import ComboBox from '_src/component/ComboBox/ComboBox';
 import env from '../../constants/env';
+import util from '../../utils/util';
 import './index.less';
 
 const { okGlobal = {} } = window;
@@ -11,9 +12,11 @@ const netTypeList = [
   {
     get url() {
       if (!env.envConfig.isTest) return window.location.href;
-      return PageURL.getCurrent().replace(
-        new RegExp(`^${langPath}/${env.testnet.pagePath}`),
-        `${langPath}/${env.mainnet.pagePath}`
+      return util.processPath(
+        PageURL.getCurrent().replace(
+          new RegExp(`^${langPath}/${env.testnet.pagePath}`),
+          `${langPath}/${env.mainnet.pagePath}`
+        )
       );
     },
     type: `/${env.mainnet.pagePath}`,
@@ -24,9 +27,11 @@ const netTypeList = [
   {
     get url() {
       if (env.envConfig.isTest) return window.location.href;
-      return PageURL.getCurrent().replace(
-        new RegExp(`${langPath}/${env.mainnet.pagePath}`),
-        `${langPath}/${env.testnet.pagePath}`
+      return util.processPath(
+        PageURL.getCurrent().replace(
+          new RegExp(`${langPath}/${env.mainnet.pagePath}`),
+          `${langPath}/${env.testnet.pagePath}`
+        )
       );
     },
     type: `/${env.testnet.pagePath}`,
