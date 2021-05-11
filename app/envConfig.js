@@ -2,20 +2,22 @@ const path = require('path');
 
 const staticLocalPath = 'http://127.0.0.1:5300/dex/swap';
 const staticBundlePath = `file://${path.resolve(__dirname, './bundle')}`;
+const staticHtmlPath = 'http://okexchain/dex/swap';
 
 module.exports = {
   staticLocalPath,
   staticBundlePath,
+  staticHtmlPath,
   locale: {
     staticPath: staticLocalPath,
-    entryTplName: '',
   },
   develope: {
-    staticPath: staticBundlePath,
-    entryTplName: 'index.html#/dex/swap',
+    staticPath: staticHtmlPath,
   },
   prod: {
     staticPath: staticBundlePath,
-    entryTplName: 'index.html#/dex/swap',
+  },
+  isOkexchainUrl(url) {
+    return /^(http:\/\/okexchain)/.test(url);
   },
 };

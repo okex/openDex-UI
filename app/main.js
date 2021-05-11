@@ -2,23 +2,20 @@ const { app, BrowserWindow, protocol } = require('electron');
 const path = require('path');
 const url = require('url');
 const open = require('open');
+const fs = require('fs');
 
 const download = require('./src/download');
 
 const envConfig = require('./envConfig');
-const nodeEnv = process.env.NODE_ENV
-  ? process.env.NODE_ENV.replace(/(^\s*)|(\s*$)/g, '')
-  : 'builder';
+const nodeEnv = process.env.NODE_ENV || 'builder';
 const sourceEnv =
   nodeEnv === 'builder' ? require('./package.json').configEnv : nodeEnv;
 
 const configRes = envConfig[sourceEnv];
-const { entryTplName } = envConfig[sourceEnv];
-const sourceHost =
+const indexPageURL =
   nodeEnv === 'builder'
     ? envConfig.staticBundlePath
     : configRes.staticPath || envConfig.staticLocalPath;
-const indexPageURL = `${sourceHost}/${entryTplName}`;
 
 if (!nodeEnv.includes('prod')) {
   process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true';
@@ -77,33 +74,25 @@ app.on('activate', () => {
 app.on('ready', () => {
   protocol.interceptFileProtocol('file', (request, callback) => {
     const uri = request.url.substr(8);
-    let { hash, pathname } = url.parse(uri);
-
+    let { pathname } = url.parse(uri);
     const isOklinePath = uri.includes('okline/');
     const bundlePath = path.resolve(__dirname, './bundle');
-    const isDexCommon =
-      uri.includes('dex/spot') || uri.includes('dex-test/spot');
-    const isAbsPath = pathname.includes(bundlePath.slice(1));
-
     let filePath = `/${uri}`;
-    if (isAbsPath) {
-      pathname = pathname.replace(bundlePath.slice(1), '');
-    }
-
-    if (isOklinePath || isAbsPath) {
-      pathname = pathname.startsWith('/') ? pathname.slice(1) : pathname;
-      filePath = path.resolve(isOklinePath ? __dirname : bundlePath, pathname);
-    }
-
-    if (isDexCommon) {
-      const commonPath = pathname.replace(/(dex(\-test)?\/spot\/)/, '');
-      filePath = path.resolve(bundlePath, commonPath);
-    }
-
-    if (hash) {
-      filePath = filePath.replace(hash, '');
-    }
+    pathname = pathname.startsWith('/') ? pathname.slice(1) : pathname;
+    filePath = path.resolve(isOklinePath ? __dirname : bundlePath, pathname);
     callback({ path: filePath });
+  });
+
+  protocol.interceptBufferProtocol('http', (request, callback) => {
+    if (envConfig.isOkexchainUrl(request.url)) {
+      fs.readFile(
+        path.resolve(__dirname, './bundle/index.html'),
+        'utf8',
+        function (err, html) {
+          callback(Buffer.from(html, 'utf8'));
+        }
+      );
+    }
   });
 
   createWindow();
