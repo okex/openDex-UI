@@ -7,19 +7,12 @@ const fs = require('fs');
 const download = require('./src/download');
 
 const envConfig = require('./envConfig');
-const nodeEnv = process.env.NODE_ENV || 'builder';
-const sourceEnv =
-  nodeEnv === 'builder' ? require('./package.json').configEnv : nodeEnv;
+const nodeEnv = process.env.NODE_ENV;
+const indexPageURL = nodeEnv
+  ? envConfig[nodeEnv].staticPath
+  : envConfig.staticLocalPath;
 
-const configRes = envConfig[sourceEnv];
-const indexPageURL =
-  nodeEnv === 'builder'
-    ? envConfig.staticBundlePath
-    : configRes.staticPath || envConfig.staticLocalPath;
-
-if (!nodeEnv.includes('prod')) {
-  process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true';
-}
+process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true';
 
 app.commandLine.appendSwitch('disable-features', 'OutOfBlinkCors');
 
@@ -43,7 +36,7 @@ function createWindow() {
   win.once('ready-to-show', () => {
     win.show();
     download();
-    if (sourceEnv === 'locale') {
+    if (nodeEnv === 'locale') {
       win.webContents.openDevTools();
     }
   });

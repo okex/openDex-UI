@@ -15,7 +15,7 @@ module.exports = {
     staticPath: staticHtmlPath,
   },
   prod: {
-    staticPath: staticBundlePath,
+    staticPath: staticHtmlPath,
   },
   isOkexchainUrl(url) {
     return /^(http:\/\/okexchain)/.test(url);
