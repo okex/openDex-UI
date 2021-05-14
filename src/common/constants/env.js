@@ -71,7 +71,7 @@ const mainnet = {
   oklinkPagePath: 'okexchain',
   oklinkApiPath: 'okexchain',
   isMainnet: true,
-  fee: 0.0005,
+  fee: 0.00002,
   firstPoolConf: {
     pool_name: '1st_pool_okt_usdt',
     lock_symbol: 'ammswap_okt_usdt-a2b',
