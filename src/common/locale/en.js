@@ -880,7 +880,7 @@ Immediate or Cancel requires all or part of the order to be executed immediately
     'You can see the transaction history in the OKExChain blockchain explorer.',
   home_steps_item3_button: 'Explore OKExChain',
   home_steps_item0_img:
-    'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/7285906D63E20BD639AA7C8A3429755E.png',
+    'https://static.coinall.ltd/cdn/assets/imgs/MjAyMDQ/7285906D63E20BD639AA7C8A3429755E.png',
   home_steps_item1_img:
     'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/9088F851DF59FD358F6EAA08BFDE08A4.png',
   home_steps_item2_img:
