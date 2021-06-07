@@ -880,16 +880,16 @@ Immediate or Cancel requires all or part of the order to be executed immediately
     'You can see the transaction history in the OKExChain blockchain explorer.',
   home_steps_item3_button: 'Explore OKExChain',
   home_steps_item0_img:
-    'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/7285906D63E20BD639AA7C8A3429755E.png',
+    'https://static.coinall.ltd/cdn/assets/imgs/MjAyMDQ/7285906D63E20BD639AA7C8A3429755E.png',
   home_steps_item1_img:
-    'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/9088F851DF59FD358F6EAA08BFDE08A4.png',
+    'https://static.coinall.ltd/cdn/assets/imgs/MjAyMDQ/9088F851DF59FD358F6EAA08BFDE08A4.png',
   home_steps_item2_img:
-    'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/1CDBD8D16A98147F82E9E7703FE9DE61.png',
+    'https://static.coinall.ltd/cdn/assets/imgs/MjAyMDQ/1CDBD8D16A98147F82E9E7703FE9DE61.png',
   home_steps_item3_img:
-    'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/298BA40D0EF5D30907E47C018D8D1B7B.png',
+    'https://static.coinall.ltd/cdn/assets/imgs/MjAyMDQ/298BA40D0EF5D30907E47C018D8D1B7B.png',
   home_exp_more: 'Learn more about OKExChain DEX',
   home_exp_img:
-    'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/A4C4128B4E548183A3D05A8463ED45F6.png',
+    'https://static.coinall.ltd/cdn/assets/imgs/MjAyMDQ/A4C4128B4E548183A3D05A8463ED45F6.png',
   home_subtitle:
     'OKExChain testnet is launched. Check your transaction history on-chain.',
   home_receive_coin: 'Claim test tokens',

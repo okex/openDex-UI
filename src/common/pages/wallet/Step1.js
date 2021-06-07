@@ -131,7 +131,7 @@ class Step1 extends Component {
         <WalletLeft
           stepNo={1}
           stepName={toLocale('wallet_create_step1')}
-          imgUrl="https://static.bafang.com/cdn/assets/imgs/MjAxOTQ/2746959A3B06A9073C31362399AD0C32.png"
+          imgUrl="https://static.coinall.ltd/cdn/assets/imgs/MjAxOTQ/2746959A3B06A9073C31362399AD0C32.png"
         />
         <WalletRight>
           <div className="set-password-container">

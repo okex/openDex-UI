@@ -39,7 +39,7 @@ class Step2 extends Component {
           <WalletLeft
             stepNo={2}
             stepName={toLocale('wallet_create_step2')}
-            imgUrl="https://static.bafang.com/cdn/assets/imgs/MjAxOTQ/985BA29EFF0DE4AE191822AEDC867924.png"
+            imgUrl="https://static.coinall.ltd/cdn/assets/imgs/MjAxOTQ/985BA29EFF0DE4AE191822AEDC867924.png"
           />
           <WalletRight>
             <div className="mnemonic-container">

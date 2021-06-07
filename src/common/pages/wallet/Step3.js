@@ -97,7 +97,7 @@ class Step3 extends Component {
           <WalletLeft
             stepNo={3}
             stepName={toLocale('wallet_create_step3')}
-            imgUrl="https://static.bafang.com/cdn/assets/imgs/MjAxOTQ/355F3AD5BD296D7EEA40263B0F98E4F3.png"
+            imgUrl="https://static.coinall.ltd/cdn/assets/imgs/MjAxOTQ/355F3AD5BD296D7EEA40263B0F98E4F3.png"
           />
           <WalletRight>
             <div className="questions-container">
