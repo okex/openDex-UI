@@ -6,6 +6,7 @@ import { Button } from '_component/Button';
 import WalletLeft from '_component/WalletLeft';
 import WalletRight from '_component/WalletRight';
 import * as walletActions from '_src/redux/actions/WalletAction';
+import util from '_src/utils/util';
 import SafeTip from './SafeTip';
 import './Step.less';
 import './Step2.less';
@@ -39,7 +40,7 @@ class Step2 extends Component {
           <WalletLeft
             stepNo={2}
             stepName={toLocale('wallet_create_step2')}
-            imgUrl="https://static.coinall.ltd/cdn/assets/imgs/MjAxOTQ/985BA29EFF0DE4AE191822AEDC867924.png"
+            imgUrl={`${util.cdnBaseUrl}/cdn/assets/imgs/MjAxOTQ/985BA29EFF0DE4AE191822AEDC867924.png`}
           />
           <WalletRight>
             <div className="mnemonic-container">

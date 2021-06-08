@@ -3,6 +3,7 @@ import { toLocale } from '_src/locale/react-locale';
 import Icon from '_src/component/IconLite';
 import PageURL from '_src/constants/PageURL';
 import Config from '_src/constants/Config';
+import util from '_src/utils/util';
 import './index.less';
 
 const index = () => (
@@ -10,14 +11,14 @@ const index = () => (
     <div className="home-header">
       <div className="home-header-right">
         <img
-          src="https://img.coinall.ltd/cdn/assets/imgs/MjAxOTEx/AD222BAF06543BE0DB6E0A96DDC583F7.png"
+          src={`${util.cdnBaseUrl}/cdn/assets/imgs/MjAxOTEx/AD222BAF06543BE0DB6E0A96DDC583F7.png`}
           width={844}
           height={400}
         />
       </div>
       <div className="home-header-left">
         <img
-          src="https://static.coinall.ltd/cdn/assets/imgs/MjAxOTEx/D4592142474E53DC42541273C4DDA1B5.png"
+          src={`${util.cdnBaseUrl}/cdn/assets/imgs/MjAxOTEx/D4592142474E53DC42541273C4DDA1B5.png`}
           width={300}
           height={286}
         />
@@ -93,7 +94,7 @@ const index = () => (
       <div className="how-to-container">
         <div className="step-container">
           <img
-            src="https://static.coinall.ltd/cdn/assets/imgs/MjAxOTEx/382EC444F5ED5F9C50DD06A6D65ED150.png"
+            src={`${util.cdnBaseUrl}/cdn/assets/imgs/MjAxOTEx/382EC444F5ED5F9C50DD06A6D65ED150.png`}
             alt="num-1"
             width={48}
             height={48}
@@ -112,14 +113,16 @@ const index = () => (
             rel="noopener noreferrer"
           >
             {toLocale('home_step1_btn')}
-            <img src="https://static.coinall.ltd/cdn/assets/imgs/MjAxOTEx/130407AC319D1D7DB4B7EAD09D83016C.png" />
+            <img
+              src={`${util.cdnBaseUrl}/cdn/assets/imgs/MjAxOTEx/130407AC319D1D7DB4B7EAD09D83016C.png`}
+            />
           </a>
         </div>
       </div>
       <div className="how-to-container">
         <div className="step-container">
           <img
-            src="https://static.coinall.ltd/cdn/assets/imgs/MjAxOTEx/754582E0858D40E1AA5541F4AC50BF85.png"
+            src={`${util.cdnBaseUrl}/cdn/assets/imgs/MjAxOTEx/754582E0858D40E1AA5541F4AC50BF85.png`}
             alt="num-2"
             width={48}
             height={48}
@@ -138,14 +141,16 @@ const index = () => (
             rel="noopener noreferrer"
           >
             {toLocale('home_step2_btn')}
-            <img src="https://static.coinall.ltd/cdn/assets/imgs/MjAxOTEx/130407AC319D1D7DB4B7EAD09D83016C.png" />
+            <img
+              src={`${util.cdnBaseUrl}/cdn/assets/imgs/MjAxOTEx/130407AC319D1D7DB4B7EAD09D83016C.png`}
+            />
           </a>
         </div>
       </div>
       <div className="how-to-container">
         <div className="step-container">
           <img
-            src="https://static.coinall.ltd/cdn/assets/imgs/MjAxOTEx/92C0DA26E463944FEE42BA6930AE8BCD.png"
+            src={`${util.cdnBaseUrl}/cdn/assets/imgs/MjAxOTEx/92C0DA26E463944FEE42BA6930AE8BCD.png`}
             alt="num-3"
             width={48}
             height={48}
@@ -163,14 +168,16 @@ const index = () => (
             rel="noopener noreferrer"
           >
             {toLocale('home_step3_btn')}
-            <img src="https://static.coinall.ltd/cdn/assets/imgs/MjAxOTEx/130407AC319D1D7DB4B7EAD09D83016C.png" />
+            <img
+              src={`${util.cdnBaseUrl}/cdn/assets/imgs/MjAxOTEx/130407AC319D1D7DB4B7EAD09D83016C.png`}
+            />
           </a>
         </div>
       </div>
       <div className="how-to-container">
         <div className="step-container">
           <img
-            src="https://static.coinall.ltd/cdn/assets/imgs/MjAxOTEx/831414284D0C7E47AF223D99E574458F.png"
+            src={`${util.cdnBaseUrl}/cdn/assets/imgs/MjAxOTEx/831414284D0C7E47AF223D99E574458F.png`}
             alt="num-4"
             width={48}
             height={48}
@@ -187,14 +194,16 @@ const index = () => (
             rel="noopener noreferrer"
           >
             {toLocale('home_step4_btn')}
-            <img src="https://static.coinall.ltd/cdn/assets/imgs/MjAxOTEx/130407AC319D1D7DB4B7EAD09D83016C.png" />
+            <img
+              src={`${util.cdnBaseUrl}/cdn/assets/imgs/MjAxOTEx/130407AC319D1D7DB4B7EAD09D83016C.png`}
+            />
           </a>
         </div>
       </div>
       <div className="how-to-container">
         <div className="step-container">
           <img
-            src="https://static.coinall.ltd/cdn/assets/imgs/MjAxOTEx/F40D61AE8D4EDF6B5440F74FC759F37E.png"
+            src={`${util.cdnBaseUrl}/cdn/assets/imgs/MjAxOTEx/F40D61AE8D4EDF6B5440F74FC759F37E.png`}
             alt="num-5"
             width={48}
             height={48}
@@ -211,7 +220,9 @@ const index = () => (
             rel="noopener noreferrer"
           >
             {toLocale('home_step5_btn')}
-            <img src="https://static.coinall.ltd/cdn/assets/imgs/MjAxOTEx/130407AC319D1D7DB4B7EAD09D83016C.png" />
+            <img
+              src={`${util.cdnBaseUrl}/cdn/assets/imgs/MjAxOTEx/130407AC319D1D7DB4B7EAD09D83016C.png`}
+            />
           </a>
         </div>
       </div>

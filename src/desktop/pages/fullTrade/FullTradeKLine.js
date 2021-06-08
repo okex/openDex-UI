@@ -74,8 +74,7 @@ export default class FullTradeKLine extends React.Component {
     const { httpUrl } = this.props.currentNode;
     let wsUrl = getWsUrl();
     let logo;
-    let screenshotIcon =
-      'https://static.coinall.ltd/cdn/assets/imgs/MjAxOTM/05D71CB3408AD30681388F4D774BABBA.png';
+    let screenshotIcon = `${util.cdnBaseUrl}/cdn/assets/imgs/MjAxOTM/05D71CB3408AD30681388F4D774BABBA.png`;
     const Kline = window.okui.CombKline || window.okui.Kline;
     this.kline = new Kline({
       element: '#dex-full-kline-container',
