@@ -6,6 +6,7 @@ import WalletLeft from '_component/WalletLeft';
 import WalletRight from '_component/WalletRight';
 import * as walletActions from '_src/redux/actions/WalletAction';
 import { toLocale } from '_src/locale/react-locale';
+import util from '_src/utils/util';
 import questionGenerator from './questionGenerator';
 import './Step.less';
 import './Step3.less';
@@ -97,7 +98,7 @@ class Step3 extends Component {
           <WalletLeft
             stepNo={3}
             stepName={toLocale('wallet_create_step3')}
-            imgUrl="https://static.bafang.com/cdn/assets/imgs/MjAxOTQ/355F3AD5BD296D7EEA40263B0F98E4F3.png"
+            imgUrl={`${util.cdnBaseUrl}/cdn/assets/imgs/MjAxOTQ/355F3AD5BD296D7EEA40263B0F98E4F3.png`}
           />
           <WalletRight>
             <div className="questions-container">

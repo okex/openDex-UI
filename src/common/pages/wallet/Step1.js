@@ -13,6 +13,7 @@ import * as walletActions from '_src/redux/actions/WalletAction';
 import WalletLeft from '_component/WalletLeft';
 import WalletRight from '_component/WalletRight';
 import PageURL from '_constants/PageURL';
+import util from '_src/utils/util';
 import './Step.less';
 import './Step1.less';
 
@@ -131,7 +132,7 @@ class Step1 extends Component {
         <WalletLeft
           stepNo={1}
           stepName={toLocale('wallet_create_step1')}
-          imgUrl="https://static.bafang.com/cdn/assets/imgs/MjAxOTQ/2746959A3B06A9073C31362399AD0C32.png"
+          imgUrl={`${util.cdnBaseUrl}/cdn/assets/imgs/MjAxOTQ/2746959A3B06A9073C31362399AD0C32.png`}
         />
         <WalletRight>
           <div className="set-password-container">

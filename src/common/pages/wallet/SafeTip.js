@@ -72,7 +72,7 @@ class SafeTip extends Component {
       <div style={{ fontSize: 18 }}>{toLocale('wallet_safeTip_title')}</div>
       <img
         className="mar-top30"
-        src="https://static.bafang.com/cdn/assets/imgs/MjAxOTQ/EB1742AFFE1C68081E13A3404A79A141.png"
+        src={`${util.cdnBaseUrl}/cdn/assets/imgs/MjAxOTQ/EB1742AFFE1C68081E13A3404A79A141.png`}
       />
       <div className="safe-tip-content">
         {toLocale('wallet_safeTip_beforeKeystore')}

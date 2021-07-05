@@ -40,6 +40,10 @@ const Config = {
       if (lang === 'zh_CN') return '/support/hc/zh-cn/articles/360060384071';
       return '/support/hc/en-us/articles/360060384071';
     },
+    get offlineNotice() {
+      if (lang === 'zh_CN') return '/support/hc/zh-cn/articles/4404361277197';
+      return '/support/hc/zh-cn/articles/4404361277197';
+    },
   },
   validatePwdDeferSecond: 100,
   operateResultDelaySecond: 500,

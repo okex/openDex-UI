@@ -315,6 +315,9 @@ const util = {
   isWalletConnect() {
     return this.isLogined() && !this.hasKeyStore();
   },
+  cdnBaseUrl:
+    window?.okGlobal?.cdnBaseUrl ||
+    `${window.location.protocol}//static.coinall.ltd`,
 };
 
 export default util;

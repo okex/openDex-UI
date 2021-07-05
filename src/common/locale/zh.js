@@ -874,16 +874,16 @@ const zhCN = {
     '每一笔交易、转账都可以通过交易哈希值、地址等在区块链浏览器中查询相应信息。',
   home_steps_item3_button: '查看区块数据',
   home_steps_item0_img:
-    'https://static.bafang.com/cdn/assets/imgs/209/8C303F4EB6749D70.png',
+    'https://static.coinall.ltd/cdn/assets/imgs/209/8C303F4EB6749D70.png',
   home_steps_item1_img:
-    'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/EA5B9697721EAAE780B6A0D18D5F6DE5.png',
+    'https://static.coinall.ltd/cdn/assets/imgs/MjAyMDQ/EA5B9697721EAAE780B6A0D18D5F6DE5.png',
   home_steps_item2_img:
-    'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/0A848CAA0FA942D868854F6F469ADEC1.png',
+    'https://static.coinall.ltd/cdn/assets/imgs/MjAyMDQ/0A848CAA0FA942D868854F6F469ADEC1.png',
   home_steps_item3_img:
-    'https://static.bafang.com/cdn/assets/imgs/209/343B60DBDE22127D.png',
+    'https://static.coinall.ltd/cdn/assets/imgs/209/343B60DBDE22127D.png',
   home_exp_more: '想要进一步了解「DEX、OKExChain详细设计规则」',
   home_exp_img:
-    'https://static.bafang.com/cdn/assets/imgs/MjAyMDQ/3AF196CA9B03F9FFAE8A519469FBB6AD.png',
+    'https://static.coinall.ltd/cdn/assets/imgs/MjAyMDQ/3AF196CA9B03F9FFAE8A519469FBB6AD.png',
   home_subtitle: 'OKExChain测试网上线，所有交易记录链上可查',
   home_receive_coin: '领取测试币',
   home_step5_title: '帮助文档',
@@ -1224,8 +1224,7 @@ const zhCN = {
   import_mnemonic_know_button: '我知道了',
   wallet_transaction_records_tab10: 'KIP 10 交易',
   wallet_transaction_records_tab20: 'KIP 20 交易',
-  dex_top_tip:
-    'OKExChain 已经兼容以太坊地址格式，您可以在您的以太坊钱包（如：MetaMask）中使用与以太坊账户相同的地址，快来了解如何使用',
+  dex_top_tip: '关于OKEx Swap和OKEx Farm下线的公告',
   dex_popup_tip:
     'ex 地址与以太坊地址由同一个公钥采用不同地址算法生成，共享账户余额',
   dex_input_err_tip_contract_useraddr: '此地址是个人账户地址',

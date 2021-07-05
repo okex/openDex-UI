@@ -14,7 +14,7 @@ export default function AddressTip() {
         <img src={information} alt="" />
         <p>{toLocale('dex_top_tip')}</p>
         <a
-          onClick={() => window.open(Config.okexchain.doubleAddress)}
+          onClick={() => window.open(Config.okexchain.offlineNotice)}
           target="_blank"
         >
           {toLocale('for_details')}
