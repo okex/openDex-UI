@@ -1224,8 +1224,7 @@ const zhCN = {
   import_mnemonic_know_button: '我知道了',
   wallet_transaction_records_tab10: 'KIP 10 交易',
   wallet_transaction_records_tab20: 'KIP 20 交易',
-  dex_top_tip:
-    'OKExChain 已经兼容以太坊地址格式，您可以在您的以太坊钱包（如：MetaMask）中使用与以太坊账户相同的地址，快来了解如何使用',
+  dex_top_tip: '关于OKEx Swap和OKEx Farm下线的公告',
   dex_popup_tip:
     'ex 地址与以太坊地址由同一个公钥采用不同地址算法生成，共享账户余额',
   dex_input_err_tip_contract_useraddr: '此地址是个人账户地址',
