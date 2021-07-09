@@ -85,14 +85,12 @@ class FullTradeHead extends React.Component {
   }
 
   render() {
-    const current = PageURL.getCurrent();
     return (
       <div className="full-top-info-box">
         <a className="logo-wrap" href="/">
           <img src={Config.okexLogo} />
         </a>
         <DesktopNetMenu />
-        <DesktopTypeMenu current={current} />
         {this.isTradePage() ? <FullTradeProductList /> : null}
         {this.isTradePage() ? <FullTradeTicker /> : null}
         <div className="okdex-header-right">

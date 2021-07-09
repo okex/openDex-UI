@@ -38,7 +38,7 @@ const paths = {
 
 export default {
   ...paths,
-  indexPage: paths.swapPage,
+  indexPage: paths.walletImport,
   getCurrent() {
     const { pathname, hash } = getPathAndHash();
     let result = '';
