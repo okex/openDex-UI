@@ -144,7 +144,7 @@ class DesktopTypeMenu extends Component {
 
 Object.defineProperty(DesktopTypeMenu, 'current', {
   get() {
-    return activedMenu || getDefaultActivedMenu(PageURL.getCurrent());
+    return activedMenu || { url: `${PageURL.walletAssets}` };
   },
 });
 
