@@ -81,7 +81,9 @@ let activedMenu = getDefaultActivedMenu(PageURL.getCurrent());
 
 export function getDefaultActivedMenu(current) {
   return (
-    headTypeList.filter((d) => current.startsWith(d.url))[0] || headTypeList[6]
+    headTypeList.filter((d) => current.startsWith(d.url))[0] || {
+      url: PageURL.walletAssets,
+    }
   );
 }
 
@@ -144,7 +146,7 @@ class DesktopTypeMenu extends Component {
 
 Object.defineProperty(DesktopTypeMenu, 'current', {
   get() {
-    return activedMenu || { url: `${PageURL.walletAssets}` };
+    return activedMenu || getDefaultActivedMenu(PageURL.getCurrent());
   },
 });
 
