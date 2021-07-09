@@ -1,6 +1,5 @@
 import React from 'react';
 import DesktopNodeMenu from '_app/component/DesktopNodeMenu';
-import DesktopLinkMenu from '_component/DesktopLinkMenu';
 import DesktopTypeMenu from '_component/DesktopTypeMenu';
 import DesktopNetMenu from '_component/DesktopNetMenu';
 import Config from '_src/constants/Config';
@@ -65,7 +64,6 @@ class FullTradeHead extends React.Component {
           {util.isLogined() ? <LoggedMenu /> : <LoginMenu />}
           {this.isSwapMenu() && <SwapSetting />}
           <DocMenu />
-          {!this.isSwapMenu() && <DesktopLinkMenu />}
         </div>
       </div>
     );
