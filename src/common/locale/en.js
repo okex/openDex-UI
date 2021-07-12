@@ -939,7 +939,7 @@ Immediate or Cancel requires all or part of the order to be executed immediately
   trans_amount: 'Transfer amount',
   trans_available: ' Available amount for transfer',
   trans_available_not_enough: 'Insufficient balance',
-  trans_fee: 'Transaction fee',
+  trans_fee: 'Transaction fee（toplimit）',
   trans_fee_not_enough: 'Insufficient fee',
   trans_note: 'Remarks',
   trans_middle_step_show_token: 'Select asset',
