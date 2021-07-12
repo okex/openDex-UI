@@ -937,7 +937,7 @@ const zhCN = {
   trans_amount: '转账数量',
   trans_available: '可转账数量：',
   trans_available_not_enough: '余额不足',
-  trans_fee: '手续费（最高）',
+  trans_fee: '手续费',
   trans_fee_not_enough: '手续费不足',
   trans_note: '备注',
   trans_middle_step_show_token: '选择币种',
